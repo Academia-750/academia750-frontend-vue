@@ -65,6 +65,8 @@ Vue.prototype.$manageTokenAuth = manageTokenAuth
 Vue.$loadUserAuth = loadUserAuth
 Vue.prototype.$loadUserAuth = loadUserAuth
 
+loadUserAuth()
+
 /*
 |---------------------------------------------------------------------
 | Main Vue Instance
