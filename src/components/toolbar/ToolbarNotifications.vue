@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-badge
         bordered
-        content="6"
+        :content="numberOfNotifications"
         offset-x="22"
         offset-y="22"
       >
@@ -16,11 +16,11 @@
     <!-- dropdown card -->
     <v-card>
       <v-list three-line dense max-width="400">
-        <v-subheader class="pa-2 font-weight-bold">Notifications</v-subheader>
+        <v-subheader class="pa-2 font-weight-bold">Notificaciones</v-subheader>
         <div v-for="(item, index) in items" :key="index">
           <v-divider v-if="index > 0 && index < items.length" inset></v-divider>
 
-          <v-list-item @click="">
+          <v-list-item>
             <v-list-item-avatar size="32" :color="item.color">
               <v-icon dark small>{{ item.icon }}</v-icon>
             </v-list-item-avatar>
@@ -37,7 +37,7 @@
       </v-list>
 
       <div class="text-center py-2">
-        <v-btn small>See all</v-btn>
+        <v-btn :disabled="disabledButtonSeeAllNotifications" small>Ver todo</v-btn>
       </div>
     </v-card>
   </v-menu>
@@ -55,43 +55,9 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          title: 'Brunch this weekend?',
-          color: 'primary',
-          icon: 'mdi-account-circle',
-          subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, repudiandae?',
-          time: '3 min'
-        },
-        {
-          title: 'Summer BBQ',
-          color: 'success',
-          icon: 'mdi-email-outline',
-          subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, repudiandae?',
-          time: '3 min'
-        },
-        {
-          title: 'Oui oui',
-          color: 'teal lighten-1',
-          icon: 'mdi-airplane-landing',
-          subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, repudiandae?',
-          time: '4 min'
-        },
-        {
-          title: 'Disk capacity is at maximum',
-          color: 'teal accent-3',
-          icon: 'mdi-server',
-          subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, repudiandae?',
-          time: '3 hr'
-        },
-        {
-          title: 'Recipe to try',
-          color: 'blue-grey lighten-2',
-          icon: 'mdi-noodles',
-          subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint, repudiandae?',
-          time: '8 hr'
-        }
-      ]
+      numberOfNotifications: '0',
+      disabledButtonSeeAllNotifications: true,
+      items: []
     }
   }
 }
