@@ -99,10 +99,10 @@
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
               <toolbar-language />
-              <div class="hidden-xs-only mx-1">
+              <!-- <div class="hidden-xs-only mx-1">
                 <toolbar-currency />
-              </div>
-              <toolbar-apps />
+              </div> -->
+              <!-- <toolbar-apps /> -->
               <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']">
                 <toolbar-notifications />
               </div>
@@ -139,9 +139,9 @@ import logoutActionsMixin from '@/modules/auth/login/resources/logoutActionsMixi
 
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
-import ToolbarApps from '../components/toolbar/ToolbarApps'
+/* import ToolbarApps from '../components/toolbar/ToolbarApps' */
 import ToolbarLanguage from '../components/toolbar/ToolbarLanguage'
-import ToolbarCurrency from '../components/toolbar/ToolbarCurrency'
+/* import ToolbarCurrency from '../components/toolbar/ToolbarCurrency' */
 import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 import ProgressCircularLoadingApp from '@/modules/loading/components/ProgressCircularLoadingApp.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
@@ -150,9 +150,9 @@ export default {
   components: {
     MainMenu,
     ToolbarUser,
-    ToolbarApps,
+    /* ToolbarApps, */
     ToolbarLanguage,
-    ToolbarCurrency,
+    /* ToolbarCurrency, */
     ToolbarNotifications,
     ProgressCircularLoadingApp,
     ProgressLinearLoadingApp

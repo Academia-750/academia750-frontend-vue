@@ -30,60 +30,72 @@ export default {
   fallbackLocale: 'en',
 
   // availabled locales for user selection
-  availableLocales: [{
-    code: 'en',
-    flag: 'us',
-    label: 'English',
-    messages: en
-  }, {
-    code: 'es',
-    flag: 'es',
-    label: 'Español',
-    messages: es
-  }, {
-    code: 'pt',
-    flag: 'pt',
-    label: 'Português',
-    messages: pt
-  }, {
-    code: 'de',
-    flag: 'de',
-    label: 'Deutsche',
-    messages: de
-  }, {
-    code: 'fr',
-    flag: 'fr',
-    label: 'Français',
-    messages: fr
-  }, {
-    code: 'ar',
-    flag: 'sa',
-    label: 'العربية',
-    messages: ar
-  }, {
-    code: 'ko',
-    flag: 'kr',
-    label: '한국어',
-    messages: ko
-  }, {
-    code: 'ru',
-    flag: 'ru',
-    label: 'русский',
-    messages: ru
-  }, {
-    code: 'zh',
-    flag: 'cn',
-    label: '中文',
-    messages: zh
-  }, {
-    code: 'ja',
-    flag: 'jp',
-    label: '日本語',
-    messages: ja
-  }, {
-    code: 'pl',
-    flag: 'pl',
-    label: 'Polskie',
-    messages: pl
-  }]
+  availableLocales: [
+    /* {
+      code: 'en',
+      flag: 'us',
+      label: 'English',
+      messages: en
+    },  */
+    {
+      code: 'es',
+      flag: 'es',
+      label: 'Español',
+      messages: es
+    }/*,
+     {
+      code: 'pt',
+      flag: 'pt',
+      label: 'Português',
+      messages: pt
+    },
+    {
+      code: 'de',
+      flag: 'de',
+      label: 'Deutsche',
+      messages: de
+    },
+    {
+      code: 'fr',
+      flag: 'fr',
+      label: 'Français',
+      messages: fr
+    },
+    {
+      code: 'ar',
+      flag: 'sa',
+      label: 'العربية',
+      messages: ar
+    },
+    {
+      code: 'ko',
+      flag: 'kr',
+      label: '한국어',
+      messages: ko
+    },
+    {
+      code: 'ru',
+      flag: 'ru',
+      label: 'русский',
+      messages: ru
+    },
+    {
+      code: 'zh',
+      flag: 'cn',
+      label: '中文',
+      messages: zh
+    },
+    {
+      code: 'ja',
+      flag: 'jp',
+      label: '日本語',
+      messages: ja
+    },
+    {
+      code: 'pl',
+      flag: 'pl',
+      label: 'Polskie',
+      messages: pl
+    } */
+  ]
 }
