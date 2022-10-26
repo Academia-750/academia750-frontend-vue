@@ -31,3 +31,11 @@ export const loadUserAuth = async () => {
 export const getUserAuth = () => {
   return store.getters['profileService/get_user_authenticated']
 }
+
+export const getRolesUserAuth = () => {
+  return store.getters['profileService/get_roles']
+}
+
+export const getPermissionsUserAuth = () => {
+  return store.getters['profileService/get_permissions']
+}

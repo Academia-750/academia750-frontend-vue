@@ -23,6 +23,11 @@ export default {
   },
   computed: {
     ...mapState('profileService', ['user'])
+  },
+  created () {
+    /* console.log(this.$userAuth())
+    console.log(this.$rolesUserAuth())
+    console.log(this.$permissionsUserAuth()) */
   }
 }
 </script>
