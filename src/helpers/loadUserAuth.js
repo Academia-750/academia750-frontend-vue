@@ -27,3 +27,7 @@ export const loadUserAuth = async () => {
     }
   }
 }
+
+export const getUserAuth = () => {
+  return store.getters['profileService/get_user_authenticated']
+}

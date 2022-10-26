@@ -11,7 +11,7 @@ import router from './router'
 import manageErrors from './helpers/manageErrors'
 import manageLoading from './helpers/manageLoading'
 import manageTokenAuth from '@/helpers/auth.js'
-import { loadUserAuth } from '@/helpers/loadUserAuth'
+import { loadUserAuth, getUserAuth } from '@/helpers/loadUserAuth'
 import { hasPermissions } from '@/helpers/managePermissions'
 
 // PLUGINS
@@ -70,6 +70,9 @@ loadUserAuth()
 
 Vue.$can = hasPermissions
 Vue.prototype.$can = hasPermissions
+
+Vue.$userAuth = getUserAuth
+Vue.prototype.$userAuth = getUserAuth
 
 /*
 |---------------------------------------------------------------------
