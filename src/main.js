@@ -12,6 +12,7 @@ import manageErrors from './helpers/manageErrors'
 import manageLoading from './helpers/manageLoading'
 import manageTokenAuth from '@/helpers/auth.js'
 import { loadUserAuth } from '@/helpers/loadUserAuth'
+import { hasPermissions } from '@/helpers/MenuPermissions'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -66,6 +67,9 @@ Vue.$loadUserAuth = loadUserAuth
 Vue.prototype.$loadUserAuth = loadUserAuth
 
 loadUserAuth()
+
+Vue.$can = hasPermissions
+Vue.prototype.$can = hasPermissions
 
 /*
 |---------------------------------------------------------------------

@@ -1,12 +1,11 @@
 import store from '@/store'
 
-export const hasPermissions = (permissionsNavItem) => {
+export const hasPermissions = (permissions) => {
   const permissionsUserAuth = store.getters['profileService/get_permissions']
+  //permissions = permissions ? permissions : '*'
 
-  permissionsNavItem = permissionsNavItem ? permissionsNavItem : '*'
-
-  if (permissionsNavItem !== '*' && permissionsNavItem) {
-    const permissionsArray = Array.isArray(permissionsNavItem) ? permissionsNavItem : [permissionsNavItem]
+  if (permissions !== '*' && permissions) {
+    const permissionsArray = Array.isArray(permissions) ? permissions : [permissions]
     let displayNavItem = false
 
     permissionsArray.forEach((permission) => {
