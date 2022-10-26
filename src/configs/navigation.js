@@ -44,13 +44,13 @@ export default {
       },
       { key: 'menu.disabled', text: 'Menu Disabled', disabled: true }
     ]
-  }],
+  }]
 
   // footer links
-  footer: [{
+  /* footer: [{
     text: 'Docs',
     key: 'menu.docs',
     href: 'https://vuetifyjs.com',
     target: '_blank'
-  }]
+  }] */
 }

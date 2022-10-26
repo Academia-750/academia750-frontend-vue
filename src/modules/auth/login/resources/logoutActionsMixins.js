@@ -39,10 +39,14 @@ export default {
         })
       } catch (error) {
         console.log(error)
+        this.$manageTokenAuth.$remove_token_auth()
+        this.$router.push({
+          name: 'login'
+        })
         this.$swal.fire({
-          icon: 'error',
+          icon: 'warning',
           toast: true,
-          title: 'Ha ocurrido un error. Por favor, intente más tarde',
+          title: 'Ha ocurrido un error. Su sesión ha sido cerrada forzozamente',
           timer: 3000
         })
       }

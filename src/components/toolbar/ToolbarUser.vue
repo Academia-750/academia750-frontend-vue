@@ -10,7 +10,7 @@
           offset-y="10"
         >
           <v-avatar size="40">
-            <v-img src="/images/avatars/avatar1.svg"></v-img>
+            <v-img :src="require('@/assets/images/avatar_default_photo.svg')"></v-img>
           </v-avatar>
         </v-badge>
       </v-btn>
@@ -36,7 +36,7 @@
 
       <v-divider class="my-1"></v-divider>
 
-      <v-list-item to="/auth/signin">
+      <v-list-item @click="logoutAccount">
         <v-list-item-icon>
           <v-icon small>mdi-logout-variant</v-icon>
         </v-list-item-icon>
@@ -50,6 +50,7 @@
 
 <script>
 import config from '../../configs'
+import logoutActionsMixin from '@/modules/auth/login/resources/logoutActionsMixins'
 /*
 |---------------------------------------------------------------------
 | Toolbar User Component
@@ -59,6 +60,7 @@ import config from '../../configs'
 |
 */
 export default {
+  mixins: [logoutActionsMixin],
   data() {
     return {
       menu: config.toolbar.user

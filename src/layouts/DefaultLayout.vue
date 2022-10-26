@@ -48,10 +48,12 @@
               dark
               block
               color="#EE44AA"
-              href="https://store.vuetifyjs.com/products/lux-admin-pro/"
-              target="_blank"
+              @click="logoutAccount"
             >
-              Buy Now
+              <v-icon left>
+                mdi-logout
+              </v-icon>
+              {{ $t('menu.logout') }}
             </v-btn>
           </div>
         </template>
@@ -133,6 +135,7 @@ import { mapState } from 'vuex'
 // navigation menu configurations
 import config from '../configs'
 import { localize } from 'vee-validate'
+import logoutActionsMixin from '@/modules/auth/login/resources/logoutActionsMixins'
 
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
@@ -154,6 +157,7 @@ export default {
     ProgressCircularLoadingApp,
     ProgressLinearLoadingApp
   },
+  mixins: [logoutActionsMixin],
   data() {
     return {
       drawer: null,
