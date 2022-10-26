@@ -1,7 +1,8 @@
 import store from '@/store'
 
-export const hasPermissions = (permissions) => {
-  const permissionsUserAuth = store.getters['profileService/get_permissions']
+export const hasPermissions = (permissions, permissionsUserAuth = null) => {
+
+  permissionsUserAuth = permissionsUserAuth ?? store.getters['profileService/get_permissions']
   //permissions = permissions ? permissions : '*'
 
   if (permissions !== '*' && permissions) {
