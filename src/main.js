@@ -9,6 +9,7 @@ import router from './router'
 
 // Helpers APP
 import manageErrors from './helpers/manageErrors'
+import manageLoading from './helpers/manageLoading'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -52,6 +53,9 @@ Vue.config.productionTip = false
 
 Vue.$errorApp = manageErrors
 Vue.prototype.$errorApp = manageErrors
+
+Vue.$loadingApp = manageLoading
+Vue.prototype.$loadingApp = manageLoading
 
 /*
 |---------------------------------------------------------------------

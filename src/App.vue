@@ -7,7 +7,7 @@
       </transition>
     </template>
     <template v-else>
-      <!-- <progress-linear-loading-app /> -->
+      <progress-linear-loading-app />
       <component :is="currentLayout" v-if="isRouterLoaded">
         <transition name="scale" mode="out-in">
           <router-view />
@@ -40,7 +40,7 @@ import simpleLayout from './layouts/SimpleLayout'
 import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
 import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
-/* import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue' */
+import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
 
 /*
 |---------------------------------------------------------------------
@@ -58,7 +58,8 @@ export default {
     simpleLayout,
     authLayout,
     errorLayout,
-    handleErrors
+    handleErrors,
+    ProgressLinearLoadingApp
   },
   computed: {
     ...mapState('app', ['toast']),
@@ -92,7 +93,7 @@ export default {
 /**
  * Transition animation between pages
  */
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.2s;
   transition-property: opacity;
@@ -102,5 +103,26 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+} */
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.5s ease;
+}
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.v-progress-linear {
+  -moz-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+
+.v-toolbar__extension {
+  padding: 0px !important;
 }
 </style>
