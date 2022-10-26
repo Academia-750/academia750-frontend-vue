@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import middleware from '@grafikri/vue-middleware'
 
 // Routes
 import AppsRoutes from './apps.routes'
@@ -53,9 +54,7 @@ const router = new Router({
 /**
  * Before each route update
  */
-router.beforeEach((to, from, next) => {
-  return next()
-})
+router.beforeEach(middleware())
 
 /**
  * After each route update

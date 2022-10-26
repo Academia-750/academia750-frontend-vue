@@ -9,6 +9,7 @@
     "dev": "npm run serve"
   },
   "dependencies": {
+    "@grafikri/vue-middleware": "^1.0.0",
     "@indielayer/vue-live-demo": "^1.0.0",
     "animate.css": "^4.1.0",
     "apexcharts": "^3.19.2",
