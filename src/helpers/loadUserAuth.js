@@ -8,7 +8,6 @@ import { enableLoadingProgressCircular, disabledLoadingProgressCircular } from '
 export const loadUserAuth = async () => {
   if (Cookies.get('authorization')) {
     try {
-      console.log('dsuighsdughds')
       enableLoadingProgressCircular()
       ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`
       ProfileAuthService.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`

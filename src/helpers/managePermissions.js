@@ -18,7 +18,7 @@ export const hasPermissions = (permissions, permissionsUserAuth = null) => {
     return displayNavItem
   }
 
-  return permissionsNavItem === '*'
+  return permissions === '*'
 }
 
 export default {

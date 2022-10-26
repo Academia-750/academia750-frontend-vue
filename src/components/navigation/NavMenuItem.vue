@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list-item
-      v-if="!menuItem.items"
+      v-if="!menuItem.items && $can(menuItem.can)"
       :input-value="menuItem.value"
       :to="menuItem.link"
       :exact="menuItem.exact"
@@ -22,7 +22,7 @@
     </v-list-item>
 
     <v-list-group
-      v-else
+      v-else-if="$can(menuItem.can)"
       :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
       :disabled="menuItem.disabled"
       :sub-group="subgroup"
