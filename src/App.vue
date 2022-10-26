@@ -10,7 +10,7 @@
       <progress-linear-loading-app />
       <component :is="currentLayout" v-if="isRouterLoaded">
         <transition name="scale" mode="out-in">
-          <router-view />
+          <router-view :key="$route.path" />
         </transition>
       </component>
     </template>
@@ -79,13 +79,8 @@ export default {
     /* this.$errorApp.activateError({
       status: 503
     }) */
-  },
-  head: {
-    link: [
-      // adds config/icons into the html head tag
-      ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
-    ]
   }
+
 }
 </script>
 

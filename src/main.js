@@ -10,6 +10,8 @@ import router from './router'
 // Helpers APP
 import manageErrors from './helpers/manageErrors'
 import manageLoading from './helpers/manageLoading'
+import manageTokenAuth from '@/helpers/auth.js'
+import { loadUserAuth } from '@/helpers/loadUserAuth'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -56,6 +58,12 @@ Vue.prototype.$errorApp = manageErrors
 
 Vue.$loadingApp = manageLoading
 Vue.prototype.$loadingApp = manageLoading
+
+Vue.$manageTokenAuth = manageTokenAuth
+Vue.prototype.$manageTokenAuth = manageTokenAuth
+
+Vue.$loadUserAuth = loadUserAuth
+Vue.prototype.$loadUserAuth = loadUserAuth
 
 /*
 |---------------------------------------------------------------------

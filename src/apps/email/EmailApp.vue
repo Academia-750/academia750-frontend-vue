@@ -42,6 +42,11 @@ export default {
       // navigation drawer
       drawer: null
     }
+  },
+  head: {
+    title: {
+      inner: 'App de Email'
+    }
   }
 }
 </script>

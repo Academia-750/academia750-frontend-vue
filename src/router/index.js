@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import middleware from '@grafikri/vue-middleware'
+import authMiddleware from '@/middlewares/auth'
 
 // Routes
 import AppsRoutes from './apps.routes'
@@ -18,6 +19,9 @@ export const routes = [{
 }, {
   path: '/dashboard/analytics',
   name: 'dashboard-analytics',
+  meta: {
+    middleware: [authMiddleware]
+  },
   component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue')
 },
 ...AppsRoutes,

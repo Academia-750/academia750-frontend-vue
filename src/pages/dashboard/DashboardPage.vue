@@ -105,7 +105,6 @@ export default {
   data() {
     return {
       loadingInterval: null,
-
       isLoading1: true,
       isLoading2: true,
       isLoading3: true,
@@ -154,6 +153,11 @@ export default {
   methods: {
     clear() {
       clearInterval(this.loadingInterval)
+    }
+  },
+  head: {
+    title: {
+      inner: 'Tablero'
     }
   }
 }
