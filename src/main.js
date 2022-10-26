@@ -20,6 +20,12 @@ import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/moment'
 
+import '@/plugins/register-helpers'
+import '@/plugins/register-modules'
+import '@/plugins/register-mixins'
+import '@/plugins/register-filters'
+import '@/plugins/register-directives'
+
 // FILTERS
 import './filters/capitalize'
 import './filters/lowercase'
