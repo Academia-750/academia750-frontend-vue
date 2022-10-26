@@ -29,10 +29,10 @@ export default {
 
   // user dropdown menu
   user: [
-    { icon: 'mdi-account-box-outline', key: 'menu.profile', text: 'Profile', link: '/users/edit' },
+    { icon: 'mdi-account-box-outline', key: 'menu.profile', text: 'Profile', link: '/users/edit' }/* ,
     { icon: 'mdi-email-outline', key: 'menu.email', text: 'Email', link: '/apps/email' },
     { icon: 'mdi-format-list-checkbox', key: 'menu.todo', text: 'Todo', link: '/apps/todo' },
     { icon: 'mdi-email-outline', key: 'menu.chat', text: 'Chat', link: '/apps/chat' },
-    { icon: 'mdi-email-outline', key: 'menu.board', text: 'Board', link: '/apps/board' }
+    { icon: 'mdi-email-outline', key: 'menu.board', text: 'Board', link: '/apps/board' } */
   ]
 }
