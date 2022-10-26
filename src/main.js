@@ -20,6 +20,7 @@ import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/moment'
 
+import '@/plugins/vue-cryptojs'
 import '@/plugins/register-helpers'
 import '@/plugins/register-modules'
 import '@/plugins/register-mixins'
