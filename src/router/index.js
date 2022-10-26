@@ -34,7 +34,7 @@ export const routes = [{
 {
   path: '*',
   name: 'error',
-  component: () => import(/* webpackChunkName: "error" */ '@/pages/error/NotFoundPage.vue'),
+  component: () => import(/* webpackChunkName: "error" */ '@/modules/errors/system/views/error404.vue'),
   meta: {
     layout: 'error'
   }

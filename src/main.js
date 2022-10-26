@@ -7,6 +7,9 @@ import store from './store'
 // VUE-ROUTER - https://router.vuejs.org/
 import router from './router'
 
+// Helpers APP
+import manageErrors from './helpers/manageErrors'
+
 // PLUGINS
 import vuetify from './plugins/vuetify'
 import i18n from './plugins/vue-i18n'
@@ -46,6 +49,9 @@ import 'animate.css/animate.min.css'
 
 // Set this to false to prevent the production tip on Vue startup.
 Vue.config.productionTip = false
+
+Vue.$errorApp = manageErrors
+Vue.prototype.$errorApp = manageErrors
 
 /*
 |---------------------------------------------------------------------

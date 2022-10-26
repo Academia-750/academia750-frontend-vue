@@ -1,11 +1,19 @@
 <template>
   <v-app>
     <!-- Layout component -->
-    <component :is="currentLayout" v-if="isRouterLoaded">
-      <transition name="fade" mode="out-in">
-        <router-view />
+    <template v-if="responseError">
+      <transition name="scale" mode="out-in">
+        <handle-errors :error-response="responseError"/>
       </transition>
-    </component>
+    </template>
+    <template v-else>
+      <!-- <progress-linear-loading-app /> -->
+      <component :is="currentLayout" v-if="isRouterLoaded">
+        <transition name="scale" mode="out-in">
+          <router-view />
+        </transition>
+      </component>
+    </template>
 
     <v-snackbar v-model="toast.show" :timeout="toast.timeout" :color="toast.color" bottom>
       {{ toast.message }}
@@ -31,6 +39,8 @@ import landingLayout from './layouts/LandingLayout'
 import simpleLayout from './layouts/SimpleLayout'
 import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
+import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
+/* import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue' */
 
 /*
 |---------------------------------------------------------------------
@@ -47,10 +57,12 @@ export default {
     landingLayout,
     simpleLayout,
     authLayout,
-    errorLayout
+    errorLayout,
+    handleErrors
   },
   computed: {
     ...mapState('app', ['toast']),
+    ...mapState('errorsService', ['responseError']),
     isRouterLoaded: function() {
       if (this.$route.name !== null) return true
 
@@ -61,6 +73,11 @@ export default {
 
       return layout + 'Layout'
     }
+  },
+  created () {
+    /* this.$errorApp.activateError({
+      status: 503
+    }) */
   },
   head: {
     link: [
