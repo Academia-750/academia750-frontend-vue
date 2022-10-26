@@ -11,8 +11,8 @@ import navigation from './navigation'
 export default {
   // product display information
   product: {
-    name: 'Lux Admin PRO',
-    version: '1.5.3'
+    name: process.env.VUE_APP_PRODUCT_NAME_APP || 'Academia 750 para bomberos',
+    version: process.env.VUE_APP_PRODUCT_VERSION_APP || '1.0.0'
   },
 
   // google maps
