@@ -144,6 +144,7 @@ import { mapState } from 'vuex'
 
 // navigation menu configurations
 import config from '../configs'
+import { localize } from 'vee-validate'
 
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
@@ -171,6 +172,9 @@ export default {
   },
   computed: {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached'])
+  },
+  mounted () {
+    localize(this.$i18n.locale)
   },
   methods: {
     onKeyup(e) {
