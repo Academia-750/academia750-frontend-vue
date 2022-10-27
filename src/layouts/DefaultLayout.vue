@@ -20,10 +20,28 @@
         <!-- Navigation menu info -->
         <template v-slot:prepend>
           <div class="pa-2">
-            <div class="title font-weight-bold text-uppercase primary--text">{{ product.name }}</div>
-            <div class="overline grey--text">{{ product.version }}</div>
+            <div class="d-flex justify-start">
+              <span
+                style="cursor: pointer;"
+                to="/"
+              >
+                <v-img
+                  class="align-self-center"
+                  :src="require('@/assets/images/logo.png')"
+                  max-height="40"
+                  max-width="40"
+                ></v-img>
+              </span>
+              <span
+                class="text-uppercase white--text font-weight-bold text-xs-caption text-sm-h6 align-self-center"
+                style="cursor: pointer;"
+                to="/"
+              >{{ product.name }}</span>
+            </div>
+            <!-- <div class="overline grey--text">{{ product.version }}</div> -->
           </div>
         </template>
+        <v-divider dark></v-divider>
         <!-- Navigation menu -->
         <main-menu :menu="navigation.menu" />
         <!-- Navigation menu footer -->
@@ -121,7 +139,14 @@
         <v-footer app inset>
           <v-spacer></v-spacer>
           <div class="overline">
-            Built with <v-icon small color="pink">mdi-heart</v-icon> <a class="text-decoration-none" href="https://indielayer.com" target="_blank">@indielayer</a>
+            <span class="caption d-none d-sm-none d-md-inline">
+              Preparación integral de las oposiciones a bomber@
+            </span>
+            .<v-icon small color="pink">mdi-heart</v-icon>
+            <span
+              style="cursor: pointer;"
+              class="text-decoration-none"
+            >@{{ product.name }}</span>
           </div>
         </v-footer>
       </v-main>
@@ -168,7 +193,14 @@ export default {
   },
   computed: {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
-    ...mapState('loadingService', ['displayProgressCircularLoading', 'displayProgressLinearLoading'])
+    ...mapState('loadingService', ['displayProgressCircularLoading', 'displayProgressLinearLoading']),
+    classTextByTheme () {
+
+      return {
+        'white--text': this.$vuetify.theme.isDark,
+        'black--text': !this.$vuetify.theme.isDark
+      }
+    }
   },
   mounted () {
     localize(this.$i18n.locale)

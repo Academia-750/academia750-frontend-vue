@@ -3,7 +3,7 @@ export default {
   globalTheme: 'light', // light | dark
 
   // side menu theme, use global theme or custom
-  menuTheme: 'global', // global | light | dark
+  menuTheme: 'dark', // global | light | dark
 
   // toolbar theme, use global theme or custom
   toolbarTheme: 'global', // global | light | dark
@@ -19,7 +19,7 @@ export default {
 
   // dark theme colors
   dark: {
-    background: '#05090c',
+    background: '#343a40',
     surface: '#111b27',
     primary: '#0096c7',
     secondary: '#829099',
