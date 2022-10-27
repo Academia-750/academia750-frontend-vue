@@ -3,10 +3,10 @@
     <v-list-item
       v-if="!menuItem.items && $can(menuItem.can)"
       :input-value="menuItem.value"
-      :to="menuItem.link"
+      :to="calculateRouteLink(menuItem)"
       :exact="menuItem.exact"
       :disabled="menuItem.disabled"
-      active-class="primary--text"
+      active-class="white--text"
       link
     >
       <v-list-item-icon>
@@ -26,7 +26,7 @@
       :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
       :disabled="menuItem.disabled"
       :sub-group="subgroup"
-      :to="menuItem.link"
+      :to="calculateRouteLink(menuItem)"
       link
     >
 
@@ -69,6 +69,23 @@ export default {
     small: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    calculateRouteLink (itemMenu) {
+      let routeTo = itemMenu.link
+
+      if (!routeTo) {
+        if (typeof itemMenu.to === 'string') {
+          routeTo = {
+            name: itemMenu.to
+          }
+        } else {
+          routeTo = itemMenu.to
+        }
+      }
+
+      return routeTo
     }
   }
 }

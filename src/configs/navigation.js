@@ -10,7 +10,7 @@ export default {
       key: '',
       can: '*',
       items: [
-        { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Dashboard', link: '/dashboard/analytics', can: '*' }
+        { icon: 'mdi-view-dashboard-outline', key: '', text: 'Perfil de usuario', to: { name: 'update-my-profile' }, can: '*' }
       ]
     }/* ,
     {
