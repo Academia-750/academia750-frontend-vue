@@ -1,10 +1,27 @@
 <template>
   <div>
-    <v-toolbar class="flex-grow-0 mb-2">
-      <div class="d-flex justify-center align-items-center">
-        <v-icon class="mx-1">mdi-account-circle</v-icon>
-        <span class="font-weight-bold text-xs-caption text-sm-h6">Perfil de usuario</span>
-      </div>
+    <v-toolbar>
+      <v-toolbar-title class="d-flex align-items-center">
+        <v-icon large class="mx-1">mdi-account-circle</v-icon>
+        <span class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6">Perfil de usuario</span>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        color="teal darken-2"
+        class="white--text"
+        @click="loadDataUserProfile"
+      >
+        <v-icon
+          right
+          dark
+          class="mx-1"
+        >
+          mdi-reload
+        </v-icon>
+        <span class="d-none d-sm-inline">Cargar</span>
+      </v-btn>
     </v-toolbar>
     <section class="email-app-top px-2 py-1 d-flex align-center">
       <validation-observer ref="FormUpdateMyProfile" v-slot="{ invalid }">

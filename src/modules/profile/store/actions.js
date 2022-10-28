@@ -30,8 +30,6 @@ const getDataMyProfileAction = async ({ commit }, options) => {
 const UpdateProfileAction = async ({ commit }, options) => {
 
   try {
-    commit('set_user', null)
-
     const response = await ProfileRepository.updateDataMyProfile(options.data, options.config)
 
     if (response) {
@@ -43,7 +41,6 @@ const UpdateProfileAction = async ({ commit }, options) => {
 
   } catch (error) {
     console.log(error)
-    commit('set_user', null)
 
     return Promise.reject(error)
   }
