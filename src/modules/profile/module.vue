@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card class="min-w-0 mx-auto" width="100%">
     <router-view />
-  </div>
+  </v-card>
 </template>
