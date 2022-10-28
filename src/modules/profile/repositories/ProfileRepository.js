@@ -11,6 +11,9 @@ export default {
   updateDataMyProfile(data, config = {}) {
     return ProfileAuthService.post('auth/update-data-my-profile', data, config)
   },
+  unsubscribeSystem(config = {}) {
+    return ProfileAuthService.get('auth/unsubscribe-from-system', config)
+  },
   changePassword(data, config = {}) {
     return ProfileAuthService.post('auth/change-password-my-account', data, config)
   }

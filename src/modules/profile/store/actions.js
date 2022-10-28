@@ -46,7 +46,26 @@ const UpdateProfileAction = async ({ commit }, options) => {
   }
 }
 
+const UnsubscribeSystemAction = async ({ commit }, config) => {
+
+  try {
+    const response = await ProfileRepository.unsubscribeSystem(config)
+
+    if (response) {
+      commit('set_user', null)
+    }
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getDataMyProfileAction,
-  UpdateProfileAction
+  UpdateProfileAction,
+  UnsubscribeSystemAction
 }
