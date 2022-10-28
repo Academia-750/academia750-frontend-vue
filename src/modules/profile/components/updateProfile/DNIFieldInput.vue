@@ -1,6 +1,7 @@
 <template>
   <v-text-field
     ref="dni-field"
+    v-model="dni"
     readonly
     label="DNI / NIE"
     filled
@@ -24,6 +25,7 @@ export default {
   },
   data() {
     return {
+      dni: ''
     }
   },
   watch: {

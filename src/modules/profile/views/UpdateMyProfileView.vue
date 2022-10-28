@@ -16,7 +16,9 @@
             lg="2"
           >
             <!-- DNI -->
-            <dni-field-input />
+            <dni-field-input
+              ref="DNIPersonInputComponent"
+            />
           </v-col>
           <v-col
             cols="12"
@@ -98,7 +100,6 @@
               color="red darken-1"
               class="mt-3 white--text"
               :block="activeStyleBlockButton"
-              @click="updateProfile"
             >
               <v-icon
                 right
@@ -144,26 +145,65 @@ export default {
         lastName: '',
         phone: '',
         email: ''
+      },
+      cache: {
+        data: {
+          profile: {
+            namePerson: '',
+            lastName: '',
+            phone: '',
+            email: ''
+          }
+        }
       }
     }
   },
   computed: {
     ...mapState('profileService', ['user']),
+    checkIfThereIsAtLeast_1ModifiedData () {
+      const { first_name, last_name, phone, email } = this.cache.data.profile
+
+      return (first_name !== this.form.namePerson) || (last_name !== this.form.lastName) || (phone !== this.form.phone) || (email !== this.form.email)
+    },
     activeStyleBlockButton () {
       return this.$vuetify.breakpoint.width <= 600
     }
   },
   mounted () {
-    this.$refs['namePersonInputComponent'].name_person = this.user.attributes.first_name
-    this.$refs['LastNamePersonInputComponent'].last_name = this.user.attributes.last_name
-    this.$refs['PhoneInputComponent'].phone = this.user.attributes.phone
-    this.$refs['EmailInputComponent'].email = this.user.attributes.email
+    const { dni, first_name, last_name, phone, email } = this.user.attributes
+
+    this.$refs['DNIPersonInputComponent'].dni = dni
+    this.$refs['namePersonInputComponent'].name_person = first_name
+    this.$refs['LastNamePersonInputComponent'].last_name = last_name
+    this.$refs['PhoneInputComponent'].phone = phone
+    this.$refs['EmailInputComponent'].email = email
+
+    this.form.namePerson = first_name
+    this.form.lastName = last_name
+    this.form.phone = phone
+    this.form.email = email
+
+    this.cache.data.profile.namePerson = first_name
+    this.cache.data.profile.lastName = last_name
+    this.cache.data.profile.phone = phone
+    this.cache.data.profile.email = email
     console.log(this.user)
   },
   methods: {
     updateProfile () {
+      if (!this.checkIfThereIsAtLeast_1ModifiedData) {
+        this.$swal.fire({
+          icon: 'warning',
+          title: 'No es necesario actualizar. No hay ningún dato modificado',
+          showConfirmButton: true,
+          confirmButtonText: '¡Entendido!',
+          timer: 5000
+        })
 
+        return
+      }
     }
+
   },
   head: {
     title: {
