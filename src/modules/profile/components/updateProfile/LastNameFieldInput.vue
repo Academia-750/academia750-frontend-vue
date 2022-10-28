@@ -1,13 +1,13 @@
 <template>
   <ValidationProvider
     v-slot="{ errors }"
-    vid="name_person"
+    vid="last-name"
     mode="aggressive"
     name="Nombre"
     :rules="rules"
   >
     <v-text-field
-      ref="name-person-field"
+      ref="last-name-field"
       v-model="last_name"
       :counter="25"
       :error-messages="errors"
@@ -45,19 +45,19 @@ export default {
     }
   },
   watch: {
-    name_person(value) {
+    last_name(value) {
       this.$emit('LastNamePersonBinding', value)
     }
   },
   methods: {
     resetAccessKey() {
-      this.name_person = ''
+      this.last_name = ''
     },
     onFocusAccesKeyField() {
-      this.$refs['name-person-field']['focus']()
+      this.$refs['last-name-field']['focus']()
     },
     onBlurAccesKeyField() {
-      this.$refs['name-person-field']['blur']()
+      this.$refs['last-name-field']['blur']()
     }
   }
 }

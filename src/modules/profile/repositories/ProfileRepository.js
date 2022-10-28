@@ -9,10 +9,10 @@ export default {
     return ProfileAuthService.get('auth/my-profile', config)
   },
   updateDataMyProfile(data, config = {}) {
-    return ProfileServiceAfterLogin.post('auth/update-data-my-profile', data, config)
+    return ProfileAuthService.post('auth/update-data-my-profile', data, config)
   },
   changePassword(data, config = {}) {
-    return ProfileServiceAfterLogin.post('auth/change-password-my-account', data, config)
+    return ProfileAuthService.post('auth/change-password-my-account', data, config)
   }
 
 }

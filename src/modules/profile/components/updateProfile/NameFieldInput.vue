@@ -1,7 +1,7 @@
 <template>
   <ValidationProvider
     v-slot="{ errors }"
-    vid="name_person"
+    vid="first-name"
     mode="aggressive"
     name="Nombre"
     :rules="rules"
