@@ -35,13 +35,21 @@
           </v-tooltip>
         </v-fade-transition>
       </template>
+      <template v-if="canGeneratePassword" v-slot:append-outer>
+        <v-fade-transition leave-absolute>
+          <v-btn color="primary" small @click="generateRandomSecurePassword"> <v-icon small class="mr-1">mdi-cog-sync</v-icon> Generar </v-btn>
+        </v-fade-transition>
+      </template>
 
     </v-text-field>
   </ValidationProvider>
 </template>
 
 <script>
+import generateSecureRandomPassword from 'secure-random-password'
+
 export default {
+  name: 'NewPasswordField',
   props: {
     isDisabled: {
       type: Boolean,
@@ -62,6 +70,14 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    canGeneratePassword: {
+      type: Boolean,
+      required: true
+    },
+    passwordGenerated: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -73,9 +89,32 @@ export default {
   watch: {
     currentPassword(value) {
       this.$emit('PasswordBinding', value)
+    },
+    passwordGenerated (value) {
+      console.log(value)
+      this.password = value
     }
   },
   methods: {
+    generateRandomSecurePassword () {
+      const PASSWORD_GENERATED = generateSecureRandomPassword.randomPassword(
+        {
+          characters: [
+            { characters: generateSecureRandomPassword.lower, exactly: 2 },
+            { characters: generateSecureRandomPassword.symbols, exactly: 2 },
+            generateSecureRandomPassword.upper,
+            { characters: generateSecureRandomPassword.digits, exactly: 2 }
+          ],
+          length: parseInt(Math.random() * (15, 8) + 8)
+        }
+      )
+
+      this.password = PASSWORD_GENERATED
+
+      this.$emit('PasswordGeneratedBinding', PASSWORD_GENERATED)
+
+      this.showCurrentPassword = true
+    }
   }
 }
 </script>

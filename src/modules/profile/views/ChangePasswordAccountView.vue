@@ -27,11 +27,13 @@
             lg="12"
           >
             <!-- Nueva contraseña -->
-            <password-field
+            <new-password-field
               rules="ItMustBeAPasswordSecure|confirmPassword:@new_password_confirmation"
               vid="password"
               name-provider="Nueva contraseña"
               label="Nueva Contraseña"
+              :can-generate-password="true"
+              @PasswordGeneratedBinding="passwordGenerate = $event"
             />
           </v-col>
           <v-col
@@ -41,11 +43,12 @@
             lg="12"
           >
             <!-- Confirmar contraseña -->
-            <password-field
+            <confirm-password-field
               rules="required"
               vid="new_password_confirmation"
               name-provider="Contraseña confirmada"
               label="Confirmar contraseña"
+              :password-generated="passwordGenerate"
             />
           </v-col>
           <v-col
@@ -82,17 +85,20 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import CurrentPasswordFieldInput from '../components/changePassword/CurrentPasswordField.vue'
-import PasswordField from '../components/changePassword/NewPasswordField.vue'
+import NewPasswordField from '../components/changePassword/NewPasswordField.vue'
+import ConfirmPasswordField from '../components/changePassword/ConfirmPasswordField.vue'
 
 export default {
   components: {
     CurrentPasswordFieldInput,
-    PasswordField
+    NewPasswordField,
+    ConfirmPasswordField
   },
   data () {
     return {
       loadingButtonChangePassword: false,
-      disabledButtonChangePassword: false
+      disabledButtonChangePassword: false,
+      passwordGenerate: ''
     }
   },
   methods: {
