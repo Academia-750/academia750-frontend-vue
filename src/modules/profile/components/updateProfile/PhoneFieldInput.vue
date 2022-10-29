@@ -14,6 +14,7 @@
       label="Teléfono"
       filled
       required
+      clearable
       @keyup.enter="$emit('submitForm')"
     >
       <template v-slot:prepend>

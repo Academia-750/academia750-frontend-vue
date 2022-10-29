@@ -217,7 +217,7 @@ export default {
             toast: true,
             title: 'Por favor, complete correctamente los campos del formulario.',
             showConfirmButton: true,
-            confirmButtonText: this.$t('crud.OkBtn'),
+            confirmButtonText: 'Entendido',
             timer: 7500
           })
 

@@ -64,8 +64,23 @@ const UnsubscribeSystemAction = async ({ commit }, config) => {
   }
 }
 
+const ChangeMyPasswordAccountAction = async ({ commit }, options) => {
+
+  try {
+    const response = await ProfileRepository.changePassword(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getDataMyProfileAction,
   UpdateProfileAction,
-  UnsubscribeSystemAction
+  UnsubscribeSystemAction,
+  ChangeMyPasswordAccountAction
 }

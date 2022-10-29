@@ -5,6 +5,12 @@
         <v-icon class="mx-1">mdi-lock</v-icon>
         <span class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6">Cambiar contraseña</span>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <button-tooltip-secure-password class="d-inline d-sm-inline d-md-none"/>
+      <button-generate-secure-password
+        class="d-inline d-sm-inline d-md-none"
+        @PasswordGeneratedBinding="notifySecurePasswordGeneratedEvent"
+      />
     </v-toolbar>
     <validation-observer ref="FormUpdatePassword" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">
@@ -17,6 +23,7 @@
           >
             <!-- Contrseña actual -->
             <current-password-field-input
+              ref="CurrentPasswordField"
               rules="required"
             />
           </v-col>
@@ -28,11 +35,13 @@
           >
             <!-- Nueva contraseña -->
             <new-password-field
-              rules="ItMustBeAPasswordSecure|confirmPassword:@new_password_confirmation"
+              ref="PasswordField"
+              rules="required|ItMustBeAPasswordSecure|confirmPassword:@password_confirmation"
               vid="password"
               name-provider="Nueva contraseña"
               label="Nueva Contraseña"
               :can-generate-password="true"
+              :password-generated="passwordGenerate"
               @PasswordGeneratedBinding="passwordGenerate = $event"
             />
           </v-col>
@@ -44,8 +53,9 @@
           >
             <!-- Confirmar contraseña -->
             <confirm-password-field
-              rules="required"
-              vid="new_password_confirmation"
+              ref="PasswordConfirmationField"
+              rules="required|confirmPassword:@password"
+              vid="password_confirmation"
               name-provider="Contraseña confirmada"
               label="Confirmar contraseña"
               :password-generated="passwordGenerate"
@@ -82,17 +92,21 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 import CurrentPasswordFieldInput from '../components/changePassword/CurrentPasswordField.vue'
 import NewPasswordField from '../components/changePassword/NewPasswordField.vue'
 import ConfirmPasswordField from '../components/changePassword/ConfirmPasswordField.vue'
+import ButtonGenerateSecurePassword from '../components/changePassword/buttonGenerateSecurePassword.vue'
+import ButtonTooltipSecurePassword from '../components/changePassword/buttonTooltipSecurePassword.vue'
 
 export default {
   components: {
     CurrentPasswordFieldInput,
     NewPasswordField,
-    ConfirmPasswordField
+    ConfirmPasswordField,
+    ButtonTooltipSecurePassword,
+    ButtonGenerateSecurePassword
   },
   data () {
     return {
@@ -101,9 +115,85 @@ export default {
       passwordGenerate: ''
     }
   },
+  computed: {
+  },
   methods: {
+    ...mapActions('profileService', ['ChangeMyPasswordAccountAction']),
     changePassword () {
+      this.$refs['FormUpdatePassword'].validate().then( (status) => {
+        if (!status) {
+          this.$swal.fire({
+            icon: 'error',
+            toast: true,
+            title: 'Por favor, complete correctamente los campos del formulario.',
+            showConfirmButton: true,
+            confirmButtonText: 'Entendido',
+            timer: 7500
+          })
 
+          return
+        }
+      } )
+      this.$loadingApp.enableLoadingProgressLinear()
+      this.loadingButtonChangePassword = true
+      this.disabledButtonChangePassword = true
+      this.changePasswordApi()
+    },
+    async changePasswordApi () {
+      try {
+        await this.ChangeMyPasswordAccountAction({
+          data: {
+            'current-password': this.$refs['CurrentPasswordField'].currentPassword,
+            'password': this.$refs['PasswordField'].password,
+            'password_confirmation': this.$refs['PasswordConfirmationField'].password
+          },
+          config: {}
+        })
+
+        this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: 'Tu contraseña ha sido actualizada con éxito.',
+          timer: 3000
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonChangePassword = false
+        this.disabledButtonChangePassword = false
+
+        this.$refs['CurrentPasswordField'].resetField()
+        this.$refs['PasswordField'].resetField()
+        this.$refs['PasswordConfirmationField'].resetField()
+        this.ResetForm()
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonChangePassword = false
+        this.disabledButtonChangePassword = false
+        if (error.response === undefined) {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            showConfirmButton: true,
+            confirmButtonText: '¡Entendido!',
+            timer: 7500
+          })
+        } else if (error.response?.status === 422) {
+          this.ResetForm()
+          this.handlingErrorValidation(error.response.data.errors)
+        }
+      }
+    },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormUpdatePassword']['setErrors'](errorResponse)
+    },
+    async ResetForm() {
+      await this.$refs['FormUpdatePassword']['reset']()
+
+      return true
+    },
+    notifySecurePasswordGeneratedEvent (PASSWORD_GENERATED) {
+      this.passwordGenerate = PASSWORD_GENERATED
     }
   },
   head: {

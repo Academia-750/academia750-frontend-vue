@@ -15,6 +15,7 @@
       :error-messages="errors"
       :disabled="isDisabled"
       filled
+      clearable
       @click:append="showCurrentPassword = !showCurrentPassword"
     >
       <template v-slot:prepend>
@@ -68,6 +69,10 @@ export default {
     }
   },
   methods: {
+    resetField () {
+      this.password = ''
+      this.showCurrentPassword = false
+    }
   }
 }
 </script>

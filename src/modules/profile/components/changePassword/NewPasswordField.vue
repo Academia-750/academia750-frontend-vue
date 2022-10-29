@@ -15,30 +15,16 @@
       :error-messages="errors"
       :disabled="isDisabled"
       filled
+      clearable
       @click:append="showCurrentPassword = !showCurrentPassword"
     >
       <template v-slot:prepend>
-        <v-fade-transition leave-absolute>
-          <v-tooltip
-            bottom
-          >
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on">
-                mdi-help-circle-outline
-              </v-icon>
-            </template>
-            <p class="caption"> - Entre 8 y 15 carácteres </p>
-            <p class="caption"> - Al menos 1 minúscula y 1 mayúscula </p>
-            <p class="caption"> - Al menos 1 dígito </p>
-            <p class="caption"> - No espacios en blanco </p>
-            <p class="caption"> - Al menos un carácter especial </p>
-          </v-tooltip>
-        </v-fade-transition>
+        <button-tooltip-secure-password class="d-none d-sm-none d-md-block"/>
       </template>
-      <template v-if="canGeneratePassword" v-slot:append-outer>
-        <v-fade-transition leave-absolute>
-          <v-btn color="primary" small @click="generateRandomSecurePassword"> <v-icon small class="mr-1">mdi-cog-sync</v-icon> Generar </v-btn>
-        </v-fade-transition>
+      <template v-if="canGeneratePasswordComputed" v-slot:append-outer>
+        <button-generate-secure-password
+          @PasswordGeneratedBinding="passwordGeneratedByButtonEvent"
+        />
       </template>
 
     </v-text-field>
@@ -46,10 +32,15 @@
 </template>
 
 <script>
-import generateSecureRandomPassword from 'secure-random-password'
+import ButtonGenerateSecurePassword from './buttonGenerateSecurePassword.vue'
+import ButtonTooltipSecurePassword from './buttonTooltipSecurePassword.vue'
 
 export default {
   name: 'NewPasswordField',
+  components: {
+    ButtonTooltipSecurePassword,
+    ButtonGenerateSecurePassword
+  },
   props: {
     isDisabled: {
       type: Boolean,
@@ -86,34 +77,34 @@ export default {
       password: ''
     }
   },
+  computed: {
+    canMdBreakpoint () {
+      return this.$vuetify.breakpoint.width > 960
+    },
+    canGeneratePasswordComputed () {
+      return this.canMdBreakpoint && this.canGeneratePassword
+    }
+  },
   watch: {
     currentPassword(value) {
       this.$emit('PasswordBinding', value)
     },
-    passwordGenerated (value) {
-      console.log(value)
+    passwordGenerated(value) {
       this.password = value
+      this.showCurrentPassword = true
     }
   },
   methods: {
-    generateRandomSecurePassword () {
-      const PASSWORD_GENERATED = generateSecureRandomPassword.randomPassword(
-        {
-          characters: [
-            { characters: generateSecureRandomPassword.lower, exactly: 2 },
-            { characters: generateSecureRandomPassword.symbols, exactly: 2 },
-            generateSecureRandomPassword.upper,
-            { characters: generateSecureRandomPassword.digits, exactly: 2 }
-          ],
-          length: parseInt(Math.random() * (15, 8) + 8)
-        }
-      )
-
+    passwordGeneratedByButtonEvent (PASSWORD_GENERATED) {
       this.password = PASSWORD_GENERATED
 
       this.$emit('PasswordGeneratedBinding', PASSWORD_GENERATED)
 
       this.showCurrentPassword = true
+    },
+    resetField () {
+      this.password = ''
+      this.showCurrentPassword = false
     }
   }
 }
