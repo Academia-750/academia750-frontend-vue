@@ -15,7 +15,9 @@ Vue.use(Router)
 
 export const routes = [{
   path: '/',
-  redirect: '/dashboard/analytics'
+  redirect: {
+    name: 'update-my-profile'
+  }
 }, {
   path: '/dashboard/analytics',
   name: 'dashboard-analytics',

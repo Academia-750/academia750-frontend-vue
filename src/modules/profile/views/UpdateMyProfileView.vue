@@ -23,8 +23,8 @@
         <span class="d-none d-sm-inline">Cargar</span>
       </v-btn>
     </v-toolbar>
-    <section class="email-app-top px-2 py-1 d-flex align-center">
-      <validation-observer ref="FormUpdateMyProfile" v-slot="{ invalid }">
+    <validation-observer ref="FormUpdateMyProfile" v-slot="{ invalid }">
+      <section class="px-2 py-2 d-flex align-center">
         <v-row dense >
           <v-col
             cols="12"
@@ -130,8 +130,8 @@
             </v-btn>
           </v-col>
         </v-row>
-      </validation-observer>
-    </section>
+      </section>
+    </validation-observer>
   </div>
 </template>
 
