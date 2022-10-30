@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div title="Generar contraseña segura">
     <v-fade-transition leave-absolute>
       <v-btn color="primary" small @click="generateRandomSecurePassword"> <v-icon small class="mx-1">mdi-sync</v-icon> <span class="d-none d-sm-inline">Generar</span> </v-btn>
     </v-fade-transition>

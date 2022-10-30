@@ -12,6 +12,7 @@
         color="teal darken-2"
         class="white--text"
         @click="loadDataUserProfile"
+        title="Cargar nuevamente mis datos"
       >
         <v-icon
           right
@@ -113,7 +114,7 @@
             <v-spacer></v-spacer>
             <v-btn
               :loading="loadingButtonUnsubscribeSystem"
-              :disabled="disabledButtonUnsubscribeSystem || !canUnsuscribeSystem"
+              :disabled="disabledButtonUnsubscribeSystem || !canUnsubscribeSystem"
               color="red darken-1"
               class="mt-3 white--text"
               :block="activeStyleBlockButton"
@@ -187,7 +188,7 @@ export default {
     activeStyleBlockButton () {
       return this.$vuetify.breakpoint.width <= 600
     },
-    canUnsuscribeSystem () {
+    canUnsubscribeSystem () {
       return !this.get_roles.includes('admin')
     }
   },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div title="Ver reglas semánticas para contraseña segura">
     <v-fade-transition leave-absolute>
       <v-tooltip
         v-model="showTooltipPassword"
