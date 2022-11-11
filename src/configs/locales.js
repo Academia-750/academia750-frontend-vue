@@ -11,13 +11,13 @@ import ja from '../translations/ja'
 import pl from '../translations/pl'
 
 const supported = ['en', 'es', 'pt', 'de', 'fr', 'ar', 'ko', 'ru', 'zh', 'ja', 'pl']
-let locale = 'en'
+const locale = 'es'
 
 try {
   // get browser default language
-  const { 0: browserLang } = navigator.language.split('-')
+  /* const { 0: browserLang } = navigator.language.split('-')
 
-  if (supported.includes(browserLang)) locale = browserLang
+  if (supported.includes(browserLang)) locale = browserLang */
 } catch (e) {
   console.log(e)
 }
@@ -31,12 +31,12 @@ export default {
 
   // availabled locales for user selection
   availableLocales: [
-    /* {
+    {
       code: 'en',
       flag: 'us',
       label: 'English',
       messages: en
-    },  */
+    },
     {
       code: 'es',
       flag: 'es',
