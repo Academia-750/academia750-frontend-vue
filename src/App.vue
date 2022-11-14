@@ -21,7 +21,7 @@
     </v-snackbar>
 
     <!-- Demo customization menu -->
-    <customization-menu />
+    <!-- <customization-menu /> -->
   </v-app>
 </template>
 
