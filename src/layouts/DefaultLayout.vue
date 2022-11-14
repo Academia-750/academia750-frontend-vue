@@ -116,7 +116,7 @@
               <v-btn class="d-block d-sm-none" icon @click="showSearch = true">
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
-              <toolbar-language />
+              <!-- <toolbar-language /> -->
               <!-- <div class="hidden-xs-only mx-1">
                 <toolbar-currency />
               </div> -->
@@ -165,7 +165,7 @@ import logoutActionsMixin from '@/modules/auth/login/resources/logoutActionsMixi
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
 /* import ToolbarApps from '../components/toolbar/ToolbarApps' */
-import ToolbarLanguage from '../components/toolbar/ToolbarLanguage'
+/* import ToolbarLanguage from '../components/toolbar/ToolbarLanguage' */
 /* import ToolbarCurrency from '../components/toolbar/ToolbarCurrency' */
 import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 import ProgressCircularLoadingApp from '@/modules/loading/components/ProgressCircularLoadingApp.vue'
@@ -176,7 +176,7 @@ export default {
     MainMenu,
     ToolbarUser,
     /* ToolbarApps, */
-    ToolbarLanguage,
+    /* ToolbarLanguage, */
     /* ToolbarCurrency, */
     ToolbarNotifications,
     ProgressCircularLoadingApp,
