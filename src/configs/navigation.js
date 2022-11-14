@@ -6,14 +6,23 @@ export default {
   // main navigation - side menu
   menu: [
     {
-      text: '',
+      text: 'Mi cuenta',
       key: '',
       can: '*',
       items: [
         { icon: 'mdi-view-dashboard-outline', key: '', text: 'Perfil de usuario', to: { name: 'update-my-profile' }, can: '*' },
         { icon: 'mdi-lock', key: '', text: 'Cambiar contraeña', to: { name: 'change-password' }, can: '*' }
       ]
-    }/* ,
+    },
+    {
+      text: 'Gestión administrativa',
+      key: '',
+      can: '*',
+      items: [
+        { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'update-my-profile' }, can: 'list-oppositions' }
+      ]
+    }
+    /* ,
     {
       text: 'Apps',
       items: menuApps
