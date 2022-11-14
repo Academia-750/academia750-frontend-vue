@@ -14,7 +14,7 @@ const moduleRoute = [
         name: 'update-my-profile',
         component: UpdateMyProfileViewModule,
         meta: {
-          /* middleware: [authMiddleware] */
+          middleware: [authMiddleware]
         }
       },
       {
@@ -22,7 +22,7 @@ const moduleRoute = [
         name: 'change-password',
         component: ChangePasswordAccountViewModule,
         meta: {
-          /* middleware: [authMiddleware] */
+          middleware: [authMiddleware]
         }
       }
     ]
