@@ -13,6 +13,7 @@ import manageLoading from './helpers/manageLoading'
 import manageTokenAuth from '@/helpers/auth.js'
 import { loadUserAuth, getUserAuth, getRolesUserAuth, getPermissionsUserAuth } from '@/helpers/loadUserAuth'
 import { hasPermissions } from '@/helpers/managePermissions'
+import { hasRoles } from '@/helpers/manageRoles'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -71,6 +72,9 @@ loadUserAuth()
 
 Vue.$can = hasPermissions
 Vue.prototype.$can = hasPermissions
+
+Vue.$hasRoles = hasRoles
+Vue.prototype.$hasRoles = hasRoles
 
 Vue.$userAuth = getUserAuth
 Vue.prototype.$userAuth = getUserAuth

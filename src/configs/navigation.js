@@ -17,7 +17,7 @@ export default {
     {
       text: 'Gestión administrativa',
       key: '',
-      can: ['list-oppositions'],
+      roles: 'admin',
       items: [
         { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'update-my-profile' }, can: 'list-oppositions' }
       ]

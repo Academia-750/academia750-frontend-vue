@@ -1,7 +1,7 @@
 <template>
   <v-list v-if="user" nav dense>
     <div v-for="(item, index) in menu" :key="index">
-      <div v-if="(item.key || item.text) && $can(item.can)" class="pa-1 mt-2 overline">{{ item.key ? $t(item.key) : item.text }}</div>
+      <div v-if="(item.key || item.text) && ( $can(item.can) || $hasRoles(item.roles) )" class="pa-1 mt-2 overline">{{ item.key ? $t(item.key) : item.text }}</div>
       <nav-menu :menu="item.items" />
     </div>
   </v-list>
