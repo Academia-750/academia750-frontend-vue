@@ -1,6 +1,6 @@
 import authMiddleware from '@/middlewares/auth'
 import Module from './module.vue'
-import ManageOppositionsModule from './views/index.vue'
+import ManageOppositionsModule from './views/Oppositions.vue'
 
 const moduleRoute = [
   {

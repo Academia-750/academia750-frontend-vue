@@ -14,6 +14,15 @@ const AuthService = axios.create({
 })
 
 const handleErrorResponse = (error) => {
+  if (error.message === 'Network Error') {
+    activateError({
+      status: 500,
+      message: 'Ha ocurrido un error en la aplicacion. Por favor intente más tarde.'
+    })
+
+    return Promise.reject(error)
+  }
+
   const isNotValidationErrorOrRejectAuthOrRejectAttemps =
     error.response.status !== 401 &&
     error.response.status !== 422

@@ -19,7 +19,7 @@ export default {
       key: '',
       roles: 'admin',
       items: [
-        { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'update-my-profile' }, can: 'list-oppositions' }
+        { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'manage-oppositions' }, can: 'list-oppositions' }
       ]
     }
     /* ,
