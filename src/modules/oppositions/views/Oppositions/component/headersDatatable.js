@@ -13,7 +13,7 @@ export default {
         {
           position: 2,
           text: 'Periodo',
-          value: 'calories',
+          value: 'period',
           show: true
         },
         {

@@ -25,7 +25,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('oppositionsService', ['oppositions']),
+    ...mapState('oppositionsService', ['itemsDatatable', 'stateLoadingItems']),
     ...footerProps
   },
   mounted () {

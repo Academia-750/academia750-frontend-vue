@@ -1,8 +1,9 @@
 <template>
   <v-card-text>
     <v-data-table
+      :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
-      :items="oppositions"
+      :items="itemsDatatable"
       item-key="id"
       no-data-text="No hay datos disponibles"
       :items-per-page="5"
