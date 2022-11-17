@@ -32,7 +32,8 @@ export default {
       const isErrorServerOrApp =
         !this.errorResponse?.status ||
         this.errorResponse?.status === 500 ||
-        this.errorResponse?.status === 0
+        this.errorResponse?.status === 0 ||
+        this.errorResponse?.status === 400
 
       const isNotErrorClientOrAnotherInvalidError =
         this.errorResponse?.status !== 403 ||

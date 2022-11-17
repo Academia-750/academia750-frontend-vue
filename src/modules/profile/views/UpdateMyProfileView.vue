@@ -11,8 +11,8 @@
       <v-btn
         color="teal darken-2"
         class="white--text"
-        @click="loadDataUserProfile"
         title="Cargar nuevamente mis datos"
+        @click="loadDataUserProfile"
       >
         <v-icon
           right
@@ -283,6 +283,9 @@ export default {
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormUpdateMyProfile']['setErrors'](errorResponse)
+      this.loadingButtonUpdateProfile = true
+      this.disabledButtonUpdateProfile = true
+      this.$loadingApp.disabledLoadingProgressLinear()
     },
     loadDataUserProfile () {
       const { dni, first_name, last_name, phone, email } = this.user.attributes

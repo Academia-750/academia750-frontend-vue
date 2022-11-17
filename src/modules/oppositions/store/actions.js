@@ -25,7 +25,7 @@ const mapMetaInformationPagination = (response) => {
 const getOppositions = async ({ commit }, config) => {
 
   try {
-    console.log(config)
+
     commit('SET_INFORMATION_META', {
       current_page: 1,
       from: 1,
@@ -58,6 +58,20 @@ const getOppositions = async ({ commit }, config) => {
   }
 }
 
+const createOpposition = async (optionsVuex, options) => {
+  try {
+
+    const response = await OppositionRepository.create(options.data)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
-  getOppositions
+  getOppositions,
+  createOpposition
 }
