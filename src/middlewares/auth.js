@@ -3,8 +3,8 @@ import Cookies from 'js-cookie'
 import { $get_token_auth } from '@/helpers/auth'
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
-import { activateError } from '@/helpers/manageErrors'
-import store from '@/store'
+import ResourceService from '@/services/ResourceService'
+//import store from '@/store'
 
 export default function ({ next }) {
 
@@ -14,8 +14,12 @@ export default function ({ next }) {
         name: 'login'
       })
     }
-    ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`
-    ProfileAuthService.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`
+
+    const TOKEN_AUTH = `Bearer ${$get_token_auth()}`
+
+    ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = TOKEN_AUTH
+    ProfileAuthService.defaults.headers.common['Authorization'] = TOKEN_AUTH
+    ResourceService.defaults.headers.common['Authorization'] = TOKEN_AUTH
 
     return next()
   } catch (error) {

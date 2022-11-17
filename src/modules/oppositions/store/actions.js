@@ -6,7 +6,8 @@ const getOppositions = async ({ commit }, config) => {
     const response = await OppositionRepository.getAll(config)
 
     if (response) {
-      commit('set_user', response.data.data)
+      console.trace(response)
+      //commit('set_user', response.data.data)
     }
 
     return Promise.resolve(response)
