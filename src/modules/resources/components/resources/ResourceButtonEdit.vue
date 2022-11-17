@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import buttonsActionsDatatable from '@/modules/resources/mixins/buttonsActionsDatatable'
+import buttonsActionsDatatable from '@/modules/resources/mixins/componentButtonsCrud'
 
 export default {
   name: 'ResourceButtonEdit',

@@ -17,3 +17,7 @@
 .v-data-table>.v-data-table__wrapper .v-data-table__mobile-row {
   border-bottom: 2px solid #ededed;
 }
+
+.theme--light.v-divider {
+  border-color: rgba(0, 0, 0, 0.6);
+}

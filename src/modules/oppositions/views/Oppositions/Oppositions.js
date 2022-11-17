@@ -1,10 +1,13 @@
 import { mapState } from 'vuex'
+
+import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
+
 import headersOppositionsTable from './component/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import footerProps from './component/footerProps'
 
 export default {
-  mixins: [headersOppositionsTable, computedDatatable],
+  mixins: [headersOppositionsTable, computedDatatable, componentButtonsCrud],
   components: {
     ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
     ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete')
