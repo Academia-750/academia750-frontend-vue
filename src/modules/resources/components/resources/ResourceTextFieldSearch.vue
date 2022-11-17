@@ -9,6 +9,7 @@
       solo
       filled
       outlined
+      @keyup.enter="emitSearchWord"
     >
       <template v-slot:append>
         <v-icon
@@ -44,19 +45,29 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      searchWordText: ''
+    }
+  },
   computed: {
     manageSearchWord: {
       get () {
-        return this.searchWord
+        return this.searchWordText
       },
       set (value) {
-        this.emitSearchWord(value)
+        this.searchWordText = value
       }
     }
   },
+  watch: {
+    searchWord (value) {
+      this.searchWordText = value
+    }
+  },
   methods: {
-    emitSearchWord (value) {
-      this.$emit('emitSearchWord', value)
+    emitSearchWord () {
+      this.$emit('emitSearchWord', this.searchWordText)
     }
   }
 }

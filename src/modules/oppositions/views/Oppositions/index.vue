@@ -4,11 +4,14 @@
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
       :items="itemsDatatable"
+      :options.sync="optionsDatatable"
       item-key="id"
+      multi-sort
       no-data-text="No hay datos disponibles"
       :items-per-page="5"
       :mobile-breakpoint="600"
       class="elevation-1"
+      :server-items-length="informationMeta.total"
       :footer-props="get_footer_props"
     >
       <template v-slot:top>
@@ -30,7 +33,7 @@
             <resource-button-add/>
           </div>
         </v-toolbar>
-        <resource-text-field-search @emitSearchWord="searchWord = $event"/>
+        <resource-text-field-search @emitSearchWord="searchFieldExecuted"/>
       </template>
       <template v-slot:no-data>
         <resource-banner-no-data-datatable/>

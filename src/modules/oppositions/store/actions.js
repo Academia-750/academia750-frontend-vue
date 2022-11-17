@@ -11,9 +11,21 @@ const mapItemsDatatableFromApi = (itemsApi) => {
   })
 }
 
+const mapMetaInformationPagination = (response) => {
+  return {
+    current_page: response.data.meta.current_page,
+    from: response.data.meta.from,
+    last_page: response.data.meta.last_page,
+    per_page: response.data.meta.per_page,
+    to: response.data.meta.to,
+    total: response.data.meta.total
+  }
+}
+
 const getOppositions = async ({ commit }, config) => {
 
   try {
+    console.log(config)
     commit('SET_INFORMATION_META', {
       current_page: 1,
       from: 1,
@@ -29,10 +41,11 @@ const getOppositions = async ({ commit }, config) => {
     const response = await OppositionRepository.getAll(config)
 
     if (response) {
-      console.trace(response)
+      //console.trace(response)
 
       commit('SET_ITEMS_DATATABLE', mapItemsDatatableFromApi(response.data.data))
       commit('SET_STATUS_LOADING_ITEMS', false)
+      commit('SET_INFORMATION_META', mapMetaInformationPagination(response))
 
     }
 

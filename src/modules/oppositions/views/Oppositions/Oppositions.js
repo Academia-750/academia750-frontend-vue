@@ -4,10 +4,11 @@ import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCru
 
 import headersOppositionsTable from './component/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
+import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import footerProps from './component/footerProps'
 
 export default {
-  mixins: [headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
   components: {
     ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
     ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
@@ -21,20 +22,35 @@ export default {
   },
   data () {
     return {
-      searchWord: ''
+      //namesRelationshipsIncludeRequest: 'topics'
     }
   },
   computed: {
-    ...mapState('oppositionsService', ['itemsDatatable', 'stateLoadingItems']),
+    ...mapState('oppositionsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
     ...footerProps
   },
   mounted () {
-    this.getOppositions()
+    this.getOppositions({
+      params: this.buildQueryParamsRequest()
+    })
+  },
+  watch: {
+    optionsDatatable: {
+      handler () {
+        this.getOppositions({
+          params: this.buildQueryParamsRequest()
+        })
+      },
+      deep: true
+    }
   },
   methods: {
     ...mapActions('oppositionsService', ['getOppositions']),
-    searchRecordsDatatableMethod () {
-      console.log('searchRecordsDatatableMethod')
+    searchFieldExecuted ($event) {
+      this.searchWord = $event
+      this.getOppositions({
+        params: this.buildQueryParamsRequest()
+      })
     }
   },
   head: {
