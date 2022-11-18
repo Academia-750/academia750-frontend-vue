@@ -108,10 +108,23 @@ const deleteOpposition = async (_, options) => {
   }
 }
 
+const fetchSyllabusOpposition = async (_, options) => {
+  try {
+    const response = await OppositionRepository.getSyllabus(options.id, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getOppositions,
   createOpposition,
   fetchOpposition,
   updateOpposition,
-  deleteOpposition
+  deleteOpposition,
+  fetchSyllabusOpposition
 }

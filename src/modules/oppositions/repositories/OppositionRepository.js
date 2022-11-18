@@ -18,6 +18,9 @@ export default {
   delete(id, config = {}) {
     return ResourceService.delete(`${resource}/delete/${id}`, config)
   },
+  getSyllabus(opposition_id, config = {}) {
+    return ResourceService.get(`${resource}/${opposition_id}/relationship/syllabus`, config)
+  },
   actionMassiveSelection(data, config = {}) {
     return ResourceService.post(`${resource}/mass-selection-action`, data, config)
   },

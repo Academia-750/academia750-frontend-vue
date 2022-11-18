@@ -3,6 +3,7 @@ import Module from './module.vue'
 import ManageOppositionsModule from './views/Oppositions/'
 import CreateOppositionView from './views/CreateOpposition/index.vue'
 import UpdateOppositionView from './views/UpdateOpposition/index.vue'
+import SyllabusOppositionView from './views/SyllabusOpposition/index.vue'
 
 const shortcutRoutes = [
   {
@@ -59,6 +60,14 @@ const moduleRoute = [
             path: 'update/:id',
             name: 'update-opposition',
             component: UpdateOppositionView,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/syllabus',
+            name: 'syllabus-opposition',
+            component: SyllabusOppositionView,
             meta: {
               middleware: [authMiddleware]
             }
