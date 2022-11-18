@@ -5,6 +5,7 @@ import login from '@/modules/auth/login'
 import profile from '@/modules/profile'
 import oppositions from '@/modules/oppositions'
 import subtopics from '@/modules/subtopics'
+import topics from '@/modules/topics'
 
 registerModules({
   errors,
@@ -12,5 +13,6 @@ registerModules({
   login,
   profile,
   oppositions,
-  subtopics
+  subtopics,
+  topics
 })
