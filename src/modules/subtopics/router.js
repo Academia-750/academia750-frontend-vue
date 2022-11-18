@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageSubtopicsModule from './views/Subtopics'
+import CreateSubtopicModule from './views/CreateSubtopic'
 
 const moduleRoute = [
   {
@@ -17,6 +18,14 @@ const moduleRoute = [
             path: 'list',
             name: 'manage-subtopics',
             component: ManageSubtopicsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'create',
+            name: 'create-subtopic',
+            component: CreateSubtopicModule,
             meta: {
               middleware: [authMiddleware]
             }

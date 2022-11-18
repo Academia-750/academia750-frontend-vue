@@ -30,7 +30,7 @@
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-opposition' }"/>
+            <resource-button-add :config-route="{ name: 'create-subtopic' }"/>
           </div>
         </v-toolbar>
         <resource-text-field-search

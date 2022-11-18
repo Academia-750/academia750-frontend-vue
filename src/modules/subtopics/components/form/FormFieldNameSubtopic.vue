@@ -3,12 +3,12 @@
     v-slot="{ errors }"
     vid="name"
     mode="aggressive"
-    name="Nombre de Oposicion"
+    name="Nombre de Subtema"
     :rules="rules"
   >
     <v-text-field
-      ref="name-opposition-field"
-      v-model="name_opposition"
+      ref="name-subtopic-field"
+      v-model="name_subtopic"
       :counter="100"
       label="Nombre"
       placeholder="Escribe el nombre"
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'FormFieldNameOpposition',
+  name: 'FormFieldNameSubtopic',
   props: {
     isDisabled: {
       type: Boolean,
@@ -43,23 +43,23 @@ export default {
   },
   data() {
     return {
-      name_opposition: ''
+      name_subtopic: ''
     }
   },
   watch: {
-    name_opposition(value) {
-      this.$emit('NameOppositionBinding', value)
+    name_subtopic(value) {
+      this.$emit('NameSubtopicBinding', value)
     }
   },
   methods: {
     resetAccessKey() {
-      this.name_opposition = ''
+      this.name_subtopic = ''
     },
     onFocusAccesKeyField() {
-      this.$refs['name-opposition-field']['focus']()
+      this.$refs['name-subtopic-field']['focus']()
     },
     onBlurAccesKeyField() {
-      this.$refs['name-opposition-field']['blur']()
+      this.$refs['name-subtopic-field']['blur']()
     }
   }
 }
