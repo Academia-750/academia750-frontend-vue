@@ -58,7 +58,7 @@ const getOppositions = async ({ commit }, config) => {
   }
 }
 
-const createOpposition = async (optionsVuex, options) => {
+const createOpposition = async (_, options) => {
   try {
 
     const response = await OppositionRepository.create(options.data)
@@ -71,7 +71,34 @@ const createOpposition = async (optionsVuex, options) => {
   }
 }
 
+const fetchOpposition = async (_, options) => {
+
+  try {
+    const response = await OppositionRepository.get(options.id, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const updateOpposition = async (_, options) => {
+  try {
+    const response = await OppositionRepository.update(options.id, options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getOppositions,
-  createOpposition
+  createOpposition,
+  fetchOpposition,
+  updateOpposition
 }

@@ -38,10 +38,10 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable/>
       </template>
-      <template v-slot:[`item.actions-resource`]>
+      <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            :config-route="{ name: 'update-my-profile' }"
+            :config-route="{ name: 'update-opposition', params: { id: item.id } }"
           />
           <resource-button-delete
             :config-route="{ name: 'change-password' }"

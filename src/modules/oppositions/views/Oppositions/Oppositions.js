@@ -30,9 +30,9 @@ export default {
     ...footerProps
   },
   mounted () {
-    this.getOppositions({
+    /* this.getOppositions({
       params: this.buildQueryParamsRequest()
-    })
+    }) */
   },
   watch: {
     optionsDatatable: {

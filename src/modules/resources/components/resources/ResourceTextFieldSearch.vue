@@ -9,6 +9,7 @@
       solo
       filled
       outlined
+      clearable
       @keyup.enter="emitSearchWord"
     >
       <template v-slot:append>
