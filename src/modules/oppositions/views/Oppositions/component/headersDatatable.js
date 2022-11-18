@@ -23,6 +23,14 @@ export default {
           align: 'center',
           value: 'actions-resource',
           show: true
+        },
+        {
+          position: 4,
+          sortable: false,
+          text: 'Temario',
+          align: 'center',
+          value: 'syllabus',
+          show: true
         }
       ]
     }

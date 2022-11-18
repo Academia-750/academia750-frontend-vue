@@ -52,6 +52,9 @@
 
         </div>
       </template>
+      <template v-slot:[`item.syllabus`]="{ item }">
+        <button-datatable-syllabus :config-route="{ name: 'update-opposition', params: { id: item.id } }"/>
+      </template>
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
