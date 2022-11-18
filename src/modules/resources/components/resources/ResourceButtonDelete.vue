@@ -6,6 +6,7 @@
       :x-small="!can_rendering_button_small"
       :small="can_rendering_button_small"
       color="red"
+      @click="$emit('actionConfirmShowDialogDelete')"
     >
       <span >Eliminar</span>
       <v-icon
@@ -26,19 +27,6 @@ import buttonsActionsDatatable from '@/modules/resources/mixins/componentButtons
 
 export default {
   name: 'ResourceButtonDelete',
-  mixins: [buttonsActionsDatatable],
-  props: {
-    configRoute: {
-      type: Object,
-      required: true
-    }
-  },
-  methods: {
-    pushRouteDeleteView () {
-      this.$router.push(
-        this.configRoute
-      )
-    }
-  }
+  mixins: [buttonsActionsDatatable]
 }
 </script>

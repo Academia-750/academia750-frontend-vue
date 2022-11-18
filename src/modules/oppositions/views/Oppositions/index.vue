@@ -33,7 +33,10 @@
             <resource-button-add :config-route="{ name: 'create-opposition' }"/>
           </div>
         </v-toolbar>
-        <resource-text-field-search @emitSearchWord="searchFieldExecuted"/>
+        <resource-text-field-search
+          ref="ResourceTextFieldSearch"
+          @emitSearchWord="searchFieldExecuted"
+        />
       </template>
       <template v-slot:no-data>
         <resource-banner-no-data-datatable/>
@@ -44,11 +47,23 @@
             :config-route="{ name: 'update-opposition', params: { id: item.id } }"
           />
           <resource-button-delete
-            :config-route="{ name: 'change-password' }"
+            @actionConfirmShowDialogDelete="deleteOppositionConfirm(item)"
           />
+
         </div>
       </template>
     </v-data-table>
+    <resource-dialog-confirm-delete
+      ref="dialogConfirmDeleteAction"
+      title="¿Estás seguro de eliminar la Oposición?"
+      @actionDelete="deleteOppositionAction"
+    >
+      <template #identifier-record>
+        <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
+          <span class="mr-1 font-italic subtitle-1">Oposicion:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete.name }}</span>
+        </div>
+      </template>
+    </resource-dialog-confirm-delete>
   </v-card-text>
 </template>
 

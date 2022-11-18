@@ -96,9 +96,22 @@ const updateOpposition = async (_, options) => {
   }
 }
 
+const deleteOpposition = async (_, options) => {
+  try {
+    const response = await OppositionRepository.delete(options.id, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getOppositions,
   createOpposition,
   fetchOpposition,
-  updateOpposition
+  updateOpposition,
+  deleteOpposition
 }

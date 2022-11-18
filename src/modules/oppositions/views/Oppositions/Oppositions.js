@@ -18,11 +18,13 @@ export default {
     ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle')
+    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
+    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
   },
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
+      currentItemsSelectedForDelete: null
     }
   },
   computed: {
@@ -45,12 +47,44 @@ export default {
     }
   },
   methods: {
-    ...mapActions('oppositionsService', ['getOppositions']),
+    ...mapActions('oppositionsService', ['getOppositions', 'deleteOpposition']),
     searchFieldExecuted ($event) {
       this.searchWord = $event
       this.getOppositions({
         params: this.buildQueryParamsRequest()
       })
+    },
+    deleteOppositionConfirm (item) {
+      this.currentItemsSelectedForDelete = item
+      this.$refs['dialogConfirmDeleteAction'].showDialog = true
+    },
+    async deleteOppositionAction () {
+      if (this.currentItemsSelectedForDelete === null || this.currentItemsSelectedForDelete === undefined) {
+        return
+      }
+
+      try {
+        await this.deleteOpposition({
+          id: this.currentItemsSelectedForDelete.id,
+          config: {}
+        })
+
+        this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: 'La oposición ha sido eliminada con éxito.',
+          timer: 3000
+        })
+
+        this.$refs['ResourceTextFieldSearch'].searchWordText = ''
+        this.searchWord = ''
+
+        this.getOppositions({
+          params: this.buildQueryParamsRequest()
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   head: {

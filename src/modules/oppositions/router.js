@@ -71,8 +71,6 @@ const moduleRoute = [
 
 ]
 
-console.log(moduleRoute)
-
 export default (router) => {
   router.addRoutes(moduleRoute)
 }
