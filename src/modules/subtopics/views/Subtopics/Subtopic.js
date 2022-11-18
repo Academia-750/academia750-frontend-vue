@@ -72,7 +72,7 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'La oposición ha sido eliminada con éxito.',
+          title: 'El subtema ha sido eliminado con éxito.',
           timer: 3000
         })
 
