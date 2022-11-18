@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageSubtopicsModule from './views/Subtopics'
 import CreateSubtopicModule from './views/CreateSubtopic'
+import UpdateSubtopicModule from './views/UpdateSubtopic'
 
 const moduleRoute = [
   {
@@ -26,6 +27,14 @@ const moduleRoute = [
             path: 'create',
             name: 'create-subtopic',
             component: CreateSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'update/:id',
+            name: 'update-subtopic',
+            component: UpdateSubtopicModule,
             meta: {
               middleware: [authMiddleware]
             }

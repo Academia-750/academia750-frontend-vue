@@ -93,7 +93,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Crear Oposicion'
+      inner: 'Crear Subtema'
     }
   }
 }
