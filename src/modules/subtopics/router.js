@@ -4,6 +4,23 @@ import ManageSubtopicsModule from './views/Subtopics'
 import CreateSubtopicModule from './views/CreateSubtopic'
 import UpdateSubtopicModule from './views/UpdateSubtopic'
 
+const shortcutRoutes = [
+  {
+    path: 'subtemas',
+    redirect: { name: 'manage-subtopics' },
+    meta: {
+      middleware: [authMiddleware]
+    }
+  },
+  {
+    path: 'subtemas/crear',
+    redirect: { name: 'create-subtopic' },
+    meta: {
+      middleware: [authMiddleware]
+    }
+  }
+]
+
 const moduleRoute = [
   {
     path: '/',
@@ -15,6 +32,13 @@ const moduleRoute = [
         component: Module,
         redirect: { name: 'manage-subtopics' },
         children: [
+          {
+            path: 'update',
+            redirect: { name: 'manage-subtopics' },
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
           {
             path: 'list',
             name: 'manage-subtopics',
@@ -40,7 +64,8 @@ const moduleRoute = [
             }
           }
         ]
-      }
+      },
+      ...shortcutRoutes
     ]
   }
 ]

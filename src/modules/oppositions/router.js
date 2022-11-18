@@ -19,14 +19,8 @@ const shortcutRoutes = [
     meta: {
       middleware: [authMiddleware]
     }
-  },
-  {
-    path: 'update/',
-    redirect: { name: 'manage-oppositions' },
-    meta: {
-      middleware: [authMiddleware]
-    }
   }
+
 ]
 
 const moduleRoute = [
@@ -40,6 +34,13 @@ const moduleRoute = [
         component: Module,
         redirect: { name: 'manage-oppositions' },
         children: [
+          {
+            path: 'update',
+            redirect: { name: 'manage-oppositions' },
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
           {
             path: 'list',
             name: 'manage-oppositions',
