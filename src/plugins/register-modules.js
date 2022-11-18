@@ -4,11 +4,13 @@ import loading from '@/modules/loading'
 import login from '@/modules/auth/login'
 import profile from '@/modules/profile'
 import oppositions from '@/modules/oppositions'
+import subtopics from '@/modules/subtopics'
 
 registerModules({
   errors,
   loading,
   login,
   profile,
-  oppositions
+  oppositions,
+  subtopics
 })
