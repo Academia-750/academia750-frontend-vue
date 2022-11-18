@@ -5,8 +5,9 @@
       :can-rendering-header="$vuetify.breakpoint.width < 620"
     />
     <resource-header-crud-title
+      v-if="opposition !== null"
       :text-header="'Oposicion: ' + opposition.name"
-      :can-rendering-header="opposition !== null"
+      :can-rendering-header="true"
     />
     <v-toolbar
       flat
