@@ -107,10 +107,23 @@ const deleteTopic = async (_, options) => {
   }
 }
 
+const fetchTopicGroups = async (_, options) => {
+  try {
+    const response = await TopicRepository.fetchTopicsGroups(options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getTopics,
   createTopic,
   fetchTopic,
   updateTopic,
-  deleteTopic
+  deleteTopic,
+  fetchTopicGroups
 }

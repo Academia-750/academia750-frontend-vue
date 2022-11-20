@@ -1,15 +1,16 @@
 <template>
   <ValidationProvider
     v-slot="{ errors }"
+    tag="div"
     vid="name"
     mode="aggressive"
-    name="Nombre de Subtema"
+    name="Nombre de Tema"
     :rules="rules"
   >
     <v-text-field
-      ref="name-subtopic-field"
-      v-model="name_subtopic"
-      :counter="100"
+      ref="name-topic-field"
+      v-model="name_topic"
+      :counter="255"
       label="Nombre"
       placeholder="Escribe el nombre"
       :error-messages="errors"
@@ -43,23 +44,23 @@ export default {
   },
   data() {
     return {
-      name_subtopic: ''
+      name_topic: ''
     }
   },
   watch: {
-    name_subtopic(value) {
-      this.$emit('NameSubtopicBinding', value)
+    name_topic(value) {
+      this.$emit('NameTopicBinding', value)
     }
   },
   methods: {
     resetAccessKey() {
-      this.name_subtopic = ''
+      this.name_topic = ''
     },
     onFocusAccesKeyField() {
-      this.$refs['name-subtopic-field']['focus']()
+      this.$refs['name-topic-field']['focus']()
     },
     onBlurAccesKeyField() {
-      this.$refs['name-subtopic-field']['blur']()
+      this.$refs['name-topic-field']['blur']()
     }
   }
 }

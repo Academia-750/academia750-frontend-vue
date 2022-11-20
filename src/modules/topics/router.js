@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageTopicsModule from '@/modules/topics/views/Topics'
+import CreateTopicModule from '@/modules/topics/views/CreateTopic'
 
 const shortcutRoutes = [
   {
@@ -44,18 +45,18 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          },
           {
             path: 'create',
-            name: 'create-subtopic',
-            component: CreateSubtopicModule,
+            name: 'create-topic',
+            component: CreateTopicModule,
             meta: {
               middleware: [authMiddleware]
             }
-          },
+          }/* ,
           {
             path: 'update/:id',
-            name: 'update-subtopic',
+            name: 'update-topic',
             component: UpdateSubtopicModule,
             meta: {
               middleware: [authMiddleware]

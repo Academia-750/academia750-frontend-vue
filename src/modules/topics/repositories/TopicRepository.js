@@ -21,6 +21,9 @@ export default {
   actionMassiveSelection(data, config = {}) {
     return ResourceService.post(`${resource}/mass-selection-action`, data, config)
   },
+  fetchTopicsGroups (config = {}) {
+    return ResourceService.get('topic-groups', config)
+  },
   export(data, config = {}) {
     return ResourceService.post(`${resource}/export`, data, config)
   },

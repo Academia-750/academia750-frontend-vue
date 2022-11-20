@@ -26,7 +26,7 @@
             >
               <form-field-name-subtopic
                 ref="nameSubtopicInputComponent"
-                rules="required|max:100"
+                rules="required|max:255"
                 @NameSubtopicBinding="form.nameSubtopic = $event"
               />
             </v-col>
