@@ -14,10 +14,6 @@ export default {
       disabledButtonCreateTopic: false,
       form: {
         nameTopic: ''
-      },
-      errorTopicGroupSelected: {
-        show: false,
-        message: null
       }
     }
   },
