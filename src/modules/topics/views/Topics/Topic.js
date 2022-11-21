@@ -55,6 +55,17 @@ export default {
       })
     },
     deleteTopicConfirm (item) {
+      if (item.has_subtopics) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: `¡Este tema '${item.name}' no se puede eliminar por que cuenta con subtemas!`,
+          timer: 6000
+        })
+
+        return
+      }
+
       this.currentItemsSelectedForDelete = item
       this.$refs['dialogConfirmDeleteAction'].showDialog = true
     },

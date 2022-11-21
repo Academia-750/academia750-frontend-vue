@@ -16,11 +16,10 @@
       :loading="loading"
       :error-messages="errors"
       small-chips
-      solo
       clearable
       item-text="text"
       item-value="value"
-      label="Grupo de temas"
+      label="Grupo de tema"
       return-object
     ></v-autocomplete>
   </ValidationProvider>

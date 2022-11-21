@@ -5,6 +5,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
     return {
       id: record.id,
       name: record.attributes.name,
+      has_subtopics: record.meta.has_subtopics,
       'created-at': record.attributes.created_at
     }
   })
