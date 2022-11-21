@@ -1,11 +1,13 @@
 <template>
   <v-card-text>
     <v-data-table
+      v-model="selectedItems"
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
+      show-select
       multi-sort
       no-data-text="No hay datos disponibles"
       :items-per-page="5"
@@ -27,11 +29,11 @@
         >
           <resource-button-go-back-router/>
           <resource-title-toolbar-datatable title-text="Gestión de alumnos" />
-          <resource-divider-title-datatable />
+          <!-- <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add :config-route="{ name: 'create-topic' }"/>
-          </div>
+          </div> -->
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
