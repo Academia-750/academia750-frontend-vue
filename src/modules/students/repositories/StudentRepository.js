@@ -24,6 +24,12 @@ export default {
   fetchTopicsGroups (config = {}) {
     return ResourceService.get('topic-groups', config)
   },
+  disableAccount(id, data, config = {}) {
+    return ResourceService.post(`${resource}/disable-account/${id}`, data, config)
+  },
+  enableAccount(id, data, config = {}) {
+    return ResourceService.post(`${resource}/enable-account/${id}`, data, config)
+  },
   export(data, config = {}) {
     return ResourceService.post(`${resource}/export`, data, config)
   },

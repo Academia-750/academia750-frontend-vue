@@ -4,8 +4,11 @@ const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
     return {
       id: record.id,
-      name: record.attributes.name,
-      has_subtopics: record.meta.has_subtopics,
+      dni: record.attributes.dni,
+      name: record.attributes.first_name,
+      'last-name': record.attributes.last_name,
+      phone: record.attributes.phone,
+      email: record.attributes.email,
       'created-at': record.attributes.created_at
     }
   })
@@ -22,7 +25,7 @@ const mapMetaInformationPagination = (response) => {
   }
 }
 
-const getTopics = async ({ commit }, config) => {
+const getStudents = async ({ commit }, config) => {
 
   try {
 
@@ -58,7 +61,7 @@ const getTopics = async ({ commit }, config) => {
   }
 }
 
-const createTopic = async (_, options) => {
+const createStudent = async (_, options) => {
   try {
 
     const response = await StudentRepository.create(options.data)
@@ -71,7 +74,7 @@ const createTopic = async (_, options) => {
   }
 }
 
-const fetchTopic = async (_, options) => {
+const fetchStudent = async (_, options) => {
 
   try {
     const response = await StudentRepository.get(options.id, options.config)
@@ -84,7 +87,7 @@ const fetchTopic = async (_, options) => {
   }
 }
 
-const updateTopic = async (_, options) => {
+const updateStudent = async (_, options) => {
   try {
     const response = await StudentRepository.update(options.id, options.data, options.config)
 
@@ -96,7 +99,7 @@ const updateTopic = async (_, options) => {
   }
 }
 
-const deleteTopic = async (_, options) => {
+const deleteStudent = async (_, options) => {
   try {
     const response = await StudentRepository.delete(options.id, options.config)
 
@@ -108,9 +111,9 @@ const deleteTopic = async (_, options) => {
   }
 }
 
-const fetchTopicGroups = async (_, options) => {
+const fetchStudentGroups = async (_, options) => {
   try {
-    const response = await StudentRepository.fetchTopicsGroups(options.config)
+    const response = await StudentRepository.fetchStudentsGroups(options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -121,10 +124,10 @@ const fetchTopicGroups = async (_, options) => {
 }
 
 export default {
-  getTopics,
-  createTopic,
-  fetchTopic,
-  updateTopic,
-  deleteTopic,
-  fetchTopicGroups
+  getStudents,
+  createStudent,
+  fetchStudent,
+  updateStudent,
+  deleteStudent,
+  fetchStudentGroups
 }

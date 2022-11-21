@@ -9,7 +9,7 @@
       multi-sort
       no-data-text="No hay datos disponibles"
       :items-per-page="5"
-      :mobile-breakpoint="600"
+      :mobile-breakpoint="700"
       class="elevation-1"
       :server-items-length="informationMeta.total"
       :footer-props="get_footer_props"
@@ -17,7 +17,7 @@
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <resource-header-crud-title
-          text-header="Gestión de temas"
+          text-header="Gestión de alumnos"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar
@@ -26,7 +26,7 @@
           outlined
         >
           <resource-button-go-back-router/>
-          <resource-title-toolbar-datatable title-text="Gestión de temas" />
+          <resource-title-toolbar-datatable title-text="Gestión de alumnos" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
@@ -46,17 +46,13 @@
           <resource-button-edit
             :config-route="{ name: 'update-topic', params: { id: item.id } }"
           />
-          <resource-button-delete
-            @actionConfirmShowDialogDelete="deleteTopicConfirm(item)"
-          />
-
         </div>
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
       title="¿Estás seguro de eliminar el Tema?"
-      @actionDelete="deleteTopicAction"
+      @actionDelete="deleteStudentAction"
     >
       <template #identifier-record>
         <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
@@ -67,5 +63,5 @@
   </v-card-text>
 </template>
 
-<script src="./Topic.js"></script>
-<style src="./Topic.css"></style>
+<script src="./StudentsComponent.js"></script>
+<style src="./StudentsComponent.css"></style>

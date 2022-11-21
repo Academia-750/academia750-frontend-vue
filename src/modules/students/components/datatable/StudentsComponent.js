@@ -21,6 +21,12 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
   },
+  props: {
+    stateAccount: {
+      type: String,
+      default: 'enable'
+    }
+  },
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
@@ -28,54 +34,56 @@ export default {
     }
   },
   computed: {
-    ...mapState('topicsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
+    ...mapState('studentsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
     ...footerProps
   },
-  mounted () {
-    /* this.getTopics({
-      params: this.buildQueryParamsRequest()
-    }) */
-  },
+  /* mounted () {
+    this.getStudents({
+      params: this.getParamsUrlApi()
+    })
+  }, */
   watch: {
     optionsDatatable: {
       handler () {
-        this.getTopics({
-          params: this.buildQueryParamsRequest()
+        this.getStudents({
+          params: this.getParamsUrlApi()
         })
       },
       deep: true
     }
   },
   methods: {
-    ...mapActions('topicsService', ['getTopics', 'deleteTopic']),
-    searchFieldExecuted ($event) {
-      this.searchWord = $event
-      this.getTopics({
-        params: this.buildQueryParamsRequest()
+    ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
+    fetchInitialData () {
+      this.getStudents({
+        params: this.getParamsUrlApi()
       })
     },
-    deleteTopicConfirm (item) {
-      if (item.has_subtopics) {
-        this.$swal.fire({
-          icon: 'error',
-          toast: true,
-          title: `¡Este tema '${item.name}' no se puede eliminar por que cuenta con subtemas!`,
-          timer: 6000
-        })
+    getParamsUrlApi () {
+      const urlParams = this.buildQueryParamsRequest()
 
-        return
-      }
+      urlParams['filter[role]'] = 'student'
+      urlParams['filter[state-account]'] = this.stateAccount
 
+      return urlParams
+    },
+    searchFieldExecuted ($event) {
+      this.searchWord = $event
+      this.getStudents({
+        params: this.getParamsUrlApi()
+      })
+    },
+    deleteStudentConfirm (item) {
       this.currentItemsSelectedForDelete = item
       this.$refs['dialogConfirmDeleteAction'].showDialog = true
     },
-    async deleteTopicAction () {
+    async deleteStudentAction () {
       if (this.currentItemsSelectedForDelete === null || this.currentItemsSelectedForDelete === undefined) {
         return
       }
 
       try {
-        await this.deleteTopic({
+        await this.deleteStudent({
           id: this.currentItemsSelectedForDelete.id,
           config: {}
         })
@@ -83,24 +91,19 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'El tema ha sido eliminado con éxito.',
+          title: 'El alumno ha sido eliminado con éxito.',
           timer: 3000
         })
 
         this.$refs['ResourceTextFieldSearch'].searchWordText = ''
         this.searchWord = ''
 
-        this.getTopics({
-          params: this.buildQueryParamsRequest()
+        this.getStudents({
+          params: this.getParamsUrlApi()
         })
       } catch (error) {
         console.log(error)
       }
-    }
-  },
-  head: {
-    title: {
-      inner: 'Gestion de temas'
     }
   }
 }
