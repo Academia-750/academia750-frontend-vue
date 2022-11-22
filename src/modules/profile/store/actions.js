@@ -33,7 +33,6 @@ const UpdateProfileAction = async ({ commit }, options) => {
     const response = await ProfileRepository.updateDataMyProfile(options.data, options.config)
 
     if (response) {
-      console.log(response.data.data)
       commit('set_user', response.data.data)
     }
 

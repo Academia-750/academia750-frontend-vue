@@ -11,7 +11,7 @@ export default {
       can: '*',
       items: [
         { icon: 'mdi-view-dashboard-outline', key: '', text: 'Perfil de usuario', to: { name: 'update-my-profile' }, can: '*' },
-        { icon: 'mdi-lock', key: '', text: 'Cambiar contraeña', to: { name: 'change-password' }, can: '*' }
+        { icon: 'mdi-lock', key: '', text: 'Cambiar contraseña', to: { name: 'change-password' }, can: '*' }
       ]
     },
     {

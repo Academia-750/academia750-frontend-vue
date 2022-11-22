@@ -8,6 +8,6 @@ export default ({ next, store }) => {
   }
 
   return next({
-    name: 'dashboard-analytics'
+    name: 'update-my-profile'
   })
 }
