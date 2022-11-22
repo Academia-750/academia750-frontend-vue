@@ -1,6 +1,6 @@
 import guestMiddleware from '@/middlewares/guest'
 import Module from './module.vue'
-import LoginModule from './views/Login.vue'
+import LoginModule from './views/Login/Login.vue'
 
 const moduleRoute = {
   path: '/login',
