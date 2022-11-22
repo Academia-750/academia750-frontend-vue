@@ -1,7 +1,7 @@
 import authMiddleware from '@/middlewares/auth'
 import Module from './module.vue'
 import UpdateMyProfileViewModule from './views/UpdateProfile/UpdateProfile.vue'
-import ChangePasswordAccountViewModule from './views/ChangePasswordAccountView.vue'
+import ChangePasswordAccountViewModule from './views/ChangePassword/ChangePassword.vue'
 
 const moduleRoute = [
   {
