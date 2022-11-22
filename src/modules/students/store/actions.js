@@ -5,7 +5,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
     return {
       id: record.id,
       dni: record.attributes.dni,
-      name: record.attributes.first_name,
+      'first-name': record.attributes.first_name,
       'last-name': record.attributes.last_name,
       phone: record.attributes.phone,
       email: record.attributes.email,
@@ -123,11 +123,24 @@ const fetchStudentGroups = async (_, options) => {
   }
 }
 
+const fetchRoleStudentData = async (_, options) => {
+  try {
+    const response = await StudentRepository.fetchRoleStudentData(options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getStudents,
   createStudent,
   fetchStudent,
   updateStudent,
   deleteStudent,
-  fetchStudentGroups
+  fetchStudentGroups,
+  fetchRoleStudentData
 }

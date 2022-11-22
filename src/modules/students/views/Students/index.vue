@@ -1,9 +1,11 @@
 <template>
   <v-card-text>
+    <create-or-edit-student/>
+    <v-divider></v-divider>
     <v-tabs
-      v-model="tab"
+      v-model="getCurrentTabView"
       grow
-      background-color="cyan darken-1"
+      background-color="cyan darken-1 mt-4"
       centered
       dark
       icons-and-text
@@ -28,7 +30,7 @@
     </v-tabs>
 
     <v-tabs-items
-      v-model="tab"
+      v-model="getCurrentTabView"
       touchless
     >
       <v-tab-item
@@ -40,7 +42,7 @@
         <v-card flat>
           <v-card-text>
             <students-datatable
-              v-if="tab === 'students-account-enable'"
+              v-if="getCurrentTabView === 'students-account-enable'"
               state-account="enable"
             />
           </v-card-text>
@@ -55,7 +57,7 @@
         <v-card flat>
           <v-card-text>
             <students-datatable
-              v-if="tab === 'students-account-disable'"
+              v-if="getCurrentTabView === 'students-account-disable'"
               state-account="disable"
             />
           </v-card-text>

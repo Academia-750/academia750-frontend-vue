@@ -19,7 +19,7 @@
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <resource-header-crud-title
-          text-header="Gestión de alumnos"
+          :text-header="getTitleByStateAccount"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar
@@ -28,7 +28,7 @@
           outlined
         >
           <resource-button-go-back-router/>
-          <resource-title-toolbar-datatable title-text="Gestión de alumnos" />
+          <resource-title-toolbar-datatable :title-text="getTitleByStateAccount" />
           <!-- <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
@@ -46,7 +46,9 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            :config-route="{ name: 'update-topic', params: { id: item.id } }"
+            :config-route="{}"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="setDataForUpdateUser(item)"
           />
         </div>
       </template>

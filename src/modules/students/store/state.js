@@ -1,6 +1,8 @@
 const state = () => ({
   itemsDatatable: [],
   stateLoadingItems: false,
+  currentUserForUpdate: null,
+  tabViewStudents: null,
   informationMeta: {
     current_page: 1,
     from: 1,

@@ -15,7 +15,7 @@ export default {
           text: 'Nombre',
           align: 'start',
           sortable: true,
-          value: 'name',
+          value: 'first-name',
           show: true
         },
         {
@@ -44,7 +44,7 @@ export default {
         },
         {
           position: 6,
-          sortable: false,
+          sortable: true,
           text: 'Fecha de alta',
           align: 'center',
           value: 'created-at',

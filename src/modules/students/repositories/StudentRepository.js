@@ -24,6 +24,9 @@ export default {
   fetchTopicsGroups (config = {}) {
     return ResourceService.get('topic-groups', config)
   },
+  fetchRoleStudentData (config = {}) {
+    return ResourceService.get('roles/get-data/student', config)
+  },
   disableAccount(id, data, config = {}) {
     return ResourceService.post(`${resource}/disable-account/${id}`, data, config)
   },

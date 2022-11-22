@@ -6,7 +6,7 @@
       :x-small="!can_rendering_button_small"
       :small="can_rendering_button_small"
       color="success"
-      @click="pushRouteEditView"
+      @click="pushRouteEditEdit"
     >
       <span >Editar</span>
       <v-icon
@@ -32,10 +32,20 @@ export default {
     configRoute: {
       type: Object,
       required: true
+    },
+    onlyDispatchClickEvent: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    pushRouteEditView () {
+    pushRouteEditEdit () {
+      if (this.onlyDispatchClickEvent) {
+        this.$emit('DispatchClickEvent')
+
+        return
+      }
+
       this.$router.push(
         this.configRoute
       )

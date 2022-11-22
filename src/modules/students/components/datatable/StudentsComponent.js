@@ -1,4 +1,4 @@
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
@@ -36,7 +36,10 @@ export default {
   },
   computed: {
     ...mapState('studentsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
-    ...footerProps
+    ...footerProps,
+    getTitleByStateAccount () {
+      return `Gestión de Alumnos ${this.stateAccount === 'enable' ? 'activos' : 'inactivos'}`
+    }
   },
   /* mounted () {
     this.getStudents({
@@ -55,6 +58,17 @@ export default {
   },
   methods: {
     ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
+    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
+    setDataForUpdateUser (item) {
+      this.SET_CURRENT_USER_FOR_UPDATE({
+        id: item.id,
+        dni: item.dni,
+        first_name: item['first-name'],
+        last_name: item['last-name'],
+        phone: item.phone,
+        email: item.email
+      })
+    },
     fetchInitialData () {
       this.getStudents({
         params: this.getParamsUrlApi()
