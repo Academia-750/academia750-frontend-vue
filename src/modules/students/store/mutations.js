@@ -13,5 +13,8 @@ export default {
   },
   SET_TAB_VIEW_STUDENTS (state, payload) {
     state.tabViewStudents = payload
+  },
+  SET_USERS_SELECTED_DATATABLE (state, payload) {
+    state.usersSelected = payload
   }
 }

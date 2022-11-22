@@ -28,7 +28,7 @@ const mapMetaInformationPagination = (response) => {
 const getStudents = async ({ commit }, config) => {
 
   try {
-
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     commit('SET_INFORMATION_META', {
       current_page: 1,
       from: 1,
@@ -63,7 +63,7 @@ const getStudents = async ({ commit }, config) => {
 
 const createStudent = async (_, options) => {
   try {
-
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.create(options.data)
 
     return Promise.resolve(response)
@@ -77,6 +77,7 @@ const createStudent = async (_, options) => {
 const fetchStudent = async (_, options) => {
 
   try {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.get(options.id, options.config)
 
     return Promise.resolve(response)
@@ -89,6 +90,7 @@ const fetchStudent = async (_, options) => {
 
 const updateStudent = async (_, options) => {
   try {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.update(options.id, options.data, options.config)
 
     return Promise.resolve(response)
@@ -101,6 +103,7 @@ const updateStudent = async (_, options) => {
 
 const deleteStudent = async (_, options) => {
   try {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.delete(options.id, options.config)
 
     return Promise.resolve(response)
@@ -113,6 +116,7 @@ const deleteStudent = async (_, options) => {
 
 const fetchStudentGroups = async (_, options) => {
   try {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.fetchStudentsGroups(options.config)
 
     return Promise.resolve(response)

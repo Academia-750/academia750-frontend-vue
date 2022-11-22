@@ -3,6 +3,7 @@ const state = () => ({
   stateLoadingItems: false,
   currentUserForUpdate: null,
   tabViewStudents: null,
+  usersSelected: [],
   informationMeta: {
     current_page: 1,
     from: 1,
