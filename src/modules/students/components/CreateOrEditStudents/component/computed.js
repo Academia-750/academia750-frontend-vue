@@ -7,6 +7,9 @@ export default {
     },
     activeStyleBlockButton () {
       return this.$vuetify.breakpoint.width <= 600
+    },
+    isUpdateUser () {
+      return this.currentUserForUpdate !== null
     }
   }
 }

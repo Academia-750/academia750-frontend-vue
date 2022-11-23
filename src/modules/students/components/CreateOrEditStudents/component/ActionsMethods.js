@@ -63,7 +63,7 @@ export default {
         await this.updateStudent({
           id: this.currentUserForUpdate.id,
           data: {
-            'dni': this.form.dni,
+            //'dni': this.form.dni,
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
             'phone': this.form.phone,

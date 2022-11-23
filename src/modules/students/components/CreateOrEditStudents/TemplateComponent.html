@@ -18,6 +18,7 @@
           <dni-field-input
             ref="DNIPersonInputComponent"
             rules="required|ItMustBeADniOrNieFromSpain"
+            :is-disabled="isUpdateUser"
             @DniBinding="form.dni = $event"
           />
         </v-col>
