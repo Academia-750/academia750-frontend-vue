@@ -3,8 +3,9 @@
     class="mx-1 my-1"
     dark
     small
+    :loading="loadingButton"
     color="deep-purple darken-1"
-    @click="$emit('actionConfirmShowDialogDelete')"
+    @click="disableUsersSelected"
   >
     <span >Desactivar</span>
     <v-icon
@@ -18,12 +19,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import ActionsByMultipleRecordsMixin from '../../mixins/ActionsByMultipleRecords.js'
 
 export default {
-  computed: {
-    ...mapState('studentsService', ['tabViewStudents'])
-  },
-  methods: {}
+  mixins: [ActionsByMultipleRecordsMixin],
+  methods: {
+    disableUsersSelected () {
+      if (!this.hasSelectedAnyRecord) {
+        this.alertErrorNotSelectedAnyRecord({
+          message: 'Por favor, primero debes seleccionar al menos un alumno para desactivar'
+        })
+
+        return
+      }
+
+      this.actionMultipleRecordsApiRequest({
+        action: 'lock-account',
+        messageSuccess: 'Los alumnos seleccionados fueron desactivados.'
+      })
+
+    }
+  }
 }
 </script>
