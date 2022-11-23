@@ -49,17 +49,20 @@
           :only-dispatch-click-event="true"
           @DispatchClickEvent="setDataForUpdateUser(item)"
         />
+        <resource-button-delete
+          @actionConfirmShowDialogDelete="deleteStudentConfirm(item)"
+        />
       </div>
     </template>
   </v-data-table>
   <resource-dialog-confirm-delete
     ref="dialogConfirmDeleteAction"
-    title="¿Estás seguro de eliminar el Tema?"
+    title="¿Estás seguro de eliminar el alumno?"
     @actionDelete="deleteStudentAction"
   >
     <template #identifier-record>
       <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
-        <span class="mr-1 font-italic subtitle-1">Tema:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete.name }}</span>
+        <span class="mr-1 font-italic subtitle-1">Alumno:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete['first-name'] }} {{ currentItemsSelectedForDelete['last-name'] }}</span>
       </div>
     </template>
   </resource-dialog-confirm-delete>
