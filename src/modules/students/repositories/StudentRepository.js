@@ -19,7 +19,7 @@ export default {
     return ResourceService.delete(`${resource}/delete/${id}`, config)
   },
   actionMassiveSelection(data, config = {}) {
-    return ResourceService.post(`${resource}/mass-selection-action`, data, config)
+    return ResourceService.post(`${resource}/actions-on-multiple-records`, data, config)
   },
   fetchTopicsGroups (config = {}) {
     return ResourceService.get('topic-groups', config)

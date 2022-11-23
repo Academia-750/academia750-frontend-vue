@@ -63,7 +63,6 @@ const getStudents = async ({ commit }, config) => {
 
 const createStudent = async (_, options) => {
   try {
-    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.create(options.data)
 
     return Promise.resolve(response)
@@ -74,7 +73,7 @@ const createStudent = async (_, options) => {
   }
 }
 
-const fetchStudent = async (_, options) => {
+const fetchStudent = async ({ commit }, options) => {
 
   try {
     commit('SET_USERS_SELECTED_DATATABLE', [])
@@ -90,7 +89,6 @@ const fetchStudent = async (_, options) => {
 
 const updateStudent = async (_, options) => {
   try {
-    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.update(options.id, options.data, options.config)
 
     return Promise.resolve(response)
@@ -103,7 +101,6 @@ const updateStudent = async (_, options) => {
 
 const deleteStudent = async (_, options) => {
   try {
-    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.delete(options.id, options.config)
 
     return Promise.resolve(response)
@@ -116,7 +113,6 @@ const deleteStudent = async (_, options) => {
 
 const fetchStudentGroups = async (_, options) => {
   try {
-    commit('SET_USERS_SELECTED_DATATABLE', [])
     const response = await StudentRepository.fetchStudentsGroups(options.config)
 
     return Promise.resolve(response)
@@ -139,6 +135,21 @@ const fetchRoleStudentData = async (_, options) => {
   }
 }
 
+const actionsForMultipleRecords = async ({ commit }, options) => {
+  try {
+    const response = await StudentRepository.actionMassiveSelection(options.data, options.config)
+
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+
+    return Promise.resolve(response)
+  } catch (error) {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getStudents,
   createStudent,
@@ -146,5 +157,6 @@ export default {
   updateStudent,
   deleteStudent,
   fetchStudentGroups,
-  fetchRoleStudentData
+  fetchRoleStudentData,
+  actionsForMultipleRecords
 }

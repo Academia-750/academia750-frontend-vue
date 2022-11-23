@@ -36,13 +36,11 @@
       <v-tab-item
         key="students-account-enable"
         :transition="false"
-        eager
         value="students-account-enable"
       >
         <v-card flat>
           <v-card-text>
             <students-datatable
-              v-if="getCurrentTabView === 'students-account-enable'"
               state-account="enable"
             />
           </v-card-text>
@@ -51,19 +49,18 @@
       <v-tab-item
         key="students-account-disable"
         :transition="false"
-        eager
         value="students-account-disable"
       >
         <v-card flat>
           <v-card-text>
             <students-datatable
-              v-if="getCurrentTabView === 'students-account-disable'"
               state-account="disable"
             />
           </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <form-actions-buttons/>
   </v-card-text>
 </template>
 

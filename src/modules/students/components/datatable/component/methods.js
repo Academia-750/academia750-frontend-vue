@@ -3,7 +3,7 @@ import { mapMutations, mapActions } from 'vuex'
 export default {
   methods: {
     ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
-    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
+    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE', 'SET_USERS_SELECTED_DATATABLE']),
     setDataForUpdateUser (item) {
       this.SET_CURRENT_USER_FOR_UPDATE({
         id: item.id,

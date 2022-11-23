@@ -4,33 +4,6 @@ export default {
   methods: {
     ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent', 'fetchRoleStudentData']),
     ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
-    loadStudentsFromCurrentTab () {
-      if (this.tabViewStudents === 'students-account-enable') {
-        this.getStudents({
-          params: {
-            'filter[role]': 'student',
-            'filter[state-account]': 'enable',
-            'page[size]': 10,
-            'page[number]': 1
-          }
-        })
-
-        return
-      }
-
-      if (this.tabViewStudents === 'students-account-disable') {
-        this.getStudents({
-          params: {
-            'filter[role]': 'student',
-            'filter[state-account]': 'disable',
-            'page[size]': 10,
-            'page[number]': 1
-          }
-        })
-
-        return
-      }
-    },
     loadDataUserForUpdate (data) {
       const { dni, first_name, last_name, phone, email } = data
 
