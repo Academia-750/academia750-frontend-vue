@@ -4,7 +4,8 @@
     dark
     small
     color="success"
-    @click="$emit('actionConfirmShowDialogDelete')"
+    :loading="loadingButton"
+    @click="enableUsersSelected"
   >
     <span >Reactivar</span>
     <v-icon
@@ -18,16 +19,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import ActionsByMultipleRecordsMixin from '../../mixins/ActionsByMultipleRecords.js'
 
 export default {
-  computed: {
-    ...mapState('studentsService', ['tabViewStudents'])
-  },
-  methods: {}
+  mixins: [ActionsByMultipleRecordsMixin],
+  methods: {
+    enableUsersSelected () {
+      if (!this.hasSelectedAnyRecord) {
+        this.alertErrorNotSelectedAnyRecord({
+          message: 'Por favor, primero debes seleccionar al menos un alumno para reactivarlo'
+        })
+
+        return
+      }
+
+      this.actionMultipleRecordsApiRequest({
+        action: 'unlock-account',
+        messageSuccess: 'Los alumnos seleccionados fueron reactivados.'
+      })
+
+    }
+  }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
