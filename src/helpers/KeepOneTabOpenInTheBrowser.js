@@ -1,4 +1,4 @@
-export const $KeepOneTabOpenInTheBrowser = function () {
+export const $KeepOneTabOpenInTheBrowserBroascastChannel = function () {
 
   const bc = new BroadcastChannel('Academia 750')
 
@@ -14,4 +14,20 @@ export const $KeepOneTabOpenInTheBrowser = function () {
   }
 
   bc.postMessage('Am I the first?')
+}
+
+export const $KeepOneTabOpenInTheBrowserLocalStorage = function () {
+  // Broadcast that you're opening a page.
+  localStorage.openpages = Date.now()
+
+  const onLocalStorageEvent = function(e) {
+    if (e.key === 'openpages') {
+      localStorage.page_available = Date.now()
+    }
+    if (e.key === 'page_available') {
+      alert('One more page already open')
+    }
+  }
+
+  window.addEventListener('storage', onLocalStorageEvent, false)
 }
