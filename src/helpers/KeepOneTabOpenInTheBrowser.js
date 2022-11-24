@@ -9,8 +9,7 @@ export const $KeepOneTabOpenInTheBrowser = function () {
       alert('Se acaba de abrir otra pestaña de este sitio')
     }
     if (event.data === 'No you re not.') {
-      alert('Ya se está ejecutando una instancia de este sitio')
-      window.close()
+      window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
     }
   }
 
