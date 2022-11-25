@@ -14,7 +14,7 @@ import manageTokenAuth from '@/helpers/auth.js'
 import { loadUserAuth, getUserAuth, getRolesUserAuth, getPermissionsUserAuth } from '@/helpers/loadUserAuth'
 import { hasPermissions } from '@/helpers/managePermissions'
 import { hasRoles } from '@/helpers/manageRoles'
-import { $KeepOneTabOpenInTheBrowserBroascastChannel } from '@/helpers/KeepOneTabOpenInTheBrowser'
+import { $KeepOneTabOpenInTheBrowserLocalStorage } from '@/helpers/KeepOneTabOpenInTheBrowser'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -86,7 +86,7 @@ Vue.prototype.$rolesUserAuth = getRolesUserAuth
 Vue.$permissionsUserAuth = getPermissionsUserAuth
 Vue.prototype.$permissionsUserAuth = getPermissionsUserAuth
 
-$KeepOneTabOpenInTheBrowserBroascastChannel()
+$KeepOneTabOpenInTheBrowserLocalStorage()
 
 /*
 |---------------------------------------------------------------------

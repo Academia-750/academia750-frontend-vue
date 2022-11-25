@@ -74,11 +74,6 @@ export default {
 
       return layout + 'Layout'
     }
-  },
-  created () {
-    /* this.$errorApp.activateError({
-      status: 503
-    }) */
   }
 
 }

@@ -25,7 +25,8 @@ export const $KeepOneTabOpenInTheBrowserLocalStorage = function () {
       localStorage.page_available = Date.now()
     }
     if (e.key === 'page_available') {
-      alert('One more page already open')
+      //alert('One more page already open')
+      window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
     }
   }
 
