@@ -5,7 +5,7 @@
       dark
       :x-small="!can_rendering_button_small"
       :small="can_rendering_button_small"
-      color="success"
+      :color="colorButton"
       @click="pushRouteEditEdit"
     >
       <span >Editar</span>
@@ -36,6 +36,10 @@ export default {
     onlyDispatchClickEvent: {
       type: Boolean,
       default: false
+    },
+    colorButton: {
+      type: String,
+      default: 'success'
     }
   },
   methods: {

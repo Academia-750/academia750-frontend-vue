@@ -17,6 +17,30 @@ export default {
           align: 'center',
           value: 'actions-resource',
           show: true
+        },
+        {
+          position: 3,
+          sortable: false,
+          text: 'Subtemas',
+          align: 'center',
+          value: 'manage-subtopics',
+          show: true
+        },
+        {
+          position: 4,
+          sortable: false,
+          text: 'Oposiciones',
+          align: 'center',
+          value: 'manage-oppositions',
+          show: true
+        },
+        {
+          position: 5,
+          sortable: false,
+          text: 'Preguntas',
+          align: 'center',
+          value: 'manage-questions',
+          show: true
         }
       ]
     }

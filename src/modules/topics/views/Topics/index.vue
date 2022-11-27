@@ -44,6 +44,7 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            color-button="blue darken-1"
             :config-route="{ name: 'update-topic', params: { id: item.id } }"
           />
           <resource-button-delete
@@ -51,6 +52,87 @@
           />
 
         </div>
+      </template>
+      <template v-slot:[`item.manage-subtopics`]="{ item }">
+        <v-btn
+          class="mx-1 white--text"
+          dark
+          :x-small="!can_rendering_button_small"
+          :small="can_rendering_button_small"
+          color="success"
+          @click="$router.push({
+            name: 'manage-subtopics-of-topic',
+            params: {
+              id: item.id
+            }
+          })"
+        >
+          <span >Subtemas</span>
+          <v-icon
+            v-if="can_rendering_icon_button"
+            class="ml-1"
+            :x-small="!can_rendering_icon_small"
+            :small="can_rendering_icon_small"
+            dark
+          >
+            mdi-eye
+          </v-icon>
+        </v-btn>
+
+      </template>
+      <template v-slot:[`item.manage-oppositions`]="{ item }">
+        <v-btn
+          class="mx-1 white--text"
+          dark
+          :x-small="!can_rendering_button_small"
+          :small="can_rendering_button_small"
+          color="success"
+          @click="$router.push({
+            name: 'manage-oppositions-of-topic',
+            params: {
+              id: item.id
+            }
+          })"
+        >
+          <span >Oposiciones</span>
+          <v-icon
+            v-if="can_rendering_icon_button"
+            class="ml-1"
+            :x-small="!can_rendering_icon_small"
+            :small="can_rendering_icon_small"
+            dark
+          >
+            mdi-eye
+          </v-icon>
+        </v-btn>
+
+      </template>
+      <template v-slot:[`item.manage-questions`]="{ item }">
+        <v-btn
+          class="mx-1 white--text"
+          dark
+          :x-small="!can_rendering_button_small"
+          :small="can_rendering_button_small"
+          color="success"
+          @click="$router.push({
+            name: 'manage-questions-of-topic',
+            params: {
+              id: item.id
+            }
+          })"
+        >
+          <span >Preguntas</span>
+          <v-icon
+            v-if="can_rendering_icon_button"
+            class="ml-1"
+            :x-small="!can_rendering_icon_small"
+            :small="can_rendering_icon_small"
+            dark
+          >
+            mdi-eye
+          </v-icon>
+        </v-btn>
+
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
