@@ -18,6 +18,7 @@ export default {
           return
         }
 
+        this.$loadingApp.enableLoadingProgressLinear()
         AuthService.defaults.headers.common['Authorization'] = `Bearer ${this.$manageTokenAuth.$get_token_auth()}`
         await this.logout()
 
@@ -34,12 +35,14 @@ export default {
         AuthService.defaults.headers.common['Authorization'] = null
         ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = null
         ProfileAuthService.defaults.headers.common['Authorization'] = null
+        this.$loadingApp.disabledLoadingProgressLinear()
         this.$router.push({
           name: 'login'
         })
       } catch (error) {
         console.log(error)
         this.$manageTokenAuth.$remove_token_auth()
+        this.$loadingApp.disabledLoadingProgressLinear()
         this.$router.push({
           name: 'login'
         })

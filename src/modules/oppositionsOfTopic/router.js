@@ -1,6 +1,6 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageSubtopicsModule from '@/modules/subtopicsOfTopic/views/Subtopics'
+import ManageOppositionsModule from '@/modules/oppositionsOfTopic/views/Oppositions'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
@@ -39,9 +39,9 @@ const moduleRoute = [
             }
           }, */
           {
-            path: ':id/subtopics/list',
-            name: 'manage-subtopics-of-topic',
-            component: ManageSubtopicsModule,
+            path: ':id/oppositions/list',
+            name: 'manage-oppositions-of-topic',
+            component: ManageOppositionsModule,
             meta: {
               middleware: [authMiddleware]
             }
