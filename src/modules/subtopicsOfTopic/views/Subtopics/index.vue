@@ -57,6 +57,13 @@
 
         </div>
       </template>
+      <template v-slot:[`item.manage-questions`]="{ item }">
+        <resource-button-edit
+          text-button="Alta de preguntas"
+          color-button="primary"
+          :config-route="{ name: 'update-subtopic', params: { id: item.id } }"
+        />
+      </template>
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"

@@ -17,6 +17,14 @@ export default {
           align: 'center',
           value: 'actions-resource',
           show: true
+        },
+        {
+          position: 3,
+          sortable: false,
+          text: 'Preguntas',
+          align: 'center',
+          value: 'manage-questions',
+          show: true
         }
       ]
     }

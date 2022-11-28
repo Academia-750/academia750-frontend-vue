@@ -8,7 +8,7 @@
       :color="colorButton"
       @click="pushRouteEditEdit"
     >
-      <span >Editar</span>
+      <span >{{ textButton }}</span>
       <v-icon
         v-if="can_rendering_icon_button"
         class="ml-1"
@@ -40,6 +40,10 @@ export default {
     colorButton: {
       type: String,
       default: 'success'
+    },
+    textButton: {
+      type: String,
+      default: 'Editar'
     }
   },
   methods: {
