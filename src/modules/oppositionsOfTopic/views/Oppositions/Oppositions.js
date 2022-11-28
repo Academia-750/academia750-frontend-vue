@@ -25,12 +25,16 @@ export default {
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
-      currentItemsSelectedForDelete: null
+      currentItemsSelectedForDelete: null,
+      topicData: null
     }
   },
   computed: {
-    ...mapState('oppositionsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
-    ...footerProps
+    ...mapState('oppositionsOfTopicService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
+    ...footerProps,
+    getNameCurrentTopic () {
+      return `Oposiciones del Tema: "${this.topicData?.attributes?.name}"`
+    }
   },
   mounted () {
     /* this.getOppositions({
@@ -41,19 +45,29 @@ export default {
     optionsDatatable: {
       handler () {
         this.getOppositions({
-          params: this.buildQueryParamsRequest()
-        })
+          topic_id: this.$route.params.id,
+          config: {
+            params: this.buildQueryParamsRequest()
+          }
+        }).then( (response) => {
+          this.topicData = response.data.meta.topic
+        } )
       },
       deep: true
     }
   },
   methods: {
-    ...mapActions('oppositionsService', ['getOppositions', 'deleteOpposition']),
+    ...mapActions('oppositionsOfTopicService', ['getOppositions', 'deleteOpposition']),
     searchFieldExecuted ($event) {
       this.searchWord = $event
       this.getOppositions({
-        params: this.buildQueryParamsRequest()
-      })
+        topic_id: this.$route.params.id,
+        config: {
+          params: this.buildQueryParamsRequest()
+        }
+      }).then( (response) => {
+        this.topicData = response.data.meta.topic
+      } )
     },
     deleteOppositionConfirm (item) {
       this.currentItemsSelectedForDelete = item
@@ -81,8 +95,13 @@ export default {
         this.searchWord = ''
 
         this.getOppositions({
-          params: this.buildQueryParamsRequest()
-        })
+          topic_id: this.$route.params.id,
+          config: {
+            params: this.buildQueryParamsRequest()
+          }
+        }).then( (response) => {
+          this.topicData = response.data.meta.topic
+        } )
       } catch (error) {
         console.log(error)
       }

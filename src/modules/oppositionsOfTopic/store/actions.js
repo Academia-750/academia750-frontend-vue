@@ -1,10 +1,11 @@
-import SubtopicsOFTopicRepository from '../repositories/SubtopicsOFTopicRepository'
+import OppositionsOfTopicRepository from '../repositories/OppositionsOfTopicRepository'
 
 const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
     return {
       id: record.id,
       name: record.attributes.name,
+      period: record.attributes.period,
       'created-at': record.attributes.created_at
     }
   })
@@ -21,7 +22,7 @@ const mapMetaInformationPagination = (response) => {
   }
 }
 
-const getSubtopics = async ({ commit }, options) => {
+const getOppositions = async ({ commit }, options) => {
 
   try {
 
@@ -37,7 +38,7 @@ const getSubtopics = async ({ commit }, options) => {
 
     commit('SET_ITEMS_DATATABLE', [])
 
-    const response = await SubtopicsOFTopicRepository.getAllSubtopics(options.topic_id, options.config)
+    const response = await OppositionsOfTopicRepository.getAllOppositions(options.topic_id, options.config)
 
     if (response) {
       //console.trace(response)
@@ -57,10 +58,10 @@ const getSubtopics = async ({ commit }, options) => {
   }
 }
 
-const createSubtopic = async (_, options) => {
+const createOpposition = async (_, options) => {
   try {
 
-    const response = await SubtopicsOFTopicRepository.create(options.data)
+    const response = await OppositionsOfTopicRepository.create(options.data)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -70,10 +71,10 @@ const createSubtopic = async (_, options) => {
   }
 }
 
-const fetchSubtopic = async (_, options) => {
+const fetchOpposition = async (_, options) => {
 
   try {
-    const response = await SubtopicsOFTopicRepository.get(options.id, options.config)
+    const response = await OppositionsOfTopicRepository.get(options.id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -83,9 +84,9 @@ const fetchSubtopic = async (_, options) => {
   }
 }
 
-const updateSubtopic = async (_, options) => {
+const updateOpposition = async (_, options) => {
   try {
-    const response = await SubtopicsOFTopicRepository.update(options.id, options.data, options.config)
+    const response = await OppositionsOfTopicRepository.update(options.id, options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -95,9 +96,9 @@ const updateSubtopic = async (_, options) => {
   }
 }
 
-const deleteSubtopic = async (_, options) => {
+const deleteOpposition = async (_, options) => {
   try {
-    const response = await SubtopicsOFTopicRepository.delete(options.id, options.config)
+    const response = await OppositionsOfTopicRepository.delete(options.id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -108,9 +109,9 @@ const deleteSubtopic = async (_, options) => {
 }
 
 export default {
-  getSubtopics,
-  createSubtopic,
-  fetchSubtopic,
-  updateSubtopic,
-  deleteSubtopic
+  getOppositions,
+  createOpposition,
+  fetchOpposition,
+  updateOpposition,
+  deleteOpposition
 }

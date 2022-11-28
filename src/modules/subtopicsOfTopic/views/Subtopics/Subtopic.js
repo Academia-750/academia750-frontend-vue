@@ -32,7 +32,7 @@ export default {
     ...mapState('subtopicsOfTopicService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
     ...footerProps,
     getNameCurrentTopic () {
-      return `Tema: ${this.topicData?.attributes?.name}`
+      return `Subtemas del Tema: "${this.topicData?.attributes?.name}"`
     }
   },
   mounted () {

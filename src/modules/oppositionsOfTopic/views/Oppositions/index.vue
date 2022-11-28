@@ -17,6 +17,11 @@
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <resource-header-crud-title
+          v-if="topicData !== null"
+          :text-header="getNameCurrentTopic"
+          :can-rendering-header="true"
+        />
+        <resource-header-crud-title
           text-header="Gestion de Oposiciones"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />

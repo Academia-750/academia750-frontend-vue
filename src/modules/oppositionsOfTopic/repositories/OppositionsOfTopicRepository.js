@@ -1,10 +1,10 @@
 import ResourceService from '@/services/ResourceService'
 
-const resource = 'oppositions'
+const resource = 'topics'
 
 export default {
-  getAll(config = {}) {
-    return ResourceService.get(`${resource}`, config)
+  getAllOppositions(topic_id, config = {}) {
+    return ResourceService.get(`${resource}/${topic_id}/relationship/oppositions`, config)
   },
   get(id, config = {}) {
     return ResourceService.get(`${resource}/${id}`, config)
