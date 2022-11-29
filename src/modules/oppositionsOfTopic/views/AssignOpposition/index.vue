@@ -18,12 +18,46 @@
       <resource-title-toolbar-datatable :width-limit-toolbar-title="420" title-text="Agregar a Oposición" />
     </v-toolbar>
     <v-card-text>
-      <select-subtopics-by-datatable
-        ref="selectSubtopicsByDatatable"
-      />
-      <select-opposition-by-datatable
-        ref="selectOppositionByDatatable"
-      />
+      <v-expansion-panels inset focusable>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Elegir subtemas
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <select-subtopics-by-datatable
+              ref="selectSubtopicsByDatatable"
+            />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Elegir Oposición
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <select-opposition-by-datatable
+              ref="selectOppositionByDatatable"
+            />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
+      <div class="d-flex justify-end">
+        <v-btn
+          class="mt-5 mb-3 white--text"
+          dark
+          small
+          color="success"
+        >
+          <span>Agregar</span>
+          <v-icon
+            class="ml-1"
+            small
+            dark
+          >
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </div>
     </v-card-text>
   </v-card-text>
 </template>

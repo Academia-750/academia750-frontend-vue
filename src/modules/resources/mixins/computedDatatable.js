@@ -6,28 +6,28 @@ export default {
       // Tamaño pantalla 4k
       if (this.$vuetify.breakpoint.width >= 2560) {
         itemsPerPageOptions = [
-          10, 25, 50, 100, 250, 500
+          5, 10, 25, 50, 100, 250, 500
         ]
       }
 
       // Tamaño laptop grande
       if (this.$vuetify.breakpoint.width >= 1440) {
         itemsPerPageOptions = [
-          10, 25, 50, 100, 250
+          5, 10, 25, 50, 100, 250
         ]
       }
 
       // Tamaño laptop normal
       if (this.$vuetify.breakpoint.width >= 1024 && this.$vuetify.breakpoint.width < 1440) {
         itemsPerPageOptions = [
-          10, 25, 50, 100
+          5, 10, 25, 50, 100
         ]
       }
 
       // Tamaño tablet
       if (this.$vuetify.breakpoint.width >= 768 && this.$vuetify.breakpoint.width < 1024) {
         itemsPerPageOptions = [
-          10, 20, 40, 80
+          5, 10, 20, 40, 80
         ]
       }
 
