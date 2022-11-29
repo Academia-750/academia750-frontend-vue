@@ -49,6 +49,7 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            text-button="Editar subtemas"
             :config-route="{ name: 'update-opposition', params: { id: item.id } }"
           />
           <resource-button-delete

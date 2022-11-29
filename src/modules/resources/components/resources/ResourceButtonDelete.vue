@@ -8,7 +8,7 @@
       color="red"
       @click="$emit('actionConfirmShowDialogDelete')"
     >
-      <span >Eliminar</span>
+      <span >{{ textButton }}</span>
       <v-icon
         v-if="can_rendering_icon_button"
         class="ml-1"
@@ -27,6 +27,12 @@ import buttonsActionsDatatable from '@/modules/resources/mixins/componentButtons
 
 export default {
   name: 'ResourceButtonDelete',
-  mixins: [buttonsActionsDatatable]
+  mixins: [buttonsActionsDatatable],
+  props: {
+    textButton: {
+      type: String,
+      default: 'Eliminar'
+    }
+  }
 }
 </script>

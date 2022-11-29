@@ -1,115 +1,36 @@
-import { mapState, mapActions } from 'vuex'
+import components from './component/components'
+import data from './component/data'
+import methods from './component/methods'
+import computed from './component/computed'
+import watch from './component/watch'
+import ActionsMethods from './component/ActionsMethods'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-
 import headersOppositionsTable from './component/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
-import footerProps from './component/footerProps'
+
+const MIXINS_COMPONENT = [
+  components,
+  data,
+  methods,
+  computed,
+  watch,
+  ActionsMethods
+]
+
+const MIXINS_ADDITIONAL = [
+  URLBuilderResources,
+  headersOppositionsTable,
+  computedDatatable,
+  componentButtonsCrud
+]
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
-  components: {
-    ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
-    ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
-    ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
-    ResourceTextFieldSearch: () => import(/* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
-    ButtonDatatableSyllabus: () => import(/* webpackChunkName: "ButtonDatatableSyllabus" */ '@/modules/oppositions/components/ButtonDatatableSyllabus.vue')
-  },
-  data () {
-    return {
-      //namesRelationshipsIncludeRequest: 'topics'
-      currentItemsSelectedForDelete: null,
-      topicData: null
-    }
-  },
-  computed: {
-    ...mapState('oppositionsOfTopicService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
-    ...footerProps,
-    getNameCurrentTopic () {
-      return `Oposiciones del Tema: "${this.topicData?.attributes?.name}"`
-    }
-  },
-  mounted () {
-    /* this.getOppositions({
-      params: this.buildQueryParamsRequest()
-    }) */
-  },
-  watch: {
-    optionsDatatable: {
-      handler () {
-        this.getOppositions({
-          topic_id: this.$route.params.id,
-          config: {
-            params: this.buildQueryParamsRequest()
-          }
-        }).then( (response) => {
-          this.topicData = response.data.meta.topic
-        } )
-      },
-      deep: true
-    }
-  },
-  methods: {
-    ...mapActions('oppositionsOfTopicService', ['getOppositions', 'deleteOpposition']),
-    searchFieldExecuted ($event) {
-      this.searchWord = $event
-      this.getOppositions({
-        topic_id: this.$route.params.id,
-        config: {
-          params: this.buildQueryParamsRequest()
-        }
-      }).then( (response) => {
-        this.topicData = response.data.meta.topic
-      } )
-    },
-    deleteOppositionConfirm (item) {
-      this.currentItemsSelectedForDelete = item
-      this.$refs['dialogConfirmDeleteAction'].showDialog = true
-    },
-    async deleteOppositionAction () {
-      if (this.currentItemsSelectedForDelete === null || this.currentItemsSelectedForDelete === undefined) {
-        return
-      }
-
-      try {
-        await this.deleteOpposition({
-          id: this.currentItemsSelectedForDelete.id,
-          config: {}
-        })
-
-        this.$swal.fire({
-          icon: 'success',
-          toast: true,
-          title: 'La oposición ha sido eliminada con éxito.',
-          timer: 3000
-        })
-
-        this.$refs['ResourceTextFieldSearch'].searchWordText = ''
-        this.searchWord = ''
-
-        this.getOppositions({
-          topic_id: this.$route.params.id,
-          config: {
-            params: this.buildQueryParamsRequest()
-          }
-        }).then( (response) => {
-          this.topicData = response.data.meta.topic
-        } )
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  },
+  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
   head: {
     title: {
-      inner: 'Gestion de oposiciones'
+      inner: 'Gestion de oposiciones de un tema'
     }
   }
 }
