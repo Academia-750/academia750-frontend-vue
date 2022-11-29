@@ -7,7 +7,9 @@ export default {
         config: {
           params: this.buildQueryParamsRequest()
         }
-      })
+      }).then( (response) => {
+        this.topicData = response.data.meta.topic
+      } )
     },
     deleteSubtopicConfirm (item) {
       this.currentItemsSelectedForDelete = item

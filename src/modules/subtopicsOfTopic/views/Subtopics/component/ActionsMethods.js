@@ -10,7 +10,8 @@ export default {
 
       try {
         await this.deleteSubtopic({
-          id: this.currentItemsSelectedForDelete.id,
+          topic_id: this.$route.params.id,
+          subtopic_id: this.currentItemsSelectedForDelete.id,
           config: {}
         })
 
@@ -24,12 +25,14 @@ export default {
         this.$refs['ResourceTextFieldSearch'].searchWordText = ''
         this.searchWord = ''
 
-        this.getSubtopics({
+        await this.getSubtopics({
           topic_id: this.$route.params.id,
           config: {
             params: this.buildQueryParamsRequest()
           }
-        })
+        }).then( (response) => {
+          this.topicData = response.data.meta.topic
+        } )
       } catch (error) {
         console.log(error)
       }
