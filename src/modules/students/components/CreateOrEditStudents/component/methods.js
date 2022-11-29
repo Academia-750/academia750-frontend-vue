@@ -20,7 +20,7 @@ export default {
       this.form.email = email
     },
     async ResetForm() {
-      await this.$refs['FormCreateOrEditStudent']['reset']()
+      //await this.$refs['FormCreateOrEditStudent']['reset']()
       this.$refs['DNIPersonInputComponent'].dni = ''
       this.$refs['namePersonInputComponent'].name_person = ''
       this.$refs['LastNamePersonInputComponent'].last_name = ''
@@ -32,6 +32,10 @@ export default {
       this.form.lastName = ''
       this.form.phone = ''
       this.form.email = ''
+
+      this.$nextTick(() => {
+        this.$refs['FormCreateOrEditStudent']['reset']()
+      })
 
       return true
     },

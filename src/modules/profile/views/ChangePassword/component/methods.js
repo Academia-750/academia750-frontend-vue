@@ -27,7 +27,10 @@ export default {
       await this.$refs['FormUpdatePassword']['setErrors'](errorResponse)
     },
     async ResetForm() {
-      await this.$refs['FormUpdatePassword']['reset']()
+      //await this.$refs['FormUpdatePassword']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormUpdatePassword']['reset']()
+      })
 
       return true
     },

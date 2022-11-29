@@ -43,7 +43,10 @@ export default {
       this.CreateTopicApi()
     },
     async ResetForm() {
-      await this.$refs['FormCreateTopic']['reset']()
+      //await this.$refs['FormCreateTopic']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormCreateTopic']['reset']()
+      })
       this.loadingButtonCreateTopic = false
       this.disabledButtonCreateTopic = false
 

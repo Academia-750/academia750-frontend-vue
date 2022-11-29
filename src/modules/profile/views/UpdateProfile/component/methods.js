@@ -37,7 +37,10 @@ export default {
       this.updateProfileApi()
     },
     async ResetForm() {
-      await this.$refs['FormUpdateMyProfile']['reset']()
+      //await this.$refs['FormUpdateMyProfile']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormUpdateMyProfile']['reset']()
+      })
 
       return true
     },

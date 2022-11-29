@@ -67,7 +67,10 @@ export default {
       this.UpdateSubtopicApi()
     },
     async ResetForm() {
-      await this.$refs['FormUpdateSubtopic']['reset']()
+      //await this.$refs['FormUpdateSubtopic']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormUpdateSubtopic']['reset']()
+      })
       this.loadingButtonUpdateSubtopic = false
       this.disabledButtonUpdateSubtopic = false
 

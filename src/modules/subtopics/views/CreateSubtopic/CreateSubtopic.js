@@ -40,7 +40,10 @@ export default {
       this.CreateSubtopicApi()
     },
     async ResetForm() {
-      await this.$refs['FormCreateSubtopic']['reset']()
+      //await this.$refs['FormCreateSubtopic']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormCreateSubtopic']['reset']()
+      })
       this.loadingButtonCreateSubtopic = false
       this.disabledButtonCreateSubtopic = false
 

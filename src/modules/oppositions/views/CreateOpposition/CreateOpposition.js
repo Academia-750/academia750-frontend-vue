@@ -42,9 +42,12 @@ export default {
       this.CreateOppositionApi()
     },
     async ResetForm() {
-      await this.$refs['FormCreateOpposition']['reset']()
+      //await this.$refs['FormCreateOpposition']['reset']()
       this.loadingButtonCreateOpposition = false
       this.disabledButtonCreateOpposition = false
+      this.$nextTick(() => {
+        this.$refs['FormCreateOpposition']['reset']()
+      })
 
       return true
     },

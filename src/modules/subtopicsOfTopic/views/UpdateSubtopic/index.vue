@@ -1,8 +1,13 @@
 <template>
   <v-card-text>
     <resource-header-crud-title
-      text-header="Actualizar tema"
+      text-header="Actualizar subtema"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
+    />
+    <resource-header-crud-title
+      v-if="topicData !== null"
+      :text-header="getNameCurrentTopic"
+      :can-rendering-header="true"
     />
     <v-toolbar
       flat
@@ -12,12 +17,15 @@
       <resource-button-go-back-router :width-number-limit="300" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
-        title-text="Actualizar tema"
+        title-text="Actualizar subtema"
       />
       <resource-divider-title-datatable :width-limit-title-divider="620"/>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
-        <resource-button-add :config-route="{ name: 'create-topic' }"/>
+        <resource-button-add
+          v-if="topicData !== null"
+          :config-route="{ name: 'create-subtopic', params: { id: topicData.id } }"
+        />
         <v-btn
           small
           color="light-blue darken-3"
@@ -35,7 +43,7 @@
       </div>
     </v-toolbar>
     <v-card-text>
-      <validation-observer ref="FormUpdateTopic" v-slot="{ invalid }">
+      <validation-observer ref="FormUpdateSubtopic" v-slot="{ invalid }">
         <v-row dense>
           <v-col
             cols="12"
@@ -43,18 +51,10 @@
             md="12"
             lg="12"
           >
-            <autocomplete-a-topic-group ref="AutocompleteATopicGroup" />
-          </v-col>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-          >
-            <form-field-name-topic
-              ref="nameTopicInputComponent"
-              rules="required|max:100"
-              @NameTopicBinding="form.nameTopic = $event"
+            <form-field-name-subtopic
+              ref="nameSubtopicInputComponent"
+              rules="required|max:255"
+              @NameSubtopicBinding="form.nameSubtopic = $event"
             />
           </v-col>
           <v-col
@@ -62,11 +62,11 @@
             class="d-flex justify-center flex-column flex-sm-row"
           >
             <v-btn
-              :loading="loadingButtonUpdateTopic"
-              :disabled="disabledButtonUpdateTopic || invalid"
+              :loading="loadingButtonUpdateSubtopic"
+              :disabled="disabledButtonUpdateSubtopic || invalid"
               color="light-blue darken-3"
               class="mt-3 white--text"
-              @click="UpdateTopic"
+              @click="UpdateSubtopic"
             >
               <v-icon right dark class="mr-1"> mdi-database-sync </v-icon>
               Actualizar

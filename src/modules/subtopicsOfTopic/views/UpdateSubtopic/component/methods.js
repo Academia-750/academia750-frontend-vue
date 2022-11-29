@@ -1,7 +1,8 @@
 export default {
   methods: {
-    CreateSubtopic () {
-      this.$refs['FormCreateSubtopic'].validate().then( (status) => {
+    UpdateSubtopic () {
+
+      this.$refs['FormUpdateSubtopic'].validate().then( (status) => {
         if (!status) {
           this.$swal.fire({
             icon: 'error',
@@ -18,23 +19,19 @@ export default {
       } )
 
       this.$loadingApp.enableLoadingProgressLinear()
-      this.loadingButtonCreateSubtopic = true
-      this.disabledButtonCreateSubtopic = true
-      this.CreateSubtopicApi()
+      this.loadingButtonUpdateSubtopic = true
+      this.disabledButtonUpdateSubtopic = true
+      this.UpdateSubtopicApi()
     },
     async ResetForm() {
-      //await this.$refs['FormCreateSubtopic']['reset']()
-      this.$nextTick(() => {
-        this.$refs['FormCreateSubtopic']['reset']()
-      })
-      this.loadingButtonCreateSubtopic = false
-      this.disabledButtonCreateSubtopic = false
+      await this.$refs['FormUpdateSubtopic']['reset']()
+      this.loadingButtonUpdateSubtopic = false
+      this.disabledButtonUpdateSubtopic = false
 
       return true
     },
     async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormCreateSubtopic']['setErrors'](errorResponse)
+      await this.$refs['FormUpdateSubtopic']['setErrors'](errorResponse)
     }
-
   }
 }

@@ -71,9 +71,13 @@ export default {
       this.UpdateOppositionApi()
     },
     async ResetForm() {
-      await this.$refs['FormUpdateOpposition']['reset']()
+      //await this.$refs['FormUpdateOpposition']['reset']()
       this.loadingButtonUpdateOpposition = false
       this.disabledButtonUpdateOpposition = false
+
+      this.$nextTick(() => {
+        this.$refs['FormUpdateOpposition']['reset']()
+      })
 
       return true
     },

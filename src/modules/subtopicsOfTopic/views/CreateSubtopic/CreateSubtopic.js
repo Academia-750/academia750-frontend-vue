@@ -3,13 +3,15 @@ import data from './component/data'
 import methods from './component/methods'
 import computed from './component/computed'
 import ActionsMethods from './component/ActionsMethods'
+import FetchDataTopicMethods from '../../mixins/FetchDataTopicMethods'
 
 const MIXINS_COMPONENT = [
   components,
   data,
   methods,
   computed,
-  ActionsMethods
+  ActionsMethods,
+  FetchDataTopicMethods
 ]
 
 export default {
