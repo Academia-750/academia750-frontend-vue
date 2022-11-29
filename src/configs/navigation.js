@@ -21,8 +21,8 @@ export default {
       items: [
         { icon: 'mdi-account-group', key: '', text: 'Gestión de Alumnos', to: { name: 'manage-students' }, can: 'list-students' },
         { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'manage-oppositions' }, can: 'list-oppositions' },
-        { icon: 'mdi-file-document-multiple', key: '', text: 'Gestión de Temas', to: { name: 'manage-topics' }, can: 'list-topics' },
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' }
+        { icon: 'mdi-file-document-multiple', key: '', text: 'Gestión de Temas', to: { name: 'manage-topics' }, can: 'list-topics' }/* ,
+        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */
       ]
     }
     /* ,
