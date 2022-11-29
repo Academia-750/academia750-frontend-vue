@@ -21,6 +21,9 @@
       <select-subtopics-by-datatable
         ref="selectSubtopicsByDatatable"
       />
+      <select-opposition-by-datatable
+        ref="selectOppositionByDatatable"
+      />
     </v-card-text>
   </v-card-text>
 </template>

@@ -20,5 +20,8 @@ export default {
   },
   getSyllabus(opposition_id, config = {}) {
     return ResourceService.get(`${resource}/${opposition_id}/relationship/syllabus`, config)
+  },
+  getOppositionsAvailableByTopic (topic_id, config = {}) {
+    return ResourceService.get(`${resource}/${topic_id}/oppositions-available`, config)
   }
 }
