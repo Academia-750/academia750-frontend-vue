@@ -7,5 +7,8 @@ export default {
   },
   SET_STATUS_LOADING_ITEMS (state, payload) {
     state.stateLoadingItems = payload
+  },
+  SET_SUBTOPICS_BY_OPPOSITION_DATATABLE (state, payload) {
+    state.subtopicsByOppositionDatatable = payload
   }
 }

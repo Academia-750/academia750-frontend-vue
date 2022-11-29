@@ -1,6 +1,7 @@
 const state = () => ({
   itemsDatatable: [],
   stateLoadingItems: false,
+  subtopicsByOppositionDatatable: [],
   informationMeta: {
     current_page: 1,
     from: 1,

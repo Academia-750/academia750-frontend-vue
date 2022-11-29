@@ -20,17 +20,5 @@ export default {
   },
   getSyllabus(opposition_id, config = {}) {
     return ResourceService.get(`${resource}/${opposition_id}/relationship/syllabus`, config)
-  },
-  actionMassiveSelection(data, config = {}) {
-    return ResourceService.post(`${resource}/mass-selection-action`, data, config)
-  },
-  export(data, config = {}) {
-    return ResourceService.post(`${resource}/export`, data, config)
-  },
-  import(data, config = {}) {
-    return ResourceService.post(`${resource}/import`, data, config)
-  },
-  downloadTemplateImport(config = {}) {
-    return ResourceService.get(`${resource}/import/template`, config)
   }
 }

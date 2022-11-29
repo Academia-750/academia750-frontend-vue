@@ -22,7 +22,7 @@
           :can-rendering-header="true"
         />
         <resource-header-crud-title
-          text-header="Gestión de Subtemas"
+          text-header="Gestión de Subtemas de un Tema"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar
@@ -31,7 +31,7 @@
           outlined
         >
           <resource-button-go-back-router/>
-          <resource-title-toolbar-datatable title-text="Gestión de Subtemas" />
+          <resource-title-toolbar-datatable title-text="Gestión de Subtemas de un Tema" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">

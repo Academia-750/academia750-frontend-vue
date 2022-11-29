@@ -1,5 +1,14 @@
 <template>
   <v-card-text>
+    <resource-header-crud-title
+      v-if="topicData !== null"
+      :text-header="getNameCurrentTopic"
+      :can-rendering-header="true"
+    />
+    <resource-header-crud-title
+      text-header="Gestion de Oposiciones de un tema"
+      :can-rendering-header="$vuetify.breakpoint.width < 700"
+    />
     <v-data-table
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
@@ -16,26 +25,21 @@
     >
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
-        <resource-header-crud-title
-          v-if="topicData !== null"
-          :text-header="getNameCurrentTopic"
-          :can-rendering-header="true"
-        />
-        <resource-header-crud-title
-          text-header="Gestion de Oposiciones"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
         <v-toolbar
           flat
           class="indigo lighten-5 my-2"
           outlined
         >
           <resource-button-go-back-router/>
-          <resource-title-toolbar-datatable title-text="Gestion de Oposiciones" />
+          <resource-title-toolbar-datatable title-text="Gestion de Oposiciones de un tema" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-opposition' }"/>
+            <resource-button-add
+              v-if="topicData !== null"
+              text-button="Agregar Oposición"
+              :config-route="{ name: 'assing-opposition-to-topic', params: { id: topicData.id } }"
+            />
           </div>
         </v-toolbar>
         <resource-text-field-search

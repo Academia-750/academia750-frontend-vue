@@ -7,5 +7,8 @@ export default {
   },
   getInformationMetaStore(state) {
     return state.informationMeta
+  },
+  getSubtopicsByOppositionDatatable(state) {
+    return state.subtopicsByOppositionDatatable
   }
 }
