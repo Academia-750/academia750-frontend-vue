@@ -2,7 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageSubtopicsModule from '@/modules/subtopicsOfTopic/views/Subtopics'
 import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
-//import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic'
+import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic'
 
 const shortcutRoutes = [
   /* {
@@ -53,15 +53,15 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          },
           {
-            path: 'update/:id',
+            path: ':id/subtopics/update/:subtopic_id',
             name: 'update-subtopic',
             component: UpdateSubtopicModule,
             meta: {
               middleware: [authMiddleware]
             }
-          } */
+          }
         ]
       }/* ,
       ...shortcutRoutes */

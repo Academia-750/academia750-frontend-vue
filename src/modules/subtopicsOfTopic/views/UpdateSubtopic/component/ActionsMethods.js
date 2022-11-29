@@ -16,7 +16,7 @@ export default {
 
         const { name } = response.data.data.attributes
 
-        this.$refs['nameSubtopicInputComponent'].name_topic = name
+        this.$refs['nameSubtopicInputComponent'].name_subtopic = name
         this.nameSubtopic = name
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -46,9 +46,9 @@ export default {
           timer: 7000
         })
 
-        this.$refs['nameSubtopicInputComponent'].name_subtopic = ''
+        /* this.$refs['nameSubtopicInputComponent'].name_subtopic = ''
         this.nameSubtopic = ''
-        this.ResetForm()
+        this.ResetForm() */
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUpdateSubtopic = false

@@ -52,7 +52,8 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            :config-route="{ name: 'update-subtopic', params: { id: item.id } }"
+            v-if="topicData !== null"
+            :config-route="{ name: 'update-subtopic', params: { id: topicData.id, subtopic_id: item.id } }"
           />
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteSubtopicConfirm(item)"
