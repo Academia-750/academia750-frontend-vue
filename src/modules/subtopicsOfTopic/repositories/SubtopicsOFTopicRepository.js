@@ -6,31 +6,16 @@ export default {
   getAllSubtopics(topic_id, config = {}) {
     return ResourceService.get(`${resource}/${topic_id}/relationship/subtopics`, config)
   },
-  get(id, config = {}) {
-    return ResourceService.get(`${resource}/${id}`, config)
+  get(topic_id, subtopic_id, config = {}) {
+    return ResourceService.get(`${resource}/${topic_id}/relationship/subtopics/${subtopic_id}`, config)
   },
-  create(data, config = {}) {
-    return ResourceService.post(`${resource}/create`, data, config)
+  create(topic_id, data, config = {}) {
+    return ResourceService.post(`${resource}/${topic_id}/relationship/subtopics/create`, data, config)
   },
-  update(id, data, config = {}) {
-    return ResourceService.patch(`${resource}/update/${id}`, data, config)
+  update(topic_id, subtopic_id, data, config = {}) {
+    return ResourceService.patch(`${resource}/${topic_id}/relationship/subtopics/${subtopic_id}/update`, data, config)
   },
-  delete(id, config = {}) {
-    return ResourceService.delete(`${resource}/delete/${id}`, config)
-  },
-  actionMassiveSelection(data, config = {}) {
-    return ResourceService.post(`${resource}/mass-selection-action`, data, config)
-  },
-  fetchTopicsGroups (config = {}) {
-    return ResourceService.get('topic-groups', config)
-  },
-  export(data, config = {}) {
-    return ResourceService.post(`${resource}/export`, data, config)
-  },
-  import(data, config = {}) {
-    return ResourceService.post(`${resource}/import`, data, config)
-  },
-  downloadTemplateImport(config = {}) {
-    return ResourceService.get(`${resource}/import/template`, config)
+  delete(topic_id, subtopic_id,config = {}) {
+    return ResourceService.delete(`${resource}/${topic_id}/relationship/subtopics/${subtopic_id}/delete`, config)
   }
 }

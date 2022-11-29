@@ -60,7 +60,7 @@ const getSubtopics = async ({ commit }, options) => {
 const createSubtopic = async (_, options) => {
   try {
 
-    const response = await SubtopicsOFTopicRepository.create(options.data)
+    const response = await SubtopicsOFTopicRepository.create(options.topic_id, options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -73,7 +73,7 @@ const createSubtopic = async (_, options) => {
 const fetchSubtopic = async (_, options) => {
 
   try {
-    const response = await SubtopicsOFTopicRepository.get(options.id, options.config)
+    const response = await SubtopicsOFTopicRepository.get(options.topic_id,options.subtopic_id,  options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -85,7 +85,7 @@ const fetchSubtopic = async (_, options) => {
 
 const updateSubtopic = async (_, options) => {
   try {
-    const response = await SubtopicsOFTopicRepository.update(options.id, options.data, options.config)
+    const response = await SubtopicsOFTopicRepository.update(options.topic_id, options.subtopic_id, options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -97,7 +97,7 @@ const updateSubtopic = async (_, options) => {
 
 const deleteSubtopic = async (_, options) => {
   try {
-    const response = await SubtopicsOFTopicRepository.delete(options.id, options.config)
+    const response = await SubtopicsOFTopicRepository.delete(options.topic_id, options.subtopic_id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
