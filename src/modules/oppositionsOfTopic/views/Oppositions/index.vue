@@ -53,8 +53,9 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            v-if="topicData !== null"
             text-button="Editar subtemas"
-            :config-route="{ name: 'update-opposition', params: { id: item.id } }"
+            :config-route="{ name: 'update-subtopics-opposition-by-topic', params: { id: topicData.id, opposition_id: item.id } }"
           />
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteOppositionConfirm(item)"

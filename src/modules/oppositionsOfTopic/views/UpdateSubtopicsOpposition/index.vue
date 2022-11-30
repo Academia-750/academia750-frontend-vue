@@ -6,16 +6,16 @@
       :can-rendering-header="true"
     />
     <resource-header-crud-title
-      text-header="Agregar a Oposición"
-      :can-rendering-header="$vuetify.breakpoint.width < 420"
+      text-header="Actualizar subtemas de la Oposición"
+      :can-rendering-header="$vuetify.breakpoint.width < 620"
     />
     <v-toolbar
       flat
       class="indigo lighten-5 my-2"
       outlined
     >
-      <resource-button-go-back-router :width-number-limit="300"/>
-      <resource-title-toolbar-datatable :width-limit-toolbar-title="420" title-text="Agregar a Oposición" />
+      <resource-button-go-back-router :width-number-limit="325"/>
+      <resource-title-toolbar-datatable :width-limit-toolbar-title="620" title-text="Actualizar subtemas de la Oposición" />
     </v-toolbar>
     <v-card-text>
       <v-expansion-panels
@@ -26,21 +26,11 @@
       >
         <v-expansion-panel>
           <v-expansion-panel-header>
-            Elegir subtemas
+            Actualizar subtemas
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <select-subtopics-by-datatable
               ref="selectSubtopicsByDatatable"
-            />
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Elegir Oposición
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <select-opposition-by-datatable
-              ref="selectOppositionByDatatable"
             />
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -52,15 +42,15 @@
           dark
           small
           color="success"
-          @click="AssignOpposition"
+          @click="UpdateSubtopicsOpposition"
         >
-          <span>Agregar</span>
+          <span>Actualizar</span>
           <v-icon
             class="ml-1"
             small
             dark
           >
-            mdi-plus
+            mdi-pencil
           </v-icon>
         </v-btn>
       </div>
@@ -68,4 +58,4 @@
   </v-card-text>
 </template>
 
-<script src="./AssignOpposition.js"></script>
+<script src="./UpdateSubtopicsOpposition.js"></script>

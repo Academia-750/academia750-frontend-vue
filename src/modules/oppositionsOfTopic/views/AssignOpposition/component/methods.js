@@ -1,20 +1,20 @@
 export default {
   methods: {
     AssignOpposition () {
-      this.$refs['FormCreateOpposition'].validate().then( (status) => {
-        if (!status) {
-          this.$swal.fire({
-            icon: 'error',
-            toast: true,
-            title: 'Por favor, complete correctamente los campos del formulario.',
-            showConfirmButton: true,
-            confirmButtonText: 'Entendido',
-            timer: 7500
-          })
+      const opposition = this.$refs['selectOppositionByDatatable'].oppositionSelected
 
-          return
-        }
-      } )
+      if (Array.isArray(opposition) && opposition.length === 0) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, seleccione la Oposición a agregar.',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 7500
+        })
+
+        return
+      }
       this.$loadingApp.enableLoadingProgressLinear()
       this.loadingButtonCreateOpposition = true
       this.disabledButtonCreateOpposition = true

@@ -4,10 +4,7 @@ export default {
       loadingButtonCreateOpposition: false,
       disabledButtonCreateOpposition: false,
       topicData: null,
-      form: {
-        nameOpposition: '',
-        periodOpposition: ''
-      }
+      expandibleSections: [0,1]
     }
   }
 }

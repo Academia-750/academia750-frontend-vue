@@ -57,6 +57,20 @@ const getOppositionsAvailableByTopic = async ({ commit }, options) => {
   }
 }
 
+const getSubtopicsOfOppositionsByTopic = async (_, options) => {
+  try {
+
+    const response = await OppositionsOfTopicRepository.getSubtopicsOfOppositionsByTopic(options.topic_id, options.opposition_id, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const getOppositions = async ({ commit }, options) => {
 
   try {
@@ -93,10 +107,10 @@ const getOppositions = async ({ commit }, options) => {
   }
 }
 
-const createOpposition = async (_, options) => {
+const assignOppositionTopic = async (_, options) => {
   try {
 
-    const response = await OppositionsOfTopicRepository.create(options.data)
+    const response = await OppositionsOfTopicRepository.assignOppositionWithSubtopicsByTopic(options.topic_id,options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -143,11 +157,30 @@ const deleteOpposition = async (_, options) => {
   }
 }
 
+const updateSubtopicsOfOppositionByTopic = async (_, options) => {
+  try {
+    const response = await OppositionsOfTopicRepository.updateSubtopicsOfOppositionByTopic(
+      options.topic_id,
+      options.opposition_id,
+      options.data,
+      options.config
+    )
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getOppositions,
-  createOpposition,
+  assignOppositionTopic,
   fetchOpposition,
   updateOpposition,
   deleteOpposition,
-  getOppositionsAvailableByTopic
+  getOppositionsAvailableByTopic,
+  getSubtopicsOfOppositionsByTopic,
+  updateSubtopicsOfOppositionByTopic
 }

@@ -9,8 +9,8 @@ export default {
   get(id, config = {}) {
     return ResourceService.get(`${resource}/${id}`, config)
   },
-  create(data, config = {}) {
-    return ResourceService.post(`${resource}/create`, data, config)
+  assignOppositionWithSubtopicsByTopic(topic_id, data, config = {}) {
+    return ResourceService.post(`${resource}/${topic_id}/relationship/oppositions/assign`, data, config)
   },
   update(id, data, config = {}) {
     return ResourceService.patch(`${resource}/update/${id}`, data, config)
@@ -23,5 +23,13 @@ export default {
   },
   getOppositionsAvailableByTopic (topic_id, config = {}) {
     return ResourceService.get(`${resource}/${topic_id}/oppositions-available`, config)
+  },
+  getSubtopicsOfOppositionsByTopic (topic_id, opposition_id, config = {}) {
+    return ResourceService.get(`${resource}/${topic_id}/relationship/oppositions/${opposition_id}/subtopics`, config)
+    /* topics/{topic}/relationship/oppositions/{opposition}/subtopics */
+  },
+  updateSubtopicsOfOppositionByTopic (topic_id, opposition_id, data, config = {}) {
+    return ResourceService.patch(`${resource}/${topic_id}/relationship/oppositions/${opposition_id}/update/subtopics`, data, config)
+    /* topics/{topic}/relationship/oppositions/{opposition}/subtopics */
   }
 }

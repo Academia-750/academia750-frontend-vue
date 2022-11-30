@@ -1,27 +1,47 @@
+/* eslint-disable prefer-destructuring */
 import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('oppositionsService', ['createOpposition']),
-
+    ...mapActions('oppositionsOfTopicService', ['assignOppositionTopic']),
     async AssignOppositionApi () {
       try {
-        await this.createOpposition({
-          data: {
-            'name': this.form.nameOpposition,
-            'period': this.form.periodOpposition
+        const subtopicsSelected = this.$refs['selectSubtopicsByDatatable'].subtopicsSelected
+        const opposition = this.$refs['selectOppositionByDatatable'].oppositionSelected[0]
+        let subtopics_id = null
+        let dataRequest = {
+          'opposition-id': opposition.id
+        }
+
+        if (Array.isArray(subtopicsSelected) && subtopicsSelected.length > 0) {
+          subtopics_id = subtopicsSelected.map((item) => {
+            return item.id
+          })
+
+          dataRequest = {
+            'opposition-id': opposition.id,
+            'subtopics': subtopics_id
           }
+        }
+
+        await this.assignOppositionTopic({
+          topic_id: this.$route.params.id,
+          data: dataRequest,
+          config: {}
         })
 
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'La oposición ha sido creada con éxito.',
-          timer: 3000
+          title: 'La oposición ha sido agregada con éxito.',
+          timer: 7000
         })
 
         this.$router.push({
-          name: 'manage-oppositions'
+          name: 'manage-oppositions-of-topic',
+          params: {
+            id: this.$route.params.id
+          }
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -40,10 +60,10 @@ export default {
             confirmButtonText: '¡Entendido!',
             timer: 7500
           })
-        } else if (error.response?.status === 422) {
+        } /* else if (error.response?.status === 422) {
           this.ResetForm()
           this.handlingErrorValidation(error.response.data.errors)
-        }
+        } */
       }
     }
   }

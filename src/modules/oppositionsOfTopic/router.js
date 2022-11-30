@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageOppositionsModule from '@/modules/oppositionsOfTopic/views/Oppositions'
 import ManageAssignOppositionToTopic from '@/modules/oppositionsOfTopic/views/AssignOpposition'
+import ManageUpdateSubtopicsOppositionByTopic from '@/modules/oppositionsOfTopic/views/UpdateSubtopicsOpposition'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
@@ -51,6 +52,14 @@ const moduleRoute = [
             path: ':id/opposition/assing',
             name: 'assing-opposition-to-topic',
             component: ManageAssignOppositionToTopic,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/opposition/:opposition_id/subtopics/update',
+            name: 'update-subtopics-opposition-by-topic',
+            component: ManageUpdateSubtopicsOppositionByTopic,
             meta: {
               middleware: [authMiddleware]
             }
