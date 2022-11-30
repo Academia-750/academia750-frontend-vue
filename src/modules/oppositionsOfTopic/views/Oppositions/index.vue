@@ -58,7 +58,7 @@
             :config-route="{ name: 'update-subtopics-opposition-by-topic', params: { id: topicData.id, opposition_id: item.id } }"
           />
           <resource-button-delete
-            @actionConfirmShowDialogDelete="deleteOppositionConfirm(item)"
+            @actionConfirmShowDialogDelete="unassignOppositionConfirm(item)"
           />
 
         </div>
@@ -70,7 +70,7 @@
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
       title="¿Estás seguro de eliminar la Oposición?"
-      @actionDelete="deleteOppositionAction"
+      @actionDelete="unassignOppositionAction"
     >
       <template #identifier-record>
         <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">

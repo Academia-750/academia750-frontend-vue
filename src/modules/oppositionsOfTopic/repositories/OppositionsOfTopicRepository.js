@@ -31,5 +31,8 @@ export default {
   updateSubtopicsOfOppositionByTopic (topic_id, opposition_id, data, config = {}) {
     return ResourceService.patch(`${resource}/${topic_id}/relationship/oppositions/${opposition_id}/update/subtopics`, data, config)
     /* topics/{topic}/relationship/oppositions/{opposition}/subtopics */
+  },
+  unassignOppositionOfTopic (topic_id, opposition_id, config = {}) {
+    return ResourceService.delete(`${resource}/${topic_id}/relationship/oppositions/${opposition_id}/delete`, config)
   }
 }

@@ -174,6 +174,22 @@ const updateSubtopicsOfOppositionByTopic = async (_, options) => {
   }
 }
 
+const unassignOppositionOfTopic = async (_, options) => {
+  try {
+    const response = await OppositionsOfTopicRepository.unassignOppositionOfTopic(
+      options.topic_id,
+      options.opposition_id,
+      options.config
+    )
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getOppositions,
   assignOppositionTopic,
@@ -182,5 +198,6 @@ export default {
   deleteOpposition,
   getOppositionsAvailableByTopic,
   getSubtopicsOfOppositionsByTopic,
-  updateSubtopicsOfOppositionByTopic
+  updateSubtopicsOfOppositionByTopic,
+  unassignOppositionOfTopic
 }

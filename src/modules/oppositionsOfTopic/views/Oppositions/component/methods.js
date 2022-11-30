@@ -11,7 +11,7 @@ export default {
         this.topicData = response.data.meta.topic
       } )
     },
-    deleteOppositionConfirm (item) {
+    unassignOppositionConfirm (item) {
       this.currentItemsSelectedForDelete = item
       this.$refs['dialogConfirmDeleteAction'].showDialog = true
     }

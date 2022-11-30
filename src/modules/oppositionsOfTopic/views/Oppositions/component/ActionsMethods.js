@@ -2,22 +2,23 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('oppositionsOfTopicService', ['getOppositions', 'deleteOpposition']),
-    async deleteOppositionAction () {
+    ...mapActions('oppositionsOfTopicService', ['getOppositions', 'unassignOppositionOfTopic']),
+    async unassignOppositionAction () {
       if (this.currentItemsSelectedForDelete === null || this.currentItemsSelectedForDelete === undefined) {
         return
       }
 
       try {
-        await this.deleteOpposition({
-          id: this.currentItemsSelectedForDelete.id,
+        await this.unassignOppositionOfTopic({
+          topic_id: this.$route.params.id,
+          opposition_id: this.currentItemsSelectedForDelete.id,
           config: {}
         })
 
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'La oposición ha sido eliminada con éxito.',
+          title: 'La oposición ha sido eliminada del tema con éxito.',
           timer: 3000
         })
 
