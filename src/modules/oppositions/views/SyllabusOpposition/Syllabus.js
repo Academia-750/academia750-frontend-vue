@@ -34,7 +34,6 @@ export default {
         this.mapItemsSyllabus(response)
         this.openTreeviews = []
         this.searchWord = ''
-        console.log(response)
         this.$loadingApp.disabledLoadingProgressLinear()
       } catch (error) {
         this.openTreeviews = []
