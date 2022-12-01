@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <v-card-text class="ma-0 pa-0">
     <v-data-table
       v-model="oppositionSelected"
       :loading="stateLoadingItems"
@@ -26,13 +26,14 @@
         />
         <v-toolbar
           flat
-          class="indigo lighten-5 my-2"
+          class="blue lighten-4 my-2"
           outlined
         >
           <resource-title-toolbar-datatable title-text="Selecciona la oposición" />
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
+          label-text-field="Buscar oposiciones"
           @emitSearchWord="searchFieldExecuted"
         />
       </template>

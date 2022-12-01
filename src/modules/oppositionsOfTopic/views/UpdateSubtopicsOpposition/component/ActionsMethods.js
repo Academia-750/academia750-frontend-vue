@@ -22,6 +22,8 @@ export default {
           }
         })
 
+        this.oppositionData = response.data.meta.opposition
+
         this.$refs['selectSubtopicsByDatatable'].subtopicsSelected = subtopics_id_selected_opposition
 
         this.$loadingApp.disabledLoadingProgressLinear()

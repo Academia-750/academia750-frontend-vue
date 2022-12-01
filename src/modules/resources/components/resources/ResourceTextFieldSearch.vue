@@ -5,7 +5,7 @@
     <v-text-field
       v-model="manageSearchWord"
       class="mx-3"
-      label="Buscar"
+      :label="labelTextField"
       solo
       filled
       outlined
@@ -44,6 +44,10 @@ export default {
           'my-2': true
         }
       }
+    },
+    labelTextField: {
+      type: String,
+      default: 'Buscar'
     }
   },
   data () {

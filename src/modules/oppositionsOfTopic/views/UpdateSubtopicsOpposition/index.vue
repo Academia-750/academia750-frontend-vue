@@ -6,8 +6,9 @@
       :can-rendering-header="true"
     />
     <resource-header-crud-title
-      text-header="Actualizar subtemas de la Oposición"
-      :can-rendering-header="$vuetify.breakpoint.width < 620"
+      v-if="oppositionData !== null"
+      :text-header="getNameCurrentOpposition"
+      :can-rendering-header="true"
     />
     <v-toolbar
       flat
@@ -17,24 +18,10 @@
       <resource-button-go-back-router :width-number-limit="325"/>
       <resource-title-toolbar-datatable :width-limit-toolbar-title="620" title-text="Actualizar subtemas de la Oposición" />
     </v-toolbar>
-    <v-card-text>
-      <v-expansion-panels
-        v-model="expandibleSections"
-        multiple
-        inset
-        focusable
-      >
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Actualizar subtemas
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <select-subtopics-by-datatable
-              ref="selectSubtopicsByDatatable"
-            />
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+    <v-card-text class="ma-0 pa-0">
+      <select-subtopics-by-datatable
+        ref="selectSubtopicsByDatatable"
+      />
 
       <div class="d-flex justify-end">
         <v-btn

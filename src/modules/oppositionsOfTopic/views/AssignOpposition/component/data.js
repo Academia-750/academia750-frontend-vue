@@ -3,8 +3,7 @@ export default {
     return {
       loadingButtonCreateOpposition: false,
       disabledButtonCreateOpposition: false,
-      topicData: null,
-      expandibleSections: [0,1]
+      topicData: null
     }
   }
 }

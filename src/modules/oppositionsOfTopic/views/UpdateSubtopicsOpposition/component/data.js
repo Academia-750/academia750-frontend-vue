@@ -4,7 +4,7 @@ export default {
       loadingButtonUpdateOpposition: false,
       disabledButtonUpdateOpposition: false,
       topicData:null,
-      expandibleSections: [0]
+      oppositionData: null
     }
   }
 }

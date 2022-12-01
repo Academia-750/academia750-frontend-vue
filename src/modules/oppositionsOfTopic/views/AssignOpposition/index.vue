@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <v-card-text class="ma-0 pa-0">
     <resource-header-crud-title
       v-if="topicData !== null"
       :text-header="getNameCurrentTopic"
@@ -18,33 +18,12 @@
       <resource-title-toolbar-datatable :width-limit-toolbar-title="420" title-text="Agregar a Oposición" />
     </v-toolbar>
     <v-card-text>
-      <v-expansion-panels
-        v-model="expandibleSections"
-        multiple
-        inset
-        focusable
-      >
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Elegir subtemas
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <select-subtopics-by-datatable
-              ref="selectSubtopicsByDatatable"
-            />
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Elegir Oposición
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <select-opposition-by-datatable
-              ref="selectOppositionByDatatable"
-            />
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      <select-subtopics-by-datatable
+        ref="selectSubtopicsByDatatable"
+      />
+      <select-opposition-by-datatable
+        ref="selectOppositionByDatatable"
+      />
 
       <div class="d-flex justify-end">
         <v-btn
