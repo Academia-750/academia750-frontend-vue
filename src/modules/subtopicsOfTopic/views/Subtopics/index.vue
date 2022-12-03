@@ -1,5 +1,24 @@
 <template>
   <v-card-text>
+    <div class="d-flex justify-end my-2">
+      <v-btn
+        class="mx-1 white--text"
+        dark
+        small
+        color="secondary"
+        @click="
+          $router.push({
+            name: 'manage-subtopics-of-topic',
+            params: {
+              id: item.id
+            }
+          })
+        "
+      >
+        <span>Importar Preguntas</span>
+        <v-icon class="ml-1" small dark> mdi-plus </v-icon>
+      </v-btn>
+    </div>
     <v-data-table
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"

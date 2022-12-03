@@ -3,7 +3,7 @@
     <!-- Layout component -->
     <template v-if="responseError">
       <transition name="scale" mode="out-in">
-        <handle-errors :error-response="responseError"/>
+        <handle-errors :error-response="responseError" />
       </transition>
     </template>
     <template v-else>
@@ -15,9 +15,20 @@
       </component>
     </template>
 
-    <v-snackbar v-model="toast.show" :timeout="toast.timeout" :color="toast.color" bottom>
+    <v-snackbar
+      v-model="toast.show"
+      :timeout="toast.timeout"
+      :color="toast.color"
+      bottom
+    >
       {{ toast.message }}
-      <v-btn v-if="toast.timeout === 0" color="white" text @click="toast.show = false">{{ $t('common.close') }}</v-btn>
+      <v-btn
+        v-if="toast.timeout === 0"
+        color="white"
+        text
+        @click="toast.show = false"
+        >{{ $t('common.close') }}</v-btn
+      >
     </v-snackbar>
 
     <!-- Demo customization menu -->
@@ -41,6 +52,7 @@ import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
 import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
+import ResourceService from '@/services/ResourceService'
 
 /*
 |---------------------------------------------------------------------
@@ -64,18 +76,25 @@ export default {
   computed: {
     ...mapState('app', ['toast']),
     ...mapState('errorsService', ['responseError']),
-    isRouterLoaded: function() {
+    isRouterLoaded: function () {
       if (this.$route.name !== null) return true
 
       return false
     },
-    currentLayout: function() {
+    currentLayout: function () {
       const layout = this.$route.meta.layout || 'default'
 
       return layout + 'Layout'
     }
+  },
+  mounted() {
+    /* ResourceService.post('/test/errors-validation/manually', {
+      dni: '1234567891012',
+      age: 200
+    })
+      .then((response) => console.trace(response))
+      .catch((error) => console.trace(error.response)) */
   }
-
 }
 </script>
 

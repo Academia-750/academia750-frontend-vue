@@ -1,5 +1,41 @@
 <template>
   <v-card-text>
+    <div class="d-flex justify-end my-2">
+      <v-btn
+        class="mx-1 white--text"
+        dark
+        small
+        color="success"
+        @click="
+          $router.push({
+            name: 'manage-subtopics-of-topic',
+            params: {
+              id: item.id
+            }
+          })
+        "
+      >
+        <span>Importar Temas</span>
+        <v-icon class="ml-1" small dark> mdi-plus </v-icon>
+      </v-btn>
+      <v-btn
+        class="mx-1 white--text"
+        dark
+        small
+        color="primary"
+        @click="
+          $router.push({
+            name: 'manage-subtopics-of-topic',
+            params: {
+              id: item.id
+            }
+          })
+        "
+      >
+        <span>Importar Subtemas</span>
+        <v-icon class="ml-1" small dark> mdi-plus </v-icon>
+      </v-btn>
+    </div>
     <v-data-table
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
@@ -20,17 +56,13 @@
           text-header="Gestión de temas"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
-        <v-toolbar
-          flat
-          class="indigo lighten-5 my-2"
-          outlined
-        >
-          <resource-button-go-back-router/>
+        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+          <resource-button-go-back-router />
           <resource-title-toolbar-datatable title-text="Gestión de temas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-topic' }"/>
+            <resource-button-add :config-route="{ name: 'create-topic' }" />
           </div>
         </v-toolbar>
         <resource-text-field-search
@@ -39,7 +71,7 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable/>
+        <resource-banner-no-data-datatable />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -50,7 +82,6 @@
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteTopicConfirm(item)"
           />
-
         </div>
       </template>
       <template v-slot:[`item.manage-subtopics`]="{ item }">
@@ -60,14 +91,16 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
-          @click="$router.push({
-            name: 'manage-subtopics-of-topic',
-            params: {
-              id: item.id
-            }
-          })"
+          @click="
+            $router.push({
+              name: 'manage-subtopics-of-topic',
+              params: {
+                id: item.id
+              }
+            })
+          "
         >
-          <span >Subtemas</span>
+          <span>Subtemas</span>
           <v-icon
             v-if="can_rendering_icon_button"
             class="ml-1"
@@ -78,7 +111,6 @@
             mdi-eye
           </v-icon>
         </v-btn>
-
       </template>
       <template v-slot:[`item.manage-oppositions`]="{ item }">
         <v-btn
@@ -87,14 +119,16 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
-          @click="$router.push({
-            name: 'manage-oppositions-of-topic',
-            params: {
-              id: item.id
-            }
-          })"
+          @click="
+            $router.push({
+              name: 'manage-oppositions-of-topic',
+              params: {
+                id: item.id
+              }
+            })
+          "
         >
-          <span >Oposiciones</span>
+          <span>Oposiciones</span>
           <v-icon
             v-if="can_rendering_icon_button"
             class="ml-1"
@@ -105,7 +139,6 @@
             mdi-eye
           </v-icon>
         </v-btn>
-
       </template>
       <template v-slot:[`item.manage-questions`]="{ item }">
         <v-btn
@@ -114,14 +147,16 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
-          @click="$router.push({
-            name: 'manage-questions-of-topic',
-            params: {
-              id: item.id
-            }
-          })"
+          @click="
+            $router.push({
+              name: 'manage-questions-of-topic',
+              params: {
+                id: item.id
+              }
+            })
+          "
         >
-          <span >Preguntas</span>
+          <span>Preguntas</span>
           <v-icon
             v-if="can_rendering_icon_button"
             class="ml-1"
@@ -132,7 +167,6 @@
             mdi-eye
           </v-icon>
         </v-btn>
-
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
@@ -141,8 +175,14 @@
       @actionDelete="deleteTopicAction"
     >
       <template #identifier-record>
-        <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
-          <span class="mr-1 font-italic subtitle-1">Tema:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete.name }}</span>
+        <div
+          v-if="currentItemsSelectedForDelete"
+          class="d-flex justify-center align-center"
+        >
+          <span class="mr-1 font-italic subtitle-1">Tema:</span>
+          <span class="font-weight-bold subtitle-1">{{
+            currentItemsSelectedForDelete.name
+          }}</span>
         </div>
       </template>
     </resource-dialog-confirm-delete>

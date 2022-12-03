@@ -20,17 +20,13 @@
           text-header="Gestión de Subtemas"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
-        <v-toolbar
-          flat
-          class="indigo lighten-5 my-2"
-          outlined
-        >
-          <resource-button-go-back-router/>
+        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+          <resource-button-go-back-router />
           <resource-title-toolbar-datatable title-text="Gestión de Subtemas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-subtopic' }"/>
+            <resource-button-add :config-route="{ name: 'create-subtopic' }" />
           </div>
         </v-toolbar>
         <resource-text-field-search
@@ -39,7 +35,7 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable/>
+        <resource-banner-no-data-datatable />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -49,7 +45,6 @@
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteSubtopicConfirm(item)"
           />
-
         </div>
       </template>
     </v-data-table>
@@ -59,8 +54,14 @@
       @actionDelete="deleteSubtopicAction"
     >
       <template #identifier-record>
-        <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
-          <span class="mr-1 font-italic subtitle-1">Subtema:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete.name }}</span>
+        <div
+          v-if="currentItemsSelectedForDelete"
+          class="d-flex justify-center align-center"
+        >
+          <span class="mr-1 font-italic subtitle-1">Subtema:</span>
+          <span class="font-weight-bold subtitle-1">{{
+            currentItemsSelectedForDelete.name
+          }}</span>
         </div>
       </template>
     </resource-dialog-confirm-delete>
