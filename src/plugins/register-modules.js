@@ -9,6 +9,7 @@ import topics from '@/modules/topics'
 import students from '@/modules/students'
 import subtopicsOfTopic from '@/modules/subtopicsOfTopic'
 import oppositionsOfTopic from '@/modules/oppositionsOfTopic'
+import questionsTopic from '@/modules/questionsTopic'
 
 registerModules({
   errors,
@@ -20,5 +21,6 @@ registerModules({
   topics,
   students,
   subtopicsOfTopic,
-  oppositionsOfTopic
+  oppositionsOfTopic,
+  questionsTopic
 })
