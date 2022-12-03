@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import ManageTopicsModule from '@/modules/topics/views/Topics'
 import CreateTopicModule from '@/modules/topics/views/CreateTopic'
 import UpdateTopicModule from '@/modules/topics/views/UpdateTopic'
+import importTopics from '@/modules/topics/views/import'
 
 const shortcutRoutes = [
   {
@@ -59,6 +60,14 @@ const moduleRoute = [
             path: 'update/:id',
             name: 'update-topic',
             component: UpdateTopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'imports/topics',
+            name: 'import-topics',
+            component: importTopics,
             meta: {
               middleware: [authMiddleware]
             }

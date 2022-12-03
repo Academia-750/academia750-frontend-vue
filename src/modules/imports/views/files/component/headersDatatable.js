@@ -20,6 +20,14 @@ export default {
         },
         {
           position: 3,
+          sortable: true,
+          text: 'Fecha de inicio',
+          align: 'center',
+          value: 'created-at',
+          show: true
+        },
+        {
+          position: 4,
           sortable: false,
           text: 'Acciones',
           align: 'center',

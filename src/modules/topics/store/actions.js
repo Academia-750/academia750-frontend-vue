@@ -120,11 +120,25 @@ const fetchTopicGroups = async (_, options) => {
   }
 }
 
+const importTopicsCSV = async (_, options) => {
+  try {
+
+    const response = await TopicRepository.import(options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getTopics,
   createTopic,
   fetchTopic,
   updateTopic,
   deleteTopic,
-  fetchTopicGroups
+  fetchTopicGroups,
+  importTopicsCSV
 }

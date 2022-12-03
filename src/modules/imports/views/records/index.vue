@@ -34,6 +34,29 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
+      <template v-slot:[`item.has-errors`]="{ item }">
+        <v-chip
+          v-if="item['has-errors']"
+          dark
+          small
+          class="ma-2"
+          color="red"
+          text-color="white"
+        >
+          <v-icon small dark class="mr-1"> mdi-cancel </v-icon>
+          Error
+        </v-chip>
+        <v-chip 
+          v-else 
+          small 
+          dark 
+          class="ma-2" 
+          color="green"
+        >
+          <v-icon small dark class="mr-1"> mdi-check </v-icon>
+          Completado
+        </v-chip>
+      </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit

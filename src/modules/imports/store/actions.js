@@ -1,5 +1,4 @@
 import ImportsRepository from '../repositories/ImportsRepository'
-import records from '../views/records/records'
 
 const mapItemsDatatableFromApiImportProcesses = (itemsApi) => {
   return itemsApi.map((record) => {
@@ -9,7 +8,8 @@ const mapItemsDatatableFromApiImportProcesses = (itemsApi) => {
     return {
       id: record.id,
       'name-file': record.attributes.name_file,
-      'total-number-of-records': has_records ? total_number_records : 'Sin informacion'
+      'total-number-of-records': has_records ? total_number_records : 'Sin informacion',
+      'created-at': record.attributes.created_at
     }
   })
 }
@@ -20,8 +20,9 @@ const mapItemsDatatableFromApiImportRecord = (itemsApi) => {
       id: record.id,
       'number-of-row': record.attributes.number_of_row,
       'reference-number': record.attributes.reference_number,
-      'has_errors': record.attributes.has_errors,
-      'errors_validation': record.attributes.errors_validation
+      'has-errors': record.attributes.has_errors,
+      'errors_validation': record.attributes.errors_validation,
+      'created-at': record.attributes.created_at
     }
   })
 }

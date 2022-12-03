@@ -20,10 +20,18 @@ export default {
         },
         {
           position: 3,
-          text: 'Estado de carga',
-          align: 'start',
           sortable: true,
-          value: 'has_errors',
+          text: 'Fecha de registro',
+          align: 'center',
+          value: 'created-at',
+          show: true
+        },
+        {
+          position: 4,
+          text: 'Estado de carga',
+          align: 'center',
+          sortable: true,
+          value: 'has-errors',
           show: true
         }
         /* ,
