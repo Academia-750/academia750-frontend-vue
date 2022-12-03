@@ -15,30 +15,25 @@
       :footer-props="get_footer_props"
     >
       <template v-slot:top>
-        <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <resource-header-crud-title
           v-if="topicData !== null"
           :text-header="getNameCurrentTopic"
           :can-rendering-header="true"
         />
         <resource-header-crud-title
-          text-header="Gestión de Subtemas de un Tema"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
+          v-if="subtopicData !== null"
+          :text-header="getNameCurrentSubtopic"
+          :can-rendering-header="true"
         />
+        <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <resource-button-go-back-router />
-          <resource-title-toolbar-datatable
-            title-text="Gestión de Subtemas de un Tema"
-          />
+          <resource-title-toolbar-datatable title-text="Gestión de preguntas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null"
-              :config-route="{
-                name: 'create-subtopic',
-                params: { id: topicData.id }
-              }"
+              :config-route="{ name: 'create-question-topic' }"
             />
           </div>
         </v-toolbar>
@@ -53,40 +48,26 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            v-if="topicData !== null"
-            :config-route="{
-              name: 'update-subtopic',
-              params: { id: topicData.id, subtopic_id: item.id }
-            }"
+            color-button="blue darken-1"
+            :config-route="{ name: 'update-topic', params: { id: item.id } }"
           />
           <resource-button-delete
-            @actionConfirmShowDialogDelete="deleteSubtopicConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
         </div>
-      </template>
-      <template v-slot:[`item.manage-questions`]="{ item }">
-        <resource-button-edit
-          v-if="topicData !== null"
-          text-button="Alta de preguntas"
-          color-button="primary"
-          :config-route="{
-            name: 'manage-questions-of-subtopic',
-            params: { id: topicData.id, subtopic_id: item.id }
-          }"
-        />
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
-      title="¿Estás seguro de eliminar el Subtema?"
-      @actionDelete="deleteSubtopicAction"
+      title="¿Estás seguro de eliminar la pregunta?"
+      @actionDelete="deleteQuestionAction"
     >
       <template #identifier-record>
         <div
           v-if="currentItemsSelectedForDelete"
           class="d-flex justify-center align-center"
         >
-          <span class="mr-1 font-italic subtitle-1">Subtema:</span>
+          <span class="mr-1 font-italic subtitle-1">Pregunta:</span>
           <span class="font-weight-bold subtitle-1">{{
             currentItemsSelectedForDelete.name
           }}</span>
@@ -96,5 +77,5 @@
   </v-card-text>
 </template>
 
-<script src="./Subtopic.js"></script>
-<style src="./Subtopic.css"></style>
+<script src="./QuestionsTopic.js"></script>
+<style src="./QuestionsTopic.css"></style>
