@@ -24,6 +24,14 @@ export default {
         { icon: 'mdi-file-document-multiple', key: '', text: 'Gestión de Temas', to: { name: 'manage-topics' }, can: 'list-topics' }/* ,
         { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */
       ]
+    },
+    {
+      text: 'Sistema',
+      key: '',
+      roles: 'admin',
+      items: [
+        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Mis importaciones', to: { name: 'manage-students' }, roles: 'admin' }
+      ]
     }
     /* ,
     {
