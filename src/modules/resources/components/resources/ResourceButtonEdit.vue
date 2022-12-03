@@ -8,7 +8,7 @@
       :color="colorButton"
       @click="pushRouteEditEdit"
     >
-      <span >{{ textButton }}</span>
+      <span>{{ textButton }}</span>
       <v-icon
         v-if="can_rendering_icon_button"
         class="ml-1"
@@ -16,7 +16,7 @@
         :small="can_rendering_icon_small"
         dark
       >
-        mdi-pencil
+        {{ iconButton }}
       </v-icon>
     </v-btn>
   </div>
@@ -44,19 +44,21 @@ export default {
     textButton: {
       type: String,
       default: 'Editar'
+    },
+    iconButton: {
+      type: String,
+      default: 'mdi-pencil'
     }
   },
   methods: {
-    pushRouteEditEdit () {
+    pushRouteEditEdit() {
       if (this.onlyDispatchClickEvent) {
         this.$emit('DispatchClickEvent')
 
         return
       }
 
-      this.$router.push(
-        this.configRoute
-      )
+      this.$router.push(this.configRoute)
     }
   }
 }

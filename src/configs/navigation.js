@@ -30,7 +30,7 @@ export default {
       key: '',
       roles: 'admin',
       items: [
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Mis importaciones', to: { name: 'manage-students' }, roles: 'admin' }
+        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Mis importaciones', to: { name: 'my-imports-files' }, roles: 'admin' }
       ]
     }
     /* ,
