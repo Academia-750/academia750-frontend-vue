@@ -22,7 +22,12 @@ export default {
         { icon: 'mdi-account-group', key: '', text: 'Gestión de Alumnos', to: { name: 'manage-students' }, can: 'list-students' },
         { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'manage-oppositions' }, can: 'list-oppositions' },
         { icon: 'mdi-file-document-multiple', key: '', text: 'Gestión de Temas', to: { name: 'manage-topics' }, can: 'list-topics' }/* ,
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */
+        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */,
+        {
+          icon: 'mdi-database-import', key: '', text: 'Importar', roles: 'admin', regex: /^\/Importar/, items: [
+            { icon: 'mdi-database-plus', key: '', text: 'Importar Temas', to: { name: 'import-topics' }, roles: 'admin' }
+          ]
+        }
       ]
     },
     {
@@ -30,7 +35,7 @@ export default {
       key: '',
       roles: 'admin',
       items: [
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Mis importaciones', to: { name: 'my-imports-files' }, roles: 'admin' }
+        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Bitácora de importaciones', to: { name: 'my-imports-files' }, roles: 'admin' }
       ]
     }
     /* ,

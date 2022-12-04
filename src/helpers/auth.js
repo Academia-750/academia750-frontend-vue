@@ -10,7 +10,8 @@ export const $set_token_auth = function (token) {
 
   const options = {
     expires: 3,
-    domain: IsDevelopmentEnviroment ? DOMAIN_APP_DEVELOPMENT : DOMAIN_APP_PRODUCTION
+    domain: IsDevelopmentEnviroment ? DOMAIN_APP_DEVELOPMENT : DOMAIN_APP_PRODUCTION,
+    sameSite: 'Lax'
   }
 
   Cookies.set('authorization', tokenPlainEncrypt, options)
