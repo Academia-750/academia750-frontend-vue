@@ -12,6 +12,14 @@ export default {
         },
         {
           position: 2,
+          sortable: false,
+          text: 'Motivo',
+          align: 'center',
+          value: 'category',
+          show: true
+        },
+        {
+          position: 2,
           sortable: true,
           text: 'Número de registros',
           align: 'center',

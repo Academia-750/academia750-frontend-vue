@@ -8,6 +8,7 @@ const mapItemsDatatableFromApiImportProcesses = (itemsApi) => {
     return {
       id: record.id,
       'name-file': record.attributes.name_file,
+      'category': record.attributes.category,
       'total-number-of-records': has_records ? total_number_of_records : 'Sin informacion',
       'total-number-failed-records': has_records ? total_number_failed_records : 'Sin informacion',
       'total-number-successful-records': has_records ? total_number_successful_records : 'Sin informacion',

@@ -11,6 +11,12 @@
         single-line
         transition="slide-y-transition"
       >
+        Motivo: <span class="font-weight-bold">{{ importProcessData.attributes.category }}</span>
+      </v-banner>
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
         Total de registros: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_of_records }}</span>
       </v-banner>
       <v-banner
