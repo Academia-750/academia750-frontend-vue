@@ -27,8 +27,9 @@
         color="white"
         text
         @click="toast.show = false"
-        >{{ $t('common.close') }}</v-btn
       >
+        {{ $t('common.close') }}
+      </v-btn>
     </v-snackbar>
 
     <!-- Demo customization menu -->

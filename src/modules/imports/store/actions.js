@@ -2,13 +2,15 @@ import ImportsRepository from '../repositories/ImportsRepository'
 
 const mapItemsDatatableFromApiImportProcesses = (itemsApi) => {
   return itemsApi.map((record) => {
-    const total_number_records = record.attributes.total_number_of_records
-    const has_records = total_number_records > 0
+    const { total_number_of_records, total_number_failed_records, total_number_successful_records } = record.attributes
+    const has_records = total_number_of_records > 0
 
     return {
       id: record.id,
       'name-file': record.attributes.name_file,
-      'total-number-of-records': has_records ? total_number_records : 'Sin informacion',
+      'total-number-of-records': has_records ? total_number_of_records : 'Sin informacion',
+      'total-number-failed-records': has_records ? total_number_failed_records : 'Sin informacion',
+      'total-number-successful-records': has_records ? total_number_successful_records : 'Sin informacion',
       'created-at': record.attributes.created_at
     }
   })

@@ -1,5 +1,37 @@
 <template>
   <v-card-text>
+    <div v-if="importProcessData !== null">
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
+        Nombre del archivo: <span class="font-weight-bold">{{ importProcessData.attributes.name_file }}</span>
+      </v-banner>
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
+        Total de registros: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_of_records }}</span>
+      </v-banner>
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
+        Total de registros fallidos: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_failed_records }}</span>
+      </v-banner>
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
+        Total de registros satisfactorios: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_successful_records }}</span>
+      </v-banner>
+      <v-banner
+        single-line
+        transition="slide-y-transition"
+      >
+        Fecha de inicio de importación: <span class="font-weight-bold">{{ importProcessData.attributes.created_at }}</span>
+      </v-banner>
+    </div>
     <v-data-table
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
@@ -46,11 +78,11 @@
           <v-icon small dark class="mr-1"> mdi-cancel </v-icon>
           Error
         </v-chip>
-        <v-chip 
-          v-else 
-          small 
-          dark 
-          class="ma-2" 
+        <v-chip
+          v-else
+          small
+          dark
+          class="ma-2"
           color="green"
         >
           <v-icon small dark class="mr-1"> mdi-check </v-icon>

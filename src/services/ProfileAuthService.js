@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import store from '@/store'
 import router from '@/router'
 import { disabledLoadingProgressCircular } from '@/helpers/manageLoading'
+import { $disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
 
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
 const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
@@ -42,6 +43,7 @@ const handleErrorResponse = (error) => {
   if (error.response.status === 401) {
     if (Cookies.get('authorization')) {
       $remove_token_auth()
+      $disconnectWebsocketsConnection()
     }
 
     store.commit('profileService/set_user', null)

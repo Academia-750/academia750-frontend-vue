@@ -7,6 +7,18 @@ export const $websocketConnectionAction = function () {
   if (window.$EchoJSInstanceAcademia750 === undefined) {
     connectWebsockets( $getCredentialsWebsocketsConnection() )
   }
+
+  //console.log(window.$EchoJSInstanceAcademia750?.connector?.pusher)
+}
+
+export const $disconnectWebsocketsConnection = function (user_id = null) {
+  console.log('Conexion websockets cerrada!')
+  /* if (user_id) {
+    window?.$EchoJSInstanceAcademia750?.connector?.pusher.terminateUserConnections(user_id)
+  } */
+  window?.$EchoJSInstanceAcademia750?.connector?.pusher.disconnect()
+
+  window.$EchoJSInstanceAcademia750 = undefined
 }
 
 const connectWebsockets = function ({

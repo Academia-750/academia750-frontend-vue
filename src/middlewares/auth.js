@@ -4,12 +4,14 @@ import { $get_token_auth } from '@/helpers/auth'
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
 import ResourceService from '@/services/ResourceService'
-import { $websocketConnectionAction } from '@/helpers/WebsocketsConnection'
+import { $websocketConnectionAction, $disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
 
 export default function ({ next }) {
 
   try {
     if (!Cookies.get('authorization')) {
+      $disconnectWebsocketsConnection()
+
       return next({
         name: 'login'
       })

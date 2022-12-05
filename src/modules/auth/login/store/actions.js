@@ -1,4 +1,6 @@
 import LoginRepository from '../repositories/LoginRepository'
+import { $disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
+import store from '@/store'
 
 const login = async (optionsVuex = {}, credentials) => {
 
@@ -19,6 +21,9 @@ const logout = async () => {
   try {
 
     const response = await LoginRepository.logout()
+
+    console.log(store.state.profileService.user)
+    $disconnectWebsocketsConnection(store.state.profileService.user.id)
 
     return Promise.resolve(response)
 

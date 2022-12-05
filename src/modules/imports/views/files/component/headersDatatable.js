@@ -21,13 +21,29 @@ export default {
         {
           position: 3,
           sortable: true,
+          text: '#Registros con éxito',
+          align: 'center',
+          value: 'total-number-successful-records',
+          show: true
+        },
+        {
+          position: 4,
+          sortable: true,
+          text: '#Registros fallidos',
+          align: 'center',
+          value: 'total-number-failed-records',
+          show: true
+        },
+        {
+          position: 5,
+          sortable: true,
           text: 'Fecha de inicio',
           align: 'center',
           value: 'created-at',
           show: true
         },
         {
-          position: 4,
+          position: 6,
           sortable: false,
           text: 'Acciones',
           align: 'center',

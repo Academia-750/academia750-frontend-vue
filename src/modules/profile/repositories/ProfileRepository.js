@@ -16,6 +16,12 @@ export default {
   },
   changePassword(data, config = {}) {
     return ProfileAuthService.post('auth/change-password-my-account', data, config)
+  },
+  getNotifications(config = {}) {
+    return ProfileAuthService.get('notifications/user', config)
+  },
+  readNotification(notification_id, data = {}, config = {}) {
+    return ProfileAuthService.post(`/read/notification/${notification_id}/user`, data, config)
   }
 
 }

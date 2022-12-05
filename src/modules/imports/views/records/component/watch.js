@@ -7,6 +7,8 @@ export default {
           config: {
             params: this.buildQueryParamsRequest()
           }
+        }).then((response) => {
+          this.importProcessData = response.data.meta.import_process
         })
       },
       deep: true

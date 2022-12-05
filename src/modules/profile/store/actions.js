@@ -63,10 +63,62 @@ const UnsubscribeSystemAction = async ({ commit }, config) => {
   }
 }
 
-const ChangeMyPasswordAccountAction = async ({ commit }, options) => {
+const ChangeMyPasswordAccountAction = async (_, options) => {
 
   try {
     const response = await ProfileRepository.changePassword(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const mapItemsNotifications = (notifications = []) => {
+  return notifications.map((notification) => {
+    const { body } = notification.attributes
+
+    return {
+      id: notification.id,
+      title: body['title-notification'],
+      color: body['color-icon'],
+      icon: body.icon,
+      subtitle: body['message-notification'],
+      time: notification.attributes['created-at-diff'],
+      routeTo: body.route,
+      has_read_notification: notification.attributes['read-at'] !== null
+    }
+  })
+}
+
+const getNotifications = async ({ commit }, options) => {
+  try {
+
+    const response = await ProfileRepository.getNotifications(options.config)
+
+    console.log(response)
+
+    commit('set_notifications', mapItemsNotifications(response.data.data))
+    commit('set_count_notifications_unread', response.data.meta.unread_notifications_count.toString())
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    commit('set_notifications', [])
+    commit('set_count_notifications_unread', '0')
+
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const readNotification = async (_, options) => {
+  try {
+    const response = await ProfileRepository.readNotification(options.notification_id, options.data, options.config)
 
     return Promise.resolve(response)
 
@@ -81,5 +133,7 @@ export default {
   getDataMyProfileAction,
   UpdateProfileAction,
   UnsubscribeSystemAction,
-  ChangeMyPasswordAccountAction
+  ChangeMyPasswordAccountAction,
+  getNotifications,
+  readNotification
 }
