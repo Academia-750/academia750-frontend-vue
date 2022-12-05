@@ -23,7 +23,7 @@
             x-small
             color="light-blue darken-3"
             class="white--text mx-1"
-            @click="loadNotifications"
+            @click="loadNotifications(5,1)"
           >
             <v-icon
               right
@@ -36,7 +36,7 @@
           </v-btn>
         </v-subheader>
         <div v-for="(item, index) in notifications" :key="index">
-          <v-divider v-if="index > 0 && index < items.length" inset></v-divider>
+          <v-divider v-if="index > 0 && index < notifications.length" inset></v-divider>
 
           <v-list-item :class="{ 'grey lighten-2': !item.has_read_notification }" @click="redirectRouteNotification(item)">
             <v-list-item-avatar size="32" :color="item.color">
@@ -55,7 +55,7 @@
       </v-list>
 
       <div class="text-center py-2">
-        <v-btn :disabled="disabledButtonSeeAllNotifications" small>Ver todo</v-btn>
+        <v-btn small class="blue lighten-5" @click="$router.push({ name: 'notifications-user-auth' })">Ver todo</v-btn>
       </div>
     </v-card>
   </v-menu>
@@ -70,9 +70,10 @@
 | Quickmenu to check out notifications
 |
 */
-import { mapState, mapActions } from 'vuex'
+import notifications from '@/mixins/notifications'
 
 export default {
+  mixins: [notifications],
   data() {
     return {
       numberOfNotifications: '2',
@@ -95,60 +96,15 @@ export default {
       ]
     }
   },
-  computed: {
-    ...mapState('profileService', ['notifications', 'count_notification_unread','user'])
-  },
   mounted () {
-    this.loadNotifications()
-    this.listenChannelUserAuth()
+    this.loadNotifications(5,1)
+    this.listenChannelNotificationsUserAuth()
   },
   methods: {
-    ...mapActions('profileService', ['getNotifications', 'readNotification']),
-    redirectRouteNotification (notification) {
-      this.readNotificationAction (notification.id)
-
-      this.$router.push({
-        path: notification.routeTo
+    listenChannelNotificationsUserAuth () {
+      this.listenChannelUserAuth(() => {
+        this.loadNotifications(5, 1)
       })
-    },
-    listenChannelUserAuth () {
-      window.$EchoJSInstanceAcademia750.private(`App.Models.User.${this.user.id}`)
-        .notification(() => {
-
-          this.$toast.success('Tienes una nueva notificación', {
-            position: 'bottom-right',
-            timeout: 10000,
-            closeOnClick: true,
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            draggable: true,
-            draggablePercent: 1.24,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: 'button',
-            icon: 'fa fa-bell',
-            rtl: false
-          })
-
-          this.loadNotifications()
-        })
-    },
-    loadNotifications () {
-      this.getNotifications({
-        config: {
-          params: {
-            'page[size]': 5,
-            'page[number]': 1
-          }
-        }
-      })
-    },
-    async readNotificationAction (notification_id) {
-      await this.readNotification({
-        notification_id
-      })
-
-      this.loadNotifications()
     }
   }
 }
