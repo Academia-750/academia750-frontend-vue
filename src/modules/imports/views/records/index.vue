@@ -67,10 +67,18 @@
       </template>
       <template v-slot:expanded-item="{ item }">
         <td :colspan="filter__headers_datatable.length">
-          <p v-if="item['has-errors']" class="ml-2 mt-2">
+          <v-expansion-panels v-if="item['has-errors']">
+            <v-expansion-panel>
+              <v-expansion-panel-header class="title">Errores de validación</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <pre class="body-2">{{ item.errors_validation }}</pre>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+          <!-- <p v-if="item['has-errors']" class="ml-2 mt-2">
             {{ item.errors_validation }}
-          </p>
-          <p v-else class="font-weight-bold ml-2 mt-2">
+          </p> -->
+          <p v-else class="font-weight-bold title ml-2 mt-2">
             Este registro no cuenta con errores.
           </p>
         </td>
