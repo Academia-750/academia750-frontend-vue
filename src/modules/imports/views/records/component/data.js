@@ -1,7 +1,8 @@
 export default {
   data() {
     return {
-      importProcessData: null
+      importProcessData: null,
+      expandedItemsDatatable: []
     }
   }
 }

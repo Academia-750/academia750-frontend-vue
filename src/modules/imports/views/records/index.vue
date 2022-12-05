@@ -39,6 +39,8 @@
       :options.sync="optionsDatatable"
       item-key="id"
       multi-sort
+      show-expand
+      :expanded.sync="expandedItemsDatatable"
       no-data-text="No hay datos disponibles"
       :items-per-page="5"
       :mobile-breakpoint="600"
@@ -62,6 +64,16 @@
           ref="ResourceTextFieldSearch"
           @emitSearchWord="searchFieldExecuted"
         />
+      </template>
+      <template v-slot:expanded-item="{ item }">
+        <td :colspan="filter__headers_datatable.length">
+          <p v-if="item['has-errors']" class="ml-2 mt-2">
+            {{ item.errors_validation }}
+          </p>
+          <p v-else class="font-weight-bold ml-2 mt-2">
+            Este registro no cuenta con errores.
+          </p>
+        </td>
       </template>
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />

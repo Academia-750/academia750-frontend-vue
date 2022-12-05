@@ -25,24 +25,24 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs['dropzoneFilesImportTopics'].$el)
+    //console.log(this.$refs['dropzoneFilesImportTopics'].$el)
     this.$refs['dropzoneFilesImportTopics'].$el.innerHTML = /* html */`
-      <div class="dz-default dz-message"><span>Adjuntar archivos</span></div>
+      <div class="dz-default dz-message"><span>Adjuntar archivos o click para seleccionar</span></div>
     `
   },
   methods: {
     ...mapActions('topicsService', ['importTopicsCSV']),
     vdropAddedFile(file) {
-      console.log(file)
+      //console.log(file)
     },
     vdropQueueCompleted() {
-      console.log('Queue completed')
+      //console.log('Queue completed')
     },
     vdropSuccessProcessSendFiles(files, response) {
-      console.trace({
+      /* console.trace({
         files,
         response
-      })
+      }) */
     },
     getAcceptedFiles() {
       return this.$refs['dropzoneFilesImportTopics'].getAcceptedFiles()

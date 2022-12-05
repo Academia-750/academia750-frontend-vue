@@ -101,7 +101,6 @@ export default {
   mounted () {
     this.loadNotifications()
     this.listenChannelUserAuth()
-    console.log(this.$toast)
   },
   methods: {
     ...mapActions('profileService', ['getNotifications', 'readNotification']),

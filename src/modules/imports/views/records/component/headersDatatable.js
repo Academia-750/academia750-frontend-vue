@@ -33,7 +33,8 @@ export default {
           sortable: true,
           value: 'has-errors',
           show: true
-        }
+        },
+        { text: 'Descripción', value: 'data-table-expand' }
         /* ,
         {
           position: 2,
