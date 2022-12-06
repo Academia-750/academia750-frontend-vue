@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-y left transition="slide-y-transition">
+  <v-menu rounded="b-xl" offset-y left transition="slide-y-transition">
     <template v-slot:activator="{ on }">
       <v-badge
         bordered

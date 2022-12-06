@@ -96,6 +96,8 @@ const mapItemsNotifications = (notifications = []) => {
 
 const getNotifications = async ({ commit }, options) => {
   try {
+    commit('set_count_notifications_unread', '...')
+    commit('set_notifications', [])
 
     const response = await ProfileRepository.getNotifications(options.config)
 
