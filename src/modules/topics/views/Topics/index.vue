@@ -22,10 +22,7 @@
         color="primary"
         @click="
           $router.push({
-            name: 'manage-subtopics-of-topic',
-            params: {
-              id: item.id
-            }
+            name: 'import-subtopics'
           })
         "
       >

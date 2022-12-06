@@ -25,13 +25,12 @@ export default {
     }
   },
   mounted() {
-    //console.log(this.$refs['dropzoneFilesImportTopics'].$el)
-    this.$refs['dropzoneFilesImportTopics'].$el.innerHTML = /* html */`
+    this.$refs['dropzoneFilesImportSubtopics'].$el.innerHTML = `
       <div class="dz-default dz-message"><span>Adjuntar archivos o click para seleccionar</span></div>
     `
   },
   methods: {
-    ...mapActions('topicsService', ['importTopicsCSV']),
+    ...mapActions('subtopicsService', ['importSubtopicsCSV']),
     vdropAddedFile(file) {
       //console.log(file)
     },
@@ -45,7 +44,7 @@ export default {
       }) */
     },
     getAcceptedFiles() {
-      return this.$refs['dropzoneFilesImportTopics'].getAcceptedFiles()
+      return this.$refs['dropzoneFilesImportSubtopics'].getAcceptedFiles()
     },
     sendFilesApi() {
       const files = this.getAcceptedFiles()
@@ -65,33 +64,37 @@ export default {
 
       /* console.trace(files)
       console.log(typeof files) */
-      this.sendFilesTopicAction(files)
+      this.sendFilesSubtopicAction(files)
     },
-    async sendFilesTopicAction(files) {
+    async sendFilesSubtopicAction(files) {
       try {
-        const formDataFilesTopics = new FormData()
+        const formDataFilesSubtopics = new FormData()
 
         files.forEach((file) => {
-          formDataFilesTopics.append('filesTopics[]', file)
+          formDataFilesSubtopics.append('filesSubtopics[]', file)
         })
 
-        //formDataFilesTopics.append('filesTopics[]', files)
+        //formDataFilesSubtopics.append('filesTopics[]', files)
 
         this.loadingButton = true
 
-        await this.importTopicsCSV({
-          data: formDataFilesTopics,
+        await this.importSubtopicsCSV({
+          data: formDataFilesSubtopics,
           config: {}
         })
 
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'El proceso de importación de temas ha iniciado. Te notificaremos en cuanto termine o puedes revisar "Mis importaciones"',
+          title: 'El proceso de importación de subtemas ha iniciado. Te notificaremos en cuanto termine o puedes revisar "Mis importaciones"',
           timer: 10000
         })
 
-        this.$refs['dropzoneFilesImportTopics'].removeAllFiles()
+        this.$refs['dropzoneFilesImportSubtopics'].removeAllFiles()
+
+        /* this.$router.push({
+          name: 'manage-topics'
+        }) */
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
@@ -115,7 +118,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Importar temas'
+      inner: 'Importar Subtemas'
     }
   }
 }

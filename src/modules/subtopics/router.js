@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import ManageSubtopicsModule from './views/Subtopics'
 import CreateSubtopicModule from './views/CreateSubtopic'
 import UpdateSubtopicModule from './views/UpdateSubtopic'
+import importSubtopics from './views/import'
 
 const shortcutRoutes = [
   {
@@ -59,6 +60,14 @@ const moduleRoute = [
             path: 'update/:id',
             name: 'update-subtopic',
             component: UpdateSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'import/subtopics',
+            name: 'import-subtopics',
+            component: importSubtopics,
             meta: {
               middleware: [authMiddleware]
             }

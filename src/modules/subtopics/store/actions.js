@@ -107,10 +107,24 @@ const deleteSubtopic = async (_, options) => {
   }
 }
 
+const importSubtopicsCSV = async (_, options) => {
+  try {
+
+    const response = await SubtopicRepository.import(options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getSubtopics,
   createSubtopic,
   fetchSubtopic,
   updateSubtopic,
-  deleteSubtopic
+  deleteSubtopic,
+  importSubtopicsCSV
 }

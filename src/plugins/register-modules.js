@@ -4,7 +4,7 @@ import loading from '@/modules/loading'
 import login from '@/modules/auth/login'
 import profile from '@/modules/profile'
 import oppositions from '@/modules/oppositions'
-//import subtopics from '@/modules/subtopics'
+import subtopics from '@/modules/subtopics'
 import topics from '@/modules/topics'
 import students from '@/modules/students'
 import subtopicsOfTopic from '@/modules/subtopicsOfTopic'
@@ -19,7 +19,7 @@ registerModules({
   login,
   profile,
   oppositions,
-  //subtopics,
+  subtopics,
   topics,
   students,
   subtopicsOfTopic,

@@ -25,7 +25,8 @@ export default {
         { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */,
         {
           icon: 'mdi-database-import', key: '', text: 'Importar', roles: 'admin', regex: /^\/Importar/, items: [
-            { icon: 'mdi-database-plus', key: '', text: 'Importar Temas', to: { name: 'import-topics' }, roles: 'admin' }
+            { icon: 'mdi-database-plus', key: '', text: 'Importar Temas', to: { name: 'import-topics' }, roles: 'admin' },
+            { icon: 'mdi-database-plus', key: '', text: 'Importar Subtemas', to: { name: 'import-subtopics' }, roles: 'admin' }
           ]
         }
       ]
