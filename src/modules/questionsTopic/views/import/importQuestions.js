@@ -31,7 +31,7 @@ export default {
     `
   },
   methods: {
-    ...mapActions('questionsTopic', ['importQuestionsCSV']),
+    ...mapActions('questionsTopicService', ['importQuestionsCSV']),
     vdropAddedFile(file) {
       //console.log(file)
     },
@@ -87,7 +87,7 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'El proceso de importación de temas ha iniciado. Te notificaremos en cuanto termine o puedes revisar "Mis importaciones"',
+          title: 'El proceso de importación de preguntas ha iniciado. Te notificaremos en cuanto termine o puedes revisar "Mis importaciones"',
           timer: 10000
         })
 
