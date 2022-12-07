@@ -2,9 +2,13 @@
   <v-card-text>
     <resource-header-crud-title
       text-header="Importar preguntas"
-      :can-rendering-header="true"
+      :can-rendering-header="$vuetify.breakpoint.width < 700"
     />
     <v-container fluid class="blue lighten-5">
+      <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+        <resource-button-go-back-router />
+        <resource-title-toolbar-datatable title-text="Importar preguntas" />
+      </v-toolbar>
       <vue-dropzone
         id="dropzoneFilesQuestions"
         ref="dropzoneFilesImportQuestions"
