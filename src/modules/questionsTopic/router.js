@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageQuestionsTopicModule from '@/modules/questionsTopic/views/questions'
+import importQuestions from '@/modules/questionsTopic/views/import'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
@@ -45,7 +46,16 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          },
+          {
+            path: 'imports/questions',
+            name: 'import-questions',
+            component: importQuestions,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+          /* ,
           {
             path: ':id/questions/create',
             name: 'create-subtopic',

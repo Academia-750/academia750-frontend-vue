@@ -12,7 +12,6 @@ export const $websocketConnectionAction = function () {
 }
 
 export const $disconnectWebsocketsConnection = function (user_id = null) {
-  console.log('Conexion websockets cerrada!')
   /* if (user_id) {
     window?.$EchoJSInstanceAcademia750?.connector?.pusher.terminateUserConnections(user_id)
   } */

@@ -26,7 +26,8 @@ export default {
         {
           icon: 'mdi-database-import', key: '', text: 'Importar', roles: 'admin', regex: /^\/Importar/, items: [
             { icon: 'mdi-database-plus', key: '', text: 'Importar Temas', to: { name: 'import-topics' }, roles: 'admin' },
-            { icon: 'mdi-database-plus', key: '', text: 'Importar Subtemas', to: { name: 'import-subtopics' }, roles: 'admin' }
+            { icon: 'mdi-database-plus', key: '', text: 'Importar Subtemas', to: { name: 'import-subtopics' }, roles: 'admin' },
+            { icon: 'mdi-database-plus', key: '', text: 'Importar Preguntas', to: { name: 'import-questions' }, roles: 'admin' }
           ]
         }
       ]

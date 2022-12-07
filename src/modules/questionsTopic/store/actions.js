@@ -109,10 +109,24 @@ const deleteQuestion = async (_, options) => {
   }
 }
 
+const importQuestionsCSV = async (_, options) => {
+  try {
+
+    const response = await QuestionsTopicRepository.import(options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getQuestions,
   createQuestion,
   fetchQuestion,
   updateQuestion,
-  deleteQuestion
+  deleteQuestion,
+  importQuestionsCSV
 }

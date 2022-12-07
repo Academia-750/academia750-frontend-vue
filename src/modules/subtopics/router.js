@@ -31,9 +31,9 @@ const moduleRoute = [
       {
         path: '/subtopics',
         component: Module,
-        redirect: { name: 'manage-subtopics' },
+        redirect: { name: 'import-subtopics' },
         children: [
-          {
+          /* {
             path: 'update',
             redirect: { name: 'manage-subtopics' },
             meta: {
@@ -63,7 +63,7 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          },
+          }, */
           {
             path: 'import/subtopics',
             name: 'import-subtopics',

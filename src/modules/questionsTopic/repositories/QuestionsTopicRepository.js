@@ -17,5 +17,8 @@ export default {
   },
   delete(topic_id, subtopic_id, config = {}) {
     return ResourceService.delete(`${resource}/${topic_id}/relationship/questions/${subtopic_id}/delete`, config)
+  },
+  import(data, config = {}) {
+    return ResourceService.post('questions/import', data, config)
   }
 }
