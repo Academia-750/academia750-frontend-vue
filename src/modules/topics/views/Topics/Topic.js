@@ -29,7 +29,15 @@ export default {
   },
   computed: {
     ...mapState('topicsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
-    ...footerProps
+    ...footerProps,
+    classDivButtonsImport() {
+      return {
+        'd-flex': true,
+        'flex-column': this.$vuetify.breakpoint.width < 700,
+        'justify-end': this.$vuetify.breakpoint.width >= 700,
+        'my-2': true
+      }
+    }
   },
   mounted () {
     /* this.getTopics({

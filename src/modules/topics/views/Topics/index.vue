@@ -1,8 +1,8 @@
 <template>
   <v-card-text>
-    <div class="d-flex justify-end my-2">
+    <div :class="classDivButtonsImport">
       <v-btn
-        class="mx-1 white--text"
+        class="mx-1 mt-2 white--text"
         dark
         small
         color="success"
@@ -16,7 +16,7 @@
         <v-icon class="ml-1" small dark> mdi-plus </v-icon>
       </v-btn>
       <v-btn
-        class="mx-1 white--text"
+        class="mx-1 mt-2 white--text"
         dark
         small
         color="primary"
@@ -27,6 +27,20 @@
         "
       >
         <span>Importar Subtemas</span>
+        <v-icon class="ml-1" small dark> mdi-plus </v-icon>
+      </v-btn>
+      <v-btn
+        class="mx-1 mt-2 black--text"
+        dark
+        small
+        color="orange lighten-2"
+        @click="
+          $router.push({
+            name: 'import-questions'
+          })
+        "
+      >
+        <span>Importar Preguntas</span>
         <v-icon class="ml-1" small dark> mdi-plus </v-icon>
       </v-btn>
     </div>
