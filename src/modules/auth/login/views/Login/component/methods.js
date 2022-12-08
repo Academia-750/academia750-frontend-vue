@@ -32,9 +32,9 @@ export default {
     },
     async ResetForm() {
       //await this.$refs['FormLoginObserver']['reset']()
-      this.$nextTick(() => {
+      /* this.$nextTick(() => {
         this.$refs['FormLoginObserver']['reset']()
-      })
+      }) */
 
       return true
     },

@@ -4,7 +4,6 @@
     mode="aggressive"
     vid="password"
     name="Contraseña"
-    rules="required|max:100"
   >
     <v-text-field
       ref="passwordField"

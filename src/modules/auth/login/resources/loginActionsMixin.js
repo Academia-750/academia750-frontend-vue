@@ -56,8 +56,8 @@ export default {
         } else if (error.response?.status === 422) {
           this.$refs['password-field']['resetPassword']()
           this.$refs['access-key-field']['onFocusAccesKeyField']()
-          this.ResetForm()
           this.handlingErrorValidation(error.response.data.errors)
+          //this.ResetForm()
         } else {
           this.actionErrorServiceApp(error.response)
         }
@@ -150,6 +150,11 @@ export default {
             confirmButtonText: '¡Entendido!',
             timer: 7500
           })
+        } else if (error.response?.status === 422) {
+          this.$refs['password-field']['resetPassword']()
+          this.$refs['access-key-field']['onFocusAccesKeyField']()
+          this.handlingErrorValidation(error.response.data.errors)
+          //this.ResetForm()
         }
       }
     }

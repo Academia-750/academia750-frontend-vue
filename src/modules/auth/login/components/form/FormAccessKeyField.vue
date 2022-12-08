@@ -4,7 +4,6 @@
     vid="access_key"
     mode="aggressive"
     name="Identificador de acceso"
-    rules="required|min:8|max:10"
   >
     <v-text-field
       ref="access-key-field"
