@@ -6,17 +6,17 @@ export default {
   getAllQuestions(topic_id, config = {}) {
     return ResourceService.get(`${resource}/${topic_id}/relationship/questions`, config)
   },
-  get(topic_id, subtopic_id, config = {}) {
-    return ResourceService.get(`${resource}/${topic_id}/relationship/questions/${subtopic_id}`, config)
+  get(topic_id, question_id, config = {}) {
+    return ResourceService.get(`${resource}/${topic_id}/relationship/questions/${question_id}`, config)
   },
   create(topic_id, data, config = {}) {
     return ResourceService.post(`${resource}/${topic_id}/relationship/questions/create`, data, config)
   },
-  update(topic_id, subtopic_id, data, config = {}) {
-    return ResourceService.patch(`${resource}/${topic_id}/relationship/questions/${subtopic_id}/update`, data, config)
+  update(topic_id, question_id, data, config = {}) {
+    return ResourceService.patch(`${resource}/${topic_id}/relationship/questions/update/${question_id}`, data, config)
   },
-  delete(topic_id, subtopic_id, config = {}) {
-    return ResourceService.delete(`${resource}/${topic_id}/relationship/questions/${subtopic_id}/delete`, config)
+  delete(topic_id, question_id, config = {}) {
+    return ResourceService.delete(`${resource}/${topic_id}/relationship/questions/delete/${question_id}`, config)
   },
   import(data, config = {}) {
     return ResourceService.post('questions/import', data, config)
