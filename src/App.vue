@@ -74,6 +74,11 @@ export default {
     handleErrors,
     ProgressLinearLoadingApp
   },
+  data () {
+    return {
+      isEditing: true
+    }
+  },
   computed: {
     ...mapState('app', ['toast']),
     ...mapState('errorsService', ['responseError']),
@@ -88,6 +93,9 @@ export default {
       return layout + 'Layout'
     }
   },
+  beforeMount () {
+    //window.addEventListener('beforeunload', this.preventNav)
+  },
   mounted() {
     /* ResourceService.post('/test/errors-validation/manually', {
       dni: '1234567891012',
@@ -95,6 +103,16 @@ export default {
     })
       .then((response) => console.trace(response))
       .catch((error) => console.trace(error.response)) */
+  },
+  methods: {
+    // Metodo para evitar cerrar la ventana del navegador
+    preventNav(event) {
+      if (!this.isEditing) return
+
+      event.preventDefault()
+
+      event.returnValue = ''
+    }
   }
 }
 </script>
