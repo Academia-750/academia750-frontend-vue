@@ -13,7 +13,7 @@ export default {
     return ResourceService.post(`${resource}/${topic_id}/relationship/questions/create`, data, config)
   },
   update(topic_id, question_id, data, config = {}) {
-    return ResourceService.patch(`${resource}/${topic_id}/relationship/questions/update/${question_id}`, data, config)
+    return ResourceService.post(`${resource}/${topic_id}/relationship/questions/update/${question_id}`, data, config)
   },
   delete(topic_id, question_id, config = {}) {
     return ResourceService.delete(`${resource}/${topic_id}/relationship/questions/delete/${question_id}`, config)

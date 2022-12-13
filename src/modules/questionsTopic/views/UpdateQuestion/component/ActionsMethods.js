@@ -2,9 +2,8 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('questionsTopicService', ['createQuestion']),
-
-    async CreateQuestionApi() {
+    ...mapActions('questionsTopicService', ['fetchQuestion','updateQuestion']),
+    async UpdateQuestionApi() {
       try {
         const FormDataQuestion = new FormData()
 
@@ -13,23 +12,28 @@ export default {
         FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
         FormDataQuestion.append('is-visible', this.$refs['FormQuestionIsVisibleCheckbox'].is_visible)
 
+        FormDataQuestion.append('answer-correct-id', this.$refs['FormAnswerCorrectField'].answer_id)
         FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
         FormDataQuestion.append('is-grouper-answer-correct', this.$refs['FormAnswerCorrectField'].is_grouper_answer)
 
+        FormDataQuestion.append('answer-one-id', this.$refs['FormAnswerOneField'].answer_id)
         FormDataQuestion.append('answer-one', this.$refs['FormAnswerOneField'].answer_value)
         FormDataQuestion.append('is-grouper-answer-one', this.$refs['FormAnswerOneField'].is_grouper_answer)
 
+        FormDataQuestion.append('answer-two-id', this.$refs['FormAnswerTwoField'].answer_id)
         FormDataQuestion.append('answer-two', this.$refs['FormAnswerTwoField'].answer_value)
         FormDataQuestion.append('is-grouper-answer-two', this.$refs['FormAnswerTwoField'].is_grouper_answer)
 
+        FormDataQuestion.append('answer-three-id', this.$refs['FormAnswerThreeField'].answer_id)
         FormDataQuestion.append('answer-three', this.$refs['FormAnswerThreeField'].answer_value)
         FormDataQuestion.append('is-grouper-answer-three', this.$refs['FormAnswerThreeField'].is_grouper_answer)
 
         FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
         FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
 
-        await this.createQuestion({
+        await this.updateQuestion({
           topic_id: this.$route.params.id,
+          question_id: this.$route.params.question_id,
           data: FormDataQuestion,
           config: {}
         })
@@ -37,20 +41,26 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'La pregunta ha sido creada con éxito.',
-          timer: 3000
+          title: 'La pregunta ha sido actualizada con éxito.',
+          timer: 10000
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateQuestion = false
-        this.disabledButtonCreateQuestion = false
+        this.loadingButtonUpdateQuestion = false
+        this.disabledButtonUpdateQuestion = false
 
-        this.ResetForm()
+        this.$router.push({
+          name: 'manage-questions-of-topic',
+          params: {
+            id: this.$route.params.id
+          }
+        })
+        //this.ResetForm()
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateQuestion = false
-        this.disabledButtonCreateQuestion = false
+        this.loadingButtonUpdateQuestion = false
+        this.disabledButtonUpdateQuestion = false
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
@@ -62,6 +72,32 @@ export default {
         } else if (error.response?.status === 422) {
           this.handlingErrorValidation(error.response.data.errors)
         }
+      }
+    },
+    async fetchDataQuestionForUpdate() {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+        this.disabledButtonUpdateQuestion = true
+
+        const response = await this.fetchQuestion({
+          topic_id: this.$route.params.id,
+          question_id: this.$route.params.question_id,
+          config: {
+            params: {
+              include: 'image,answers'
+            }
+          }
+        })
+
+        this.syncValuesForm(response)
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonUpdateQuestion = false
+
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonUpdateQuestion = false
       }
     }
   }

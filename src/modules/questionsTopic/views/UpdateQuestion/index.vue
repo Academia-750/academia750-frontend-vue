@@ -6,18 +6,38 @@
       :can-rendering-header="true"
     />
     <resource-header-crud-title
-      text-header="Crear pregunta"
+      v-if="questionData"
+      :text-header="getNameCurrentQuestion"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
     <v-toolbar flat class="indigo lighten-5 my-2" outlined>
       <resource-button-go-back-router :width-number-limit="300" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
-        title-text="Crear pregunta"
+        title-text="Actualizar pregunta"
       />
+      <resource-divider-title-datatable :width-limit-title-divider="620"/>
+      <v-spacer></v-spacer>
+      <div class="d-flex justify-center">
+        <resource-button-add :config-route="{ name: 'create-question-topic' }"/>
+        <v-btn
+          small
+          color="light-blue darken-3"
+          class="white--text mx-1 align-self-center"
+          @click="fetchDataQuestionForUpdate"
+        >
+          <v-icon
+            right
+            dark
+            class="mr-1"
+          >
+            mdi-refresh
+          </v-icon>
+        </v-btn>
+      </div>
     </v-toolbar>
     <v-card-text>
-      <validation-observer ref="FormCreateQuestion" v-slot="{ invalid }">
+      <validation-observer ref="FormUpdateQuestion" v-slot="{ invalid }">
         <v-row dense>
           <v-col
             cols="12"
@@ -60,7 +80,7 @@
             cols="12"
             sm="12"
             md="12"
-            :lg="isCardMemoryQuestion ? 6 : 12"
+            lg="6"
             class="d-flex align-center"
           >
             <v-row dense>
@@ -116,7 +136,6 @@
           ></v-divider> -->
           <!-- -------------------------------- -->
           <v-col
-            v-if="isCardMemoryQuestion"
             cols="12"
             sm="12"
             md="12"
@@ -147,14 +166,14 @@
             class="d-flex justify-center flex-column flex-sm-row"
           >
             <v-btn
-              :loading="loadingButtonCreateQuestion"
-              :disabled="disabledButtonCreateQuestion || invalid"
+              :loading="loadingButtonUpdateQuestion"
+              :disabled="disabledButtonUpdateQuestion || invalid"
               color="light-blue darken-3"
               class="mt-3 white--text"
-              @click="CreateQuestion"
+              @click="UpdateQuestion"
             >
-              <v-icon right dark class="mr-1"> mdi-database-plus </v-icon>
-              Crear
+              <v-icon right dark class="mr-1"> mdi-database-refresh </v-icon>
+              Actualizar
             </v-btn>
           </v-col>
         </v-row>
@@ -163,4 +182,4 @@
   </v-card-text>
 </template>
 
-<script src="./CreateQuestionsTopic.js"></script>
+<script src="./UpdateQuestionsTopic.js"></script>

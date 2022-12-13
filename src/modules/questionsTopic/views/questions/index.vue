@@ -32,7 +32,10 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              :config-route="{ name: 'create-question-topic' }"
+              v-if="topicData !== null"
+              :config-route="{ name: 'create-question-topic', params: {
+                id: topicData.id
+              } }"
             />
           </div>
         </v-toolbar>
@@ -47,8 +50,9 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            v-if="topicData !== null"
             color-button="blue darken-1"
-            :config-route="{ name: 'update-topic', params: { id: item.id } }"
+            :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
           />
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"

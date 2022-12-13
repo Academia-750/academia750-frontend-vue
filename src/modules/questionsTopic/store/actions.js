@@ -75,7 +75,7 @@ const createQuestion = async (_, options) => {
 const fetchQuestion = async (_, options) => {
 
   try {
-    const response = await QuestionsTopicRepository.get(options.topic_id, options.subtopic_id, options.config)
+    const response = await QuestionsTopicRepository.get(options.topic_id, options.question_id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -87,7 +87,7 @@ const fetchQuestion = async (_, options) => {
 
 const updateQuestion = async (_, options) => {
   try {
-    const response = await QuestionsTopicRepository.update(options.topic_id, options.subtopic_id, options.data, options.config)
+    const response = await QuestionsTopicRepository.update(options.topic_id, options.question_id, options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -99,7 +99,7 @@ const updateQuestion = async (_, options) => {
 
 const deleteQuestion = async (_, options) => {
   try {
-    const response = await QuestionsTopicRepository.delete(options.topic_id, options.subtopic_id, options.config)
+    const response = await QuestionsTopicRepository.delete(options.topic_id, options.question_id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {

@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import ManageQuestionsTopicModule from '@/modules/questionsTopic/views/questions'
 import importQuestions from '@/modules/questionsTopic/views/import'
 import CreateQuestionsTopicModule from './views/CreateQuestion'
+import UpdateQuestionsTopicModule from './views/UpdateQuestion'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
@@ -63,15 +64,15 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          },
           {
-            path: ':id/questions/update/:subtopic_id',
-            name: 'update-subtopic',
-            component: UpdateSubtopicModule,
+            path: ':id/questions/update/:question_id',
+            name: 'update-question-topic',
+            component: UpdateQuestionsTopicModule,
             meta: {
               middleware: [authMiddleware]
             }
-          } */
+          }
         ]
       }/* ,
       ...shortcutRoutes */

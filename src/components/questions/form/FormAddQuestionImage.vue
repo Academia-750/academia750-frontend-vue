@@ -7,7 +7,7 @@
       accept="image/*"
       @change="Preview_image"
     ></v-file-input>
-    <v-container v-if="image" fluid>
+    <v-container v-if="image || previewImageForUpdate" fluid>
       <v-img
         max-width="500"
         :aspect-ratio="16/9"
@@ -23,6 +23,7 @@ export default {
   data () {
     return {
       image: null,
+      previewImageForUpdate: false,
       urlImage: null
     }
   },

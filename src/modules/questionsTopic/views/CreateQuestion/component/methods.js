@@ -21,8 +21,8 @@ export default {
       this.$refs['FormAnswerTwoField'].is_grouper_answer = ''
       this.$refs['FormAnswerThreeField'].answer_value = ''
       this.$refs['FormAnswerThreeField'].is_grouper_answer = ''
-      this.$refs['formReasonTextArea'].reason_value = ''
-      this.$refs['formAddQuestionImage'].image = null
+      this.$refs['FormReasonTextArea'].reason_value = ''
+      this.$refs['FormAddQuestionImage'].image = null
 
       this.$nextTick(() => {
         this.$refs['FormCreateQuestion']['reset']()
@@ -31,8 +31,6 @@ export default {
       return true
     },
     async CreateQuestion() {
-
-      console.log(this.$refs['formAddQuestionImage'].image)
 
       const statusValidate = await this.$refs['FormCreateQuestion'].validate()
 
@@ -50,8 +48,8 @@ export default {
       }
 
       const isCardMemory = this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory
-      const valueReasonText = this.$refs['formReasonTextArea'].reason_value
-      const valueReasonImage = this.$refs['formAddQuestionImage'].image
+      const valueReasonText = this.$refs['FormReasonTextArea'].reason_value
+      const valueReasonImage = this.$refs['FormAddQuestionImage'].image
 
       if (isCardMemory && !(valueReasonText || valueReasonImage)) {
         this.$swal.fire({

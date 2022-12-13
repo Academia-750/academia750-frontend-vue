@@ -81,6 +81,7 @@ export default {
   },
   data() {
     return {
+      answer_id: null,
       answer_value: '',
       is_correct_answer: false,
       is_grouper_answer: false
