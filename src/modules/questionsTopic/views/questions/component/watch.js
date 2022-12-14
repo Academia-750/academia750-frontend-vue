@@ -9,6 +9,7 @@ export default {
           }
         }).then((response) => {
           this.topicData = response.data.meta.topic
+          this.metaData = response.data.meta
         })
       },
       deep: true

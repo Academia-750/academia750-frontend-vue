@@ -7,6 +7,9 @@ export default {
     ...footerProps,
     getNameCurrentTopic() {
       return `Preguntas del Tema: "${this.topicData?.attributes?.name}"`
+    },
+    getTotalQuestionsSyllabus() {
+      return `Total de preguntas de temario: "${this.metaData['total-questions-syllabus']}"`
     }
   }
 }

@@ -16,6 +16,11 @@
     >
       <template v-slot:top>
         <resource-header-crud-title
+          v-if="metaData !== null"
+          :text-header="getTotalQuestionsSyllabus"
+          :can-rendering-header="true"
+        />
+        <resource-header-crud-title
           v-if="topicData !== null"
           :text-header="getNameCurrentTopic"
           :can-rendering-header="true"

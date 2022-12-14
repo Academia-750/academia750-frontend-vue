@@ -12,6 +12,14 @@ export default {
         },
         {
           position: 2,
+          text: 'Fecha de creación',
+          align: 'start',
+          sortable: true,
+          value: 'created-at',
+          show: true
+        },
+        {
+          position: 3,
           sortable: false,
           text: 'Acciones',
           align: 'center',
