@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageSubtopicsModule from '@/modules/subtopicsOfTopic/views/Subtopics'
 import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
+import FetchSubtopicModule from '@/modules/subtopicsOfTopic/views/FetchSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic'
 
 const shortcutRoutes = [
@@ -50,6 +51,14 @@ const moduleRoute = [
             path: ':id/subtopics/create',
             name: 'create-subtopic',
             component: CreateSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/subtopics/fetch/:subtopic_id',
+            name: 'fetch-subtopic',
+            component: FetchSubtopicModule,
             meta: {
               middleware: [authMiddleware]
             }

@@ -74,6 +74,12 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            text-button="Ver"
+            icon-button="mdi-eye"
+            color-button="success"
+            :config-route="{ name: 'fetch-subtopic', params: { id: $route.params.id, subtopic_id: item.id } }"
+          />
+          <resource-button-edit
             v-if="topicData !== null"
             :config-route="{
               name: 'update-subtopic',
