@@ -64,6 +64,7 @@ export default {
     alertErrorNotSelectedAnyRecord ({ message }) {
       this.$swal.fire({
         icon: 'info',
+        toast: true,
         title: message,
         showConfirmButton: true,
         confirmButtonText: '¡Entendido!',
