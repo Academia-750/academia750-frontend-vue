@@ -22,7 +22,6 @@ const mapItemsDatatableFromApiImportRecord = (itemsApi) => {
     return {
       id: record.id,
       'number-of-row': record.attributes.number_of_row,
-      'reference-number': record.attributes.reference_number,
       'has-errors': record.attributes.has_errors,
       'errors_validation': record.attributes.errors_validation,
       'created-at': record.attributes.created_at

@@ -11,14 +11,6 @@ export default {
           show: true
         },
         {
-          position: 2,
-          text: '#Referencia',
-          align: 'start',
-          sortable: true,
-          value: 'reference-number',
-          show: true
-        },
-        {
           position: 3,
           sortable: true,
           text: 'Fecha de registro',
