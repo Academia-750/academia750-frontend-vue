@@ -64,7 +64,7 @@
             </template>
           </v-treeview>
           <div v-else class="d-flex justify-center mt-2">
-            <p class="font-weight-bold subtitle-1">No hay datos disponibles</p>
+            <p class="font-weight-bold subtitle-1">Esta oposicion no tiene temas ni subtemas disponibles</p>
           </div>
         </v-card-text>
       </v-card>

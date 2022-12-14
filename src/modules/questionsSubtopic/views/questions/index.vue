@@ -7,7 +7,7 @@
       :options.sync="optionsDatatable"
       item-key="id"
       multi-sort
-      no-data-text="No hay datos disponibles"
+      no-data-text="Este subtema no tiene preguntas disponibles"
       :items-per-page="5"
       :mobile-breakpoint="600"
       class="elevation-1"
@@ -45,7 +45,7 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable />
+        <resource-banner-no-data-datatable message-text="Este subtema no tiene preguntas disponibles"/>
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
