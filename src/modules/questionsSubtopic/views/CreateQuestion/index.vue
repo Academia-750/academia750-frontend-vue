@@ -6,14 +6,14 @@
       :can-rendering-header="true"
     />
     <resource-header-crud-title
-      text-header="Crear pregunta para tema"
+      text-header="Crear pregunta para subtema"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
     <v-toolbar flat class="indigo lighten-5 my-2" outlined>
       <resource-button-go-back-router :width-number-limit="300" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
-        title-text="Crear pregunta para tema"
+        title-text="Crear pregunta para subtema"
       />
     </v-toolbar>
     <v-card-text>
@@ -163,4 +163,4 @@
   </v-card-text>
 </template>
 
-<script src="./CreateQuestionsTopic.js"></script>
+<script src="./CreateQuestionsSubtopic.js"></script>

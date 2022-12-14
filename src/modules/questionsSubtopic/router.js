@@ -1,8 +1,8 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/questions'
-/* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
-import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
+import CreateQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/CreateQuestion'
+/* import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
 const shortcutRoutes = [
   /* {
@@ -45,7 +45,16 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          },
+          {
+            path: ':id/questions/:subtopic_id/create',
+            name: 'create-question-subtopic',
+            component: CreateQuestionsSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+          /* ,
           {
             path: ':id/questions/create',
             name: 'create-subtopic',

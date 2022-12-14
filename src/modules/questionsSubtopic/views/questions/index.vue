@@ -33,7 +33,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              :config-route="{ name: 'create-question-topic' }"
+              :config-route="{ name: 'create-question-subtopic' }"
             />
           </div>
         </v-toolbar>

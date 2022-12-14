@@ -9,7 +9,7 @@ export default {
       return `Preguntas del Tema: "${this.topicData?.attributes?.name}"`
     },
     getTotalQuestionsSyllabus() {
-      return `Total de preguntas de temario: "${this.metaData['total-questions-syllabus']}"`
+      return `Total de preguntas de tema: "${this.metaData['total-questions-syllabus']}"`
     }
   }
 }

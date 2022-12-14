@@ -13,7 +13,7 @@ export default {
     return ResourceService.post(`${resource}/${subtopic_id}/relationship/questions/create`, data, config)
   },
   update(subtopic_id, question_id, data, config = {}) {
-    return ResourceService.patch(`${resource}/${subtopic_id}/relationship/questions/${question_id}/update`, data, config)
+    return ResourceService.post(`${resource}/${subtopic_id}/relationship/questions/${question_id}/update`, data, config)
   },
   delete(subtopic_id, question_id, config = {}) {
     return ResourceService.delete(`${resource}/${subtopic_id}/relationship/questions/${question_id}/delete`, config)
