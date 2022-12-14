@@ -71,7 +71,7 @@
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
-      title="¿Estás seguro de eliminar la Oposición?"
+      title="¿Estás seguro de remover la Oposición del tema?"
       @actionDelete="unassignOppositionAction"
     >
       <template #identifier-record>
