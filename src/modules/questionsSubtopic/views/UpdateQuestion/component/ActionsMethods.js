@@ -2,7 +2,7 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('questionsTopicService', ['fetchQuestion','updateQuestion']),
+    ...mapActions('questionsSubtopicService', ['fetchQuestion','updateQuestion']),
     async UpdateQuestionApi() {
       try {
         const FormDataQuestion = new FormData()
@@ -32,7 +32,7 @@ export default {
         FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
 
         await this.updateQuestion({
-          topic_id: this.$route.params.id,
+          subtopic_id: this.$route.params.subtopic_id,
           question_id: this.$route.params.question_id,
           data: FormDataQuestion,
           config: {}
@@ -50,10 +50,7 @@ export default {
         this.disabledButtonUpdateQuestion = false
 
         this.$router.push({
-          name: 'manage-questions-of-topic',
-          params: {
-            id: this.$route.params.id
-          }
+          name: 'manage-questions-of-subtopic'
         })
         //this.ResetForm()
       } catch (error) {
@@ -80,7 +77,7 @@ export default {
         this.disabledButtonUpdateQuestion = true
 
         const response = await this.fetchQuestion({
-          topic_id: this.$route.params.id,
+          subtopic_id: this.$route.params.subtopic_id,
           question_id: this.$route.params.question_id,
           config: {
             params: {

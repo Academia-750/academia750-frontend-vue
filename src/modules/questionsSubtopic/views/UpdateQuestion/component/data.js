@@ -2,7 +2,7 @@ export default {
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
-      topicData: null,
+      subtopicData: null,
       questionData: null,
       loadingButtonUpdateQuestion: false,
       disabledButtonUpdateQuestion: false,

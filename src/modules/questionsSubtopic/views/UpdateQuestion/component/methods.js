@@ -72,11 +72,11 @@ export default {
     },
     syncValuesForm(response) {
       const { attributes, relationships } = response.data.data
-      const { topic } = response.data.meta
+      const { subtopic } = response.data.meta
       let { data: dataAnswers } = relationships.answers
 
       this.questionData = response.data
-      this.topicData = topic
+      this.subtopicData = subtopic
 
       this.$refs['FormQuestionTextField'].question_text = attributes['question-text']
       this.$refs['FormQuestionTypeTestCheckbox'].is_test = attributes.its_for_test === 'yes'

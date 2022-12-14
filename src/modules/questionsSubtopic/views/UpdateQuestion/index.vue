@@ -1,8 +1,8 @@
 <template>
   <v-card-text>
     <resource-header-crud-title
-      v-if="topicData"
-      :text-header="getNameCurrentTopic"
+      v-if="subtopicData"
+      :text-header="getNameCurrentSubtopic"
       :can-rendering-header="true"
     />
     <resource-header-crud-title
@@ -19,7 +19,7 @@
       <resource-divider-title-datatable :width-limit-title-divider="620"/>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
-        <resource-button-add :config-route="{ name: 'create-question-topic' }"/>
+        <resource-button-add :config-route="{ name: 'create-question-subtopic' }"/>
         <v-btn
           small
           color="light-blue darken-3"
@@ -182,4 +182,4 @@
   </v-card-text>
 </template>
 
-<script src="./UpdateQuestionsTopic.js"></script>
+<script src="./UpdateQuestionsSubtopic.js"></script>

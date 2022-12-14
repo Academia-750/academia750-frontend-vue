@@ -49,7 +49,7 @@
         <div class="d-flex justify-space-around">
           <resource-button-edit
             color-button="blue darken-1"
-            :config-route="{ name: 'update-topic', params: { id: item.id } }"
+            :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
