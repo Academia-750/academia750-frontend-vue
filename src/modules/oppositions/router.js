@@ -2,6 +2,7 @@ import authMiddleware from '@/middlewares/auth'
 import Module from './module.vue'
 import ManageOppositionsModule from './views/Oppositions/'
 import CreateOppositionView from './views/CreateOpposition/index.vue'
+import FetchOppositionView from './views/FetchOpposition/index.vue'
 import UpdateOppositionView from './views/UpdateOpposition/index.vue'
 import SyllabusOppositionView from './views/SyllabusOpposition/index.vue'
 
@@ -53,6 +54,14 @@ const moduleRoute = [
             path: 'create',
             name: 'create-opposition',
             component: CreateOppositionView,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'fetch/:id',
+            name: 'fetch-opposition',
+            component: FetchOppositionView,
             meta: {
               middleware: [authMiddleware]
             }

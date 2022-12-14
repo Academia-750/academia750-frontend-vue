@@ -20,19 +20,14 @@ export default {
     this.fetchRecordData()
   },
   methods: {
-    ...mapActions('topicsService', ['fetchTopic']),
+    ...mapActions('oppositionsService', ['fetchOpposition']),
     async fetchRecordData () {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.disabledButtonFetchRecord = true
 
-        const response = await this.fetchTopic({
-          id: this.$route.params.id,
-          config: {
-            params: {
-              include: 'topic-group'
-            }
-          }
+        const response = await this.fetchOpposition({
+          id: this.$route.params.id
         })
 
         this.recordData = response.data
@@ -49,7 +44,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Ver Tema'
+      inner: 'Ver Oposición'
     }
   }
 }

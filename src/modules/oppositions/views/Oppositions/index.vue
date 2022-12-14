@@ -46,6 +46,12 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            text-button="Ver"
+            icon-button="mdi-eye"
+            color-button="success"
+            :config-route="{ name: 'fetch-opposition', params: { id: item.id } }"
+          />
+          <resource-button-edit
             :config-route="{ name: 'update-opposition', params: { id: item.id } }"
           />
           <resource-button-delete
