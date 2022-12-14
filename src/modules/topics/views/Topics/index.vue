@@ -86,6 +86,12 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
+            text-button="Ver"
+            icon-button="mdi-eye"
+            color-button="success"
+            :config-route="{ name: 'fetch-topic', params: { id: item.id } }"
+          />
+          <resource-button-edit
             color-button="blue darken-1"
             :config-route="{ name: 'update-topic', params: { id: item.id } }"
           />

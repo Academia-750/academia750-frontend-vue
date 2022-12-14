@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageTopicsModule from '@/modules/topics/views/Topics'
 import CreateTopicModule from '@/modules/topics/views/CreateTopic'
+import FetchTopicModule from '@/modules/topics/views/FetchTopic'
 import UpdateTopicModule from '@/modules/topics/views/UpdateTopic'
 import importTopics from '@/modules/topics/views/import'
 
@@ -60,6 +61,14 @@ const moduleRoute = [
             path: 'update/:id',
             name: 'update-topic',
             component: UpdateTopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'fetch/:id',
+            name: 'fetch-topic',
+            component: FetchTopicModule,
             meta: {
               middleware: [authMiddleware]
             }
