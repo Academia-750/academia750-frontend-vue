@@ -61,7 +61,7 @@
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
-      title="¿Estás seguro de eliminar la pregunta?"
+      title="¿Estás seguro de eliminar la pregunta del subtema?"
       @actionDelete="deleteQuestionAction"
     >
       <template #identifier-record>

@@ -11,14 +11,14 @@ export default {
       try {
         await this.deleteQuestion({
           topic_id: this.$route.params.id,
-          subtopic_id: this.currentItemsSelectedForDelete.id,
+          question_id: this.currentItemsSelectedForDelete.id,
           config: {}
         })
 
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'El subtema ha sido eliminado con éxito.',
+          title: 'La pregunta ha sido eliminado con éxito del tema.',
           timer: 3000
         })
 

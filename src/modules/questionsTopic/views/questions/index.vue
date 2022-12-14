@@ -69,7 +69,7 @@
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
-      title="¿Estás seguro de eliminar la pregunta?"
+      title="¿Estás seguro de eliminar la pregunta del tema?"
       @actionDelete="deleteQuestionAction"
     >
       <template #identifier-record>
@@ -79,7 +79,7 @@
         >
           <span class="mr-1 font-italic subtitle-1">Pregunta:</span>
           <span class="font-weight-bold subtitle-1">{{
-            currentItemsSelectedForDelete.name
+            currentItemsSelectedForDelete['question-text']
           }}</span>
         </div>
       </template>
