@@ -12,7 +12,7 @@ export default {
         },
         {
           position: 2,
-          text: 'Fecha de creación',
+          text: 'Fecha de alta',
           align: 'start',
           sortable: true,
           value: 'created-at',

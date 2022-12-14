@@ -17,6 +17,13 @@ export default {
           show: true
         },
         {
+          text: 'Fecha de alta',
+          align: 'start',
+          sortable: true,
+          value: 'created-at',
+          show: true
+        },
+        {
           position: 3,
           sortable: false,
           text: 'Acciones',

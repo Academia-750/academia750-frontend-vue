@@ -11,7 +11,14 @@ export default {
           show: true
         },
         {
-          position: 2,
+          text: 'Fecha de alta',
+          align: 'start',
+          sortable: true,
+          value: 'created-at',
+          show: true
+        },
+        {
+          position: 3,
           sortable: false,
           text: 'Acciones',
           align: 'center',
@@ -19,7 +26,7 @@ export default {
           show: true
         },
         {
-          position: 3,
+          position: 4,
           sortable: false,
           text: 'Subtemas',
           align: 'center',
@@ -27,7 +34,7 @@ export default {
           show: true
         },
         {
-          position: 4,
+          position: 5,
           sortable: false,
           text: 'Oposiciones',
           align: 'center',
@@ -35,7 +42,7 @@ export default {
           show: true
         },
         {
-          position: 5,
+          position: 6,
           sortable: false,
           text: 'Preguntas',
           align: 'center',

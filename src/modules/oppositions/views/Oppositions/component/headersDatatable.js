@@ -18,6 +18,14 @@ export default {
         },
         {
           position: 3,
+          text: 'Fecha de alta',
+          align: 'start',
+          sortable: true,
+          value: 'created-at',
+          show: true
+        },
+        {
+          position: 4,
           sortable: false,
           text: 'Acciones',
           align: 'center',
@@ -25,7 +33,7 @@ export default {
           show: true
         },
         {
-          position: 4,
+          position: 5,
           sortable: false,
           text: 'Temario',
           align: 'center',
