@@ -11,6 +11,8 @@
       :items-per-page="5"
       :mobile-breakpoint="600"
       class="elevation-1"
+      sort-by="created-at"
+      sort-desc
       :server-items-length="informationMeta.total"
       :footer-props="get_footer_props"
     >
