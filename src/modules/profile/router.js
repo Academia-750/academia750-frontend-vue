@@ -2,6 +2,7 @@ import authMiddleware from '@/middlewares/auth'
 import Module from './module.vue'
 import UpdateMyProfileViewModule from './views/UpdateProfile/UpdateProfile.vue'
 import ChangePasswordAccountViewModule from './views/ChangePassword/ChangePassword.vue'
+import ChangeImageAccountViewModule from './views/ChangeImage/ChangeImage.vue'
 import NotificationsUser from './views/notifications'
 
 const moduleRoute = [
@@ -22,6 +23,14 @@ const moduleRoute = [
         path: 'change-password',
         name: 'change-password',
         component: ChangePasswordAccountViewModule,
+        meta: {
+          middleware: [authMiddleware]
+        }
+      },
+      {
+        path: 'update-image-account',
+        name: 'update-image-account',
+        component: ChangeImageAccountViewModule,
         meta: {
           middleware: [authMiddleware]
         }

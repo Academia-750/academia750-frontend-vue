@@ -77,6 +77,20 @@ const ChangeMyPasswordAccountAction = async (_, options) => {
   }
 }
 
+const ChangeImageMyAccountProfile = async (_, options) => {
+
+  try {
+    const response = await ProfileRepository.changeImageAccount(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const mapItemsNotifications = (notifications = []) => {
   return notifications.map((notification) => {
     const { body } = notification.attributes
@@ -135,5 +149,6 @@ export default {
   UnsubscribeSystemAction,
   ChangeMyPasswordAccountAction,
   getNotifications,
-  readNotification
+  readNotification,
+  ChangeImageMyAccountProfile
 }

@@ -2,14 +2,15 @@
   <div>
     <v-file-input
       v-model="image"
+      :error-messages="validationErrors"
       show-size
-      label="Selecciona Imagen de explicación"
+      :label="label"
       accept="image/*"
       @change="Preview_image"
     ></v-file-input>
-    <v-container v-if="image || previewImageForUpdate" fluid>
+    <v-container v-if="image || previewImageForUpdate" class="d-flex justify-center" fluid>
       <v-img
-        max-width="500"
+        :max-width="maxWidthImagePreview"
         :aspect-ratio="16/9"
         :src="urlImage"
       ></v-img>
@@ -20,6 +21,22 @@
 <script>
 export default {
   name: 'FormAddQuestionImage',
+  props: {
+    label: {
+      type: String,
+      default: 'Selecciona Imagen de explicación'
+    },
+    maxWidthImagePreview: {
+      type: String,
+      default: '500'
+    },
+    validationErrors: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
   data () {
     return {
       image: null,

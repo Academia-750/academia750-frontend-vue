@@ -51,6 +51,7 @@
 <script>
 import config from '../../configs'
 import logoutActionsMixin from '@/modules/auth/login/resources/logoutActionsMixins'
+import { mapState } from 'vuex'
 /*
 |---------------------------------------------------------------------
 | Toolbar User Component
@@ -67,11 +68,26 @@ export default {
       pathImageAccount: null
     }
   },
+  computed: {
+    ...mapState('profileService', ['user'])
+  },
+  watch: {
+    user (value) {
+      if (!value) {
+        return
+      }
+
+      this.loadImageAccount()
+    }
+  },
   beforeMount () {
     this.loadImageAccount()
   },
   methods: {
     loadImageAccount () {
+      const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
+      const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
+      const serverApiProduction = process.env.VUE_APP_BASE_URL_API_PRODUCTION
       const { image } = this.$userAuth()?.relationships
 
       if (!image) {

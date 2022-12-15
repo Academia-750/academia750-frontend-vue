@@ -22,6 +22,9 @@ export default {
   },
   readNotification(notification_id, data = {}, config = {}) {
     return ProfileAuthService.post(`/read/notification/${notification_id}/user`, data, config)
+  },
+  changeImageAccount(data = {}, config = {}) {
+    return ProfileAuthService.post('/auth/my-account/update/image', data, config)
   }
 
 }
