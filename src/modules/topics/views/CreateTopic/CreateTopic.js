@@ -8,6 +8,9 @@ export default {
     FormFieldNameTopic: () => import(/* webpackChunkName: "FormFieldNameTopic" */ '../../components/form/FormFieldNameTopic.vue'),
     AutocompleteATopicGroup: () => import(/* webpackChunkName: "AutocompleteTopicGroup" */ '../../components/form/AutocompleteATopicGroup.vue')
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data () {
     return {
       loadingButtonCreateTopic: false,

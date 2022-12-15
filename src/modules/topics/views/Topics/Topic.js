@@ -21,6 +21,9 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
