@@ -42,6 +42,7 @@ export default {
       this.$loadingApp.disabledLoadingProgressLinear()
     },
     async reloadImageByPath() {
+      this.$loadingApp.enableLoadingProgressLinear()
       await this.getDataMyProfileAction({
         actionAfterLogin: false,
         configResponse: {
@@ -51,6 +52,7 @@ export default {
         }
       })
       this.loadImageAccount()
+      this.$loadingApp.disabledLoadingProgressLinear()
     },
     loadImageAccount() {
       const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
