@@ -4,6 +4,7 @@
     <error429-view v-if="isTooManyAttempsRequestsError" />
     <error500-view v-if="isErrorServerOrApp" />
     <error503-view v-if="isMaintenanceServer" />
+    <error-keep-one-tab v-if="keepOneTabError"/>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import Error404View from './error404.vue'
 import Error429View from './error429.vue'
 import Error500View from './error500.vue'
 import Error503View from './error503.vue'
+import ErrorKeepOneTab from './errorKeepOneTab.vue'
 
 export default {
   name: 'HandleErrors',
@@ -19,7 +21,8 @@ export default {
     Error404View,
     Error429View,
     Error500View,
-    Error503View
+    Error503View,
+    ErrorKeepOneTab
   },
   props: {
     errorResponse: {
@@ -41,7 +44,8 @@ export default {
         this.errorResponse?.status !== 404 ||
         this.errorResponse?.status !== 401 ||
         this.errorResponse?.status !== 422 ||
-        this.errorResponse?.status !== 429
+        this.errorResponse?.status !== 429 ||
+        this.errorResponse?.status !== 'keep-one-tab'
 
       return isErrorServerOrApp
     },
@@ -55,6 +59,9 @@ export default {
     },
     isMaintenanceServer() {
       return this.errorResponse?.status === 503
+    },
+    keepOneTabError () {
+      return this.errorResponse?.status === 'keep-one-tab'
     }
   }
 }

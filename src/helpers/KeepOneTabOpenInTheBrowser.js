@@ -1,3 +1,5 @@
+import { activateError } from '@/helpers/manageErrors'
+
 export const $KeepOneTabOpenInTheBrowserBroascastChannel = function () {
 
   const bc = new BroadcastChannel('Academia 750')
@@ -9,7 +11,11 @@ export const $KeepOneTabOpenInTheBrowserBroascastChannel = function () {
       alert('Se acaba de abrir otra pestaña de este sitio')
     }
     if (event.data === 'No you re not.') {
-      window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
+      activateError({
+        status: 'keep-one-tab',
+        message: 'Solo puedes mantener una pestaña abierta en el navegador'
+      })
+      //window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
     }
   }
 
@@ -26,7 +32,11 @@ export const $KeepOneTabOpenInTheBrowserLocalStorage = function () {
     }
     if (e.key === 'page_available') {
       //alert('One more page already open')
-      window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
+      activateError({
+        status: 'keep-one-tab',
+        message: 'Solo puedes mantener una pestaña abierta en el navegador'
+      })
+      //window.location = 'https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif'
     }
   }
 

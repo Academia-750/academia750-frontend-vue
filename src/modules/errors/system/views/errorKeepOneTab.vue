@@ -12,9 +12,13 @@
     "
   >
     <div class="overflow-y-auto">
-      <image-describe-error />
-      <section-main-error />
-      <button-action />
+      <image-describe-error
+        src-image="/images/errors/unauthorized.jpg"
+      />
+      <section-main-error
+        title="Acción no permitida"
+        description="Solo puedes mantener una pestaña abierta del sistema"
+      />
     </div>
   </v-card>
 </template>
@@ -22,14 +26,12 @@
 <script>
 import ImageDescribeError from '../components/ImageDescribeError.vue'
 import SectionMainError from '../components/sectionMainError.vue'
-import ButtonAction from '../components/ButtonAction.vue'
 
 export default {
   name: 'Error500View',
   components: {
     ImageDescribeError,
-    SectionMainError,
-    ButtonAction
+    SectionMainError
   }
 }
 </script>
