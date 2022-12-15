@@ -1,6 +1,6 @@
-import menuUI from './menus/ui.menu'
+/* import menuUI from './menus/ui.menu'
 import menuApps from './menus/apps.menu'
-import menuPages from './menus/pages.menu'
+import menuPages from './menus/pages.menu' */
 
 export default {
   // main navigation - side menu
