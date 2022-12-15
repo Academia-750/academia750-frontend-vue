@@ -33,6 +33,9 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted() {
     //console.log(this.$refs['dropzoneFilesImportTopics'].$el)
     this.$refs['dropzoneFilesImportTopics'].$el.innerHTML = /* html */`

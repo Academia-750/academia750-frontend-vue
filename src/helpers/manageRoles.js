@@ -1,8 +1,9 @@
-import store from '@/store'
+import $store from '@/store'
+import { activateError } from '@/helpers/manageErrors'
 
 export const hasRoles = (roles, rolesUserAuth = null) => {
 
-  rolesUserAuth = rolesUserAuth ?? store.getters['profileService/get_roles']
+  rolesUserAuth = rolesUserAuth ?? $store.getters['profileService/get_roles']
   //permissions = permissions ? permissions : '*'
 
   if (roles !== '*' && roles) {
@@ -19,6 +20,17 @@ export const hasRoles = (roles, rolesUserAuth = null) => {
   }
 
   return roles === '*'
+}
+
+export const hasRoleMiddleware = (role) => {
+  if (!hasRoles(role)) {
+    activateError({
+      status: 404,
+      message: 'Pagina no encontrada'
+    })
+
+    return
+  }
 }
 
 export default {
