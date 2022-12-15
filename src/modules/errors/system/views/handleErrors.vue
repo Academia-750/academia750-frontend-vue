@@ -30,10 +30,11 @@ export default {
   computed: {
     isErrorServerOrApp() {
       const isErrorServerOrApp =
-        !this.errorResponse?.status ||
+        (!this.errorResponse?.status ||
         this.errorResponse?.status === 500 ||
         this.errorResponse?.status === 0 ||
-        this.errorResponse?.status === 400
+        this.errorResponse?.status === 400) &&
+        !isNotErrorClientOrAnotherInvalidError
 
       const isNotErrorClientOrAnotherInvalidError =
         this.errorResponse?.status !== 403 ||
@@ -42,7 +43,7 @@ export default {
         this.errorResponse?.status !== 422 ||
         this.errorResponse?.status !== 429
 
-      return isErrorServerOrApp && isNotErrorClientOrAnotherInvalidError
+      return isErrorServerOrApp
     },
     isNotFoundError() {
       return (

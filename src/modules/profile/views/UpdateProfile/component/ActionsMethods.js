@@ -49,8 +49,8 @@ export default {
     async unsubscribeSystem () {
 
       this.$swal.fire({
-        // icon: "error",
-        width: '800px',
+        toast: true,
+        width: '400px',
         imageUrl: 'https://cdn-icons-png.flaticon.com/512/725/725099.png',
         imageWidth: 100,
         imageHeigth: 100,
