@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card
-      class="mx-auto"
+      class="mx-auto mt-4"
       max-width="600"
     >
       <v-list three-line dense max-width="600">
@@ -46,6 +46,11 @@
             </v-icon>
           </v-btn>
         </v-subheader> -->
+        <div class="d-flex justify-center mt-4">
+          <p v-if="!Array.isArray(notifications) || notifications.length === 0" class="font-weight-bold title">
+            No hay notificaciones
+          </p>
+        </div>
         <div v-for="(item, index) in notifications" :key="index">
           <v-divider v-if="index > 0 && index < notifications.length" inset></v-divider>
           <v-list-item :class="{ 'grey lighten-2': !item.has_read_notification }" @click="redirectRouteNotification(item)">
