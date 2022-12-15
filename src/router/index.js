@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import middleware from '@grafikri/vue-middleware'
-import authMiddleware from '@/middlewares/auth'
 
 // Routes
-import AppsRoutes from './apps.routes'
+/* import AppsRoutes from './apps.routes'
 import UIRoutes from './ui.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
 import EcommerceRoutes from './ecommerce.routes'
-import LandingRoutes from './landing.routes'
+import LandingRoutes from './landing.routes' */
 
 Vue.use(Router)
 
@@ -18,25 +17,13 @@ export const routes = [{
   redirect: {
     name: 'update-my-profile'
   }
-}, {
-  path: '/dashboard/analytics',
-  name: 'dashboard-analytics',
-  meta: {
-    middleware: [authMiddleware]
-  },
-  component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue')
 },
-...AppsRoutes,
+/* ...AppsRoutes,
 ...UIRoutes,
 ...PagesRoutes,
 ...UsersRoutes,
 ...EcommerceRoutes,
-...LandingRoutes,
-{
-  path: '/blank',
-  name: 'blank',
-  component: () => import(/* webpackChunkName: "blank" */ '@/pages/BlankPage.vue')
-},
+...LandingRoutes, */
 {
   path: '*',
   name: 'error',
