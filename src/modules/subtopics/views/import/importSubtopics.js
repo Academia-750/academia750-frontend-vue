@@ -16,6 +16,9 @@ export default {
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data() {
     return {
       canSendFiles: false,

@@ -15,6 +15,9 @@ export default {
       opposition: null
     }
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted () {
     //console.log(this.$route.params.id)
     this.fetchSyllabusOppositionApi()

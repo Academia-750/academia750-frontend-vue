@@ -42,6 +42,9 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   head: {
     title: {
       inner: 'Ver Oposición'

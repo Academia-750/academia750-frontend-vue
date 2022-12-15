@@ -22,6 +22,9 @@ export default {
   mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
   mounted() {
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   head: {
     title: {
       inner: 'Crear pregunta para subtema'

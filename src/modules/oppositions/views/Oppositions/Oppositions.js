@@ -22,6 +22,9 @@ export default {
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
     ButtonDatatableSyllabus: () => import(/* webpackChunkName: "ButtonDatatableSyllabus" */ '@/modules/oppositions/components/ButtonDatatableSyllabus.vue')
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'

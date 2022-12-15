@@ -20,6 +20,9 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted () {
     //console.log(this.$route.params.id)
     this.fetchOppositionForUpdate()

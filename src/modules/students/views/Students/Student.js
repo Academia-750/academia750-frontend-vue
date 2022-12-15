@@ -26,7 +26,8 @@ export default {
       }
     }
   },
-  mounted () {
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
   },
   watch: {
     tabViewStudents () {

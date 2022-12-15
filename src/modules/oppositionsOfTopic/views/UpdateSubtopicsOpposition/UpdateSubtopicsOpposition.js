@@ -21,6 +21,9 @@ export default {
     this.fetchDataTopic()
     this.fetchSubtopicsOppositionByTopicForUpdate()
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   head: {
     title: {
       inner: 'Editar subtemas de una Oposicion'

@@ -31,6 +31,9 @@ export default {
     ...mapState('subtopicsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
     ...footerProps
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted () {
     /* this.getSubtopics({
       params: this.buildQueryParamsRequest()

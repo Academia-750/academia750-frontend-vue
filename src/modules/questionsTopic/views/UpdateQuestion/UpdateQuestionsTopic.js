@@ -23,6 +23,9 @@ export default {
   mounted() {
     this.fetchDataQuestionForUpdate()
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   head: {
     title: {
       inner: 'Actualizar pregunta para tema'

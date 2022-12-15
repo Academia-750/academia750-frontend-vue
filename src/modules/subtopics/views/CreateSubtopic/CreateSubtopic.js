@@ -8,6 +8,9 @@ export default {
     FormFieldNameSubtopic: () => import(/* webpackChunkName: "FormFieldNameSubtopic" */ '../../components/form/FormFieldNameSubtopic.vue')
 
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data () {
     return {
       loadingButtonCreateSubtopic: false,

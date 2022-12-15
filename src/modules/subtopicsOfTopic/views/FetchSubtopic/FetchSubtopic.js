@@ -16,6 +16,9 @@ export default {
       recordData: ''
     }
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted () {
     this.fetchRecordData()
   },

@@ -20,7 +20,8 @@ const MIXINS_ADDITIONAL = [
 
 export default {
   mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
-  mounted() {
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
   },
   head: {
     title: {

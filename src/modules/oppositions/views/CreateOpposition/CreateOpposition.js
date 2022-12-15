@@ -9,6 +9,9 @@ export default {
     FormFieldPeriodOpposition: () => import(/* webpackChunkName: "FormFieldPeriodOpposition" */ '../../components/form/FormFieldPeriodOpposition.vue')
 
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   data () {
     return {
       loadingButtonCreateOpposition: false,

@@ -19,6 +19,9 @@ export default {
   mounted () {
     this.fetchDataTopic()
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   head: {
     title: {
       inner: 'Asignar Oposicion al tema'

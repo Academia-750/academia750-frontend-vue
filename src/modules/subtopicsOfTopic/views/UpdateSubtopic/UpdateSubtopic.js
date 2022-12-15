@@ -16,6 +16,9 @@ const MIXINS_COMPONENT = [
 
 export default {
   mixins: [...MIXINS_COMPONENT],
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   mounted () {
     this.fetchDataTopic()
     this.fetchDataForUpdate()
