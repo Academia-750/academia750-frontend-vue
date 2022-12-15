@@ -10,7 +10,7 @@
           offset-y="10"
         >
           <v-avatar size="40">
-            <v-img :src="require('@/assets/images/avatar_default_photo.svg')"></v-img>
+            <v-img v-if="pathImageAccount" :src="pathImageAccount"></v-img>
           </v-avatar>
         </v-badge>
       </v-btn>
@@ -63,7 +63,34 @@ export default {
   mixins: [logoutActionsMixin],
   data() {
     return {
-      menu: config.toolbar.user
+      menu: config.toolbar.user,
+      pathImageAccount: null
+    }
+  },
+  beforeMount () {
+    this.loadImageAccount()
+  },
+  methods: {
+    loadImageAccount () {
+      const { image } = this.$userAuth()?.relationships
+
+      if (!image) {
+        this.pathImageAccount = '/images/academia750/avatar_default_photo.svg'
+
+        return
+      }
+
+      if (image.attributes.type_path === 'url') {
+        this.pathImageAccount = image.attributes.path
+
+        return
+      }
+
+      if (image.attributes.type_path === 'local') {
+        this.pathImageAccount = `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}${image.attributes.path}`
+
+        return
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ export const loadUserAuth = async () => {
         actionAfterLogin: false,
         configResponse: {
           params: {
-            include: 'roles,roles-permissions'
+            include: 'image,roles,roles-permissions'
           }
         }
       })
