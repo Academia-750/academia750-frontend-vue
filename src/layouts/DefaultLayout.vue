@@ -100,22 +100,7 @@
             ></v-text-field>
             <div v-else class="d-flex flex-grow-1 align-center">
               <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-              <v-spacer class="d-none d-lg-block"></v-spacer>
-              <!-- search input desktop -->
-              <v-text-field
-                ref="search"
-                class="mx-1 hidden-xs-only"
-                :placeholder="$t('menu.search')"
-                prepend-inner-icon="mdi-magnify"
-                hide-details
-                filled
-                rounded
-                dense
-              ></v-text-field>
-              <v-spacer class="d-block d-sm-none"></v-spacer>
-              <v-btn class="d-block d-sm-none" icon @click="showSearch = true">
-                <v-icon>mdi-magnify</v-icon>
-              </v-btn>
+              <v-spacer></v-spacer>
               <!-- <toolbar-language /> -->
               <!-- <div class="hidden-xs-only mx-1">
                 <toolbar-currency />
