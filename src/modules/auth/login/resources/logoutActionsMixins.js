@@ -36,16 +36,14 @@ export default {
         ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = null
         ProfileAuthService.defaults.headers.common['Authorization'] = null
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.$router.push({
-          name: 'login'
-        })
+
+        window.location.href = process.env.VUE_APP_BASE_URL_HOME
+
       } catch (error) {
         console.log(error)
         this.$manageTokenAuth.$remove_token_auth()
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.$router.push({
-          name: 'login'
-        })
+        window.location.href = process.env.VUE_APP_BASE_URL_HOME
         this.$swal.fire({
           icon: 'warning',
           toast: true,

@@ -46,9 +46,7 @@ const handleErrorResponse = (error) => {
     }
 
     store.commit('profileService/set_user', null)
-    router.push({
-      name: 'login'
-    })
+    window.location.href = process.env.VUE_APP_BASE_URL_HOME
   }
 
   return Promise.reject(error)
