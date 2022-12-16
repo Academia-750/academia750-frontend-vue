@@ -140,7 +140,7 @@
           <v-spacer></v-spacer>
           <div class="overline">
             <span class="caption d-none d-sm-none d-md-inline">
-              Preparación integral de las oposiciones a bomber@
+              👨‍🚒👩‍🚒Academia de oposiciones a Bomber@s
             </span>
             .<v-icon small color="pink">mdi-heart</v-icon>
             <span
