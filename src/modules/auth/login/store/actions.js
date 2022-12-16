@@ -22,7 +22,6 @@ const logout = async () => {
 
     const response = await LoginRepository.logout()
 
-    console.log(store.state.profileService.user)
     $disconnectWebsocketsConnection(store.state.profileService.user.id)
 
     return Promise.resolve(response)
