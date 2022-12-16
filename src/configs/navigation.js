@@ -16,6 +16,32 @@ export default {
       ]
     },
     {
+      text: 'Zona de entrenamiento',
+      key: '',
+      roles: 'student',
+      items: [
+        {
+          icon: 'mdi-book-edit', key: '', text: 'Zona de entrenamiento', roles: 'student', regex: /^\/Zona de Entrenamiento/, items: [
+            { icon: 'mdi-book-open-variant', key: '', text: 'Tomar cuestionario', to: { name: 'update-my-profile' }, roles: 'student' },
+            { icon: 'mdi-book-clock', key: '', text: 'Tests sin completar', to: { name: 'update-image-account' }, roles: 'student' }
+          ]
+        }
+      ]
+    },
+    {
+      text: 'Mi cuenta',
+      key: '',
+      roles: 'student',
+      items: [
+        {
+          icon: 'mdi-chart-areaspline', key: '', text: 'Mis progresos', roles: 'student', regex: /^\/Mis progresos/, items: [
+            { icon: 'mdi-file-chart', key: '', text: 'Resumen', to: { name: 'update-my-profile' }, roles: 'student' },
+            { icon: 'mdi-chart-timeline', key: '', text: 'Históricos de preguntas', to: { name: 'update-image-account' }, roles: 'student' }
+          ]
+        }
+      ]
+    },
+    {
       text: 'Gestión administrativa',
       key: '',
       roles: 'admin',
