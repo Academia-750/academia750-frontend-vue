@@ -36,8 +36,10 @@ export default {
         (!this.errorResponse?.status ||
         this.errorResponse?.status === 500 ||
         this.errorResponse?.status === 0 ||
-        this.errorResponse?.status === 400) &&
-        !isNotErrorClientOrAnotherInvalidError
+        this.errorResponse?.status === 400 ||
+        this.errorResponse?.status === 405 ||
+        this.errorResponse?.status === 406 ||
+        this.errorResponse?.status === 415)
 
       const isNotErrorClientOrAnotherInvalidError =
         this.errorResponse?.status !== 403 ||
@@ -47,7 +49,7 @@ export default {
         this.errorResponse?.status !== 429 ||
         this.errorResponse?.status !== 'keep-one-tab'
 
-      return isErrorServerOrApp
+      return isErrorServerOrApp && isNotErrorClientOrAnotherInvalidError
     },
     isNotFoundError() {
       return (

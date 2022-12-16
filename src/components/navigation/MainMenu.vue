@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user">
     <v-divider></v-divider>
     <v-list-item class="py-1 px-3" two-line>
       <v-list-item-avatar
