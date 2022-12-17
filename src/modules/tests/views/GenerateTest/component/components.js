@@ -5,6 +5,7 @@ export default {
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
+    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     FormNumberQuestionsRadioButtons: () => import(/* webpackChunkName: "FormNumberQuestionsRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormNumberQuestionsRadioButtons'),
     FormTypeTestRadioButtons: () => import(/* webpackChunkName: "FormTypeTestRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormTypeTestRadioButtons'),
     selectOppositionByDatatable
