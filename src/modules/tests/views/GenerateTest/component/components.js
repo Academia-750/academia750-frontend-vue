@@ -6,6 +6,7 @@ export default {
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
     FormNumberQuestionsRadioButtons: () => import(/* webpackChunkName: "FormNumberQuestionsRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormNumberQuestionsRadioButtons'),
+    FormTypeTestRadioButtons: () => import(/* webpackChunkName: "FormTypeTestRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormTypeTestRadioButtons'),
     selectOppositionByDatatable
   }
 }
