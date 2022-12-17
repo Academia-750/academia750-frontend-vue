@@ -5,28 +5,35 @@
     class="d-flex justify-center"
     :vid="vid"
     mode="aggressive"
-    name="Tipo de test"
+    name="Grupo de tema"
     :rules="rules"
   >
     <v-radio-group
-      v-model="typeTest"
+      v-model="topicGroup"
       active-class="blue lighten-4"
       :error-messages="errors"
       :disabled="isDisabled"
       row
     >
       <v-radio
-        value="Test"
+        value="Legislación"
       >
         <template #label>
-          <span class="title font-weight-bold py-1">Examen</span>
+          <span class="title font-weight-bold py-1">Legislación</span>
         </template>
       </v-radio>
       <v-radio
-        value="Tarjeta de memoria"
+        value="Genérico"
       >
         <template #label>
-          <span class="title font-weight-bold py-1">Tarjeta de memoria</span>
+          <span class="title font-weight-bold py-1">Genérico</span>
+        </template>
+      </v-radio>
+      <v-radio
+        value="Específico"
+      >
+        <template #label>
+          <span class="title font-weight-bold py-1">Específico</span>
         </template>
       </v-radio>
     </v-radio-group>
@@ -35,7 +42,7 @@
 
 <script>
 export default {
-  name: 'FormTypeTestRadioButtons',
+  name: 'FormTopicGroupRadioButtons',
   props: {
     vid: {
       type: String,
@@ -52,12 +59,12 @@ export default {
   },
   data() {
     return {
-      typeTest: null
+      topicGroup: null
     }
   },
   watch: {
-    typeTest(value) {
-      this.$emit('TypeTestBinding', value)
+    topicGroup(value) {
+      this.$emit('TopicGroupTestBinding', value)
     }
   }
 }

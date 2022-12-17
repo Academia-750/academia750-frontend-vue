@@ -13,8 +13,8 @@
         ref="selectOppositionByDatatable"
         @OppositionSelectedBinding="oppositionSelected = $event"
       />
+      <hr>
     </v-container>
-    <hr>
     <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
       <p class="title font-weight-bold d-flex justify-center">Número de preguntas</p>
       <form-number-questions-radio-buttons
@@ -23,6 +23,7 @@
         rules="required"
         @NumberQuestionsTestBinding="numberOfQuestions = $event"
       />
+      <hr>
     </v-container>
     <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
       <p class="title font-weight-bold d-flex justify-center">Deseas generar</p>
@@ -31,6 +32,16 @@
         vid="type-test"
         rules="required"
         @TypeTestBinding="typeTest = $event"
+      />
+      <hr>
+    </v-container>
+    <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
+      <p class="title font-weight-bold d-flex justify-center">Grupos de temas</p>
+      <form-topic-group-radio-buttons
+        ref="FormTopicGroupRadioButtons"
+        vid="topic-group"
+        rules="required"
+        @TypeTestBinding="topicGroup = $event"
       />
     </v-container>
   </v-card-text>
