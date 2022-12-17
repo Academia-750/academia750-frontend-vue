@@ -12,6 +12,7 @@ import oppositionsOfTopic from '@/modules/oppositionsOfTopic'
 import questionsTopic from '@/modules/questionsTopic'
 import questionsSubtopic from '@/modules/questionsSubtopic'
 import imports from '@/modules/imports'
+import tests from '@/modules/tests'
 
 registerModules({
   errors,
@@ -26,5 +27,6 @@ registerModules({
   oppositionsOfTopic,
   questionsTopic,
   questionsSubtopic,
+  tests,
   imports
 })

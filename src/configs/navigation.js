@@ -22,7 +22,7 @@ export default {
       items: [
         {
           icon: 'mdi-book-edit', key: '', text: 'Zona de entrenamiento', roles: 'student', regex: /^\/Zona de Entrenamiento/, items: [
-            { icon: 'mdi-book-open-variant', key: '', text: 'Tomar cuestionario', to: { name: 'update-my-profile' }, roles: 'student' },
+            { icon: 'mdi-book-open-variant', key: '', text: 'Tomar cuestionario', to: { name: 'generate-questionnaire' }, roles: 'student' },
             { icon: 'mdi-book-clock', key: '', text: 'Tests sin completar', to: { name: 'update-image-account' }, roles: 'student' }
           ]
         }
