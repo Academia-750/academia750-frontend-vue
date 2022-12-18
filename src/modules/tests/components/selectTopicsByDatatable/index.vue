@@ -6,7 +6,6 @@
       :headers="filter__headers_datatable"
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
-      :single-select="true"
       show-select
       item-key="id"
       multi-sort

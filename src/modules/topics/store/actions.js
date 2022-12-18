@@ -22,6 +22,20 @@ const mapMetaInformationPagination = (response) => {
   }
 }
 
+const getTopicsGroups = async (_ , config) => {
+  try {
+
+    const response = await TopicRepository.getTopicsGroups(config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const getTopics = async ({ commit }, config) => {
 
   try {
@@ -140,5 +154,6 @@ export default {
   updateTopic,
   deleteTopic,
   fetchTopicGroups,
-  importTopicsCSV
+  importTopicsCSV,
+  getTopicsGroups
 }

@@ -6,6 +6,9 @@ export default {
   getAll(config = {}) {
     return ResourceService.get(`${resource}`, config)
   },
+  getTopicsGroups(config = {}) {
+    return ResourceService.get('topic-groups', config)
+  },
   get(id, config = {}) {
     return ResourceService.get(`${resource}/${id}`, config)
   },

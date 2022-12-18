@@ -1,5 +1,3 @@
-import { mapState, mapActions } from 'vuex'
-
 import components from './component/components'
 import data from './component/data'
 

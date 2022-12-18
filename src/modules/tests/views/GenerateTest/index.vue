@@ -21,7 +21,7 @@
         ref="FormNumberQuestionsRadioButtons"
         vid="number-questions"
         rules="required"
-        @NumberQuestionsTestBinding="numberOfQuestions = $event"
+        @NumberQuestionsTestBinding="numberOfQuestionsSelected = $event"
       />
       <hr>
     </v-container>
@@ -31,7 +31,7 @@
         ref="FormTypeTestRadioButtons"
         vid="type-test"
         rules="required"
-        @TypeTestBinding="typeTest = $event"
+        @TypeTestBinding="typeTestSelected = $event"
       />
       <hr>
     </v-container>
@@ -41,17 +41,31 @@
         ref="FormTopicGroupRadioButtons"
         vid="topic-group"
         rules="required"
-        @TypeTestBinding="topicGroup = $event"
+        @TopicGroupTestBinding="topicGroupSelected = $event"
       />
       <hr>
     </v-container>
-    <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
+    <v-container
+      v-if="oppositionSelected && topicGroupSelected"
+      :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
+    >
       <select-topics-by-datatable
+
         ref="selectTopicsByDatatable"
+        :opposition-id="oppositionSelected[0]?.id"
+        :topic-group-id="topicGroupSelected"
         @OppositionSelectedBinding="topicsSelected = $event"
       />
       <hr>
     </v-container>
+    <v-container
+      v-if="!oppositionSelected || !topicGroupSelected"
+      :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
+      class="d-flex justify-center"
+    >
+      <p class="title font-weight-bold red--text">Por favor, primero seleccione una Oposición y un grupo de tema</p>
+    </v-container>
+
   </v-card-text>
 </template>
 

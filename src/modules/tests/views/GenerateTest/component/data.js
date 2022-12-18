@@ -2,9 +2,9 @@ export default {
   data () {
     return {
       oppositionSelected: null,
-      numberOfQuestions: 0,
-      typeTest: null,
-      topicGroup: null,
+      numberOfQuestionsSelected: 0,
+      typeTestSelected: null,
+      topicGroupSelected: null,
       topicsSelected: []
     }
   }
