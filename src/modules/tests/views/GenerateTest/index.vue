@@ -43,6 +43,14 @@
         rules="required"
         @TypeTestBinding="topicGroup = $event"
       />
+      <hr>
+    </v-container>
+    <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
+      <select-topics-by-datatable
+        ref="selectTopicsByDatatable"
+        @OppositionSelectedBinding="topicsSelected = $event"
+      />
+      <hr>
     </v-container>
   </v-card-text>
 </template>
