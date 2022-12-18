@@ -29,6 +29,21 @@
           outlined
         >
           <resource-title-toolbar-datatable title-text="Selecciona los temas" />
+          <v-spacer></v-spacer>
+          <v-btn
+            small
+            color="light-blue darken-3"
+            class="white--text mx-1 align-self-center"
+            @click="loadDataTopics"
+          >
+            <v-icon
+              right
+              dark
+              class="mr-1"
+            >
+              mdi-refresh
+            </v-icon>
+          </v-btn>
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
