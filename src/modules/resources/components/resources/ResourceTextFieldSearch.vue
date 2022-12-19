@@ -68,6 +68,10 @@ export default {
   watch: {
     searchWord (value) {
       this.searchWordText = value
+
+    },
+    searchWordText (value) {
+      this.$emit('emitSearchTextBinding', value)
     }
   },
   methods: {

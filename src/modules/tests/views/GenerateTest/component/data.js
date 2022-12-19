@@ -1,10 +1,10 @@
 export default {
   data () {
     return {
-      oppositionSelected: null,
+      oppositionSelected: [],
       numberOfQuestionsSelected: 0,
       typeTestSelected: null,
-      topicGroupSelected: null,
+      topicGroupSelected: [],
       topicsSelected: []
     }
   }

@@ -27,5 +27,11 @@ const MIXINS_ADDITIONAL = [
 ]
 
 export default {
-  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL]
+  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
+  props: {
+    showSelect: {
+      type: Boolean,
+      required: true
+    }
+  }
 }

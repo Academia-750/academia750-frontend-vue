@@ -1,5 +1,6 @@
 import selectOppositionByDatatable from '@/modules/tests/components/selectOppositionByDatatable'
 import selectTopicsByDatatable from '@/modules/tests/components/selectTopicsByDatatable'
+import previewTopicsSelected from '@/modules/tests/components/previewTopicsSelected'
 
 export default {
   components: {
@@ -11,6 +12,7 @@ export default {
     FormTypeTestRadioButtons: () => import(/* webpackChunkName: "FormTypeTestRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormTypeTestRadioButtons'),
     FormTopicGroupRadioButtons: () => import(/* webpackChunkName: "FormTopicGroupRadioButtonsGenerateTest" */ '@/modules/tests/components/form/FormTopicGroupRadioButtons'),
     selectOppositionByDatatable,
-    selectTopicsByDatatable
+    selectTopicsByDatatable,
+    previewTopicsSelected
   }
 }

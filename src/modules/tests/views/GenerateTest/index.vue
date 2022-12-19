@@ -8,9 +8,22 @@
       <resource-button-go-back-router />
       <resource-title-toolbar-datatable title-text="Generar Test" />
     </v-toolbar>
-    <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
+    <v-container
+      v-if="oppositionSelected.length > 0"
+      :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
+      class="d-flex justify-center"
+    >
+      <div>
+        <span class="title">Oposición: </span><span class="title font-weight-bold">{{ oppositionSelected[0].name }}</span>
+      </div>
+    </v-container>
+    <v-container
+      v-show="topicsSelected.length === 0"
+      :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
+    >
       <select-opposition-by-datatable
         ref="selectOppositionByDatatable"
+        :show-select="topicsSelected.length === 0"
         @OppositionSelectedBinding="oppositionSelected = $event"
       />
       <hr>
@@ -46,7 +59,7 @@
       <hr>
     </v-container>
     <v-container
-      v-if="oppositionSelected && topicGroupSelected"
+      v-if="oppositionSelected.length > 0 && topicGroupSelected.length > 0"
       :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
     >
       <select-topics-by-datatable
@@ -54,18 +67,27 @@
         ref="selectTopicsByDatatable"
         :opposition-id="oppositionSelected[0]?.id"
         :topic-group-id="topicGroupSelected"
-        @OppositionSelectedBinding="topicsSelected = $event"
+        @TopicsSelectedBinding="topicsSelected = $event"
       />
       <hr>
     </v-container>
     <v-container
-      v-if="!oppositionSelected || !topicGroupSelected"
+      v-if="oppositionSelected.length === 0 || topicGroupSelected.length === 0"
       :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
       class="d-flex justify-center"
     >
       <p class="title font-weight-bold red--text">Por favor, primero seleccione una Oposición y un grupo de tema</p>
     </v-container>
+    <v-container
+      :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
+    >
+      <preview-topics-selected
 
+        ref="previewTopicsSelectedDatatable"
+        :items-datatable="topicsSelected"
+        @RemoveTopicSelectedByIdBinding="removeTopicSelected"
+      />
+    </v-container>
   </v-card-text>
 </template>
 
