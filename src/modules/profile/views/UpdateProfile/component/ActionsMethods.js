@@ -78,7 +78,12 @@ export default {
         await this.UnsubscribeSystemAction()
 
         this.$manageTokenAuth.$remove_token_auth()
-        window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        //window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        if (this.$router.currentRoute.name !== 'home-website') {
+          this.$router.push({
+            path: '/'
+          })
+        }
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUnsubscribeSystem = false
         this.disabledButtonUnsubscribeSystem = false

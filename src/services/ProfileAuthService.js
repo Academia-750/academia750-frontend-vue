@@ -51,7 +51,12 @@ const handleErrorResponse = (error) => {
       status: 500,
       message: 'No hay autorizacion previa para el proceso'
     })
-    window.location.href = process.env.VUE_APP_BASE_URL_HOME
+    //window.location.href = process.env.VUE_APP_BASE_URL_HOME
+    if (router.currentRoute.name !== 'home-website') {
+      router.push({
+        path: '/'
+      })
+    }
   }
 
   return Promise.reject(error)

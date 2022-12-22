@@ -37,13 +37,23 @@ export default {
         ProfileAuthService.defaults.headers.common['Authorization'] = null
         this.$loadingApp.disabledLoadingProgressLinear()
 
-        window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        //window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        if (this.$router.currentRoute.name !== 'home-website') {
+          this.$router.push({
+            path: '/'
+          })
+        }
 
       } catch (error) {
         console.log(error)
         this.$manageTokenAuth.$remove_token_auth()
         this.$loadingApp.disabledLoadingProgressLinear()
-        window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        //window.location.href = process.env.VUE_APP_BASE_URL_HOME
+        if (this.$router.currentRoute.name !== 'home-website') {
+          this.$router.push({
+            path: '/'
+          })
+        }
         this.$swal.fire({
           icon: 'warning',
           toast: true,
