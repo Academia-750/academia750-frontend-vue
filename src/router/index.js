@@ -13,10 +13,6 @@ import LandingRoutes from './landing.routes' */
 Vue.use(Router)
 
 export const routes = [{
-  path: '/',
-  redirect: {
-    name: 'update-my-profile'
-  }
 },
 /* ...AppsRoutes,
 ...UIRoutes,

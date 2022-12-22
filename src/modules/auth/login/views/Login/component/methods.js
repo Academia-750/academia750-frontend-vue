@@ -6,7 +6,12 @@ export default {
     ...mapActions('loginService', ['login', 'checkPreviousSessionAction']),
     ...mapActions('profileService', ['getDataMyProfileAction']),
     redirectToPageHomeProduction() {
-      location.href = process.env.VUE_APP_BASE_URL_PAGE_HOME_PRODUCTION
+      //location.href = process.env.VUE_APP_BASE_URL_PAGE_HOME_PRODUCTION
+      if (this.$router.currentRoute.name !== 'home-website') {
+        this.$router.push({
+          path: '/'
+        })
+      }
     },
     async submit() {
       const validateFormStatus = await this.$refs['FormLoginObserver'][
