@@ -1,4 +1,4 @@
-import TopicRepository from '../repositories/TopicRepository'
+import TestsRepository from '../repositories/TestsRepository'
 
 const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
@@ -22,7 +22,7 @@ const mapMetaInformationPagination = (response) => {
   }
 }
 
-const getTopics = async ({ commit }, config) => {
+const getUnresolvedTests = async ({ commit }, config) => {
 
   try {
 
@@ -38,7 +38,7 @@ const getTopics = async ({ commit }, config) => {
 
     commit('SET_ITEMS_DATATABLE', [])
 
-    const response = await TopicRepository.getAll(config)
+    const response = await TestsRepository.getUnresolvedTests(config)
 
     if (response) {
       //console.trace(response)
@@ -58,87 +58,6 @@ const getTopics = async ({ commit }, config) => {
   }
 }
 
-const createTopic = async (_, options) => {
-  try {
-
-    const response = await TopicRepository.create(options.data)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
-const fetchTopic = async (_, options) => {
-
-  try {
-    const response = await TopicRepository.get(options.id, options.config)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
-const updateTopic = async (_, options) => {
-  try {
-    const response = await TopicRepository.update(options.id, options.data, options.config)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
-const deleteTopic = async (_, options) => {
-  try {
-    const response = await TopicRepository.delete(options.id, options.config)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
-const fetchTopicGroups = async (_, options) => {
-  try {
-    const response = await TopicRepository.fetchTopicsGroups(options.config)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
-const importTopicsCSV = async (_, options) => {
-  try {
-
-    const response = await TopicRepository.import(options.data, options.config)
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
 export default {
-  getTopics,
-  createTopic,
-  fetchTopic,
-  updateTopic,
-  deleteTopic,
-  fetchTopicGroups,
-  importTopicsCSV
+  getUnresolvedTests
 }

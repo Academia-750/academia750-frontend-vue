@@ -52,7 +52,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable/>
+        <resource-banner-no-data-datatable
+          message-text="No hay temas disponibles"
+        />
       </template>
     </v-data-table>
   </v-card-text>

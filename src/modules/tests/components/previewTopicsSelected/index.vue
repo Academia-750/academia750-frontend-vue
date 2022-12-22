@@ -31,7 +31,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable/>
+        <resource-banner-no-data-datatable
+          message-text="No has seleccionado ningún tema"
+        />
       </template>
       <template v-slot:[`item.actions-record`]="{ item }">
         <v-btn
