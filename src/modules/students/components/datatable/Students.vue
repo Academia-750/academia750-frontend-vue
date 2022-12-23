@@ -33,14 +33,16 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <v-btn
+              small
+              elevation="24"
               color="teal darken-2"
               class="white--text"
               title="Cargar nuevamente"
               @click="loadDatatatable"
             >
               <v-icon
-                right
                 dark
+                small
                 class="mx-1"
               >
                 mdi-reload
