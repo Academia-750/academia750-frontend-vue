@@ -9,6 +9,8 @@ import { /* $websocketConnectionAction,  */$disconnectWebsocketsConnection } fro
 export default function ({ next }) {
 
   try {
+    /* console.log(Cookies.get('authorization')) */
+
     if (!Cookies.get('authorization')) {
       $disconnectWebsocketsConnection()
 
@@ -27,6 +29,8 @@ export default function ({ next }) {
 
     return next()
   } catch (error) {
+    /* console.log(Cookies.get('authorization'))
+    console.log('Error en middleware Auth') */
     console.log(error)
     activateError()
   }

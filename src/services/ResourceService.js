@@ -40,11 +40,13 @@ const handleErrorResponse = (error) => {
   }
 
   if (error.response.status === 401) {
+    /* console.log(Cookies.get('authorization')) */
     if (Cookies.get('authorization')) {
       $remove_token_auth()
       $disconnectWebsocketsConnection()
     }
 
+    /* console.log('Error en el Resource Service') */
     store.commit('profileService/set_user', null)
     /* activateError({
       status: 500,

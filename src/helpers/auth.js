@@ -14,6 +14,9 @@ export const $set_token_auth = function (token) {
     sameSite: 'Lax'
   }
 
+  /* console.log('Colocando la Cookie')
+  console.log({ options }) */
+
   Cookies.set('authorization', tokenPlainEncrypt, options)
 }
 
@@ -26,8 +29,16 @@ export const $remove_token_auth = function () {
   /* const options = {
     domain: IsDevelopmentEnviroment ? DOMAIN_APP_DEVELOPMENT : DOMAIN_APP_PRODUCTION
   } */
+  const options = {
+    expires: 3,
+    domain: IsDevelopmentEnviroment ? DOMAIN_APP_DEVELOPMENT : DOMAIN_APP_PRODUCTION,
+    sameSite: 'Lax'
+  }
 
-  Cookies.remove('authorization')
+  /* console.log(Cookies.get('authorization'))
+  console.log('Remover token') */
+
+  Cookies.remove('authorization', options)
 }
 
 export default {
