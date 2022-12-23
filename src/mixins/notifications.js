@@ -31,7 +31,7 @@ export default {
       })
     },
     listenChannelUserAuth(callback_execute) {
-      $EchoJSInstanceAcademia750.private(`App.Models.User.${this.user.id}`)
+      /* $EchoJSInstanceAcademia750.private(`App.Models.User.${this.user.id}`)
         .notification((notification) => {
           this.$toast.success('Tienes una nueva notificación', {
             position: 'bottom-right',
@@ -49,7 +49,7 @@ export default {
           })
 
           callback_execute(notification)
-        })
+        }) */
     }
   }
 }

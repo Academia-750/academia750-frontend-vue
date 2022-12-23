@@ -46,14 +46,14 @@ const handleErrorResponse = (error) => {
     }
 
     store.commit('profileService/set_user', null)
-    activateError({
+    /* activateError({
       status: 500,
       message: 'No hay autorizacion previa para el proceso'
-    })
+    }) */
 
     if (router.currentRoute.name !== 'home-website') {
       router.push({
-        path: '/'
+        name: 'home-website'
       })
     }
 

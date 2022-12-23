@@ -20,10 +20,9 @@
         <!-- Navigation menu info -->
         <template v-slot:prepend>
           <div class="pa-2">
-            <div class="d-flex justify-start">
+            <div class="d-flex justify-start" style="cursor: pointer;" @click="redirectToHomePage">
               <span
                 style="cursor: pointer;"
-                to="/"
               >
                 <v-img
                   class="align-self-center"
@@ -34,7 +33,6 @@
               </span>
               <span
                 class="text-uppercase white--text font-weight-bold text-xs-caption text-sm-h6 align-self-center"
-                style="cursor: pointer;"
                 to="/"
               >{{ product.name }}</span>
             </div>
@@ -193,6 +191,11 @@ export default {
   methods: {
     onKeyup(e) {
       this.$refs.search.focus()
+    },
+    redirectToHomePage () {
+      this.$router.push({
+        name: 'home-website'
+      })
     }
   }
 }

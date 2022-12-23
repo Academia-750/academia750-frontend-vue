@@ -13,6 +13,7 @@ import questionsTopic from '@/modules/questionsTopic'
 import questionsSubtopic from '@/modules/questionsSubtopic'
 import imports from '@/modules/imports'
 import tests from '@/modules/tests'
+import home from '@/modules/home'
 
 registerModules({
   errors,
@@ -28,5 +29,6 @@ registerModules({
   questionsTopic,
   questionsSubtopic,
   tests,
-  imports
+  imports,
+  home
 })

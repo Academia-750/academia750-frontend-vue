@@ -40,7 +40,7 @@ export default {
         //window.location.href = process.env.VUE_APP_BASE_URL_HOME
         if (this.$router.currentRoute.name !== 'home-website') {
           this.$router.push({
-            path: '/'
+            name: 'home-website'
           })
         }
 
@@ -51,7 +51,7 @@ export default {
         //window.location.href = process.env.VUE_APP_BASE_URL_HOME
         if (this.$router.currentRoute.name !== 'home-website') {
           this.$router.push({
-            path: '/'
+            name: 'home-website'
           })
         }
         this.$swal.fire({

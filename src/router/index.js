@@ -12,22 +12,20 @@ import LandingRoutes from './landing.routes' */
 
 Vue.use(Router)
 
-export const routes = [{
-},
-/* ...AppsRoutes,
-...UIRoutes,
-...PagesRoutes,
-...UsersRoutes,
-...EcommerceRoutes,
-...LandingRoutes, */
-{
-  path: '*',
-  name: 'error',
-  component: () => import(/* webpackChunkName: "error" */ '@/modules/errors/system/views/error404.vue'),
-  meta: {
-    layout: 'error'
+export const routes = [
+  {
+    path: '/',
+    redirect: { name: 'home-website' }
+  },
+  {
+    path: '*',
+    name: 'error',
+    component: () => import(/* webpackChunkName: "error" */ '@/modules/errors/system/views/error404.vue'),
+    meta: {
+      layout: 'error'
+    }
   }
-}]
+]
 
 const router = new Router({
   mode: 'history',
