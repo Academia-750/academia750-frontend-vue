@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
 import headersOppositionsTable from './data/headersDatatable'
@@ -32,5 +33,8 @@ const MIXINS = [
 ]
 
 export default {
-  mixins: [...MIXINS, ...COMPONENT_MIXINS]
+  mixins: [...MIXINS, ...COMPONENT_MIXINS],
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
+  }
 }

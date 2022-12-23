@@ -29,14 +29,29 @@
         >
           <resource-button-go-back-router/>
           <resource-title-toolbar-datatable :title-text="getTitleByStateAccount" />
-          <!-- <resource-divider-title-datatable />
+          <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-topic' }"/>
-          </div> -->
+            <v-btn
+              color="teal darken-2"
+              class="white--text"
+              title="Cargar nuevamente"
+              @click="loadDatatatable"
+            >
+              <v-icon
+                right
+                dark
+                class="mx-1"
+              >
+                mdi-reload
+              </v-icon>
+              <span class="d-none d-sm-inline">Cargar</span>
+            </v-btn>
+          </div>
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
+          @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
       </template>

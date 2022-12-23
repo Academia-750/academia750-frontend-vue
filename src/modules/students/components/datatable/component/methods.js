@@ -4,6 +4,11 @@ export default {
   methods: {
     ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
     ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE', 'SET_USERS_SELECTED_DATATABLE']),
+    loadDatatatable() {
+      this.getStudents({
+        params: this.getParamsUrlApi()
+      })
+    },
     setDataForUpdateUser (item) {
       this.SET_CURRENT_USER_FOR_UPDATE({
         id: item.id,
@@ -32,6 +37,9 @@ export default {
       this.getStudents({
         params: this.getParamsUrlApi()
       })
+    },
+    searchFieldWithDebounce(value) {
+      this.searchFieldExecuted(value)
     },
     deleteStudentConfirm (item) {
       this.currentItemsSelectedForDelete = item
