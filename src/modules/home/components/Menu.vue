@@ -1,37 +1,33 @@
 <template>
-  <div class="pt-10">
-    <v-app-bar fixed>
+  <div>
+    <v-app-bar bottom elevate-on-scroll>
       <v-app-bar-nav-icon
-        class="d-flex d-sm-none"
+        class="d-flex d-sm-flex d-md-none"
         @click="drawer = true"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>Your Dashboard</v-toolbar-title>
+      <v-toolbar-title>
+        <v-img src="/images/academia750/logo.svg"></v-img>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div class="d-none d-sm-none d-md-flex justify-center">
+        <v-btn text>
+          Inicio
+        </v-btn>
+        <v-btn text>
+          Qué ofrecemos
+        </v-btn>
+        <v-btn text>
+          Tarifas
+        </v-btn>
+        <v-btn text>
+          Contáctanos
+        </v-btn>
+      </div>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn @click="executeLoginAccountAction">
+        <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
       </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-
-      <template v-slot:extension>
-        <v-tabs
-          v-model="tab"
-          align-with-title
-          class="d-none d-sm-flex"
-        >
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-
-          <v-tab
-            v-for="item in items"
-            :key="item"
-          >
-            {{ item }}
-          </v-tab>
-        </v-tabs>
-      </template>
     </v-app-bar>
     <!-- Add a navigation bar -->
     <v-navigation-drawer
@@ -39,13 +35,37 @@
       absolute
       temporary
     >
+      <v-list>
+        <v-list-item>
+          <v-list-item-avatar size="60">
+            <v-img src="/images/academia750/logo.svg"></v-img>
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              Menú
+            </v-list-item-title>
+          </v-list-item-content>
+
+        </v-list-item>
+      </v-list>
       <v-list
+        rounded
         nav
         dense
       >
         <v-list-item-group>
           <v-list-item v-for="(item, index) in items" :key="index">
-            <v-list-item-title @click="tab = index">{{ item }}</v-list-item-title>
+            <v-list-item-icon>
+              <v-icon>mdi-arrow-right-drop-circle</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item"></v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-subtitle @click="tab = index">{{ item }}</v-list-item-subtitle>
           </v-list-item>
 
         </v-list-item-group>
@@ -54,14 +74,37 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex'
+import Cookies from 'js-cookie'
+import Vue from 'vue'
+
 export default {
   data () {
     return {
       drawer: false,
       tab: null,
       items: [
-        'web', 'shopping', 'videos', 'images', 'news'
+        'Inicio', 'Qué ofrecemos', 'Tarifas', 'Contáctanos'
       ]
+    }
+  },
+  computed: {
+    ...mapState('profileService', ['user'])
+  },
+  methods: {
+    ...mapMutations('profileService', ['set_user']),
+    executeLoginAccountAction () {
+      if (Cookies.get('authorization')) {
+        this.$router.push({
+          name: 'update-my-profile'
+        })
+
+        return
+      }
+
+      this.$router.push({
+        name: 'login'
+      })
     }
   }
 }

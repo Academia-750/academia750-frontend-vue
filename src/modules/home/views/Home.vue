@@ -2,6 +2,9 @@
   <div class="ma-0 pa-0">
     <TopMenu />
     <Menu />
+    <div>
+      <v-img src="/images/academia750/portada.png"></v-img>
+    </div>
   </div>
 </template>
 

@@ -4,6 +4,7 @@ import { $remove_token_auth } from '@/helpers/auth'
 import Cookies from 'js-cookie'
 import store from '@/store'
 import router from '@/router'
+import Vue from 'vue'
 import { $disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
 
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
@@ -53,6 +54,12 @@ const handleErrorResponse = (error) => {
       message: 'No hay autorizacion previa para el proceso'
     }) */
 
+    Vue.swal.fire({
+      icon: 'error',
+      toast: true,
+      title: 'Tu sesión ha expirado. Vuelve a iniciar sesión.',
+      timer: 10000
+    })
     if (router.currentRoute.name !== 'home-website') {
       router.push({
         name: 'home-website'
