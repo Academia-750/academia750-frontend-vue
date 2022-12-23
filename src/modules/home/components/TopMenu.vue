@@ -31,6 +31,7 @@
             icon
             color="blue"
             class="pa-1 ml-1"
+            @click="redirectToFacebookSocialMedia"
           >
             <v-icon>mdi-facebook</v-icon>
           </v-btn>
@@ -38,6 +39,7 @@
             icon
             color="yellow darken-2 align-self-center"
             class="pa-1 ml-1"
+            @click="redirectToInstagramSocialMedia"
           >
             <v-icon>mdi-instagram</v-icon>
           </v-btn>
