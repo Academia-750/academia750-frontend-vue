@@ -43,7 +43,24 @@ export default {
     },
     deleteStudentConfirm (item) {
       this.currentItemsSelectedForDelete = item
-      this.$refs['dialogConfirmDeleteAction'].showDialog = true
+      //this.$refs['dialogConfirmDeleteAction'].showDialog = true
+      this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'DAR DE BAJA',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este alumno y los datos relacionados a este?',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteStudentAction()
+
+        }
+      })
     }
   }
 }

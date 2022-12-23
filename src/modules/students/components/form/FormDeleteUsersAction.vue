@@ -39,7 +39,7 @@ export default {
         width: '400px',
         icon: 'question',
         title: 'DAR DE BAJA',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar todos los alumnos seleccionados y los datos relaciones a estos?',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar todos los alumnos seleccionados y los datos relacionados a estos?',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',

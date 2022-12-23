@@ -68,6 +68,7 @@
             @DispatchClickEvent="setDataForUpdateUser(item)"
           />
           <resource-button-delete
+            text-button="Dar de baja"
             @actionConfirmShowDialogDelete="deleteStudentConfirm(item)"
           />
         </div>
