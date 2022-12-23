@@ -1,4 +1,5 @@
 import { mapState, mapActions } from 'vuex'
+import _ from 'lodash'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
@@ -42,10 +43,8 @@ export default {
       }
     }
   },
-  mounted () {
-    /* this.getTopics({
-      params: this.buildQueryParamsRequest()
-    }) */
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
   },
   watch: {
     optionsDatatable: {
@@ -61,6 +60,14 @@ export default {
     ...mapActions('topicsService', ['getTopics', 'deleteTopic']),
     searchFieldExecuted ($event) {
       this.searchWord = $event
+      this.getTopics({
+        params: this.buildQueryParamsRequest()
+      })
+    },
+    searchFieldWithDebounce(value) {
+      this.searchFieldExecuted(value)
+    },
+    loadDatatatable() {
       this.getTopics({
         params: this.buildQueryParamsRequest()
       })
