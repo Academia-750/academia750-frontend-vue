@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import components from './component/components'
 import data from './component/data'
 import methods from './component/methods'
@@ -27,5 +28,8 @@ const MIXINS_ADDITIONAL = [
 ]
 
 export default {
-  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL]
+  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
+  }
 }

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import components from './component/components'
 import data from './component/data'
 import methods from './component/methods'
