@@ -30,10 +30,32 @@
           outlined
         >
           <resource-title-toolbar-datatable title-text="Selecciona la oposición" />
+          <resource-divider-title-datatable />
+          <v-spacer></v-spacer>
+          <div class="d-flex justify-center">
+            <v-btn
+              small
+              elevation="24"
+              color="teal darken-2"
+              class="white--text ml-1"
+              title="Cargar nuevamente"
+              @click="loadDatatatable"
+            >
+              <v-icon
+                dark
+                small
+                class="mx-1"
+              >
+                mdi-reload
+              </v-icon>
+              <span class="d-none d-sm-inline">Cargar</span>
+            </v-btn>
+          </div>
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
           label-text-field="Buscar oposiciones"
+          @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
       </template>

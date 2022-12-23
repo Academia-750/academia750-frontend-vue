@@ -18,11 +18,11 @@
       <resource-title-toolbar-datatable :width-limit-toolbar-title="420" title-text="Agregar a Oposición" />
     </v-toolbar>
     <v-card-text>
-      <select-subtopics-by-datatable
-        ref="selectSubtopicsByDatatable"
-      />
       <select-opposition-by-datatable
         ref="selectOppositionByDatatable"
+      />
+      <select-subtopics-by-datatable
+        ref="selectSubtopicsByDatatable"
       />
 
       <div class="d-flex justify-end">

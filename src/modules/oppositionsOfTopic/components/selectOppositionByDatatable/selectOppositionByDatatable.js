@@ -27,5 +27,8 @@ const MIXINS_ADDITIONAL = [
 ]
 
 export default {
-  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL]
+  mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
+  }
 }
