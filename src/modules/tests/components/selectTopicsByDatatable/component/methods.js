@@ -13,6 +13,12 @@ export default {
       this.getTopics({
         params: urlParams
       })
+    },
+    searchFieldWithDebounce(value) {
+      this.searchFieldExecuted(value)
+    },
+    loadDatatatable() {
+      this.loadDataTopics()
     }
   }
 }

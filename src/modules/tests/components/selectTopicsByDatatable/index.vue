@@ -48,6 +48,7 @@
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
           label-text-field="Buscar temas"
+          @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
       </template>
