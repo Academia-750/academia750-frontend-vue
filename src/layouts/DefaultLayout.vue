@@ -1,6 +1,6 @@
 <template>
   <div>
-    <progress-circular-loading-app v-if="displayProgressCircularLoading"/>
+    <progress-circular-loading-app v-if="displayProgressCircularLoading || !user"/>
     <section
       v-else
       v-shortkey="['ctrl', '/']"
@@ -177,6 +177,7 @@ export default {
   computed: {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState('loadingService', ['displayProgressCircularLoading', 'displayProgressLinearLoading']),
+    ...mapState('profileService', ['user']),
     classTextByTheme () {
 
       return {
@@ -186,6 +187,7 @@ export default {
     }
   },
   mounted () {
+    this.$loadUserAuth()
     localize(this.$i18n.locale)
   },
   methods: {

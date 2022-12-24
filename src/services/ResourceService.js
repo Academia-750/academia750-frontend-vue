@@ -54,17 +54,19 @@ const handleErrorResponse = (error) => {
       message: 'No hay autorizacion previa para el proceso'
     }) */
 
-    Vue.swal.fire({
-      icon: 'error',
-      toast: true,
-      title: 'Tu sesión ha expirado. Vuelve a iniciar sesión.',
-      timer: 10000
-    })
     if (router.currentRoute.name !== 'home-website') {
+      Vue.swal.fire({
+        icon: 'error',
+        toast: true,
+        title: 'Tu sesión ha expirado. Vuelve a iniciar sesión.',
+        timer: 10000
+      })
       router.push({
         name: 'home-website'
       })
     }
+
+    return Promise.reject(error)
 
   }
 

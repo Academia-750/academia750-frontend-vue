@@ -17,14 +17,14 @@
         elevation="5"
         class="mb-3"
       >
-        <span class="text-h6 ml-1" style="cursor: pointer" @click="showDialogLogin = false">Acceso</span>
+        <span class="text-h6 ml-1" style="cursor: pointer" @click="closeDialogLogin">Acceso</span>
         <v-spacer></v-spacer>
         <v-btn
           icon
           elevation="18"
           small
           class="d-flex justify-center align-center mr-1"
-          @click="showDialogLogin = false"
+          @click="closeDialogLogin"
         >
           <v-icon small>mdi-close</v-icon>
         </v-btn>
@@ -92,6 +92,22 @@ export default {
       isDisabled: false,
       access_key: null,
       password: null
+    }
+  },
+  methods: {
+    closeDialogLogin () {
+      this.$refs['FormLoginObserver']['reset']()
+      this.$refs['access-key-field'].access_key = null
+      this.access_key = null
+
+      this.$refs['password-field'].password = null
+      this.$refs['password-field'].showPassword = false
+      this.password = null
+
+      this.isLoading = false
+      this.isDisabled = false
+
+      this.showDialogLogin = false
     }
   }
 }
