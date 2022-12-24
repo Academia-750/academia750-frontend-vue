@@ -1,8 +1,9 @@
 <template>
   <div class="ma-0 pa-0 overflow-hidden">
     <TopMenu />
-    <Menu />
+    <Menu @emitShowLoginDialog="showDialogLoginAction" />
     <BannerMenu />
+    <DialogLogin ref="DialogLoginForm" />
     <!-- <div>
       <v-img src="/images/academia750/portada.png"></v-img>
     </div> -->
@@ -13,13 +14,20 @@
 import TopMenu from '../components/TopMenu'
 import Menu from '../components/Menu'
 import BannerMenu from '../components/BannerMenu'
+import DialogLogin from '../components/Login/DialogLogin'
 
 export default {
   name: 'HomeView',
   components: {
     TopMenu,
     Menu,
-    BannerMenu
+    BannerMenu,
+    DialogLogin
+  },
+  methods: {
+    showDialogLoginAction () {
+      this.$refs['DialogLoginForm'].showDialogLogin = true
+    }
   }
 }
 </script>

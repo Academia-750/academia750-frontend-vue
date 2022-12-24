@@ -76,7 +76,6 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import Cookies from 'js-cookie'
-import Vue from 'vue'
 
 export default {
   data () {
@@ -102,9 +101,7 @@ export default {
         return
       }
 
-      this.$router.push({
-        name: 'login'
-      })
+      this.$emit('emitShowLoginDialog')
     }
   }
 }
