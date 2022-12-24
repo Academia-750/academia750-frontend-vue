@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import components from './component/components'
 import data from './component/data'
 import methods from './component/methods'
@@ -33,5 +34,8 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
   }
 }

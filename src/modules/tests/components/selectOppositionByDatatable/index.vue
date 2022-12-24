@@ -34,6 +34,7 @@
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
           label-text-field="Buscar oposiciones"
+          @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
       </template>
