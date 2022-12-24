@@ -1,9 +1,11 @@
 <template>
   <div class="d-flex justify-center">
     <v-btn
-      dark
-      color="blue darken-3"
+      color="blue darken-3 white--text"
       elevation="10"
+      :loading="isLoading"
+      :disabled="isDisabled"
+
       @click="$emit('emitActionLogin')"
     >
       {{ textButton }}
@@ -18,6 +20,14 @@ export default {
     textButton: {
       type: String,
       default: 'Acceder'
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   }
 }

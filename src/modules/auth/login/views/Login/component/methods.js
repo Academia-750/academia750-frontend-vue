@@ -28,6 +28,7 @@ export default {
     },
     notificationFormValidationError() {
       this.$swal.fire({
+        toast: true,
         icon: 'error',
         title: 'Por favor, complete correctamente los campos del formulario.',
         showConfirmButton: true,
@@ -40,6 +41,9 @@ export default {
       /* this.$nextTick(() => {
         this.$refs['FormLoginObserver']['reset']()
       }) */
+      this.isLoading = false
+      this.isDisabled = false
+      this.$refs['password-field']['resetPassword']()
 
       return true
     },

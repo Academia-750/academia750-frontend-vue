@@ -5,6 +5,7 @@ export default {
       access_key: '',
       password: '',
       isLoading: false,
+      isDisabled: false,
       hasErrorServiceApp: false,
       messageErrorServiceApp: ''
     }

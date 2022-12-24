@@ -33,17 +33,20 @@
           <v-form ref="FormHTMLLogin" @submit.prevent="handleSubmit(onSubmit)">
             <form-access-key-field
               ref="access-key-field"
+              rules="required|max:10|ItMustBeADniOrNieFromSpainLogin"
               :is-disabled="isLoading"
               @AccessKeyBinding="access_key = $event"
               @submitForm="submit"
             />
             <form-password-field
               ref="password-field"
+              rules="required|max:150"
               :is-disabled="isLoading"
               @passwordBinding="password = $event"
               @submitForm="submit"
             />
             <form-button-submit-login
+              :is-disabled="isDisabled"
               :is-loading="isLoading"
               @submitForm="submit"
             />

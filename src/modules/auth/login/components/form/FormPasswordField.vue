@@ -1,9 +1,11 @@
 <template>
   <ValidationProvider
     v-slot="{ errors }"
-    mode="aggressive"
+    ref="PasswordValidationProvider"
+    mode="eager"
     vid="password"
     name="Contraseña"
+    :rules="rules"
   >
     <v-text-field
       ref="passwordField"
@@ -28,6 +30,10 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    rules: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -44,6 +50,7 @@ export default {
   methods: {
     resetPassword() {
       this.password = ''
+      this.$refs['PasswordValidationProvider']['reset']()
     },
     onBlurPasswordField() {
       this.$refs['passwordField']['blur']()

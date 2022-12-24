@@ -36,17 +36,23 @@
         >
           <FormAccessKeyField
             ref="access-key-field"
+            rules="required|max:10|ItMustBeADniOrNieFromSpainLogin"
             :is-disabled="isLoading"
             @AccessKeyBinding="access_key = $event"
             @submitForm="submit"
           />
           <FormPasswordField
             ref="password-field"
+            rules="required|max:150"
             :is-disabled="isLoading"
             @passwordBinding="password = $event"
             @submitForm="submit"
           />
-          <ButtonActionLogin />
+          <ButtonActionLogin
+            :is-disabled="isDisabled"
+            :is-loading="isLoading"
+            @emitActionLogin="submit"
+          />
           <AlertErrorLogin ref="AlertErrorLogin" />
           <ButtonForgotPasswordLogin />
           <v-divider class="my-1 blue-grey lighten-4" />
@@ -65,6 +71,9 @@ import ButtonActionLogin from './ButtonActionLogin'
 import AlertErrorLogin from './AlertErrorLogin'
 import FooterDialogLogin from './FooterDialogLogin'
 
+import loginActionsMixins from '@/modules/auth/login/resources/loginActionsMixin'
+import MethodsMixinLogin from '@/modules/auth/login/views/Login/component/methods.js'
+
 export default {
   name: 'DialogLogin',
   components: {
@@ -75,17 +84,14 @@ export default {
     AlertErrorLogin,
     FooterDialogLogin
   },
+  mixins: [MethodsMixinLogin, loginActionsMixins],
   data () {
     return {
       showDialogLogin: false,
       isLoading: false,
+      isDisabled: false,
       access_key: null,
       password: null
-    }
-  },
-  methods: {
-    submit () {
-
     }
   }
 }

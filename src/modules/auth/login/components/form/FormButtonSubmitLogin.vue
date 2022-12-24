@@ -1,7 +1,7 @@
 <template>
   <v-btn
     :loading="isLoading"
-    :disabled="toEnable"
+    :disabled="isDisabled"
     block
     x-large
     color="primary"
@@ -19,7 +19,7 @@ export default {
       type: Boolean,
       default: false
     },
-    toEnable: {
+    isDisabled: {
       type: Boolean,
       default: false
     }

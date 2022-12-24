@@ -7,6 +7,7 @@ export default {
     async signIn() {
       try {
         this.isLoading = true
+        this.isDisabled = true
 
         const credentials = {
           access_key: this.access_key,
@@ -35,6 +36,7 @@ export default {
           })
 
           this.isLoading = false
+          this.isDisabled = false
           this.$loadingApp.disabledLoadingProgressLinear()
 
           this.$router.push({
@@ -44,6 +46,7 @@ export default {
       } catch (error) {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
+        this.isDisabled = false
         console.log(error)
         if (error.response === undefined) {
           this.$swal.fire({
@@ -57,7 +60,7 @@ export default {
           this.$refs['password-field']['resetPassword']()
           this.$refs['access-key-field']['onFocusAccesKeyField']()
           this.handlingErrorValidation(error.response.data.errors)
-          //this.ResetForm()
+          this.ResetForm()
         } else {
           this.actionErrorServiceApp(error.response)
         }
@@ -66,6 +69,7 @@ export default {
     async getProfileAfterLogin() {
       try {
         this.isLoading = true
+        this.isDisabled = true
 
         await this.getDataMyProfileAction({
           actionAfterLogin: true,
@@ -80,6 +84,7 @@ export default {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
+        this.isDisabled = false
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
@@ -103,6 +108,7 @@ export default {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.isLoading = true
+        this.isDisabled = true
         const credentials = {
           access_key: this.access_key,
           password: this.password
@@ -131,6 +137,7 @@ export default {
               this.$refs['password-field']['resetPassword']()
               this.ResetForm()
               this.isLoading = false
+              this.isDisabled = false
               this.$loadingApp.disabledLoadingProgressLinear()
             }
           })
@@ -141,6 +148,7 @@ export default {
       } catch (error) {
         console.log(error)
         this.isLoading = false
+        this.isDisabled = false
         this.$loadingApp.disabledLoadingProgressLinear()
         if (error.response === undefined) {
           this.$swal.fire({

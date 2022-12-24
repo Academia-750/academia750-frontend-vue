@@ -2,8 +2,9 @@
   <ValidationProvider
     v-slot="{ errors }"
     vid="access_key"
-    mode="aggressive"
-    name="Identificador de acceso"
+    mode="eager"
+    name="DNI/NIE"
+    :rules="rules"
   >
     <v-text-field
       ref="access-key-field"
@@ -26,6 +27,10 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    rules: {
+      type: String,
+      required: true
     }
   },
   data() {
