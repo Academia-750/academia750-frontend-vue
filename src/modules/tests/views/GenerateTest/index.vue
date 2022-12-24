@@ -27,7 +27,7 @@
           :show-select="topicsSelected.length === 0"
           @OppositionSelectedBinding="oppositionSelected = $event"
         />
-        <hr>
+        <v-divider class="my-1 blue-grey lighten-4" />
       </v-container>
       <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
         <p class="title font-weight-bold d-flex justify-center">Número de preguntas</p>
@@ -37,7 +37,7 @@
           rules="required"
           @NumberQuestionsTestBinding="numberOfQuestionsSelected = $event"
         />
-        <hr>
+        <v-divider class="my-1 blue-grey lighten-4" />
       </v-container>
       <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
         <p class="title font-weight-bold d-flex justify-center">Deseas generar</p>
@@ -47,7 +47,7 @@
           rules="required"
           @TypeTestBinding="typeTestSelected = $event"
         />
-        <hr>
+        <v-divider class="my-1 blue-grey lighten-4" />
       </v-container>
       <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3">
         <p class="title font-weight-bold d-flex justify-center">Grupos de temas</p>
@@ -57,7 +57,7 @@
           rules="required"
           @TopicGroupTestBinding="topicGroupSelected = $event"
         />
-        <hr>
+        <v-divider class="my-1 blue-grey lighten-4" />
       </v-container>
       <v-container
         v-if="oppositionSelected.length > 0 && topicGroupSelected.length > 0"
@@ -69,7 +69,7 @@
           :topic-group-id="topicGroupSelected"
           @TopicsSelectedBinding="topicsSelected = $event"
         />
-        <hr>
+        <v-divider class="my-1 blue-grey lighten-4" />
       </v-container>
       <v-container
         v-if="oppositionSelected.length === 0 || topicGroupSelected.length === 0"
