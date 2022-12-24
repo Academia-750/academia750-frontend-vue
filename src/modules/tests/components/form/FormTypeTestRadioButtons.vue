@@ -16,14 +16,14 @@
       row
     >
       <v-radio
-        value="Test"
+        value="test"
       >
         <template #label>
           <span class="title font-weight-bold py-1">Examen</span>
         </template>
       </v-radio>
       <v-radio
-        value="Tarjeta de memoria"
+        value="card_memory"
       >
         <template #label>
           <span class="title font-weight-bold py-1">Tarjeta de memoria</span>
