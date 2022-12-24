@@ -1,4 +1,5 @@
 import { mapState, mapActions } from 'vuex'
+import notifications from '@/mixins/notifications'
 import _ from 'lodash'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
@@ -9,7 +10,7 @@ import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import footerProps from './component/footerProps'
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud, notifications],
   components: {
     ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
     ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
@@ -39,7 +40,8 @@ export default {
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
   },
-  mounted () {
+  mounted() {
+    this.loadNotifications()
     /* this.getOppositions({
       params: this.buildQueryParamsRequest()
     }) */

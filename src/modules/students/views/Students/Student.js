@@ -1,10 +1,12 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import notifications from '@/mixins/notifications'
 
 export default {
   name: 'StudentsView',
   mixins: [
-    DatatableManageStudents
+    DatatableManageStudents,
+    notifications
   ],
   components: {
     StudentsDatatable: () => import(/* webpackChunkName: "StudentsDatatableStudentsModule" */ '../../components/datatable/Students.vue'),
@@ -28,6 +30,9 @@ export default {
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
+  },
+  mounted() {
+    this.loadNotifications()
   },
   watch: {
     tabViewStudents () {

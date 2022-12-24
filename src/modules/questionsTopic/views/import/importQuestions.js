@@ -1,8 +1,10 @@
+import notifications from '@/mixins/notifications'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import { mapActions } from 'vuex'
 
 export default {
+  mixins: [notifications],
   components: {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     vueDropzone: vue2Dropzone,
@@ -37,6 +39,7 @@ export default {
     }
   },
   mounted() {
+    this.loadNotifications()
     //console.log(this.$refs['dropzoneFilesImportQuestions'].$el)
     this.$refs['dropzoneFilesImportQuestions'].$el.innerHTML = /* html */`
       <div class="dz-default dz-message"><span>Adjuntar archivos o click para seleccionar</span></div>

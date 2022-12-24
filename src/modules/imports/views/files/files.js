@@ -1,3 +1,4 @@
+import notifications from '@/mixins/notifications'
 import components from './component/components'
 import data from './component/data'
 import methods from './component/methods'
@@ -16,7 +17,8 @@ const MIXINS_COMPONENT = [
   methods,
   computed,
   watch,
-  ActionsMethods
+  ActionsMethods,
+  notifications
 ]
 
 const MIXINS_ADDITIONAL = [
@@ -30,6 +32,9 @@ export default {
   mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
+  },
+  mounted() {
+    this.loadNotifications()
   },
   head: {
     title: {

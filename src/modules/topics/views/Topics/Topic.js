@@ -1,3 +1,4 @@
+import notifications from '@/mixins/notifications'
 import { mapState, mapActions } from 'vuex'
 import _ from 'lodash'
 
@@ -9,7 +10,7 @@ import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import footerProps from './component/footerProps'
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud, notifications],
   components: {
     ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
     ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
@@ -24,6 +25,9 @@ export default {
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
+  },
+  mounted() {
+    this.loadNotifications()
   },
   data () {
     return {
