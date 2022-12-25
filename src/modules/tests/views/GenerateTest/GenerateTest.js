@@ -1,6 +1,7 @@
 import components from './component/components'
 import data from './component/data'
 import methods from './component/methods'
+import ActionsMethods from './component/ActionsMethods'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headersOppositionsTable from './component/headersDatatable'
@@ -10,7 +11,8 @@ import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 const MIXIN_COMPONENT = [
   components,
   data,
-  methods
+  methods,
+  ActionsMethods
 ]
 
 const MIXINS_EXTRA = [

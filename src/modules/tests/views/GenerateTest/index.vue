@@ -8,7 +8,7 @@
       <resource-button-go-back-router />
       <resource-title-toolbar-datatable title-text="Generar Test" />
     </v-toolbar>
-    <validation-observer ref="CreateTestStudent" v-slot="{ invalid }">
+    <validation-observer ref="FormCreateTest" v-slot="{ invalid }">
       <v-container
         v-if="oppositionSelected.length > 0"
         :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
@@ -94,7 +94,9 @@
         <v-btn
           color="light-blue darken-3"
           class="white--text mx-1 align-self-center"
-          :disabled="invalid || topicsSelected.length === 0 || true"
+          :loading="loadingButtonCreateTest"
+          :disabled="invalid || topicsSelected.length === 0 || disabledButtonCreateTest"
+          @click="CreateTest"
         >
           <v-icon
             right

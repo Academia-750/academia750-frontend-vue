@@ -22,6 +22,34 @@ const mapMetaInformationPagination = (response) => {
   }
 }
 
+const createAQuiz = async (_, options) => {
+  try {
+
+    const response = await TestsRepository.generateTestWithQuestions(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const fetchAQuiz = async (_, options) => {
+  try {
+
+    const response = await TestsRepository.fetchUnresolvedTest(options.test_id, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const getUnresolvedTests = async ({ commit }, config) => {
 
   try {
@@ -59,5 +87,7 @@ const getUnresolvedTests = async ({ commit }, config) => {
 }
 
 export default {
+  createAQuiz,
+  fetchAQuiz,
   getUnresolvedTests
 }

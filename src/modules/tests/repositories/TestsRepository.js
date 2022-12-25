@@ -10,6 +10,6 @@ export default {
     return ResourceService.get(`${resource}/fetch/unresolved/${test_id}`, config)
   },
   generateTestWithQuestions(data, config = {}) {
-    return ResourceService.post(`${resource}/generate/questions`, data, config)
+    return ResourceService.post(`${resource}/create-a-quiz`, data, config)
   }
 }

@@ -5,7 +5,9 @@ export default {
       numberOfQuestionsSelected: 0,
       typeTestSelected: null,
       topicGroupSelected: [],
-      topicsSelected: []
+      topicsSelected: [],
+      loadingButtonCreateTest: false,
+      disabledButtonCreateTest: false
     }
   }
 }
