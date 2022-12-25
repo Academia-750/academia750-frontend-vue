@@ -18,10 +18,10 @@
           </div>
           <div :class="manageClassResponsiveWrapperBanner" class="mt-2">
             <v-btn
-              tile
               rounded
               dark
               color="blue darken-1"
+              class="pa-3"
             >
               Únete
             </v-btn>
