@@ -9,7 +9,7 @@
       <v-col cols="12" :class="sectionSmAndDownBrakpoint">
         <div class="mr-4">
           <div :class="manageClassResponsiveWrapperBanner">
-            <span :class="manageClassResponsiveTitle" class="font-weight-bold">Academia de Bomberos 750</span>
+            <span :class="manageClassResponsiveTitle" class="font-weight-black">Academia de Bomberos 750</span>
           </div>
           <div :class="manageClassResponsiveWrapperBanner">
             <div :class="manageClassResponsiveSubtitle" class="width-subtitle-banner">
@@ -17,14 +17,7 @@
             </div>
           </div>
           <div :class="manageClassResponsiveWrapperBanner" class="mt-2">
-            <v-btn
-              rounded
-              dark
-              color="blue darken-1"
-              class="pa-3"
-            >
-              Únete
-            </v-btn>
+            <button-go-to-register-contact-us />
           </div>
         </div>
       </v-col>
@@ -33,8 +26,13 @@
 </template>
 
 <script>
+import ButtonGoToRegisterContactUs from './ButtonGoToRegisterContactUs'
+
 export default {
   name: 'BannerMenu',
+  components: {
+    ButtonGoToRegisterContactUs
+  },
   computed: {
     sectionSmAndDownBrakpoint () {
       return {

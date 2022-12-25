@@ -5,6 +5,7 @@
     <BannerMenu />
     <DialogLogin ref="DialogLoginForm" />
     <OurServices />
+    <GroupsByLevel />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import Menu from '../components/Menu'
 import BannerMenu from '../components/BannerMenu'
 import DialogLogin from '../components/Login/DialogLogin'
 import OurServices from '../components/OurServices'
+import GroupsByLevel from '../components/GroupsByLevel'
 
 export default {
   name: 'HomeView',
@@ -22,7 +24,8 @@ export default {
     Menu,
     BannerMenu,
     DialogLogin,
-    OurServices
+    OurServices,
+    GroupsByLevel
   },
   methods: {
     showDialogLoginAction () {
