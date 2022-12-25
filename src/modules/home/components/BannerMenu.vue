@@ -13,7 +13,7 @@
           </div>
           <div :class="manageClassResponsiveWrapperBanner">
             <div :class="manageClassResponsiveSubtitle" class="width-subtitle-banner">
-              Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición
+              <span>Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición</span>
             </div>
           </div>
           <div :class="manageClassResponsiveWrapperBanner" class="mt-2">
@@ -40,19 +40,20 @@ export default {
       return {
         'd-flex': true,
         'white--text': true,
-        'justify-center': this.$vuetify.breakpoint.xsAndDown,
+        'justify-center': this.$vuetify.breakpoint.width < 600,
         'justify-end': this.$vuetify.breakpoint.smAndUp
       }
     },
     manageClassResponsiveTitle () {
       return {
-        'title': this.$vuetify.breakpoint.xsAndDown,
+        'title': this.$vuetify.breakpoint.width < 600,
+        'font-weight-bold': true,
         'display-1': this.$vuetify.breakpoint.smAndUp
       }
     },
     manageClassResponsiveSubtitle () {
       return {
-        'caption': this.$vuetify.breakpoint.xsAndDown,
+        'caption': this.$vuetify.breakpoint.width < 600,
         'subtitle-1': this.$vuetify.breakpoint.smAndUp
       }
     },
@@ -60,7 +61,8 @@ export default {
       return {
         'd-flex': true,
         'my-2': true,
-        'justify-center': this.$vuetify.breakpoint.xsAndDown,
+        'justify-center': this.$vuetify.breakpoint.width < 600,
+        'text-center': this.$vuetify.breakpoint.width < 600,
         'justify-start': this.$vuetify.breakpoint.smAndUp
       }
     }

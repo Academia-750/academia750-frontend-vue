@@ -4,9 +4,6 @@
     <Menu @emitShowLoginDialog="showDialogLoginAction" />
     <BannerMenu />
     <DialogLogin ref="DialogLoginForm" />
-    <!-- <div>
-      <v-img src="/images/academia750/portada.png"></v-img>
-    </div> -->
   </div>
 </template>
 

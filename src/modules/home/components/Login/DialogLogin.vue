@@ -11,17 +11,18 @@
     <v-card
       class="mx-auto"
       max-width="400"
+      elevation="5"
     >
       <v-toolbar
         color="blue-grey lighten-5"
-        elevation="5"
         class="mb-3"
+        elevation="1"
       >
         <span class="text-h6 ml-1" style="cursor: pointer" @click="closeDialogLogin">Acceso</span>
         <v-spacer></v-spacer>
         <v-btn
           icon
-          elevation="18"
+          elevation="1"
           small
           class="d-flex justify-center align-center mr-1"
           @click="closeDialogLogin"

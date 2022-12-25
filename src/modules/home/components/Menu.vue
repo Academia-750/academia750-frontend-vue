@@ -1,30 +1,14 @@
 <template>
   <div>
-    <v-app-bar bottom elevate-on-scroll>
+    <v-app-bar :bottom="!isFixedMenu" :fixed="isFixedMenu" elevate-on-scroll>
       <v-app-bar-nav-icon
         class="d-flex d-sm-flex d-md-none"
         @click="drawer = true"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        <v-img src="/images/academia750/logo.svg"></v-img>
-      </v-toolbar-title>
+      <logo-menu />
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-none d-md-flex justify-center">
-        <v-btn text>
-          Inicio
-        </v-btn>
-        <v-btn text>
-          Qué ofrecemos
-        </v-btn>
-        <v-btn text>
-          Tarifas
-        </v-btn>
-        <v-btn text>
-          Contáctanos
-        </v-btn>
-      </div>
+      <links-menu />
       <v-spacer></v-spacer>
-
       <v-btn @click="executeLoginAccountAction">
         <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
       </v-btn>
@@ -36,20 +20,8 @@
       temporary
     >
       <v-list>
-        <v-list-item>
-          <v-list-item-avatar size="60">
-            <v-img src="/images/academia750/logo.svg"></v-img>
-          </v-list-item-avatar>
-        </v-list-item>
-
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              Menú
-            </v-list-item-title>
-          </v-list-item-content>
-
-        </v-list-item>
+        <logo-list-menu />
+        <title-list-menu />
       </v-list>
       <v-list
         rounded
@@ -58,14 +30,12 @@
       >
         <v-list-item-group>
           <v-list-item v-for="(item, index) in items" :key="index">
-            <v-list-item-icon>
-              <v-icon>mdi-arrow-right-drop-circle</v-icon>
-            </v-list-item-icon>
+            <icon-arrow-link-list-menu />
 
             <v-list-item-content>
               <v-list-item-title v-text="item"></v-list-item-title>
             </v-list-item-content>
-            <v-list-item-subtitle @click="tab = index">{{ item }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ item }}</v-list-item-subtitle>
           </v-list-item>
 
         </v-list-item-group>
@@ -76,19 +46,37 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import Cookies from 'js-cookie'
+import LogoMenu from './Menu/LogoMenu'
+import LinksMenu from './Menu/LinksMenu'
+import LogoListMenu from './Menu/ListMenu/LogoListMenu'
+import TitleListMenu from './Menu/ListMenu/TitleListMenu'
+import IconArrowLinkListMenu from './Menu/ListMenu/IconArrowLinkListMenu'
 
 export default {
+  components: {
+    LogoMenu,
+    LinksMenu,
+    LogoListMenu,
+    TitleListMenu,
+    IconArrowLinkListMenu
+  },
   data () {
     return {
       drawer: false,
-      tab: null,
       items: [
         'Inicio', 'Qué ofrecemos', 'Tarifas', 'Contáctanos'
-      ]
+      ],
+      isFixedMenu: false
     }
   },
   computed: {
     ...mapState('profileService', ['user'])
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
     ...mapMutations('profileService', ['set_user']),
@@ -102,6 +90,9 @@ export default {
       }
 
       this.$emit('emitShowLoginDialog')
+    },
+    handleScroll() {
+      this.isFixedMenu = window.scrollY >= 100
     }
   }
 }
