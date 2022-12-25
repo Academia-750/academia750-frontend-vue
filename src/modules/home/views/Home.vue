@@ -2,10 +2,10 @@
   <div class="ma-0 pa-0 overflow-hidden">
     <TopMenu />
     <Menu @emitShowLoginDialog="showDialogLoginAction" />
-    <BannerMenu />
+    <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister"/>
     <DialogLogin ref="DialogLoginForm" />
     <OurServices />
-    <GroupsByLevel />
+    <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
   </div>
 </template>
 
@@ -27,10 +27,17 @@ export default {
     OurServices,
     GroupsByLevel
   },
+  mounted () {
+
+  },
   methods: {
     showDialogLoginAction () {
       this.$refs['DialogLoginForm'].showDialogLogin = true
+    },
+    scrollToContactUsFormForRegister () {
+      //this.$refs['GroupsByLevelComponent'].scrollIntoViewContainerGroupLevel()
     }
   }
+
 }
 </script>

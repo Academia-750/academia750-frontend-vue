@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-2">
+  <v-container ref="groupsByLevelsContainer" class="mt-2">
     <v-row dense>
       <image-groups-by-level />
       <v-col
@@ -18,7 +18,7 @@
           title="Avanzado"
           :items-level="advancedLevelItems"
         />
-        <button-go-to-register-contact-us />
+        <button-go-to-register-contact-us @executeRegisterContactUs="$emit('executeRegisterContactUs')" />
       </v-col>
     </v-row>
   </v-container>
@@ -53,6 +53,12 @@ export default {
         'Diapositivas de correción por pregunta',
         'Repaso de temas y continua evaluación para conocer fortalezas y debilidades'
       ]
+    }
+  },
+  methods: {
+    scrollIntoViewContainerGroupLevel () {
+      console.log('scrollIntoViewContainerGroupLevel')
+      this.$refs['groupsByLevelsContainer'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
 }

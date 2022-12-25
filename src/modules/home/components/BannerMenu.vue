@@ -17,7 +17,7 @@
             </div>
           </div>
           <div :class="manageClassResponsiveWrapperBanner" class="mt-2">
-            <button-go-to-register-contact-us />
+            <button-go-to-register-contact-us @executeRegisterContactUs="$emit('executeRegisterContactUs')"/>
           </div>
         </div>
       </v-col>
