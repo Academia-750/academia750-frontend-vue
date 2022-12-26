@@ -19,7 +19,7 @@
         value="test"
       >
         <template #label>
-          <span class="title font-weight-bold py-1">Examen</span>
+          <span class="title font-weight-bold py-1">Test</span>
         </template>
       </v-radio>
       <v-radio
