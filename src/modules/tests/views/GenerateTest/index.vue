@@ -77,7 +77,7 @@
         <v-container
           v-if="oppositionSelected.length === 0 || topicGroupSelected.length === 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
-          class="mx-auto"
+          class="mx-auto d-flex justify-center"
         >
           <p class="title font-weight-bold red--text">Por favor, primero seleccione una Oposición y un grupo de tema</p>
         </v-container>

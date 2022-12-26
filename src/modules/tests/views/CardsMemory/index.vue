@@ -19,12 +19,12 @@
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <resource-header-crud-title
-          text-header="Tests no completados"
+          text-header="Tarjetas de memoria"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Tests no completados" />
+          <resource-title-toolbar-datatable title-text="Tarjetas de memoria" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
@@ -37,7 +37,7 @@
         /> -->
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="No hay tests disponibles" />
+        <resource-banner-no-data-datatable message-text="No hay tarjetas de memoria disponibles" />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -53,5 +53,5 @@
   </v-card-text>
 </template>
 
-<script src="./TestsNotComplete.js"></script>
-<style src="./TestsNotComplete.css"></style>
+<script src="./CardsMemory.js"></script>
+<style src="./CardsMemory.css"></style>

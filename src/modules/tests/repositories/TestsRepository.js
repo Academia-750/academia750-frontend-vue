@@ -6,6 +6,9 @@ export default {
   getUnresolvedTests(config = {}) {
     return ResourceService.get(`${resource}/unresolved`, config)
   },
+  getCardsMemory(config = {}) {
+    return ResourceService.get(`${resource}/cards-memory`, config)
+  },
   fetchUnresolvedTest(test_id, config = {}) {
     return ResourceService.get(`${resource}/fetch/unresolved/${test_id}`, config)
   },

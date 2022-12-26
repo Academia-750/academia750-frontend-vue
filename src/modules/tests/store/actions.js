@@ -85,8 +85,45 @@ const getUnresolvedTests = async ({ commit }, config) => {
   }
 }
 
+const getCardsMemory = async ({ commit }, config) => {
+
+  try {
+
+    commit('SET_INFORMATION_META', {
+      current_page: 1,
+      from: 1,
+      last_page: 1,
+      per_page: 10,
+      to: 10,
+      total: 10
+    })
+    commit('SET_STATUS_LOADING_ITEMS', true)
+
+    commit('SET_ITEMS_DATATABLE', [])
+
+    const response = await TestsRepository.getCardsMemory(config)
+
+    if (response) {
+      //console.trace(response)
+
+      commit('SET_ITEMS_DATATABLE', mapItemsDatatableFromApi(response.data.data))
+      commit('SET_STATUS_LOADING_ITEMS', false)
+      commit('SET_INFORMATION_META', mapMetaInformationPagination(response))
+
+    }
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   createAQuiz,
   fetchAQuiz,
-  getUnresolvedTests
+  getUnresolvedTests,
+  getCardsMemory
 }
