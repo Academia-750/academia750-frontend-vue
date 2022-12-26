@@ -4,9 +4,8 @@ const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
     return {
       id: record.id,
-      name: record.attributes.name,
-      has_subtopics: record.meta.has_subtopics,
-      'created-at': record.attributes.created_at
+      'created-at': record.attributes.created_at,
+      'test-questions-count': record.attributes.number_of_questions_generated
     }
   })
 }
