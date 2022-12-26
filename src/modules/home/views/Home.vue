@@ -6,6 +6,7 @@
     <DialogLogin ref="DialogLoginForm" />
     <OurServices />
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
+    <Testimonials />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import BannerMenu from '../components/BannerMenu'
 import DialogLogin from '../components/Login/DialogLogin'
 import OurServices from '../components/OurServices'
 import GroupsByLevel from '../components/GroupsByLevel'
+import Testimonials from '../components/Testimonials'
 
 export default {
   name: 'HomeView',
@@ -25,7 +27,8 @@ export default {
     BannerMenu,
     DialogLogin,
     OurServices,
-    GroupsByLevel
+    GroupsByLevel,
+    Testimonials
   },
   mounted () {
 
