@@ -54,7 +54,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Tests no completados'
+      inner: 'Tarjetas de memoria'
     }
   }
 }
