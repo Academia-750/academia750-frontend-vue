@@ -25,13 +25,13 @@ export default {
         console.log(response)
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateTopic = false
-        this.disabledButtonCreateTopic = false
+        this.loadingButtonCreateTest = false
+        this.disabledButtonCreateTest = false
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateTopic = false
-        this.disabledButtonCreateTopic = false
+        this.loadingButtonCreateTest = false
+        this.disabledButtonCreateTest = false
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
