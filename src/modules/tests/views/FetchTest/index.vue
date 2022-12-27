@@ -65,4 +65,4 @@
   </v-card-text>
 </template>
 
-<script src="./FetchTopic.js"></script>
+<script src="./FetchTest.js"></script>

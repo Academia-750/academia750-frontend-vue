@@ -6,6 +6,9 @@ export default {
   getAll(config = {}) {
     return ResourceService.get(`${resource}`, config)
   },
+  getTopicsAvailableForGenerateTest(config = {}) {
+    return ResourceService.get(`${resource}/available/by-generate-test`, config)
+  },
   getTopicsGroups(config = {}) {
     return ResourceService.get('topic-groups', config)
   },

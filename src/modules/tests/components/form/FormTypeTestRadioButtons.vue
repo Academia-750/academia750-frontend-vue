@@ -55,9 +55,21 @@ export default {
       typeTest: null
     }
   },
+
   watch: {
     typeTest(value) {
       this.$emit('TypeTestBinding', value)
+    }
+  },
+  mounted () {
+    if (this.$route.query['select-type-test']) {
+      if (this.$route.query['select-type-test'] === 'card-memory') {
+        this.typeTest = 'card_memory'
+      }
+
+      if (this.$route.query['select-type-test'] === 'test') {
+        this.typeTest = 'test'
+      }
     }
   }
 }

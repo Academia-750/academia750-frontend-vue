@@ -7,5 +7,11 @@ export default {
   },
   SET_STATUS_LOADING_ITEMS (state, payload) {
     state.stateLoadingItems = payload
+  },
+  SET_ITEMS_QUESTIONS_BY_CARDS_MEMORY(state, payload) {
+    state.ItemsQuestionsByCardsMemory = payload
+  },
+  SET_ITEMS_QUESTIONS_BY_TESTS(state, payload) {
+    state.ItemsQuestionsByTests = payload
   }
 }

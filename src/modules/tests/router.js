@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import GenerateTestModule from './views/GenerateTest'
 import ListTestsUncompleteModule from './views/TestsNotComplete'
 import ListCardsMemoryModule from './views/CardsMemory'
+import FetchCardMemoryModule from './views/FetchCardMemory'
 
 const shortcutRoutes = [
 ]
@@ -38,6 +39,14 @@ const moduleRoute = [
             path: 'cards-memory',
             name: 'list-cards-memory',
             component: ListCardsMemoryModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'cards-memory/:id',
+            name: 'fetch-card-memory',
+            component: FetchCardMemoryModule,
             meta: {
               middleware: [authMiddleware]
             }

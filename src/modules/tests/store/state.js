@@ -1,5 +1,7 @@
 const state = () => ({
   itemsDatatable: [],
+  ItemsQuestionsByCardsMemory: [],
+  ItemsQuestionsByTests: [],
   stateLoadingItems: false,
   informationMeta: {
     current_page: 1,

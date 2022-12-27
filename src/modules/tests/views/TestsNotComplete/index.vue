@@ -28,7 +28,7 @@
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add text-button="Crear test" :config-route="{ name: 'generate-questionnaire' }" />
+            <resource-button-add text-button="Crear test" :config-route="{ name: 'generate-questionnaire', query: { 'select-type-test': 'test' } }" />
           </div>
         </v-toolbar>
         <!-- <resource-text-field-search

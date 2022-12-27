@@ -28,7 +28,7 @@
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add text-button="Crear test" :config-route="{ name: 'generate-questionnaire' }" />
+            <resource-button-add text-button="Crear tarjeta" :config-route="{ name: 'generate-questionnaire', query: { 'select-type-test': 'card-memory' } }" />
           </div>
         </v-toolbar>
         <!-- <resource-text-field-search
@@ -45,7 +45,7 @@
             text-button="Ver"
             icon-button="mdi-eye"
             color-button="success"
-            :config-route="{ name: 'fetch-topic', params: { id: item.id } }"
+            :config-route="{ name: 'fetch-card-memory', params: { id: item.id } }"
           />
         </div>
       </template>

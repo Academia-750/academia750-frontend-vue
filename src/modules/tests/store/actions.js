@@ -49,14 +49,19 @@ const fetchAQuiz = async (_, options) => {
   }
 }
 
-const fetchACardMemory = async (_, options) => {
+const fetchACardMemory = async ({ commit }, options) => {
   try {
 
+    commit('SET_ITEMS_QUESTIONS_BY_CARDS_MEMORY', [])
     const response = await TestsRepository.fetchCardMemory(options.test_id, options.config)
+
+    commit('SET_ITEMS_QUESTIONS_BY_CARDS_MEMORY', response.data.data)
 
     return Promise.resolve(response)
 
   } catch (error) {
+
+    commit('SET_ITEMS_QUESTIONS_BY_CARDS_MEMORY', [])
     console.log(error)
 
     return Promise.reject(error)

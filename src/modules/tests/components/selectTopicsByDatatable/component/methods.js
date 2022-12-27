@@ -7,12 +7,16 @@ export default {
     loadDataTopics() {
       const urlParams = this.buildQueryParamsRequest()
 
-      urlParams['filter[oppositions]'] = this.oppositionId
-      urlParams['filter[topic-group]'] = this.topicGroupId
+      urlParams['opposition-id'] = this.oppositionId
+      urlParams['topic-group-id'] = this.topicGroupId
+      //urlParams['filter[oppositions]'] = this.oppositionId
+      //urlParams['filter[topic-group]'] = this.topicGroupId
       //urlParams['filter[has-questions-available]'] = '0'
 
-      this.getTopics({
-        params: urlParams
+      this.getTopicsAvailableForGenerateTest({
+        config: {
+          params: urlParams
+        }
       })
     },
     searchFieldWithDebounce(value) {
