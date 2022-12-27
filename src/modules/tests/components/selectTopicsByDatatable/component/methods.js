@@ -9,6 +9,7 @@ export default {
 
       urlParams['filter[oppositions]'] = this.oppositionId
       urlParams['filter[topic-group]'] = this.topicGroupId
+      //urlParams['filter[has-questions-available]'] = '0'
 
       this.getTopics({
         params: urlParams

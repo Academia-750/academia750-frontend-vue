@@ -12,6 +12,9 @@ export default {
   fetchUnresolvedTest(test_id, config = {}) {
     return ResourceService.get(`${resource}/fetch/unresolved/${test_id}`, config)
   },
+  fetchCardMemory(test_id, config = {}) {
+    return ResourceService.get(`${resource}/fetch/card-memory/${test_id}`, config)
+  },
   generateTestWithQuestions(data, config = {}) {
     return ResourceService.post(`${resource}/create-a-quiz`, data, config)
   }

@@ -49,6 +49,20 @@ const fetchAQuiz = async (_, options) => {
   }
 }
 
+const fetchACardMemory = async (_, options) => {
+  try {
+
+    const response = await TestsRepository.fetchCardMemory(options.test_id, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const getUnresolvedTests = async ({ commit }, config) => {
 
   try {
@@ -124,6 +138,7 @@ const getCardsMemory = async ({ commit }, config) => {
 export default {
   createAQuiz,
   fetchAQuiz,
+  fetchACardMemory,
   getUnresolvedTests,
   getCardsMemory
 }
