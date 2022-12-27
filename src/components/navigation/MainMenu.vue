@@ -8,7 +8,13 @@
         height="40"
         width="40"
       >
-        <v-img v-if="pathImageAccount" :src="pathImageAccount" />
+        <v-img v-if="pathImageAccount" :src="pathImageAccount" @error="loadImageProfileDefault"/>
+        <v-skeleton-loader
+          v-else-if="!pathImageAccount && !hasErrorImage"
+          class="mx-auto"
+          max-width="40"
+          type="avatar"
+        ></v-skeleton-loader>
       </v-list-item-avatar>
 
       <v-list-item-content>
@@ -46,7 +52,8 @@ export default {
   },
   data () {
     return {
-      pathImageAccount: null
+      pathImageAccount: null,
+      hasErrorImage: false
     }
   },
   computed: {
@@ -68,6 +75,10 @@ export default {
     console.log(this.$permissionsUserAuth()) */
   },
   methods: {
+    loadImageProfileDefault () {
+      this.hasErrorImage = true
+      this.pathImageAccount = '/images/academia750/avatar_default_photo.svg'
+    },
     loadImageAccount () {
       const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
       const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT

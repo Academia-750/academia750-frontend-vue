@@ -51,7 +51,13 @@
           </v-col>
         </v-row>
       </v-container>
-
+      <v-container class="max-width d-flex justify-center">
+        <v-pagination
+          v-model="pageNumber"
+          class="my-4"
+          :length="totalNumberPages"
+        ></v-pagination>
+      </v-container>
     </v-card-text>
   </v-card-text>
 </template>

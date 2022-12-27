@@ -17,6 +17,7 @@ export default {
   data () {
     return {
       pageNumber: 1,
+      numberItemsPerPage: 21,
       totalNumberPages: 0
     }
   },
@@ -26,8 +27,16 @@ export default {
   mounted () {
     this.fetchRecordData()
   },
+  watch: {
+    pageNumber(number) {
+      this.fetchRecordData()
+    }
+  },
   methods: {
     ...mapActions('testsService', ['fetchACardMemory']),
+    getTotalNumberPages(response) {
+      return Math.ceil((response.data.meta.total / response.data.meta.per_page))
+    },
     async fetchRecordData () {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
@@ -36,10 +45,12 @@ export default {
           test_id: this.$route.params.id,
           config: {
             params: {
-              'page[size]': '20',
+              'page[size]': this.numberItemsPerPage,
               'page[number]': this.pageNumber
             }
           }
+        }).then((response) => {
+          this.totalNumberPages = this.getTotalNumberPages(response)
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()

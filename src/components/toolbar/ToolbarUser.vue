@@ -9,9 +9,18 @@
           offset-x="10"
           offset-y="10"
         >
-          <v-avatar size="40">
-            <v-img v-if="pathImageAccount" :src="pathImageAccount"></v-img>
+          <v-avatar v-if="pathImageAccount" size="40">
+            <v-img
+              :src="pathImageAccount"
+              @error="loadImageProfileDefault"
+            ></v-img>
           </v-avatar>
+          <v-skeleton-loader
+            v-else-if="!pathImageAccount && !hasErrorImage"
+            class="mx-auto"
+            max-width="40"
+            type="avatar"
+          ></v-skeleton-loader>
         </v-badge>
       </v-btn>
     </template>
@@ -65,7 +74,8 @@ export default {
   data() {
     return {
       menu: config.toolbar.user,
-      pathImageAccount: null
+      pathImageAccount: null,
+      hasErrorImage: false
     }
   },
   computed: {
@@ -84,6 +94,10 @@ export default {
     this.loadImageAccount()
   },
   methods: {
+    loadImageProfileDefault () {
+      this.hasErrorImage = true
+      this.pathImageAccount = '/images/academia750/avatar_default_photo.svg'
+    },
     loadImageAccount () {
       const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
       const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
