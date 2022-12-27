@@ -15,18 +15,24 @@ export default {
           config: {}
         })
 
-        this.$swal.fire({
-          icon: 'success',
-          toast: true,
-          title: '¡Buena suerte con tu Test!',
-          timer: 10000
-        })
-
-        console.log(response)
-
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateTest = false
         this.disabledButtonCreateTest = false
+
+        if (this.typeTestSelected === 'test') {
+
+          this.$swal.fire({
+            icon: 'success',
+            toast: true,
+            title: '¡Buena suerte con tu Test!',
+            timer: 10000
+          })
+        }
+
+        if (this.typeTestSelected === 'card_memory') {
+
+          this.$router.push({ name: 'fetch-card-memory', params: { id: response.data.data.id } })
+        }
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
