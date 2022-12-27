@@ -17,5 +17,8 @@ export default {
   },
   generateTestWithQuestions(data, config = {}) {
     return ResourceService.post(`${resource}/create-a-quiz`, data, config)
+  },
+  claimQuestion(data, config = {}) {
+    return ResourceService.post('questions/claim/academia', data, config)
   }
 }

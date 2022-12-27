@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panels focusable>
     <v-expansion-panel>
-      <v-expansion-panel-header expand-icon="mdi-menu-down">{{ questionWithAnswers.attributes['question-text'] }}</v-expansion-panel-header>
+      <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down">{{ questionWithAnswers.attributes['question-text'] }}</v-expansion-panel-header>
       <v-expansion-panel-content>
         <p v-if="getAnswerCorrect" class="white--text green--text text--darken-3 mt-2 mb-3 font-weight-bold">{{ getAnswerCorrect?.attributes.answer_text }}</p>
         <v-divider class="grey lighten-3"></v-divider>
@@ -15,13 +15,7 @@
           ></v-img>
         </div>
         <div class="d-flex justify-center mt-3">
-          <v-btn
-            rounded
-            color="primary"
-            small
-          >
-            Impugnar pregunta <v-icon small class="ml-1">mdi-close-octagon</v-icon>
-          </v-btn>
+          <claim-question-card-memory :question-uuid="questionWithAnswers.id" />
         </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -29,8 +23,13 @@
 </template>
 
 <script>
+import ClaimQuestionCardMemory from './ClaimQuestionCardMemory'
+
 export default {
   name: 'CardMemoryItem',
+  components: {
+    ClaimQuestionCardMemory
+  },
   props: {
     questionWithAnswers: {
       type: Object,

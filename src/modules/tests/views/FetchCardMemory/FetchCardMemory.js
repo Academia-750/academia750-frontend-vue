@@ -37,6 +37,29 @@ export default {
     getTotalNumberPages(response) {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },
+    async claimQuestion() {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+
+        await this.fetchACardMemory({
+          test_id: this.$route.params.id,
+          config: {
+            params: {
+              'page[size]': this.numberItemsPerPage,
+              'page[number]': this.pageNumber
+            }
+          }
+        }).then((response) => {
+          this.totalNumberPages = this.getTotalNumberPages(response)
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+      }
+    },
     async fetchRecordData () {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
