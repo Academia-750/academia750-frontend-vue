@@ -34,8 +34,8 @@
       </div>
     </v-toolbar>
     <v-card-text v-if="ItemsQuestionsByCardsMemory">
-      <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
-        <v-row dense>
+      <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="d-flex justify-center mx-auto">
+        <v-row dense class="ma-0 pa-0">
           <v-col
             v-for="question in ItemsQuestionsByCardsMemory"
             :key="`Sección Tarjeta - ${question.id}`"
@@ -44,6 +44,7 @@
             md="6"
             lg="4"
             xl="4"
+            class="d-flex justify-center"
           >
             <card-memory-item
               :question-with-answers="question"
