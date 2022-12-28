@@ -23,5 +23,8 @@ export default {
   },
   resolveQuestion(data, config = {}) {
     return ResourceService.post(`${resource}/questionnaire/resolve-question`, data, config)
+  },
+  closeAndGradeTest(test_id, data, config = {}) {
+    return ResourceService.post(`${resource}/questionnaire/grade-test/${test_id}`, data, config)
   }
 }

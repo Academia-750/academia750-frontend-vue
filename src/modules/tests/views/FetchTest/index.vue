@@ -1,8 +1,5 @@
 <template>
   <v-card-text>
-    <!-- <pre>
-      {{ questionsDataResolved }}
-    </pre> -->
     <resource-header-crud-title
       text-header="Ver tema"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
@@ -58,6 +55,16 @@
           </v-col>
         </v-row>
       </v-container>
+      <v-container v-if="isLastPage" class="max-width d-flex justify-end">
+        <v-btn
+          color="blue lighten-4"
+          elevation="6"
+          rounded
+          @click="closeAndGradeTestApi"
+        >
+          Finalizar Test <v-icon class="ml-1">mdi-pencil</v-icon>
+        </v-btn>
+      </v-container>
       <v-container class="max-width d-flex justify-center">
         <v-pagination
           v-model="pageNumber"
@@ -65,6 +72,7 @@
           :length="totalNumberPages"
         ></v-pagination>
       </v-container>
+
     </v-card-text>
   </v-card-text>
 </template>

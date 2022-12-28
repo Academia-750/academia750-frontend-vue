@@ -63,6 +63,20 @@ const resolveQuestion = async (_, options) => {
   }
 }
 
+const closeAndGradeTest = async (_, options) => {
+  try {
+
+    const response = await TestsRepository.closeAndGradeTestresolveQuestion(options.test_id, options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const fetchAQuiz = async ({ commit }, options) => {
   try {
 
@@ -182,5 +196,6 @@ export default {
   getUnresolvedTests,
   getCardsMemory,
   claimQuestion,
-  resolveQuestion
+  resolveQuestion,
+  closeAndGradeTest
 }

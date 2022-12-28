@@ -2,6 +2,7 @@ import { mapActions, mapMutations, mapState } from 'vuex'
 import CopyLabel from '@/components/common/CopyLabel'
 import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
 import SetHistoryAnswersResolved from './SetHistoryAnswersResolved'
+import _ from 'lodash'
 
 export default {
   mixins: [SetHistoryAnswersResolved],
@@ -21,11 +22,15 @@ export default {
       pageNumber: 1,
       numberItemsPerPage: 20,
       totalNumberPages: 0,
-      testData: null
+      testData: null,
+      isLastPage: false
     }
   },
   computed: {
     ...mapState('testsService', ['ItemsQuestionsByTests','questionsDataResolved'])
+  },
+  created() {
+    this.closeAndGradeTestApi = _.debounce(this.closeAndGradeTestApi, 1000)
   },
   mounted() {
     this.fetchRecordData()
@@ -36,7 +41,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('testsService', ['fetchAQuiz']),
+    ...mapActions('testsService', ['fetchAQuiz', 'closeAndGradeTest']),
     getTotalNumberPages(response) {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },
@@ -55,6 +60,13 @@ export default {
         }).then((response) => {
           this.totalNumberPages = this.getTotalNumberPages(response)
           this.testData = response.data.meta.test
+          console.log(response.data.meta)
+
+          if (response.data.meta.current_page === response.data.meta.last_page) {
+            this.isLastPage = true
+          } else {
+            this.isLastPage = false
+          }
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -62,6 +74,31 @@ export default {
 
       } catch (error) {
         console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+      }
+    },
+    async closeAndGradeTestApi() {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+
+        await this.closeAndGradeTest({
+          test_id: this.testData.id,
+          data: {},
+          config: {}
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.setQuestionsHistoryResolvedOfTest()
+
+      } catch (error) {
+        console.log(error)
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+          showConfirmButton: true,
+          confirmButtonText: '¡Entendido!',
+          timer: 10000
+        })
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     }
