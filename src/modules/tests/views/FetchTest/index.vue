@@ -19,8 +19,6 @@
       <div class="d-flex justify-center">
         <v-btn
           small
-          :loading="loadingButtonFetchRecord"
-          :disabled="disabledButtonFetchRecord"
           color="light-blue darken-3"
           class="white--text mx-1 align-self-center"
           @click="fetchRecordData"
@@ -35,32 +33,33 @@
         </v-btn>
       </div>
     </v-toolbar>
-    <v-card-text v-if="recordData">
-      <div class="my-2 text-subtitle-1">
-        UUID del tema: <span class="mx-1">
-          <copy-label :text="recordData.data.id" />
-        </span>
-      </div>
-      <div class="my-2 text-subtitle-1">
-        Tema: <span class="mx-1">
-          <copy-label :text="recordData.data.attributes.name" />
-        </span>
-      </div>
-      <div class="my-2 text-subtitle-1">
-        Fecha de alta: <span class="mx-1">
-          <copy-label :text="recordData.data.attributes.created_at" />
-        </span>
-      </div>
-      <div class="my-2 text-subtitle-1">
-        UUID del grupo de tema: <span class="mx-1">
-          <copy-label :text="recordData.data.relationships.topic_group.id" />
-        </span>
-      </div>
-      <div class="my-2 text-subtitle-1">
-        Grupo de tema: <span class="mx-1">
-          <copy-label :text="recordData.data.relationships.topic_group.attributes.name" />
-        </span>
-      </div>
+
+    <v-card-text v-if="ItemsQuestionsByTests">
+      <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
+        <v-row dense class="ma-0 pa-0">
+          <v-col
+            v-for="(question, index) in ItemsQuestionsByTests"
+            :key="`Sección Test Pregunta - ${question.id}`"
+            cols="12"
+            sm="12"
+            md="12"
+            lg="12"
+            xl="12"
+          >
+            <questionnaire-item
+              :index="index"
+              :question-with-answers="question"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container class="max-width d-flex justify-center">
+        <v-pagination
+          v-model="pageNumber"
+          class="my-4"
+          :length="totalNumberPages"
+        ></v-pagination>
+      </v-container>
     </v-card-text>
   </v-card-text>
 </template>

@@ -13,5 +13,8 @@ export default {
   },
   SET_ITEMS_QUESTIONS_BY_TESTS(state, payload) {
     state.ItemsQuestionsByTests = payload
+  },
+  SET_QUESTIONS_DATA_BY_TEST(state, payload) {
+    state.questionsDataByTest = payload
   }
 }

@@ -49,14 +49,21 @@ const claimQuestion = async (_, options) => {
   }
 }
 
-const fetchAQuiz = async (_, options) => {
+const fetchAQuiz = async ({ commit }, options) => {
   try {
 
+    commit('SET_ITEMS_QUESTIONS_BY_TESTS', [])
+    commit('SET_QUESTIONS_DATA_BY_TEST', [])
     const response = await TestsRepository.fetchUnresolvedTest(options.test_id, options.config)
+
+    commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
+    commit('SET_QUESTIONS_DATA_BY_TEST', response.data.meta.questions_data)
 
     return Promise.resolve(response)
 
   } catch (error) {
+    commit('SET_ITEMS_QUESTIONS_BY_TESTS', [])
+    commit('SET_QUESTIONS_DATA_BY_TEST', [])
     console.log(error)
 
     return Promise.reject(error)

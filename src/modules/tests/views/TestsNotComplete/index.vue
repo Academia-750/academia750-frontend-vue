@@ -45,7 +45,7 @@
             text-button="Ver"
             icon-button="mdi-eye"
             color-button="success"
-            :config-route="{ name: 'fetch-topic', params: { id: item.id } }"
+            :config-route="{ name: 'fetch-questionnaire', params: { id: item.id } }"
           />
         </div>
       </template>

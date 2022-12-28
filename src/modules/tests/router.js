@@ -4,6 +4,7 @@ import GenerateTestModule from './views/GenerateTest'
 import ListTestsUncompleteModule from './views/TestsNotComplete'
 import ListCardsMemoryModule from './views/CardsMemory'
 import FetchCardMemoryModule from './views/FetchCardMemory'
+import FetchQuestionnaireModule from './views/FetchTest'
 
 const shortcutRoutes = [
 ]
@@ -39,6 +40,14 @@ const moduleRoute = [
             path: 'cards-memory',
             name: 'list-cards-memory',
             component: ListCardsMemoryModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'test-uncomplete/:id',
+            name: 'fetch-questionnaire',
+            component: FetchQuestionnaireModule,
             meta: {
               middleware: [authMiddleware]
             }

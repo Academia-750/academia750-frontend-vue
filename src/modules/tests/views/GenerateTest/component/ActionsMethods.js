@@ -27,6 +27,8 @@ export default {
             title: '¡Buena suerte con tu Test!',
             timer: 10000
           })
+
+          this.$router.push({ name: 'fetch-questionnaire', params: { id: response.data.data.id } })
         }
 
         if (this.typeTestSelected === 'card_memory') {

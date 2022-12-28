@@ -1,5 +1,6 @@
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import CopyLabel from '@/components/common/CopyLabel'
+import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
 
 export default {
   components: {
@@ -7,52 +8,62 @@ export default {
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    CopyLabel
+    CopyLabel,
+    QuestionnaireItem
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
+    this?.$hasRoleMiddleware('student')
   },
   data () {
     return {
-      loadingButtonFetchRecord: false,
-      disabledButtonFetchRecord: false,
-      recordData: ''
+      pageNumber: 1,
+      numberItemsPerPage: 21,
+      totalNumberPages: 0
     }
   },
-  mounted () {
+  computed: {
+    ...mapState('testsService', ['ItemsQuestionsByTests'])
+  },
+  mounted() {
     this.fetchRecordData()
   },
+  watch: {
+    pageNumber(number) {
+      this.fetchRecordData()
+    }
+  },
   methods: {
-    ...mapActions('topicsService', ['fetchTopic']),
+    ...mapActions('testsService', ['fetchAQuiz']),
+    getTotalNumberPages(response) {
+      return Math.ceil((response.data.meta.total / response.data.meta.per_page))
+    },
     async fetchRecordData () {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
-        this.disabledButtonFetchRecord = true
 
-        const response = await this.fetchTopic({
-          id: this.$route.params.id,
+        const response = await this.fetchAQuiz({
+          test_id: this.$route.params.id,
           config: {
             params: {
-              include: 'topic-group'
+              'page[size]': this.numberItemsPerPage,
+              'page[number]': this.pageNumber
             }
           }
+        }).then((response) => {
+          this.totalNumberPages = this.getTotalNumberPages(response)
         })
 
-        this.recordData = response.data
-
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.disabledButtonFetchRecord = false
 
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.disabledButtonFetchRecord = false
       }
     }
   },
   head: {
     title: {
-      inner: 'Ver Tema'
+      inner: 'Resolver Test'
     }
   }
 }
