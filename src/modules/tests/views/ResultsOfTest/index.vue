@@ -24,7 +24,7 @@
         <span class="d-none d-sm-inline">Cargar</span>
       </v-btn>
     </v-toolbar>
-    <div>
+    <div v-if="testData">
       <head-results-history-test
         :total-questions-correct="testData.attributes.total_questions_correct"
         :total-questions-wrong="testData.attributes.total_questions_wrong"
@@ -33,6 +33,10 @@
       <div class="my-2 d-flex justify-center">
         <span class="font-weight-black display-1">Puntuación total: {{ testData.attributes.test_result }}</span>
       </div>
+      <symbology-history-test />
+      <v-container>
+        <v-divider class="grey lighten-2 my-1"></v-divider>
+      </v-container>
     </div>
   </div>
 </template>

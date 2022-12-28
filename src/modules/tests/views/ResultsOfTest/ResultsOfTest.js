@@ -1,6 +1,7 @@
 import { mapActions, mapState } from 'vuex'
 import _ from 'lodash'
 import HeadResultsHistoryTest from '@/modules/tests/components/HistoryTest/HeadResultsHistoryTest'
+import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/SymbologyHistoryTest'
 
 export default {
   components: {
@@ -8,7 +9,8 @@ export default {
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    HeadResultsHistoryTest
+    HeadResultsHistoryTest,
+    SymbologyHistoryTest
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
