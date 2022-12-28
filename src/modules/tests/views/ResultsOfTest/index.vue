@@ -43,8 +43,22 @@
       <v-container class="mt-1">
         <resume-question-state-history-test :questions-data-history="questionDataHistoryState" :questions="questionsDataHistoryByTest" />
       </v-container>
+      <v-container class="max-width d-flex justify-center">
+        <v-pagination
+          v-model="pageNumber"
+          class="my-4"
+          :length="totalNumberPages"
+        ></v-pagination>
+      </v-container>
       <v-container class="mt-1">
         <question-guide-list-history-test />
+      </v-container>
+      <v-container class="max-width d-flex justify-center">
+        <v-pagination
+          v-model="pageNumber"
+          class="my-4"
+          :length="totalNumberPages"
+        ></v-pagination>
       </v-container>
     </div>
   </div>
