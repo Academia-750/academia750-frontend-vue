@@ -15,6 +15,9 @@ export default {
   fetchCardMemory(test_id, config = {}) {
     return ResourceService.get(`${resource}/fetch/card-memory/${test_id}`, config)
   },
+  fetchHistoryTestComplete(test_id, config = {}) {
+    return ResourceService.get(`${resource}/fetch/history/test-complete/${test_id}`, config)
+  },
   generateTestWithQuestions(data, config = {}) {
     return ResourceService.post(`${resource}/create-a-quiz`, data, config)
   },
@@ -25,6 +28,6 @@ export default {
     return ResourceService.post(`${resource}/questionnaire/resolve-question`, data, config)
   },
   closeAndGradeTest(test_id, data, config = {}) {
-    return ResourceService.post(`${resource}/questionnaire/grade-test/${test_id}`, data, config)
+    return ResourceService.post(`${resource}/questionnaire/${test_id}/grade-test`, data, config)
   }
 }

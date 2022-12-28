@@ -60,7 +60,6 @@ export default {
         }).then((response) => {
           this.totalNumberPages = this.getTotalNumberPages(response)
           this.testData = response.data.meta.test
-          console.log(response.data.meta)
 
           if (response.data.meta.current_page === response.data.meta.last_page) {
             this.isLastPage = true
@@ -81,14 +80,20 @@ export default {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
 
-        await this.closeAndGradeTest({
+        const response = await this.closeAndGradeTest({
           test_id: this.testData.id,
           data: {},
           config: {}
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.setQuestionsHistoryResolvedOfTest()
+
+        this.$router.push({
+          name: 'fetch-history-test-complete',
+          params: {
+            id: response.data.data.id
+          }
+        })
 
       } catch (error) {
         console.log(error)
