@@ -1,8 +1,5 @@
 <template>
   <div>
-    <pre>
-      {{ questionsDataHistoryByTest }}
-    </pre>
     <v-toolbar>
       <v-toolbar-title class="d-flex align-items-center">
         <v-icon large class="mx-1">mdi-book-edit</v-icon>
@@ -15,6 +12,7 @@
         color="teal darken-2"
         class="white--text"
         title="Cargar nuevamente mis datos"
+        @click="fetchRecordData"
       >
         <v-icon
           right
@@ -26,6 +24,16 @@
         <span class="d-none d-sm-inline">Cargar</span>
       </v-btn>
     </v-toolbar>
+    <div>
+      <head-results-history-test
+        :total-questions-correct="testData.attributes.total_questions_correct"
+        :total-questions-wrong="testData.attributes.total_questions_wrong"
+        :total-questions-unanswered="testData.attributes.total_questions_unanswered"
+      />
+      <div class="my-2 d-flex justify-center">
+        <span class="font-weight-black display-1">Puntuación total: {{ testData.attributes.test_result }}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script src="./ResultsOfTest.js"></script>
