@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-4 mb-2 py-4 cyan lighten-4">
+  <v-container class="mt-4 mb-1 py-4 cyan lighten-4">
     <v-row dense>
       <v-col
         cols="12"

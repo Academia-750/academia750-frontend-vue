@@ -23,7 +23,10 @@ export default {
       numberItemsPerPage: 20,
       totalNumberPages: 0,
       testData: null,
-      isLastPage: false
+      isLastPage: false,
+      isLoading: false,
+      isDisabledCloseTest: false,
+      isLoadingCloseTest: false
     }
   },
   computed: {
@@ -47,6 +50,7 @@ export default {
     },
     async fetchRecordData () {
       try {
+        this.isLoading = true
         this.$loadingApp.enableLoadingProgressLinear()
 
         const response = await this.fetchAQuiz({
@@ -70,16 +74,22 @@ export default {
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.setQuestionsHistoryResolvedOfTest()
+        this.isLoading = false
 
       } catch (error) {
+        this.isLoading = false
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     },
+    closeAndGradeTestAction() {
+      this.$loadingApp.enableLoadingProgressLinear()
+      this.isDisabledCloseTest = true
+      this.isLoadingCloseTest = true
+      this.closeAndGradeTestApi()
+    },
     async closeAndGradeTestApi() {
       try {
-        this.$loadingApp.enableLoadingProgressLinear()
-
         const response = await this.closeAndGradeTest({
           test_id: this.testData.id,
           data: {},
@@ -95,8 +105,13 @@ export default {
           }
         })
 
+        this.isDisabledCloseTest = false
+        this.isLoadingCloseTest = false
+
       } catch (error) {
         console.log(error)
+        this.isDisabledCloseTest = false
+        this.isLoadingCloseTest = false
         this.$swal.fire({
           icon: 'error',
           title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',

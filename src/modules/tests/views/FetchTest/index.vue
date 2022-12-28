@@ -59,9 +59,11 @@
         <v-container v-if="isLastPage" class="max-width d-flex justify-end">
           <v-btn
             color="blue lighten-4"
+            :disabled="isDisabledCloseTest"
+            :loading="isLoadingCloseTest"
             elevation="6"
             rounded
-            @click="closeAndGradeTestApi"
+            @click="closeAndGradeTestAction"
           >
             Finalizar Test <v-icon class="ml-1">mdi-pencil</v-icon>
           </v-btn>
@@ -74,8 +76,8 @@
           ></v-pagination>
         </v-container>
       </div>
-      <v-container v-else class="d-flex justify-center">
-        <p class="font-weight-black display-1">Lo siento mucho, no ha sido posible generar una prueba con preguntas disponibles. Por favor, reporte este problema al correo oficial de la academia y intente crear otra prueba más tarde.</p>
+      <v-container v-if="(!ItemsQuestionsByTests || ItemsQuestionsByTests.length === 0) && !isLoading" class="d-flex justify-center">
+        <p class="font-weight-black display-1">No ha sido posible generar una prueba con preguntas disponibles. Por favor, reporte este problema al correo oficial de la academia y intente crear otra prueba más tarde.</p>
       </v-container>
 
     </v-card-text>

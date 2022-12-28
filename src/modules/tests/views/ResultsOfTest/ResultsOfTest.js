@@ -3,6 +3,7 @@ import _ from 'lodash'
 import HeadResultsHistoryTest from '@/modules/tests/components/HistoryTest/HeadResultsHistoryTest'
 import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/SymbologyHistoryTest'
 import ResumeQuestionStateHistoryTest from '@/modules/tests/components/HistoryTest/ResumeQuestionStateHistoryTest'
+import QuestionGuideListHistoryTest from '@/modules/tests/components/HistoryTest/QuestionGuideListHistoryTest'
 
 export default {
   components: {
@@ -12,7 +13,8 @@ export default {
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
     HeadResultsHistoryTest,
     SymbologyHistoryTest,
-    ResumeQuestionStateHistoryTest
+    ResumeQuestionStateHistoryTest,
+    QuestionGuideListHistoryTest
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
@@ -20,9 +22,10 @@ export default {
   data() {
     return {
       pageNumber: 1,
-      numberItemsPerPage: 20,
+      numberItemsPerPage: 15,
       totalNumberPages: 0,
-      testData: null
+      testData: null,
+      questionDataHistoryState: []
     }
   },
   computed: {
@@ -58,6 +61,7 @@ export default {
         }).then((response) => {
           this.totalNumberPages = this.getTotalNumberPages(response)
           this.testData = response.data.meta.test
+          this.questionDataHistoryState = response.data.meta.questions_data
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()

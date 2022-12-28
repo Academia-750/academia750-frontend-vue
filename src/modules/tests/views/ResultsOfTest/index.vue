@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <pre>
+      {{ questionDataHistoryState }}
+    </pre> -->
     <v-toolbar>
       <v-toolbar-title class="d-flex align-items-center">
         <v-icon large class="mx-1">mdi-book-edit</v-icon>
@@ -35,10 +38,13 @@
       </div>
       <symbology-history-test />
       <v-container>
-        <v-divider class="grey lighten-2 my-1"></v-divider>
+        <v-divider class="grey lighten-2"></v-divider>
       </v-container>
-      <v-container class="mt-3">
-        <resume-question-state-history-test />
+      <v-container class="mt-1">
+        <resume-question-state-history-test :questions-data-history="questionDataHistoryState" :questions="questionsDataHistoryByTest" />
+      </v-container>
+      <v-container class="mt-1">
+        <question-guide-list-history-test />
       </v-container>
     </div>
   </div>
