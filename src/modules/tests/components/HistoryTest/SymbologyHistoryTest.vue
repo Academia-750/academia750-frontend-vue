@@ -3,7 +3,7 @@
     <v-row dense>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="4"
         lg="4"
         xl="4"
@@ -19,7 +19,7 @@
       </v-col>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="4"
         lg="4"
         xl="4"

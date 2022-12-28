@@ -2,6 +2,7 @@ import { mapActions, mapState } from 'vuex'
 import _ from 'lodash'
 import HeadResultsHistoryTest from '@/modules/tests/components/HistoryTest/HeadResultsHistoryTest'
 import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/SymbologyHistoryTest'
+import ResumeQuestionStateHistoryTest from '@/modules/tests/components/HistoryTest/ResumeQuestionStateHistoryTest'
 
 export default {
   components: {
@@ -10,7 +11,8 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
     HeadResultsHistoryTest,
-    SymbologyHistoryTest
+    SymbologyHistoryTest,
+    ResumeQuestionStateHistoryTest
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')

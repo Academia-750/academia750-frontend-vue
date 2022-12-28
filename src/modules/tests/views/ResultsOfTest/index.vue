@@ -37,6 +37,9 @@
       <v-container>
         <v-divider class="grey lighten-2 my-1"></v-divider>
       </v-container>
+      <v-container class="mt-3">
+        <resume-question-state-history-test />
+      </v-container>
     </div>
   </div>
 </template>
