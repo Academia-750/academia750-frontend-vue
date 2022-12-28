@@ -1,5 +1,8 @@
 <template>
   <v-card-text>
+    <!-- <pre>
+      {{ questionsDataResolved }}
+    </pre> -->
     <resource-header-crud-title
       text-header="Ver tema"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
@@ -47,6 +50,8 @@
             xl="12"
           >
             <questionnaire-item
+              v-if="testData"
+              :test-uuid="testData.id"
               :index="index"
               :question-with-answers="question"
             />

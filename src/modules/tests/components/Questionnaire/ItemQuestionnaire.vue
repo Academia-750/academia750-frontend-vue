@@ -4,7 +4,8 @@
     <answers-radio-buttons-questionnaire
       :ref="`answers-group-question-${questionWithAnswers.id}`"
       :answers="getAnswersOfQuestion"
-      @AnswerSelectedBinding="answer_selected_id = $event"
+      :question-uuid="questionWithAnswers.id"
+      @changeSelectedAnswer="changeSelectionAnswerResolvedInQuestion"
     />
 
     <div v-if="answer_selected_id" class="d-flex justify-end mx-auto my-1">
@@ -23,13 +24,17 @@
 
 <script>
 import AnswersRadioButtonsQuestionnaire from './AnswersRadioButtonsQuestionnaire'
-import { mapState } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import SetHistoryAnswersResolved from '../../views/FetchTest/SetHistoryAnswersResolved'
+import SaveHistoryAnswersResolved from '../../views/FetchTest/SaveHistoryAnswersResolved'
+import _ from 'lodash'
 
 export default {
   name: 'ItemQuestionnaire',
   components: {
     AnswersRadioButtonsQuestionnaire
   },
+  mixins: [SetHistoryAnswersResolved, SaveHistoryAnswersResolved],
   props: {
     index: {
       type: [String, Number],
@@ -37,6 +42,10 @@ export default {
     },
     questionWithAnswers: {
       type: Object,
+      required: true
+    },
+    testUuid: {
+      type: String,
       required: true
     }
   },
@@ -46,9 +55,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('testsService', ['questionsDataByTest']),
+    ...mapState('testsService', ['questionsDataHistoryByTest', 'questionsDataResolved']),
     getIndexQuestion() {
-      return this.questionsDataByTest.find((question) => question.question_id === this.questionWithAnswers.id)
+      return this.questionsDataHistoryByTest.find((question) => question.question_id === this.questionWithAnswers.id)
     },
     getAnswersOfQuestion() {
 
@@ -63,28 +72,49 @@ export default {
     }
   },
   watch: {
-    questionWithAnswers (value) {
-      console.log(value)
+    answer_selected_id() {
+      //this.saveAnswerResolvedOfQuestion()
+    },
+    questionWithAnswers: {
+      handler () {
+        this.setAnswerResolved()
+      },
+      deep: true
     }
   },
-  mounted () {
+  created() {
+    this.saveAnswerResolvedOfQuestion = _.debounce(this.saveAnswerResolvedOfQuestion, 600)
+  },
+  mounted() {
+    this.setAnswerResolved()
   },
   methods: {
-    shuffleAnswers(answers) {
-      const answersNoGrouper = answers.filter((answer) => answer.attributes.is_grouper === 'no')
-      const answersGrouper = answers.filter((answer) => answer.attributes.is_grouper === 'yes')
+    ...mapMutations('testsService', ['SET_QUESTIONS_DATA_RESOLVED']),
+    saveQuestionAnswerInStore() {
 
-      answersNoGrouper.sort(() => Math.random() - 0.5)
+      const questionsResolved = this.questionsDataResolved
 
-      answersGrouper.forEach((answerGrouper) => {
-        answersNoGrouper.push(answerGrouper)
-      })
+      const questionIndex = this.getResolvedQuestion()
 
-      return answersNoGrouper
+      if (questionIndex === -1) {
+        questionsResolved.push({
+          question_text: this.questionWithAnswers.attributes.question,
+          answer_text: this.questionWithAnswers.relationships['answers-test'].data.find((answer) => answer.id === this.answer_selected_id),
+          question_id: this.questionWithAnswers.id,
+          answer_id: this.answer_selected_id
+        })
+        this.SET_QUESTIONS_DATA_RESOLVED(questionsResolved)
+
+        return
+      }
+
+      questionsResolved[questionIndex]['answer_id'] = this.answer_selected_id
+
+      console.log(questionsResolved)
+      this.SET_QUESTIONS_DATA_RESOLVED(questionsResolved)
     },
-    removeSelectionAnswerQuestion() {
-      this.$refs[`answers-group-question-${this.questionWithAnswers.id}`].answer_selected_id = null
-      this.answer_selected_id = null
+    getResolvedQuestion() {
+      return this.questionsDataResolved.findIndex((question) => question.question_id === this.questionUuid)
     }
   }
 }

@@ -42,8 +42,8 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            text-button="Ver"
-            icon-button="mdi-eye"
+            text-button="Retomar test"
+            icon-button="mdi-pencil"
             color-button="success"
             :config-route="{ name: 'fetch-questionnaire', params: { id: item.id } }"
           />

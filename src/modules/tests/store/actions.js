@@ -49,21 +49,35 @@ const claimQuestion = async (_, options) => {
   }
 }
 
+const resolveQuestion = async (_, options) => {
+  try {
+
+    const response = await TestsRepository.resolveQuestion(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const fetchAQuiz = async ({ commit }, options) => {
   try {
 
     commit('SET_ITEMS_QUESTIONS_BY_TESTS', [])
-    commit('SET_QUESTIONS_DATA_BY_TEST', [])
+    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
     const response = await TestsRepository.fetchUnresolvedTest(options.test_id, options.config)
 
     commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
-    commit('SET_QUESTIONS_DATA_BY_TEST', response.data.meta.questions_data)
+    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.meta.questions_data)
 
     return Promise.resolve(response)
 
   } catch (error) {
     commit('SET_ITEMS_QUESTIONS_BY_TESTS', [])
-    commit('SET_QUESTIONS_DATA_BY_TEST', [])
+    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
     console.log(error)
 
     return Promise.reject(error)
@@ -167,5 +181,6 @@ export default {
   fetchACardMemory,
   getUnresolvedTests,
   getCardsMemory,
-  claimQuestion
+  claimQuestion,
+  resolveQuestion
 }

@@ -2,7 +2,8 @@ const state = () => ({
   itemsDatatable: [],
   ItemsQuestionsByCardsMemory: [],
   ItemsQuestionsByTests: [],
-  questionsDataByTest: [],
+  questionsDataHistoryByTest: [],
+  questionsDataResolved: [],
   stateLoadingItems: false,
   informationMeta: {
     current_page: 1,

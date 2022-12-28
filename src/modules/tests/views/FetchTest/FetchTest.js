@@ -1,8 +1,10 @@
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import CopyLabel from '@/components/common/CopyLabel'
 import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
+import SetHistoryAnswersResolved from './SetHistoryAnswersResolved'
 
 export default {
+  mixins: [SetHistoryAnswersResolved],
   components: {
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
@@ -18,11 +20,12 @@ export default {
     return {
       pageNumber: 1,
       numberItemsPerPage: 20,
-      totalNumberPages: 0
+      totalNumberPages: 0,
+      testData: null
     }
   },
   computed: {
-    ...mapState('testsService', ['ItemsQuestionsByTests'])
+    ...mapState('testsService', ['ItemsQuestionsByTests','questionsDataResolved'])
   },
   mounted() {
     this.fetchRecordData()
@@ -51,9 +54,11 @@ export default {
           }
         }).then((response) => {
           this.totalNumberPages = this.getTotalNumberPages(response)
+          this.testData = response.data.meta.test
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
+        this.setQuestionsHistoryResolvedOfTest()
 
       } catch (error) {
         console.log(error)

@@ -2,6 +2,7 @@
   <v-radio-group
     v-model="answer_selected_id"
     column
+    @change="$emit('changeSelectedAnswer')"
   >
     <v-radio
       v-for="answer in answers"
@@ -19,6 +20,10 @@ export default {
     answers: {
       type: Array,
       required: true
+    },
+    questionUuid: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -28,6 +33,7 @@ export default {
   },
   watch: {
     answer_selected_id(value) {
+      //this.resolveQuestion()
       this.$emit('AnswerSelectedBinding', value)
     }
   }

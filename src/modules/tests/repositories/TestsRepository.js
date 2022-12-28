@@ -20,5 +20,8 @@ export default {
   },
   claimQuestion(data, config = {}) {
     return ResourceService.post('questions/claim/academia', data, config)
+  },
+  resolveQuestion(data, config = {}) {
+    return ResourceService.post(`${resource}/questionnaire/resolve-question`, data, config)
   }
 }
