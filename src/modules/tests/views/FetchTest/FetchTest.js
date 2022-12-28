@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       pageNumber: 1,
-      numberItemsPerPage: 21,
+      numberItemsPerPage: 20,
       totalNumberPages: 0
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ index + 1 }}. - <span class="font-weight-black">{{ questionWithAnswers?.attributes['question-text'] }}</span></p>
+    <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getIndexQuestion.index }}. - <span class="font-weight-black">{{ questionWithAnswers?.attributes['question-text'] }}</span></p>
     <answers-radio-buttons-questionnaire
       :ref="`answers-group-question-${questionWithAnswers.id}`"
       :answers="getAnswersOfQuestion"
