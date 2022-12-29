@@ -1,12 +1,13 @@
 <template>
   <v-container>
     <!-- <p class="font-weight-bold my-3">{{ getDataQuestionInHistory }}</p> -->
-    <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getDataQuestionInHistory.index }}. - <span class="font-weight-black">{{ question?.attributes['question-text'] }}</span></p>
+    <p class="text--darken-3 mt-2 mb-3 font-weight-bold subtitle-1"> {{ getDataQuestionInHistory.index }}. - <span class="font-weight-black">{{ question?.attributes['question-text'] }}</span></p>
     <answers-state-question-history-test
       :question="question"
       :answers="question.relationships.answers.data"
       :questions-data-history="questionsDataHistory"
     />
+    <v-divider class="grey lighten-2"></v-divider>
   </v-container>
 </template>
 

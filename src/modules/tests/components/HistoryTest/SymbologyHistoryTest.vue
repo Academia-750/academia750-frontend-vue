@@ -30,7 +30,7 @@
           elevation="12"
           height="20"
           width="7%"
-          color="grey darken-4"
+          color="secondary"
         ></v-sheet><span class="ml-1 font-weight-bold">Alternativa correcta</span>
       </v-col>
       <v-col

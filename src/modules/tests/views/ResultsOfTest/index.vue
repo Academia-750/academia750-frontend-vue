@@ -52,6 +52,7 @@
         ></v-pagination>
       </v-container>
       <v-container class="mt-1">
+        <v-divider class="grey lighten-2"></v-divider>
         <v-row dense>
           <v-col
             v-for="(questionItem) in questionsDataHistoryByTest"
