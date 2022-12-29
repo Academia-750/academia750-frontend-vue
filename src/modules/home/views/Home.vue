@@ -7,6 +7,21 @@
     <OurServices />
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
     <Testimonials />
+    <v-fab-transition>
+      <v-btn
+        class="my-5 mx-2"
+        color="blue darken-1"
+        dark
+        fixed
+        small
+        bottom
+        right
+        fab
+        @click="$vuetify.goTo(0)"
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </div>
 </template>
 
@@ -29,6 +44,10 @@ export default {
     OurServices,
     GroupsByLevel,
     Testimonials
+  },
+  data() {
+    return {
+    }
   },
   mounted () {
 
