@@ -20,13 +20,11 @@ export default {
     },
     changeSelectionAnswerResolvedInQuestion() {
       this.answer_selected_id = this.$refs[`answers-group-question-${this.questionWithAnswers.id}`].answer_selected_id
-      console.log(this.answer_selected_id)
       this.saveAnswerResolvedOfQuestion()
     },
     removeSelectionAnswerQuestion() {
       this.$refs[`answers-group-question-${this.questionWithAnswers.id}`].answer_selected_id = null
       this.answer_selected_id = null
-      console.log(this.answer_selected_id)
       this.saveAnswerResolvedOfQuestion()
 
     }
