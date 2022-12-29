@@ -1,0 +1,23 @@
+/*.v-data-table>.v-data-table__wrapper .v-data-table__mobile-table-row {
+  margin: 10px;
+  border: 1px solid #ededed;
+  display: block;
+}*/
+
+.v-data-table>.v-data-table__wrapper .v-data-table__mobile-table-row {
+  margin-top: 10px;
+  border: 2px solid #ededed;
+  display: block;
+  box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.32);
+-webkit-box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.32);
+-moz-box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.32);
+}
+
+/* each cell border in mobile */
+.v-data-table>.v-data-table__wrapper .v-data-table__mobile-row {
+  border-bottom: 2px solid #ededed;
+}
+
+.theme--light.v-divider {
+  border-color: rgba(0, 0, 0, 0.6);
+}

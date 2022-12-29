@@ -14,6 +14,7 @@ import questionsSubtopic from '@/modules/questionsSubtopic'
 import imports from '@/modules/imports'
 import tests from '@/modules/tests'
 import home from '@/modules/home'
+import statistics from '@/modules/statistics'
 
 registerModules({
   errors,
@@ -30,5 +31,6 @@ registerModules({
   questionsSubtopic,
   tests,
   imports,
-  home
+  home,
+  statistics
 })

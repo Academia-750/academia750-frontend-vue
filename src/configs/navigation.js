@@ -38,7 +38,7 @@ export default {
           icon: 'mdi-chart-areaspline', key: '', text: 'Mis progresos', roles: 'student', regex: /^\/Mis progresos/, items: [
             { icon: 'mdi-file-chart', key: '', text: 'Resumen', to: { name: 'update-my-profile' }, roles: 'student' },
             { icon: 'mdi-chart-timeline', key: '', text: 'Históricos de preguntas', to: { name: 'update-image-account' }, roles: 'student' },
-            { icon: 'mdi-notebook-check', key: '', text: 'Tests completados', to: { name: 'update-image-account' }, roles: 'student' }
+            { icon: 'mdi-notebook-check', key: '', text: 'Tests completados', to: { name: 'fetch-history-tests-completed' }, roles: 'student' }
           ]
         }
       ]
