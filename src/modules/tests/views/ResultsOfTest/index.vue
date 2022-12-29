@@ -24,7 +24,7 @@
         <span class="d-none d-sm-inline">Cargar</span>
       </v-btn>
     </v-toolbar>
-    <div v-if="testData">
+    <div v-if="testData" style="position: relative !important;">
       <head-results-history-test
         :total-questions-correct="testData.attributes.total_questions_correct"
         :total-questions-wrong="testData.attributes.total_questions_wrong"
@@ -72,6 +72,21 @@
           :length="totalNumberPages"
         ></v-pagination>
       </v-container>
+      <v-fab-transition>
+        <v-btn
+          class="my-5 mx-2"
+          color="blue lighten-3"
+          dark
+          fixed
+          small
+          bottom
+          right
+          fab
+          @click="$vuetify.goTo(0)"
+        >
+          <v-icon>mdi-arrow-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
     </div>
   </div>
 </template>
