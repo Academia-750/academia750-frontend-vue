@@ -3,7 +3,7 @@ import _ from 'lodash'
 import HeadResultsHistoryTest from '@/modules/tests/components/HistoryTest/HeadResultsHistoryTest'
 import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/SymbologyHistoryTest'
 import ResumeQuestionStateHistoryTest from '@/modules/tests/components/HistoryTest/ResumeQuestionStateHistoryTest'
-import QuestionGuideListHistoryTest from '@/modules/tests/components/HistoryTest/QuestionGuideListHistoryTest'
+import ItemQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ItemQuestionHistoryTest'
 
 export default {
   components: {
@@ -14,7 +14,7 @@ export default {
     HeadResultsHistoryTest,
     SymbologyHistoryTest,
     ResumeQuestionStateHistoryTest,
-    QuestionGuideListHistoryTest
+    ItemQuestionHistoryTest
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')

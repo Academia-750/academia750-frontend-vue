@@ -83,7 +83,7 @@ export default {
     }
   },
   created() {
-    this.saveAnswerResolvedOfQuestion = _.debounce(this.saveAnswerResolvedOfQuestion, 600)
+    this.saveAnswerResolvedOfQuestion = _.debounce(this.saveAnswerResolvedOfQuestion, 300)
   },
   mounted() {
     this.setAnswerResolved()

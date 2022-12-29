@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <pre>
-      {{ questionDataHistoryState }}
-    </pre> -->
     <v-toolbar>
       <v-toolbar-title class="d-flex align-items-center">
         <v-icon large class="mx-1">mdi-book-edit</v-icon>
@@ -51,7 +48,16 @@
         ></v-pagination>
       </v-container>
       <v-container class="mt-1">
-        <question-guide-list-history-test />
+        <v-row dense>
+          <v-col
+            v-for="(questionItem) in questionsDataHistoryByTest"
+            :key="`section-item-question-result-${questionItem.id}`"
+            :ref="`element-item-question-result-${questionItem.id}`"
+            cols="12"
+          >
+            <item-question-history-test :question="questionItem" :questions-data-history="questionDataHistoryState" />
+          </v-col>
+        </v-row>
       </v-container>
       <v-container class="max-width d-flex justify-center">
         <v-pagination

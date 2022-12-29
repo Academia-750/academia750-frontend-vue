@@ -14,8 +14,8 @@
 export default {
   name: 'HeadResultItem',
   props: {
-    questionUuid: {
-      type: String,
+    question: {
+      type: Object,
       required: true
     },
     questionsDataHistory: {
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     getDataQuestionInHistory() {
-      return this.questionsDataHistory.find((question) => question.question_id === this.questionUuid)
+      return this.questionsDataHistory.find((question) => question.question_id === this.question.id)
     },
     getColorQuestion() {
       const questionState = this.getDataQuestionInHistory.status_question

@@ -15,7 +15,7 @@
         width="100%"
         color="grey lighten-3"
       >
-        <head-result-item :question-uuid="question.id" :questions-data-history="questionsDataHistory" />
+        <head-result-item :question="question" :questions-data-history="questionsDataHistory" />
       </v-sheet>
     </v-col>
   </v-row>
