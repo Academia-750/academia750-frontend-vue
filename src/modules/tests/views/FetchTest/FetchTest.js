@@ -3,9 +3,10 @@ import CopyLabel from '@/components/common/CopyLabel'
 import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
 import SetHistoryAnswersResolved from './SetHistoryAnswersResolved'
 import _ from 'lodash'
+import BlockActionsUser from './BlockActionsUser'
 
 export default {
-  mixins: [SetHistoryAnswersResolved],
+  mixins: [SetHistoryAnswersResolved, BlockActionsUser],
   components: {
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
@@ -37,6 +38,10 @@ export default {
   },
   mounted() {
     this.fetchRecordData()
+    this.blockActionsSelectionUser()
+  },
+  beforeDestroy() {
+    this.removeEventsListenerActionsUser()
   },
   watch: {
     pageNumber(number) {
@@ -45,6 +50,24 @@ export default {
   },
   methods: {
     ...mapActions('testsService', ['fetchAQuiz', 'closeAndGradeTest']),
+    blockActionsSelectionUser() {
+      const elementResolveTest = this.$refs['resolveTestView']
+
+      this.blockEventJavascript(elementResolveTest, 'copy')
+      this.blockEventJavascript(elementResolveTest, 'paste')
+      this.blockEventJavascript(elementResolveTest, 'keydown')
+      this.blockEventJavascript(elementResolveTest, 'mousedown')
+      this.blockEventJavascript(elementResolveTest, 'contextmenu')
+    },
+    removeEventsListenerActionsUser() {
+      const elementResolveTest = this.$refs['resolveTestView']
+
+      this.enableEventJavascript(elementResolveTest, 'copy')
+      this.enableEventJavascript(elementResolveTest, 'paste')
+      this.enableEventJavascript(elementResolveTest, 'keydown')
+      this.enableEventJavascript(elementResolveTest, 'mousedown')
+      this.enableEventJavascript(elementResolveTest, 'contextmenu')
+    },
     getTotalNumberPages(response) {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },

@@ -16,13 +16,6 @@
       row
     >
       <v-radio
-        value="10"
-      >
-        <template #label>
-          <span class="title font-weight-bold py-1">10</span>
-        </template>
-      </v-radio>
-      <v-radio
         value="25"
       >
         <template #label>
@@ -44,6 +37,13 @@
         </template>
       </v-radio>
     </v-radio-group>
+    <v-radio
+      value="120"
+    >
+      <template #label>
+        <span class="title font-weight-bold py-1">120</span>
+      </template>
+    </v-radio>
   </ValidationProvider>
 </template>
 

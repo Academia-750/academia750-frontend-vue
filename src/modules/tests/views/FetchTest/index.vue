@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <v-card-text ref="resolveTestView">
     <resource-header-crud-title
       text-header="Resolver test"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
