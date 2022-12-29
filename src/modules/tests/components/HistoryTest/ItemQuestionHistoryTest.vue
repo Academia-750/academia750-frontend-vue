@@ -7,7 +7,8 @@
       :answers="question.relationships.answers.data"
       :questions-data-history="questionsDataHistory"
     />
-    <reason-question-history-test :question="question"/>
+    <reason-question-history-test :question="question" class="my-2"/>
+    <claim-question-history-test :question="question" class="my-2"/>
     <v-divider class="grey lighten-2 my-1"></v-divider>
   </v-container>
 </template>
@@ -15,12 +16,14 @@
 <script>
 import AnswersStateQuestionHistoryTest from '@/modules/tests/components/HistoryTest/AnswersStateQuestionHistoryTest'
 import ReasonQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ReasonQuestionHistoryTest'
+import ClaimQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ClaimQuestionHistoryTest'
 
 export default {
   name: 'ItemQuestionHistoryTest',
   components: {
     AnswersStateQuestionHistoryTest,
-    ReasonQuestionHistoryTest
+    ReasonQuestionHistoryTest,
+    ClaimQuestionHistoryTest
   },
   props: {
     question: {

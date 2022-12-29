@@ -1,24 +1,26 @@
 <template>
   <v-expansion-panels>
     <v-expansion-panel>
-      <v-expansion-panel-header expand-icon="mdi-menu-down">Impugnar pregunta</v-expansion-panel-header>
+      <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down"><span class="font-weight-black">Impugnar pregunta: </span></v-expansion-panel-header>
       <v-expansion-panel-content>
-        <div class="d-flex justify-center mt-3">
+        <div class="mt-3">
           <validation-observer ref="FormClaimQuestion">
             <claim-field-card-memory
               ref="ClaimFieldCardMemoryField"
               rules="required|max:400"
             />
-            <v-btn
-              dark
-              rounded
-              color="deep-orange darken-1"
-              small
-              :loading="loadingButtonClaimQuestion"
-              @click="validateClaimQuestion"
-            >
-              Impugnar pregunta <v-icon small class="ml-1">mdi-close-octagon</v-icon>
-            </v-btn>
+            <div class="d-flex justify-center">
+              <v-btn
+                dark
+                rounded
+                color="deep-orange darken-1"
+                small
+                :loading="loadingButtonClaimQuestion"
+                @click="validateClaimQuestion"
+              >
+                Impugnar pregunta <v-icon small class="ml-1">mdi-close-octagon</v-icon>
+              </v-btn>
+            </div>
           </validation-observer>
         </div>
       </v-expansion-panel-content>
@@ -98,7 +100,7 @@ export default {
           icon: 'success',
           toast: true,
           title: 'Su solicitud de impugnación ha sido enviada con éxito.',
-          timer: 3000
+          timer: 10000
         })
 
         this.$refs['ClaimFieldCardMemoryField'].claim_text = null
