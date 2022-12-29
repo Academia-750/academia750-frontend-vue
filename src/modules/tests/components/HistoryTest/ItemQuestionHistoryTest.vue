@@ -7,17 +7,20 @@
       :answers="question.relationships.answers.data"
       :questions-data-history="questionsDataHistory"
     />
-    <v-divider class="grey lighten-2"></v-divider>
+    <reason-question-history-test :question="question"/>
+    <v-divider class="grey lighten-2 my-1"></v-divider>
   </v-container>
 </template>
 
 <script>
 import AnswersStateQuestionHistoryTest from '@/modules/tests/components/HistoryTest/AnswersStateQuestionHistoryTest'
+import ReasonQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ReasonQuestionHistoryTest'
 
 export default {
   name: 'ItemQuestionHistoryTest',
   components: {
-    AnswersStateQuestionHistoryTest
+    AnswersStateQuestionHistoryTest,
+    ReasonQuestionHistoryTest
   },
   props: {
     question: {
