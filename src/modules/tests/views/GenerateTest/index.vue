@@ -109,7 +109,7 @@
             >
               mdi-plus
             </v-icon>
-            Crear test
+            {{ getTextButtonCreateTest }}
           </v-btn>
         </v-container>
       </validation-observer>

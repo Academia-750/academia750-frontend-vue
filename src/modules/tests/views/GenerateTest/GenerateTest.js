@@ -27,6 +27,19 @@ export default {
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
   },
+  computed: {
+    getTextButtonCreateTest() {
+      if (this.typeTestSelected === 'test') {
+        return 'Crear Test'
+      }
+
+      if (this.typeTestSelected === 'card_memory') {
+        return 'Crear tarjeta de memoria'
+      }
+
+      return 'Crear Test'
+    }
+  },
   mounted () {
   },
   methods: {
