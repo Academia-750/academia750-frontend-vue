@@ -37,6 +37,13 @@ export default {
         }
       } catch (error) {
         console.log(error)
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Tu Test no ha sido generado con éxito. Por favor, notifícalo al correo oficial de la academia.',
+          showConfirmButton: true,
+          confirmButtonText: '¡Entendido!',
+          timer: 7500
+        })
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateTest = false
         this.disabledButtonCreateTest = false

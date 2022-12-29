@@ -24,14 +24,14 @@
         <span class="d-none d-sm-inline">Cargar</span>
       </v-btn>
     </v-toolbar>
-    <div v-if="testData" style="position: relative !important;">
+    <div v-if="testData">
       <head-results-history-test
         :total-questions-correct="testData.attributes.total_questions_correct"
         :total-questions-wrong="testData.attributes.total_questions_wrong"
         :total-questions-unanswered="testData.attributes.total_questions_unanswered"
       />
-      <div class="my-2 d-flex justify-center">
-        <span class="font-weight-black display-1">Puntuación total: {{ testData.attributes.test_result }}</span>
+      <div class="my-2 d-flex justify-center mx-auto">
+        <span class="font-weight-black display-1 mx-auto">Puntuación total: {{ testData.attributes.test_result }}</span>
       </div>
       <symbology-history-test />
       <v-container>
