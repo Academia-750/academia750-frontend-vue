@@ -43,6 +43,11 @@ export default {
   },
   methods: {
     ...mapActions('testsService', ['fetchHistoryTestComplete']),
+    scrollToElementRefQuestion($nameElementRef) {
+      const sectionQuestionHistory = document.querySelector(`#${$nameElementRef}`)
+
+      sectionQuestionHistory.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    },
     getTotalNumberPages(response) {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },

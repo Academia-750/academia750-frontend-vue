@@ -38,7 +38,11 @@
         <v-divider class="grey lighten-2"></v-divider>
       </v-container>
       <v-container class="mt-1">
-        <resume-question-state-history-test :questions-data-history="questionDataHistoryState" :questions="questionsDataHistoryByTest" />
+        <resume-question-state-history-test
+          :questions-data-history="questionDataHistoryState"
+          :questions="questionsDataHistoryByTest"
+          @scrollToElementRefQuestion="scrollToElementRefQuestion"
+        />
       </v-container>
       <v-container class="max-width d-flex justify-center">
         <v-pagination
@@ -52,10 +56,11 @@
           <v-col
             v-for="(questionItem) in questionsDataHistoryByTest"
             :key="`section-item-question-result-${questionItem.id}`"
-            :ref="`element-item-question-result-${questionItem.id}`"
             cols="12"
           >
-            <item-question-history-test :question="questionItem" :questions-data-history="questionDataHistoryState" />
+            <div :id="`element-item-question-result-${questionItem.id}`">
+              <item-question-history-test :question="questionItem" :questions-data-history="questionDataHistoryState" />
+            </div>
           </v-col>
         </v-row>
       </v-container>

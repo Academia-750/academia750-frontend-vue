@@ -11,9 +11,10 @@
       class="d-flex justify-center"
     >
       <v-sheet
-        class="py-2"
+        class="py-2 cursor-pointer"
         width="100%"
         color="grey lighten-3"
+        @click="$emit('scrollToElementRefQuestion', `element-item-question-result-${question.id}`)"
       >
         <head-result-item :question="question" :questions-data-history="questionsDataHistory" />
       </v-sheet>
