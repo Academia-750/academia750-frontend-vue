@@ -183,6 +183,19 @@ const importTopicsCSV = async (_, options) => {
   }
 }
 
+const downloadTemplateImport = async (_, options) => {
+  try {
+
+    const response = await TopicRepository.downloadTemplateImport(options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getTopics,
   getTopicsAvailableForGenerateTest,
@@ -192,5 +205,6 @@ export default {
   deleteTopic,
   fetchTopicGroups,
   importTopicsCSV,
-  getTopicsGroups
+  getTopicsGroups,
+  downloadTemplateImport
 }
