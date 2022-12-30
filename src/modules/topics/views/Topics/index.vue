@@ -73,7 +73,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add :config-route="{ name: 'create-topic' }" />
-            <v-btn
+            <!-- <v-btn
               small
               elevation="24"
               color="teal darken-2"
@@ -89,7 +89,7 @@
                 mdi-reload
               </v-icon>
               <span class="d-none d-sm-inline">Cargar</span>
-            </v-btn>
+            </v-btn> -->
           </div>
         </v-toolbar>
         <resource-text-field-search

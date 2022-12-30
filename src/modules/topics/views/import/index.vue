@@ -8,11 +8,11 @@
       <v-toolbar flat class="indigo lighten-5 my-2" outlined>
         <resource-button-go-back-router />
         <resource-title-toolbar-datatable title-text="Importar temas" />
-        <resource-divider-title-datatable />
+        <!-- <resource-divider-title-datatable />
         <v-spacer></v-spacer>
         <div class="d-flex justify-center">
           <resource-button-add :config-route="{ name: 'create-topic' }" />
-        </div>
+        </div> -->
       </v-toolbar>
       <vue-dropzone
         id="dropzoneFilesTopics"

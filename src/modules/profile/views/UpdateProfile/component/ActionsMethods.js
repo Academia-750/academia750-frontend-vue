@@ -49,19 +49,22 @@ export default {
     async unsubscribeSystem () {
 
       this.$swal.fire({
-        toast: true,
         width: '400px',
         imageUrl: 'https://cdn-icons-png.flaticon.com/512/725/725099.png',
         imageWidth: 100,
         imageHeigth: 100,
         title: 'Dar de Baja',
         // eslint-disable-next-line quotes
-        html: "<p class='text-center'>Nos da mucha pena despedirnos de ti. <br>Esperamos que durante tu estancia en Academia 750 hayas podido aprender y conseguir ser un mejor opositor o que tu sueño se haya cumplido con nosotros. <br><b>¡Esperamos verte pronto de nuevo!</b></p>",
+        html: "<p class='text-xs-center'>Nos da mucha pena despedirnos de ti. <br>Esperamos que durante tu estancia en Academia 750 hayas podido aprender y conseguir ser un mejor opositor o que tu sueño se haya cumplido con nosotros. <br><b>¡Esperamos verte pronto de nuevo!</b></p>",
         confirmButtonText: 'Continuar con el proceso de baja',
         confirmButtonColor: '#007bff',
         showCancelButton: true,
         cancelButtonColor: '#dc3545',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        customClass: {
+          confirmButton: 'text-xs-center',
+          cancelButton: 'text-xs-center'
+        }
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {

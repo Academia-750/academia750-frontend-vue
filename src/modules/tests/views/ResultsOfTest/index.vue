@@ -6,7 +6,7 @@
         <span class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6">Resultados del Test</span>
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer>
 
       <v-btn
         color="teal darken-2"
@@ -22,7 +22,7 @@
           mdi-reload
         </v-icon>
         <span class="d-none d-sm-inline">Cargar</span>
-      </v-btn>
+      </v-btn> -->
     </v-toolbar>
     <div v-if="testData">
       <head-results-history-test

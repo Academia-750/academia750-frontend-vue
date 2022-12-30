@@ -6,7 +6,7 @@
         <span class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6">Cambiar mi imagen de perfil</span>
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer>
 
       <v-btn
         color="teal darken-2"
@@ -22,7 +22,7 @@
           mdi-reload
         </v-icon>
         <span class="d-none d-sm-inline">Cargar</span>
-      </v-btn>
+      </v-btn> -->
     </v-toolbar>
     <validation-observer ref="FormChangeImageAccount" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">

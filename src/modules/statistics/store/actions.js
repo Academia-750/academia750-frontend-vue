@@ -51,6 +51,7 @@ const getHistoryTestsCompletedByStudent = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
+    commit('SET_STATUS_LOADING_ITEMS', false)
     console.log(error)
 
     return Promise.reject(error)

@@ -78,7 +78,7 @@ export default {
   }),
   computed: {
     widthCardResponsive () {
-      if (this.$vuetify.breakpoint.width < 400) {
+      if (this.$vuetify.breakpoint.width < 490) {
         return 270
       }
 

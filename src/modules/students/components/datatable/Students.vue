@@ -32,7 +32,7 @@
           <resource-button-go-back-router/>
           <resource-title-toolbar-datatable :title-text="getTitleByStateAccount" />
           <resource-divider-title-datatable />
-          <v-spacer></v-spacer>
+          <!-- <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <v-btn
               small
@@ -51,7 +51,7 @@
               </v-icon>
               <span class="d-none d-sm-inline">Cargar</span>
             </v-btn>
-          </div>
+          </div> -->
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"

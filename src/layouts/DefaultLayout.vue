@@ -60,10 +60,9 @@
           <!-- REMOVE ME - Shop Demo purposes -->
           <div class="pa-2 pt-1 text-center">
             <v-btn
-              class="buy-button"
               dark
               block
-              color="#EE44AA"
+              color="#FF0000"
               @click="logoutAccount"
             >
               <v-icon left>

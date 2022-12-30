@@ -7,6 +7,8 @@
     <OurServices />
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
     <Testimonials />
+    <v-divider class="grey lighten-1 my-2"></v-divider>
+    <contact-us-form />
     <v-fab-transition>
       <v-btn
         class="my-5 mx-2"
@@ -33,6 +35,7 @@ import DialogLogin from '../components/Login/DialogLogin'
 import OurServices from '../components/OurServices'
 import GroupsByLevel from '../components/GroupsByLevel'
 import Testimonials from '../components/Testimonials'
+import ContactUsForm from '../components/ContactUsForm'
 
 export default {
   name: 'HomeView',
@@ -43,7 +46,8 @@ export default {
     DialogLogin,
     OurServices,
     GroupsByLevel,
-    Testimonials
+    Testimonials,
+    ContactUsForm
   },
   data() {
     return {
