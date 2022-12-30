@@ -39,19 +39,20 @@ export default {
     numberQuestionsResolved: {
       handler () {
         this.calculateValueProgressQuestionsTest()
-        console.log(this.numberQuestionsResolved)
+        //console.log(this.numberQuestionsResolved)
       },
       deep: true
     },
     totalNumberQuestionsTest: {
       handler () {
         this.calculateValueProgressQuestionsTest()
-        console.log(this.totalNumberQuestionsTest)
+        //console.log(this.totalNumberQuestionsTest)
       },
       deep: true
     }
   },
   mounted() {
+    this.calculateValueProgressQuestionsTest()
     window.addEventListener('scroll', this.handleScroll)
   },
   beforeDestroy() {
@@ -62,10 +63,10 @@ export default {
       this.isFixedMenu = window.scrollY >= 100
     },
     calculateValueProgressQuestionsTest() {
-      console.log({
+      /* console.log({
         total: this.totalNumberQuestionsTest,
         progress: this.numberQuestionsResolved
-      })
+      }) */
 
       if (this.totalNumberQuestionsTest === 0 && this.numberQuestionsResolved === 0) {
         this.progressResolvedQuestionOfTest = 0
@@ -80,10 +81,6 @@ export default {
       }
 
       this.progressResolvedQuestionOfTest = Math.ceil((this.numberQuestionsResolved / this.totalNumberQuestionsTest) * 100)
-    },
-    preventChangeNumber(event) {
-      console.log(event)
-      this.calculateValueProgressQuestionsTest()
     }
   }
 }
