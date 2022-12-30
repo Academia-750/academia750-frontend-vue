@@ -120,11 +120,25 @@ const importSubtopicsCSV = async (_, options) => {
   }
 }
 
+const downloadTemplateImport = async (_, options) => {
+  try {
+
+    const response = await SubtopicRepository.downloadTemplateImport(options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getSubtopics,
   createSubtopic,
   fetchSubtopic,
   updateSubtopic,
   deleteSubtopic,
-  importSubtopicsCSV
+  importSubtopicsCSV,
+  downloadTemplateImport
 }

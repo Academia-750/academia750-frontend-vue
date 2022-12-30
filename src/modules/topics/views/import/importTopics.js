@@ -70,7 +70,7 @@ export default {
       link.href = url
       link.setAttribute(
         'download',
-        'template_csv_import_topics.csv'
+        'plantilla_importar_temas.csv'
       ) //or any other extension
       document.body.appendChild(link)
       link.click()

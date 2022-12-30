@@ -8,6 +8,15 @@
       <v-toolbar flat class="indigo lighten-5 my-2" outlined>
         <resource-button-go-back-router />
         <resource-title-toolbar-datatable title-text="Importar subtemas" />
+        <resource-divider-title-datatable />
+        <v-spacer></v-spacer>
+        <div class="d-flex justify-center">
+          <resource-button-download-template
+            text-button="Descargar plantilla"
+            color-button="success"
+            @emitDownloadTemplateCsv="downloadTemplateImportApi"
+          />
+        </div>
       </v-toolbar>
       <vue-dropzone
         id="dropzoneFilesSubtopics"
