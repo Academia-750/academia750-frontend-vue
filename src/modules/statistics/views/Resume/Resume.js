@@ -32,6 +32,10 @@ export default {
     return {
       topicsSelectedData: [],
       period: 'last-month',
+      arrayCountsQuestionsCorrect: [],
+      arrayCountsQuestionsWrong: [],
+      arrayCountsQuestionsUnanswered: [],
+      categoriesTopics: [],
       periodsSelectForm: [
         { label: 'Total', key: 'total' },
         { label: 'Último mes', key: 'last-month' },
@@ -78,6 +82,19 @@ export default {
         return
       }
 
+      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length > 5) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Máximo 5 temas',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
       if (!this.period) {
         this.$swal.fire({
           icon: 'error',
@@ -106,7 +123,10 @@ export default {
           config: {}
         })
 
-        console.log(response)
+        this.categoriesTopics = response.data.data.map((topic) => topic.topic.name)
+        this.arrayCountsQuestionsCorrect = response.data.data.map((topic) => parseInt(topic.correct))
+        this.arrayCountsQuestionsWrong = response.data.data.map((topic) => parseInt(topic.wrong))
+        this.arrayCountsQuestionsUnanswered = response.data.data.map((topic) => parseInt(topic.unanswered))
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false

@@ -1,5 +1,23 @@
 export default {
   name: 'GraphStatisticsTopics',
+  props: {
+    arrayCountsQuestionsCorrect: {
+      type: Array,
+      required: true
+    },
+    arrayCountsQuestionsWrong: {
+      type: Array,
+      required: true
+    },
+    arrayCountsQuestionsUnanswered: {
+      type: Array,
+      required: true
+    },
+    categoriesTopics: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       showChart: false,
@@ -15,8 +33,27 @@ export default {
         name: 'No respondidas',
         color: '#D0B838',
         data: [5, 16]
-      }],
-      chartOptions: {
+      }]
+    }
+  },
+  computed: {
+    getSeriesGraph () {
+      return [{
+        name: 'Correctas',
+        color: '#26A69A',
+        data: this.arrayCountsQuestionsCorrect
+      }, {
+        name: 'Incorrectas',
+        data: this.arrayCountsQuestionsWrong,
+        color: '#D32F2F'
+      }, {
+        name: 'No respondidas',
+        color: '#D0B838',
+        data: this.arrayCountsQuestionsUnanswered
+      }]
+    },
+    getChartOptions () {
+      return {
         chart: {
           type: 'bar',
           height: 350,
@@ -50,7 +87,7 @@ export default {
           colors: ['transparent']
         },
         xaxis: {
-          categories: ['Topic 1', 'Topic 15']
+          categories: this.categoriesTopics
         },
         yaxis: {
           title: {
@@ -59,14 +96,7 @@ export default {
         },
         fill: {
           opacity: 1
-        }/* ,
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return '$ ' + val + ' thousands'
-            }
-          }
-        } */
+        }
       }
     }
   },

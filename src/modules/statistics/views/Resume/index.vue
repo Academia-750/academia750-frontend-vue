@@ -1,5 +1,8 @@
 <template>
   <v-card-text>
+    <pre>{{ arrayCountsQuestionsCorrect }}</pre>
+    <pre>{{ arrayCountsQuestionsWrong }}</pre>
+    <pre>{{ arrayCountsQuestionsUnanswered }}</pre>
     <resource-header-crud-title
       text-header="Resumen"
       :can-rendering-header="$vuetify.breakpoint.width < 700"
@@ -44,8 +47,15 @@
         </v-btn>
       </div>
     </v-container>
-    <v-container class="ma-0 pa-0">
-      <graph-statistics-topics />
+    <v-container class="ma-0 pa-0 d-flex justify-center mx-auto">
+      <div class="mx-auto" style="width: 98% !important">
+        <graph-statistics-topics
+          :array-counts-questions-correct="arrayCountsQuestionsCorrect"
+          :array-counts-questions-wrong="arrayCountsQuestionsWrong"
+          :array-counts-questions-unanswered="arrayCountsQuestionsUnanswered"
+          :categories-topics="categoriesTopics"
+        />
+      </div>
     </v-container>
   </v-card-text>
 </template>
