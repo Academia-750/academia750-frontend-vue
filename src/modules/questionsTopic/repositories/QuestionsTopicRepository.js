@@ -20,5 +20,8 @@ export default {
   },
   import(data, config = {}) {
     return ResourceService.post('questions/import', data, config)
+  },
+  downloadTemplateImport(config = {}) {
+    return ResourceService.get('questions/import/template', config)
   }
 }

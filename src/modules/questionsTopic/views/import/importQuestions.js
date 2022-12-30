@@ -16,7 +16,8 @@ export default {
     ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
+    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
+    ResourceButtonDownloadTemplate: () => import(/* webpackChunkName: "ResourceButtonDownloadTemplate" */ '@/modules/resources/components/resources/ResourceButtonDownloadTemplate')
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
@@ -46,7 +47,47 @@ export default {
     `
   },
   methods: {
-    ...mapActions('questionsTopicService', ['importQuestionsCSV']),
+    ...mapActions('questionsTopicService', ['importQuestionsCSV', 'downloadTemplateImport']),
+    GenerateDownloadTemplate(templateImportData) {
+      const url = window.URL.createObjectURL(new Blob([templateImportData]))
+      const link = document.createElement('a')
+
+      link.href = url
+      link.setAttribute(
+        'download',
+        'plantilla_importar_temas.csv'
+      ) //or any other extension
+      document.body.appendChild(link)
+      link.click()
+    },
+    async downloadTemplateImportApi() {
+      try {
+
+        this.loadingButton = true
+
+        const response = await this.downloadTemplateImport({
+          config: {
+            responseType: 'blob'
+          }
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButton = false
+
+        this.GenerateDownloadTemplate(response.data)
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButton = false
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+          showConfirmButton: true,
+          confirmButtonText: '¡Entendido!',
+          timer: 7500
+        })
+      }
+    },
     vdropAddedFile(file) {
       //console.log(file)
     },
