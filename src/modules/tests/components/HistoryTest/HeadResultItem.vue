@@ -38,7 +38,7 @@ export default {
         return 'red lighten-1'
       }
 
-      return 'grey lighten-3'
+      return '#D0B838'
     }
   }
 }

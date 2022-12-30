@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <!-- <p class="font-weight-bold my-3">{{ getDataQuestionInHistory }}</p> -->
-    <p class="text--darken-3 mt-2 mb-3 font-weight-bold subtitle-1"> {{ getDataQuestionInHistory.index }}. - <span class="font-weight-black">{{ question?.attributes['question-text'] }}</span></p>
+    <p class="text--darken-3 mt-2 mb-3 font-weight-bold subtitle-1"> {{ getDataQuestionInHistory.index }}. - <span class="font-weight-black">{{ question?.attributes['question-text'] }}</span> <span v-if="questionIsUnanswered" class="font-weight-bold color-unsanswered-question ml-2"> (No respondida) </span></p>
     <answers-state-question-history-test
       :question="question"
       :answers="question.relationships.answers.data"
@@ -38,7 +38,16 @@ export default {
   computed: {
     getDataQuestionInHistory() {
       return this.questionsDataHistory.find((question) => question.question_id === this.question.id)
+    },
+    questionIsUnanswered() {
+      return this.getDataQuestionInHistory?.status_question === 'unanswered'
     }
   }
 }
 </script>
+
+<style scoped>
+  .color-unsanswered-question {
+    background-color: #D0B838;
+  }
+</style>
