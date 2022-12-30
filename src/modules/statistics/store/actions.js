@@ -58,6 +58,21 @@ const getHistoryTestsCompletedByStudent = async ({ commit }, config) => {
   }
 }
 
+const getHistoryStatisticsDataGraph = async (_, options) => {
+  try {
+
+    const response = await StatisticsRepository.getHistoryStatisticsDataGraph(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
-  getHistoryTestsCompletedByStudent
+  getHistoryTestsCompletedByStudent,
+  getHistoryStatisticsDataGraph
 }

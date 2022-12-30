@@ -30,7 +30,14 @@ export default {
   },
   data () {
     return {
-      //namesRelationshipsIncludeRequest: 'topics'
+      topicsSelectedData: [],
+      period: 'last-month',
+      periodsSelectForm: [
+        { label: 'Total', key: 'total' },
+        { label: 'Último mes', key: 'last-month' },
+        { label: 'Últimos 3 meses', key: 'last-three-months' }
+      ],
+      disabledButtonFetchRecord: false
     }
   },
   computed: {
@@ -45,20 +52,75 @@ export default {
         })
       },
       deep: true
-    }
+    }/* ,
+    topicsSelectedData: {
+      handler () {
+        console.log('dsdioshgiusoiug')
+        this.getHistoryStatisticsDataGraphApi()
+      },
+      deep: true
+    } */
   },
   methods: {
-    ...mapActions('statisticsService', ['getHistoryTestsCompletedByStudent']),
-    searchFieldExecuted ($event) {
-      this.searchWord = $event
-      this.getHistoryTestsCompletedByStudent({
-        params: this.buildQueryParamsRequest()
-      })
+    ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph']),
+    getHistoryStatisticsDataGraphApiAction () {
+
+      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length === 0) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, seleccione al menos 1 tema',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      if (!this.period) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, seleccione un periodo válido',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      this.getHistoryStatisticsDataGraphApi()
+    },
+    async getHistoryStatisticsDataGraphApi () {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+        this.disabledButtonFetchRecord = true
+
+        const response = await this.getHistoryStatisticsDataGraph({
+          data: {
+            topics_id: this.topicsSelectedData.map((topic) => topic.id),
+            period: this.period
+          },
+          config: {}
+        })
+
+        console.log(response)
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonFetchRecord = false
+
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonFetchRecord = false
+      }
     }
   },
   head: {
     title: {
-      inner: 'Tests completados'
+      inner: 'Mi resumen'
     }
   }
 }

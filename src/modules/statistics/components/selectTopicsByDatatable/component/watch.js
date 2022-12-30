@@ -5,6 +5,12 @@ export default {
         this.loadDatatatable()
       },
       deep: true
+    },
+    topicsSelected: {
+      handler () {
+        this.$emit('emitChangeSelectedTopics', this.topicsSelected)
+      },
+      deep: true
     }
   }
 }

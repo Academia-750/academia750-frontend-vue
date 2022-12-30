@@ -9,9 +9,42 @@
       <resource-title-toolbar-datatable title-text="Resumen" />
     </v-toolbar>
     <v-container>
-      <select-topics-by-datatable />
+      <v-select
+        v-model="period"
+        :items="periodsSelectForm"
+        item-text="label"
+        item-value="key"
+        filled
+        persistent-hint
+        label="Selecciona un periodo"
+        dense
+      ></v-select>
     </v-container>
     <v-container>
+      <select-topics-by-datatable
+        @emitChangeSelectedTopics="topicsSelectedData = $event"
+      />
+    </v-container>
+    <v-container>
+      <div class="d-flex justify-end my-2">
+        <v-btn
+          small
+          :disabled="disabledButtonFetchRecord"
+          color="light-blue darken-3"
+          class="white--text mx-1 align-self-center"
+          @click="getHistoryStatisticsDataGraphApiAction"
+        > Cargar datos
+          <v-icon
+            right
+            dark
+            class="mr-1"
+          >
+            mdi-refresh
+          </v-icon>
+        </v-btn>
+      </div>
+    </v-container>
+    <v-container class="ma-0 pa-0">
       <graph-statistics-topics />
     </v-container>
   </v-card-text>
