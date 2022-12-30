@@ -4,6 +4,7 @@ import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
 import SetHistoryAnswersResolved from './SetHistoryAnswersResolved'
 import _ from 'lodash'
 import BlockActionsUser from './BlockActionsUser'
+import ProgressLinearStateTest from './components/progressLinearStateTest'
 
 export default {
   mixins: [SetHistoryAnswersResolved, BlockActionsUser],
@@ -13,7 +14,8 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
     CopyLabel,
-    QuestionnaireItem
+    QuestionnaireItem,
+    ProgressLinearStateTest
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
@@ -27,7 +29,9 @@ export default {
       isLastPage: false,
       isLoading: false,
       isDisabledCloseTest: false,
-      isLoadingCloseTest: false
+      isLoadingCloseTest: false,
+      numberQuestionsResolved: 0,
+      totalNumberQuestionsTest: 0
     }
   },
   computed: {
@@ -71,6 +75,12 @@ export default {
     getTotalNumberPages(response) {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },
+    setDataStatisticProgress(numberQuestionsResolved, totalNumberQuestionsTest) {
+      /* console.log(numberQuestionsResolved)
+      console.log(totalNumberQuestionsTest) */
+      this.numberQuestionsResolved = parseInt(numberQuestionsResolved)
+      this.totalNumberQuestionsTest = parseInt(totalNumberQuestionsTest)
+    },
     async fetchRecordData () {
       try {
         this.isLoading = true
@@ -85,8 +95,16 @@ export default {
             }
           }
         }).then((response) => {
+
+          const { test, number_of_questions_answered_of_test, total_questions_of_this_test } = response.data.meta
+
           this.totalNumberPages = this.getTotalNumberPages(response)
-          this.testData = response.data.meta.test
+          this.testData = test
+
+          this.setDataStatisticProgress(number_of_questions_answered_of_test, total_questions_of_this_test)
+          /* this.numberQuestionsResolved = parseInt(number_of_questions_answered_of_test)
+          this.totalNumberQuestionsTest = parseInt(total_questions_of_this_test) */
+          //this.$refs['progressLinearStateQuestionsTest'].calculateValueProgressQuestionsTest()
 
           if (response.data.meta.current_page === response.data.meta.last_page) {
             this.isLastPage = true
@@ -109,6 +127,15 @@ export default {
       this.$loadingApp.enableLoadingProgressLinear()
       this.isDisabledCloseTest = true
       this.isLoadingCloseTest = true
+      this.closeAndGradeTestApi()
+    },
+    verifyProgressTestAndConfirmGrade() {
+      /* if (this.numberQuestionsResolved >= this.totalNumberQuestionsTest) {
+        this.closeAndGradeTestApi()
+
+        return
+      } */
+
       this.closeAndGradeTestApi()
     },
     async closeAndGradeTestApi() {

@@ -14,7 +14,7 @@
         :width-limit-toolbar-title="420"
         title-text="Resolver test"
       />
-      <resource-divider-title-datatable :width-limit-title-divider="620"/>
+      <!-- <resource-divider-title-datatable :width-limit-title-divider="620"/>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
         <v-btn
@@ -31,9 +31,12 @@
             mdi-refresh
           </v-icon>
         </v-btn>
-      </div>
+      </div> -->
     </v-toolbar>
-
+    <progress-linear-state-test
+      :number-questions-resolved="numberQuestionsResolved"
+      :total-number-questions-test="totalNumberQuestionsTest"
+    />
     <v-card-text>
       <div v-if="ItemsQuestionsByTests && ItemsQuestionsByTests.length > 0">
         <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
@@ -52,6 +55,7 @@
                 :test-uuid="testData.id"
                 :index="index"
                 :question-with-answers="question"
+                @emitSaveAnswerAndUpdateProgressTest="setDataStatisticProgress($event.number_of_questions_answered_of_test, $event.total_questions_of_this_test)"
               />
             </v-col>
           </v-row>
@@ -76,6 +80,10 @@
           ></v-pagination>
         </v-container>
       </div>
+      <progress-linear-state-test
+        :number-questions-resolved="numberQuestionsResolved"
+        :total-number-questions-test="totalNumberQuestionsTest"
+      />
       <v-container v-if="(!ItemsQuestionsByTests || ItemsQuestionsByTests.length === 0) && !isLoading" class="d-flex justify-center">
         <p class="font-weight-black display-1">No ha sido posible generar una prueba con preguntas disponibles. Por favor, reporte este problema al correo oficial de la academia y intente crear otra prueba más tarde.</p>
       </v-container>

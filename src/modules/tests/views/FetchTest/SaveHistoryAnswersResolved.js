@@ -5,7 +5,7 @@ export default {
     ...mapActions('testsService', ['resolveQuestion']),
     async saveAnswerResolvedOfQuestion() {
       try {
-        await this.resolveQuestion({
+        const response = await this.resolveQuestion({
           data: {
             question_id: this.questionWithAnswers.id,
             test_id: this.testUuid,
@@ -13,6 +13,16 @@ export default {
           },
           config: {}
         })
+
+        const { number_of_questions_answered_of_test, total_questions_of_this_test } = response.data
+
+        /* this.numberQuestionsResolved = parseInt(response.data.number_of_questions_answered_of_test)
+        this.totalNumberQuestionsTest = parseInt(response.data.total_questions_of_this_test) */
+
+        this.$emit('emitSaveAnswerAndUpdateProgressTest', {
+          number_of_questions_answered_of_test, total_questions_of_this_test
+        })
+        //this.$refs['progressLinearStateQuestionsTest'].calculateValueProgressQuestionsTest()
 
       } catch (error) {
         console.log(error)
