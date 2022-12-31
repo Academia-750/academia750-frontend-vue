@@ -18,7 +18,18 @@ const state = () => ({
     total: 10
   },
   itemsDatatableQuestionsWrong: [],
-  stateLoadingItemsQuestionsWrong: false
+  stateLoadingItemsQuestionsWrong: false,
+
+  informationMetaTestsByPeriod: {
+    current_page: 1,
+    from: 1,
+    last_page: 1,
+    per_page: 10,
+    to: 10,
+    total: 10
+  },
+  itemsDatatableTestsByPeriod: [],
+  stateLoadingItemsTestsByPeriod: false
 })
 
 export default state

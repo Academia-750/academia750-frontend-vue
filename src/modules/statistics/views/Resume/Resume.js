@@ -1,4 +1,4 @@
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
@@ -29,6 +29,9 @@ export default {
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
+  },
+  mounted () {
+    this.SET_ITEMS_DATATABLE_QUESTIONS_WRONG([])
   },
   data () {
     return {
@@ -76,6 +79,7 @@ export default {
     } */
   },
   methods: {
+    ...mapMutations('statisticsService', ['SET_ITEMS_DATATABLE_QUESTIONS_WRONG']),
     ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph']),
     getHistoryStatisticsQuestionsFailedTests () {
       if (!this.topicSelectedForQueryQuestionsWrong) {

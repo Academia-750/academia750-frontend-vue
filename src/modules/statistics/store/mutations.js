@@ -16,5 +16,14 @@ export default {
   },
   SET_STATUS_LOADING_ITEMS_QUESTIONS_WRONG (state, payload) {
     state.stateLoadingItemsQuestionsWrong = payload
+  },
+  SET_INFORMATION_META_TESTS_BY_PERIOD(state, payload) {
+    state.informationMetaTestsByPeriod = payload
+  },
+  SET_ITEMS_DATATABLE_TESTS_BY_PERIOD (state, payload) {
+    state.itemsDatatableTestsByPeriod = payload
+  },
+  SET_STATUS_LOADING_ITEMS_TESTS_BY_PERIOD (state, payload) {
+    state.stateLoadingItemsTestsByPeriod = payload
   }
 }

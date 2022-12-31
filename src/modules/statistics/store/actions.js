@@ -75,7 +75,6 @@ const getHistoryStatisticsDataGraph = async (_, options) => {
 
 const mapItemsDatatableQuestionsWrongFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
-    console.log(record)
     const { question_wrong_id, test_wrong_id } = record
 
     return {
@@ -87,17 +86,6 @@ const mapItemsDatatableQuestionsWrongFromApi = (itemsApi) => {
       'finished-at': record.fecha_test
     }
   })
-}
-
-const mapMetaInformationPaginationQuestionsWrong = (response) => {
-  return {
-    current_page: response.data.meta.current_page,
-    from: response.data.meta.from,
-    last_page: response.data.meta.last_page,
-    per_page: response.data.meta.per_page,
-    to: response.data.meta.to,
-    total: response.data.meta.total
-  }
 }
 
 const getHistoryQuestionsWrongByTopic = async ({ commit }, options) => {
@@ -146,8 +134,81 @@ const getHistoryQuestionsWrongByTopic = async ({ commit }, options) => {
   }
 }
 
+const mapItemsDatatableTestsByPeriodFromApi = (itemsApi) => {
+  return itemsApi.map((record) => {
+
+    return {
+      id: record.id,
+      'created-at': record.attributes.created_at,
+      'test-questions-count': record.attributes.number_of_questions_generated
+    }
+  })
+}
+
+const getTestsByPeriodApi = async ({ commit }, options) => {
+  try {
+
+    commit('SET_INFORMATION_META_TESTS_BY_PERIOD', {
+      current_page: 1,
+      from: 1,
+      last_page: 1,
+      per_page: 10,
+      to: 10,
+      total: 10
+    })
+    commit('SET_STATUS_LOADING_ITEMS_TESTS_BY_PERIOD', true)
+
+    commit('SET_ITEMS_DATATABLE_TESTS_BY_PERIOD', [])
+
+    const response = await StatisticsRepository.getTestsByPeriod(options.period_key, options.config)
+
+    if (response) {
+      //console.trace(response)
+
+      commit('SET_ITEMS_DATATABLE_TESTS_BY_PERIOD', mapItemsDatatableTestsByPeriodFromApi(response.data.data))
+      commit('SET_STATUS_LOADING_ITEMS_TESTS_BY_PERIOD', false)
+      commit('SET_INFORMATION_META_TESTS_BY_PERIOD', mapMetaInformationPagination(response))
+
+    }
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+    commit('SET_INFORMATION_META_TESTS_BY_PERIOD', {
+      current_page: 1,
+      from: 1,
+      last_page: 1,
+      per_page: 10,
+      to: 10,
+      total: 10
+    })
+    commit('SET_STATUS_LOADING_ITEMS_TESTS_BY_PERIOD', true)
+
+    commit('SET_ITEMS_DATATABLE_TESTS_BY_PERIOD', [])
+
+    return Promise.reject(error)
+  }
+}
+
+const getQuestionsByTestAndTypeQuestion = async (_, options) => {
+  try {
+
+    const response = await StatisticsRepository.getQuestionsByTestAndTypeQuestion(options.test_id, options.type_question, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getHistoryTestsCompletedByStudent,
   getHistoryStatisticsDataGraph,
-  getHistoryQuestionsWrongByTopic
+  getHistoryQuestionsWrongByTopic,
+  getTestsByPeriodApi,
+  getQuestionsByTestAndTypeQuestion
 }
