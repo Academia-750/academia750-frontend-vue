@@ -56,7 +56,7 @@ export default {
       return {
         chart: {
           type: 'bar',
-          height: 350,
+          height: 350/* ,
           toolbar: {
             export: {
               csv: {
@@ -69,7 +69,7 @@ export default {
                 title: 'Descargar datos CSV' // Título del botón
               }
             }
-          }
+          } */
         },
         plotOptions: {
           bar: {
@@ -96,6 +96,13 @@ export default {
         },
         fill: {
           opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return parseInt(val)
+            }
+          }
         }
       }
     }

@@ -29,16 +29,6 @@ const MIXINS_ADDITIONAL = [
 
 export default {
   mixins: [...MIXINS_COMPONENT, ...MIXINS_ADDITIONAL],
-  props: {
-    singleSelectDatatable: {
-      type: Boolean,
-      default: false
-    },
-    titleTopDatatable: {
-      type: String,
-      required: true
-    }
-  },
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
   }

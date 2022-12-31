@@ -8,7 +8,7 @@ export default {
       this.searchFieldExecuted(value)
     },
     loadDatatatable() {
-      this.getTopics({
+      this.fetchTopicsAvailableInTestsOfStudent({
         params: this.buildQueryParamsRequest()
       })
     }

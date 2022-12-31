@@ -10,6 +10,7 @@
       filled
       outlined
       clearable
+      :disabled="isDisabled"
       @keyup.enter="emitSearchWord"
     >
       <template v-slot:append>
@@ -44,6 +45,10 @@ export default {
           'my-2': true
         }
       }
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     },
     labelTextField: {
       type: String,

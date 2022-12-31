@@ -38,5 +38,8 @@ export default {
   },
   downloadTemplateImport(config = {}) {
     return ResourceService.get(`${resource}/import/template`, config)
+  },
+  fetchTopicsAvailableInTestsOfStudent(config = {}) {
+    return ResourceService.get('users/student/tests/fetch/topics-available-in-tests', config)
   }
 }

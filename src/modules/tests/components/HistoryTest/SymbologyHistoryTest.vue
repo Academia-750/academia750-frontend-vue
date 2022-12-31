@@ -4,9 +4,9 @@
       <v-col
         cols="12"
         sm="12"
-        md="4"
-        lg="4"
-        xl="4"
+        md="3"
+        lg="3"
+        xl="3"
         class="d-flex justify-center align-center"
       >
         <v-sheet
@@ -20,9 +20,9 @@
       <v-col
         cols="12"
         sm="12"
-        md="4"
-        lg="4"
-        xl="4"
+        md="3"
+        lg="3"
+        xl="3"
         class="d-flex justify-center align-center"
       >
         <v-sheet
@@ -36,9 +36,9 @@
       <v-col
         cols="12"
         sm="12"
-        md="4"
-        lg="4"
-        xl="4"
+        md="3"
+        lg="3"
+        xl="3"
         class="d-flex justify-center align-center"
       >
         <v-sheet
@@ -48,6 +48,22 @@
           width="7%"
           color="green darken-1"
         ></v-sheet><span class="ml-1 font-weight-bold">Respuesta correcta</span>
+      </v-col>
+      <v-col
+        cols="12"
+        sm="12"
+        md="3"
+        lg="3"
+        xl="3"
+        class="d-flex justify-center align-center"
+      >
+        <v-sheet
+          class="rounded-circle transition-swing"
+          elevation="12"
+          height="20"
+          width="7%"
+          color="#D0B838"
+        ></v-sheet><span class="ml-1 font-weight-bold">Respuesta no respondida</span>
       </v-col>
     </v-row>
   </v-container>

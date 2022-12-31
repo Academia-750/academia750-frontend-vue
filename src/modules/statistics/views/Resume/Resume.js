@@ -7,6 +7,7 @@ import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import footerProps from './component/footerProps'
 import selectTopicsByDatatable from '../../components/selectTopicsByDatatable'
+import QuestionsWrongByTopic from '../../components/QuestionsWrongByTopic'
 import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
 
 export default {
@@ -23,7 +24,8 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
     selectTopicsByDatatable,
-    GraphStatisticsTopics
+    GraphStatisticsTopics,
+    QuestionsWrongByTopic
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
@@ -36,6 +38,7 @@ export default {
       arrayCountsQuestionsWrong: [],
       arrayCountsQuestionsUnanswered: [],
       categoriesTopics: [],
+      topicSelectedForQueryQuestionsWrong: null,
       periodsSelectForm: [
         { label: 'Total', key: 'total' },
         { label: 'Último mes', key: 'last-month' },
@@ -56,7 +59,14 @@ export default {
         })
       },
       deep: true
-    }/* ,
+    },
+    topicSelectedForQueryQuestionsWrong: {
+      handler () {
+        this.$refs['QuestionsWrongByTopic'].topic_id = this.topicSelectedForQueryQuestionsWrong?.id
+      },
+      deep: true
+    }
+    /* ,
     topicsSelectedData: {
       handler () {
         console.log('dsdioshgiusoiug')
@@ -67,6 +77,22 @@ export default {
   },
   methods: {
     ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph']),
+    getHistoryStatisticsQuestionsFailedTests () {
+      if (!this.topicSelectedForQueryQuestionsWrong) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, seleccione 1 tema',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      this.$refs['QuestionsWrongByTopic'].loadDatatatable()
+    },
     getHistoryStatisticsDataGraphApiAction () {
 
       if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length === 0) {
