@@ -4,11 +4,13 @@
     <v-progress-linear
       v-model="progressResolvedQuestionOfTest"
       color="light-green lighten-2"
-      height="25"
+      height="30"
       rounded
-      active
     >
-      <strong>{{ progressResolvedQuestionOfTest }}%</strong>
+      <template v-slot:default>
+        <strong>{{ progressResolvedQuestionOfTest }}%</strong>
+      </template>
+
     </v-progress-linear>
     <v-overlay absolute z-index="1" opacity="0">
       <!-- Contenido de la capa -->
@@ -85,3 +87,9 @@ export default {
   }
 }
 </script>
+
+<style scope>
+  .mode-normal-text-progress {
+    writing-mode: vertical-lr;
+  }
+</style>

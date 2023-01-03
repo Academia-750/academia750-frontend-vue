@@ -7,8 +7,6 @@
     <OurServices />
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
     <Testimonials />
-    <v-divider class="grey lighten-1 my-2"></v-divider>
-    <contact-us-form />
     <v-fab-transition>
       <v-btn
         class="my-5 mx-2"
@@ -24,7 +22,12 @@
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
+    <Tarifas />
+    <Nosotros/>
+    <Formulario/>
+    <Footer/>
   </div>
+ 
 </template>
 
 <script>
@@ -35,19 +38,25 @@ import DialogLogin from '../components/Login/DialogLogin'
 import OurServices from '../components/OurServices'
 import GroupsByLevel from '../components/GroupsByLevel'
 import Testimonials from '../components/Testimonials'
-import ContactUsForm from '../components/ContactUsForm'
-
+import Tarifas from '../components/Tarifas'
+import Nosotros from '../components/Nosotros'
+import Formulario from '../components/Formulario'
+import Footer from '../components/Footer'
 export default {
   name: 'HomeView',
   components: {
+    Tarifas,
+    Formulario,
+    Footer,
+    Nosotros,
     TopMenu,
     Menu,
     BannerMenu,
     DialogLogin,
     OurServices,
     GroupsByLevel,
-    Testimonials,
-    ContactUsForm
+    Testimonials
+    
   },
   data() {
     return {

@@ -11,7 +11,7 @@
       <v-img
         src="/images/academia750/img-nivel.png"
         contain
-        max-height="600"
+        width="100%"
         alt="Grupos por nivel"
       />
     </div>

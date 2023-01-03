@@ -7,7 +7,7 @@
       lg="10"
     >
       <div class="d-flex justify-center text-center mb-1">
-        <span class="text-h5 text-sm-h4 text-md-h3 text-lg-h3 text-xl-h3 font-weight-bold">
+        <span class="titulo_1">
           Descubre nuestros servicios
         </span>
       </div>

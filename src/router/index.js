@@ -15,7 +15,7 @@ Vue.use(Router)
 export const routes = [
   {
     path: '/',
-    redirect: { name: 'update-my-profile' }
+    redirect: { name: 'home-website' }
   },
   {
     path: '*',

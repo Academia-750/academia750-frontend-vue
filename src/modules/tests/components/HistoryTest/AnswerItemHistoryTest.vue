@@ -26,8 +26,8 @@ export default {
   },
   computed: {
     getClassAnswerBlock() {
-      if ( this.questionHistory.status_question === 'unanswered' ) {
-        return ''
+      if ( this.questionHistory.status_question === 'unanswered' && this.answerCorrect.id === this.answer.id ) {
+        return 'green darken-1 white--text'
       }
 
       if ( this.questionHistory.status_question === 'correct' && this.answerCorrect.id === this.answer.id) {

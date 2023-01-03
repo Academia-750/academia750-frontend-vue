@@ -16,8 +16,8 @@
         :alt="titleService"
       />
     </div>
-    <h2 class="font-weight-bold text-center text-subtitle-2 text-sm-h6 text-md-h6 text-lg-h6 text-xl-h6">{{ titleService }}</h2>
-    <p class="text-center text-caption">{{ descriptionService }}</p>
+    <h2 class="titulo_2  text-center">{{ titleService }}</h2>
+    <p class=" text-center">{{ descriptionService }}</p>
   </v-col>
 </template>
 

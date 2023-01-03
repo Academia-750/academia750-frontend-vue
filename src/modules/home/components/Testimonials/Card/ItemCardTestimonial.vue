@@ -30,7 +30,7 @@
           lg="9"
           xl="9"
         >
-          <p class="title font-weight-bold ma-0 pa-0 ml-1">{{ namePerson }}</p>
+          <h2 class="nombre_persona">{{ namePerson }}</h2>
           <v-rating
             :value="5"
             color="amber accent-2"
@@ -44,9 +44,9 @@
     </v-container>
 
     <v-card-text class="my-2 py-0">
-      <div class="font-weight-bold text-subtitle-1">
+      <p class="contenido_testimonio">
         {{ testimonialPerson }}
-      </div>
+      </p>
 
     </v-card-text>
   </v-card>
@@ -78,7 +78,7 @@ export default {
   }),
   computed: {
     widthCardResponsive () {
-      if (this.$vuetify.breakpoint.width < 490) {
+      if (this.$vuetify.breakpoint.width < 400) {
         return 270
       }
 
@@ -91,5 +91,15 @@ export default {
 <style scoped>
   .card-item-testimonial {
     min-height: 420px !important;
+  }
+  .nombre_persona{
+  
+    font-size: 20px;
+    font-family: var(--fuente_uno);
+    color: #000;
+
+  }
+  .contenido_testimonio{
+    color: #000;
   }
 </style>

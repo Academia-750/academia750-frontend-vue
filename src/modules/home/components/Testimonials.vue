@@ -1,5 +1,6 @@
 <template>
   <div class="section-testimonials">
+    <v-container>
     <v-row dense>
       <v-col
         cols="12"
@@ -9,7 +10,8 @@
         xl="12"
       >
         <v-container class="d-flex justify-center text-center pt-5">
-          <p class="font-weight-black text-center text-h5 text-sm-h4 text-md-h3 text-lg-h3 text-xl-h3 white--text">Opinión de nuestros alumnos</p>
+          <p class="titulo_1 white--text">Opinión de nuestros alumnos</p>
+
         </v-container>
       </v-col>
       <v-col
@@ -61,6 +63,7 @@
         </v-container>
       </v-col>
     </v-row>
+  </v-container>
   </div>
 </template>
 
@@ -79,16 +82,25 @@ export default {
 </script>
 
 <style scoped>
-  .section-testimonials {
-    width: 100% !important;
+.section-testimonials{
+  position: relative;
+}
+  .section-testimonials::before {
+    content: '';
     background: rgb(71, 162, 188);
-    background: linear-gradient(
-      178deg,
-      rgba(71, 162, 188, 1) 0%,
-      rgba(75, 163, 188, 1) 100%
-    );
-    margin-bottom: 10px 0px;
+    background: linear-gradient( 178deg, rgba(71, 162, 188, 1) 0%, rgba(75, 163, 188, 1) 100% );
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 332px;
+    z-index: 0;
+  }
+  .section-testimonials .titulo_1{
+    z-index: 1;
+  }
+  .section-testimonials > .container{
     border-bottom: 1px solid #e3e1e1;
+    margin: 80px auto;
   }
 
 </style>

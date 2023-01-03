@@ -51,21 +51,8 @@ const handleErrorResponse = (error) => {
 
     /* console.log('Error en el ProfileAuthService') */
     store.commit('profileService/set_user', null)
-    /* activateError({
-      status: 500,
-      message: 'No hay autorizacion previa para el proceso'
-    }) */
-    //window.location.href = process.env.VUE_APP_BASE_URL_HOME
-    if (router.currentRoute.name !== 'home-website') {
-      /* Vue.swal.fire({
-        icon: 'error',
-        toast: true,
-        title: 'Tu sesión ha expirado. Vuelve a iniciar sesión.',
-        timer: 10000
-      }) */
 
-      configLogoutMethods.redirectToHomePageAfterLogout()
-    }
+    configLogoutMethods.redirectToHomePageAfterLogout()
 
     return Promise.reject(error)
   }

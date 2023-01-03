@@ -80,10 +80,10 @@
           ></v-pagination>
         </v-container>
       </div>
-      <progress-linear-state-test
+      <!-- <progress-linear-state-test
         :number-questions-resolved="numberQuestionsResolved"
         :total-number-questions-test="totalNumberQuestionsTest"
-      />
+      /> -->
       <v-container v-if="(!ItemsQuestionsByTests || ItemsQuestionsByTests.length === 0) && !isLoading" class="d-flex justify-center">
         <p class="font-weight-black display-1">No ha sido posible generar una prueba con preguntas disponibles. Por favor, reporte este problema al correo oficial de la academia y intente crear otra prueba más tarde.</p>
       </v-container>

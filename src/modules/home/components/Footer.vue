@@ -1,0 +1,108 @@
+<template>
+  <div class="estilo_footer">
+    <v-container>
+      <v-row align="center">
+        <v-col lg="3"  cols="12">
+          <FooterUno />
+        </v-col>
+        <v-col lg="9" cols="12">
+          <v-row align="start">
+            <v-col lg="4" cols="12">
+          <h2>Academia 750</h2>
+          <div class="linea_footer"></div>
+          <div>
+            <FooterDos :itemsFooter="FooterMenu" />
+          </div>
+        </v-col>
+        <v-col lg="4" md="6" cols="12">
+            <h2>Contáctanos</h2>
+            <div class="linea_footer"></div>
+          <div>
+            <ul class="lista_footer mt-2">
+           
+                <FooterTres icoContacto="mdi-map-marker" itemsContacto="Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante"  />
+                <FooterTres icoContacto="mdi-phone" itemsContacto="+34663261014"  />
+                <FooterTres icoContacto="mdi-email" itemsContacto=" info@academia750.com"  />
+           
+            </ul>
+            
+          </div>
+        </v-col>
+        <v-col lg="4" md="6" cols="12">
+            <h2>Siguenos</h2>
+            <div class="linea_footer"></div>
+            <div class="mt-2">
+                <FooterRedes linkRedesFooter="https://www.facebook.com/AcademiaBomberos750/" icoRedesFooter="mdi-facebook"/>
+                <FooterRedes linkRedesFooter="https://www.instagram.com/academia.750/" icoRedesFooter="mdi-instagram"/>
+            </div>
+            <div class="mt-3">
+                <a href="#" class="acceso_estilo" dark>
+                    Acceso <v-img src="/images/academia750/logo-login.svg" width="49px"></v-img>
+                </a>
+            </div>
+        </v-col>
+          </v-row>
+        </v-col>
+        
+      </v-row>
+    </v-container>
+  </div>
+</template>
+<script>
+import FooterUno from './Footer/FooterUno'
+import FooterDos from './Footer/FooterDos'
+import FooterTres from './Footer/FooterTres'
+import FooterRedes from './Footer/FooterRedes'
+export default {
+  name: 'Footer',
+  components: {
+    FooterUno,
+    FooterDos,
+    FooterRedes,
+    FooterTres
+  },
+  data() {
+    return {
+      FooterMenu: ['Inicio', 'Qué ofrecemos', 'Tarifas', 'Contáctanos'],
+      Contactanos : ['Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante' , '+34663261014' , 'info@academia750.com']
+    }
+  }
+}
+</script>
+<style>
+
+.estilo_footer {
+  background-color: #202020;
+  color: #fff;
+}
+.estilo_footer ul{
+    list-style: none;
+    padding-left: 0px!important;
+}
+.estilo_footer h2{
+    font-size: 16px;
+    font-family: var(--fuente_cuatro);
+   
+}
+.linea_footer {
+    height: 1px;
+    width: 150px;
+    background-color: #fff;
+}
+.acceso_estilo{
+    display: flex;
+    align-items: center;
+    font-family: var(--fuente_uno) !important;
+    color: #fff!important;
+    text-decoration: none!important;
+}
+.acceso_estilo .v-image__image , .acceso_estilo  .v-responsive__sizer{
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+}
+.acceso_estilo  .v-responsive__sizer{
+    padding-bottom: 0px!important;
+}
+
+</style>

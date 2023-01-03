@@ -13,7 +13,7 @@ import questionsTopic from '@/modules/questionsTopic'
 import questionsSubtopic from '@/modules/questionsSubtopic'
 import imports from '@/modules/imports'
 import tests from '@/modules/tests'
-/* import home from '@/modules/home' */
+import home from '@/modules/home'
 import statistics from '@/modules/statistics'
 
 registerModules({
@@ -31,6 +31,6 @@ registerModules({
   questionsSubtopic,
   tests,
   imports,
-  /* home, */
+  home,
   statistics
 })

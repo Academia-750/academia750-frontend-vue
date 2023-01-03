@@ -1,7 +1,13 @@
 <template>
   <div>
     <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getIndexQuestion.index }}. - <span class="font-weight-black">{{ questionWithAnswers?.attributes['question-text'] }}</span></p>
-    <answers-radio-buttons-questionnaire
+    <!-- <answers-radio-buttons-questionnaire
+      :ref="`answers-group-question-${questionWithAnswers.id}`"
+      :answers="getAnswersOfQuestion"
+      :question-uuid="questionWithAnswers.id"
+      @changeSelectedAnswer="changeSelectionAnswerResolvedInQuestion"
+    /> -->
+    <answers-list-solve-action-questionnaire
       :ref="`answers-group-question-${questionWithAnswers.id}`"
       :answers="getAnswersOfQuestion"
       :question-uuid="questionWithAnswers.id"
@@ -23,7 +29,8 @@
 </template>
 
 <script>
-import AnswersRadioButtonsQuestionnaire from './AnswersRadioButtonsQuestionnaire'
+//import AnswersRadioButtonsQuestionnaire from './AnswersRadioButtonsQuestionnaire'
+import AnswersListSolveActionQuestionnaire from './AnswersListSolveActionQuestionnaire'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import SetHistoryAnswersResolved from '../../views/FetchTest/SetHistoryAnswersResolved'
 import SaveHistoryAnswersResolved from '../../views/FetchTest/SaveHistoryAnswersResolved'
@@ -32,7 +39,8 @@ import _ from 'lodash'
 export default {
   name: 'ItemQuestionnaire',
   components: {
-    AnswersRadioButtonsQuestionnaire
+    //AnswersRadioButtonsQuestionnaire
+    AnswersListSolveActionQuestionnaire
   },
   mixins: [SetHistoryAnswersResolved, SaveHistoryAnswersResolved],
   props: {

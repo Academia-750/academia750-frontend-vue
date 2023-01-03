@@ -1,27 +1,31 @@
 <template>
   <v-container class="ma-0 pa-0">
-    <v-row
-      class="bg-image ma-0 pa-0"
+    <div
+      class="bg-image estilo_banner ma-0 pa-0"
       align="center"
       justify="center"
       fluid
     >
-      <v-col cols="12" :class="sectionSmAndDownBrakpoint">
+    <v-container>
+      <v-row align="center" justify="end"  class="contenido_banner">
+      <v-col cols="5" :class="sectionSmAndDownBrakpoint">
         <div class="mr-4">
-          <div :class="manageClassResponsiveWrapperBanner">
-            <span :class="manageClassResponsiveTitle" class="font-weight-black">Academia de Bomberos 750</span>
+          <div :class="manageClassResponsiveWrapperBanner" class="text-start">
+            <span class="font-weight-black titulo_banner">Academia de Bomberos 750</span>
           </div>
-          <div :class="manageClassResponsiveWrapperBanner">
-            <div :class="manageClassResponsiveSubtitle" class="width-subtitle-banner">
-              <span>Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición</span>
+          <div :class="manageClassResponsiveWrapperBanner" class="text-start">
+            <div  class="width-subtitle-banner">
+              <span class="texto_banner">Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición</span>
             </div>
           </div>
-          <div :class="manageClassResponsiveWrapperBanner" class="mt-2">
+          <div :class="manageClassResponsiveWrapperBanner" class="mt-2 boton_banner">
             <button-go-to-register-contact-us @executeRegisterContactUs="$emit('executeRegisterContactUs')"/>
           </div>
         </div>
       </v-col>
     </v-row>
+    </v-container>
+    </div>
   </v-container>
 </template>
 
@@ -75,9 +79,39 @@ export default {
   width: 100vw !important;
   background-position: center;
   background-size: cover;
+  mix-blend-mode: multiply;
 }
 
 .width-subtitle-banner {
   width: 75% !important;
 }
+.titulo_banner{
+  font-size: 64px!important;
+  line-height: 64px!important;
+  font-family: var(--fuente_cuatro)!important;
+  color: #fff;
+}
+.contenido_banner{
+  height: 100vh;
+}
+.texto_banner{
+  color: #fff !important;
+  font-size: 20px !important;
+  font-family: var(--fuente_uno)!important;
+
+}
+.boton_banner > button{
+    background: rgb(42, 153, 186);
+    background: linear-gradient( 98deg, rgba(42, 153, 186, 1) 0%, rgba(117, 189, 210, 1) 100% );
+    border: none !important;
+    border-radius: 20px;
+    font-family: var(--fuente_cuatro);
+    font-size: 18px !important;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff !important;
+}
+
 </style>

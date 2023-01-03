@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0 menu_estilo">
     <v-app-bar :bottom="!isFixedMenu" :fixed="isFixedMenu" elevate-on-scroll>
       <v-app-bar-nav-icon
         class="d-flex d-sm-flex d-md-none"
@@ -41,7 +41,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </v-container>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
@@ -97,3 +97,15 @@ export default {
   }
 }
 </script>
+<style>
+@media(min-width:1025px){
+  .menu_estilo header > .v-toolbar__content{
+    max-width: 1320px!important;
+    margin: auto;
+  }
+  header{
+    background: #f2f5f8!important;
+  }
+}
+
+</style> 

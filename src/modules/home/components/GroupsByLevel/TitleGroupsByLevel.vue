@@ -1,5 +1,5 @@
 <template>
-  <p class="font-weight-black text-center text-h6 text-sm-h4 text-md-h3 text-lg-h3 text-xl-h3 mb-4">{{ title }}</p>
+  <h2 class="titulo_1">{{ title }}</h2>
 </template>
 
 <script>
