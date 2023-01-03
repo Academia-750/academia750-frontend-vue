@@ -3,10 +3,13 @@ import AuthService from '@/services/AuthService'
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
 
+import configLogoutMethods from './configLogout'
+
 export default {
   methods: {
     ...mapMutations('profileService', ['set_user']),
     ...mapActions('loginService', ['logout']),
+    ...configLogoutMethods,
     async logoutAccount () {
       try {
 
@@ -25,12 +28,12 @@ export default {
         this.$manageTokenAuth.$remove_token_auth()
         this.set_user(null)
 
-        this.$swal.fire({
+        /* this.$swal.fire({
           icon: 'success',
           toast: true,
           title: '¡Nos vemos pronto!',
           timer: 3000
-        })
+        }) */
 
         AuthService.defaults.headers.common['Authorization'] = null
         ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = null
@@ -38,28 +41,26 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
 
         //window.location.href = process.env.VUE_APP_BASE_URL_HOME
-        if (this.$router.currentRoute.name !== 'home-website') {
+        this.redirectToHomePageAfterLogout()
+        /* if (this.$router.currentRoute.name !== 'home-website') {
           this.$router.push({
             name: 'home-website'
           })
-        }
+        } */
 
       } catch (error) {
         console.log(error)
         this.$manageTokenAuth.$remove_token_auth()
         this.$loadingApp.disabledLoadingProgressLinear()
         //window.location.href = process.env.VUE_APP_BASE_URL_HOME
-        if (this.$router.currentRoute.name !== 'home-website') {
-          this.$router.push({
-            name: 'home-website'
-          })
-        }
-        this.$swal.fire({
+        this.redirectToHomePageAfterLogout()
+
+        /* this.$swal.fire({
           icon: 'warning',
           toast: true,
           title: 'Ha ocurrido un error. Su sesión ha sido cerrada forzozamente',
           timer: 3000
-        })
+        }) */
       }
     }
   }

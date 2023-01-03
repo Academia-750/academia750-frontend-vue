@@ -22,7 +22,7 @@ export default {
           position: 4,
           text: 'Estado de carga',
           align: 'center',
-          sortable: true,
+          sortable: false,
           value: 'has-errors',
           show: true
         },

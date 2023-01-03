@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
-const DOMAIN_APP_DEVELOPMENT = process.env.VUE_APP_BASE_URL_DOMAIN_DEVELOPMENT
-const DOMAIN_APP_PRODUCTION = process.env.VUE_APP_BASE_URL_DOMAIN_PRODUCTION
+const DOMAIN_APP_DEVELOPMENT = process.env.VUE_APP_BASE_URL_DOMAIN_FOR_COOKIES_DEVELOPMENT
+const DOMAIN_APP_PRODUCTION = process.env.VUE_APP_BASE_URL_DOMAIN_FOR_COOKIES_PRODUCTION
 
 const optionsCookieAuth = {
   expires: 1,

@@ -1,7 +1,9 @@
 import { mapMutations, mapActions } from 'vuex'
+import configLogoutMethods from '@/modules/auth/login/resources/configLogout'
 
 export default {
   methods: {
+    ...configLogoutMethods,
     ...mapMutations('errorsService', ['set_response_error']),
     ...mapActions('loginService', ['login', 'checkPreviousSessionAction']),
     ...mapActions('profileService', ['getDataMyProfileAction']),

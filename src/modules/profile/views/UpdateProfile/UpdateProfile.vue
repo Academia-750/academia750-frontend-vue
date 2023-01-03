@@ -6,12 +6,12 @@
         <span class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6">Perfil de usuario</span>
       </v-toolbar-title>
 
-      <!-- <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
       <v-btn
-        color="teal darken-2"
+        color="red darken-1"
         class="white--text"
-        title="Cargar nuevamente mis datos"
+        title="cancelar"
         @click="loadDataUserProfile"
       >
         <v-icon
@@ -19,10 +19,10 @@
           dark
           class="mx-1"
         >
-          mdi-reload
+          mdi-close-circle
         </v-icon>
-        <span class="d-none d-sm-inline">Cargar</span>
-      </v-btn> -->
+        <span class="d-none d-sm-inline">Cancelar</span>
+      </v-btn>
     </v-toolbar>
     <validation-observer ref="FormUpdateMyProfile" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">

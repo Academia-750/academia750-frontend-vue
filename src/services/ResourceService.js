@@ -6,6 +6,7 @@ import store from '@/store'
 import router from '@/router'
 import Vue from 'vue'
 import { $disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
+import configLogoutMethods from '@/modules/auth/login/resources/configLogout'
 
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
 const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
@@ -55,15 +56,14 @@ const handleErrorResponse = (error) => {
     }) */
 
     if (router.currentRoute.name !== 'home-website') {
-      Vue.swal.fire({
+      /* Vue.swal.fire({
         icon: 'error',
         toast: true,
         title: 'Tu sesión ha expirado. Vuelve a iniciar sesión.',
         timer: 10000
-      })
-      router.push({
-        name: 'home-website'
-      })
+      }) */
+
+      configLogoutMethods.redirectToHomePageAfterLogout()
     }
 
     return Promise.reject(error)

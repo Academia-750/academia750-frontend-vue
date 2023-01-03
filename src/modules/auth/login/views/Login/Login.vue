@@ -4,7 +4,7 @@
       <div class="d-flex justify-center">
         <span
           style="cursor: pointer;"
-          @click="redirectToPageHomeProduction"
+          @click="redirectToHomePageAfterLogout"
         >
           <v-img
             class="align-self-center"
@@ -16,7 +16,7 @@
         <span
           class="font-weight-bold text-xs-caption text-sm-h5 align-self-center"
           style="cursor: pointer;"
-          @click="redirectToPageHomeProduction"
+          @click="redirectToHomePageAfterLogout"
         >{{ product.name }}</span>
       </div>
       <v-card-title class="justify-center mb-2 text-xs-caption text-sm-h6">

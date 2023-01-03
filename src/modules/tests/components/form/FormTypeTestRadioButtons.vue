@@ -10,7 +10,6 @@
   >
     <v-radio-group
       v-model="typeTest"
-      active-class="blue lighten-4"
       :error-messages="errors"
       :disabled="isDisabled"
       row
