@@ -1,11 +1,12 @@
 import Vue from 'vue'
-//import { required, email, max, min, confirmed, dimensions, size, mimes } from 'vee-validate/dist/rules'
+import { required, email, max, min, confirmed, dimensions, size, mimes } from 'vee-validate/dist/rules'
 import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate'
 /* import errorsValidation from '@/components/errors/ErrorsValidationForm'
 import errorsValidationImportData from '@/components/errors/ErrorsValidationImportData' */
 import * as rules from 'vee-validate/dist/rules'
 import en from 'vee-validate/dist/locale/en.json'
-import es from 'vee-validate/dist/locale/es.json'
+//import es from 'vee-validate/dist/locale/es.json'
+import es from '@/translations/Vee-Validate/es.json'
 import VueI18n from '@/plugins/vue-i18n'
 
 // Install English and Spanish locales.

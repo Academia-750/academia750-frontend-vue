@@ -1,0 +1,33 @@
+{
+  "code": "es",
+  "messages": {
+    "alpha": "{_field_} solo debe contener letras",
+    "alpha_dash": "{_field_} solo debe contener letras, números y guiones",
+    "alpha_num": "{_field_} solo debe contener letras y números",
+    "alpha_spaces": "{_field_} solo debe contener letras y espacios",
+    "between": "{_field_} debe estar entre {min} y {max}",
+    "confirmed": "{_field_} no coincide",
+    "digits": "{_field_} debe ser numérico y contener exactamente {length} dígitos",
+    "dimensions": "{_field_} debe ser de {width} píxeles por {height} píxeles",
+    "email": "{_field_} debe ser un correo electrónico válido",
+    "excluded": "{_field_} debe ser un valor válido",
+    "ext": "{_field_} debe ser un archivo válido",
+    "image": "{_field_} debe ser una imagen",
+    "oneOf": "{_field_} debe ser un valor válido",
+    "integer": "{_field_} debe ser un entero",
+    "length": "El largo del campo {_field_} debe ser {length}",
+    "max": "{_field_} no debe ser mayor a {length} caracteres",
+    "max_value": "{_field_} debe de ser {max} o menor",
+    "mimes": "{_field_} debe ser un tipo de archivo válido",
+    "min": "{_field_} debe tener al menos {length} caracteres",
+    "min_value": "{_field_} debe ser {min} o superior",
+    "numeric": "{_field_} debe contener solo caracteres numéricos",
+    "regex": "El formato del campo {_field_} no es válido",
+    "required": "Ingrese {_field_}",
+    "required_if": "Ingrese {_field_} ",
+    "size": "{_field_} debe ser menor a {size}KB",
+    "double": "{_field_} debe ser un decimal válido",
+    "is": "{_field_} no coincide con {other}",
+    "is_not": "{_field_} debe ser diferente a {other}"
+  }
+}

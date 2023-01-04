@@ -86,6 +86,7 @@ export default {
       this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
 
       this.$refs['ContactUsFormComponent'].form.reason = 'reset-password'
+      this.$refs['ContactUsFormComponent'].form.message = 'He olvidado mi contraseña'
     }
   }
 

@@ -47,9 +47,19 @@
                   ico-redes-footer="mdi-instagram"
                 />
               </div>
-              <div class="mt-3">
-                <v-btn @click="$emit('emitShowLoginDialog')">
+              <div class="mt-1">
+                <v-btn small text dark @click="$emit('emitShowLoginDialog')">
                   <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
+                </v-btn>
+              </div>
+              <div class="mt-1">
+                <v-btn small text dark>
+                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Términos y condiciones</span>
+                </v-btn>
+              </div>
+              <div class="mt-1">
+                <v-btn small text dark>
+                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Política de privacidad</span>
                 </v-btn>
               </div>
             </v-col>

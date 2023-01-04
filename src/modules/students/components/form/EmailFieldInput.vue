@@ -3,7 +3,7 @@
     v-slot="{ errors }"
     vid="email"
     mode="aggressive"
-    name="Correo electrónico"
+    name="Email"
     :rules="rules"
   >
     <v-text-field
@@ -12,7 +12,7 @@
       :error-messages="errors"
       :disabled="isDisabled"
       filled
-      label="Correo electrónico"
+      label="Email"
       required
       clearable
       @keyup.enter="$emit('submitForm')"

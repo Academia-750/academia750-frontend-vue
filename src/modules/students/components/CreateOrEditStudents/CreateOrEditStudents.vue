@@ -5,6 +5,23 @@
         <v-icon large class="mx-1">mdi-account-circle</v-icon>
         <span class="font-weight-bold text-xs-caption text-sm-h6">{{ getTitleByUserDataForUpdateOrCreate }}</span>
       </div>
+      <v-spacer></v-spacer>
+
+      <v-btn
+        color="red darken-1"
+        class="white--text"
+        title="cancelar"
+        disabled
+      >
+        <v-icon
+          right
+          dark
+          class="mx-1"
+        >
+          mdi-close-circle
+        </v-icon>
+        <span class="d-none d-sm-inline">Revertir modificaciones</span>
+      </v-btn>
     </v-toolbar>
     <validation-observer ref="FormCreateOrEditStudent" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">
