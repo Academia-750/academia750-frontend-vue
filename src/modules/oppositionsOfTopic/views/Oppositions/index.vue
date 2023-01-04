@@ -32,7 +32,7 @@
           class="indigo lighten-5 my-2"
           outlined
         >
-          <resource-button-go-back-router/>
+          <resource-button-go-back-router :path-route-go-back="{ name: 'manage-topics' }"/>
           <resource-title-toolbar-datatable title-text="Gestion de Oposiciones de un tema" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>

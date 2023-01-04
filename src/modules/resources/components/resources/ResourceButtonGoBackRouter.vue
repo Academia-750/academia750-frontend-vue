@@ -32,7 +32,7 @@ export default {
   methods: {
     goBackRouter () {
       if (this.pathRouteGoBack) {
-        this.router.push(this.pathRouteGoBack)
+        this.$router.push(this.pathRouteGoBack)
 
         return
       }

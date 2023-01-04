@@ -27,7 +27,7 @@ const moduleRoute = [
   {
     path: '/',
     component: Module,
-    redirect: { name: 'manage-subtopics-of-topic' },
+    redirect: { name: 'manage-oppositions-of-topic' },
     children: [
       {
         path: '/topics',

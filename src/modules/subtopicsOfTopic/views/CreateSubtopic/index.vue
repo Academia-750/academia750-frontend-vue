@@ -10,7 +10,7 @@
       :can-rendering-header="true"
     />
     <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-      <resource-button-go-back-router :width-number-limit="300" />
+      <resource-button-go-back-router :width-number-limit="300" :path-route-go-back="{ name: 'manage-subtopics-of-topic' }" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Crear subtema"

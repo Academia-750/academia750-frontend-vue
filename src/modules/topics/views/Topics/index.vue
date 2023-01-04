@@ -67,7 +67,7 @@
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
+          <!-- <resource-button-go-back-router /> -->
           <resource-title-toolbar-datatable title-text="Gestión de temas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>

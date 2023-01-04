@@ -15,7 +15,7 @@
       class="indigo lighten-5 my-2"
       outlined
     >
-      <resource-button-go-back-router :width-number-limit="325"/>
+      <resource-button-go-back-router :width-number-limit="325" :path-route-go-back="{ name: 'manage-oppositions-of-topic' }"/>
       <resource-title-toolbar-datatable :width-limit-toolbar-title="620" title-text="Actualizar subtemas de la Oposición" />
     </v-toolbar>
     <v-card-text class="ma-0 pa-0">

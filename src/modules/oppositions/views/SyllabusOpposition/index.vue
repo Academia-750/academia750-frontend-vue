@@ -14,7 +14,7 @@
       class="indigo lighten-5 my-2"
       outlined
     >
-      <resource-button-go-back-router :width-number-limit="325"/>
+      <resource-button-go-back-router :width-number-limit="325" :path-route-go-back="{ name: 'manage-oppositions' }"/>
       <resource-title-toolbar-datatable :width-limit-toolbar-title="620" title-text="Temario" />
       <resource-divider-title-datatable :width-limit-title-divider="620"/>
       <v-spacer></v-spacer>

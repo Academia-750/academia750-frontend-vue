@@ -29,9 +29,9 @@
           class="indigo lighten-5 my-2"
           outlined
         >
-          <resource-button-go-back-router/>
+          <!-- <resource-button-go-back-router/> -->
           <resource-title-toolbar-datatable :title-text="getTitleByStateAccount" />
-          <resource-divider-title-datatable />
+          <!-- <resource-divider-title-datatable /> -->
           <!-- <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <v-btn

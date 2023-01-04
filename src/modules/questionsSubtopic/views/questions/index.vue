@@ -29,7 +29,7 @@
         />
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
+          <resource-button-go-back-router :path-route-go-back="{ name: 'manage-subtopics-of-topic' }"/>
           <resource-title-toolbar-datatable title-text="Gestión de preguntas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
