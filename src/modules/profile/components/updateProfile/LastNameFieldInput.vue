@@ -9,16 +9,16 @@
     <v-text-field
       ref="last-name-field"
       v-model="last_name"
-      :counter="25"
       :error-messages="errors"
       :disabled="isDisabled"
-      filled
+      :filled="isFilled"
+      :solo="isSolo"
       label="Apellidos"
       required
       clearable
       @keyup.enter="$emit('submitForm')"
     >
-      <template v-slot:prepend>
+      <template v-if="hasPrependIcon" v-slot:prepend>
         <v-icon class="d-none d-sm-none d-md-block">
           mdi-account
         </v-icon>
@@ -38,6 +38,18 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    isFilled: {
+      type: Boolean,
+      default: true
+    },
+    isSolo: {
+      type: Boolean,
+      default: false
+    },
+    hasPrependIcon: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

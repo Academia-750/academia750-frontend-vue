@@ -18,8 +18,8 @@
           title="Avanzado"
           :items-level="advancedLevelItems"
         />
-        
-        <button-go-to-register-contact-us @executeRegisterContactUs="$emit('executeRegisterContactUs')" class="boton-1" />
+
+        <button-go-to-register-contact-us class="boton-1" @executeRegisterContactUs="$emit('executeRegisterContactUs')" />
       </v-col>
     </v-row>
   </v-container>

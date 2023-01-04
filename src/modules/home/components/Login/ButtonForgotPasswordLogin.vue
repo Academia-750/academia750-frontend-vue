@@ -5,6 +5,7 @@
       small
       dark
       :color="colorButton"
+      @click="$emit('scrollToResetPasswordSection')"
     >
       {{ textButton }}
     </v-btn>

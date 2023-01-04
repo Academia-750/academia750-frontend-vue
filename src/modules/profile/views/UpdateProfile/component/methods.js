@@ -42,12 +42,15 @@ export default {
         this.$refs['FormUpdateMyProfile']['reset']()
       })
 
+      this.loadingButtonUpdateProfile = false
+      this.disabledButtonUpdateProfile = false
+
       return true
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormUpdateMyProfile']['setErrors'](errorResponse)
-      this.loadingButtonUpdateProfile = true
-      this.disabledButtonUpdateProfile = true
+      this.loadingButtonUpdateProfile = false
+      this.disabledButtonUpdateProfile = false
       this.$loadingApp.disabledLoadingProgressLinear()
     },
     loadDataUserProfile () {

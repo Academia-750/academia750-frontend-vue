@@ -1,10 +1,12 @@
 <template>
   <div class="ma-0 pa-0 overflow-hidden">
     <TopMenu />
-    <Menu @emitShowLoginDialog="showDialogLoginAction" />
+    <Menu @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister"/>
-    <DialogLogin ref="DialogLoginForm" />
-    <OurServices />
+    <DialogLogin ref="DialogLoginForm" @scrollToResetPasswordSection="scrollToResetPasswordSection" />
+    <div ref="OurServiceSection">
+      <OurServices />
+    </div>
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
     <Testimonials />
     <v-fab-transition>
@@ -22,12 +24,16 @@
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
-    <Tarifas />
-    <Nosotros/>
-    <Formulario/>
-    <Footer/>
+    <div ref="tarifasSection">
+      <Tarifas />
+    </div>
+    <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
+    <div ref="ContactUsForm">
+      <Formulario ref="ContactUsFormComponent"/>
+    </div>
+    <Footer @emitShowLoginDialog="showDialogLoginAction"/>
   </div>
- 
+
 </template>
 
 <script>
@@ -56,14 +62,13 @@ export default {
     OurServices,
     GroupsByLevel,
     Testimonials
-    
+
   },
   data() {
     return {
     }
   },
   mounted () {
-
   },
   methods: {
     showDialogLoginAction () {
@@ -71,6 +76,16 @@ export default {
     },
     scrollToContactUsFormForRegister () {
       //this.$refs['GroupsByLevelComponent'].scrollIntoViewContainerGroupLevel()
+    },
+    scrollToSectionOfHomePage ($refElement) {
+      this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    },
+    scrollToResetPasswordSection () {
+      this.$refs['DialogLoginForm'].showDialogLogin = false
+
+      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+      this.$refs['ContactUsFormComponent'].form.reason = 'reset-password'
     }
   }
 

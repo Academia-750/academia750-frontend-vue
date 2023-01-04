@@ -7,7 +7,7 @@
       ></v-app-bar-nav-icon>
       <logo-menu />
       <v-spacer></v-spacer>
-      <links-menu />
+      <links-menu @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"/>
       <v-spacer></v-spacer>
       <v-btn @click="executeLoginAccountAction">
         <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
@@ -108,4 +108,4 @@ export default {
   }
 }
 
-</style> 
+</style>

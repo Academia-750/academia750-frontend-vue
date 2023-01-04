@@ -9,7 +9,6 @@
     <v-text-field
       ref="name-person-field"
       v-model="name_person"
-      :counter="25"
       :error-messages="errors"
       :disabled="isDisabled"
       label="Nombre"

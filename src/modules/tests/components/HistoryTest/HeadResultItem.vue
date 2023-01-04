@@ -1,10 +1,9 @@
 <template>
   <v-sheet
-    elevation="12"
-    class="mx-auto d-flex justify-center align-center"
-    height="70"
-    width="70"
+    class="py-1 cursor-pointer d-flex justify-center"
+    width="100%"
     :color="getColorQuestion"
+    @click="$emit('scrollToElementRefQuestion', `element-item-question-result-${question.id}`)"
   >
     <span v-if="getDataQuestionInHistory" class="title font-weight-black">{{ getDataQuestionInHistory.index }}</span>
   </v-sheet>

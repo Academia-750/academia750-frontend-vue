@@ -10,7 +10,7 @@
             titulo-tarifa="Iniciación"
             precio-tarifa="80"
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
-            :itemsTarifa="iniciacion"
+            :items-tarifa="iniciacion"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -18,7 +18,7 @@
             titulo-tarifa="Avanzado"
             precio-tarifa="80"
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
-            :itemsTarifa="iniciacion"
+            :items-tarifa="iniciacion"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -26,7 +26,7 @@
             titulo-tarifa="Autoevealuable"
             precio-tarifa="20"
             contenido-tarifa="Te ofrecemos la posibilidad de autoevaluarte de forma continua, cuando quieras y desde donde quieras, generando de forma ilimitada todos los test que necesites."
-            :itemsTarifa="Autoevealuable"
+            :items-tarifa="Autoevealuable"
           />
         </v-col>
       </v-row>

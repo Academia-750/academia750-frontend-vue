@@ -6,25 +6,41 @@
       justify="center"
       fluid
     >
-    <v-container>
-      <v-row align="center" justify="end"  class="contenido_banner">
-      <v-col cols="5" :class="sectionSmAndDownBrakpoint">
-        <div class="mr-4">
-          <div :class="manageClassResponsiveWrapperBanner" class="text-start">
-            <span class="font-weight-black titulo_banner">Academia de Bomberos 750</span>
-          </div>
-          <div :class="manageClassResponsiveWrapperBanner" class="text-start">
-            <div  class="width-subtitle-banner">
-              <span class="texto_banner">Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición</span>
+      <v-container>
+        <v-row align="center" justify="end" class="contenido_banner">
+          <v-col cols="5" :class="sectionSmAndDownBrakpoint">
+            <div class="mr-4">
+              <div
+                :class="manageClassResponsiveWrapperBanner"
+                class="text-start"
+              >
+                <span
+                  class="font-weight-black titulo_banner"
+                >
+                  Academia de Bomberos 750
+                </span>
+              </div>
+              <div
+                :class="manageClassResponsiveWrapperBanner"
+                class="text-start"
+              >
+                <div class="width-subtitle-banner">
+                  <span class="texto_banner">Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en
+                    tu oposición</span>
+                </div>
+              </div>
+              <div
+                :class="manageClassResponsiveWrapperBanner"
+                class="mt-2 boton_banner"
+              >
+                <button-go-to-register-contact-us
+                  @executeRegisterContactUs="$emit('executeRegisterContactUs')"
+                />
+              </div>
             </div>
-          </div>
-          <div :class="manageClassResponsiveWrapperBanner" class="mt-2 boton_banner">
-            <button-go-to-register-contact-us @executeRegisterContactUs="$emit('executeRegisterContactUs')"/>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-    </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </v-container>
 </template>
@@ -38,7 +54,7 @@ export default {
     ButtonGoToRegisterContactUs
   },
   computed: {
-    sectionSmAndDownBrakpoint () {
+    sectionSmAndDownBrakpoint() {
       return {
         'd-flex': true,
         'white--text': true,
@@ -46,20 +62,20 @@ export default {
         'justify-end': this.$vuetify.breakpoint.smAndUp
       }
     },
-    manageClassResponsiveTitle () {
+    manageClassResponsiveTitle() {
       return {
-        'title': this.$vuetify.breakpoint.width < 600,
+        title: this.$vuetify.breakpoint.width < 600,
         'font-weight-bold': true,
         'display-1': this.$vuetify.breakpoint.smAndUp
       }
     },
-    manageClassResponsiveSubtitle () {
+    manageClassResponsiveSubtitle() {
       return {
-        'caption': this.$vuetify.breakpoint.width < 600,
+        caption: this.$vuetify.breakpoint.width < 600,
         'subtitle-1': this.$vuetify.breakpoint.smAndUp
       }
     },
-    manageClassResponsiveWrapperBanner () {
+    manageClassResponsiveWrapperBanner() {
       return {
         'd-flex': true,
         'my-2': true,
@@ -85,33 +101,35 @@ export default {
 .width-subtitle-banner {
   width: 75% !important;
 }
-.titulo_banner{
-  font-size: 64px!important;
-  line-height: 64px!important;
-  font-family: var(--fuente_cuatro)!important;
+.titulo_banner {
+  font-size: 64px !important;
+  line-height: 64px !important;
+  font-family: var(--fuente_cuatro) !important;
   color: #fff;
 }
-.contenido_banner{
+.contenido_banner {
   height: 100vh;
 }
-.texto_banner{
+.texto_banner {
   color: #fff !important;
   font-size: 20px !important;
-  font-family: var(--fuente_uno)!important;
-
+  font-family: var(--fuente_uno) !important;
 }
-.boton_banner > button{
-    background: rgb(42, 153, 186);
-    background: linear-gradient( 98deg, rgba(42, 153, 186, 1) 0%, rgba(117, 189, 210, 1) 100% );
-    border: none !important;
-    border-radius: 20px;
-    font-family: var(--fuente_cuatro);
-    font-size: 18px !important;
-    height: 53px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff !important;
+.boton_banner > button {
+  background: rgb(42, 153, 186);
+  background: linear-gradient(
+    98deg,
+    rgba(42, 153, 186, 1) 0%,
+    rgba(117, 189, 210, 1) 100%
+  );
+  border: none !important;
+  border-radius: 20px;
+  font-family: var(--fuente_cuatro);
+  font-size: 18px !important;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
 }
-
 </style>

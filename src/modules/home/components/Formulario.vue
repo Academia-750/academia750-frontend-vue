@@ -16,67 +16,242 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-form>
+    <validation-observer ref="FormSubmitContactUs" v-slot="{ invalid }">
       <v-container>
         <v-row>
           <v-col cols="12" lg="3">
-            <v-select :items="itemsMotivo" placeholder="Motivo"></v-select>
+            <v-select
+              v-model="form.reason"
+              solo
+              :items="itemsReasonSelect"
+              placeholder="Motivo"
+              item-text="label"
+              item-value="key"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="12" lg="6">
-            <v-text-field
-              v-model="Nombre"
-              
-              placeholder="Nombre"
-              required
-            ></v-text-field>
+            <name-person-input
+              ref="namePersonInputComponent"
+              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              is-solo
+              :is-filled="false"
+              :has-prepend-icon="false"
+              @NamePersonBinding="form.firstName = $event"
+            />
           </v-col>
           <v-col cols="12" lg="6">
-            <v-text-field
-              v-model="Apellidos"
-             
-              placeholder="Apellidos"
-              required
-            ></v-text-field>
+            <last-name-person-input
+              ref="LastNamePersonInputComponent"
+              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              is-solo
+              :is-filled="false"
+              :has-prepend-icon="false"
+              @LastNamePersonBinding="form.lastName = $event"
+            />
           </v-col>
           <v-col cols="12" lg="6">
-            <v-text-field
-              v-model="Email"
-             
-              placeholder="Email"
-              required
-            ></v-text-field>
+            <phone-field-input
+              ref="PhoneInputComponent"
+              rules="required|numeric|ItMustBeAPhoneNumberFromSpain"
+              is-solo
+              :is-filled="false"
+              :has-prepend-icon="false"
+              @PhoneBinding="form.phone = $event"
+            />
           </v-col>
           <v-col cols="12" lg="6">
-            <v-text-field
-              v-model="Telefono"
-           
-              placeholder="Teléfono"
-              required
-            ></v-text-field>
+            <email-field-input
+              ref="EmailInputComponent"
+              rules="required|email"
+              is-solo
+              :is-filled="false"
+              :has-prepend-icon="false"
+              @EmailBinding="form.email = $event"
+            />
           </v-col>
           <v-col class="mensaje_estilo">
-            <v-textarea
-              solo
-              name="Comentarios"
-              label="Solo textarea"
-            ></v-textarea>
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              vid="vid"
+              mode="aggressive"
+              name="Mensaje"
+            >
+              <v-textarea
+                ref="MessageTextarea"
+                v-model="form.message"
+                label="Mensaje"
+                placeholder="Escribe tu mensaje"
+                solo
+                :error-messages="errors"
+                name="input-7-4"
+              ></v-textarea>
+            </ValidationProvider>
           </v-col>
-          <v-col cols="12 ">
-            <v-btn class="btn-3" @click="submit"> Enviar </v-btn>
+          <v-col cols="12" class="d-flex justify-end">
+            <v-btn
+              color="#dc3545"
+              rounded
+              large
+              :loading="loadingButtonSubmit"
+              :disabled="disabledButtonSubmit || invalid"
+              @click="validateFormOrSubmit"
+            >
+              Enviar
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
-    </v-form>
+    </validation-observer>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import NamePersonInput from '@/modules/profile/components/updateProfile/NameFieldInput.vue'
+import LastNamePersonInput from '@/modules/profile/components/updateProfile/LastNameFieldInput.vue'
+import PhoneFieldInput from '@/modules/profile/components/updateProfile/PhoneFieldInput.vue'
+import EmailFieldInput from '@/modules/profile/components/updateProfile/EmailFieldInput.vue'
+
 export default {
   name: 'Formulario',
+  components: {
+    NamePersonInput,
+    LastNamePersonInput,
+    PhoneFieldInput,
+    EmailFieldInput
+  },
   data() {
     return {
-      itemsMotivo: ['General', 'Recuperar Contraseña' , 'Unete']
+      form : {
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        message: '',
+        reason: null
+      },
+      itemsMotivo: ['General', 'Recuperar Contraseña' , 'Unete'],
+      itemsReasonSelect: [
+        { label: 'General', key: 'general' },
+        { label: 'Recuperar Contraseña', key: 'reset-password' },
+        { label: 'Únete', key: 'inscription' }
+      ],
+      disabledButtonSubmit: false,
+      loadingButtonSubmit: false
+    }
+  },
+  methods: {
+    ...mapActions('homeService', ['sendInformationContactUSForm']),
+    ResetForm() {
+      this.$refs.namePersonInputComponent.name_person = null
+      this.$refs.LastNamePersonInputComponent.last_name = null
+      this.$refs.PhoneInputComponent.phone = null
+      this.$refs.EmailInputComponent.email = null
+
+      this.form.firstName = null
+      this.form.lastName = null
+      this.form.phone = null
+      this.form.email = null
+      this.form.message = null
+      this.form.reason = null
+
+      this.$nextTick(() => {
+        this.$refs['FormSubmitContactUs']['reset']()
+      })
+
+      return true
+    },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormSubmitContactUs']['setErrors'](errorResponse)
+      this.loadingButtonSubmit = true
+      this.disabledButtonSubmit = true
+      this.$loadingApp.disabledLoadingProgressLinear()
+    },
+    async validateFormOrSubmit () {
+
+      const responseValidation = await this.$refs['FormSubmitContactUs'].validate()
+
+      if (!responseValidation) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, complete correctamente los campos del formulario.',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      } else {
+        this.$loadingApp.enableLoadingProgressLinear()
+        this.loadingButtonSubmit = false
+        this.disabledButtonSubmit = false
+
+        this.submitActionContactUs()
+      }
+    },
+    async submitActionContactUs () {
+      try {
+        const response = await this.sendInformationContactUSForm({
+          data: {
+            'reason': this.form.reason,
+            'first-name': this.form.firstName,
+            'last-name': this.form.lastName,
+            'phone': this.form.phone,
+            'email': this.form.email,
+            'message': this.form.message
+          }
+        })
+
+        const { message, status } = response.data.data
+
+        if (status === 'successfully') {
+          this.$swal.fire({
+            icon: 'success',
+            toast: true,
+            title: message,
+            timer: 10000
+          })
+
+          this.ResetForm()
+        }
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonSubmit = false
+        this.disabledButtonSubmit = false
+
+        if (status === 'failed') {
+          this.$swal.fire({
+            icon: 'error',
+            toast: true,
+            title: message,
+            timer: 10000
+          })
+
+          return
+        }
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonSubmit = false
+        this.disabledButtonSubmit = false
+        if (error.response === undefined) {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            showConfirmButton: true,
+            confirmButtonText: '¡Entendido!',
+            timer: 10000
+          })
+
+          this.ResetForm()
+        } else if (error.response?.status === 422) {
+
+          this.handlingErrorValidation(error.response.data.errors)
+        }
+      }
     }
   }
 }
@@ -87,17 +262,31 @@ export default {
   padding: 80px 0px;
   color: #fff;
 }
-.estilo_formulario a {
+/* .estilo_formulario a {
   color: #fff !important;
   font-size: 16px;
   font-family: var(--fuente_uno) !important;
   text-decoration: none !important;
-}
+} */
 .estilo_formulario h2 {
   font-family: var(--fuente_cuatro);
   font-size: 48px;
 }
-.estilo_formulario input {
+
+.btn-3 {
+  width: 150px;
+  background-color: #bf1215;
+  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
+  border: none !important;
+  border-radius: 20px;
+  font-family: var(--fuente_cuatro);
+  font-size: 18px !important;
+  height: 53px !important;
+  display: flex;
+  margin-left: auto;
+  color: #fff !important;
+}
+/* .estilo_formulario input {
   background-color: #fff !important;
   padding-top: 0px !important;
   margin-top: 0px !important;
@@ -130,24 +319,9 @@ export default {
   font-family: var(--fuente_uno) !important;
   color: #b5b5b5 !important;
 }
-.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
-  display: none;
-}
-.btn-3 {
-  width: 150px;
-  background-color: #bf1215;
-  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
-  border: none !important;
-  border-radius: 20px;
-  font-family: var(--fuente_cuatro);
-  font-size: 18px !important;
-  height: 53px !important;
-  display: flex;
-  margin-left: auto;
-  color: #fff !important;
-}
+
 .estilo_formulario .v-select__slot{
     background: #fff;
     padding-left: 10px;
-}
+} */
 </style>

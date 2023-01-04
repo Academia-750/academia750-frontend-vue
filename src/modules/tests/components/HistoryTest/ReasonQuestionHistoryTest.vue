@@ -1,7 +1,7 @@
 <template>
-  <v-expansion-panels focusable>
+  <v-expansion-panels v-if="showSectionReasonQuestion" focusable>
     <v-expansion-panel>
-      <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down"><span class="font-weight-black">Explicación: </span>{{ question.attributes['question-text'] }}</v-expansion-panel-header>
+      <v-expansion-panel-header v-if="hasReasonTextQuestion" color="blue-grey lighten-5" expand-icon="mdi-menu-down"><span class="font-weight-black">Explicación: </span>{{ question.attributes['question-text'] }}</v-expansion-panel-header>
       <v-expansion-panel-content>
         <p class="mt-2 mb-3 font-weight-bold mx-auto d-flex justify-center"><span>{{ question.attributes['reason-text'] }}</span></p>
         <div v-if="pathImageQuestion" class="d-flex justify-center">
@@ -32,6 +32,14 @@ export default {
   data () {
     return {
       pathImageQuestion: null
+    }
+  },
+  computed: {
+    showSectionReasonQuestion () {
+      return this.question.attributes['reason-text'] || this.pathImageQuestion
+    },
+    hasReasonTextQuestion () {
+      return this.question.attributes['reason-text'] !== null || this.question.attributes['reason-text'] !== ''
     }
   },
   mounted () {

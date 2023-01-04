@@ -165,29 +165,29 @@ p, li {
   transform: scale(0.9);
 }
 
-.v-progress-linear {
+/* .v-progress-linear {
   -moz-transform: scale(1, -1);
   -webkit-transform: scale(1, -1);
   -o-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
-}
+} */
 
-.v-toolbar__extension {
+/* .v-toolbar__extension {
   padding: 0px !important;
-}
-header .v-btn__content{
+} */
+/* header .v-btn__content{
   color: #505050;
   font-family: var(--fuente_uno);
   font-size: 20px;
   font-weight: normal;
-}
-header .v-toolbar__content{
+} */
+/* header .v-toolbar__content{
   background: #f2f5f8;
-}
-.theme--light.v-btn:hover::before{
+} */
+/* .theme--light.v-btn:hover::before{
   opacity: 0!important;
-}
+} */
 .titulo_1 {
     font-family: var(--fuente_cuatro)!important;
     color: #000;

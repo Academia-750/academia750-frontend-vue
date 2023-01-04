@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       pageNumber: 1,
-      numberItemsPerPage: 15,
+      numberItemsPerPage: 60,
       totalNumberPages: 0,
       testData: null,
       questionDataHistoryState: []

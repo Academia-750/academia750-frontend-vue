@@ -9,7 +9,6 @@
     <v-text-field
       ref="last-name-field"
       v-model="last_name"
-      :counter="25"
       :error-messages="errors"
       :disabled="isDisabled"
       filled

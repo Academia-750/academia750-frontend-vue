@@ -3,7 +3,7 @@
     v-slot="{ errors }"
     vid="email"
     mode="aggressive"
-    name="Correo electrónico"
+    name="Email"
     :rules="rules"
   >
     <v-text-field
@@ -11,13 +11,14 @@
       v-model="email"
       :error-messages="errors"
       :disabled="isDisabled"
-      filled
-      label="Correo electrónico"
+      :filled="isFilled"
+      :solo="isSolo"
+      label="Email"
       required
       clearable
       @keyup.enter="$emit('submitForm')"
     >
-      <template v-slot:prepend>
+      <template v-if="hasPrependIcon" v-slot:prepend>
         <v-icon class="d-none d-sm-none d-md-block">
           mdi-email
         </v-icon>
@@ -37,6 +38,18 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    isFilled: {
+      type: Boolean,
+      default: true
+    },
+    isSolo: {
+      type: Boolean,
+      default: false
+    },
+    hasPrependIcon: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

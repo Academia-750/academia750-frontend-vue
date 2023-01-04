@@ -3,21 +3,15 @@
     <v-col
       v-for="(question) in questions"
       :key="`Head-History-Question-State-${question.id}`"
-      cols="12"
-      sm="6"
-      md="4"
-      lg="4"
-      xl="4"
+      cols="3"
+      sm="1"
+      md="1"
+      lg="1"
+      xl="1"
       class="d-flex justify-center"
     >
-      <v-sheet
-        class="py-2 cursor-pointer"
-        width="100%"
-        color="grey lighten-3"
-        @click="$emit('scrollToElementRefQuestion', `element-item-question-result-${question.id}`)"
-      >
-        <head-result-item :question="question" :questions-data-history="questionsDataHistory" />
-      </v-sheet>
+
+      <head-result-item :question="question" :questions-data-history="questionsDataHistory" />
     </v-col>
   </v-row>
 </template>

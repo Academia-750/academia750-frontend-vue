@@ -12,12 +12,13 @@
       :error-messages="errors"
       :disabled="isDisabled"
       label="Teléfono"
-      filled
+      :filled="isFilled"
+      :solo="isSolo"
       required
       clearable
       @keyup.enter="$emit('submitForm')"
     >
-      <template v-slot:prepend>
+      <template v-if="hasPrependIcon" v-slot:prepend>
         <v-icon class="d-none d-sm-none d-md-block">
           mdi-phone
         </v-icon>
@@ -37,6 +38,18 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    isFilled: {
+      type: Boolean,
+      default: true
+    },
+    isSolo: {
+      type: Boolean,
+      default: false
+    },
+    hasPrependIcon: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

@@ -55,7 +55,7 @@
             @emitActionLogin="submit"
           />
           <AlertErrorLogin ref="AlertErrorLogin" />
-          <ButtonForgotPasswordLogin />
+          <ButtonForgotPasswordLogin @scrollToResetPasswordSection="$emit('scrollToResetPasswordSection')" />
           <v-divider class="my-1 blue-grey lighten-4" />
           <FooterDialogLogin ref="FooterDialogLogin" />
         </validation-observer>

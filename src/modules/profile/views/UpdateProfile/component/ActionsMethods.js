@@ -20,7 +20,7 @@ export default {
           icon: 'success',
           toast: true,
           title: 'Tus datos han sido actualizados con éxito.',
-          timer: 3000
+          timer: 10000
         })
 
         this.loadDataUserProfile()
@@ -41,7 +41,9 @@ export default {
             timer: 7500
           })
         } else if (error.response?.status === 422) {
-          this.ResetForm()
+          //this.ResetForm()
+          this.loadingButtonUpdateProfile = false
+          this.disabledButtonUpdateProfile = false
           this.handlingErrorValidation(error.response.data.errors)
         }
       }
