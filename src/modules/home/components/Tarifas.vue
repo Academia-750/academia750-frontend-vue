@@ -11,6 +11,7 @@
             precio-tarifa="80"
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
             :items-tarifa="iniciacion"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Iniciación')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -19,6 +20,7 @@
             precio-tarifa="80"
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
             :items-tarifa="iniciacion"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Avanzado')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -27,6 +29,7 @@
             precio-tarifa="20"
             contenido-tarifa="Te ofrecemos la posibilidad de autoevaluarte de forma continua, cuando quieras y desde donde quieras, generando de forma ilimitada todos los test que necesites."
             :items-tarifa="Autoevealuable"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Autoevaluable')"
           />
         </v-col>
       </v-row>

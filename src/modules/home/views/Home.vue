@@ -25,7 +25,7 @@
       </v-btn>
     </v-fab-transition>
     <div ref="tarifasSection">
-      <Tarifas />
+      <Tarifas @emitClickInscriptionContactUs="scrollToContactUsFormForRegisterWithReasonInscription" />
     </div>
     <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
     <div ref="ContactUsForm">
@@ -75,10 +75,19 @@ export default {
       this.$refs['DialogLoginForm'].showDialogLogin = true
     },
     scrollToContactUsFormForRegister () {
-      //this.$refs['GroupsByLevelComponent'].scrollIntoViewContainerGroupLevel()
+      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.$refs['ContactUsFormComponent'].form.message = null
+      this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
     scrollToSectionOfHomePage ($refElement) {
       this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.$refs['ContactUsFormComponent'].form.message = null
+      this.$refs['ContactUsFormComponent'].form.reason = null
+    },
+    scrollToContactUsFormForRegisterWithReasonInscription ( reasonInscription ) {
+      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.$refs['ContactUsFormComponent'].form.message = `tarifa: ${reasonInscription}`
+      this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
     scrollToResetPasswordSection () {
       this.$refs['DialogLoginForm'].showDialogLogin = false

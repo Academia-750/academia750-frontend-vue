@@ -10,9 +10,9 @@
         <ul class="lista_tarifa mt-2">
           <li v-for="(item, index) in itemsTarifa" :key="index">{{ item }}</li>
         </ul>
-       
+
       </div>
-      <div class="caja_boton py-4"> <button class="boton-2">Únete</button></div>   
+      <div class="caja_boton py-4"> <button class="boton-2" @click="$emit('emitClickInscriptionContactUs')">Únete</button></div>
 
     </div>
   </div>
@@ -89,7 +89,7 @@ align-items: center;
   padding-right: 13px;
 }
 .caja_boton{
-    
+
     padding: 40px 45px 0px 45px;
 }
 .lista_tarifa {

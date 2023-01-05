@@ -40,6 +40,7 @@ export default {
         this.SET_CURRENT_USER_FOR_UPDATE(null)
         this.$emit('SuccessfullyProcessCreateOrUpdateStudent')
         this.loadStudentsFromCurrentTab()
+        this.resetDataAndProcessEditStudent()
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

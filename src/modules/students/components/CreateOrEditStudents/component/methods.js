@@ -4,6 +4,26 @@ export default {
   methods: {
     ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent', 'fetchRoleStudentData']),
     ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
+    cancelProcessEditStudentData () {
+
+      if (this.isUpdateStudent) {
+        this.loadDataUserForUpdate(this.currentUserForUpdate)
+
+        return
+      }
+
+      this.ResetForm()
+    },
+    resetDataAndProcessEditStudent () {
+      this.cache.data.student.firstName = null
+      this.cache.data.student.lastName = null
+      this.cache.data.student.phone = null
+      this.cache.data.student.email = null
+
+      this.ResetForm()
+      this.isUpdateStudent = false
+      this.SET_CURRENT_USER_FOR_UPDATE(null)
+    },
     loadDataUserForUpdate (data) {
       const { dni, first_name, last_name, phone, email } = data
 
@@ -18,8 +38,15 @@ export default {
       this.form.lastName = last_name
       this.form.phone = phone
       this.form.email = email
+
+      this.cache.data.student.firstName = first_name
+      this.cache.data.student.lastName = last_name
+      this.cache.data.student.phone = phone
+      this.cache.data.student.email = email
+
+      this.isUpdateStudent = true
     },
-    async ResetForm() {
+    ResetForm() {
       //await this.$refs['FormCreateOrEditStudent']['reset']()
       this.$refs['DNIPersonInputComponent'].dni = ''
       this.$refs['namePersonInputComponent'].name_person = ''

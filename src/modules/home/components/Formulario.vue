@@ -8,10 +8,25 @@
         </v-col>
         <v-col lg="6" cols="12" class="text-center">
           <div>
-            <a href="#">+34663261014</a>
+            <v-btn
+              dark
+              text
+              class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
+              @click="redirectToCallPhoneNumber"
+            >
+              +34663261014
+            </v-btn>
           </div>
           <div>
-            <a href="#">info@academia750.com</a>
+            <v-btn
+              dark
+              text
+              class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
+              @click="redirectToSendMailAcademia"
+            >
+              info@academia750.com
+            </v-btn>
+            <!-- <a href="#">info@academia750.com</a> -->
           </div>
         </v-col>
       </v-row>
@@ -144,6 +159,12 @@ export default {
   },
   methods: {
     ...mapActions('homeService', ['sendInformationContactUSForm']),
+    redirectToCallPhoneNumber () {
+      window.open('tel:+34663261014', '_self')
+    },
+    redirectToSendMailAcademia () {
+      window.open('mailto:info@academia750.com', '_self')
+    },
     ResetForm() {
       this.$refs.namePersonInputComponent.name_person = null
       this.$refs.LastNamePersonInputComponent.last_name = null

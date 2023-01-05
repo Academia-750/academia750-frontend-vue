@@ -1,5 +1,8 @@
 <template>
   <div>
+    <pre>{{ isUpdateStudent }}</pre>
+    <pre>{{ checkIfThereIsAtLeast_1ModifiedData }}</pre>
+    <pre>{{ currentUserForUpdate }}</pre>
     <v-toolbar>
       <div class="d-flex align-center">
         <v-icon large class="mx-1">mdi-account-circle</v-icon>
@@ -7,11 +10,12 @@
       </div>
       <v-spacer></v-spacer>
 
-      <v-btn
+      <!-- <v-btn
+        v-if="cancelProcessFormStudent"
         color="red darken-1"
         class="white--text"
         title="cancelar"
-        disabled
+        @click="cancelProcessEditStudentData"
       >
         <v-icon
           right
@@ -20,8 +24,8 @@
         >
           mdi-close-circle
         </v-icon>
-        <span class="d-none d-sm-inline">Revertir modificaciones</span>
-      </v-btn>
+        <span class="d-none d-sm-inline">{{ textButtonCancelDataEditStudent }}</span>
+      </v-btn> -->
     </v-toolbar>
     <validation-observer ref="FormCreateOrEditStudent" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">
@@ -115,7 +119,7 @@
               Crear
             </v-btn>
             <v-btn
-              v-if="currentUserForUpdate !== null"
+              v-if="currentUserForUpdate !== null && isUpdateStudent"
               :loading="loadingButtonCreateOrUpdateStudent"
               :disabled="disabledButtonCreateOrUpdateStudent || invalid"
               color="light-blue darken-3"
@@ -133,13 +137,12 @@
               Actualizar
             </v-btn>
             <v-btn
-              v-if="currentUserForUpdate !== null"
+              v-if="currentUserForUpdate !== null && isUpdateStudent"
               :loading="loadingButtonCreateOrUpdateStudent"
-              :disabled="disabledButtonCreateOrUpdateStudent || invalid"
               color="red"
               class="mt-2 ml-2 white--text"
               :block="activeStyleBlockButton"
-              @click="SET_CURRENT_USER_FOR_UPDATE(null)"
+              @click="resetDataAndProcessEditStudent"
             >
               <v-icon
                 right
