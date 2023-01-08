@@ -1,8 +1,5 @@
 <template>
   <div>
-    <pre>{{ isUpdateStudent }}</pre>
-    <pre>{{ checkIfThereIsAtLeast_1ModifiedData }}</pre>
-    <pre>{{ currentUserForUpdate }}</pre>
     <v-toolbar>
       <div class="d-flex align-center">
         <v-icon large class="mx-1">mdi-account-circle</v-icon>
@@ -39,7 +36,7 @@
             <!-- DNI -->
             <dni-field-input
               ref="DNIPersonInputComponent"
-              rules="required|ItMustBeADniOrNieFromSpain"
+              rules="requiredDniNie|ItMustBeADniOrNieFromSpain"
               :is-disabled="isUpdateUser"
               @DniBinding="form.dni = $event"
             />
@@ -53,7 +50,7 @@
             <!-- Nombre -->
             <name-field-input
               ref="namePersonInputComponent"
-              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
               @NamePersonBinding="form.firstName = $event"
             />
           </v-col>
@@ -66,7 +63,7 @@
             <!-- Apellidos -->
             <last-name-field-input
               ref="LastNamePersonInputComponent"
-              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              rules="requiredLastName|min:3|max:25|mustContainLettersAndOptionalTilde"
               @LastNamePersonBinding="form.lastName = $event"
             />
           </v-col>
@@ -79,7 +76,7 @@
             <!-- telefono -->
             <phone-field-input
               ref="PhoneInputComponent"
-              rules="required|numeric|ItMustBeAPhoneNumberFromSpain"
+              rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
               @PhoneBinding="form.phone = $event"
             />
           </v-col>
@@ -92,7 +89,7 @@
             <!-- Email -->
             <email-field-input
               ref="EmailInputComponent"
-              rules="required|email"
+              rules="requiredEmail|email"
               @EmailBinding="form.email = $event"
             />
           </v-col>

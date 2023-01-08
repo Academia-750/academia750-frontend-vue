@@ -14,7 +14,6 @@ export default {
       this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
       this.$refs['FormAnswerCorrectField'].answer_value = ''
       this.$refs['FormAnswerCorrectField'].is_grouper_answer = ''
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
       this.$refs['FormAnswerOneField'].answer_value = ''
       this.$refs['FormAnswerOneField'].is_grouper_answer = ''
       this.$refs['FormAnswerTwoField'].answer_value = ''
@@ -85,11 +84,11 @@ export default {
 
       const answerCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'yes')
 
-      console.log(answerCorrect)
-      console.log(dataAnswers)
+      /* console.log(answerCorrect)
+      console.log(dataAnswers) */
 
       dataAnswers = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
-      console.log(dataAnswers)
+      /* console.log(dataAnswers) */
 
       this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect[0].id
       this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect[0].attributes.answer_text
@@ -106,6 +105,8 @@ export default {
       this.$refs['FormAnswerThreeField'].answer_id = dataAnswers[2].id
       this.$refs['FormAnswerThreeField'].answer_value = dataAnswers[2].attributes.answer_text
       this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswers[2].attributes.is_grouper_answer === 'yes'
+
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = attributes.is_visible === 'yes'
 
       this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text'] ? attributes['reason-text'] : ''
 

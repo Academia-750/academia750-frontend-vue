@@ -3,7 +3,7 @@
     v-slot="{ errors }"
     vid="last-name"
     mode="aggressive"
-    name="Apellidos"
+    name="Apellido"
     :rules="rules"
   >
     <v-text-field

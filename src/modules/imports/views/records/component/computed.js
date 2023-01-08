@@ -5,5 +5,6 @@ export default {
   computed: {
     ...mapState('importsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
     ...footerProps
+
   }
 }

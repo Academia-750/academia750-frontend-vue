@@ -85,11 +85,11 @@ export default {
 
       const answerCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'yes')
 
-      console.log(answerCorrect)
-      console.log(dataAnswers)
+      /* console.log(answerCorrect)
+      console.log(dataAnswers) */
 
       dataAnswers = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
-      console.log(dataAnswers)
+      /* console.log(dataAnswers) */
 
       this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect[0].id
       this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect[0].attributes.answer_text

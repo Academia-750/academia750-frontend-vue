@@ -116,7 +116,6 @@
           ></v-divider> -->
           <!-- -------------------------------- -->
           <v-col
-            v-if="isCardMemoryQuestion"
             cols="12"
             sm="12"
             md="12"

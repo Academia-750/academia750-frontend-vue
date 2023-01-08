@@ -53,12 +53,12 @@
       </div>
       <div class="my-2 text-subtitle-1">
         UUID del grupo de tema: <span class="mx-1">
-          <copy-label :text="recordData.data.relationships.topic_group.id" />
+          <copy-label :text="recordData.data.relationships.topic_group?.id" />
         </span>
       </div>
       <div class="my-2 text-subtitle-1">
         Grupo de tema: <span class="mx-1">
-          <copy-label :text="recordData.data.relationships.topic_group.attributes.name" />
+          <copy-label :text="recordData.data.relationships.topic_group?.attributes?.name" />
         </span>
       </div>
     </v-card-text>

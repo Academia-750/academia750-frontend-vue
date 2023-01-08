@@ -1,5 +1,14 @@
 <template>
   <v-card-text>
+    <!-- <pre>
+      {{ itemsDatatable.length }}
+    </pre>
+    <pre>
+      {{ optionsDatatable }}
+    </pre>
+    <pre>
+      {{ informationMeta }}
+    </pre> -->
     <v-data-table
       v-model="getSelectedItems"
       :loading="stateLoadingItems"

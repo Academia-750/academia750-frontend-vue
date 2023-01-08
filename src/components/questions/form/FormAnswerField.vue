@@ -95,7 +95,8 @@ export default {
         return `Es Agrupadora: ${answer}`
       }
  */
-      return `Es Agrupadora ${this.label}: ${answer}`
+      //return `Es Agrupadora ${this.label}: ${answer}`
+      return `Es Agrupadora: ${answer}`
     }
   },
   watch: {

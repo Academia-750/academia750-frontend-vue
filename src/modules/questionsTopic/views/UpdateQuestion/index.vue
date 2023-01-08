@@ -73,7 +73,6 @@
           >
             <form-question-is-visible-checkbox
               ref="FormQuestionIsVisibleCheckbox"
-              is-disabled
             />
           </v-col>
           <v-col

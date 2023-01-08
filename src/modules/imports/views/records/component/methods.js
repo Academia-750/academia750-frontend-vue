@@ -10,6 +10,18 @@ export default {
       }).then((response) => {
         this.importProcessData = response.data.meta.import_process
       })
+    },
+    getFieldsRowsValuesErrorRecord ($arrayKeys, $arrayErrors) {
+      //console.log($arrayErrors)
+
+      return $arrayKeys.map( (column) => {
+        console.log($arrayErrors[column])
+
+        return {
+          'name-row': column,
+          'description-errors': $arrayErrors[column]
+        }
+      })
     }
   }
 }

@@ -2,7 +2,7 @@
   <ValidationProvider
     v-slot="{ errors }"
     tag="div"
-    vid="is-card-memory"
+    vid="is-visibile"
     mode="aggressive"
     name="Pregunta estará visible para otros cuestionarios"
   >

@@ -9,6 +9,7 @@
       <v-spacer></v-spacer>
 
       <v-btn
+        v-if="checkIfThereIsAtLeast_1ModifiedData"
         color="red darken-1"
         class="white--text"
         title="cancelar"

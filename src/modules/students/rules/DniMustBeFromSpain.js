@@ -66,7 +66,7 @@ extend('ItMustBeADniOrNieFromSpain', {
 
     return validateStructureNieSpain(value)
   },
-  message: 'Este no es un DNI válido para Ciudadano de España'
+  message: 'Este no es un DNI/NIE válido'
 })
 
 extend('ItMustBeADniOrNieFromSpainLogin', {
@@ -79,5 +79,5 @@ extend('ItMustBeADniOrNieFromSpainLogin', {
 
     return validateStructureNieSpain(value)
   },
-  message: 'Proporciona un DNI/NIE válido'
+  message: 'Este no es un DNI/NIE válido'
 })

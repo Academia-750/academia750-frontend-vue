@@ -36,5 +36,10 @@ export default {
   mixins: [...MIXINS, ...COMPONENT_MIXINS],
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
+  },
+  mounted () {
+    this.getStudents({
+      params: this.getParamsUrlApi()
+    })
   }
 }

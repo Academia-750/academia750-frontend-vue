@@ -72,12 +72,24 @@
         />
       </template>
       <template v-slot:expanded-item="{ item }">
-        <td :colspan="filter__headers_datatable.length">
+        <td colspan="4">
           <v-expansion-panels v-if="item['has-errors']">
             <v-expansion-panel>
               <v-expansion-panel-header class="title">Errores de validación</v-expansion-panel-header>
               <v-expansion-panel-content>
-                <pre class="body-2">{{ item.errors_validation }}</pre>
+                <v-data-table
+                  :key="item.id"
+                  :headers="headersDescriptionRecord"
+                  :items="getFieldsRowsValuesErrorRecord(Object.keys(item.errors_validation), item.errors_validation)"
+                  :items-per-page="10"
+                  class="elevation-1"
+                >
+                  <template v-slot:[`item.description-errors`]="{ item: errorItem }">
+                    <errors-record-import-list :items-errors="errorItem['description-errors']" />
+                  </template>
+                </v-data-table>
+                <!-- <pre class="body-2">{{ item.errors_validation }}</pre>
+                <pre class="body-2">{{ Object.keys(item.errors_validation) }}</pre> -->
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>

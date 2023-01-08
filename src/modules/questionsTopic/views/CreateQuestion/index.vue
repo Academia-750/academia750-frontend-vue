@@ -53,14 +53,13 @@
           >
             <form-question-is-visible-checkbox
               ref="FormQuestionIsVisibleCheckbox"
-              is-disabled
             />
           </v-col>
           <v-col
             cols="12"
             sm="12"
             md="12"
-            :lg="isCardMemoryQuestion ? 6 : 12"
+            lg="6"
             class="d-flex align-center"
           >
             <v-row dense>
@@ -116,7 +115,6 @@
           ></v-divider> -->
           <!-- -------------------------------- -->
           <v-col
-            v-if="isCardMemoryQuestion"
             cols="12"
             sm="12"
             md="12"
