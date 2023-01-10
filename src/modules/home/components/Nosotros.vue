@@ -84,29 +84,19 @@ export default {
   }
 }
 </script>
-<style>
-
-.title-about-us {
-  font-weight: bold;
-  font-size: 40px;
-  letter-spacing: 0.5px;
-  margin-left: 10px;
+<style scoped>
+.nosotros_seccion{
+    background-image: url(/images/academia750/quienesSomos.png);
+    height: 875px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
 }
-
-.subtitle-about-us {
-  font-weight: 400;
-  font-size: 16px;
-  margin-left: 2px;
-
-}
-
-.nosotros_seccion {
-  background-image: url(/images/academia750/quienesSomos.png);
-  height: 875px;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  align-items: center;
+@media(max-width:991px){
+  .nosotros_seccion{
+    height: auto;
+  }
 }
 </style>

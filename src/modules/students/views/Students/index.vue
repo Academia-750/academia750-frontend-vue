@@ -1,6 +1,8 @@
 <template>
   <v-card-text>
-    <create-or-edit-student/>
+    <div ref="CreateOrEditStudentSection">
+      <create-or-edit-student />
+    </div>
     <v-divider></v-divider>
     <v-tabs
       v-model="getCurrentTabView"
@@ -29,10 +31,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items
-      v-model="getCurrentTabView"
-      touchless
-    >
+    <v-tabs-items v-model="getCurrentTabView" touchless>
       <v-tab-item
         key="students-account-enable"
         :transition="false"
@@ -40,9 +39,7 @@
       >
         <v-card flat>
           <v-card-text>
-            <students-datatable
-              state-account="enable"
-            />
+            <students-datatable state-account="enable" @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm" />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -53,14 +50,12 @@
       >
         <v-card flat>
           <v-card-text>
-            <students-datatable
-              state-account="disable"
-            />
+            <students-datatable state-account="disable" @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm" />
           </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
-    <form-actions-buttons/>
+    <form-actions-buttons />
   </v-card-text>
 </template>
 

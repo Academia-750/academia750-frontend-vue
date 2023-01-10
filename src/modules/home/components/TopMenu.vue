@@ -93,4 +93,9 @@ export default {
   .font-size-13 {
     font-size: 13px!important;
   }
+  @media(max-width:1025px){
+    .top-menu {
+      display: none;
+    }
+  }
 </style>

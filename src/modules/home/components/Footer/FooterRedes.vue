@@ -1,5 +1,5 @@
 <template>
-  <a class="redes_footer mr-1" :href=" linkRedesFooter " target="_blank">
+  <a class="redes_footer" :href=" linkRedesFooter " target="_blank">
     <v-icon dark> {{ icoRedesFooter }} </v-icon>
   </a>
 </template>

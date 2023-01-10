@@ -18,6 +18,8 @@ export default {
         phone: item.phone,
         email: item.email
       })
+
+      this.$emit('emitScrollToCreateOrEditStudentForm')
     },
     fetchInitialData () {
       this.getStudents({

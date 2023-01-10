@@ -41,7 +41,10 @@ export default {
   },
   methods: {
     ...mapMutations('studentsService', ['SET_TAB_VIEW_STUDENTS']),
-    ...mapActions('studentsService', ['getStudents'])
+    ...mapActions('studentsService', ['getStudents']),
+    ScrollToCreateOrEditStudentForm () {
+      this.$refs['CreateOrEditStudentSection'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   },
   head: {
     title: {

@@ -18,7 +18,7 @@
           <item-tarifas
             titulo-tarifa="Avanzado"
             precio-tarifa="80"
-            contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
+            contenido-tarifa="Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:"
             :items-tarifa="iniciacion"
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Avanzado')"
           />

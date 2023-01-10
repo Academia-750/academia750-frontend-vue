@@ -84,28 +84,25 @@ export default {
 </script>
 
 <style scoped>
-.section-testimonials {
+.section-testimonials{
   position: relative;
 }
-.section-testimonials::before {
-  content: '';
-  background: rgb(71, 162, 188);
-  background: linear-gradient(
-    178deg,
-    rgba(71, 162, 188, 1) 0%,
-    rgba(75, 163, 188, 1) 100%
-  );
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 332px;
-  z-index: 0;
-}
-.section-testimonials .titulo_1 {
-  z-index: 1;
-}
-.section-testimonials > .container {
-  border-bottom: 1px solid #e3e1e1;
-  margin: 80px auto;
-}
+  .section-testimonials::before {
+    content: '';
+    background: rgb(71, 162, 188);
+    background: linear-gradient( 178deg, rgba(71, 162, 188, 1) 0%, rgba(75, 163, 188, 1) 100% );
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 332px;
+    z-index: 0;
+  }
+  .section-testimonials .titulo_1{
+    z-index: 1;
+  }
+  .section-testimonials > .container{
+    border-bottom: 1px solid #e3e1e1;
+    margin: 80px auto;
+  }
+
 </style>

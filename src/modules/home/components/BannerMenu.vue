@@ -101,35 +101,52 @@ export default {
 .width-subtitle-banner {
   width: 75% !important;
 }
-.titulo_banner {
-  font-size: 64px !important;
-  line-height: 64px !important;
-  font-family: var(--fuente_cuatro) !important;
+.titulo_banner{
+  font-size: 64px!important;
+  line-height: 64px!important;
+  font-family: var(--fuente_cuatro)!important;
   color: #fff;
 }
-.contenido_banner {
+.contenido_banner{
   height: 100vh;
 }
-.texto_banner {
+.texto_banner{
   color: #fff !important;
   font-size: 20px !important;
-  font-family: var(--fuente_uno) !important;
+  font-family: var(--fuente_uno)!important;
+
 }
-.boton_banner > button {
-  background: rgb(42, 153, 186);
-  background: linear-gradient(
-    98deg,
-    rgba(42, 153, 186, 1) 0%,
-    rgba(117, 189, 210, 1) 100%
-  );
-  border: none !important;
-  border-radius: 20px;
-  font-family: var(--fuente_cuatro);
-  font-size: 18px !important;
-  height: 53px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff !important;
+.boton_banner > button{
+    background: rgb(42, 153, 186);
+    background: linear-gradient( 98deg, rgba(42, 153, 186, 1) 0%, rgba(117, 189, 210, 1) 100% );
+    border: none !important;
+    border-radius: 20px;
+    font-family: var(--fuente_cuatro);
+    font-size: 18px !important;
+    height: 53px!important;
+    width: 150px!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff !important;
 }
+.texto_banner{
+  text-align: start;
+}
+@media(max-width:991px){
+  .titulo_banner{
+    font-size: 40px!important;
+    line-height: 40px!important;
+    text-align: center;
+  }
+  .texto_banner{
+    text-align: center;
+  }
+  .bg-image{
+    height: 90vh !important;
+    align-items: center;
+    display: flex;
+  }
+}
+
 </style>

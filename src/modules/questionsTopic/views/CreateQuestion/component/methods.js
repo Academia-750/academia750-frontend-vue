@@ -47,6 +47,7 @@ export default {
         return
       }
 
+      const isTest = this.$refs['FormQuestionTypeTestCheckbox'].is_test
       const isCardMemory = this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory
       const valueReasonText = this.$refs['FormReasonTextArea'].reason_value
       const valueReasonImage = this.$refs['FormAddQuestionImage'].image
@@ -56,6 +57,19 @@ export default {
           icon: 'error',
           toast: true,
           title: 'Las preguntas para Tarjetas de memoria, deben contener al menos una explicación en Texto o Imagen',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      if (!isTest && !isCardMemory) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'La pregunta debe ser para un Test o tarjeta de memoria',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 10000

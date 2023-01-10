@@ -1,13 +1,22 @@
 <template>
   <div>
-    <v-file-input
-      v-model="image"
-      :error-messages="validationErrors"
-      show-size
-      :label="label"
-      accept="image/*"
-      @change="Preview_image"
-    ></v-file-input>
+    <ValidationProvider
+      v-slot="{ errors }"
+      tag="div"
+      vid="file-reason"
+      mode="aggressive"
+      name="Imagen de explicación"
+      :rules="rulesImageQuestion"
+    >
+      <v-file-input
+        v-model="image"
+        :error-messages="errors"
+        show-size
+        :label="label"
+        accept="image/*"
+        @change="Preview_image"
+      ></v-file-input>
+    </ValidationProvider>
     <v-container v-if="image || previewImageForUpdate" class="d-flex justify-center" fluid>
       <v-img
         :max-width="maxWidthImagePreview"
@@ -30,11 +39,9 @@ export default {
       type: String,
       default: '500'
     },
-    validationErrors: {
-      type: Array,
-      default: function () {
-        return []
-      }
+    isCardMemory: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -42,6 +49,11 @@ export default {
       image: null,
       previewImageForUpdate: false,
       urlImage: null
+    }
+  },
+  computed: {
+    rulesImageQuestion () {
+      return this.image ? 'IsValidImageQuestion|ImageQuestionRequiredMaxSize' : ''
     }
   },
   methods: {

@@ -136,6 +136,7 @@
                 />
                 <form-add-question-image
                   ref="FormAddQuestionImage"
+                  :is-card-memory="isCardMemoryQuestion"
                 />
               </v-col>
             </v-row>

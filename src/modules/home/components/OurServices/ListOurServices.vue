@@ -2,7 +2,7 @@
   <v-row dense class="ma-0 pa-0 mt-2 mt-sm-2 mt-md-4 mt-lg-4 mt-xl-4 mb-1 mb-sm-1 mb-md-2 mb-lg-2 mb-xl-2 d-flex justify-center">
     <item-our-service
       cols="12"
-      sm="12"
+      sm="6"
       md="6"
       lg="4"
       xl="4"
@@ -12,7 +12,7 @@
     />
     <item-our-service
       cols="12"
-      sm="12"
+      sm="6"
       md="6"
       lg="4"
       xl="4"
@@ -22,7 +22,7 @@
     />
     <item-our-service
       cols="12"
-      sm="12"
+      sm="6"
       md="6"
       lg="4"
       xl="4"
@@ -32,7 +32,7 @@
     />
     <item-our-service
       cols="12"
-      sm="12"
+      sm="6"
       md="6"
       lg="4"
       xl="4"
@@ -42,7 +42,7 @@
     />
     <item-our-service
       cols="12"
-      sm="12"
+      sm="6"
       md="6"
       lg="4"
       xl="4"

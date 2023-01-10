@@ -12,7 +12,9 @@
         </ul>
 
       </div>
-      <div class="caja_boton py-4"> <button class="boton-2" @click="$emit('emitClickInscriptionContactUs')">Únete</button></div>
+      <div class="caja_boton py-4">
+        <button class="boton-2" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+      </div>
 
     </div>
   </div>

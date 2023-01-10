@@ -49,7 +49,7 @@
           <v-col cols="12" lg="6">
             <name-person-input
               ref="namePersonInputComponent"
-              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
               is-solo
               :is-filled="false"
               :has-prepend-icon="false"
@@ -59,7 +59,7 @@
           <v-col cols="12" lg="6">
             <last-name-person-input
               ref="LastNamePersonInputComponent"
-              rules="required|min:3|max:25|mustContainLettersAndOptionalTilde"
+              rules="requiredLastName|min:3|max:25|mustContainLettersAndOptionalTilde"
               is-solo
               :is-filled="false"
               :has-prepend-icon="false"
@@ -69,7 +69,7 @@
           <v-col cols="12" lg="6">
             <phone-field-input
               ref="PhoneInputComponent"
-              rules="required|numeric|ItMustBeAPhoneNumberFromSpain"
+              rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
               is-solo
               :is-filled="false"
               :has-prepend-icon="false"
@@ -79,7 +79,7 @@
           <v-col cols="12" lg="6">
             <email-field-input
               ref="EmailInputComponent"
-              rules="required|email"
+              rules="requiredEmail|email"
               is-solo
               :is-filled="false"
               :has-prepend-icon="false"
@@ -277,37 +277,24 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .estilo_formulario {
   background: linear-gradient(180deg, #47a2bc 34.9%, #81b3c1 100%);
   padding: 80px 0px;
   color: #fff;
 }
-/* .estilo_formulario a {
+.estilo_formulario a {
   color: #fff !important;
   font-size: 16px;
   font-family: var(--fuente_uno) !important;
   text-decoration: none !important;
-} */
+}
 .estilo_formulario h2 {
   font-family: var(--fuente_cuatro);
   font-size: 48px;
+  line-height: 48px;
 }
-
-.btn-3 {
-  width: 150px;
-  background-color: #bf1215;
-  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
-  border: none !important;
-  border-radius: 20px;
-  font-family: var(--fuente_cuatro);
-  font-size: 18px !important;
-  height: 53px !important;
-  display: flex;
-  margin-left: auto;
-  color: #fff !important;
-}
-/* .estilo_formulario input {
+.estilo_formulario input {
   background-color: #fff !important;
   padding-top: 0px !important;
   margin-top: 0px !important;
@@ -340,9 +327,32 @@ export default {
   font-family: var(--fuente_uno) !important;
   color: #b5b5b5 !important;
 }
-
+.estilo_formulario .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+  display: none;
+}
+.btn-3 {
+  width: 150px;
+  background-color: #bf1215;
+  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
+  border: none !important;
+  border-radius: 20px;
+  font-family: var(--fuente_cuatro);
+  font-size: 18px !important;
+  height: 53px !important;
+  display: flex;
+  margin-left: auto;
+  color: #fff !important;
+}
 .estilo_formulario .v-select__slot{
     background: #fff;
     padding-left: 10px;
-} */
+}
+@media(max-width:991px){
+  .estilo_formulario h2{
+    text-align: center;
+  }
+  .btn-3{
+    margin: 0 auto;
+  }
+}
 </style>
