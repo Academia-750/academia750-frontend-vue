@@ -38,7 +38,10 @@
             lg="2"
             class="d-flex flex-column"
           >
-            <form-question-type-test-checkbox ref="FormQuestionTypeTestCheckbox" />
+            <form-question-type-test-checkbox
+              ref="FormQuestionTypeTestCheckbox"
+              @QuestionIsTestBinding="isTestQuestion = $event"
+            />
             <form-question-type-card-memory-checkbox
               ref="FormQuestionTypeCardMemoryCheckbox"
               @QuestionIsCardMemoryBinding="isCardMemoryQuestion = $event"
@@ -56,6 +59,7 @@
             />
           </v-col>
           <v-col
+            v-if="dataAnswersUuid.length > 0"
             cols="12"
             sm="12"
             md="12"
@@ -71,6 +75,8 @@
               >
                 <form-answer-field
                   ref="FormAnswerCorrectField"
+                  :answer-grouper-selected="answerGrouperSelected"
+                  :uuid="dataAnswersUuid[0]"
                   rules="required"
                   vid="answer-correct"
                   name-field-validate="Respuesta correcta"
@@ -78,34 +84,44 @@
                   label="Respuesta correcta"
                   placeholder="Escribe la respuesta correcta"
                   correct-answer
+                  @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                 />
                 <!-- <v-divider class="my-3"/> -->
                 <form-answer-field
                   ref="FormAnswerOneField"
+                  :answer-grouper-selected="answerGrouperSelected"
+                  :uuid="dataAnswersUuid[1]"
                   rules="required"
                   vid="answer-one"
                   name-field-validate="Respuesta 1"
                   ref-text-field="answer-one-field"
                   label="Respuesta 1"
                   placeholder="Escribe la respuesta 1"
+                  @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                 />
                 <form-answer-field
                   ref="FormAnswerTwoField"
+                  :answer-grouper-selected="answerGrouperSelected"
+                  :uuid="dataAnswersUuid[2]"
                   rules="required"
                   vid="answer-two"
                   name-field-validate="Respuesta 2"
                   ref-text-field="answer-two-field"
                   label="Respuesta 2"
                   placeholder="Escribe la respuesta 2"
+                  @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                 />
                 <form-answer-field
                   ref="FormAnswerThreeField"
+                  :answer-grouper-selected="answerGrouperSelected"
+                  :uuid="dataAnswersUuid[3]"
                   rules="required"
                   vid="answer-three"
                   name-field-validate="Respuesta 3"
                   ref-text-field="answer-three-field"
                   label="Respuesta 3"
                   placeholder="Escribe la respuesta 3"
+                  @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                 />
               </v-col>
             </v-row>
@@ -133,6 +149,7 @@
                   rules=""
                   vid="reason-question"
                   name-field-validate="Explicación"
+                  :is-card-memory="isCardMemoryQuestion"
                 />
                 <form-add-question-image
                   ref="FormAddQuestionImage"

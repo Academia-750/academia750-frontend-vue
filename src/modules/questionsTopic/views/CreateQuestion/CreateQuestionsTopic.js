@@ -23,6 +23,14 @@ export default {
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
+  mounted () {
+    this.dataAnswersUuid = [
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID()
+    ]
+  },
   head: {
     title: {
       inner: 'Crear pregunta para tema'

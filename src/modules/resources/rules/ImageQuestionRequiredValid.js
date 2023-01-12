@@ -1,5 +1,5 @@
 import { extend } from 'vee-validate'
-import { image } from 'vee-validate/dist/rules'
+import { required, image } from 'vee-validate/dist/rules'
 
 extend('ImageQuestionRequiredMaxSize', {
   validate(value) {
@@ -15,4 +15,9 @@ extend('ImageQuestionRequiredMaxSize', {
 extend('IsValidImageQuestion', {
   ...image,
   message: 'Ingresa una imagen válida para la pregunta'
+})
+
+extend('requiredReasonTextQuestion', {
+  ...required,
+  message: 'Ingresa una explicación'
 })

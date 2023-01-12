@@ -29,7 +29,7 @@ export default {
         thumbnailWidth: 100,
         maxFileSize: 10, //mib
         parallelUploads: 2,
-        maxFiles: 6,
+        maxFiles: 3,
         clickable: true,
         autoQueue: true,
         addRemoveLinks: true

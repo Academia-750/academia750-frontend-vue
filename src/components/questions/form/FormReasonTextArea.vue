@@ -5,6 +5,7 @@
     :vid="vid"
     mode="aggressive"
     :name="nameFieldValidate"
+    :rules="rulesReasonTextQuestion"
   >
     <v-textarea
       ref="ReasonQuestionTextarea"
@@ -38,11 +39,20 @@ export default {
     nameFieldValidate: {
       type: String,
       required: true
+    },
+    isCardMemory: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
     return {
       reason_value: ''
+    }
+  },
+  computed: {
+    rulesReasonTextQuestion () {
+      return this.reason_value ? 'requiredReasonTextQuestion' : ''
     }
   },
   watch: {

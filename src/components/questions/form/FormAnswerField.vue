@@ -2,7 +2,7 @@
   <div>
     <v-checkbox
       v-model="is_grouper_answer"
-      :disabled="disableCheckbox"
+      :disabled="isDisabledCheckGrouperAnswer"
       color="blue darken-1"
       :label="is_grouper_answer_label"
     ></v-checkbox>
@@ -46,9 +46,9 @@ export default {
       type: Boolean,
       default: false
     },
-    disableCheckbox: {
-      type: Boolean,
-      default: false
+    uuid: {
+      type: String,
+      required: true
     },
     rules: {
       type: [Object, String],
@@ -77,6 +77,10 @@ export default {
     correctAnswer: {
       type: Boolean,
       default: false
+    },
+    answerGrouperSelected: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -84,7 +88,8 @@ export default {
       answer_id: null,
       answer_value: '',
       is_correct_answer: false,
-      is_grouper_answer: false
+      is_grouper_answer: false,
+      isDisabledCheckGrouperAnswer: false
     }
   },
   computed: {
@@ -102,6 +107,27 @@ export default {
   watch: {
     answer_value(value) {
       this.$emit('AnswerValueBinding', value)
+    },
+    answerGrouperSelected () {
+      if (!this.answerGrouperSelected) {
+        this.isDisabledCheckGrouperAnswer = false
+
+        return
+      }
+
+      if (this.answerGrouperSelected === this.uuid) {
+        this.isDisabledCheckGrouperAnswer = false
+
+        return
+      }
+
+      this.isDisabledCheckGrouperAnswer = true
+    },
+    is_grouper_answer (value) {
+      this.$emit('AnswerIsGrouperValueBinding', {
+        value,
+        uuid: this.uuid
+      })
     },
     correctAnswer(value) {
       this.is_correct_answer = value

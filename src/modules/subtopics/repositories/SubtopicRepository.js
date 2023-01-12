@@ -25,7 +25,7 @@ export default {
     return ResourceService.post(`${resource}/export`, data, config)
   },
   import(data, config = {}) {
-    return ResourceService.post(`${resource}/import`, data, config)
+    return ResourceService.post('topics/subtopics/import', data, config)
   },
   downloadTemplateImport(config = {}) {
     return ResourceService.get(`${resource}/import/template`, config)

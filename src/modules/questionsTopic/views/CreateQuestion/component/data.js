@@ -5,7 +5,10 @@ export default {
       topicData: null,
       loadingButtonCreateQuestion: false,
       disabledButtonCreateQuestion: false,
-      isCardMemoryQuestion: false
+      isCardMemoryQuestion: false,
+      isTestQuestion: false,
+      answerGrouperSelected: '',
+      dataAnswersUuid: []
     }
   }
 }
