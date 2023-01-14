@@ -3,7 +3,7 @@ import { mapMutations, mapActions } from 'vuex'
 export default {
   methods: {
     ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
-    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE', 'SET_USERS_SELECTED_DATATABLE']),
+    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE', 'SET_USERS_SELECTED_DATATABLE', 'SET_OPTIONS_DATATABLE_USERS']),
     loadDatatatable() {
       this.getStudents({
         params: this.getParamsUrlApi()

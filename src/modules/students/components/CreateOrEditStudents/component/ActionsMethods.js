@@ -30,7 +30,7 @@ export default {
           icon: 'success',
           toast: true,
           title: 'El alumno ha sido registrado con éxito.',
-          timer: 3000
+          timer: 10000
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -39,8 +39,8 @@ export default {
         this.ResetForm()
         this.SET_CURRENT_USER_FOR_UPDATE(null)
         this.$emit('SuccessfullyProcessCreateOrUpdateStudent')
-        this.loadStudentsFromCurrentTab()
-        this.resetDataAndProcessEditStudent()
+
+        this.$emit('emitReloadDatatableStudents')
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -78,7 +78,7 @@ export default {
           icon: 'success',
           toast: true,
           title: 'Alumno actualizado correctamente.',
-          timer: 3000
+          timer: 10000
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -89,6 +89,8 @@ export default {
         this.SET_CURRENT_USER_FOR_UPDATE(null)
         this.$emit('SuccessfullyProcessCreateOrUpdateStudent')
         this.loadStudentsFromCurrentTab()
+
+        this.$emit('emitReloadDatatableStudents')
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

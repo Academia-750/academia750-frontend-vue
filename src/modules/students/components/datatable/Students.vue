@@ -31,27 +31,6 @@
         >
           <!-- <resource-button-go-back-router/> -->
           <resource-title-toolbar-datatable :title-text="getTitleByStateAccount" />
-          <!-- <resource-divider-title-datatable /> -->
-          <!-- <v-spacer></v-spacer>
-          <div class="d-flex justify-center">
-            <v-btn
-              small
-              elevation="24"
-              color="teal darken-2"
-              class="white--text"
-              title="Cargar nuevamente"
-              @click="loadDatatatable"
-            >
-              <v-icon
-                dark
-                small
-                class="mx-1"
-              >
-                mdi-reload
-              </v-icon>
-              <span class="d-none d-sm-inline">Cargar</span>
-            </v-btn>
-          </div> -->
         </v-toolbar>
         <resource-text-field-search
           ref="ResourceTextFieldSearch"

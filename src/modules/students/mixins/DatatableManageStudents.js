@@ -1,17 +1,19 @@
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
+    ...mapMutations('studentsService', ['SET_USERS_SELECTED_DATATABLE']),
     ...mapActions('studentsService', ['getStudents']),
     async loadStudentsFromCurrentTab (valueTab = null) {
 
-      const value = valueTab ?? this.tabViewStudents
+      //this.ReloadDatatableStudents()
 
-      if (value === 'students-account-enable') {
+      if (valueTab === 'students-account-enable') {
         await this.getStudents({
           params: {
             'filter[role]': 'student',
             'filter[state-account]': 'enable',
+            'sort': '-created-at',
             'page[size]': 5,
             'page[number]': 1
           }
@@ -20,7 +22,7 @@ export default {
         return
       }
 
-      if (value === 'students-account-disable') {
+      if (valueTab === 'students-account-disable') {
         await this.getStudents({
           params: {
             'filter[role]': 'student',

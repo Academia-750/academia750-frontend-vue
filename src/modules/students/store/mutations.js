@@ -18,6 +18,6 @@ export default {
     state.usersSelected = payload
   },
   SET_OPTIONS_DATATABLE_USERS (state, payload) {
-    state.optionsDatatable = payload
+    state.optionsDatatableUsers = payload
   }
 }

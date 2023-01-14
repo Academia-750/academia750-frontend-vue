@@ -15,6 +15,7 @@ export default {
   },
   data () {
     return {
+      reloadDatatableUsers: false
     }
   },
   computed: {
@@ -36,9 +37,11 @@ export default {
   },
   watch: {
     tabViewStudents () {
-      this.loadStudentsFromCurrentTab()
-      console.log(this.$refs['studentsDatatableStateEnable'])
-      console.log(this.$refs['studentsDatatableStateDisable'])
+      //this.loadStudentsFromCurrentTab()
+
+      console.log('Se ha detectado un cambio en los Tabs')
+
+      this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   },
   methods: {
@@ -46,6 +49,24 @@ export default {
     ...mapActions('studentsService', ['getStudents']),
     ScrollToCreateOrEditStudentForm () {
       this.$refs['CreateOrEditStudentSection'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    },
+    ReloadDatatableStudents () {
+
+      this.loadStudentsFromCurrentTab(this.getCurrentTabView)
+
+      /* if (this.getCurrentTabView === 'students-account-enable') {
+        this.SET_TAB_VIEW_STUDENTS(null)
+        this.SET_TAB_VIEW_STUDENTS('students-account-disable')
+        this.SET_TAB_VIEW_STUDENTS('students-account-enable')
+      }
+
+      if (this.getCurrentTabView === 'students-account-disable') {
+        this.SET_TAB_VIEW_STUDENTS(null)
+        this.SET_TAB_VIEW_STUDENTS('students-account-enable')
+        this.SET_TAB_VIEW_STUDENTS('students-account-disable')
+      } */
+
+      this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   },
   head: {

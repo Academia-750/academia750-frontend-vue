@@ -4,7 +4,7 @@ const state = () => ({
   currentUserForUpdate: null,
   tabViewStudents: 'students-account-enable',
   usersSelected: [],
-  optionsDatatable: null/* {
+  optionsDatatableUsers: {
     page: 1,
     itemsPerPage: 10,
     sortBy: ['created-at'],
@@ -13,7 +13,7 @@ const state = () => ({
     groupDesc: [],
     mustSort: false,
     multiSort: true
-  } */,
+  },
   informationMeta: {
     current_page: 1,
     from: 1,
