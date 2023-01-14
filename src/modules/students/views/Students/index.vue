@@ -39,7 +39,11 @@
       >
         <v-card flat>
           <v-card-text>
-            <students-datatable state-account="enable" @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm" />
+            <students-datatable
+              ref="studentsDatatableStateEnable"
+              state-account="enable"
+              @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm"
+            />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -50,7 +54,11 @@
       >
         <v-card flat>
           <v-card-text>
-            <students-datatable state-account="disable" @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm" />
+            <students-datatable
+              ref="studentsDatatableStateDisable"
+              state-account="disable"
+              @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm"
+            />
           </v-card-text>
         </v-card>
       </v-tab-item>

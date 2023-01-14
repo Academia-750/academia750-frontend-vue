@@ -37,6 +37,8 @@ export default {
   watch: {
     tabViewStudents () {
       this.loadStudentsFromCurrentTab()
+      console.log(this.$refs['studentsDatatableStateEnable'])
+      console.log(this.$refs['studentsDatatableStateDisable'])
     }
   },
   methods: {

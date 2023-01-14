@@ -1,3 +1,6 @@
+import { $remove_token_auth } from '@/helpers/auth'
+import configLogoutMethods from '@/modules/auth/login/resources/configLogout'
+
 export default {
   methods: {
     async changePasswordApi () {
@@ -14,8 +17,8 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'Tu contraseña ha sido actualizada con éxito.',
-          timer: 3000
+          title: 'Tu contraseña ha sido actualizada con éxito. Inicia sesión nuevamente.',
+          timer: 10000
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -26,6 +29,9 @@ export default {
         this.$refs['PasswordField'].resetField()
         this.$refs['PasswordConfirmationField'].resetField()
         this.ResetForm()
+
+        $remove_token_auth()
+        configLogoutMethods.redirectToHomePageAfterLogout()
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -37,10 +43,9 @@ export default {
             title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
-            timer: 7500
+            timer: 10000
           })
         } else if (error.response?.status === 422) {
-          //this.ResetForm()
           this.handlingErrorValidation(error.response.data.errors)
         }
       }

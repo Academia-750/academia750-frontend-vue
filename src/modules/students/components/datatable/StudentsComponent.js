@@ -3,7 +3,7 @@ import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCru
 
 import headersOppositionsTable from './data/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
-import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
+import UrlBuilderDatatableMethods from '@/modules/resources/mixins/UrlBuilderDatatableMethods'
 
 import props from './component/props'
 import components from './component/components'
@@ -26,7 +26,7 @@ const COMPONENT_MIXINS = [
 
 const MIXINS = [
   DatatableManageStudents,
-  URLBuilderResources,
+  UrlBuilderDatatableMethods,
   headersOppositionsTable,
   computedDatatable,
   componentButtonsCrud
