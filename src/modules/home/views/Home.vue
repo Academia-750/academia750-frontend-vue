@@ -1,7 +1,7 @@
 <template>
   <div class="ma-0 pa-0 overflow-hidden">
     <TopMenu />
-    <Menu @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
+    <Menu ref="MenuHomePage" @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister"/>
     <DialogLogin ref="DialogLoginForm" @scrollToResetPasswordSection="scrollToResetPasswordSection" />
     <div ref="OurServiceSection">
@@ -80,6 +80,7 @@ export default {
       this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
     scrollToSectionOfHomePage ($refElement) {
+      this.$refs['MenuHomePage'].drawer = false
       this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = null

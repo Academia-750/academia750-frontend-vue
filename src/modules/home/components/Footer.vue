@@ -18,7 +18,7 @@
               <h2>Contáctanos</h2>
               <div class="linea_footer"></div>
               <div>
-                <ul class="lista_footer mt-2">
+                <ul class="lista_footer mt-2" style="list-style: none;">
                   <FooterTres
                     ico-contacto="mdi-map-marker"
                     items-contacto="Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante"
@@ -37,7 +37,7 @@
             <v-col lg="4" md="6" cols="12">
               <h2>Siguenos</h2>
               <div class="linea_footer"></div>
-              <div class="mt-2">
+              <div class="mt-2 text-center text-lg-start">
                 <FooterRedes
                   link-redes-footer="https://www.facebook.com/AcademiaBomberos750/"
                   ico-redes-footer="mdi-facebook"
@@ -100,10 +100,11 @@ export default {
   background-color: #202020;
   color: #fff;
 }
-.estilo_footer ul{
-    list-style: none;
+.lista_footer{
+    list-style: none!important;;
     padding-left: 0px!important;
 }
+
 .estilo_footer h2{
     font-size: 16px;
     font-family: var(--fuente_cuatro);
@@ -129,5 +130,13 @@ export default {
 .acceso_estilo  .v-responsive__sizer{
     padding-bottom: 0px!important;
 }
-
+@media(max-width:768px){
+  .estilo_footer h2{
+    font-size: 25px;
+    text-align: center;
+  }
+  .linea_footer{
+    margin: 0 auto;
+  }
+}
 </style>

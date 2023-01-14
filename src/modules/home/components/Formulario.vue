@@ -107,9 +107,8 @@
           </v-col>
           <v-col cols="12" class="d-flex justify-end">
             <v-btn
-              color="#dc3545"
-              rounded
-              large
+              id="boton_enviar_form"
+              class="btn-3"
               :loading="loadingButtonSubmit"
               :disabled="disabledButtonSubmit || invalid"
               @click="validateFormOrSubmit"
@@ -139,7 +138,7 @@ export default {
   },
   data() {
     return {
-      form : {
+      form: {
         firstName: '',
         lastName: '',
         phone: '',
@@ -147,7 +146,7 @@ export default {
         message: '',
         reason: null
       },
-      itemsMotivo: ['General', 'Recuperar Contraseña' , 'Unete'],
+      itemsMotivo: ['General', 'Recuperar Contraseña', 'Unete'],
       itemsReasonSelect: [
         { label: 'General', key: 'general' },
         { label: 'Recuperar Contraseña', key: 'reset-password' },
@@ -159,10 +158,10 @@ export default {
   },
   methods: {
     ...mapActions('homeService', ['sendInformationContactUSForm']),
-    redirectToCallPhoneNumber () {
+    redirectToCallPhoneNumber() {
       window.open('tel:+34663261014', '_self')
     },
-    redirectToSendMailAcademia () {
+    redirectToSendMailAcademia() {
       window.open('mailto:info@academia750.com', '_self')
     },
     ResetForm() {
@@ -190,9 +189,10 @@ export default {
       this.disabledButtonSubmit = true
       this.$loadingApp.disabledLoadingProgressLinear()
     },
-    async validateFormOrSubmit () {
-
-      const responseValidation = await this.$refs['FormSubmitContactUs'].validate()
+    async validateFormOrSubmit() {
+      const responseValidation = await this.$refs[
+        'FormSubmitContactUs'
+      ].validate()
 
       if (!responseValidation) {
         this.$swal.fire({
@@ -213,16 +213,16 @@ export default {
         this.submitActionContactUs()
       }
     },
-    async submitActionContactUs () {
+    async submitActionContactUs() {
       try {
         const response = await this.sendInformationContactUSForm({
           data: {
-            'reason': this.form.reason,
+            reason: this.form.reason,
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
-            'phone': this.form.phone,
-            'email': this.form.email,
-            'message': this.form.message
+            phone: this.form.phone,
+            email: this.form.email,
+            message: this.form.message
           }
         })
 
@@ -261,7 +261,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 10000
@@ -269,7 +270,6 @@ export default {
 
           this.ResetForm()
         } else if (error.response?.status === 422) {
-
           this.handlingErrorValidation(error.response.data.errors)
         }
       }
@@ -322,15 +322,21 @@ export default {
 
 .estilo_formulario input::placeholder,
 .estilo_formulario textarea::placeholder,
-.estilo_formulario label , .estilo_formulario .v-select__slot , .estilo_formulario  .v-select__selection{
+.estilo_formulario label,
+.estilo_formulario .v-select__slot,
+.estilo_formulario .v-select__selection {
   font-size: 16px !important;
   font-family: var(--fuente_uno) !important;
   color: #b5b5b5 !important;
 }
-.estilo_formulario .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+.estilo_formulario
+  .theme--light.v-text-field
+  > .v-input__control
+  > .v-input__slot:before {
   display: none;
 }
-.btn-3 {
+.btn-3,
+#boton_enviar_form.btn-3 {
   width: 150px;
   background-color: #bf1215;
   background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
@@ -343,15 +349,15 @@ export default {
   margin-left: auto;
   color: #fff !important;
 }
-.estilo_formulario .v-select__slot{
-    background: #fff;
-    padding-left: 10px;
+.estilo_formulario .v-select__slot {
+  background: #fff;
+  padding-left: 10px;
 }
-@media(max-width:991px){
-  .estilo_formulario h2{
+@media (max-width: 991px) {
+  .estilo_formulario h2 {
     text-align: center;
   }
-  .btn-3{
+  .btn-3 {
     margin: 0 auto;
   }
 }

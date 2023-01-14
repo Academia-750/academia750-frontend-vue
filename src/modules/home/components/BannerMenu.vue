@@ -8,8 +8,8 @@
     >
       <v-container>
         <v-row align="center" justify="end" class="contenido_banner">
-          <v-col cols="5" :class="sectionSmAndDownBrakpoint">
-            <div class="mr-4">
+          <v-col lg="5" cols="12" :class="sectionSmAndDownBrakpoint">
+            <div class="mr-lg-4">
               <div
                 :class="manageClassResponsiveWrapperBanner"
                 class="text-start"
@@ -25,7 +25,7 @@
                 class="text-start"
               >
                 <div class="width-subtitle-banner">
-                  <span class="texto_banner">Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en
+                  <span class="texto_banner text-md-start text-center">Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en
                     tu oposición</span>
                 </div>
               </div>

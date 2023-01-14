@@ -9,7 +9,7 @@
       <v-spacer></v-spacer>
       <links-menu @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"/>
       <v-spacer></v-spacer>
-      <v-btn @click="executeLoginAccountAction">
+      <v-btn class="mr-lg-0 mr-4" @click="executeLoginAccountAction">
         <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
       </v-btn>
     </v-app-bar>
