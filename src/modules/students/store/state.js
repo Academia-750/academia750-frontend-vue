@@ -22,7 +22,8 @@ const state = () => ({
     to: 10,
     total: 10
     /* Esta información es la que por defecto le daremos al datatable, en lo que asíncronamente cargan los datos, y después colocar la información de la paginación que trae el servidor */
-  }
+  },
+  matchesResetOptionsDatatable: false
 })
 
 export default state

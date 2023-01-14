@@ -19,5 +19,8 @@ export default {
   },
   SET_OPTIONS_DATATABLE_USERS (state, payload) {
     state.optionsDatatableUsers = payload
+  },
+  SET_MATCHES_RESET_OPTIONS_DATATABLE (state, payload) {
+    state.matchesResetOptionsDatatable = payload
   }
 }

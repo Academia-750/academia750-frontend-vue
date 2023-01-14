@@ -45,14 +45,16 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('studentsService', ['SET_TAB_VIEW_STUDENTS']),
+    ...mapMutations('studentsService', ['SET_TAB_VIEW_STUDENTS', 'SET_MATCHES_RESET_OPTIONS_DATATABLE']),
     ...mapActions('studentsService', ['getStudents']),
     ScrollToCreateOrEditStudentForm () {
       this.$refs['CreateOrEditStudentSection'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     },
     ReloadDatatableStudents () {
 
-      this.loadStudentsFromCurrentTab(this.getCurrentTabView)
+      //this.loadStudentsFromCurrentTab(this.getCurrentTabView)
+
+      this.SET_MATCHES_RESET_OPTIONS_DATATABLE(true)
 
       /* if (this.getCurrentTabView === 'students-account-enable') {
         this.SET_TAB_VIEW_STUDENTS(null)
@@ -66,7 +68,7 @@ export default {
         this.SET_TAB_VIEW_STUDENTS('students-account-disable')
       } */
 
-      this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      //this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   },
   head: {
