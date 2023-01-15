@@ -20,10 +20,13 @@
 
 <script>
 import ActionsByMultipleRecordsMixin from '../../mixins/ActionsByMultipleRecords.js'
+import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import { mapMutations } from 'vuex'
 
 export default {
-  mixins: [ActionsByMultipleRecordsMixin],
+  mixins: [ActionsByMultipleRecordsMixin, DatatableManageStudents],
   methods: {
+    ...mapMutations('studentsService', ['SET_MATCHES_RESET_OPTIONS_DATATABLE']),
     enableUsersSelected () {
       if (!this.hasSelectedAnyRecord) {
         this.alertErrorNotSelectedAnyRecord({
@@ -37,6 +40,8 @@ export default {
         action: 'unlock-account',
         messageSuccess: 'Los alumnos seleccionados fueron reactivados.'
       })
+
+      this.loadStudentsFromCurrentTab()
 
     }
   }

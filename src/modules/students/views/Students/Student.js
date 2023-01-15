@@ -39,8 +39,6 @@ export default {
     tabViewStudents () {
       //this.loadStudentsFromCurrentTab()
 
-      console.log('Se ha detectado un cambio en los Tabs')
-
       this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   },
@@ -52,23 +50,7 @@ export default {
     },
     ReloadDatatableStudents () {
 
-      //this.loadStudentsFromCurrentTab(this.getCurrentTabView)
-
-      this.SET_MATCHES_RESET_OPTIONS_DATATABLE(true)
-
-      /* if (this.getCurrentTabView === 'students-account-enable') {
-        this.SET_TAB_VIEW_STUDENTS(null)
-        this.SET_TAB_VIEW_STUDENTS('students-account-disable')
-        this.SET_TAB_VIEW_STUDENTS('students-account-enable')
-      }
-
-      if (this.getCurrentTabView === 'students-account-disable') {
-        this.SET_TAB_VIEW_STUDENTS(null)
-        this.SET_TAB_VIEW_STUDENTS('students-account-enable')
-        this.SET_TAB_VIEW_STUDENTS('students-account-disable')
-      } */
-
-      //this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.loadStudentsFromCurrentTab()
     }
   },
   head: {

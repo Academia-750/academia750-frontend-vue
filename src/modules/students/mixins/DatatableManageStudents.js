@@ -1,14 +1,17 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState('studentsService', ['tabViewStudents'])
+  },
   methods: {
-    ...mapMutations('studentsService', ['SET_USERS_SELECTED_DATATABLE']),
+    ...mapMutations('studentsService', ['SET_USERS_SELECTED_DATATABLE', 'SET_MATCHES_RESET_OPTIONS_DATATABLE']),
     ...mapActions('studentsService', ['getStudents']),
     async loadStudentsFromCurrentTab (valueTab = null) {
 
-      //this.ReloadDatatableStudents()
+      const currentTab = valueTab ?? this.tabViewStudents
 
-      if (valueTab === 'students-account-enable') {
+      if (currentTab === 'students-account-enable') {
         await this.getStudents({
           params: {
             'filter[role]': 'student',
@@ -19,10 +22,12 @@ export default {
           }
         })
 
+        this.SET_MATCHES_RESET_OPTIONS_DATATABLE(true)
+
         return
       }
 
-      if (valueTab === 'students-account-disable') {
+      if (currentTab === 'students-account-disable') {
         await this.getStudents({
           params: {
             'filter[role]': 'student',
@@ -32,11 +37,10 @@ export default {
           }
         })
 
+        this.SET_MATCHES_RESET_OPTIONS_DATATABLE(true)
+
         return
       }
     }
-  },
-  computed: {
-    ...mapState('studentsService', ['tabViewStudents'])
   }
 }

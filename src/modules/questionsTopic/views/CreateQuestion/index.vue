@@ -76,6 +76,7 @@
           >
             <v-row dense>
               <v-col
+                v-show="!isCardMemoryQuestion"
                 cols="12"
                 sm="12"
                 md="12"
@@ -111,10 +112,12 @@
                     placeholder="Escribe la respuesta correcta"
                     :is-required-answer="!isQuestionBinary"
                     correct-answer
+                    :forbidden-grouper-answer="!isTestQuestion"
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                   <!-- <v-divider class="my-3"/> -->
                   <form-answer-field
+                    v-show="isTestQuestion"
                     ref="FormAnswerOneField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[1]"
@@ -128,6 +131,7 @@
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                   <form-answer-field
+                    v-show="isTestQuestion"
                     ref="FormAnswerTwoField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[2]"
@@ -141,6 +145,7 @@
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                   <form-answer-field
+                    v-show="isTestQuestion"
                     ref="FormAnswerThreeField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[3]"
@@ -172,6 +177,7 @@
                   />
                   <!-- <v-divider class="my-3"/> -->
                   <form-answer-field
+                    v-show="isTestQuestion"
                     ref="FormAnswerAnotherFieldOfQuestionBinary"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[1]"
