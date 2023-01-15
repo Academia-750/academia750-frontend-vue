@@ -93,6 +93,7 @@
               vid="vid"
               mode="aggressive"
               name="Mensaje"
+              rules="required|max:400"
             >
               <v-textarea
                 ref="MessageTextarea"

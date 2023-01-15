@@ -30,21 +30,21 @@
               <NosotrosLeft
                 numero-nosotros="3."
                 titulo-nosotros="¿Como formamos?"
-                contenido-nosotros="Nuestro método permite facilitar al alumno/a múltiples herramientas y recursos para desenvolverse en cualquier situación siempre exigiéndonos la mayor calidad."
+                contenido-nosotros="Nuestro método permite facilitar al alumno/a múltiples herramientas y recursos para desenvolverse en cualquier situación siempre exigiéndonos la máxima calidad."
               />
             </v-col>
             <v-col lg="6" sm="6" cols="12">
               <NosotrosLeft
                 numero-nosotros="4."
                 titulo-nosotros="Nuestra meta"
-                contenido-nosotros="Obtener el máximo rendimiento de nuestros alumnos/as y prepararlos para cualquier prueba o situación."
+                contenido-nosotros="Obtener el máximo rendimiento de nuestros alumnos/as en la preparación de cualquier prueba o situación."
               />
             </v-col>
           </v-row>
         </v-col>
         <v-col md="6" cols="12" class="d-lg-flex d-none">
-          <ImagenNosotrosUnidad
-        /></v-col>
+          <ImagenNosotrosUnidad/>
+        </v-col>
       </v-row>
     </v-container>
   </div>
