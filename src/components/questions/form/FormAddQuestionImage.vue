@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     rulesImageQuestion () {
-      return this.image ? 'IsValidImageQuestion|ImageQuestionRequiredMaxSize' : ''
+      return this.image || this.isCardMemory ? 'IsValidImageQuestion|ImageQuestionRequiredMaxSize' : ''
     }
   },
   methods: {

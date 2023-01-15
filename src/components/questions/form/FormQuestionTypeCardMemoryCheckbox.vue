@@ -11,6 +11,8 @@
       :disabled="isDisabled"
       :error-messages="errors"
       color="blue darken-1"
+      required
+      type="checkbox"
       :label="`Es para tarjeta de memoria: ${question_for_card_memory_label}`"
     ></v-checkbox>
   </ValidationProvider>

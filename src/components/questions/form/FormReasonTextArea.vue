@@ -28,10 +28,6 @@ export default {
       type: Boolean,
       default: false
     },
-    rules: {
-      type: [Object, String],
-      required: true
-    },
     vid: {
       type: String,
       required: true
@@ -43,6 +39,10 @@ export default {
     isCardMemory: {
       type: Boolean,
       required: true
+    },
+    hasReasonImage: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     rulesReasonTextQuestion () {
-      return this.reason_value ? 'requiredReasonTextQuestion' : ''
+      return this.reason_value || (this.isCardMemory && !this.hasReasonImage && !this.reason_value) ? 'requiredReasonByCardMemoryQuestion|max:400' : ''
     }
   },
   watch: {

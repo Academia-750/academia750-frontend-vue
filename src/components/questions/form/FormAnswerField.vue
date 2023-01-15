@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-checkbox
+      v-show="!forbiddenGrouperAnswer"
       v-model="is_grouper_answer"
       :disabled="isDisabledCheckGrouperAnswer"
       color="blue darken-1"
@@ -12,7 +13,7 @@
       :vid="vid"
       mode="aggressive"
       :name="nameFieldValidate"
-      :rules="rules"
+      :rules="rulesTextFieldAnswer"
       class="d-flex justify-center flex-column flex-lg-row"
     >
       <v-text-field
@@ -81,6 +82,18 @@ export default {
     answerGrouperSelected: {
       type: String,
       required: true
+    },
+    forbiddenGrouperAnswer: {
+      type: Boolean,
+      default: false
+    },
+    isQuestionBinary: {
+      type: Boolean,
+      default: false
+    },
+    isRequiredAnswer: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -102,6 +115,9 @@ export default {
  */
       //return `Es Agrupadora ${this.label}: ${answer}`
       return `Es Agrupadora: ${answer}`
+    },
+    rulesTextFieldAnswer () {
+      return this.isRequiredAnswer ? this.rules : ''
     }
   },
   watch: {

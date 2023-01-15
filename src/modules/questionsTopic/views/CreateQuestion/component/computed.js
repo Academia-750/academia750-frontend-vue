@@ -10,6 +10,12 @@ export default {
         'flex-column': this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.md,
         'flex-row': this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl
       }
+    },
+    getLabelByQuestionBinary () {
+      return this.isQuestionBinary ? 'Si' : 'No'
+    },
+    invalidComputedValidation () {
+      return !(this.isCardMemoryQuestion || this.isTestQuestion)
     }
   }
 }

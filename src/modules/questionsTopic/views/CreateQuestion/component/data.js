@@ -4,11 +4,7 @@ export default {
       //namesRelationshipsIncludeRequest: 'topics'
       topicData: null,
       loadingButtonCreateQuestion: false,
-      disabledButtonCreateQuestion: false,
-      isCardMemoryQuestion: false,
-      isTestQuestion: false,
-      answerGrouperSelected: '',
-      dataAnswersUuid: []
+      disabledButtonCreateQuestion: false
     }
   }
 }
