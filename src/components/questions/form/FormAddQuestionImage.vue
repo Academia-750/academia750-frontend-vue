@@ -56,6 +56,18 @@ export default {
       return this.image || this.isCardMemory ? 'IsValidImageQuestion|ImageQuestionRequiredMaxSize' : ''
     }
   },
+  watch: {
+    image (value) {
+      if (!value) {
+        this.$emit('ImageBinding', null)
+
+        return
+      }
+
+      this.$emit('ImageBinding', value)
+
+    }
+  },
   methods: {
     Preview_image() {
       if (!this.image) return

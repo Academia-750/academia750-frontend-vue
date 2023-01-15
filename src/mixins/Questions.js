@@ -5,7 +5,8 @@ export default {
       isTestQuestion: false,
       answerGrouperSelected: '',
       dataAnswersUuid: [],
-      isQuestionBinary: false
+      isQuestionBinary: false,
+      imageReason: null
     }
   }
 }

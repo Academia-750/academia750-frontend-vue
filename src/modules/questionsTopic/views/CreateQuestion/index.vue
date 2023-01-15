@@ -124,7 +124,7 @@
                     ref-text-field="answer-one-field"
                     label="Respuesta 1"
                     placeholder="Escribe la respuesta 1"
-                    :is-required-answer="!isQuestionBinary"
+                    :is-required-answer="!isQuestionBinary && isTestQuestion"
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                   <form-answer-field
@@ -137,7 +137,7 @@
                     ref-text-field="answer-two-field"
                     label="Respuesta 2"
                     placeholder="Escribe la respuesta 2"
-                    :is-required-answer="!isQuestionBinary"
+                    :is-required-answer="!isQuestionBinary && isTestQuestion"
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                   <form-answer-field
@@ -150,7 +150,7 @@
                     ref-text-field="answer-three-field"
                     label="Respuesta 3"
                     placeholder="Escribe la respuesta 3"
-                    :is-required-answer="!isQuestionBinary"
+                    :is-required-answer="!isQuestionBinary && isTestQuestion"
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
                 </div>
@@ -181,7 +181,7 @@
                     ref-text-field="answer-another-field-of-question-binary"
                     label="Segunda alternativa"
                     placeholder="Escribe la segunda alternativa"
-                    :is-required-answer="isQuestionBinary"
+                    :is-required-answer="isQuestionBinary && isTestQuestion"
                     forbidden-grouper-answer
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
@@ -211,11 +211,13 @@
                   ref="FormReasonTextArea"
                   vid="reason-question"
                   name-field-validate="Explicación"
+                  :has-reason-image="imageReason !== null"
                   :is-card-memory="isCardMemoryQuestion"
                 />
                 <form-add-question-image
                   ref="FormAddQuestionImage"
                   :is-card-memory="isCardMemoryQuestion"
+                  @ImageBinding="imageReason = $event"
                 />
               </v-col>
             </v-row>
