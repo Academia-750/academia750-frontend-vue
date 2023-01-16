@@ -77,6 +77,17 @@ export default {
       this.loadingButtonCreateQuestion = false
       this.disabledButtonCreateQuestion = false
 
+      this.isCardMemoryQuestion = false
+      this.isTestQuestion = false
+      this.answerGrouperSelected = ''
+      this.dataAnswersUuid = []
+      this.isQuestionBinary = false
+      this.imageReason = null
+
+      this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = ''
+
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = ''
+
       this.$refs['FormQuestionTextField'].question_text = ''
       this.$refs['FormQuestionTypeTestCheckbox'].is_test = ''
       this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ''
@@ -92,6 +103,13 @@ export default {
       this.$refs['FormAnswerThreeField'].is_grouper_answer = ''
       this.$refs['FormReasonTextArea'].reason_value = ''
       this.$refs['FormAddQuestionImage'].image = null
+
+      this.dataAnswersUuid = [
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID()
+      ]
 
       this.$nextTick(() => {
         this.$refs['FormCreateQuestion']['reset']()
