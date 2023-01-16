@@ -9,6 +9,46 @@ export default {
 
       this.answerGrouperSelected = uuid
     },
+    getFormDataForSaveQuestion () {
+      const FormDataQuestion = new FormData()
+
+      FormDataQuestion.append('question-text', this.$refs['FormQuestionTextField'].question_text)
+      FormDataQuestion.append('is-test', this.$refs['FormQuestionTypeTestCheckbox'].is_test)
+      FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
+      FormDataQuestion.append('is-visible', this.$refs['FormQuestionIsVisibleCheckbox'].is_visible)
+      FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
+      FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
+
+      if (!this.isTestQuestion) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'not_defined')
+
+        return FormDataQuestion
+      }
+
+      if (this.isQuestionBinary) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('another-answer-binary-alternative', this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'yes')
+
+        return FormDataQuestion
+      }
+
+      FormDataQuestion.append('is-question-binary-alternatives', 'no')
+      FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-correct', this.$refs['FormAnswerCorrectField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-one', this.$refs['FormAnswerOneField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-one', this.$refs['FormAnswerOneField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-two', this.$refs['FormAnswerTwoField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-two', this.$refs['FormAnswerTwoField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-three', this.$refs['FormAnswerThreeField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-three', this.$refs['FormAnswerThreeField'].is_grouper_answer)
+
+      return FormDataQuestion
+    },
     generateUUID() {
       let d = new Date().getTime()
 

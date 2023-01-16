@@ -7,7 +7,6 @@
     :name="nameFieldValidate"
     :rules="rulesReasonTextQuestion"
   >
-    {{ rulesReasonTextQuestion }}
     <v-textarea
       ref="ReasonQuestionTextarea"
       v-model="reason_value"

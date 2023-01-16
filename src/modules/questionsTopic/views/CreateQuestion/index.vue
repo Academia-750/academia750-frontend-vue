@@ -76,7 +76,7 @@
           >
             <v-row dense>
               <v-col
-                v-show="!isCardMemoryQuestion"
+                v-show="isTestQuestion"
                 cols="12"
                 sm="12"
                 md="12"
