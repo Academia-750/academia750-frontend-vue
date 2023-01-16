@@ -7,6 +7,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       'question-text': record.attributes['question-text'],
       'reason-text': record.attributes['reason-text'],
       'is-visible': record.attributes.is_visible,
+      'can_this_question_be_affected': record.meta.can_this_question_be_affected,
       'created-at': record.attributes.created_at
     }
   })

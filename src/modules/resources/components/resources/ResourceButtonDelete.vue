@@ -5,6 +5,7 @@
       dark
       :x-small="!can_rendering_button_small"
       :small="can_rendering_button_small"
+      :disabled="isDisabled"
       color="red"
       @click="$emit('actionConfirmShowDialogDelete')"
     >
@@ -32,6 +33,10 @@ export default {
     textButton: {
       type: String,
       default: 'Eliminar'
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     }
   }
 }

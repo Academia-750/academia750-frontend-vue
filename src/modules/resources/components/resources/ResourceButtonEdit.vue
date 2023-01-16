@@ -6,6 +6,7 @@
       :x-small="!can_rendering_button_small"
       :small="can_rendering_button_small"
       :color="colorButton"
+      :disabled="isDisabled"
       @click="pushRouteEditEdit"
     >
       <span>{{ textButton }}</span>
@@ -34,6 +35,10 @@ export default {
       required: true
     },
     onlyDispatchClickEvent: {
+      type: Boolean,
+      default: false
+    },
+    isDisabled: {
       type: Boolean,
       default: false
     },
