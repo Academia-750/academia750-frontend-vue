@@ -129,12 +129,10 @@ export default {
     justify-content: center;
     align-items: center;
     color: #fff !important;
-    padding:0px!important;
 }
 .texto_banner{
   text-align: start;
 }
-
 @media(max-width:991px){
   .titulo_banner{
     font-size: 40px!important;

@@ -77,21 +77,14 @@ export default {
       this.loadingButtonCreateQuestion = false
       this.disabledButtonCreateQuestion = false
 
-      this.isCardMemoryQuestion = false
-      this.isTestQuestion = false
-      this.answerGrouperSelected = ''
-      this.dataAnswersUuid = []
-      this.isQuestionBinary = false
-      this.imageReason = null
-
       this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = ''
 
       this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = ''
 
       this.$refs['FormQuestionTextField'].question_text = ''
-      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ''
-      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ''
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = false
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = false
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = true
       this.$refs['FormAnswerCorrectField'].answer_value = ''
       this.$refs['FormAnswerCorrectField'].is_grouper_answer = ''
       this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
@@ -110,6 +103,13 @@ export default {
         this.generateUUID(),
         this.generateUUID()
       ]
+
+      this.isCardMemoryQuestion = false
+      this.isTestQuestion = false
+      this.answerGrouperSelected = ''
+
+      this.isQuestionBinary = false
+      this.imageReason = null
 
       this.$nextTick(() => {
         this.$refs['FormCreateQuestion']['reset']()
