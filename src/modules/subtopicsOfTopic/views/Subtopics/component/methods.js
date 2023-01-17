@@ -9,12 +9,14 @@ export default {
         }
       }).then( (response) => {
         this.topicData = response.data.meta.topic
+        this.metaData = response.data.meta
       } )
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
     },
     loadDatatatable() {
+      console.log('shfbsdbf')
       this.getSubtopics({
         topic_id: this.$route.params.id,
         config: {
@@ -22,6 +24,9 @@ export default {
         }
       }).then((response) => {
         this.topicData = response.data.meta.topic
+        this.metaData = response.data.meta
+      }).catch((error) => {
+        console.error(error)
       })
     },
     deleteSubtopicConfirm (item) {

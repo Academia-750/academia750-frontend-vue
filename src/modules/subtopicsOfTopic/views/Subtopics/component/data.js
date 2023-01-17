@@ -3,7 +3,8 @@ export default {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
       currentItemsSelectedForDelete: null,
-      topicData: null
+      topicData: null,
+      metaData: null
     }
   }
 }

@@ -7,6 +7,9 @@ export default {
     ...footerProps,
     getNameCurrentTopic () {
       return `Subtemas del Tema: "${this.topicData?.attributes?.name}"`
+    },
+    getTotalQuestionsSubtopics() {
+      return `Total de preguntas de los subtemas: "${this.metaData['total-questions-subtopics']}"`
     }
   }
 }
