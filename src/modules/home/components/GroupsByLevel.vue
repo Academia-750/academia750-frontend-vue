@@ -1,5 +1,5 @@
 <template>
-  <v-container ref="groupsByLevelsContainer" class="mt-2">
+  <v-container ref="groupsByLevelsContainer" class="mt-2 groups-by-level">
     <v-row dense>
       <image-groups-by-level />
       <v-col
@@ -65,6 +65,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+  /* .groups-by-level {
+    border-bottom: 1px solid #e3e1e1;
+    margin-top: 80px auto;
+  } */
 </style>

@@ -27,7 +27,7 @@
           <item-tarifas
             titulo-tarifa="Autoevealuable"
             precio-tarifa="20"
-            contenido-tarifa="Te ofrecemos la posibilidad de autoevaluarte de forma continua, cuando quieras y desde donde quieras, generando de forma ilimitada todos los test que necesites."
+            contenido-tarifa="Te ofrecemos la posibilidad de autoevaluarte de forma continua, cuando quieras y desde donde quieras, generando de forma ilimitada todos los test que necesites:"
             :items-tarifa="Autoevealuable"
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Autoevaluable')"
           />
@@ -61,4 +61,9 @@ export default {
   }
 }
 </script>
-<style></style>
+<style scoped>
+  /* .seccion_tarifa {
+    padding-top: 70px;
+  } */
+
+</style>

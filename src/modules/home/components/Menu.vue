@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0 menu_estilo">
-    <v-app-bar elevate-on-scroll> <!-- :bottom="!isFixedMenu" :fixed="isFixedMenu" -->
+    <v-app-bar :bottom="!isFixedMenu" :fixed="isFixedMenu"> <!-- :bottom="!isFixedMenu" :fixed="isFixedMenu" -->
       <v-app-bar-nav-icon
         class="d-flex d-sm-flex d-md-none"
         @click="drawer = true"
@@ -85,7 +85,8 @@ export default {
           key: 'ContactUsForm'
         }
       ],
-      isFixedMenu: false
+      isFixedMenu: false,
+      allowedFixedMenu: true
     }
   },
   computed: {
@@ -111,6 +112,7 @@ export default {
       this.$emit('emitShowLoginDialog')
     },
     handleScroll() {
+      console.log('scroll detectado')
       this.isFixedMenu = window.scrollY >= 100
     }
   }
@@ -118,7 +120,7 @@ export default {
 </script>
 
 <style scoped>
-.menu_estilo .v-btn:before{
+/* .menu_estilo .v-btn:before{
   display: none!important;
 }
 .menu_estilo button.v-app-bar__nav-icon:hover{
@@ -143,6 +145,6 @@ export default {
     position: absolute;
     right: 0;
   }
-}
+} */
 
 </style>

@@ -4,7 +4,7 @@
     <Menu ref="MenuHomePage" @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister"/>
     <DialogLogin ref="DialogLoginForm" @scrollToResetPasswordSection="scrollToResetPasswordSection" />
-    <div ref="OurServiceSection">
+    <div ref="OurServiceSection" style="padding-top: 100px;">
       <OurServices />
     </div>
     <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
@@ -24,7 +24,7 @@
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div ref="tarifasSection">
+    <div ref="tarifasSection" style="padding-top: 100px;">
       <Tarifas @emitClickInscriptionContactUs="scrollToContactUsFormForRegisterWithReasonInscription" />
     </div>
     <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
@@ -81,9 +81,13 @@ export default {
     },
     scrollToSectionOfHomePage ($refElement) {
       this.$refs['MenuHomePage'].drawer = false
+
+      console.log(this.$refs[$refElement].offsetHeight)
       this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = null
+
+      console.info('scrollToSectionOfHomePage')
     },
     scrollToContactUsFormForRegisterWithReasonInscription ( reasonInscription ) {
       this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })

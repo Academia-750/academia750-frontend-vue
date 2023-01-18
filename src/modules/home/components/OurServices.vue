@@ -19,8 +19,9 @@ export default {
 </script>
 
 <style scoped>
-  .our-services-section {
+  /* .our-services-section {
     border-bottom: 1px solid #e3e1e1;
-    margin: 80px auto;
-  }
+    margin-top: 80px auto;
+    padding-top: 140px!important;
+  } */
 </style>

@@ -46,6 +46,12 @@ const handleErrorResponse = (error) => {
     if (Cookies.get('authorization')) {
       $remove_token_auth()
       $disconnectWebsocketsConnection()
+      Vue.swal.fire({
+        icon: 'error',
+        toast: true,
+        title: 'Su sesión ha expirado. Inicia sesión nuevamente.',
+        timer: 10000
+      })
     }
 
     /* console.log('Error en el Resource Service') */

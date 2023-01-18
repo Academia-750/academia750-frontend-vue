@@ -87,7 +87,6 @@ export default {
       this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = true
       this.$refs['FormAnswerCorrectField'].answer_value = ''
       this.$refs['FormAnswerCorrectField'].is_grouper_answer = ''
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
       this.$refs['FormAnswerOneField'].answer_value = ''
       this.$refs['FormAnswerOneField'].is_grouper_answer = ''
       this.$refs['FormAnswerTwoField'].answer_value = ''

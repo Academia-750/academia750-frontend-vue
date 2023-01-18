@@ -55,7 +55,7 @@ export default {
       link.href = url
       link.setAttribute(
         'download',
-        'plantilla_importar_temas.csv'
+        'plantilla_importar_preguntas.csv'
       ) //or any other extension
       document.body.appendChild(link)
       link.click()

@@ -281,7 +281,7 @@ export default {
 <style scoped>
 .estilo_formulario {
   background: linear-gradient(180deg, #47a2bc 34.9%, #81b3c1 100%);
-  padding: 80px 0px;
+  padding: 100px 0px;
   color: #fff;
 }
 .estilo_formulario a {
