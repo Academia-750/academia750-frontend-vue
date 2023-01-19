@@ -1,9 +1,9 @@
 <template>
-  <v-container class="pa-0 menu_estilo">
-    <v-app-bar :bottom="!isFixedMenu" :fixed="isFixedMenu"> <!-- :bottom="!isFixedMenu" :fixed="isFixedMenu" -->
+  <div class="pa-0" style="width: 100% !important;">
+    <v-app-bar :bottom="!isFixedMenu" :fixed="isFixedMenu" style="z-index: 10 !important;"> <!-- :bottom="!isFixedMenu" :fixed="isFixedMenu" -->
       <v-app-bar-nav-icon
         class="d-flex d-sm-flex d-md-none"
-        @click="drawer = true"
+        @click="openNavigationDrawer"
       ></v-app-bar-nav-icon>
       <logo-menu />
       <v-spacer></v-spacer>
@@ -16,8 +16,9 @@
     <!-- Add a navigation bar -->
     <v-navigation-drawer
       v-model="drawer"
-      absolute
+      fixed
       temporary
+      style="z-index: 12 !important;"
     >
       <v-list>
         <logo-list-menu />
@@ -27,29 +28,30 @@
         rounded
         nav
         dense
+        style="z-index: 12 !important;"
       >
-        <v-list-item-group>
-          <v-list-item>
+        <v-list-item-group style="z-index: 12 !important;">
+          <v-list-item style="z-index: 12 !important;" @click="scrollToTop">
             <icon-arrow-link-list-menu />
-            <v-list-item-subtitle @click="$vuetify.goTo(0)">Inicio</v-list-item-subtitle>
+            <v-list-item-subtitle>Inicio</v-list-item-subtitle>
           </v-list-item>
-          <v-list-item>
+          <v-list-item style="z-index: 12 !important;" @click="$emit('emitScrollToSectionHomePage', 'OurServiceSection')">
             <icon-arrow-link-list-menu />
-            <v-list-item-subtitle @click="$emit('emitScrollToSectionHomePage', 'OurServiceSection')">Qué ofrecemos</v-list-item-subtitle>
+            <v-list-item-subtitle>Qué ofrecemos</v-list-item-subtitle>
           </v-list-item>
-          <v-list-item>
+          <v-list-item style="z-index: 12 !important;" @click="$emit('emitScrollToSectionHomePage', 'tarifasSection')">
             <icon-arrow-link-list-menu />
-            <v-list-item-subtitle @click="$emit('emitScrollToSectionHomePage', 'tarifasSection')">Tarifas</v-list-item-subtitle>
+            <v-list-item-subtitle>Tarifas</v-list-item-subtitle>
           </v-list-item>
-          <v-list-item>
+          <v-list-item style="z-index: 12 !important;" @click="$emit('emitScrollToSectionHomePage', 'ContactUsForm')">
             <icon-arrow-link-list-menu />
-            <v-list-item-subtitle @click="$emit('emitScrollToSectionHomePage', 'ContactUsForm')">Contáctanos</v-list-item-subtitle>
+            <v-list-item-subtitle>Contáctanos</v-list-item-subtitle>
           </v-list-item>
 
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </v-container>
+  </div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
@@ -100,6 +102,10 @@ export default {
   },
   methods: {
     ...mapMutations('profileService', ['set_user']),
+    openNavigationDrawer () {
+      console.log('openNavigationDrawer')
+      this.drawer = true
+    },
     executeLoginAccountAction () {
       if (Cookies.get('authorization')) {
         this.$router.push({
@@ -112,8 +118,11 @@ export default {
       this.$emit('emitShowLoginDialog')
     },
     handleScroll() {
-      console.log('scroll detectado')
       this.isFixedMenu = window.scrollY >= 100
+    },
+    scrollToTop () {
+      this.$vuetify.goTo(0)
+      this.drawer = false
     }
   }
 }

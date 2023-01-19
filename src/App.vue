@@ -165,7 +165,7 @@ p, li {
   transform: scale(0.9);
 }
 
-.menu_estilo header .v-btn__content{
+/* .menu_estilo header .v-btn__content{
   color: #505050;
   font-family: var(--fuente_uno);
   font-size: 20px;
@@ -173,7 +173,7 @@ p, li {
 }
 .menu_estilo header .v-toolbar__content{
   background: #f2f5f8;
-}
+} */
 
 .titulo_1 {
     font-family: var(--fuente_cuatro)!important;
@@ -227,7 +227,7 @@ p, li {
     max-width: 1320px!important;
   }
 }
-@media(max-width:991px){
+/* @media(max-width:991px){
 
   .menu_estilo header {
 
@@ -240,6 +240,6 @@ p, li {
   .menu_estilo .v-navigation-drawer{
     z-index: 9;
   }
-}
+} */
 
 </style>
