@@ -82,7 +82,7 @@ export default {
       this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = ''
 
       this.$refs['FormQuestionTextField'].question_text = ''
-      this.$refs['FormQuestionTypeTestCheckbox'].is_test = false
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = true
       this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = false
       this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = true
       this.$refs['FormAnswerCorrectField'].answer_value = ''
@@ -104,7 +104,7 @@ export default {
       ]
 
       this.isCardMemoryQuestion = false
-      this.isTestQuestion = false
+      this.isTestQuestion = true
       this.answerGrouperSelected = ''
 
       this.isQuestionBinary = false

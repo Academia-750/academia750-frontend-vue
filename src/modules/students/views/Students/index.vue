@@ -38,7 +38,7 @@
           :transition="false"
           value="students-account-enable"
         >
-          <v-card v-if="getCurrentTabView === 'students-account-enable'" flat>
+          <v-card v-show="getCurrentTabView === 'students-account-enable'" flat>
             <v-card-text>
               <students-datatable
                 ref="studentsDatatableStateEnable"
@@ -53,7 +53,7 @@
           :transition="false"
           value="students-account-disable"
         >
-          <v-card v-if="getCurrentTabView === 'students-account-disable'" flat>
+          <v-card v-show="getCurrentTabView === 'students-account-disable'" flat>
             <v-card-text>
               <students-datatable
                 ref="studentsDatatableStateDisable"

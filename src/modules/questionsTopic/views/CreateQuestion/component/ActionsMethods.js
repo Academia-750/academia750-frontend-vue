@@ -18,7 +18,7 @@ export default {
           icon: 'success',
           toast: true,
           title: 'La pregunta ha sido creada con éxito.',
-          timer: 3000
+          timer: 10000
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()

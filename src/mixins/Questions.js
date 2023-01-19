@@ -2,7 +2,7 @@ export default {
   data () {
     return {
       isCardMemoryQuestion: false,
-      isTestQuestion: false,
+      isTestQuestion: true,
       answerGrouperSelected: '',
       dataAnswersUuid: [],
       isQuestionBinary: false,

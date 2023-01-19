@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      is_test: false
+      is_test: true
     }
   },
   computed: {
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     resetIsTest() {
-      this.is_test = ''
+      this.is_test = true
     }
   }
 }
