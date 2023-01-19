@@ -82,7 +82,7 @@ export default {
     scrollToSectionOfHomePage ($refElement) {
       this.$refs['MenuHomePage'].drawer = false
 
-      console.log(this.$refs[$refElement].offsetHeight)
+      //console.log(this.$refs[$refElement].offsetHeight)
       this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = null
