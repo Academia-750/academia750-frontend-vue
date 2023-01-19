@@ -17,7 +17,7 @@ export default {
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'Tu contraseña ha sido actualizada con éxito. Inicia sesión nuevamente.',
+          title: 'Tu contraseña ha sido actualizada con éxito.',
           timer: 10000
         })
 
@@ -30,7 +30,7 @@ export default {
         this.$refs['PasswordConfirmationField'].resetField()
         this.ResetForm()
 
-        $remove_token_auth()
+        //$remove_token_auth()
         //configLogoutMethods.redirectToHomePageAfterLogout()
       } catch (error) {
         console.log(error)
