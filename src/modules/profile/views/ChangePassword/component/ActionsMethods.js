@@ -31,7 +31,7 @@ export default {
         this.ResetForm()
 
         $remove_token_auth()
-        configLogoutMethods.redirectToHomePageAfterLogout()
+        //configLogoutMethods.redirectToHomePageAfterLogout()
       } catch (error) {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
