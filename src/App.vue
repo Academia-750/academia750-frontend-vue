@@ -222,11 +222,6 @@ p, li {
     margin: 0 auto;
 }
 
-@media (min-width: 1400px){
-  .container{
-    max-width: 1320px!important;
-  }
-}
 /* @media(max-width:991px){
 
   .menu_estilo header {
