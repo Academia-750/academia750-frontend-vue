@@ -4,7 +4,8 @@ export default {
       //namesRelationshipsIncludeRequest: 'topics'
       currentItemsSelectedForDelete: null,
       topicData: null,
-      subtopicData: null
+      subtopicData: null,
+      metaData: null
     }
   }
 }

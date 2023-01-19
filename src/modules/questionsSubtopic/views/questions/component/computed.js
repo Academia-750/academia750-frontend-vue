@@ -10,6 +10,9 @@ export default {
     },
     getNameCurrentSubtopic() {
       return `Preguntas del subtema: "${this.subtopicData?.attributes?.name}"`
+    },
+    getTotalQuestionsSubtopic() {
+      return `Total de preguntas del subtema: "${this.metaData['total']}"`
     }
   }
 }

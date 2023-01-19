@@ -18,6 +18,11 @@
     >
       <template v-slot:top>
         <resource-header-crud-title
+          v-if="metaData !== null"
+          :text-header="getTotalQuestionsSubtopic"
+          :can-rendering-header="true"
+        />
+        <resource-header-crud-title
           v-if="topicData !== null"
           :text-header="getNameCurrentTopic"
           :can-rendering-header="true"
