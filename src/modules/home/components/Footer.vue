@@ -11,7 +11,9 @@
               <h2>Academia 750</h2>
               <div class="linea_footer"></div>
               <div>
-                <FooterDos :items-footer="FooterMenu" />
+                <FooterDos
+                  @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"
+                />
               </div>
             </v-col>
             <v-col lg="4" md="6" cols="12">
