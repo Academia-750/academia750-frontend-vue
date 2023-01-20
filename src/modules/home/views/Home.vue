@@ -31,7 +31,7 @@
     <div ref="ContactUsForm">
       <Formulario ref="ContactUsFormComponent"/>
     </div>
-    <Footer @emitShowLoginDialog="showDialogLoginAction"/>
+    <Footer @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
   </div>
 
 </template>
