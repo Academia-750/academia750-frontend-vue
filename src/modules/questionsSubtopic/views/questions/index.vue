@@ -1,5 +1,21 @@
 <template>
   <v-card-text>
+    <div class="d-flex justify-end my-2">
+      <v-btn
+        class="mx-1 white--text"
+        dark
+        small
+        color="secondary"
+        @click="
+          $router.push({
+            name: 'import-questions'
+          })
+        "
+      >
+        <span>Importar Preguntas</span>
+        <v-icon class="ml-1" small dark> mdi-plus </v-icon>
+      </v-btn>
+    </div>
     <v-data-table
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
@@ -73,9 +89,8 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div v-if="item.can_this_question_be_affected" class="d-flex justify-space-around">
           <resource-button-edit
-            v-if="topicData !== null"
             color-button="blue darken-1"
-            :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
+            :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-delete
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
