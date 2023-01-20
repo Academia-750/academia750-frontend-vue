@@ -40,7 +40,8 @@ export default {
       //this.loadStudentsFromCurrentTab()
 
       this.loadStudentsFromCurrentTab()
-      //this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      /* this.loadStudentsFromCurrentTab()
+      this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' }) */
     }
   },
   methods: {
