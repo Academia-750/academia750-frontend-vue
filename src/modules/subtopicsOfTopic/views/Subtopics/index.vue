@@ -8,14 +8,11 @@
         color="secondary"
         @click="
           $router.push({
-            name: 'manage-subtopics-of-topic',
-            params: {
-              id: item.id
-            }
+            name: 'import-subtopics'
           })
         "
       >
-        <span>Importar Preguntas</span>
+        <span>Importar subtemas</span>
         <v-icon class="ml-1" small dark> mdi-plus </v-icon>
       </v-btn>
     </div>
