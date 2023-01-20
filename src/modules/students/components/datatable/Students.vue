@@ -1,5 +1,5 @@
 <template>
-  <v-card-text style="min-height: 700px !important; height: 700px !important;">
+  <v-card-text>
     <v-data-table
       v-model="getSelectedItems"
       :loading="stateLoadingItems"
@@ -17,7 +17,6 @@
       class="elevation-1"
       :server-items-length="informationMeta.total"
       :footer-props="get_footer_props"
-      height="700"
     >
       <template v-slot:top>
         <!-- <resource-header-crud-title text-header="Tema: Prevención de muertes y lesiones de bomberos durante los ejercicios de capacitación" /> -->
