@@ -65,7 +65,9 @@
         </v-tab-item>
       </v-tabs-items>
     </div>
-    <form-actions-buttons />
+    <v-container>
+      <form-actions-buttons />
+    </v-container>
   </v-card-text>
 </template>
 
