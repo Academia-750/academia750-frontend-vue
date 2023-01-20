@@ -20,10 +20,6 @@
 export default {
   name: 'FooterDos',
   props: {
-    itemsFooter: {
-      type: Array,
-      required: true
-    }
   },
   data() {
     return {}
