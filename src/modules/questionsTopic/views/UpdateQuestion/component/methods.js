@@ -3,15 +3,28 @@ export default {
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormUpdateQuestion']['setErrors'](errorResponse)
     },
+    bindingCheckGroupAnswer({ value, uuid }) {
+      if (!value) {
+        this.answerGrouperSelected = ''
+
+        return
+      }
+
+      this.answerGrouperSelected = uuid
+    },
     async ResetForm() {
 
-      this.loadingButtonUpdateQuestion = false
-      this.disabledButtonUpdateQuestion = false
+      this.loadingButtonCreateQuestion = false
+      this.disabledButtonCreateQuestion = false
+
+      this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = ''
+
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = ''
 
       this.$refs['FormQuestionTextField'].question_text = ''
-      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ''
-      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ''
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ''
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = true
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = false
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = true
       this.$refs['FormAnswerCorrectField'].answer_value = ''
       this.$refs['FormAnswerCorrectField'].is_grouper_answer = ''
       this.$refs['FormAnswerOneField'].answer_value = ''
@@ -23,8 +36,22 @@ export default {
       this.$refs['FormReasonTextArea'].reason_value = ''
       this.$refs['FormAddQuestionImage'].image = null
 
+      this.dataAnswersUuid = [
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID()
+      ]
+
+      this.isCardMemoryQuestion = false
+      this.isTestQuestion = true
+      this.answerGrouperSelected = ''
+
+      this.isQuestionBinary = false
+      this.imageReason = null
+
       this.$nextTick(() => {
-        this.$refs['FormUpdateQuestion']['reset']()
+        this.$refs['FormCreateQuestion']['reset']()
       })
 
       return true
@@ -69,47 +96,67 @@ export default {
       this.disabledButtonUpdateQuestion = true
       this.UpdateQuestionApi()
     },
-    syncValuesForm(response) {
-      const { attributes, relationships } = response.data.data
-      const { topic } = response.data.meta
-      let { data: dataAnswers } = relationships.answers
+    generateUUID() {
+      let d = new Date().getTime()
 
-      this.questionData = response.data
-      this.topicData = topic
+      let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0
 
-      this.$refs['FormQuestionTextField'].question_text = attributes['question-text']
-      this.$refs['FormQuestionTypeTestCheckbox'].is_test = attributes.its_for_test === 'yes'
-      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = attributes.its_for_card_memory === 'yes'
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = attributes.is_visible
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        let r = Math.random() * 16
 
-      const answerCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'yes')
+        if (d > 0) {
 
-      /* console.log(answerCorrect)
-      console.log(dataAnswers) */
+          r = (d + r) % 16 | 0
+          d = Math.floor(d / 16)
+        } else {
+          r = (d2 + r) % 16 | 0
+          d2 = Math.floor(d2 / 16)
+        }
 
-      dataAnswers = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
-      /* console.log(dataAnswers) */
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+      })
+    },
+    getFormDataForSaveQuestion () {
+      const FormDataQuestion = new FormData()
 
-      this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect[0].id
-      this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect[0].attributes.answer_text
-      this.$refs['FormAnswerCorrectField'].is_grouper_answer = answerCorrect[0].attributes.is_grouper_answer === 'yes'
+      FormDataQuestion.append('question-text', this.$refs['FormQuestionTextField'].question_text)
+      FormDataQuestion.append('is-test', this.$refs['FormQuestionTypeTestCheckbox'].is_test)
+      FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
+      FormDataQuestion.append('is-visible', this.$refs['FormQuestionIsVisibleCheckbox'].is_visible)
+      FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
+      FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
 
-      this.$refs['FormAnswerOneField'].answer_id = dataAnswers[0].id
-      this.$refs['FormAnswerOneField'].answer_value = dataAnswers[0].attributes.answer_text
-      this.$refs['FormAnswerOneField'].is_grouper_answer = dataAnswers[0].attributes.is_grouper_answer === 'yes'
+      if (!this.isTestQuestion) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'not_defined')
 
-      this.$refs['FormAnswerTwoField'].answer_id = dataAnswers[1].id
-      this.$refs['FormAnswerTwoField'].answer_value = dataAnswers[1].attributes.answer_text
-      this.$refs['FormAnswerTwoField'].is_grouper_answer = dataAnswers[1].attributes.is_grouper_answer === 'yes'
+        return FormDataQuestion
+      }
 
-      this.$refs['FormAnswerThreeField'].answer_id = dataAnswers[2].id
-      this.$refs['FormAnswerThreeField'].answer_value = dataAnswers[2].attributes.answer_text
-      this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswers[2].attributes.is_grouper_answer === 'yes'
+      if (this.isQuestionBinary) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('another-answer-binary-alternative', this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'yes')
 
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = attributes.is_visible === 'yes'
+        return FormDataQuestion
+      }
 
-      this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text'] ? attributes['reason-text'] : ''
+      FormDataQuestion.append('is-question-binary-alternatives', 'no')
+      FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-correct', this.$refs['FormAnswerCorrectField'].is_grouper_answer)
 
+      FormDataQuestion.append('answer-one', this.$refs['FormAnswerOneField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-one', this.$refs['FormAnswerOneField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-two', this.$refs['FormAnswerTwoField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-two', this.$refs['FormAnswerTwoField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-three', this.$refs['FormAnswerThreeField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-three', this.$refs['FormAnswerThreeField'].is_grouper_answer)
+
+      return FormDataQuestion
+    },
+    loadImageQuestion (relationships) {
       if (relationships.image) {
         const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
         const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
@@ -126,6 +173,79 @@ export default {
         }
 
       }
+    },
+    loadAnswersQuestion (dataAnswers, { isTest, isCardMemory, isQuestionBinary }) {
+
+      if (isCardMemory) {
+        const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
+
+        const dataAnswersFiltered = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'no')
+
+        this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.answer_text
+        this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersFiltered.answer_text
+      }
+
+      console.log(answerCorrect)
+      console.log(dataAnswersFiltered)
+
+      /* console.log(dataAnswers) */
+
+      /* this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect[0].id
+      this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect[0].attributes.answer_text
+      this.$refs['FormAnswerCorrectField'].is_grouper_answer = answerCorrect[0].attributes.is_grouper_answer === 'yes'
+
+      this.$refs['FormAnswerOneField'].answer_id = dataAnswers[0].id
+      this.$refs['FormAnswerOneField'].answer_value = dataAnswers[0].attributes.answer_text
+      this.$refs['FormAnswerOneField'].is_grouper_answer = dataAnswers[0].attributes.is_grouper_answer === 'yes'
+
+      this.$refs['FormAnswerTwoField'].answer_id = dataAnswers[1].id
+      this.$refs['FormAnswerTwoField'].answer_value = dataAnswers[1].attributes.answer_text
+      this.$refs['FormAnswerTwoField'].is_grouper_answer = dataAnswers[1].attributes.is_grouper_answer === 'yes'
+
+      this.$refs['FormAnswerThreeField'].answer_id = dataAnswers[2].id
+      this.$refs['FormAnswerThreeField'].answer_value = dataAnswers[2].attributes.answer_text
+      this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswers[2].attributes.is_grouper_answer === 'yes' */
+    },
+    syncValuesForm(response) {
+      console.log(response.data)
+
+      this.loadingButtonCreateQuestion = false
+      this.disabledButtonCreateQuestion = false
+
+      const { attributes, relationships } = response.data.data
+      const { topic } = response.data.meta
+
+      this.$refs['FormQuestionTextField'].question_text = attributes['question-text']
+      /* Consultar todo sobre el tipo de pregunta es */
+
+      const ITS_CARD_MEMORY_BOOLEAN = attributes.its_for_card_memory === 'yes'
+      const ITS_TEST_BOOLEAN = attributes.its_for_test === 'yes'
+      const ITS_BINARY_QUESTION_BOOLEAN = attributes.is_question_binary_alternatives === 'yes'
+      const ITS_VISABLE_QUESTION_BOOLEAN = attributes.is_visible === 'yes'
+
+      this.questionData = response.data
+      this.topicData = topic
+
+      this.isCardMemoryQuestion = ITS_CARD_MEMORY_BOOLEAN
+      this.isTestQuestion = ITS_TEST_BOOLEAN
+      this.isQuestionBinary = ITS_BINARY_QUESTION_BOOLEAN
+
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ITS_TEST_BOOLEAN
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ITS_CARD_MEMORY_BOOLEAN
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ITS_VISABLE_QUESTION_BOOLEAN
+
+      this.answerGrouperSelected = ''
+      this.dataAnswersUuid = [
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID()
+      ]
+
+      this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
+
+      this.loadAnswersQuestion(relationships.answers.data)
+      this.loadImageQuestion(relationships)
 
     }
   }

@@ -3,6 +3,7 @@ import data from './component/data'
 import methods from './component/methods'
 import computed from './component/computed'
 import ActionsMethods from './component/ActionsMethods'
+import QuestionsMixin from '@/mixins/Questions'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
@@ -15,7 +16,8 @@ const MIXINS_COMPONENT = [
 ]
 
 const MIXINS_ADDITIONAL = [
-  componentButtonsCrud
+  componentButtonsCrud,
+  QuestionsMixin
 ]
 
 export default {

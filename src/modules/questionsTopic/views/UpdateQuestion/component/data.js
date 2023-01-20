@@ -5,8 +5,7 @@ export default {
       topicData: null,
       questionData: null,
       loadingButtonUpdateQuestion: false,
-      disabledButtonUpdateQuestion: false,
-      isCardMemoryQuestion: false
+      disabledButtonUpdateQuestion: false
     }
   }
 }

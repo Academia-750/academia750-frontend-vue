@@ -5,31 +5,7 @@ export default {
     ...mapActions('questionsTopicService', ['fetchQuestion','updateQuestion']),
     async UpdateQuestionApi() {
       try {
-        const FormDataQuestion = new FormData()
-
-        FormDataQuestion.append('question-text', this.$refs['FormQuestionTextField'].question_text)
-        FormDataQuestion.append('is-test', this.$refs['FormQuestionTypeTestCheckbox'].is_test)
-        FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
-        FormDataQuestion.append('is-visible', this.$refs['FormQuestionIsVisibleCheckbox'].is_visible)
-
-        FormDataQuestion.append('answer-correct-id', this.$refs['FormAnswerCorrectField'].answer_id)
-        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
-        FormDataQuestion.append('is-grouper-answer-correct', this.$refs['FormAnswerCorrectField'].is_grouper_answer)
-
-        FormDataQuestion.append('answer-one-id', this.$refs['FormAnswerOneField'].answer_id)
-        FormDataQuestion.append('answer-one', this.$refs['FormAnswerOneField'].answer_value)
-        FormDataQuestion.append('is-grouper-answer-one', this.$refs['FormAnswerOneField'].is_grouper_answer)
-
-        FormDataQuestion.append('answer-two-id', this.$refs['FormAnswerTwoField'].answer_id)
-        FormDataQuestion.append('answer-two', this.$refs['FormAnswerTwoField'].answer_value)
-        FormDataQuestion.append('is-grouper-answer-two', this.$refs['FormAnswerTwoField'].is_grouper_answer)
-
-        FormDataQuestion.append('answer-three-id', this.$refs['FormAnswerThreeField'].answer_id)
-        FormDataQuestion.append('answer-three', this.$refs['FormAnswerThreeField'].answer_value)
-        FormDataQuestion.append('is-grouper-answer-three', this.$refs['FormAnswerThreeField'].is_grouper_answer)
-
-        FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
-        FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
+        const FormDataQuestion = this.getFormDataForSaveQuestion()
 
         await this.updateQuestion({
           topic_id: this.$route.params.id,
