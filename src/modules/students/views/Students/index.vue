@@ -37,7 +37,7 @@
           key="students-account-enable"
           :transition="false"
           value="students-account-enable"
-          style="min-height: 800px;"
+          style="min-height: 600px;"
         >
           <v-card v-if="getCurrentTabView === 'students-account-enable'" flat>
             <v-card-text>
@@ -47,13 +47,18 @@
                 @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm"
               />
             </v-card-text>
+            <v-card-text>
+              <v-container>
+                <form-actions-buttons />
+              </v-container>
+            </v-card-text>
           </v-card>
         </v-tab-item>
         <v-tab-item
           key="students-account-disable"
           :transition="false"
           value="students-account-disable"
-          style="min-height: 800px;"
+          style="min-height: 600px;"
         >
           <v-card v-if="getCurrentTabView === 'students-account-disable'" flat>
             <v-card-text>
@@ -63,13 +68,15 @@
                 @emitScrollToCreateOrEditStudentForm="ScrollToCreateOrEditStudentForm"
               />
             </v-card-text>
+            <v-card-text>
+              <v-container>
+                <form-actions-buttons />
+              </v-container>
+            </v-card-text>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
     </div>
-    <v-container>
-      <form-actions-buttons />
-    </v-container>
   </v-card-text>
 </template>
 
