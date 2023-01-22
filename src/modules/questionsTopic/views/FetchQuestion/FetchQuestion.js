@@ -38,7 +38,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Actualizar pregunta para subtema'
+      inner: 'Ver pregunta para tema'
     }
   }
 }

@@ -13,6 +13,8 @@
         :error-messages="errors"
         show-size
         :label="label"
+        :clearable="clearable"
+        :disabled="disabled"
         accept="image/*"
         @change="Preview_image"
       ></v-file-input>
@@ -42,6 +44,14 @@ export default {
     isCardMemory: {
       type: Boolean,
       required: true
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

@@ -6,6 +6,7 @@
       :disabled="isDisabledCheckGrouperAnswer"
       color="blue darken-1"
       :label="is_grouper_answer_label"
+      :readonly="readonlyCheckbox"
     ></v-checkbox>
     <ValidationProvider
       v-slot="{ errors }"
@@ -24,9 +25,10 @@
         :placeholder="placeholder"
         :error-messages="errors"
         :disabled="disableField"
+        :readonly="readonlyField"
         filled
         required
-        clearable
+        :clearable="clearable"
         @keyup.enter="$emit('submitForm')"
       >
         <template v-slot:prepend>
@@ -54,6 +56,18 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    readonlyField: {
+      type: Boolean,
+      default: false
+    },
+    readonlyCheckbox: {
+      type: Boolean,
+      default: false
     },
     vid: {
       type: String,

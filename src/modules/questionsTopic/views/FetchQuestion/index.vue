@@ -14,30 +14,16 @@
       <resource-button-go-back-router :width-number-limit="300" :path-route-go-back="{ name: 'manage-questions-of-topic' }" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
-        title-text="Actualizar pregunta"
+        title-text="Ver pregunta"
       />
       <resource-divider-title-datatable :width-limit-title-divider="620"/>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
         <resource-button-add :config-route="{ name: 'create-question-topic' }"/>
-        <!-- <v-btn
-          small
-          color="light-blue darken-3"
-          class="white--text mx-1 align-self-center"
-          @click="fetchDataQuestionForUpdate"
-        >
-          <v-icon
-            right
-            dark
-            class="mr-1"
-          >
-            mdi-refresh
-          </v-icon>
-        </v-btn> -->
       </div>
     </v-toolbar>
     <v-card-text>
-      <validation-observer ref="FormUpdateQuestion" v-slot="{ invalid }">
+      <validation-observer ref="FormUpdateQuestion" v-slot="{}">
         <v-row dense>
           <v-col
             cols="12"
@@ -49,6 +35,8 @@
             <form-question-text-field
               ref="FormQuestionTextField"
               rules="required"
+              :clearable="false"
+              readonly
             />
           </v-col>
           <v-col
@@ -60,10 +48,12 @@
           >
             <form-question-type-test-checkbox
               ref="FormQuestionTypeTestCheckbox"
+              readonly
               @QuestionIsTestBinding="isTestQuestion = $event"
             />
             <form-question-type-card-memory-checkbox
               ref="FormQuestionTypeCardMemoryCheckbox"
+              readonly
               @QuestionIsCardMemoryBinding="isCardMemoryQuestion = $event"
             />
           </v-col>
@@ -76,6 +66,7 @@
           >
             <form-question-is-visible-checkbox
               ref="FormQuestionIsVisibleCheckbox"
+              readonly
             />
           </v-col>
           <v-col
@@ -108,6 +99,7 @@
                 >
                   <v-switch
                     v-model="isQuestionBinary"
+                    readonly
                     :label="`Es pregunta binaria: ${getLabelByQuestionBinary}`"
                   ></v-switch>
                 </v-container>
@@ -124,6 +116,9 @@
                     ref="FormAnswerCorrectField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[0]"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     rules="required"
                     vid="answer-correct"
                     name-field-validate="Respuesta correcta"
@@ -143,6 +138,9 @@
                     :uuid="dataAnswersUuid[1]"
                     rules="required"
                     vid="answer-one"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     name-field-validate="Respuesta 1"
                     ref-text-field="answer-one-field"
                     label="Respuesta 1"
@@ -157,6 +155,9 @@
                     :uuid="dataAnswersUuid[2]"
                     rules="required"
                     vid="answer-two"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     name-field-validate="Respuesta 2"
                     ref-text-field="answer-two-field"
                     label="Respuesta 2"
@@ -171,6 +172,9 @@
                     :uuid="dataAnswersUuid[3]"
                     rules="required"
                     vid="answer-three"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     name-field-validate="Respuesta 3"
                     ref-text-field="answer-three-field"
                     label="Respuesta 3"
@@ -185,6 +189,9 @@
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[0]"
                     rules="required"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     vid="answer-correct-of-question-binary"
                     name-field-validate="Respuesta correcta"
                     ref-text-field="answer-correct-field-of-question-binary"
@@ -202,6 +209,9 @@
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[1]"
                     rules="required"
+                    readonly-field
+                    readonly-checkbox
+                    :clearable="false"
                     vid="another-answer-of-question-binary"
                     name-field-validate="Segunda alternativa"
                     ref-text-field="answer-another-field-of-question-binary"
@@ -239,29 +249,18 @@
                   name-field-validate="Explicación"
                   :has-reason-image="imageReason !== null"
                   :is-card-memory="isCardMemoryQuestion"
+                  :clearable="false"
+                  readonly
                 />
                 <form-add-question-image
                   ref="FormAddQuestionImage"
+                  disabled
+                  :clearable="false"
                   :is-card-memory="isCardMemoryQuestion"
                   @ImageBinding="imageReason = $event"
                 />
               </v-col>
             </v-row>
-          </v-col>
-          <v-col
-            cols="12"
-            class="d-flex justify-center flex-column flex-sm-row"
-          >
-            <v-btn
-              :loading="loadingButtonUpdateQuestion"
-              :disabled="disabledButtonUpdateQuestion || invalid || true"
-              color="light-blue darken-3"
-              class="mt-3 white--text"
-              @click="UpdateQuestion"
-            >
-              <v-icon right dark class="mr-1"> mdi-database-refresh </v-icon>
-              Actualizar
-            </v-btn>
           </v-col>
         </v-row>
       </validation-observer>
@@ -269,4 +268,4 @@
   </v-card-text>
 </template>
 
-<script src="./UpdateQuestionsTopic.js"></script>
+<script src="./FetchQuestion.js"></script>

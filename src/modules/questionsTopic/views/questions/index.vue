@@ -89,19 +89,26 @@
         <resource-banner-no-data-datatable message-text="Este tema no tiene preguntas disponibles"/>
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div v-if="item.can_this_question_be_affected" class="d-flex justify-space-around">
+        <div class="d-flex justify-space-around">
           <resource-button-edit
-            v-if="topicData !== null"
+            text-button="Ver"
+            icon-button="mdi-eye"
+            color-button="success"
+            :config-route="{ name: 'fetch-question-topic', params: { question_id: item.id } }"
+          />
+          <resource-button-edit
+            v-if="topicData !== null && item.can_this_question_be_affected"
             color-button="blue darken-1"
             :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
           />
           <resource-button-delete
+            v-if="item.can_this_question_be_affected"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
         </div>
-        <div v-else class="d-flex justify-center">
+        <!-- <div v-else class="d-flex justify-center">
           <span class="font-weight-bold">Esta pregunta está siendo usada en un Test y no se puede modificar</span>
-        </div>
+        </div> -->
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete

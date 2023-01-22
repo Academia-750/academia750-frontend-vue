@@ -10,6 +10,7 @@
       v-model="is_visible"
       :disabled="isDisabled"
       :error-messages="errors"
+      :readonly="readonly"
       color="blue darken-1"
       :label="`Es visible: ${is_visible_question}`"
     ></v-checkbox>
@@ -21,6 +22,10 @@ export default {
   name: 'FormQuestionIsVisibleCheckbox',
   props: {
     isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
       type: Boolean,
       default: false
     }

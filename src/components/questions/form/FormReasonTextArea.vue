@@ -14,6 +14,8 @@
       label="Explicación"
       placeholder="Explicación de la pregunta"
       filled
+      :clearable="clearable"
+      :readonly="readonly"
       :error-messages="errors"
       name="input-7-4"
     ></v-textarea>
@@ -31,6 +33,14 @@ export default {
     vid: {
       type: String,
       required: true
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
     nameFieldValidate: {
       type: String,

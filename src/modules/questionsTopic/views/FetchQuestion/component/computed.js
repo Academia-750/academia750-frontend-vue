@@ -1,7 +1,7 @@
 export default {
   computed: {
-    getNameCurrentSubtopic() {
-      return `Pregunta del Subtema: "${this.subtopicData?.attributes?.name}"`
+    getNameCurrentTopic() {
+      return `Pregunta del Tema: "${this.topicData?.attributes?.name}"`
     },
     getNameCurrentQuestion() {
       return `Pregunta: "${this.questionData?.data?.attributes['question-text']}"`

@@ -11,6 +11,7 @@
       color="success"
       :disabled="isDisabled"
       :error-messages="errors"
+      :readonly="readonly"
       :label="`Es para Test: ${question_for_test_label}`"
     ></v-checkbox>
   </ValidationProvider>
@@ -21,6 +22,14 @@ export default {
   name: 'FormQuestionTypeTestCheckbox',
   props: {
     isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    readonly: {
       type: Boolean,
       default: false
     }

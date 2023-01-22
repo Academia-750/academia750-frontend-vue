@@ -16,9 +16,10 @@
       placeholder="Escribe la pregunta"
       :error-messages="errors"
       :disabled="isDisabled"
+      :readonly="readonly"
       filled
       required
-      clearable
+      :clearable="clearable"
       @keyup.enter="$emit('submitForm')"
     >
       <template v-slot:prepend>
@@ -35,6 +36,14 @@ export default {
   name: 'FormQuestionTextField',
   props: {
     isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    readonly: {
       type: Boolean,
       default: false
     },

@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import ManageQuestionsTopicModule from '@/modules/questionsTopic/views/questions'
 import importQuestions from '@/modules/questionsTopic/views/import'
 import CreateQuestionsTopicModule from './views/CreateQuestion'
+import FetchQuestionTopicModule from './views/FetchQuestion'
 import UpdateQuestionsTopicModule from './views/UpdateQuestion'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
@@ -61,6 +62,14 @@ const moduleRoute = [
             path: ':id/questions/create',
             name: 'create-question-topic',
             component: CreateQuestionsTopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/questions/fetch/:question_id',
+            name: 'fetch-question-topic',
+            component: FetchQuestionTopicModule,
             meta: {
               middleware: [authMiddleware]
             }
