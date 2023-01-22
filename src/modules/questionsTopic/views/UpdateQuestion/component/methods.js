@@ -176,47 +176,72 @@ export default {
     },
     loadAnswersQuestion (dataAnswers, { isTest, isCardMemory, isQuestionBinary }) {
 
-      if (isCardMemory) {
-        /* const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
+      const dataAnswersAlternativesNoCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
+      const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
 
-        const dataAnswersFiltered = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'no')
+      console.log(dataAnswersAlternativesNoCorrect)
 
-        this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.answer_text
-        this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersFiltered.answer_text */
+      this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect.id
+      this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect.attributes.answer_text
+      this.$refs['FormAnswerCorrectField'].is_grouper_answer = false
+
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_id = answerCorrect.id
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.attributes.answer_text
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].is_grouper_answer = false
+
+      if (!isTest && isCardMemory && !isQuestionBinary && answerCorrect) {
+        console.info('Pregunta de tipo tarjeta de memoria')
+
+        return
+      }
+
+      if (isTest && !isQuestionBinary) {
+        console.info('Pregunta de tipo Test y pregunta de alternativas no binaria')
+
+        if (dataAnswersAlternativesNoCorrect && dataAnswersAlternativesNoCorrect.length > 0) {
+
+          this.$refs['FormAnswerOneField'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerOneField'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerOneField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[0].attributes.is_grouper_answer === 'yes'
+
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].is_grouper_answer = false
+
+          this.$refs['FormAnswerTwoField'].answer_id = dataAnswersAlternativesNoCorrect[1].id
+          this.$refs['FormAnswerTwoField'].answer_value = dataAnswersAlternativesNoCorrect[1].attributes.answer_text
+          this.$refs['FormAnswerTwoField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[1].attributes.is_grouper_answer === 'yes'
+
+          this.$refs['FormAnswerThreeField'].answer_id = dataAnswersAlternativesNoCorrect[2].id
+          this.$refs['FormAnswerThreeField'].answer_value = dataAnswersAlternativesNoCorrect[2].attributes.answer_text
+          this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[2].attributes.is_grouper_answer === 'yes'
+        }
+
+        return
+      }
+
+      if (isTest && isQuestionBinary) {
+        console.info('Pregunta de tipo Test y pregunta de alternativas binaria')
+
+        if (dataAnswersAlternativesNoCorrect && dataAnswersAlternativesNoCorrect.length > 0) {
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].is_grouper_answer = false
+
+          this.$refs['FormAnswerOneField'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerOneField'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerOneField'].is_grouper_answer = false
+        }
+
+        return
       }
 
       console.log(dataAnswers)
-
-      console.log(this.$refs)
-      console.log(this.$refs['FormAnswerCorrectFieldOfQuestionBinary'])
-      console.log(this.$refs['FormAnswerAnotherFieldOfQuestionBinary'])
-
       console.log({
         isTest,
         isCardMemory,
         isQuestionBinary
       })
-
-      /* console.log(answerCorrect)
-      console.log(dataAnswersFiltered) */
-
-      /* console.log(dataAnswers) */
-
-      /* this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect[0].id
-      this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect[0].attributes.answer_text
-      this.$refs['FormAnswerCorrectField'].is_grouper_answer = answerCorrect[0].attributes.is_grouper_answer === 'yes'
-
-      this.$refs['FormAnswerOneField'].answer_id = dataAnswers[0].id
-      this.$refs['FormAnswerOneField'].answer_value = dataAnswers[0].attributes.answer_text
-      this.$refs['FormAnswerOneField'].is_grouper_answer = dataAnswers[0].attributes.is_grouper_answer === 'yes'
-
-      this.$refs['FormAnswerTwoField'].answer_id = dataAnswers[1].id
-      this.$refs['FormAnswerTwoField'].answer_value = dataAnswers[1].attributes.answer_text
-      this.$refs['FormAnswerTwoField'].is_grouper_answer = dataAnswers[1].attributes.is_grouper_answer === 'yes'
-
-      this.$refs['FormAnswerThreeField'].answer_id = dataAnswers[2].id
-      this.$refs['FormAnswerThreeField'].answer_value = dataAnswers[2].attributes.answer_text
-      this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswers[2].attributes.is_grouper_answer === 'yes' */
     },
     syncValuesForm(response) {
       console.log(response.data)
@@ -247,12 +272,6 @@ export default {
       this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ITS_VISABLE_QUESTION_BOOLEAN
 
       this.answerGrouperSelected = ''
-      this.dataAnswersUuid = [
-        this.generateUUID(),
-        this.generateUUID(),
-        this.generateUUID(),
-        this.generateUUID()
-      ]
 
       this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
 

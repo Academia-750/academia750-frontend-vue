@@ -28,6 +28,14 @@ export default {
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
+  created () {
+    this.dataAnswersUuid = [
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID()
+    ]
+  },
   head: {
     title: {
       inner: 'Actualizar pregunta para tema'

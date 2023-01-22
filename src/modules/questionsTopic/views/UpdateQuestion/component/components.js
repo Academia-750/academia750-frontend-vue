@@ -7,6 +7,13 @@ import FormAddQuestionImage from '@/components/questions/form/FormAddQuestionIma
 import FormQuestionIsVisibleCheckbox from '@/components/questions/form/FormQuestionIsVisibleCheckbox'
 
 const components = {
+  FormQuestionTextField,
+  FormQuestionTypeTestCheckbox,
+  FormQuestionTypeCardMemoryCheckbox,
+  FormQuestionIsVisibleCheckbox,
+  FormReasonTextArea,
+  FormAnswerField,
+  FormAddQuestionImage,
   ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
   ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
   ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
@@ -16,14 +23,7 @@ const components = {
   ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
   ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
   ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-  ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
-  FormQuestionTextField,
-  FormQuestionTypeTestCheckbox,
-  FormQuestionTypeCardMemoryCheckbox,
-  FormQuestionIsVisibleCheckbox,
-  FormReasonTextArea,
-  FormAnswerField,
-  FormAddQuestionImage
+  ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete')
 }
 
 export default {

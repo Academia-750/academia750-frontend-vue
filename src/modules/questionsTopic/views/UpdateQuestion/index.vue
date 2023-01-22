@@ -254,7 +254,7 @@
           >
             <v-btn
               :loading="loadingButtonUpdateQuestion"
-              :disabled="disabledButtonUpdateQuestion || invalid"
+              :disabled="disabledButtonUpdateQuestion || invalid || true"
               color="light-blue darken-3"
               class="mt-3 white--text"
               @click="UpdateQuestion"
