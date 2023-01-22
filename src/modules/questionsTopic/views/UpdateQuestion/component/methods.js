@@ -177,16 +177,28 @@ export default {
     loadAnswersQuestion (dataAnswers, { isTest, isCardMemory, isQuestionBinary }) {
 
       if (isCardMemory) {
-        const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
+        /* const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
 
         const dataAnswersFiltered = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'no')
 
         this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.answer_text
-        this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersFiltered.answer_text
+        this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersFiltered.answer_text */
       }
 
-      console.log(answerCorrect)
-      console.log(dataAnswersFiltered)
+      console.log(dataAnswers)
+
+      console.log(this.$refs)
+      console.log(this.$refs['FormAnswerCorrectFieldOfQuestionBinary'])
+      console.log(this.$refs['FormAnswerAnotherFieldOfQuestionBinary'])
+
+      console.log({
+        isTest,
+        isCardMemory,
+        isQuestionBinary
+      })
+
+      /* console.log(answerCorrect)
+      console.log(dataAnswersFiltered) */
 
       /* console.log(dataAnswers) */
 
@@ -244,7 +256,11 @@ export default {
 
       this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
 
-      this.loadAnswersQuestion(relationships.answers.data)
+      this.loadAnswersQuestion(relationships.answers.data, {
+        isTest: ITS_TEST_BOOLEAN,
+        isCardMemory: ITS_CARD_MEMORY_BOOLEAN,
+        isQuestionBinary: ITS_BINARY_QUESTION_BOOLEAN
+      })
       this.loadImageQuestion(relationships)
 
     }

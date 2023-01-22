@@ -21,7 +21,7 @@ export default {
 
       if (!this.isTestQuestion) {
         FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
-        FormDataQuestion.append('is-question-binary-alternatives', 'not_defined')
+        FormDataQuestion.append('is-question-binary-alternatives', 'no')
 
         return FormDataQuestion
       }
