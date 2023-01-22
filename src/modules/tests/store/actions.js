@@ -77,6 +77,12 @@ const closeAndGradeTest = async (_, options) => {
   }
 }
 
+const sortQuestionsByIndexTest = (questions_data, questions) => {
+  return questions_data.map((question_reference) => {
+    return questions.find((question) => question.id === question_reference.question_id)
+  })
+}
+
 const fetchAQuiz = async ({ commit }, options) => {
   try {
 
@@ -84,7 +90,11 @@ const fetchAQuiz = async ({ commit }, options) => {
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
     const response = await TestsRepository.fetchUnresolvedTest(options.test_id, options.config)
 
-    commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
+    const { data: questions } = response.data
+    const { questions_data } = response.data.meta
+
+    commit('SET_ITEMS_QUESTIONS_BY_TESTS', sortQuestionsByIndexTest(questions_data, questions))
+    //commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.meta.questions_data)
 
     return Promise.resolve(response)
@@ -104,7 +114,11 @@ const fetchHistoryTestComplete = async ({ commit }, options) => {
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
     const response = await TestsRepository.fetchHistoryTestComplete(options.test_id, options.config)
 
-    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.data)
+    const { data: questions } = response.data
+    const { questions_data } = response.data.meta
+
+    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', sortQuestionsByIndexTest(questions_data, questions))
+    //commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.data)
 
     return Promise.resolve(response)
 
