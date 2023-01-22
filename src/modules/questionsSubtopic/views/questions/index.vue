@@ -87,17 +87,22 @@
         <resource-banner-no-data-datatable message-text="Este subtema no tiene preguntas disponibles"/>
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div v-if="item.can_this_question_be_affected" class="d-flex justify-space-around">
+        <div class="d-flex justify-space-around">
           <resource-button-edit
+            text-button="Ver"
+            icon-button="mdi-eye"
+            color-button="success"
+            :config-route="{ name: 'fetch-question-subtopic', params: { question_id: item.id } }"
+          />
+          <resource-button-edit
+            v-if="item.can_this_question_be_affected"
             color-button="blue darken-1"
             :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-delete
+            v-if="item.can_this_question_be_affected"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
-        </div>
-        <div v-else class="d-flex justify-center">
-          <span class="font-weight-bold">Esta pregunta está siendo usada en un Test y no se puede modificar</span>
         </div>
       </template>
     </v-data-table>

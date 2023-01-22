@@ -3,6 +3,7 @@ import authMiddleware from '@/middlewares/auth'
 import ManageQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/questions'
 import CreateQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/CreateQuestion'
 import UpdateQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/UpdateQuestion'
+import FetchQuestionSubtopicModule from '@/modules/questionsSubtopic/views/FetchQuestion'
 
 const shortcutRoutes = [
   /* {
@@ -50,6 +51,14 @@ const moduleRoute = [
             path: ':id/subtopics/:subtopic_id/questions/create',
             name: 'create-question-subtopic',
             component: CreateQuestionsSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/subtopics/:subtopic_id/questions/fetch/:question_id',
+            name: 'fetch-question-subtopic',
+            component: FetchQuestionSubtopicModule,
             meta: {
               middleware: [authMiddleware]
             }
