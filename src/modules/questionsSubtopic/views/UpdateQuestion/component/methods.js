@@ -102,6 +102,7 @@ export default {
     getFormDataForSaveQuestion () {
       const FormDataQuestion = new FormData()
 
+      FormDataQuestion.append('remove-image-existing', 'no')
       FormDataQuestion.append('question-text', this.$refs['FormQuestionTextField'].question_text)
       FormDataQuestion.append('is-test', this.$refs['FormQuestionTypeTestCheckbox'].is_test)
       FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
@@ -111,7 +112,7 @@ export default {
 
       if (!this.isTestQuestion) {
         FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
-        FormDataQuestion.append('is-question-binary-alternatives', 'not_defined')
+        FormDataQuestion.append('is-question-binary-alternatives', 'no')
 
         return FormDataQuestion
       }
@@ -148,11 +149,13 @@ export default {
         if (relationships.image.attributes.type_path === 'url') {
           this.$refs['FormAddQuestionImage'].urlImage = relationships.image.attributes.path
           this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
         }
 
         if (relationships.image.attributes.type_path === 'local') {
           this.$refs['FormAddQuestionImage'].urlImage = `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}${relationships.image.attributes.path}`
           this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
         }
 
       }
@@ -161,6 +164,9 @@ export default {
 
       const dataAnswersAlternativesNoCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
       const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
+
+      /* console.log(dataAnswersAlternativesNoCorrect)
+      console.log(answerCorrect) */
 
       this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect.id
       this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect.attributes.answer_text

@@ -6,7 +6,9 @@ export default {
       questionData: null,
       loadingButtonUpdateQuestion: false,
       disabledButtonUpdateQuestion: false,
-      isCardMemoryQuestion: false
+      isCardMemoryQuestion: false,
+      removeImagenOfQuestion: false,
+      isThereImageQuestionUpdate: false
     }
   }
 }

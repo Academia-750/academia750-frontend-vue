@@ -239,6 +239,7 @@
                   name-field-validate="Explicación"
                   :has-reason-image="imageReason !== null"
                   :is-card-memory="isCardMemoryQuestion"
+                  :is-there-image-question-update="isThereImageQuestionUpdate"
                 />
                 <form-add-question-image
                   ref="FormAddQuestionImage"
@@ -254,7 +255,7 @@
           >
             <v-btn
               :loading="loadingButtonUpdateQuestion"
-              :disabled="disabledButtonUpdateQuestion || invalid || true"
+              :disabled="disabledButtonUpdateQuestion || invalid"
               color="light-blue darken-3"
               class="mt-3 white--text"
               @click="UpdateQuestion"

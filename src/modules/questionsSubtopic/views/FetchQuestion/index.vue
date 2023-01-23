@@ -11,7 +11,7 @@
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
     <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-      <resource-button-go-back-router :width-number-limit="300" :path-route-go-back="{ name: 'manage-questions-of-topic' }" />
+      <resource-button-go-back-router :width-number-limit="300" :path-route-go-back="{ name: 'manage-questions-of-subtopic' }" />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Ver pregunta"
