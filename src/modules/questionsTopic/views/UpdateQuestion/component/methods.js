@@ -179,15 +179,16 @@ export default {
       const dataAnswersAlternativesNoCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
       const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
 
-      console.log(dataAnswersAlternativesNoCorrect)
+      /* console.log(dataAnswersAlternativesNoCorrect)
+      console.log(answerCorrect) */
 
       this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect.id
       this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect.attributes.answer_text
-      this.$refs['FormAnswerCorrectField'].is_grouper_answer = false
+      this.$refs['FormAnswerCorrectField'].is_grouper_answer = answerCorrect.attributes.is_grouper_answer === 'yes'
 
       this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_id = answerCorrect.id
       this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.attributes.answer_text
-      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].is_grouper_answer = false
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].is_grouper_answer = answerCorrect.attributes.is_grouper_answer === 'yes'
 
       if (!isTest && isCardMemory && !isQuestionBinary && answerCorrect) {
         console.info('Pregunta de tipo tarjeta de memoria')
