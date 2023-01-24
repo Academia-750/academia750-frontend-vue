@@ -60,11 +60,11 @@
           >
             <form-question-type-test-checkbox
               ref="FormQuestionTypeTestCheckbox"
-              @QuestionIsTestBinding="isTestQuestion = $event"
+              @QuestionIsTestBinding="bindingIsTestState"
             />
             <form-question-type-card-memory-checkbox
               ref="FormQuestionTypeCardMemoryCheckbox"
-              @QuestionIsCardMemoryBinding="isCardMemoryQuestion = $event"
+              @QuestionIsCardMemoryBinding="bindingIsCardMemoryState"
             />
           </v-col>
           <v-col

@@ -99,6 +99,16 @@ export default {
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
       })
     },
+    bindingIsTestState (isTest) {
+      this.isTestQuestion = isTest
+      this.show_reason_text_in_test = isTest
+      this.show_reason_image_in_test = isTest
+    },
+    bindingIsCardMemoryState (isCardMemory) {
+      this.isCardMemoryQuestion = isCardMemory
+      this.show_reason_text_in_card_memory = isCardMemory
+      this.show_reason_image_in_card_memory = isCardMemory
+    },
     getFormDataForSaveQuestion () {
       const FormDataQuestion = new FormData()
 
