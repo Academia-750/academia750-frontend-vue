@@ -11,7 +11,6 @@
     <v-text-field
       ref="question-text-field"
       v-model="question_text"
-      :counter="255"
       label="Pregunta"
       placeholder="Escribe la pregunta"
       :error-messages="errors"

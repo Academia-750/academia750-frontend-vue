@@ -48,7 +48,7 @@
           >
             <form-question-text-field
               ref="FormQuestionTextField"
-              rules="required"
+              rules="required|max:65535"
             />
           </v-col>
           <v-col
@@ -124,7 +124,7 @@
                     ref="FormAnswerCorrectField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[0]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="answer-correct"
                     name-field-validate="Respuesta correcta"
                     ref-text-field="answer-correct-field"
@@ -141,7 +141,7 @@
                     ref="FormAnswerOneField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[1]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="answer-one"
                     name-field-validate="Respuesta 1"
                     ref-text-field="answer-one-field"
@@ -155,7 +155,7 @@
                     ref="FormAnswerTwoField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[2]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="answer-two"
                     name-field-validate="Respuesta 2"
                     ref-text-field="answer-two-field"
@@ -169,7 +169,7 @@
                     ref="FormAnswerThreeField"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[3]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="answer-three"
                     name-field-validate="Respuesta 3"
                     ref-text-field="answer-three-field"
@@ -184,7 +184,7 @@
                     ref="FormAnswerCorrectFieldOfQuestionBinary"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[0]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="answer-correct-of-question-binary"
                     name-field-validate="Respuesta correcta"
                     ref-text-field="answer-correct-field-of-question-binary"
@@ -201,7 +201,7 @@
                     ref="FormAnswerAnotherFieldOfQuestionBinary"
                     :answer-grouper-selected="answerGrouperSelected"
                     :uuid="dataAnswersUuid[1]"
-                    rules="required"
+                    rules="required|max:65535"
                     vid="another-answer-of-question-binary"
                     name-field-validate="Segunda alternativa"
                     ref-text-field="answer-another-field-of-question-binary"

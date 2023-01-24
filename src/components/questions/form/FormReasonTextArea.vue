@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     rulesReasonTextQuestion () {
-      return this.reason_value || (this.isCardMemory && !this.hasReasonImage && !this.isThereImageQuestionUpdate && !this.reason_value) ? 'requiredReasonByCardMemoryQuestion|max:400' : ''
+      return this.reason_value || (this.isCardMemory && !this.hasReasonImage && !this.isThereImageQuestionUpdate && !this.reason_value) ? 'requiredReasonByCardMemoryQuestion|max:65535' : ''
     }
   },
   watch: {

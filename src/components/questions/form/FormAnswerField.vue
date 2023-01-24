@@ -20,7 +20,6 @@
       <v-text-field
         :ref="refTextField"
         v-model="answer_value"
-        :counter="255"
         :label="label"
         :placeholder="placeholder"
         :error-messages="errors"
