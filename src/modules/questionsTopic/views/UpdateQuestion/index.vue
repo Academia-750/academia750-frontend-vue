@@ -233,6 +233,16 @@
                 md="12"
                 lg="12"
               >
+                <div v-if="reasonText" class="d-flex justify-space-around">
+                  <v-checkbox
+                    v-model="show_reason_text_in_test"
+                    label="Mostrar en Test"
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-model="show_reason_text_in_card_memory"
+                    label="Mostrar en Tarjeta de memoria"
+                  ></v-checkbox>
+                </div>
                 <form-reason-text-area
                   ref="FormReasonTextArea"
                   vid="reason-question"
@@ -241,6 +251,16 @@
                   :is-card-memory="isCardMemoryQuestion"
                   :is-there-image-question-update="isThereImageQuestionUpdate"
                 />
+                <div v-if="imageReason || isThereImageQuestionUpdate" class="d-flex justify-space-around mt-4">
+                  <v-checkbox
+                    v-model="show_reason_image_in_test"
+                    label="Mostrar en Test"
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-model="show_reason_image_in_card_memory"
+                    label="Mostrar en Tarjeta de memoria"
+                  ></v-checkbox>
+                </div>
                 <form-add-question-image
                   ref="FormAddQuestionImage"
                   :is-card-memory="isCardMemoryQuestion"
