@@ -135,15 +135,18 @@ export default {
 
         this.loadingButton = true
 
-        await this.importQuestionsCSV({
+        const response = await this.importQuestionsCSV({
           data: formDataFilesQuestions,
           config: {}
         })
 
+        console.log(response)
+
         this.$swal.fire({
-          icon: 'success',
+          icon: 'info',
           toast: true,
           title: 'El proceso de importación de preguntas ha iniciado. Te notificaremos en cuanto termine o puedes revisar "Mis importaciones"',
+          //title: response.data.message,
           timer: 10000
         })
 

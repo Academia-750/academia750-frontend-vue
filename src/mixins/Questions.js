@@ -6,7 +6,8 @@ export default {
       answerGrouperSelected: '',
       dataAnswersUuid: [],
       isQuestionBinary: false,
-      imageReason: null
+      imageReason: null,
+      reasonText: null
     }
   }
 }
