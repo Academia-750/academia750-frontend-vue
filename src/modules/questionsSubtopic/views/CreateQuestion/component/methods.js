@@ -19,6 +19,22 @@ export default {
       FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
       FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
 
+      if (this.reasonText) {
+        FormDataQuestion.append('show_reason_text_in_test', this.show_reason_text_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', this.show_reason_text_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_text_in_test', 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', 'no')
+      }
+
+      if (this.imageReason) {
+        FormDataQuestion.append('show_reason_image_in_test', this.show_reason_image_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', this.show_reason_image_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_image_in_test', 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', 'no')
+      }
+
       if (!this.isTestQuestion) {
         FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
         FormDataQuestion.append('is-question-binary-alternatives', 'no')
@@ -109,6 +125,11 @@ export default {
 
       this.isQuestionBinary = false
       this.imageReason = null
+
+      this.show_reason_text_in_test = true
+      this.show_reason_text_in_card_memory = false
+      this.show_reason_image_in_test = true
+      this.show_reason_image_in_card_memory = false
 
       this.$nextTick(() => {
         this.$refs['FormCreateQuestion']['reset']()

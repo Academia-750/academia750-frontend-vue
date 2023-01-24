@@ -110,6 +110,22 @@ export default {
       FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
       FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
 
+      if (this.reasonText) {
+        FormDataQuestion.append('show_reason_text_in_test', this.show_reason_text_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', this.show_reason_text_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_text_in_test', 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', 'no')
+      }
+
+      if (this.imageReason || this.isThereImageQuestionUpdate) {
+        FormDataQuestion.append('show_reason_image_in_test', this.show_reason_image_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', this.show_reason_image_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_image_in_test', 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', 'no')
+      }
+
       if (!this.isTestQuestion) {
         FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
         FormDataQuestion.append('is-question-binary-alternatives', 'no')
@@ -247,6 +263,16 @@ export default {
       const ITS_BINARY_QUESTION_BOOLEAN = attributes.is_question_binary_alternatives === 'yes'
       const ITS_VISABLE_QUESTION_BOOLEAN = attributes.is_visible === 'yes'
 
+      const SHOW_REASON_TEXT_IN_TEST = attributes.show_reason_text_in_test === 'yes'
+      const SHOW_REASON_TEXT_IN_CARD_MEMORY = attributes.show_reason_text_in_card_memory === 'yes'
+      const SHOW_REASON_IMAGE_IN_TEST = attributes.show_reason_image_in_test === 'yes'
+      const SHOW_REASON_IMAGE_IN_CARD_MEMORY = attributes.show_reason_image_in_card_memory === 'yes'
+
+      this.show_reason_text_in_test = SHOW_REASON_TEXT_IN_TEST
+      this.show_reason_text_in_card_memory = SHOW_REASON_TEXT_IN_CARD_MEMORY
+      this.show_reason_image_in_test = SHOW_REASON_IMAGE_IN_TEST
+      this.show_reason_image_in_card_memory = SHOW_REASON_IMAGE_IN_CARD_MEMORY
+
       this.questionData = response.data
       this.topicData = topic
 
@@ -261,6 +287,7 @@ export default {
       this.answerGrouperSelected = ''
 
       this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
+      this.reasonText = attributes['reason-text']
 
       this.loadAnswersQuestion(relationships.answers.data, {
         isTest: ITS_TEST_BOOLEAN,

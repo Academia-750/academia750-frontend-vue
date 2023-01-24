@@ -81,11 +81,13 @@ export default {
         if (relationships.image.attributes.type_path === 'url') {
           this.$refs['FormAddQuestionImage'].urlImage = relationships.image.attributes.path
           this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
         }
 
         if (relationships.image.attributes.type_path === 'local') {
           this.$refs['FormAddQuestionImage'].urlImage = `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}${relationships.image.attributes.path}`
           this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
         }
 
       }
@@ -174,6 +176,16 @@ export default {
       const ITS_BINARY_QUESTION_BOOLEAN = attributes.is_question_binary_alternatives === 'yes'
       const ITS_VISABLE_QUESTION_BOOLEAN = attributes.is_visible === 'yes'
 
+      const SHOW_REASON_TEXT_IN_TEST = attributes.show_reason_text_in_test === 'yes'
+      const SHOW_REASON_TEXT_IN_CARD_MEMORY = attributes.show_reason_text_in_card_memory === 'yes'
+      const SHOW_REASON_IMAGE_IN_TEST = attributes.show_reason_image_in_test === 'yes'
+      const SHOW_REASON_IMAGE_IN_CARD_MEMORY = attributes.show_reason_image_in_card_memory === 'yes'
+
+      this.show_reason_text_in_test = SHOW_REASON_TEXT_IN_TEST
+      this.show_reason_text_in_card_memory = SHOW_REASON_TEXT_IN_CARD_MEMORY
+      this.show_reason_image_in_test = SHOW_REASON_IMAGE_IN_TEST
+      this.show_reason_image_in_card_memory = SHOW_REASON_IMAGE_IN_CARD_MEMORY
+
       this.questionData = response.data
       this.topicData = topic
 
@@ -188,6 +200,7 @@ export default {
       this.answerGrouperSelected = ''
 
       this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
+      this.reasonText = attributes['reason-text']
 
       this.loadAnswersQuestion(relationships.answers.data, {
         isTest: ITS_TEST_BOOLEAN,

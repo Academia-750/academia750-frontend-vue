@@ -250,6 +250,7 @@
                   :has-reason-image="imageReason !== null"
                   :is-card-memory="isCardMemoryQuestion"
                   :is-there-image-question-update="isThereImageQuestionUpdate"
+                  @ReasonQuestionBinding="reasonText = $event"
                 />
                 <div v-if="imageReason || isThereImageQuestionUpdate" class="d-flex justify-space-around mt-4">
                   <v-checkbox
