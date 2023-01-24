@@ -22,7 +22,7 @@ export default {
       items: [
         {
           icon: 'mdi-book-edit', key: '', text: 'Zona de entrenamiento', roles: 'student', regex: /^\/Zona de Entrenamiento/, items: [
-            { icon: 'mdi-book-open-variant', key: '', text: 'Tomar cuestionario', to: { name: 'generate-questionnaire' }, roles: 'student' },
+            { icon: 'mdi-book-open-variant', key: '', text: 'Generar cuestionario', to: { name: 'generate-questionnaire' }, roles: 'student' },
             { icon: 'mdi-book-clock', key: '', text: 'Tests sin completar', to: { name: 'list-questionnaires-of-student-not-complete' }, roles: 'student' },
             { icon: 'mdi-view-list', key: '', text: 'Tarjetas de memoria', to: { name: 'list-cards-memory' }, roles: 'student' }
           ]
