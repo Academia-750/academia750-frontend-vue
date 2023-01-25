@@ -93,8 +93,8 @@ const fetchAQuiz = async ({ commit }, options) => {
     const { data: questions } = response.data
     const { questions_data } = response.data.meta
 
-    commit('SET_ITEMS_QUESTIONS_BY_TESTS', sortQuestionsByIndexTest(questions_data, questions))
-    //commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
+    //commit('SET_ITEMS_QUESTIONS_BY_TESTS', sortQuestionsByIndexTest(questions_data, questions))
+    commit('SET_ITEMS_QUESTIONS_BY_TESTS', response.data.data)
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.meta.questions_data)
 
     return Promise.resolve(response)

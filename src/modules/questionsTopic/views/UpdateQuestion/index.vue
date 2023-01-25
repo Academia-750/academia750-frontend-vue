@@ -43,6 +43,15 @@
             cols="12"
             sm="12"
             md="12"
+            lg="12"
+          >
+            <p class="font-weight-bold">La pregunta está en modo edición. Mientras esté en modo edición la pregunta no estará disponible para los Tests</p>
+            <p class="font-weight-bold">Para salir del modo edición, solamente dar click a "actualizar" y listo</p>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="12"
+            md="12"
             lg="8"
             class="d-flex align-center"
           >

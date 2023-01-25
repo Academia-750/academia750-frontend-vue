@@ -11,7 +11,7 @@
       class="d-flex justify-center"
     >
 
-      <head-result-item :question="question" :questions-data-history="questionsDataHistory" />
+      <head-result-item :question="question" :questions-data-history="questionsDataHistory" @scrollToElementRefQuestion="$emit('scrollToElementRefQuestion', $event)" />
     </v-col>
   </v-row>
 </template>
