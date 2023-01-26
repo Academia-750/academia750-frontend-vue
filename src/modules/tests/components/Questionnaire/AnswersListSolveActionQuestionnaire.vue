@@ -10,12 +10,12 @@
         color="primary"
       >
         <v-list-item
-          v-for="answer in answers"
+          v-for="answer in answersWithIndexComputed"
           :key="answer.value"
           :value="answer.value"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="answer.answer"></v-list-item-title>
+            <v-list-item-title>{{ answer.index }} {{ answer.answer }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -39,6 +39,27 @@ export default {
   data() {
     return {
       answer_selected_id: null
+    }
+  },
+  computed: {
+    answersWithIndexComputed () {
+      const indexAnswers = [
+        'a)',
+        'b)',
+        'c)',
+        'd)'
+      ]
+
+      indexAnswers.slice(0, this.answers.length)
+
+      return this.answers.map((answer, i) => {
+        return {
+          index: indexAnswers[i],
+          answer: answer.answer,
+          value: answer.value
+        }
+      })
+
     }
   },
   watch: {

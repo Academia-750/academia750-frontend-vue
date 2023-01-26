@@ -69,19 +69,16 @@ export default {
         total: this.totalNumberQuestionsTest,
         progress: this.numberQuestionsResolved
       }) */
-
       if (this.totalNumberQuestionsTest === 0 && this.numberQuestionsResolved === 0) {
         this.progressResolvedQuestionOfTest = 0
 
         return
       }
-
       if (this.totalNumberQuestionsTest < this.numberQuestionsResolved) {
         this.progressResolvedQuestionOfTest = 0
 
         return
       }
-
       this.progressResolvedQuestionOfTest = Math.ceil((this.numberQuestionsResolved / this.totalNumberQuestionsTest) * 100)
     }
   }
