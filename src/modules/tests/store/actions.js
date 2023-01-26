@@ -117,8 +117,8 @@ const fetchHistoryTestComplete = async ({ commit }, options) => {
     const { data: questions } = response.data
     const { questions_data } = response.data.meta
 
-    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', sortQuestionsByIndexTest(questions_data, questions))
-    //commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.data)
+    //commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', sortQuestionsByIndexTest(questions_data, questions))
+    commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', response.data.data)
 
     return Promise.resolve(response)
 

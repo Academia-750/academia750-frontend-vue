@@ -1,7 +1,8 @@
 <template>
   <v-expansion-panels v-if="showSectionReasonQuestion" focusable>
     <v-expansion-panel>
-      <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down"><span class="font-weight-black">Explicación: </span>{{ question.attributes['question-text'] }}</v-expansion-panel-header>
+      <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down"><span class="font-weight-black">Explicación: </span>
+        <span class="ml-3">{{ question.attributes['question-text'] }}</span></v-expansion-panel-header>
       <v-expansion-panel-content>
         <p v-if="question.attributes.show_reason_text_in_test === 'yes' && question.attributes['reason-text']" class="mt-2 mb-3 font-weight-bold mx-auto d-flex justify-center"><span>{{ question.attributes['reason-text'] }}</span></p>
         <div v-if="pathImageQuestion && question.attributes.show_reason_image_in_test === 'yes'" class="d-flex justify-center">
@@ -36,8 +37,11 @@ export default {
   },
   computed: {
     showSectionReasonQuestion () {
-      return (this.question.attributes['reason-text'] || this.pathImageQuestion) &&
-      (this.question.attributes.show_reason_text_in_test === 'yes' || this.question.attributes.show_reason_image_in_test === 'yes')
+
+      const { show_reason_text_in_test, show_reason_image_in_test } = this.question.attributes
+
+      return (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
+      !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)
     },
     hasReasonTextQuestion () {
       return this.question.attributes['reason-text'] !== null || this.question.attributes['reason-text'] !== ''
@@ -46,14 +50,24 @@ export default {
   mounted () {
     this.loadImageQuestion()
     console.log({
+      question : this.question.attributes['question-text'],
       reason : this.question.attributes['reason-text'],
       pathImageQuestion: this.pathImageQuestion,
       show_reason_text: this.question.attributes.show_reason_text_in_test,
       show_reason_image: this.question.attributes.show_reason_image_in_test
     })
 
+    const { show_reason_text_in_test, show_reason_image_in_test } = this.question.attributes
+
+    /* (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
+    !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true) */
+
+    console.log(!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true)
+    console.log(!(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)
+
     console.log(
-      (this.question.attributes['reason-text'] || this.pathImageQuestion) && (this.question.attributes.show_reason_text_in_test === 'yes' || this.question.attributes.show_reason_image_in_test === 'yes'))
+      (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
+    !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true))
   },
   methods: {
     loadImageProfileDefault () {
