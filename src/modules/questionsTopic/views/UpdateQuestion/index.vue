@@ -69,11 +69,9 @@
           >
             <form-question-type-test-checkbox
               ref="FormQuestionTypeTestCheckbox"
-              @QuestionIsTestBinding="bindingIsTestState"
             />
             <form-question-type-card-memory-checkbox
               ref="FormQuestionTypeCardMemoryCheckbox"
-              @QuestionIsCardMemoryBinding="bindingIsCardMemoryState"
             />
           </v-col>
           <v-col

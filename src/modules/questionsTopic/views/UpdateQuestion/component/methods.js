@@ -274,7 +274,7 @@ export default {
       })
     },
     syncValuesForm(response) {
-      console.log(response.data)
+      //console.log(response.data)
 
       this.loadingButtonCreateQuestion = false
       this.disabledButtonCreateQuestion = false
@@ -302,14 +302,14 @@ export default {
       this.isTestQuestion = ITS_TEST_BOOLEAN
       this.isQuestionBinary = ITS_BINARY_QUESTION_BOOLEAN
 
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ITS_TEST_BOOLEAN
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ITS_CARD_MEMORY_BOOLEAN
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ITS_VISABLE_QUESTION_BOOLEAN
+
       this.show_reason_text_in_test = SHOW_REASON_TEXT_IN_TEST
       this.show_reason_text_in_card_memory = SHOW_REASON_TEXT_IN_CARD_MEMORY
       this.show_reason_image_in_test = SHOW_REASON_IMAGE_IN_TEST
       this.show_reason_image_in_card_memory = SHOW_REASON_IMAGE_IN_CARD_MEMORY
-
-      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ITS_TEST_BOOLEAN
-      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ITS_CARD_MEMORY_BOOLEAN
-      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ITS_VISABLE_QUESTION_BOOLEAN
 
       this.answerGrouperSelected = ''
 
