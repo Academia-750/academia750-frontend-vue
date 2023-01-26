@@ -26,10 +26,34 @@ export default {
   },
   mounted () {
     this.fetchRecordData()
+
   },
   watch: {
     pageNumber(number) {
       this.fetchRecordData()
+    },
+    ItemsQuestionsByCardsMemory (value) {
+      if (value) {
+        console.log(value)
+        console.log(
+          value.filter((question) => {
+            console.log(question.attributes.show_reason_text_in_card_memory)
+
+            return question.attributes.show_reason_text_in_card_memory === 'yes'
+          })
+        )
+        /* console.log(
+          value.filter((question) => {
+            return !question.attributes['reason-text'] !== true
+          })
+        ) */
+        /* console.log(
+          value.filter((question) => {
+            return question.attributes.show_reason_text_in_test === 'yes'
+          })
+        ) */
+      }
+
     }
   },
   methods: {
