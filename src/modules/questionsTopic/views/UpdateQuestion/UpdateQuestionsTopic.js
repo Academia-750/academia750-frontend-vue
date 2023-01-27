@@ -28,6 +28,9 @@ export default {
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
+  beforeDestroy () {
+    this.setEditModeQuestionApi(this.questionData.data.id, 'no')
+  },
   created () {
     this.dataAnswersUuid = [
       this.generateUUID(),
@@ -35,6 +38,11 @@ export default {
       this.generateUUID(),
       this.generateUUID()
     ]
+  },
+  watch: {
+    questionData (value) {
+      this.setEditModeQuestionApi(value.data.id, 'yes')
+    }
   },
   head: {
     title: {

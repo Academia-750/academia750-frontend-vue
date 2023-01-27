@@ -73,6 +73,19 @@ const createQuestion = async (_, options) => {
   }
 }
 
+const setEditModeQuestion = async (_, options) => {
+  try {
+
+    const response = await QuestionsTopicRepository.setEditModeQuestion(options.question_id, options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const fetchQuestion = async (_, options) => {
 
   try {
@@ -143,5 +156,6 @@ export default {
   updateQuestion,
   deleteQuestion,
   importQuestionsCSV,
-  downloadTemplateImport
+  downloadTemplateImport,
+  setEditModeQuestion
 }

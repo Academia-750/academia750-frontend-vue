@@ -3,7 +3,7 @@
     class="subtitle-2 font-weight-bold pa-2"
     :class="getClassAnswerBlock"
   >
-    {{ answer.attributes.answer_text }}
+    {{ getIndexAnswerQuestion }} {{ answer.attributes.answer_text }}
   </p>
 </template>
 
@@ -22,9 +22,23 @@ export default {
     questionHistory: {
       type: Object,
       required: true
+    },
+    index: {
+      type: [Number, String],
+      required: true
     }
   },
   computed: {
+    getIndexAnswerQuestion () {
+      const indexAnswers = [
+        'a)',
+        'b)',
+        'c)',
+        'd)'
+      ]
+
+      return indexAnswers[this.index]
+    },
     getClassAnswerBlock() {
       if ( this.questionHistory.status_question === 'unanswered' && this.answerCorrect.id === this.answer.id ) {
         return 'green darken-1 white--text'

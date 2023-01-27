@@ -2,7 +2,7 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('questionsTopicService', ['fetchQuestion','updateQuestion']),
+    ...mapActions('questionsTopicService', ['fetchQuestion','updateQuestion', 'setEditModeQuestion']),
     async UpdateQuestionApi() {
       try {
         const FormDataQuestion = this.getFormDataForSaveQuestion()
@@ -74,6 +74,19 @@ export default {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateQuestion = false
+      }
+    },
+    async setEditModeQuestionApi (question_id, isModeEdition) {
+      try {
+        const response = await this.setEditModeQuestion({
+          question_id: question_id,
+          data: {
+            'is-mode-edition-question': isModeEdition
+          },
+          config: {}
+        })
+      } catch (error) {
+        console.log(error)
       }
     }
   }

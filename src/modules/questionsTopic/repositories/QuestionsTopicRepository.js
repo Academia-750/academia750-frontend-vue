@@ -23,5 +23,8 @@ export default {
   },
   downloadTemplateImport(config = {}) {
     return ResourceService.get('questions/import/template', config)
+  },
+  setEditModeQuestion(question_id, data, config = {}) {
+    return ResourceService.post(`questions/set-mode-edit/${question_id}/tests`, data, config)
   }
 }

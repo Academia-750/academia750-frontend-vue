@@ -5,6 +5,7 @@
       :key="index"
     >
       <answer-item-history-test
+        :index="index"
         :answer-correct="getCorrectAnswer"
         :answer="answer"
         :question-history="getQuestionHistory"
@@ -35,6 +36,21 @@ export default {
     }
   },
   computed: {
+    answersWithIndexComputed () {
+      const indexAnswers = [
+        'a)',
+        'b)',
+        'c)',
+        'd)'
+      ]
+
+      indexAnswers.slice(0, this.answers.length)
+
+      return this.answers.map((answer, i) => {
+
+        return this.answers[i]['index-answer'] = indexAnswers[i]
+      })
+    },
     getQuestionHistory() {
       return this.questionsDataHistory.find((questionHistory) => questionHistory.question_id === this.question.id)
     },
