@@ -15,7 +15,7 @@
           :value="answer.value"
         >
           <v-list-item-content>
-            <v-list-item-title>{{ answer.index }} {{ answer.answer }}</v-list-item-title>
+            <v-list-item-title><!-- {{ answer.index }}  -->{{ answer.answer }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>

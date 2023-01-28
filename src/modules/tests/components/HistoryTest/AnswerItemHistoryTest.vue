@@ -3,7 +3,7 @@
     class="subtitle-2 font-weight-bold pa-2"
     :class="getClassAnswerBlock"
   >
-    {{ getIndexAnswerQuestion }} {{ answer.attributes.answer_text }}
+    <!-- {{ getIndexAnswerQuestion }}  -->{{ answer.attributes.answer_text }}
   </p>
 </template>
 
