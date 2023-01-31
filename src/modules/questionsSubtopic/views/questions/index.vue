@@ -24,7 +24,7 @@
       item-key="id"
       multi-sort
       no-data-text="Este subtema no tiene preguntas disponibles"
-      :items-per-page="5"
+      :items-per-page="25"
       :mobile-breakpoint="600"
       class="elevation-1"
       sort-by="created-at"

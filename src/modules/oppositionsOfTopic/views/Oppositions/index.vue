@@ -17,7 +17,7 @@
       item-key="id"
       multi-sort
       no-data-text="Este tema no tiene oposiciones disponibles"
-      :items-per-page="5"
+      :items-per-page="25"
       :mobile-breakpoint="600"
       class="elevation-1"
       sort-by="created-at"
