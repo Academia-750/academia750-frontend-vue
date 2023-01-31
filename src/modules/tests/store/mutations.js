@@ -19,5 +19,11 @@ export default {
   },
   SET_QUESTIONS_DATA_RESOLVED(state, payload) {
     state.questionsDataResolved = payload
+  },
+  SET_NUMBER_QUESTIONS_RESOLVED(state, payload) {
+    state.fetchTestModuleNumberQuestionsResolved = payload
+  },
+  SET_TOTAL_NUMBER_QUESTIONS_TEST(state, payload) {
+    state.fetchTestModuleTotalNumberQuestionsTest = payload
   }
 }

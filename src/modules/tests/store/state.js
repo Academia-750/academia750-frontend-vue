@@ -5,6 +5,8 @@ const state = () => ({
   questionsDataHistoryByTest: [],
   questionsDataResolved: [],
   stateLoadingItems: false,
+  fetchTestModuleNumberQuestionsResolved: 0,
+  fetchTestModuleTotalNumberQuestionsTest: 0,
   informationMeta: {
     current_page: 1,
     from: 1,

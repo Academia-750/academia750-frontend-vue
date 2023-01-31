@@ -33,10 +33,10 @@
         </v-btn>
       </div> -->
     </v-toolbar>
-    <progress-linear-state-test
+    <!-- <progress-linear-state-test
       :number-questions-resolved="numberQuestionsResolved"
       :total-number-questions-test="totalNumberQuestionsTest"
-    />
+    /> -->
     <v-card-text>
       <div v-if="ItemsQuestionsByTests && ItemsQuestionsByTests.length > 0">
         <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">

@@ -96,17 +96,23 @@
               @click:append="showSearch = false"
             ></v-text-field>
             <div v-else class="d-flex flex-grow-1 align-center">
-              <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-              <v-spacer></v-spacer>
+              <v-app-bar-nav-icon style="z-index: 10 !important;" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+              <v-spacer style="z-index: 10 !important;"></v-spacer>
+              <progress-linear-state-test
+                v-if="$router.currentRoute.name === 'fetch-questionnaire'"
+                :number-questions-resolved="fetchTestModuleNumberQuestionsResolved"
+                :total-number-questions-test="fetchTestModuleTotalNumberQuestionsTest"
+              />
+              <v-spacer style="z-index: 10 !important;"></v-spacer>
               <!-- <toolbar-language /> -->
               <!-- <div class="hidden-xs-only mx-1">
                 <toolbar-currency />
               </div> -->
               <!-- <toolbar-apps /> -->
-              <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']">
-                <toolbar-notifications />
+              <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']" style="z-index: 10 !important;">
+                <toolbar-notifications style="z-index: 10 !important;" />
               </div>
-              <toolbar-user />
+              <toolbar-user style="z-index: 10 !important;"/>
             </div>
           </div>
         </v-card>
@@ -152,6 +158,7 @@ import ToolbarUser from '../components/toolbar/ToolbarUser'
 import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 import ProgressCircularLoadingApp from '@/modules/loading/components/ProgressCircularLoadingApp.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
+import ProgressLinearStateTest from '@/modules/tests/views/FetchTest/components/progressLinearStateTest'
 
 export default {
   components: {
@@ -162,7 +169,8 @@ export default {
     /* ToolbarCurrency, */
     ToolbarNotifications,
     ProgressCircularLoadingApp,
-    ProgressLinearLoadingApp
+    ProgressLinearLoadingApp,
+    ProgressLinearStateTest
   },
   mixins: [logoutActionsMixin],
   data() {
@@ -177,6 +185,7 @@ export default {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState('loadingService', ['displayProgressCircularLoading', 'displayProgressLinearLoading']),
     ...mapState('profileService', ['user']),
+    ...mapState('testsService', ['fetchTestModuleNumberQuestionsResolved', 'fetchTestModuleTotalNumberQuestionsTest']),
     classTextByTheme () {
 
       return {

@@ -1,24 +1,34 @@
 <template>
-  <v-container style="position: relative !important;">
-    <div class="d-flex justify-center mb-1 font-weight-bold"><span>Progreso del Test</span></div>
-    <v-progress-linear
-      v-model="progressResolvedQuestionOfTest"
-      color="light-green lighten-2"
-      height="30"
-      rounded
-    >
-      <template v-slot:default>
-        <strong>{{ progressResolvedQuestionOfTest }}%</strong>
-      </template>
+  <div style="width: 60% !important; height: auto !important;">
+    <!-- <pre>
+      {{ fetchTestModuleNumberQuestionsResolved }}
+    </pre>
+    <pre>
+      {{ fetchTestModuleTotalNumberQuestionsTest }}
+    </pre> -->
+    <!-- <div class="d-flex justify-center mb-1 font-weight-bold"><span>Progreso del Test</span></div> -->
+    <div>
+      <v-progress-linear
+        v-model="progressResolvedQuestionOfTest"
+        color="light-green lighten-2"
+        height="30"
+        rounded
+      >
+        <template v-slot:default>
+          <strong>{{ progressResolvedQuestionOfTest }}%</strong>
+        </template>
 
-    </v-progress-linear>
-    <v-overlay absolute z-index="1" opacity="0">
-      <!-- Contenido de la capa -->
-    </v-overlay>
-  </v-container>
+      </v-progress-linear>
+      <v-overlay absolute z-index="1" opacity="0">
+        <!-- Contenido de la capa -->
+      </v-overlay>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'ProgressLinearStateTest',
   props: {
@@ -36,6 +46,9 @@ export default {
       progressResolvedQuestionOfTest: 0,
       isFixedMenu: false
     }
+  },
+  computed: {
+    ...mapState('testsService', ['fetchTestModuleNumberQuestionsResolved', 'fetchTestModuleTotalNumberQuestionsTest'])
   },
   watch: {
     numberQuestionsResolved: {

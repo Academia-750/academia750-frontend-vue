@@ -43,6 +43,10 @@ export default {
   mounted() {
     this.fetchRecordData()
     this.blockActionsSelectionUser()
+    this.SET_TOTAL_NUMBER_QUESTIONS_TEST(0)
+    this.SET_NUMBER_QUESTIONS_RESOLVED(0)
+
+    console.log(this.$router.currentRoute.name)
   },
   beforeDestroy() {
     this.removeEventsListenerActionsUser()
@@ -50,9 +54,16 @@ export default {
   watch: {
     pageNumber(number) {
       this.fetchRecordData()
+    },
+    totalNumberQuestionsTest (number) {
+      this.SET_TOTAL_NUMBER_QUESTIONS_TEST(number)
+    },
+    numberQuestionsResolved (number) {
+      this.SET_NUMBER_QUESTIONS_RESOLVED(number)
     }
   },
   methods: {
+    ...mapMutations('testsService', ['SET_NUMBER_QUESTIONS_RESOLVED','SET_TOTAL_NUMBER_QUESTIONS_TEST']),
     ...mapActions('testsService', ['fetchAQuiz', 'closeAndGradeTest']),
     blockActionsSelectionUser() {
       const elementResolveTest = this.$refs['resolveTestView']
