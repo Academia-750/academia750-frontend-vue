@@ -9,7 +9,7 @@
       single-expand
       :expanded.sync="QuestionsWrongItemsExpanded"
       no-data-text="No hay datos disponibles"
-      :items-per-page="25"
+      :items-per-page="10"
       :mobile-breakpoint="600"
       class="elevation-1"
       :footer-props="get_footer_props"

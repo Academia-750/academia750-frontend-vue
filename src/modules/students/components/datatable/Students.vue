@@ -12,7 +12,7 @@
       sort-by="created-at"
       sort-desc
       no-data-text="No hay datos disponibles"
-      :items-per-page="25"
+      :items-per-page="10"
       :mobile-breakpoint="700"
       class="elevation-1"
       :server-items-length="informationMeta.total"

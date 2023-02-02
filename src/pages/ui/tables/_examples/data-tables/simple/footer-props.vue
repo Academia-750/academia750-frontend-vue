@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="desserts"
-    :items-per-page="25"
+    :items-per-page="10"
     item-key="name"
     class="elevation-1"
     :footer-props="{
