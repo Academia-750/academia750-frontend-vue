@@ -71,3 +71,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .v-list-item__subtitle, .v-list-item__title{
+        text-overflow: initial!important;
+      white-space: initial!important;
+  }
+</style>
