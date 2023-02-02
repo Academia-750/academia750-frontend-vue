@@ -67,6 +67,13 @@
         </v-btn>
       </div>
     </v-container>
+    <v-container v-if="totalNumberPages > 0" class="max-width d-flex justify-center">
+      <v-pagination
+        v-model="pageNumber"
+        class="my-4"
+        :length="totalNumberPages"
+      ></v-pagination>
+    </v-container>
     <v-container class="mt-1">
       <v-row dense>
         <v-col

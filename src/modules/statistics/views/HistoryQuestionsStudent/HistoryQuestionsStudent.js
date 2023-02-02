@@ -60,6 +60,9 @@ export default {
         this.$refs['TestsByPeriodDatatable'].loadDatatatable()
       },
       deep: true
+    },
+    pageNumber(number) {
+      this.fetchRecordData()
     }
   },
   methods: {
@@ -69,15 +72,19 @@ export default {
     },
     async fetchRecordData() {
       try {
+        this.$loadingApp.enableLoadingProgressLinear()
+
         if (!this.testSelected) {
+          this.$loadingApp.disabledLoadingProgressLinear()
+
           return
         }
 
         if (!this.typeQuestionSelected) {
+          this.$loadingApp.disabledLoadingProgressLinear()
+
           return
         }
-
-        this.$loadingApp.enableLoadingProgressLinear()
 
         await this.getQuestionsByTestAndTypeQuestion({
           test_id: this.testSelected?.id,
