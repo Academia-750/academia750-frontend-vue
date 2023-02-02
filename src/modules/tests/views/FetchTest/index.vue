@@ -9,7 +9,7 @@
       class="indigo lighten-5 my-2"
       outlined
     >
-      <resource-button-go-back-router :width-number-limit="300" />
+      <!-- <resource-button-go-back-router :width-number-limit="300" /> -->
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Resolver test"
@@ -39,6 +39,13 @@
     /> -->
     <v-card-text>
       <div v-if="ItemsQuestionsByTests && ItemsQuestionsByTests.length > 0">
+        <v-container class="max-width d-flex justify-center">
+          <v-pagination
+            v-model="pageNumber"
+            class="my-4"
+            :length="totalNumberPages"
+          ></v-pagination>
+        </v-container>
         <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}">
           <v-row dense class="ma-0 pa-0">
             <v-col
