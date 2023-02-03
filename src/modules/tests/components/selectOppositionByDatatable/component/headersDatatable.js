@@ -9,13 +9,13 @@ export default {
           sortable: true,
           value: 'name',
           show: true
-        },
+        }/* ,
         {
           position: 2,
           text: 'Periodo',
           value: 'period',
           show: true
-        }
+        } */
       ]
     }
   }
