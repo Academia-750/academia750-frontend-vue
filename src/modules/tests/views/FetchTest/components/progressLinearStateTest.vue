@@ -13,6 +13,7 @@
         color="light-green lighten-2"
         height="30"
         rounded
+        style="z-index: 0 !important;"
       >
         <template v-slot:default>
           <strong>{{ progressResolvedQuestionOfTest }}%</strong>

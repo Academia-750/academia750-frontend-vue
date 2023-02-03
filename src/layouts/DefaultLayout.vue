@@ -96,23 +96,23 @@
               @click:append="showSearch = false"
             ></v-text-field>
             <div v-else class="d-flex flex-grow-1 align-center">
-              <v-app-bar-nav-icon style="z-index: 10 !important;" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-              <v-spacer style="z-index: 10 !important;"></v-spacer>
+              <v-app-bar-nav-icon style="z-index: 100 !important;" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+              <v-spacer style="z-index: 100 !important;"></v-spacer>
               <progress-linear-state-test
                 v-if="$router.currentRoute.name === 'fetch-questionnaire'"
                 :number-questions-resolved="fetchTestModuleNumberQuestionsResolved"
                 :total-number-questions-test="fetchTestModuleTotalNumberQuestionsTest"
               />
-              <v-spacer style="z-index: 10 !important;"></v-spacer>
+              <v-spacer style="z-index: 100 !important;"></v-spacer>
               <!-- <toolbar-language /> -->
               <!-- <div class="hidden-xs-only mx-1">
                 <toolbar-currency />
               </div> -->
               <!-- <toolbar-apps /> -->
-              <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']" style="z-index: 10 !important;">
-                <toolbar-notifications style="z-index: 10 !important;" />
+              <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']" style="z-index: 100 !important;">
+                <toolbar-notifications style="z-index: 100 !important;" />
               </div>
-              <toolbar-user style="z-index: 10 !important;"/>
+              <toolbar-user style="z-index: 100 !important;"/>
             </div>
           </div>
         </v-card>
