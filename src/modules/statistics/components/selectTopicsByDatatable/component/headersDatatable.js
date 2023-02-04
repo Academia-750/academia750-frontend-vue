@@ -9,14 +9,14 @@ export default {
           sortable: true,
           value: 'name',
           show: true
-        },
+        }/* ,
         {
           text: 'Fecha de alta',
           align: 'start',
           sortable: true,
           value: 'created-at',
           show: true
-        }
+        } */
       ]
     }
   }
