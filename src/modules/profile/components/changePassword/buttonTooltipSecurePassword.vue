@@ -38,7 +38,7 @@ export default {
         'Al menos 1 minúscula y 1 mayúscula',
         'Al menos 1 dígito',
         'No espacios en blanco',
-        'Al menos un carácter especial: $@!%*?&#^=_/<>)('
+        'Al menos un carácter especial' //$@!%*?&#^=_/<>)(
       ]
     }
   }
