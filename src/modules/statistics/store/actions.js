@@ -205,10 +205,25 @@ const getQuestionsByTestAndTypeQuestion = async (_, options) => {
   }
 }
 
+const getTopicsWorstInTestsStudent = async (_, config) => {
+  try {
+
+    const response = await StatisticsRepository.getTopicsWorstInTestsStudent(config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getHistoryTestsCompletedByStudent,
   getHistoryStatisticsDataGraph,
   getHistoryQuestionsWrongByTopic,
   getTestsByPeriodApi,
-  getQuestionsByTestAndTypeQuestion
+  getQuestionsByTestAndTypeQuestion,
+  getTopicsWorstInTestsStudent
 }

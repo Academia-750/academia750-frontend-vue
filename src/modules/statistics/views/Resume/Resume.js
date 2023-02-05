@@ -9,6 +9,7 @@ import footerProps from './component/footerProps'
 import selectTopicsByDatatable from '../../components/selectTopicsByDatatable'
 import QuestionsWrongByTopic from '../../components/QuestionsWrongByTopic'
 import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
+import PreviewTopicsWorstTests from '../../components/previewTopicsWorstTests'
 
 export default {
   mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
@@ -25,13 +26,18 @@ export default {
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
     selectTopicsByDatatable,
     GraphStatisticsTopics,
-    QuestionsWrongByTopic
+    QuestionsWrongByTopic,
+    PreviewTopicsWorstTests
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
   },
   mounted () {
+    this.topicsWorstDataInTestsStudent = []
+
     this.SET_ITEMS_DATATABLE_QUESTIONS_WRONG([])
+
+    this.getTopicsWorstInTestsStudentApi()
   },
   data () {
     return {
@@ -47,7 +53,8 @@ export default {
         { label: 'Último mes', key: 'last-month' },
         { label: 'Últimos 3 meses', key: 'last-three-months' }
       ],
-      disabledButtonFetchRecord: false
+      disabledButtonFetchRecord: false,
+      topicsWorstDataInTestsStudent: []
     }
   },
   computed: {
@@ -80,7 +87,7 @@ export default {
   },
   methods: {
     ...mapMutations('statisticsService', ['SET_ITEMS_DATATABLE_QUESTIONS_WRONG']),
-    ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph']),
+    ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph', 'getTopicsWorstInTestsStudent']),
     getHistoryStatisticsQuestionsFailedTests () {
       if (!this.topicSelectedForQueryQuestionsWrong) {
         this.$swal.fire({
@@ -165,6 +172,21 @@ export default {
         console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
+      }
+    },
+    async getTopicsWorstInTestsStudentApi () {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+
+        const response = await this.getTopicsWorstInTestsStudent({})
+
+        this.topicsWorstDataInTestsStudent = response.data
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
       }
     }
   },

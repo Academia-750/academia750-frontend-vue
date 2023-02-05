@@ -59,6 +59,12 @@
     </v-container>
     <v-divider class="grey lighten-1 mt-6 mb-3"></v-divider>
     <v-container>
+      <preview-topics-worst-tests
+        :items-datatable="topicsWorstDataInTestsStudent"
+      />
+    </v-container>
+    <v-divider class="grey lighten-1 mt-6 mb-3"></v-divider>
+    <v-container>
       <select-topics-by-datatable
         single-select-datatable
         title-top-datatable="Preguntas incorrectas por tema"

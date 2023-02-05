@@ -17,5 +17,8 @@ export default {
   },
   getQuestionsByTestAndTypeQuestion(test_id, type_question, config = {}) {
     return ResourceService.get(`${resource}/fetch/history-questions-by-test-relation-type-question?test-id=${test_id}&type-question=${type_question}`, config)
+  },
+  getTopicsWorstInTestsStudent(config = {}) {
+    return ResourceService.get('topics/student/get-worst-topics', config)
   }
 }
