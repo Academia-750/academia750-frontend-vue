@@ -7,8 +7,10 @@
     :rules="rules"
   >
     <v-text-field
+      id="__email_person"
       ref="email-field"
       v-model="email"
+      name="__email"
       :error-messages="errors"
       :disabled="isDisabled"
       :filled="isFilled"

@@ -7,8 +7,10 @@
     :rules="rules"
   >
     <v-text-field
+      id="username"
       ref="access-key-field"
       v-model="access_key"
+      name="username"
       :counter="10"
       :error-messages="errors"
       :disabled="isDisabled"

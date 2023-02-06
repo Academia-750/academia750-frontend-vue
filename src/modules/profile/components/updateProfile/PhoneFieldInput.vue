@@ -7,8 +7,10 @@
     :rules="rules"
   >
     <v-text-field
+      id="__phone_person"
       ref="phone-field"
       v-model="phone"
+      name="__phone"
       :error-messages="errors"
       :disabled="isDisabled"
       label="Teléfono"

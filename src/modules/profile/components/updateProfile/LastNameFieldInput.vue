@@ -7,8 +7,10 @@
     :rules="rules"
   >
     <v-text-field
+      id="__last_name_person"
       ref="last-name-field"
       v-model="last_name"
+      name="__last_name"
       :error-messages="errors"
       :disabled="isDisabled"
       :filled="isFilled"

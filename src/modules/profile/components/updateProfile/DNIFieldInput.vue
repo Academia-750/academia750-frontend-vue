@@ -1,7 +1,9 @@
 <template>
   <v-text-field
+    id="__dni_person"
     ref="dni-field"
     v-model="dni"
+    name="__dni"
     readonly
     label="DNI / NIE"
     filled

@@ -31,95 +31,97 @@
         </v-col>
       </v-row>
     </v-container>
-    <validation-observer ref="FormSubmitContactUs" v-slot="{ invalid }">
-      <v-container>
-        <v-row>
-          <v-col cols="12" lg="3">
-            <v-select
-              v-model="form.reason"
-              solo
-              :items="itemsReasonSelect"
-              placeholder="Motivo"
-              item-text="label"
-              item-value="key"
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" lg="6">
-            <name-person-input
-              ref="namePersonInputComponent"
-              rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
-              is-solo
-              :is-filled="false"
-              :has-prepend-icon="false"
-              @NamePersonBinding="form.firstName = $event"
-            />
-          </v-col>
-          <v-col cols="12" lg="6">
-            <last-name-person-input
-              ref="LastNamePersonInputComponent"
-              rules="requiredLastName|min:3|max:25|mustContainLettersAndOptionalTilde"
-              is-solo
-              :is-filled="false"
-              :has-prepend-icon="false"
-              @LastNamePersonBinding="form.lastName = $event"
-            />
-          </v-col>
-          <v-col cols="12" lg="6">
-            <phone-field-input
-              ref="PhoneInputComponent"
-              rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
-              is-solo
-              :is-filled="false"
-              :has-prepend-icon="false"
-              @PhoneBinding="form.phone = $event"
-            />
-          </v-col>
-          <v-col cols="12" lg="6">
-            <email-field-input
-              ref="EmailInputComponent"
-              rules="requiredEmail|email"
-              is-solo
-              :is-filled="false"
-              :has-prepend-icon="false"
-              @EmailBinding="form.email = $event"
-            />
-          </v-col>
-          <v-col class="mensaje_estilo">
-            <ValidationProvider
-              v-slot="{ errors }"
-              tag="div"
-              vid="vid"
-              mode="aggressive"
-              name="Mensaje"
-              rules="required|max:400"
-            >
-              <v-textarea
-                ref="MessageTextarea"
-                v-model="form.message"
-                label="Mensaje"
-                placeholder="Escribe tu mensaje"
+    <form id="contact-form-home" name="contact-form__home" autocomplete="off">
+      <validation-observer ref="FormSubmitContactUs" v-slot="{ invalid }">
+        <v-container>
+          <v-row>
+            <v-col cols="12" lg="3">
+              <v-select
+                v-model="form.reason"
                 solo
-                :error-messages="errors"
-                name="input-7-4"
-              ></v-textarea>
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12" class="d-flex justify-end">
-            <v-btn
-              id="boton_enviar_form"
-              class="btn-3"
-              :loading="loadingButtonSubmit"
-              :disabled="disabledButtonSubmit || invalid"
-              @click="validateFormOrSubmit"
-            >
-              Enviar
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </validation-observer>
+                :items="itemsReasonSelect"
+                placeholder="Motivo"
+                item-text="label"
+                item-value="key"
+              ></v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="6">
+              <name-person-input
+                ref="namePersonInputComponent"
+                rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
+                is-solo
+                :is-filled="false"
+                :has-prepend-icon="false"
+                @NamePersonBinding="form.firstName = $event"
+              />
+            </v-col>
+            <v-col cols="12" lg="6">
+              <last-name-person-input
+                ref="LastNamePersonInputComponent"
+                rules="requiredLastName|min:3|max:25|mustContainLettersAndOptionalTilde"
+                is-solo
+                :is-filled="false"
+                :has-prepend-icon="false"
+                @LastNamePersonBinding="form.lastName = $event"
+              />
+            </v-col>
+            <v-col cols="12" lg="6">
+              <phone-field-input
+                ref="PhoneInputComponent"
+                rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
+                is-solo
+                :is-filled="false"
+                :has-prepend-icon="false"
+                @PhoneBinding="form.phone = $event"
+              />
+            </v-col>
+            <v-col cols="12" lg="6">
+              <email-field-input
+                ref="EmailInputComponent"
+                rules="requiredEmail|email"
+                is-solo
+                :is-filled="false"
+                :has-prepend-icon="false"
+                @EmailBinding="form.email = $event"
+              />
+            </v-col>
+            <v-col class="mensaje_estilo">
+              <ValidationProvider
+                v-slot="{ errors }"
+                tag="div"
+                vid="vid"
+                mode="aggressive"
+                name="Mensaje"
+                rules="required|max:400"
+              >
+                <v-textarea
+                  ref="MessageTextarea"
+                  v-model="form.message"
+                  label="Mensaje"
+                  placeholder="Escribe tu mensaje"
+                  solo
+                  :error-messages="errors"
+                  name="input-7-4"
+                ></v-textarea>
+              </ValidationProvider>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-end">
+              <v-btn
+                id="boton_enviar_form"
+                class="btn-3"
+                :loading="loadingButtonSubmit"
+                :disabled="disabledButtonSubmit || invalid"
+                @click="validateFormOrSubmit"
+              >
+                Enviar
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </validation-observer>
+    </form>
   </div>
 </template>
 <script>

@@ -32,33 +32,35 @@
       </v-toolbar>
 
       <v-card-text>
-        <validation-observer
-          ref="FormLoginObserver"
-        >
-          <FormAccessKeyField
-            ref="access-key-field"
-            rules="required|max:10|ItMustBeADniOrNieFromSpainLogin"
-            :is-disabled="isLoading"
-            @AccessKeyBinding="access_key = $event"
-            @submitForm="submit"
-          />
-          <FormPasswordField
-            ref="password-field"
-            rules="required|max:150"
-            :is-disabled="isLoading"
-            @passwordBinding="password = $event"
-            @submitForm="submit"
-          />
-          <ButtonActionLogin
-            :is-disabled="isDisabled"
-            :is-loading="isLoading"
-            @emitActionLogin="submit"
-          />
-          <AlertErrorLogin ref="AlertErrorLogin" />
-          <ButtonForgotPasswordLogin @scrollToResetPasswordSection="$emit('scrollToResetPasswordSection')" />
-          <v-divider class="my-1 blue-grey lighten-4" />
-          <FooterDialogLogin ref="FooterDialogLogin" />
-        </validation-observer>
+        <form id="login" name="login" autocomplete="on">
+          <validation-observer
+            ref="FormLoginObserver"
+          >
+            <FormAccessKeyField
+              ref="access-key-field"
+              rules="required|max:10|ItMustBeADniOrNieFromSpainLogin"
+              :is-disabled="isLoading"
+              @AccessKeyBinding="access_key = $event"
+              @submitForm="submit"
+            />
+            <FormPasswordField
+              ref="password-field"
+              rules="required|max:150"
+              :is-disabled="isLoading"
+              @passwordBinding="password = $event"
+              @submitForm="submit"
+            />
+            <ButtonActionLogin
+              :is-disabled="isDisabled"
+              :is-loading="isLoading"
+              @emitActionLogin="submit"
+            />
+            <AlertErrorLogin ref="AlertErrorLogin" />
+            <ButtonForgotPasswordLogin @scrollToResetPasswordSection="$emit('scrollToResetPasswordSection')" />
+            <v-divider class="my-1 blue-grey lighten-4" />
+            <FooterDialogLogin ref="FooterDialogLogin" />
+          </validation-observer>
+        </form>
       </v-card-text>
     </v-card>
   </v-dialog>
