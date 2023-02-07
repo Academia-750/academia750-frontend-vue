@@ -12,7 +12,9 @@
             max-width="150"
             :src="pathImageQuestion"
             @error="loadImageProfileDefault"
+            @click="showReasonImageDialogMethod"
           ></v-img>
+          <show-reason-image-in-dialog ref="ShowReasonImageInDialogComponent" :path-image="pathImageQuestion"/>
         </div>
         <div class="d-flex justify-center mt-3">
           <claim-question-card-memory :question-uuid="questionWithAnswers.id" />
@@ -24,11 +26,13 @@
 
 <script>
 import ClaimQuestionCardMemory from './ClaimQuestionCardMemory'
+import ShowReasonImageInDialog from '@/modules/tests/components/HistoryTest/Dialog/ShowReasonImageInDialog'
 
 export default {
   name: 'CardMemoryItem',
   components: {
-    ClaimQuestionCardMemory
+    ClaimQuestionCardMemory,
+    ShowReasonImageInDialog
   },
   props: {
     questionWithAnswers: {
@@ -56,6 +60,9 @@ export default {
     this.loadImageQuestion()
   },
   methods: {
+    showReasonImageDialogMethod () {
+      this.$refs['ShowReasonImageInDialogComponent'].showReasonImageInDialog = true
+    },
     loadImageProfileDefault () {
       console.error('No se ha podido cargar la imagen de la pregunta')
       this.pathImageQuestion = null

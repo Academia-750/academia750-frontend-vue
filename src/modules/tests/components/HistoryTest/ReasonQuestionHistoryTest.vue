@@ -11,7 +11,9 @@
             max-width="150"
             :src="pathImageQuestion"
             @error="loadImageProfileDefault"
+            @click="showReasonImageDialogMethod"
           ></v-img>
+          <show-reason-image-in-dialog ref="ShowReasonImageInDialogComponent" :path-image="pathImageQuestion"/>
         </div>
         <!-- <div class="d-flex justify-center mt-3">
           <claim-question-card-memory :question-uuid="question.id" />
@@ -22,8 +24,13 @@
 </template>
 
 <script>
+import ShowReasonImageInDialog from './Dialog/ShowReasonImageInDialog'
+
 export default {
   name: 'ReasonQuestionHistoryTest',
+  components: {
+    ShowReasonImageInDialog
+  },
   props: {
     question: {
       type: Object,
@@ -70,6 +77,9 @@ export default {
     !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true))
   },
   methods: {
+    showReasonImageDialogMethod () {
+      this.$refs['ShowReasonImageInDialogComponent'].showReasonImageInDialog = true
+    },
     loadImageProfileDefault () {
       console.error('No se ha podido cargar la imagen de la pregunta')
       this.pathImageQuestion = null
