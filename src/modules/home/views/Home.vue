@@ -1,13 +1,22 @@
 <template>
   <div class="ma-0 pa-0 overflow-hidden">
     <TopMenu />
-    <Menu ref="MenuHomePage" @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
-    <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister"/>
-    <DialogLogin ref="DialogLoginForm" @scrollToResetPasswordSection="scrollToResetPasswordSection" />
-    <div ref="OurServiceSection" style="padding-top: 100px;">
+    <Menu
+      ref="MenuHomePage"
+      @emitShowLoginDialog="showDialogLoginAction"
+      @emitScrollToSectionHomePage="scrollToSectionOfHomePage"
+    />
+    <BannerMenu @executeRegisterContactUs="scrollToContactUsFormForRegister" />
+    <DialogLogin
+      ref="DialogLoginForm"
+      @scrollToResetPasswordSection="scrollToResetPasswordSection"
+    />
+    <div ref="OurServiceSection" style="padding-top: 100px">
       <OurServices />
     </div>
-    <GroupsByLevel @executeRegisterContactUs="scrollToContactUsFormForRegister" />
+    <GroupsByLevel
+      @executeRegisterContactUs="scrollToContactUsFormForRegister"
+    />
     <Testimonials />
     <v-fab-transition>
       <v-btn
@@ -24,16 +33,22 @@
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div ref="tarifasSection" style="padding-top: 100px;">
-      <Tarifas @emitClickInscriptionContactUs="scrollToContactUsFormForRegisterWithReasonInscription" />
+    <div ref="tarifasSection" style="padding-top: 100px">
+      <Tarifas
+        @emitClickInscriptionContactUs="
+          scrollToContactUsFormForRegisterWithReasonInscription
+        "
+      />
     </div>
-    <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
+    <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <div ref="ContactUsForm">
-      <Formulario ref="ContactUsFormComponent"/>
+      <Formulario ref="ContactUsFormComponent" />
     </div>
-    <Footer @emitShowLoginDialog="showDialogLoginAction" @emitScrollToSectionHomePage="scrollToSectionOfHomePage"/>
+    <Footer
+      @emitShowLoginDialog="showDialogLoginAction"
+      @emitScrollToSectionHomePage="scrollToSectionOfHomePage"
+    />
   </div>
-
 </template>
 
 <script>
@@ -62,47 +77,58 @@ export default {
     OurServices,
     GroupsByLevel,
     Testimonials
-
   },
   data() {
-    return {
-    }
+    return {}
   },
-  mounted () {
-  },
+  mounted() {},
   methods: {
-    showDialogLoginAction () {
+    showDialogLoginAction() {
       this.$refs['DialogLoginForm'].showDialogLogin = true
     },
-    scrollToContactUsFormForRegister () {
-      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    scrollToContactUsFormForRegister() {
+      this.$refs['ContactUsForm'].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
-    scrollToSectionOfHomePage ($refElement) {
+    scrollToSectionOfHomePage($refElement) {
       this.$refs['MenuHomePage'].drawer = false
 
       //console.log(this.$refs[$refElement].offsetHeight)
-      this.$refs[$refElement].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.$refs[$refElement].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = null
 
       console.info('scrollToSectionOfHomePage')
     },
-    scrollToContactUsFormForRegisterWithReasonInscription ( reasonInscription ) {
-      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
-      this.$refs['ContactUsFormComponent'].form.message = `tarifa: ${reasonInscription}`
+    scrollToContactUsFormForRegisterWithReasonInscription(reasonInscription) {
+      this.$refs['ContactUsForm'].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+      this.$refs[
+        'ContactUsFormComponent'
+      ].form.message = `tarifa: ${reasonInscription}`
       this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
-    scrollToResetPasswordSection () {
+    scrollToResetPasswordSection() {
       this.$refs['DialogLoginForm'].showDialogLogin = false
 
-      this.$refs['ContactUsForm'].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.$refs['ContactUsForm'].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
 
       this.$refs['ContactUsFormComponent'].form.reason = 'reset-password'
-      this.$refs['ContactUsFormComponent'].form.message = 'He olvidado mi contraseña'
+      this.$refs['ContactUsFormComponent'].form.message =
+        'He olvidado mi contraseña'
     }
   }
-
 }
 </script>

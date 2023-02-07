@@ -3,12 +3,6 @@
   "singleQuote": true,
   "trailingComma": "none",
   "semi": false,
-  "overrides": [
-    {
-      "files": ".prettierrc",
-      "options": {
-        "editorconfig": true
-      }
-    }
-  ]
+  "printWidth": 80,
+  "bracketSameLine": false
 }

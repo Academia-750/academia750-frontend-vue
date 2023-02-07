@@ -1,6 +1,11 @@
 module.exports = {
   // https://cli.vuejs.org/config/#productionsourcemap
   productionSourceMap: false,
+  /* devServer: {
+    host: 'academia-bomberos750.test',
+    port: 8080,
+    https: false
+  }, */
 
   // https://cli.vuejs.org/config/#css-extract
   css: {
