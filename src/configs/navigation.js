@@ -10,9 +10,27 @@ export default {
       key: '',
       can: '*',
       items: [
-        { icon: 'mdi-account-circle', key: '', text: 'Perfil de usuario', to: { name: 'update-my-profile' }, can: '*' },
-        { icon: 'mdi-camera', key: '', text: 'Cambiar mi foto', to: { name: 'update-image-account' }, can: '*' },
-        { icon: 'mdi-lock', key: '', text: 'Cambiar contraseña', to: { name: 'change-password' }, can: '*' }
+        {
+          icon: 'mdi-account-circle',
+          key: '',
+          text: 'Perfil de usuario',
+          to: { name: 'update-my-profile' },
+          can: '*'
+        },
+        {
+          icon: 'mdi-camera',
+          key: '',
+          text: 'Cambiar mi foto',
+          to: { name: 'update-image-account' },
+          can: '*'
+        },
+        {
+          icon: 'mdi-lock',
+          key: '',
+          text: 'Cambiar contraseña',
+          to: { name: 'change-password' },
+          can: '*'
+        }
       ]
     },
     {
@@ -21,10 +39,33 @@ export default {
       roles: 'student',
       items: [
         {
-          icon: 'mdi-book-edit', key: '', text: 'Zona de entrenamiento', roles: 'student', regex: /^\/Zona de Entrenamiento/, items: [
-            { icon: 'mdi-book-open-variant', key: '', text: 'Generar cuestionario', to: { name: 'generate-questionnaire' }, roles: 'student' },
-            { icon: 'mdi-book-clock', key: '', text: 'Tests sin completar', to: { name: 'list-questionnaires-of-student-not-complete' }, roles: 'student' },
-            { icon: 'mdi-view-list', key: '', text: 'Tarjetas de memoria', to: { name: 'list-cards-memory' }, roles: 'student' }
+          icon: 'mdi-book-edit',
+          key: '',
+          text: 'Zona de entrenamiento',
+          roles: 'student',
+          regex: /^\/Zona de Entrenamiento/,
+          items: [
+            {
+              icon: 'mdi-book-open-variant',
+              key: '',
+              text: 'Generar cuestionario',
+              to: { name: 'generate-questionnaire' },
+              roles: 'student'
+            },
+            {
+              icon: 'mdi-book-clock',
+              key: '',
+              text: 'Tests sin completar',
+              to: { name: 'list-questionnaires-of-student-not-complete' },
+              roles: 'student'
+            },
+            {
+              icon: 'mdi-view-list',
+              key: '',
+              text: 'Tarjetas de memoria',
+              to: { name: 'list-cards-memory' },
+              roles: 'student'
+            }
           ]
         }
       ]
@@ -35,10 +76,41 @@ export default {
       roles: 'student',
       items: [
         {
-          icon: 'mdi-chart-areaspline', key: '', text: 'Mis progresos', roles: 'student', regex: /^\/Mis progresos/, items: [
-            { icon: 'mdi-file-chart', key: '', text: 'Resumen', to: { name: 'fetch-resume-my-data-student' }, roles: 'student' },
-            { icon: 'mdi-chart-timeline', key: '', text: 'Históricos de preguntas', to: { name: 'fetch-history-questions-student-by-tests-period-type-question' }, roles: 'student' },
-            { icon: 'mdi-notebook-check', key: '', text: 'Tests completados', to: { name: 'fetch-history-tests-completed' }, roles: 'student' }
+          icon: 'mdi-chart-areaspline',
+          key: '',
+          text: 'Mis progresos',
+          roles: 'student',
+          regex: /^\/Mis progresos/,
+          items: [
+            {
+              icon: 'mdi-file-chart',
+              key: '',
+              text: 'Resumen',
+              /* to: { name: 'fetch-resume-my-data-student' }, */ regex:
+                /^\/Resumen/,
+              roles: 'student',
+              items: [
+                { icon: 'mdi-book-open-variant', key: '', text: '5 temas a mejorar', to: { name: 'fetch-resume-student-five-topics-to-improve' }, roles: 'student' },
+                { icon: 'mdi-book-clock', key: '', text: 'Resultados por tema', to: { name: 'list-questionnaires-of-student-not-complete' }, roles: 'student' },
+                { icon: 'mdi-view-list', key: '', text: 'Errores por tema', to: { name: 'list-cards-memory' }, roles: 'student' }
+              ]
+            },
+            {
+              icon: 'mdi-chart-timeline',
+              key: '',
+              text: 'Históricos de preguntas',
+              to: {
+                name: 'fetch-history-questions-student-by-tests-period-type-question'
+              },
+              roles: 'student'
+            },
+            {
+              icon: 'mdi-notebook-check',
+              key: '',
+              text: 'Tests completados',
+              to: { name: 'fetch-history-tests-completed' },
+              roles: 'student'
+            }
           ]
         }
       ]
@@ -48,15 +120,56 @@ export default {
       key: '',
       roles: 'admin',
       items: [
-        { icon: 'mdi-account-group', key: '', text: 'Gestión de Alumnos', to: { name: 'manage-students' }, roles: 'admin' },
-        { icon: 'mdi-book-open-variant', key: '', text: 'Gestión de Oposiciones', to: { name: 'manage-oppositions' }, roles: 'admin' },
-        { icon: 'mdi-file-document-multiple', key: '', text: 'Gestión de Temas', to: { name: 'manage-topics' }, roles: 'admin' }/* ,
+        {
+          icon: 'mdi-account-group',
+          key: '',
+          text: 'Gestión de Alumnos',
+          to: { name: 'manage-students' },
+          roles: 'admin'
+        },
+        {
+          icon: 'mdi-book-open-variant',
+          key: '',
+          text: 'Gestión de Oposiciones',
+          to: { name: 'manage-oppositions' },
+          roles: 'admin'
+        },
+        {
+          icon: 'mdi-file-document-multiple',
+          key: '',
+          text: 'Gestión de Temas',
+          to: { name: 'manage-topics' },
+          roles: 'admin'
+        } /* ,
         { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */,
         {
-          icon: 'mdi-database-import', key: '', text: 'Importar', roles: 'admin', regex: /^\/Importar/, items: [
-            { icon: 'mdi-database-plus', key: '', text: 'Importar Temas', to: { name: 'import-topics' }, roles: 'admin' },
-            { icon: 'mdi-database-plus', key: '', text: 'Importar Subtemas', to: { name: 'import-subtopics' }, roles: 'admin' },
-            { icon: 'mdi-database-plus', key: '', text: 'Importar Preguntas', to: { name: 'import-questions' }, roles: 'admin' }
+          icon: 'mdi-database-import',
+          key: '',
+          text: 'Importar',
+          roles: 'admin',
+          regex: /^\/Importar/,
+          items: [
+            {
+              icon: 'mdi-database-plus',
+              key: '',
+              text: 'Importar Temas',
+              to: { name: 'import-topics' },
+              roles: 'admin'
+            },
+            {
+              icon: 'mdi-database-plus',
+              key: '',
+              text: 'Importar Subtemas',
+              to: { name: 'import-subtopics' },
+              roles: 'admin'
+            },
+            {
+              icon: 'mdi-database-plus',
+              key: '',
+              text: 'Importar Preguntas',
+              to: { name: 'import-questions' },
+              roles: 'admin'
+            }
           ]
         }
       ]
@@ -66,7 +179,13 @@ export default {
       key: '',
       roles: 'admin',
       items: [
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Bitácora de importaciones', to: { name: 'my-imports-files' }, roles: 'admin' }
+        {
+          icon: 'mdi-file-document-multiple-outline',
+          key: '',
+          text: 'Bitácora de importaciones',
+          to: { name: 'my-imports-files' },
+          roles: 'admin'
+        }
       ]
     }
     /* ,

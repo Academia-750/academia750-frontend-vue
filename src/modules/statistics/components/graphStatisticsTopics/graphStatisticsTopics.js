@@ -20,20 +20,7 @@ export default {
   },
   data() {
     return {
-      showChart: false,
-      series: [{
-        name: 'Correctas',
-        color: '#26A69A',
-        data: [10, 10]
-      }, {
-        name: 'Incorrectas',
-        data: [10, 15],
-        color: '#D32F2F'
-      }, {
-        name: 'No respondidas',
-        color: '#D0B838',
-        data: [5, 16]
-      }]
+      showChart: false
     }
   },
   computed: {

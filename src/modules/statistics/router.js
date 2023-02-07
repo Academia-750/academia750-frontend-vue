@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import TestsCompletedModule from './views/TestsCompleted'
 import ResumeModule from './views/Resume'
+import ResumeFiveTopicsToImprove from './views/Resume/FiveTopicToImprove'
 import HistoryQuestionsStudentModule from './views/HistoryQuestionsStudent'
 
 const shortcutRoutes = [
@@ -30,6 +31,14 @@ const moduleRoute = [
             path: 'fetch/resume-my-data',
             name: 'fetch-resume-my-data-student',
             component: ResumeModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'fetch/resume/five-topics-to-improve',
+            name: 'fetch-resume-student-five-topics-to-improve',
+            component: ResumeFiveTopicsToImprove,
             meta: {
               middleware: [authMiddleware]
             }
