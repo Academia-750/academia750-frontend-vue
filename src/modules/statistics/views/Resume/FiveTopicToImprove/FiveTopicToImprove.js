@@ -9,6 +9,7 @@ import footerProps from './component/footerProps'
 //import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
 import PreviewTopicsWorstTests from '@/modules/statistics/components/previewTopicsWorstTests'
 import GraphStatisticsTopicsDialog from '@/modules/statistics/components/graphStatisticsTopics/Dialog/graphStatisticsTopicsDialog'
+import GraphStatisticsTopicsComponent from '@/modules/statistics/components/graphStatisticsTopics'
 
 export default {
   mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
@@ -24,7 +25,8 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
     PreviewTopicsWorstTests,
-    GraphStatisticsTopicsDialog
+    GraphStatisticsTopicsDialog,
+    GraphStatisticsTopicsComponent
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
