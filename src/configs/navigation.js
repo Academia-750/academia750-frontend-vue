@@ -71,47 +71,55 @@ export default {
       ]
     },
     {
-      text: 'Mi cuenta',
+      text: 'Mi evolución',
       key: '',
       roles: 'student',
       items: [
         {
           icon: 'mdi-chart-areaspline',
           key: '',
-          text: 'Mis progresos',
+          text: 'Resumen',
           roles: 'student',
-          regex: /^\/Mis progresos/,
+          regex: /^\/Resumen/,
           items: [
             {
-              icon: 'mdi-file-chart',
+              icon: 'mdi-book-open-variant',
               key: '',
-              text: 'Resumen',
-              /* to: { name: 'fetch-resume-my-data-student' }, */ regex:
-                /^\/Resumen/,
-              roles: 'student',
-              items: [
-                { icon: 'mdi-book-open-variant', key: '', text: '5 temas a mejorar', to: { name: 'fetch-resume-student-five-topics-to-improve' }, roles: 'student' },
-                { icon: 'mdi-book-clock', key: '', text: 'Resultados por tema', to: { name: 'list-questionnaires-of-student-not-complete' }, roles: 'student' },
-                { icon: 'mdi-view-list', key: '', text: 'Errores por tema', to: { name: 'list-cards-memory' }, roles: 'student' }
-              ]
-            },
-            {
-              icon: 'mdi-chart-timeline',
-              key: '',
-              text: 'Históricos de preguntas',
-              to: {
-                name: 'fetch-history-questions-student-by-tests-period-type-question'
-              },
+              text: '5 temas a mejorar',
+              to: { name: 'fetch-resume-student-five-topics-to-improve' },
               roles: 'student'
             },
             {
-              icon: 'mdi-notebook-check',
+              icon: 'mdi-book-clock',
               key: '',
-              text: 'Tests completados',
-              to: { name: 'fetch-history-tests-completed' },
+              text: 'Resultados por tema',
+              to: { name: 'fetch-resume-student-results-per-topic' },
+              roles: 'student'
+            },
+            {
+              icon: 'mdi-view-list',
+              key: '',
+              text: 'Errores por tema',
+              to: { name: 'fetch-resume-student-questions-wrong-per-topic' },
               roles: 'student'
             }
           ]
+        },
+        {
+          icon: 'mdi-chart-timeline',
+          key: '',
+          text: 'Históricos de preguntas',
+          to: {
+            name: 'fetch-history-questions-student-by-tests-period-type-question'
+          },
+          roles: 'student'
+        },
+        {
+          icon: 'mdi-notebook-check',
+          key: '',
+          text: 'Tests completados',
+          to: { name: 'fetch-history-tests-completed' },
+          roles: 'student'
         }
       ]
     },

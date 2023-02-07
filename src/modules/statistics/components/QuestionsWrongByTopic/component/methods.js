@@ -26,14 +26,14 @@ export default {
     loadDatatatable() {
       if (!this.topic_id) {
 
-        /* this.$swal.fire({
+        this.$swal.fire({
           icon: 'error',
           toast: true,
           title: 'Por favor, seleccione 1 tema',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 10000
-        }) */
+        })
 
         return
       }
