@@ -10,7 +10,7 @@
         <resource-title-toolbar-datatable title-text="Generar Test" />
       </v-toolbar>
       <validation-observer ref="FormCreateTest" v-slot="{ invalid }">
-        <v-container
+        <!-- <v-container
           v-if="oppositionSelected.length > 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
           class="d-flex justify-center"
@@ -18,15 +18,15 @@
           <div>
             <span class="title">Oposición: </span><span class="title font-weight-bold">{{ oppositionSelected[0].name }}</span>
           </div>
-        </v-container>
+        </v-container> -->
         <v-container
-          v-show="topicsSelected.length === 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
           class="mx-auto"
         >
           <select-opposition-by-datatable
             ref="selectOppositionByDatatable"
-            :show-select="topicsSelected.length === 0"
+            :show-select="true"
+            @ClearTopicsSelectedBinding="clearTopicsSelected"
             @OppositionSelectedBinding="oppositionSelected = $event"
           />
           <v-divider class="my-1 blue-grey lighten-4" />
@@ -62,13 +62,13 @@
           <v-divider class="my-1 blue-grey lighten-4" />
         </v-container>
         <v-container
-          v-if="oppositionSelected.length > 0 && topicGroupSelected.length > 0"
+          v-show="oppositionSelected.length > 0 && topicGroupSelected.length > 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
           class="mx-auto"
         >
           <select-topics-by-datatable
             ref="selectTopicsByDatatable"
-            :opposition-id="oppositionSelected[0]?.id"
+            :opposition-id="oppositionSelected.length > 0 ? oppositionSelected[0]?.id : ''"
             :topic-group-id="topicGroupSelected"
             @TopicsSelectedBinding="topicsSelected = $event"
           />

@@ -8,8 +8,13 @@ export default {
       },
       deep: true
     },
-    oppositionSelected (value) {
-      this.$emit('OppositionSelectedBinding',value)
+    oppositionSelected (newValue) {
+      /* console.log({
+        lastValue,
+        newValue
+      }) */
+      this.$emit('ClearTopicsSelectedBinding')
+      this.$emit('OppositionSelectedBinding',newValue)
     }
   }
 }

@@ -1,5 +1,8 @@
+import { mapMutations } from 'vuex'
+
 export default {
   methods: {
+    ...mapMutations('topicsService', ['SET_ITEMS_DATATABLE']),
     searchFieldExecuted ($event) {
       this.searchWord = $event
       this.loadDataTopics()

@@ -33,6 +33,12 @@ export default {
     showSelect: {
       type: Boolean,
       required: true
+    },
+    topicsSelected: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   created() {

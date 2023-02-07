@@ -2,15 +2,25 @@ export default {
   watch: {
     optionsDatatable: {
       handler() {
-        this.loadDataTopics()
+
+        if (this.oppositionId && this.topicGroupId) {
+          this.loadDataTopics()
+        }
       },
       deep: true
     },
     topicsSelected (value) {
       this.$emit('TopicsSelectedBinding',value)
     },
+    oppositionId() {
+      if (this.oppositionId && this.topicGroupId) {
+        this.loadDataTopics()
+      }
+    },
     topicGroupId() {
-      this.loadDataTopics()
+      if (this.oppositionId && this.topicGroupId) {
+        this.loadDataTopics()
+      }
     }
   }
 }
