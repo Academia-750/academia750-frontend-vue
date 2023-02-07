@@ -56,6 +56,7 @@ export default {
       return {
         chart: {
           type: 'bar',
+          width: '100%',
           height: 350/* ,
           toolbar: {
             export: {
@@ -71,23 +72,35 @@ export default {
             }
           } */
         },
+        legend: {
+          position: 'top'
+        },
         plotOptions: {
           bar: {
             horizontal: false,
             columnWidth: '90%',
-            endingShape: 'rounded'
+            barHeight: '100%',
+            endingShape: 'rounded',
+            dataLabels: {
+              position: 'center'
+            }
           }
         },
-        dataLabels: {
-          enabled: false
-        },
+        /* dataLabels: {
+          enabled: false,
+          offsetY: 500
+        }, */
         stroke: {
           show: true,
           width: 2,
           colors: ['transparent']
         },
         xaxis: {
-          categories: this.categoriesTopics
+          categories: this.categoriesTopics,
+          labels: {
+            rotate: -85,
+            maxHeight: 3000
+          }
         },
         yaxis: {
           title: {

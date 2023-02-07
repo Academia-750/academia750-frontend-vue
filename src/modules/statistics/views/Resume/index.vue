@@ -36,25 +36,27 @@
           color="light-blue darken-3"
           class="white--text mx-1 align-self-center"
           @click="getHistoryStatisticsDataGraphApiAction"
-        > Mostrar gráfica
-          <v-icon
-            right
-            dark
-            class="mr-1"
-          >
-            mdi-refresh
-          </v-icon>
+        >
+          Mostrar gráfica
+          <v-icon right dark class="mr-1"> mdi-refresh </v-icon>
         </v-btn>
       </div>
     </v-container>
     <v-container class="ma-0 pa-0 d-flex justify-center mx-auto">
       <div class="mx-auto" style="width: 98% !important">
-        <graph-statistics-topics
+        <graph-statistics-topics-dialog
+          ref="GraphStatisticsTopicsDialogComponent"
           :array-counts-questions-correct="arrayCountsQuestionsCorrect"
           :array-counts-questions-wrong="arrayCountsQuestionsWrong"
           :array-counts-questions-unanswered="arrayCountsQuestionsUnanswered"
           :categories-topics="categoriesTopics"
         />
+        <!-- <graph-statistics-topics
+          :array-counts-questions-correct="arrayCountsQuestionsCorrect"
+          :array-counts-questions-wrong="arrayCountsQuestionsWrong"
+          :array-counts-questions-unanswered="arrayCountsQuestionsUnanswered"
+          :categories-topics="categoriesTopics"
+        /> -->
       </div>
     </v-container>
     <v-divider class="grey lighten-1 mt-6 mb-3"></v-divider>
@@ -81,21 +83,14 @@
           color="light-blue darken-3"
           class="white--text mx-1 align-self-center"
           @click="getHistoryStatisticsQuestionsFailedTests"
-        > Mostrar preguntas
-          <v-icon
-            right
-            dark
-            class="mr-1"
-          >
-            mdi-refresh
-          </v-icon>
+        >
+          Mostrar preguntas
+          <v-icon right dark class="mr-1"> mdi-refresh </v-icon>
         </v-btn>
       </div>
     </v-container>
     <v-container>
-      <questions-wrong-by-topic
-        ref="QuestionsWrongByTopic"
-      />
+      <questions-wrong-by-topic ref="QuestionsWrongByTopic" />
     </v-container>
   </v-card-text>
 </template>

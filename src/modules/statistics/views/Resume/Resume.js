@@ -8,8 +8,9 @@ import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import footerProps from './component/footerProps'
 import selectTopicsByDatatable from '../../components/selectTopicsByDatatable'
 import QuestionsWrongByTopic from '../../components/QuestionsWrongByTopic'
-import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
+//import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
 import PreviewTopicsWorstTests from '../../components/previewTopicsWorstTests'
+import GraphStatisticsTopicsDialog from '@/modules/statistics/components/graphStatisticsTopics/Dialog/graphStatisticsTopicsDialog'
 
 export default {
   mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
@@ -25,9 +26,10 @@ export default {
     ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
     ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
     selectTopicsByDatatable,
-    GraphStatisticsTopics,
+    //GraphStatisticsTopics,
     QuestionsWrongByTopic,
-    PreviewTopicsWorstTests
+    PreviewTopicsWorstTests,
+    GraphStatisticsTopicsDialog
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('student')
@@ -167,6 +169,8 @@ export default {
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
+
+        this.$refs['GraphStatisticsTopicsDialogComponent'].showGraphStatisticsStudent = true
 
       } catch (error) {
         console.log(error)
