@@ -17,7 +17,7 @@ export default {
             'filter[role]': 'student',
             'filter[state-account]': 'enable',
             'sort': '-created-at',
-            'page[size]': 5,
+            'page[size]': 10,
             'page[number]': 1
           }
         })
@@ -32,7 +32,7 @@ export default {
           params: {
             'filter[role]': 'student',
             'filter[state-account]': 'disable',
-            'page[size]': 5,
+            'page[size]': 10,
             'page[number]': 1
           }
         })
