@@ -4,7 +4,7 @@
     :items="desserts"
     :sort-by="['calories', 'fat']"
     :sort-desc="[false, true]"
-    multi-sort
+
     class="elevation-1"
   ></v-data-table>
 </template>

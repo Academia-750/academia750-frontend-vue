@@ -44,7 +44,6 @@
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
-      multi-sort
       show-expand
       :expanded.sync="expandedItemsDatatable"
       no-data-text="No hay datos disponibles"

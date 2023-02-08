@@ -8,7 +8,7 @@
       :options.sync="optionsDatatable"
       item-key="id"
       show-select
-      multi-sort
+
       sort-by="created-at"
       sort-desc
       no-data-text="No hay datos disponibles"

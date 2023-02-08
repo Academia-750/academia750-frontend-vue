@@ -9,7 +9,6 @@
       :single-select="true"
       show-select
       item-key="id"
-      multi-sort
       no-data-text="No hay datos disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"

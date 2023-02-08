@@ -22,7 +22,7 @@
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
-      multi-sort
+
       no-data-text="Este tema no tiene subtemas disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"

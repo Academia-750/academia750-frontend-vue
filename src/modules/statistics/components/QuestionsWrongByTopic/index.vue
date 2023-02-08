@@ -4,7 +4,7 @@
       :headers="filter__headers_datatable"
       :items.sync="itemsDatatableQuestionsWrong"
       item-key="id"
-      multi-sort
+
       show-expand
       single-expand
       :expanded.sync="QuestionsWrongItemsExpanded"

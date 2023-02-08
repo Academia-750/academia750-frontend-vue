@@ -14,7 +14,7 @@ import FooterPropsSnippet from '!!raw-loader!./_examples/data-tables/simple/foot
 import VirtualizedSnippet from '!!raw-loader!./_examples/data-tables/simple/virtualized.vue'
 import HeaderlessSnippet from '!!raw-loader!./_examples/data-tables/simple/headerless.vue'
 import LoadingSnippet from '!!raw-loader!./_examples/data-tables/simple/loading.vue'
-import MultiSortSnippet from '!!raw-loader!./_examples/data-tables/simple/multi-sort.vue'
+import MultiSortSnippet from '!!raw-loader!./_examples/data-tables/simple/.vue'
 import SearchSnippet from '!!raw-loader!./_examples/data-tables/simple/search.vue'
 import GroupSnippet from '!!raw-loader!./_examples/data-tables/simple/group.vue'
 import SortSnippet from '!!raw-loader!./_examples/data-tables/intermediate/sort.vue'

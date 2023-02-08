@@ -3,7 +3,6 @@
     <v-data-table
       :headers="headersDatatable"
       :items="itemsDatatable"
-      multi-sort
       no-data-text="No hay temas disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"
