@@ -32,6 +32,7 @@ export default {
           params: {
             'filter[role]': 'student',
             'filter[state-account]': 'disable',
+            'sort': '-created-at',
             'page[size]': 10,
             'page[number]': 1
           }
