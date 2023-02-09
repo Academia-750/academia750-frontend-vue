@@ -5,7 +5,7 @@
       :items="itemsDatatable"
 
       no-data-text="No hay datos disponibles"
-      :items-per-page="10"
+      :items-per-page="100"
       :mobile-breakpoint="600"
       :search="search"
       class="elevation-1"
