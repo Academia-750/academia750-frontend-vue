@@ -59,23 +59,6 @@
                 id: topicData.id
               } }"
             />
-            <!-- <v-btn
-              small
-              elevation="24"
-              color="teal darken-2"
-              class="white--text ml-1"
-              title="Cargar nuevamente"
-              @click="loadDatatatable"
-            >
-              <v-icon
-                dark
-                small
-                class="mx-1"
-              >
-                mdi-reload
-              </v-icon>
-              <span class="d-none d-sm-inline">Cargar</span>
-            </v-btn> -->
           </div>
         </v-toolbar>
         <resource-text-field-search
@@ -86,6 +69,16 @@
       </template>
       <template v-slot:no-data>
         <resource-banner-no-data-datatable message-text="Este tema no tiene preguntas disponibles"/>
+      </template>
+      <template v-slot:[`item.question-is-visible`]="{ item }">
+        <!-- <pre>
+          {{ item }}
+        </pre> -->
+        <change-state-visibility-question-switch
+          :question-id="item.id"
+          :state-question-visibility="item['is-visible'] === 'yes'"
+          @emitStateQuestionVisibility="ChangeStateVisibilityQuestionSwitchMethod(item.id, $event)"
+        />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">

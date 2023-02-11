@@ -26,5 +26,8 @@ export default {
   },
   setEditModeQuestion(question_id, data, config = {}) {
     return ResourceService.post(`questions/set-mode-edit/${question_id}/tests`, data, config)
+  },
+  setStateVisibilityQuestion(question_id, data, config = {}) {
+    return ResourceService.post(`questions/set-state-visibility-question/${question_id}/tests`, data, config)
   }
 }

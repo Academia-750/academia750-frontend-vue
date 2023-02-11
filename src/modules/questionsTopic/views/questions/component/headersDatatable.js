@@ -19,6 +19,13 @@ export default {
           show: true
         },
         {
+          sortable: false,
+          text: '¿Es visible?',
+          align: 'center',
+          value: 'question-is-visible',
+          show: true
+        },
+        {
           position: 3,
           sortable: false,
           text: 'Acciones',
@@ -26,6 +33,7 @@ export default {
           value: 'actions-resource',
           show: true
         }
+
       ]
     }
   }

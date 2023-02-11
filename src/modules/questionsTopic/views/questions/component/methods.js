@@ -1,5 +1,8 @@
+import { mapActions } from 'vuex'
+
 export default {
   methods: {
+    ...mapActions('questionsTopicService', ['setStateVisibilityQuestion']),
     searchFieldExecuted($event) {
       this.searchWord = $event
       this.getQuestions({
@@ -14,6 +17,15 @@ export default {
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
+    },
+    ChangeStateVisibilityQuestionSwitchMethod (question_id, $modeVisibleQuestion) {
+      this.setStateVisibilityQuestion({
+        question_id,
+        data: {
+          'is-visible-question': $modeVisibleQuestion ? 'yes' : 'no'
+        },
+        config: {}
+      })
     },
     loadDatatatable() {
       this.getQuestions({

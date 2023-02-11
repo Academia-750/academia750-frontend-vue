@@ -34,6 +34,7 @@ export default {
   },
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
+    this.ChangeStateVisibilityQuestionSwitchMethod = _.debounce(this.ChangeStateVisibilityQuestionSwitchMethod, 300)
   },
   head: {
     title: {

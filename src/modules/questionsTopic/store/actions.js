@@ -8,6 +8,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       'reason-text': record.attributes['reason-text'],
       'is-visible': record.attributes.is_visible,
       'can_this_question_be_affected': record.meta.can_this_question_be_affected,
+      //'question-is-visible': record.attributes.is_visible,
       'created-at': record.attributes.created_at
     }
   })
@@ -77,6 +78,19 @@ const setEditModeQuestion = async (_, options) => {
   try {
 
     const response = await QuestionsTopicRepository.setEditModeQuestion(options.question_id, options.data, options.config)
+
+    return Promise.resolve(response)
+  } catch (error) {
+    console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const setStateVisibilityQuestion = async (_, options) => {
+  try {
+
+    const response = await QuestionsTopicRepository.setStateVisibilityQuestion(options.question_id, options.data, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -157,5 +171,6 @@ export default {
   deleteQuestion,
   importQuestionsCSV,
   downloadTemplateImport,
-  setEditModeQuestion
+  setEditModeQuestion,
+  setStateVisibilityQuestion
 }
