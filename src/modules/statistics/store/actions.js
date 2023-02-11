@@ -83,6 +83,7 @@ const mapItemsDatatableQuestionsWrongFromApi = (itemsApi) => {
       'reason-text': record.explicacion_pregunta,
       'answer-solved-in-question': record.texto_respuesta_marcada,
       'answer-correct-question': record.texto_respuesta_correcta,
+      'question_data': record.question_data,
       'finished-at': record.fecha_test
     }
   })

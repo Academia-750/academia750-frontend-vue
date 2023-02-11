@@ -62,7 +62,7 @@
       </template>
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
-          <div class="py-3 px-1 mt-2 grey lighten-2">
+          <div v-if="item['reason-text'] && item?.question_data?.show_reason_text_in_test === 'yes'" class="py-3 px-1 mt-2 grey lighten-2">
             <span>Explicación de la pregunta: </span> <span class="font-weight-black">{{ item['reason-text'] }}</span>
           </div>
         </td>
