@@ -13,14 +13,22 @@ export default {
       this.$emit('TopicsSelectedBinding',value)
     },
     oppositionId() {
-      if (this.oppositionId && this.topicGroupId) {
+      if (this.oppositionId && this.topicsGroupId.length > 0) {
         this.loadDataTopics()
       }
     },
-    topicGroupId() {
-      if (this.oppositionId && this.topicGroupId) {
-        this.loadDataTopics()
-      }
+    topicsGroupId: {
+      handler () {
+        if (this.oppositionId && this.topicsGroupId.length > 0) {
+          this.loadDataTopics()
+        }
+
+        if (this.topicsGroupId?.length === 0) {
+
+          this.SET_ITEMS_DATATABLE([])
+        }
+      },
+      deep: true
     }
   }
 }

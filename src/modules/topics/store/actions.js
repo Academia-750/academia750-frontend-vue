@@ -124,7 +124,7 @@ const getTopicsAvailableForGenerateTest = async ({ commit }, options) => {
 
     commit('SET_ITEMS_DATATABLE', [])
 
-    const response = await TopicRepository.getTopicsAvailableForGenerateTest(options.config)
+    const response = await TopicRepository.getTopicsAvailableForGenerateTest(options.data, options.config)
 
     if (response) {
       //console.trace(response)

@@ -34,8 +34,8 @@ export default {
       type: String,
       required: true
     },
-    topicGroupId: {
-      type: String,
+    topicsGroupId: {
+      type: Array,
       required: true
     }
   },

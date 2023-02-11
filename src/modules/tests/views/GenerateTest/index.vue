@@ -69,7 +69,7 @@
           <select-topics-by-datatable
             ref="selectTopicsByDatatable"
             :opposition-id="oppositionSelected.length > 0 ? oppositionSelected[0]?.id : ''"
-            :topic-group-id="topicGroupSelected"
+            :topics-group-id="topicGroupSelected"
             @TopicsSelectedBinding="topicsSelected = $event"
           />
           <v-divider class="my-1 blue-grey lighten-4" />

@@ -8,7 +8,18 @@
     name="Grupo de tema"
     :rules="rules"
   >
-    <v-radio-group
+    <div v-for="topicGroup in topicsGroups" :key="topicGroup.id" class="ma-2">
+      <v-checkbox
+        v-model="topicGroupSelected"
+        :error-messages="errors"
+        :value="topicGroup.id"
+      >
+        <template v-slot:label>
+          <span class="title font-weight-bold py-1">{{ topicGroup.attributes.name }}</span>
+        </template>
+      </v-checkbox>
+    </div>
+    <!-- <v-radio-group
       v-model="topicGroupSelected"
       :error-messages="errors"
       :disabled="isDisabled"
@@ -23,7 +34,7 @@
           <span class="title font-weight-bold py-1">{{ topicGroup.attributes.name }}</span>
         </template>
       </v-radio>
-    </v-radio-group>
+    </v-radio-group> -->
   </ValidationProvider>
 </template>
 
@@ -48,12 +59,13 @@ export default {
   },
   data() {
     return {
-      topicGroupSelected: null,
+      topicGroupSelected: [],
       topicsGroups: []
     }
   },
   watch: {
     topicGroupSelected(value) {
+      console.log(value)
       this.$emit('TopicGroupTestBinding', value)
     }
   },
