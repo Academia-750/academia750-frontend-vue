@@ -85,6 +85,16 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable message-text="Este subtema no tiene preguntas disponibles"/>
       </template>
+      <template v-slot:[`item.question-is-visible`]="{ item }">
+        <!-- <pre>
+          {{ item }}
+        </pre> -->
+        <change-state-visibility-question-switch
+          :question-id="item.id"
+          :state-question-visibility="item['is-visible'] === 'yes'"
+          @emitStateQuestionVisibility="ChangeStateVisibilityQuestionSwitchMethod(item.id, $event)"
+        />
+      </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
