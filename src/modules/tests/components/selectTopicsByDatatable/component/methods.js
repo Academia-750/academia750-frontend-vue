@@ -34,7 +34,9 @@ export default {
           'opposition-id': this.oppositionId,
           'topics-group-id': this.topicsGroupId
         },
-        config: {}
+        config: {
+          params: this.buildQueryParamsRequest()
+        }
       })
     },
     searchFieldWithDebounce(value) {

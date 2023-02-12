@@ -2,7 +2,7 @@
   <ValidationProvider
     v-slot="{ errors }"
     tag="div"
-    class="d-flex justify-center"
+    :class="classGroupCheckboxSectionTopicsGroup"
     :vid="vid"
     mode="aggressive"
     name="Grupo de tema"
@@ -61,6 +61,14 @@ export default {
     return {
       topicGroupSelected: [],
       topicsGroups: []
+    }
+  },
+  computed: {
+    classGroupCheckboxSectionTopicsGroup () {
+      return {
+        'd-flex': this.$vuetify.breakpoint.width >= 600,
+        'justify-center': this.$vuetify.breakpoint.width >= 600
+      }
     }
   },
   watch: {

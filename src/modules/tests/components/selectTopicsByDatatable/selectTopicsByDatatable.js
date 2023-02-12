@@ -8,7 +8,8 @@ import ActionsMethods from './component/ActionsMethods'
 
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headersOppositionsTable from './component/headersDatatable'
-import computedDatatable from '@/modules/resources/mixins/computedDatatable'
+//import computedDatatable from '@/modules/resources/mixins/computedDatatable'
+import computedDatatable from '@/modules/tests/components/selectTopicsByDatatable/component/ComputedFooterPropsMixin'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 
 const MIXINS_COMPONENT = [
