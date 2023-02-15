@@ -20,7 +20,7 @@
         xl="4"
         class="d-flex justify-center"
       >
-        <span class="font-weight-bold">Respuestas fallidas: </span>
+        <span class="font-weight-bold">Respuestas erróneas: </span>
         <span class="ml-1 red--text font-weight-bold">{{ totalQuestionsWrong }}</span>
       </v-col>
       <v-col
@@ -31,7 +31,7 @@
         xl="4"
         class="d-flex justify-center"
       >
-        <span class="font-weight-bold">Respuestas sin responder: </span>
+        <span class="font-weight-bold">Preguntas no respondidas: </span>
         <span class="ml-1 secondary--text font-weight-bold">{{ totalQuestionsUnanswered }}</span>
       </v-col>
     </v-row>

@@ -2,12 +2,12 @@
   <v-card-text class="overflow-x-auto overflow-y-hidden d-flex justify-center">
     <div class="mx-auto" style="width: 96% !important;">
       <resource-header-crud-title
-        text-header="Generar Test"
+        text-header="Generar cuestionario"
         :can-rendering-header="$vuetify.breakpoint.width < 700"
       />
       <v-toolbar flat class="indigo lighten-5 my-2" outlined>
         <resource-button-go-back-router />
-        <resource-title-toolbar-datatable title-text="Generar Test" />
+        <resource-title-toolbar-datatable title-text="Generar cuestionario" />
       </v-toolbar>
       <validation-observer ref="FormCreateTest" v-slot="{ invalid }">
         <!-- <v-container
@@ -42,7 +42,7 @@
           <v-divider class="my-1 blue-grey lighten-4" />
         </v-container>
         <v-container :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}" class="mt-3 mx-auto">
-          <p class="title font-weight-bold d-flex justify-center">Deseas generar</p>
+          <p class="title font-weight-bold d-flex justify-center">Tipo de cuestionario</p>
           <form-type-test-radio-buttons
             ref="FormTypeTestRadioButtons"
             vid="type-test"

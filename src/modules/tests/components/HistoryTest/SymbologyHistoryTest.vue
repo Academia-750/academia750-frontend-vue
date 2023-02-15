@@ -63,7 +63,7 @@
           height="20"
           width="7%"
           color="#D0B838"
-        ></v-sheet><span class="ml-1 font-weight-bold">Respuesta no respondida</span>
+        ></v-sheet><span class="ml-1 font-weight-bold">Pregunta no respondida</span>
       </v-col>
     </v-row>
   </v-container>

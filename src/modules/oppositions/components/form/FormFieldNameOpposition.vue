@@ -9,7 +9,6 @@
     <v-text-field
       ref="name-opposition-field"
       v-model="name_opposition"
-      :counter="100"
       label="Nombre"
       placeholder="Escribe el nombre"
       :error-messages="errors"

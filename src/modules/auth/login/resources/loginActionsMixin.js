@@ -120,11 +120,11 @@ export default {
           this.$swal.fire({
             title: 'Existe una sesión ya abierta para este usuario. ¿Desea cerrarla para continuar?',
             showDenyButton: true,
-            showCancelButton: true,
+            showCancelButton: false,
             allowEscapeKey: false,
             allowOutsideClick: false,
             allowEnterKey: false,
-            confirmButtonText: 'Si, deseo continuar',
+            confirmButtonText: 'Si deseo continuar',
             denyButtonText: 'No deseo continuar'
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */

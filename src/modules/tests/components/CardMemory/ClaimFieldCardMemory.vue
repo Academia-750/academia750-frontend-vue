@@ -14,7 +14,6 @@
       placeholder="Escribe el motivo de impugnación"
       :error-messages="errors"
       filled
-      :counter="400"
       name="input-7-4"
     ></v-textarea>
   </ValidationProvider>

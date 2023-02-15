@@ -9,7 +9,6 @@
     <v-text-field
       ref="period-opposition-field"
       v-model="period_opposition"
-      :counter="100"
       label="Periodo"
       placeholder="Escribe el periodo"
       :error-messages="errors"

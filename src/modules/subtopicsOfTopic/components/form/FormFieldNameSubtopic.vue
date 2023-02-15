@@ -9,7 +9,6 @@
     <v-text-field
       ref="name-subtopic-field"
       v-model="name_subtopic"
-      :counter="255"
       label="Nombre"
       placeholder="Escribe el nombre"
       :error-messages="errors"
