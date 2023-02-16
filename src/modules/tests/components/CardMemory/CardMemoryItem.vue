@@ -1,12 +1,12 @@
 <template>
   <v-expansion-panels focusable>
-    <v-expansion-panel>
+    <v-expansion-panel class="blue-grey lighten-5">
       <v-expansion-panel-header color="blue-grey lighten-5" expand-icon="mdi-menu-down">{{ questionWithAnswers.attributes['question-text'] }}</v-expansion-panel-header>
-      <v-expansion-panel-content>
-        <p v-if="getAnswerCorrect" class="white--text green--text text--darken-3 mt-2 mb-3 font-weight-bold">{{ getAnswerCorrect?.attributes.answer_text }}</p>
+      <v-expansion-panel-content class="blue-grey lighten-5">
+        <p v-if="getAnswerCorrect" class="blue-grey lighten-5 white--text green--text text--darken-3 mt-2 mb-3 font-weight-bold">{{ getAnswerCorrect?.attributes.answer_text }}</p>
         <v-divider class="grey lighten-3"></v-divider>
-        <p v-if="getAnswerCorrect && questionWithAnswers.attributes.show_reason_text_in_card_memory === 'yes' && questionWithAnswers.attributes['reason-text']" class="mt-2 mb-3 font-weight-bold">{{ questionWithAnswers.attributes['reason-text'] }}</p>
-        <div v-if="pathImageQuestion && questionWithAnswers.attributes.show_reason_image_in_card_memory === 'yes'" class="d-flex justify-center">
+        <p v-if="getAnswerCorrect && questionWithAnswers.attributes.show_reason_text_in_card_memory === 'yes' && questionWithAnswers.attributes['reason-text']" class="mt-2 mb-3 font-weight-bold blue-grey lighten-5">{{ questionWithAnswers.attributes['reason-text'] }}</p>
+        <div v-if="pathImageQuestion && questionWithAnswers.attributes.show_reason_image_in_card_memory === 'yes'" class="d-flex justify-center blue-grey lighten-5">
           <v-img
             contain
             max-width="150"
