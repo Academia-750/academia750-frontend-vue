@@ -42,8 +42,8 @@
             cols="12"
             sm="12"
             md="6"
-            lg="4"
-            xl="4"
+            lg="6"
+            xl="6"
             class="d-flex justify-center"
           >
             <card-memory-item
