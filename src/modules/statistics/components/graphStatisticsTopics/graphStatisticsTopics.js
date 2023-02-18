@@ -44,7 +44,7 @@ export default {
         chart: {
           type: 'bar',
           width: '100%',
-          height: 350/* ,
+          height: '100%'/* ,
           toolbar: {
             export: {
               csv: {
@@ -65,8 +65,8 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '20px',
-            barHeight: '100%',
+            columnWidth: '50px',
+            barHeight: '500px',
             endingShape: 'rounded',
             dataLabels: {
               position: 'center'
