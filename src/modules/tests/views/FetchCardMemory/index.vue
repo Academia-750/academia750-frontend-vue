@@ -44,7 +44,7 @@
             md="6"
             lg="6"
             xl="6"
-            class="d-flex justify-center"
+            class="d-flex justify-center pa-3"
           >
             <card-memory-item
               :question-with-answers="question"
