@@ -65,7 +65,7 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '90%',
+            columnWidth: '20px',
             barHeight: '100%',
             endingShape: 'rounded',
             dataLabels: {
