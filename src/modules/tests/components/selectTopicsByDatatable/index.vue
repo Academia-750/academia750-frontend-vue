@@ -8,7 +8,6 @@
       :options.sync="optionsDatatable"
       show-select
       item-key="id"
-
       no-data-text="No hay datos disponibles"
       :items-per-page="100"
       :mobile-breakpoint="600"

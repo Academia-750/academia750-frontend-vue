@@ -2,8 +2,8 @@ export default {
   watch: {
     optionsDatatable: {
       handler() {
+        if (this.oppositionId && this.topicsGroupId.length > 0) {
 
-        if (this.oppositionId && this.topicGroupId) {
           this.loadDataTopics()
         }
       },
