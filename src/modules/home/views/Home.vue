@@ -11,7 +11,7 @@
       ref="DialogLoginForm"
       @scrollToResetPasswordSection="scrollToResetPasswordSection"
     />
-    <div ref="OurServiceSection" style="padding-top: 100px">
+    <div id="OurServiceSection" ref="OurServiceSection" style="padding-top: 100px">
       <OurServices />
     </div>
     <GroupsByLevel
@@ -33,7 +33,7 @@
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
-    <div ref="tarifasSection" style="padding-top: 100px">
+    <div id="tarifasSection" ref="tarifasSection" style="padding-top: 100px">
       <Tarifas
         @emitClickInscriptionContactUs="
           scrollToContactUsFormForRegisterWithReasonInscription
@@ -41,7 +41,7 @@
       />
     </div>
     <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
-    <div ref="ContactUsForm">
+    <div id="ContactUsForm" ref="ContactUsForm">
       <Formulario ref="ContactUsFormComponent" />
     </div>
     <Footer
@@ -98,10 +98,20 @@ export default {
       this.$refs['MenuHomePage'].drawer = false
 
       //console.log(this.$refs[$refElement].offsetHeight)
-      this.$refs[$refElement].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
+      /* const elemento = document.getElementById($refElement)
+      const altura = elemento?.clientHeight
+      const posicion = elemento?.getBoundingClientRect().top + window.pageYOffset - altura
+
+      window.scrollTo({ top: posicion, behavior: 'smooth' }) */
+
+      document.getElementById($refElement)?.scrollIntoView()
+      /* setTimeout(() => {
+        this.$refs[$refElement].scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }, 50) */
+
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = null
 
@@ -132,3 +142,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.border-solid-light {
+  border: 2px dotted black !important;
+}
+</style>
