@@ -17,6 +17,21 @@ const login = async (optionsVuex = {}, credentials) => {
   }
 }
 
+const requestChangePasswordApi = async (optionsVuex = {}, options) => {
+
+  try {
+
+    const response = await LoginRepository.requestChangePasswordApi(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    /* commit('reset_values') */
+
+    return Promise.reject(error)
+  }
+}
+
 const logout = async () => {
   try {
 
@@ -44,5 +59,5 @@ const checkPreviousSessionAction = async (VuexContext, credentials) => {
 }
 
 export default {
-  login, logout, checkPreviousSessionAction
+  login, logout, checkPreviousSessionAction, requestChangePasswordApi
 }

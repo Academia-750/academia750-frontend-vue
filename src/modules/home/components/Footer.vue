@@ -48,8 +48,8 @@
                 />
               </div>
               <div class="mt-1">
-                <v-btn small text dark @click="$emit('emitShowLoginDialog')">
-                  <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
+                <v-btn small text dark @click="executeLoginAccountAction">
+                  <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Área privada</span>
                 </v-btn>
               </div>
               <div class="mt-1">
@@ -70,6 +70,7 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 import FooterUno from './Footer/FooterUno'
 import FooterDos from './Footer/FooterDos'
 import FooterTres from './Footer/FooterTres'
@@ -90,6 +91,22 @@ export default {
         '+34663261014',
         'hola@academia750.es'
       ]
+    }
+  },
+  methods: {
+    executeLoginAccountAction () {
+      if (Cookies.get('authorization')) {
+        this.$router.push({
+          name: 'update-my-profile'
+        })
+
+        return
+      }
+
+      this.$router.push({
+        name: 'login'
+      })
+      //this.$emit('emitShowLoginDialog')
     }
   }
 }

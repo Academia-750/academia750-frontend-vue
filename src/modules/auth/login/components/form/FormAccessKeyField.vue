@@ -1,19 +1,19 @@
 <template>
   <ValidationProvider
     v-slot="{ errors }"
-    vid="access_key"
+    :vid="vidValidationProvider"
     mode="eager"
-    name="DNI/NIE"
+    :name="nameValidationProvider"
     :rules="rules"
   >
     <v-text-field
-      id="username"
-      ref="access-key-field"
+      :id="idElement"
+      :ref="refElement"
       v-model="access_key"
-      name="username"
+      :name="nameElement"
       :error-messages="errors"
       :disabled="isDisabled"
-      label="DNI"
+      :label="labelInput"
       outlined
       required
       @keyup.enter="$emit('submitForm')"
@@ -32,6 +32,30 @@ export default {
     rules: {
       type: String,
       required: true
+    },
+    refElement: {
+      type: String,
+      default: 'access-key-field'
+    },
+    nameElement: {
+      type: String,
+      default: 'username'
+    },
+    idElement: {
+      type: String,
+      default: 'username'
+    },
+    labelInput: {
+      type: String,
+      default: 'DNI'
+    },
+    nameValidationProvider: {
+      type: String,
+      default: 'DNI/NIE'
+    },
+    vidValidationProvider: {
+      type: String,
+      default: 'access_key'
     }
   },
   data() {
@@ -49,10 +73,10 @@ export default {
       this.access_key = ''
     },
     onFocusAccesKeyField() {
-      this.$refs['access-key-field']['focus']()
+      this.$refs[this.refElement]['focus']()
     },
     onBlurAccesKeyField() {
-      this.$refs['access-key-field']['blur']()
+      this.$refs[this.refElement]['blur']()
     }
   }
 }
