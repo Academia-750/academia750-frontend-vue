@@ -9,7 +9,7 @@
   >
     <div class="d-flex justify-center" style="width: 80% !important;">
       <v-img
-        src="/images/academia750/img-nivel.png"
+        src="/images/academia750/gruposPorNivel.png"
         contain
         width="100%"
         alt="Grupos por nivel"

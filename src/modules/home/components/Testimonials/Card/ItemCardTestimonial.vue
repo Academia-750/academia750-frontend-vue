@@ -2,7 +2,7 @@
   <v-card
     evelation="10"
     rounded
-    class="mx-auto rounded-xl px-2 py-3 card-item-testimonial overflow-y-hidden overflow-x-auto"
+    class="mx-auto rounded-xl px-2 pt-2 card-item-testimonial overflow-y-hidden overflow-x-auto"
     :max-width="widthCardResponsive"
   >
     <v-container class="my-0 py-0">
@@ -90,10 +90,10 @@ export default {
 
 <style scoped>
   .card-item-testimonial {
-    min-height: 420px !important;
+    min-height: 310px !important;
   }
   .nombre_persona{
-  
+
     font-size: 20px;
     font-family: var(--fuente_uno);
     color: #000;
