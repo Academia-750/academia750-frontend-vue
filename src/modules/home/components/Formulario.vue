@@ -3,7 +3,7 @@
     <v-container>
       <v-row align="center">
         <v-col lg="6" cols="12">
-          <h2>Contacto con nosotros</h2>
+          <h2>Contacta con nosotros</h2>
           <p>Estaremos encantados de resolverte cualquier duda.</p>
         </v-col>
         <v-col lg="6" cols="12" class="text-center">
@@ -24,9 +24,9 @@
               class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
               @click="redirectToSendMailAcademia"
             >
-              info@academia750.com
+              hola@academia750.es
             </v-btn>
-            <!-- <a href="#">info@academia750.com</a> -->
+            <!-- <a href="#">hola@academia750.es</a> -->
           </div>
         </v-col>
       </v-row>
@@ -173,7 +173,7 @@ export default {
       window.open('tel:+34663261014', '_self')
     },
     redirectToSendMailAcademia() {
-      window.open('mailto:info@academia750.com', '_self')
+      window.open('mailto:hola@academia750.es', '_self')
     },
     ResetForm() {
       this.$refs.namePersonInputComponent.name_person = null

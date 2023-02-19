@@ -2,7 +2,7 @@
   <div class="mt-2">
     <div class="d-flex justify-center">
       <span class="font-weight-bold caption">
-        Para cualquier problema con tu acceso, envíanos un email a
+        Si necesitas ayuda escribenos a
       </span>
     </div>
     <div class="d-flex justify-center">

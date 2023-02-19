@@ -47,7 +47,7 @@
       lg="4"
       xl="4"
       path-image-service="/images/academia750/psicotecnicos.svg"
-      title-service="Supuestos prácticos"
+      title-service="Supuestos Psicoténicos"
       description-service="Incorporamos la preparación de psicotécnicos de forma que no olvidamos ninguna de las pruebas."
     />
   </v-row>

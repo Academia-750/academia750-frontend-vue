@@ -29,7 +29,7 @@
                   />
                   <FooterTres
                     ico-contacto="mdi-email"
-                    items-contacto=" info@academia750.com"
+                    items-contacto=" hola@academia750.es"
                   />
                 </ul>
               </div>
@@ -88,7 +88,7 @@ export default {
       Contactanos: [
         'Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante',
         '+34663261014',
-        'info@academia750.com'
+        'hola@academia750.es'
       ]
     }
   }

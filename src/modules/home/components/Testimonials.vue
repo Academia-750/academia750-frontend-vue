@@ -40,7 +40,7 @@
 
           <v-container class="d-flex justify-center">
             <item-card-testimonial
-              path-image="/images/academia750/testimonio_1.png"
+              path-image="/images/academia750/testimonio_2.jpg"
               alt-image="Testimonio 2 - Academia 750"
               name-person="Nadia Serrano"
               testimonial-person="Academia en la que no solo los materiales y la dedicación del profesorado en el aprendizaje del alumno son inmejorables, sino donde también es fundamental el apoyo que se recibe por su parte, tan importante en este duro camino que es la oposición a bombero."
