@@ -74,6 +74,10 @@
             </div>
             <hr class="mt-2">
             <FooterDialogLogin ref="FooterDialogLogin" />
+            <v-btn to="/" class="my-2 d-flex d-md-none">
+              <v-icon class="mr-1">mdi-arrow-collapse-left</v-icon>
+              Regresar
+            </v-btn>
           </v-form>
         </validation-observer>
       </v-card-text>

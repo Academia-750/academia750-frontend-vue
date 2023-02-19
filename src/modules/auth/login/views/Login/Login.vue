@@ -2,10 +2,7 @@
   <div>
     <v-card class="text-center pa-1 bg-transparent-academia">
       <div class="d-flex justify-center">
-        <span
-          style="cursor: pointer;"
-          @click="redirectToHomePageAfterLogout"
-        >
+        <span style="cursor: pointer" @click="redirectToHomePageAfterLogout">
           <v-img
             class="align-self-center"
             :src="require('../../assets/logo.png')"
@@ -15,9 +12,11 @@
         </span>
         <span
           class="font-weight-bold text-xs-caption text-sm-h5 align-self-center"
-          style="cursor: pointer;"
+          style="cursor: pointer"
           @click="redirectToHomePageAfterLogout"
-        >{{ product.name }}</span>
+        >
+          {{ product.name }}
+        </span>
       </div>
       <v-card-title class="justify-center mb-2 text-xs-caption text-sm-h6">
         Bienvenido
@@ -26,10 +25,7 @@
 
       <!-- sign in form -->
       <v-card-text>
-        <validation-observer
-          ref="FormLoginObserver"
-          v-slot="{ handleSubmit }"
-        >
+        <validation-observer ref="FormLoginObserver" v-slot="{ handleSubmit }">
           <v-form ref="FormHTMLLogin" @submit.prevent="handleSubmit(onSubmit)">
             <form-access-key-field
               ref="access-key-field"
@@ -71,8 +67,12 @@
               </v-alert>
             </div>
             <button-request-reset-password />
-            <hr class="mt-2">
+            <hr class="mt-2" />
             <FooterDialogLogin ref="FooterDialogLogin" />
+            <v-btn to="/" class="my-2 d-flex d-md-none">
+              <v-icon class="mr-1">mdi-arrow-collapse-left</v-icon>
+              Regresar
+            </v-btn>
           </v-form>
         </validation-observer>
       </v-card-text>
@@ -84,7 +84,7 @@
 <script src="./LoginComponent.js"></script>
 
 <style scoped>
-  .bg-transparent-academia {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-  }
+.bg-transparent-academia {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
 </style>
