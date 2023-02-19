@@ -32,25 +32,34 @@
       </v-row>
     </v-container>
     <form id="contact-form-home" name="contact-form__home" autocomplete="off">
-      <validation-observer ref="FormSubmitContactUs" v-slot="{ invalid }">
+      <validation-observer ref="FormSubmitContactUs">
         <v-container>
           <v-row>
             <v-col cols="12" lg="3">
-              <v-select
-                v-model="form.reason"
-                solo
-                :items="itemsReasonSelect"
-                placeholder="Motivo"
-                item-text="label"
-                item-value="key"
-              ></v-select>
+              <ValidationProvider
+                v-slot="{ errors }"
+                vid="reason"
+                mode="aggressive"
+                name="Motivo"
+                rules="required"
+              >
+                <v-select
+                  v-model="form.reason"
+                  solo
+                  :items="itemsReasonSelect"
+                  :error-messages="errors"
+                  placeholder="Motivo"
+                  item-text="label"
+                  item-value="key"
+                ></v-select>
+              </ValidationProvider>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" lg="6">
               <name-person-input
                 ref="namePersonInputComponent"
-                rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
+                rules="requiredFirstName|min:3|max:255|mustContainLettersAndOptionalTilde"
                 is-solo
                 :is-filled="false"
                 :has-prepend-icon="false"
@@ -60,7 +69,7 @@
             <v-col cols="12" lg="6">
               <last-name-person-input
                 ref="LastNamePersonInputComponent"
-                rules="requiredLastName|min:3|max:25|mustContainLettersAndOptionalTilde"
+                rules="requiredLastName|min:3|max:255|mustContainLettersAndOptionalTilde"
                 is-solo
                 :is-filled="false"
                 :has-prepend-icon="false"
@@ -112,7 +121,6 @@
                 id="boton_enviar_form"
                 class="btn-3"
                 :loading="loadingButtonSubmit"
-                :disabled="disabledButtonSubmit || invalid"
                 @click="validateFormOrSubmit"
               >
                 Enviar
@@ -193,11 +201,13 @@ export default {
       this.$loadingApp.disabledLoadingProgressLinear()
     },
     async validateFormOrSubmit() {
+      console.log('Se ejecuta validateFormOrSubmit')
       const responseValidation = await this.$refs[
         'FormSubmitContactUs'
       ].validate()
 
       if (!responseValidation) {
+        console.log('Hay error de validación')
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -209,6 +219,7 @@ export default {
 
         return
       } else {
+        console.log('No hay error de validación')
         this.$loadingApp.enableLoadingProgressLinear()
         this.loadingButtonSubmit = false
         this.disabledButtonSubmit = false
