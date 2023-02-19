@@ -160,7 +160,7 @@ export default {
       itemsMotivo: ['General', 'Recuperar Contraseña', 'Unete'],
       itemsReasonSelect: [
         { label: 'General', key: 'general' },
-        { label: 'Recuperar Contraseña', key: 'reset-password' },
+        /* { label: 'Recuperar Contraseña', key: 'reset-password' }, */
         { label: 'Únete', key: 'inscription' }
       ],
       disabledButtonSubmit: false,

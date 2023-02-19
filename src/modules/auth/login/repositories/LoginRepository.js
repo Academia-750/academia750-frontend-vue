@@ -2,7 +2,7 @@ import AuthService from '@/services/AuthService.js'
 
 export default {
   login(data, config = {}) {
-    return AuthService.post('login', credentials, config)
+    return AuthService.post('login', data, config)
   },
   logout(config = {}) {
     return AuthService.get('logout', config)
