@@ -34,7 +34,7 @@ export default {
 
       const statusValidate = await this.$refs['FormCreateTest'].validate()
 
-      if (!statusValidate) {
+      if (!statusValidate || this.topicsSelected.length === 0) {
         this.$swal.fire({
           icon: 'error',
           toast: true,

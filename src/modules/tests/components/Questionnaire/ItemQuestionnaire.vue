@@ -1,6 +1,11 @@
 <template>
   <div>
-    <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getIndexQuestion.index }}. - <span class="font-weight-black">{{ questionWithAnswers?.attributes['question-text'] }}</span></p>
+    <!-- <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getIndexQuestion.index }}. - <span class="font-weight-bold">{{ questionWithAnswers?.attributes['question-text'] }}</span></p> -->
+
+    <v-list-item-content class="mb-2">
+      <v-list-item-title class="text--darken-3 font-weight-bold">{{ getIndexQuestion.index }}. - {{ questionWithAnswers?.attributes['question-text'] }}</v-list-item-title>
+    </v-list-item-content>
+    <!-- <p class="text--darken-3 my-3 font-weight-bold">{{ getIndexQuestion.index }}. - <span class="font-weight-bold">{{ questionWithAnswers?.attributes['question-text'] }}</span></p> -->
     <!-- <answers-radio-buttons-questionnaire
       :ref="`answers-group-question-${questionWithAnswers.id}`"
       :answers="getAnswersOfQuestion"
@@ -127,3 +132,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .v-list-item__subtitle, .v-list-item__title{
+      text-overflow: initial!important;
+      white-space: initial!important;
+      color: #000;
+  }
+</style>

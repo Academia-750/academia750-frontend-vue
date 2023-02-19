@@ -4,7 +4,7 @@
     max-width="100%"
     tile
   >
-    <v-list rounded>
+    <v-list rounded >
       <v-list-item-group
         v-model="answer_selected_id"
         color="primary"
@@ -13,9 +13,10 @@
           v-for="answer in answersWithIndexComputed"
           :key="answer.value"
           :value="answer.value"
+          class="d-flex align-center"
         >
           <v-list-item-content>
-            <v-list-item-title><!-- {{ answer.index }}  -->{{ answer.answer }}</v-list-item-title>
+            <v-list-item-title class="text--darken-3 font-weight-bold"><!-- {{ answer.index }}  -->{{ answer.answer }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -74,7 +75,9 @@ export default {
 
 <style scoped>
   .v-list-item__subtitle, .v-list-item__title{
-        text-overflow: initial!important;
+      text-overflow: initial!important;
       white-space: initial!important;
+      color: #000;
   }
+
 </style>

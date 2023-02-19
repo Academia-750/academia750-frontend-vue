@@ -112,6 +112,22 @@
             {{ getTextButtonCreateTest }}
           </v-btn>
         </v-container>
+        <v-fab-transition>
+          <v-btn
+            class="my-5 mx-2"
+            color="blue darken-1"
+            dark
+            fixed
+            bottom
+            right
+            fab
+            :disabled="false"
+            title="Generar cuestionario"
+            @click="CreateTest"
+          >
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </v-fab-transition>
       </validation-observer>
     </div>
 
