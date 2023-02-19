@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <router-link :to="pathObjectRoute" class="font-weight-bold body-1">
+    <router-link :to="pathObjectRoute" class="font-weight-bold caption">
       {{ textButton }}
     </router-link>
   </div>

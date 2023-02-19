@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="text-center pa-1">
+    <v-card class="text-center pa-1 bg-transparent-academia">
       <div class="d-flex justify-center">
         <span
           style="cursor: pointer;"
@@ -45,11 +45,14 @@
               @passwordBinding="password = $event"
               @submitForm="submit"
             />
-            <form-button-submit-login
-              :is-disabled="isDisabled"
-              :is-loading="isLoading"
-              @submitForm="submit"
-            />
+            <div class="d-flex justify-center">
+              <form-button-submit-login
+                :is-disabled="isDisabled"
+                :is-loading="isLoading"
+                button-text="Acceder"
+                @submitForm="submit"
+              />
+            </div>
             <div v-if="hasErrorServiceApp" class="my-5">
               <v-alert
                 v-model="hasErrorServiceApp"
@@ -67,7 +70,9 @@
                 }}</span>
               </v-alert>
             </div>
-            <!-- <button-request-reset-password /> -->
+            <button-request-reset-password />
+            <hr class="mt-2">
+            <FooterDialogLogin ref="FooterDialogLogin" />
           </v-form>
         </validation-observer>
       </v-card-text>
@@ -77,3 +82,9 @@
   </div>
 </template>
 <script src="./LoginComponent.js"></script>
+
+<style scoped>
+  .bg-transparent-academia {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+</style>

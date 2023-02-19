@@ -10,7 +10,7 @@
       <links-menu @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"/>
       <v-spacer></v-spacer>
       <v-btn class="mr-lg-0 mr-4" @click="executeLoginAccountAction">
-        <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Acceso</span>
+        <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Área privada</span>
       </v-btn>
     </v-app-bar>
     <!-- Add a navigation bar -->
@@ -115,7 +115,10 @@ export default {
         return
       }
 
-      this.$emit('emitShowLoginDialog')
+      this.$router.push({
+        name: 'login'
+      })
+      //this.$emit('emitShowLoginDialog')
     },
     handleScroll() {
       this.isFixedMenu = window.scrollY >= 100

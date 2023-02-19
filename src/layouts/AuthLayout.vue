@@ -1,21 +1,21 @@
 <template>
-  <div class="d-flex text-center flex-column flex-md-row flex-grow-1">
+  <div id="section-login-system" class="d-flex text-center flex-column flex-md-row flex-grow-1">
     <!-- <v-sheet class="layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2">
       <div class="mt-3 mt-md-10 pa-2">
         <div class="display-2 font-weight-bold primary--text">
           {{ product.name }}
         </div>
-        <div class="title my-2">Welcome! Let's build amazing things together.</div>
-        <v-btn to="/" class="my-4">Take me back</v-btn>
+        <div class="title my-2">Bienvenid@. Descubre la fórmula para obtener el MÁXIMO RENDIMIENTO en tu oposición</div>
+        <v-btn to="/" class="my-4"> <v-icon class="mr-1">mdi-arrow-collapse-left</v-icon> Regresar</v-btn>
       </div>
-      <img class="w-full" src="/images/illustrations/signin-illustration.svg" />
+      <img class="w-full" src="/images/academia750/bomberos-login-background.jpg" />
     </v-sheet> -->
 
     <div class="pa-2 pa-md-4 flex-grow-1 align-center justify-center d-flex flex-column">
       <div class="layout-content ma-auto w-full">
         <slot></slot>
       </div>
-      <div class="overline mt-4">{{ product.name }} - {{ product.version }}</div>
+      <!-- <div class="overline mt-4">{{ product.name }} - {{ product.version }}</div> -->
     </div>
   </div>
 </template>
@@ -37,5 +37,11 @@ export default {
 
 .layout-content {
   max-width: 480px;
+}
+
+#section-login-system {
+  background-image: url('/images/academia750/bomberos-login-background.png');
+  background-size: cover;
+  background-position: center;
 }
 </style>

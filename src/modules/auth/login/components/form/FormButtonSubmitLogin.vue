@@ -2,12 +2,12 @@
   <v-btn
     :loading="isLoading"
     :disabled="isDisabled"
-    block
-    x-large
+    is-button-block
+    large
     color="primary"
     @click="$emit('submitForm')"
   >
-    Iniciar Sesión
+    {{ buttonText }}
   </v-btn>
 </template>
 
@@ -20,6 +20,14 @@ export default {
       default: false
     },
     isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    buttonText: {
+      type: String,
+      default: 'Iniciar sesión'
+    },
+    isButtonBlock: {
       type: Boolean,
       default: false
     }
