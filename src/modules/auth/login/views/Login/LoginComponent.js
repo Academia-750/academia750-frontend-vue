@@ -12,6 +12,12 @@ export default {
     computed,
     components
   ],
+  mounted () {
+    console.log(this.$refs['access-key-field'])
+    if (this.$refs['access-key-field']) {
+      this.$refs['access-key-field']?.focus()
+    }
+  },
   head: {
     title: {
       inner: 'Iniciar sesion'
