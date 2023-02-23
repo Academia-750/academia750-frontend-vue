@@ -35,6 +35,31 @@
       <validation-observer ref="FormSubmitContactUs">
         <v-container>
           <v-row>
+            <v-col cols="12" lg="12">
+              <ValidationProvider
+                v-slot="{ errors }"
+                vid="g-recaptcha-response"
+                mode="aggressive"
+                name="g-recaptcha-response"
+              >
+                <v-alert
+                  v-if="errors.length > 0"
+                  prominent
+                  type="error"
+                >
+                  <v-row align="center">
+                    <v-col class="grow">
+                      {{ errors[0] }}
+                    </v-col>
+                    <v-col class="shrink">
+                      <v-btn @click="reloadWindowByRecaptcha">Recargar página web</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-alert>
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="12" lg="3">
               <ValidationProvider
                 v-slot="{ errors }"
@@ -121,7 +146,7 @@
                 id="boton_enviar_form"
                 class="btn-3"
                 :loading="loadingButtonSubmit"
-                @click="validateFormOrSubmit"
+                @click="prepareFormContactUsSubmit"
               >
                 Enviar
               </v-btn>
@@ -196,11 +221,41 @@ export default {
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormSubmitContactUs']['setErrors'](errorResponse)
-      this.loadingButtonSubmit = true
-      this.disabledButtonSubmit = true
+      this.loadingButtonSubmit = false
+      this.disabledButtonSubmit = false
       this.$loadingApp.disabledLoadingProgressLinear()
     },
-    async validateFormOrSubmit() {
+    prepareFormContactUsSubmit() {
+      this.loadingButtonSubmit = true
+      this.disabledButtonSubmit = true
+      grecaptcha.ready(() => {
+        grecaptcha
+          .execute('6Lc6PqckAAAAAEl7M5ZIhQPddhBimFxQgAr77t0w', {
+            action: 'submit'
+          })
+          .then((token) => {
+            /* console.log({
+              token
+            }) */
+
+            this.validateFormOrSubmit(token)
+          })
+          .catch((error) => {
+            this.$swal.fire({
+              icon: 'error',
+              title:
+                'No podemos verificar autenticidad con Recaptcha. Por favor, recarga la página, y vuelve a intentarlo.',
+              showConfirmButton: true,
+              confirmButtonText: '¡Entendido!',
+              timer: 10000
+            })
+
+            this.loadingButtonSubmit = false
+            this.disabledButtonSubmit = false
+          })
+      })
+    },
+    async validateFormOrSubmit(tokenRecaptcha) {
       console.log('Se ejecuta validateFormOrSubmit')
       const responseValidation = await this.$refs[
         'FormSubmitContactUs'
@@ -221,13 +276,15 @@ export default {
       } else {
         console.log('No hay error de validación')
         this.$loadingApp.enableLoadingProgressLinear()
-        this.loadingButtonSubmit = false
-        this.disabledButtonSubmit = false
 
-        this.submitActionContactUs()
+        this.submitActionContactUs(tokenRecaptcha)
       }
     },
-    async submitActionContactUs() {
+    reloadWindowByRecaptcha () {
+      location.reload()
+    },
+    async submitActionContactUs(tokenRecaptcha) {
+
       try {
         const response = await this.sendInformationContactUSForm({
           data: {
@@ -236,7 +293,8 @@ export default {
             'last-name': this.form.lastName,
             phone: this.form.phone,
             email: this.form.email,
-            message: this.form.message
+            message: this.form.message,
+            'g-recaptcha-response': tokenRecaptcha
           }
         })
 

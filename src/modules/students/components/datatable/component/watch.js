@@ -15,7 +15,7 @@ export default {
         if (this.matchesResetOptionsDatatable) {
           this.optionsDatatable = {
             page: 1,
-            itemsPerPage: 5,
+            itemsPerPage: 10,
             sortBy: ['created-at'],
             sortDesc: [true],
             groupBy: [],
