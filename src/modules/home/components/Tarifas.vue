@@ -25,11 +25,11 @@
         </v-col>
         <v-col lg="4" md="6" cols="12">
           <item-tarifas
-            titulo-tarifa="Autoevealuable"
+            titulo-tarifa="Online"
             precio-tarifa="20"
-            contenido-tarifa="Te ofrecemos la posibilidad de autoevaluarte de forma continua, cuando quieras y desde donde quieras, generando de forma ilimitada todos los test que necesites:"
+            contenido-tarifa="Para l@s que necesitáis una preparación a vuestro ritmo de una forma online y totalmente autónoma os ofrecemos una tarifa con las siguientes funcionalidades. MUY PRONTO"
             :items-tarifa="Autoevealuable"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Autoevaluable')"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Online')"
           />
         </v-col>
       </v-row>
@@ -54,8 +54,12 @@ export default {
         'Clases de forma presencial u online.'
       ],
       Autoevealuable: [
-        'Acceso a plataforma de Test',
-        'Análisis de datos por temas'
+        'Preparación teórica',
+        'Preparación física',
+        'Supuestos prácticos',
+        'Psicotécnicos',
+        'Generador de test',
+        'Grabaciones teóricas'
       ]
     }
   }
