@@ -11,6 +11,7 @@
             precio-tarifa="80"
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
             :items-tarifa="iniciacion"
+            is-dark-button
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Iniciación')"
           />
         </v-col>
@@ -18,6 +19,7 @@
           <item-tarifas
             titulo-tarifa="Avanzado"
             precio-tarifa="80"
+            is-dark-button
             contenido-tarifa="Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:"
             :items-tarifa="iniciacion"
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Avanzado')"
@@ -26,7 +28,8 @@
         <v-col lg="4" md="6" cols="12">
           <item-tarifas
             titulo-tarifa="Online"
-            precio-tarifa="20"
+            precio-tarifa="50"
+            :is-disabled-button="true"
             contenido-tarifa="Para l@s que necesitáis una preparación a vuestro ritmo de una forma online y totalmente autónoma os ofrecemos una tarifa con las siguientes funcionalidades. MUY PRONTO"
             :items-tarifa="Autoevealuable"
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Online')"

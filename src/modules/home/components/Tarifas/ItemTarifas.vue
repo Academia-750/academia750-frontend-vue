@@ -10,12 +10,18 @@
         <ul class="lista_tarifa mt-2">
           <li v-for="(item, index) in itemsTarifa" :key="index">{{ item }}</li>
         </ul>
-
       </div>
       <div class="caja_boton py-4">
-        <button class="boton-2" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+        <!-- <button class="boton-2" @click="$emit('emitClickInscriptionContactUs')">Únete</button> -->
+        <v-btn
+          class="button-unete-tarifa"
+          rounded
+          :dark="isDarkButton"
+          color="#2a99ba"
+          :disabled="isDisabledButton"
+          @click="$emit('emitClickInscriptionContactUs')"
+        >Únete</v-btn>
       </div>
-
     </div>
   </div>
 </template>
@@ -38,6 +44,14 @@ export default {
     itemsTarifa: {
       type: Array,
       required: true
+    },
+    isDisabledButton: {
+      type: Boolean,
+      default: false
+    },
+    isDarkButton: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -53,19 +67,18 @@ export default {
   border-bottom: 1px solid #d7d7d7;
   background-color: #fff;
   display: flex;
-justify-content: space-between;
-align-items: center;
-
+  justify-content: space-between;
+  align-items: center;
 }
-.cabeza_tarifa h2{
-    font-family: var(--fuente_cinco);
-    font-size: 25px;
-    color: var(--color_uno);
+.cabeza_tarifa h2 {
+  font-family: var(--fuente_cinco);
+  font-size: 25px;
+  color: var(--color_uno);
 }
-.cabeza_tarifa h3{
-    font-size: 17px;
-    font-family: var(--fuente_tres);
-    line-height: 17px;
+.cabeza_tarifa h3 {
+  font-size: 17px;
+  font-family: var(--fuente_tres);
+  line-height: 17px;
 }
 .todo_tarifa {
   background: linear-gradient(
@@ -77,7 +90,7 @@ align-items: center;
   position: relative;
   border-radius: 20px;
   -webkit-box-shadow: 0px 5px 15px 5px rgb(0 0 0 / 10%) !important;
-    box-shadow: 0px 5px 15px 5px rgb(0 0 0 / 10%) !important;
+  box-shadow: 0px 5px 15px 5px rgb(0 0 0 / 10%) !important;
 }
 .cuerpo_tarifa {
   padding: 40px 45px 0px 45px;
@@ -86,15 +99,21 @@ align-items: center;
 .lista_tarifa {
   list-style: none;
 }
-.lista_tarifa  li::before {
+.lista_tarifa li::before {
   content: url(/images/academia750/cheack.svg);
   padding-right: 13px;
 }
-.caja_boton{
-
-    padding: 40px 45px 0px 45px;
+.caja_boton {
+  padding: 40px 45px 0px 45px;
 }
 .lista_tarifa {
-    padding-left: 15px;
+  padding-left: 15px;
+}
+
+.button-unete-tarifa {
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
+  width: 134px;
+  font-weight: 700;
+  font-size: 18px;
 }
 </style>
