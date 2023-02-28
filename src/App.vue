@@ -32,6 +32,8 @@
       </v-btn>
     </v-snackbar>
 
+    <cookie-policies-dialog-legal-vue ref="CookiePoliciesDialogLegalVue"/>
+
     <!-- Demo customization menu -->
     <!-- <customization-menu /> -->
   </v-app>
@@ -44,8 +46,6 @@ import { mapState, mapMutations } from 'vuex'
 // Demo Menu
 import CustomizationMenu from './components/demo/CustomizationMenu'
 
-import config from './configs'
-
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
 import landingLayout from './layouts/LandingLayout'
@@ -54,8 +54,8 @@ import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
 import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
-import ResourceService from '@/services/ResourceService'
-import  './assets/fuentes/stylesheet.css'
+import jsCookie from 'js-cookie'
+import CookiePoliciesDialogLegalVue from './modules/home/components/Legal/CookiePoliciesDialogLegal.vue'
 
 /*
 |---------------------------------------------------------------------
@@ -74,7 +74,8 @@ export default {
     authLayout,
     errorLayout,
     handleErrors,
-    ProgressLinearLoadingApp
+    ProgressLinearLoadingApp,
+    CookiePoliciesDialogLegalVue
   },
   data () {
     return {
@@ -99,6 +100,10 @@ export default {
     //window.addEventListener('beforeunload', this.preventNav)
   },
   mounted() {
+    if (!jsCookie.get('accept_cookies_agreement')) {
+      this.$refs['CookiePoliciesDialogLegalVue'].isOpenDialog = true
+    }
+
     this.set_response_error(null)
     /* ResourceService.post('/test/errors-validation/manually', {
       dni: '1234567891012',
