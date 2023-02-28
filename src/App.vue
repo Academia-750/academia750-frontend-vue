@@ -55,6 +55,7 @@ import errorLayout from './layouts/ErrorLayout'
 import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
 import jsCookie from 'js-cookie'
+import  './assets/fuentes/stylesheet.css'
 import CookiePoliciesDialogLegalVue from './modules/home/components/Legal/CookiePoliciesDialogLegal.vue'
 
 /*
