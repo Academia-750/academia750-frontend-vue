@@ -52,18 +52,19 @@
                   <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Área privada</span>
                 </v-btn>
               </div>
-              <div class="mt-1">
+              <!-- <div class="mt-1">
                 <v-btn small text dark>
                   <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Términos y condiciones</span>
                 </v-btn>
-              </div>
+              </div> -->
               <div class="mt-1">
-                <v-btn small text dark>
-                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Política de privacidad</span>
+                <v-btn small text dark @click="openAgreementLegalDialog">
+                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Aviso legal</span>
                 </v-btn>
               </div>
             </v-col>
           </v-row>
+          <agreement-legal-dialog ref="AgreementLegalDialog" title="Aviso legal" src-file-legal="/legal/agreement_legal.pdf"/>
         </v-col>
       </v-row>
     </v-container>
@@ -75,13 +76,16 @@ import FooterUno from './Footer/FooterUno'
 import FooterDos from './Footer/FooterDos'
 import FooterTres from './Footer/FooterTres'
 import FooterRedes from './Footer/FooterRedes'
+import AgreementLegalDialog from './Legal/AgreementDialogLegal'
+
 export default {
   name: 'Footer',
   components: {
     FooterUno,
     FooterDos,
     FooterRedes,
-    FooterTres
+    FooterTres,
+    AgreementLegalDialog
   },
   data() {
     return {
@@ -107,6 +111,9 @@ export default {
         name: 'login'
       })
       //this.$emit('emitShowLoginDialog')
+    },
+    openAgreementLegalDialog () {
+      this.$refs['AgreementLegalDialog'].isOpenDialog = true
     }
   }
 }
