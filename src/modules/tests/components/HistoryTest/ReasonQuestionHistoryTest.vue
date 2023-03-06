@@ -56,13 +56,13 @@ export default {
   },
   mounted () {
     this.loadImageQuestion()
-    //console.log({
+    /* console.log({
       question : this.question.attributes['question-text'],
       reason : this.question.attributes['reason-text'],
       pathImageQuestion: this.pathImageQuestion,
       show_reason_text: this.question.attributes.show_reason_text_in_test,
       show_reason_image: this.question.attributes.show_reason_image_in_test
-    })
+    }) */
 
     const { show_reason_text_in_test, show_reason_image_in_test } = this.question.attributes
 
@@ -72,9 +72,9 @@ export default {
     //console.log(!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true)
     //console.log(!(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)
 
-    //console.log(
+    /* console.log(
       (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
-    !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true))
+    !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)) */
   },
   methods: {
     showReasonImageDialogMethod () {

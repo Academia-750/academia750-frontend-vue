@@ -153,11 +153,11 @@ export default {
       }
 
       //console.log(dataAnswers)
-      //console.log({
+      /* console.log({
         isTest,
         isCardMemory,
         isQuestionBinary
-      })
+      }) */
     },
     syncValuesForm(response) {
       //console.log(response.data)

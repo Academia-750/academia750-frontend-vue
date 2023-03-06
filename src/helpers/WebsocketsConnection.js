@@ -55,9 +55,9 @@ const connectWebsockets = function ({
 
 export const listenErrorEventConnectionWebsockets = function () {
   window.$EchoJSInstanceAcademia750.connector.error((error) => {
-    //console.log({
+    /* console.log({
       error
-    } )
+    } ) */
   })
   window.$EchoJSInstanceAcademia750.connector.connect({
     reconnect: false
