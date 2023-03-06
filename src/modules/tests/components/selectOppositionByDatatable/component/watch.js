@@ -9,7 +9,7 @@ export default {
       deep: true
     },
     oppositionSelected (newValue) {
-      /* console.log({
+      /* //console.log({
         lastValue,
         newValue
       }) */

@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     topicGroupSelected(value) {
-      console.log(value)
+      //console.log(value)
       this.$emit('TopicGroupTestBinding', value)
     }
   },

@@ -55,7 +55,7 @@ export default {
         this.disabledButtonUpdateTopic = false
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateTopic = false
       }
@@ -122,7 +122,7 @@ export default {
         this.loadingButtonUpdateTopic = false
         this.disabledButtonUpdateTopic = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUpdateTopic = false
         this.disabledButtonUpdateTopic = false

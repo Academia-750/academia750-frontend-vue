@@ -49,7 +49,7 @@ export default {
         } */
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$manageTokenAuth.$remove_token_auth()
         this.$loadingApp.disabledLoadingProgressLinear()
         //window.location.href = process.env.VUE_APP_BASE_URL_HOME

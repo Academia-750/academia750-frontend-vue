@@ -35,7 +35,7 @@ export default {
           this.metaData = response.data.meta
         })
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
   }

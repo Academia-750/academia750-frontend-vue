@@ -25,7 +25,7 @@ export default {
         //this.$refs['progressLinearStateQuestionsTest'].calculateValueProgressQuestionsTest()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     },
     changeSelectionAnswerResolvedInQuestion() {

@@ -55,7 +55,7 @@ const getStudents = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -67,7 +67,7 @@ const createStudent = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -81,7 +81,7 @@ const fetchStudent = async ({ commit }, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -93,7 +93,7 @@ const updateStudent = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -105,7 +105,7 @@ const deleteStudent = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -117,7 +117,7 @@ const fetchStudentGroups = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -129,7 +129,7 @@ const fetchRoleStudentData = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -144,7 +144,7 @@ const actionsForMultipleRecords = async ({ commit }, options) => {
     return Promise.resolve(response)
   } catch (error) {
     commit('SET_USERS_SELECTED_DATATABLE', [])
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

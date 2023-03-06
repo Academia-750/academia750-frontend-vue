@@ -52,7 +52,7 @@ const getOppositions = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -65,7 +65,7 @@ const createOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -78,7 +78,7 @@ const fetchOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -90,7 +90,7 @@ const updateOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -102,7 +102,7 @@ const deleteOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -114,7 +114,7 @@ const fetchSyllabusOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

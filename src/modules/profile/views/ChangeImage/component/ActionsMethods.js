@@ -27,7 +27,7 @@ export default {
         this.loadingButtonChangeImageAccount = false
         this.disabledButtonChangeImageAccount = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonChangeImageAccount = false
         this.disabledButtonChangeImageAccount = false

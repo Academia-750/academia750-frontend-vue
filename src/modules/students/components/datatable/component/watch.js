@@ -10,7 +10,7 @@ export default {
     },
     matchesResetOptionsDatatable: {
       handler () {
-        //console.log(this.matchesResetOptionsDatatable)
+        ////console.log(this.matchesResetOptionsDatatable)
         this.searchWord = ''
         if (this.matchesResetOptionsDatatable) {
           this.optionsDatatable = {

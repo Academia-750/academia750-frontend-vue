@@ -125,7 +125,7 @@ export default {
         this.$refs['GraphStatisticsTopicsDialogComponent'].showGraphStatisticsStudent = true
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
       }

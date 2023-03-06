@@ -72,7 +72,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     }

@@ -51,7 +51,7 @@ const getOppositionsAvailableByTopic = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -65,7 +65,7 @@ const getSubtopicsOfOppositionsByTopic = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -101,7 +101,7 @@ const getOppositions = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -114,7 +114,7 @@ const assignOppositionTopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -127,7 +127,7 @@ const fetchOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -139,7 +139,7 @@ const updateOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -151,7 +151,7 @@ const deleteOpposition = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -168,7 +168,7 @@ const updateSubtopicsOfOppositionByTopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -184,7 +184,7 @@ const unassignOppositionOfTopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

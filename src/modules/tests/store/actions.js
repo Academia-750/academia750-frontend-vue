@@ -29,7 +29,7 @@ const createAQuiz = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -43,7 +43,7 @@ const claimQuestion = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -57,7 +57,7 @@ const resolveQuestion = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -71,7 +71,7 @@ const closeAndGradeTest = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -102,7 +102,7 @@ const fetchAQuiz = async ({ commit }, options) => {
   } catch (error) {
     commit('SET_ITEMS_QUESTIONS_BY_TESTS', [])
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -124,7 +124,7 @@ const fetchHistoryTestComplete = async ({ commit }, options) => {
 
   } catch (error) {
     commit('SET_QUESTIONS_DATA_HISTORY_BY_TEST', [])
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -143,7 +143,7 @@ const fetchACardMemory = async ({ commit }, options) => {
   } catch (error) {
 
     commit('SET_ITEMS_QUESTIONS_BY_CARDS_MEMORY', [])
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -179,7 +179,7 @@ const getUnresolvedTests = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -215,7 +215,7 @@ const getCardsMemory = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

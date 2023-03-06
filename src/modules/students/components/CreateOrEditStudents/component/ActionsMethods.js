@@ -8,7 +8,7 @@ export default {
 
         this.dataRoleStudent = response.data.data
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
 
     },
@@ -42,7 +42,7 @@ export default {
 
         this.$emit('emitReloadDatatableStudents')
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateOrUpdateStudent = false
         this.disabledButtonCreateOrUpdateStudent = false
@@ -92,7 +92,7 @@ export default {
 
         this.$emit('emitReloadDatatableStudents')
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateOrUpdateStudent = false
         this.disabledButtonCreateOrUpdateStudent = false

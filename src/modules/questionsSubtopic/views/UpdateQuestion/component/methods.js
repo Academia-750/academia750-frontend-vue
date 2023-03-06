@@ -191,8 +191,8 @@ export default {
       const dataAnswersAlternativesNoCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
       const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
 
-      /* console.log(dataAnswersAlternativesNoCorrect)
-      console.log(answerCorrect) */
+      /* //console.log(dataAnswersAlternativesNoCorrect)
+      //console.log(answerCorrect) */
 
       this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect.id
       this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect.attributes.answer_text
@@ -249,15 +249,15 @@ export default {
         return
       }
 
-      console.log(dataAnswers)
-      console.log({
+      //console.log(dataAnswers)
+      //console.log({
         isTest,
         isCardMemory,
         isQuestionBinary
       })
     },
     syncValuesForm(response) {
-      console.log(response.data)
+      //console.log(response.data)
 
       this.loadingButtonCreateQuestion = false
       this.disabledButtonCreateQuestion = false

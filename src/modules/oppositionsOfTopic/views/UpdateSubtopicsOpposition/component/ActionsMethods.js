@@ -29,7 +29,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateOpposition = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateOpposition = false
       }
@@ -76,7 +76,7 @@ export default {
         this.loadingButtonUpdateOpposition = false
         this.disabledButtonUpdateOpposition = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUpdateOpposition = false
         this.disabledButtonUpdateOpposition = false

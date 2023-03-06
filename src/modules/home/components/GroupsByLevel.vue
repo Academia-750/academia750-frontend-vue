@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     scrollIntoViewContainerGroupLevel () {
-      console.log('scrollIntoViewContainerGroupLevel')
+      //console.log('scrollIntoViewContainerGroupLevel')
       this.$refs['groupsByLevelsContainer'].scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }

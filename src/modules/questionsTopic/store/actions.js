@@ -55,7 +55,7 @@ const getQuestions = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -68,7 +68,7 @@ const createQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -81,7 +81,7 @@ const setEditModeQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -94,7 +94,7 @@ const setStateVisibilityQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -107,7 +107,7 @@ const fetchQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -119,7 +119,7 @@ const updateQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -131,7 +131,7 @@ const deleteQuestion = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -144,7 +144,7 @@ const importQuestionsCSV = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -157,7 +157,7 @@ const downloadTemplateImport = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

@@ -23,7 +23,7 @@ export default {
 
         this.loadStudentsFromCurrentTab()
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
   }

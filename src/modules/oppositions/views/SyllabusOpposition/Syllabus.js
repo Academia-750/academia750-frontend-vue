@@ -19,7 +19,7 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   mounted () {
-    //console.log(this.$route.params.id)
+    ////console.log(this.$route.params.id)
     this.fetchSyllabusOppositionApi()
   },
   methods: {
@@ -42,7 +42,7 @@ export default {
         this.openTreeviews = []
         this.searchWord = ''
         this.syllabus = []
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     },

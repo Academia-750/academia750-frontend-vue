@@ -24,7 +24,7 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   mounted () {
-    //console.log(this.$route.params.id)
+    ////console.log(this.$route.params.id)
     this.fetchOppositionForUpdate()
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateOpposition = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateOpposition = false
       }
@@ -113,7 +113,7 @@ export default {
         this.loadingButtonUpdateOpposition = false
         this.disabledButtonCreateopposition = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUpdateOpposition = false
         this.disabledButtonUpdateOpposition = false

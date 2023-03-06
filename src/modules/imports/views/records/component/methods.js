@@ -12,10 +12,10 @@ export default {
       })
     },
     getFieldsRowsValuesErrorRecord ($arrayKeys, $arrayErrors) {
-      //console.log($arrayErrors)
+      ////console.log($arrayErrors)
 
       return $arrayKeys.map( (column) => {
-        console.log($arrayErrors[column])
+        //console.log($arrayErrors[column])
 
         return {
           'name-row': column,

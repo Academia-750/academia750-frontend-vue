@@ -24,7 +24,7 @@ export default {
         this.disabledButtonUpdateQuestion = false
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateQuestion = false
       }

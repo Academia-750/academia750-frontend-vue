@@ -75,7 +75,7 @@ export default {
 
         this.GenerateDownloadTemplate(response.data)
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
         this.$swal.fire({
@@ -88,10 +88,10 @@ export default {
       }
     },
     vdropAddedFile(file) {
-      //console.log(file)
+      ////console.log(file)
     },
     vdropQueueCompleted() {
-      //console.log('Queue completed')
+      ////console.log('Queue completed')
     },
     vdropSuccessProcessSendFiles(files, response) {
       /* console.trace({
@@ -119,7 +119,7 @@ export default {
       }
 
       /* console.trace(files)
-      console.log(typeof files) */
+      //console.log(typeof files) */
       this.sendFilesSubtopicAction(files)
     },
     async sendFilesSubtopicAction(files) {
@@ -155,7 +155,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
         if (error.response === undefined) {
@@ -167,7 +167,7 @@ export default {
             timer: 7500
           })
         } else if (error.response?.status === 422) {
-          console.log(error.response)
+          //console.log(error.response)
         }
       }
     }

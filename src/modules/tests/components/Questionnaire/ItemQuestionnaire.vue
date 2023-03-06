@@ -123,7 +123,7 @@ export default {
 
       questionsResolved[questionIndex]['answer_id'] = this.answer_selected_id
 
-      console.log(questionsResolved)
+      //console.log(questionsResolved)
       this.SET_QUESTIONS_DATA_RESOLVED(questionsResolved)
     },
     getResolvedQuestion() {

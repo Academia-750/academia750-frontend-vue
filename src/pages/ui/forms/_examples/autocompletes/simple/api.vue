@@ -111,7 +111,7 @@ export default {
           this.entries = entries
         })
         .catch((err) => {
-          console.log(err)
+          //console.log(err)
         })
         .finally(() => (this.isLoading = false))
     }

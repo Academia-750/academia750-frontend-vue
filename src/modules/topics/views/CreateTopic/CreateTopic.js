@@ -82,7 +82,7 @@ export default {
         this.loadingButtonCreateTopic = false
         this.disabledButtonCreateTopic = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateTopic = false
         this.disabledButtonCreateTopic = false

@@ -43,7 +43,7 @@ const handleErrorResponse = (error) => {
   }
 
   if (error.response.status === 401) {
-    /* console.log(Cookies.get('authorization')) */
+    /* //console.log(Cookies.get('authorization')) */
     if (Cookies.get('authorization')) {
       $remove_token_auth()
       $disconnectWebsocketsConnection()
@@ -55,7 +55,7 @@ const handleErrorResponse = (error) => {
       })
     }
 
-    /* console.log('Error en el ProfileAuthService') */
+    /* //console.log('Error en el ProfileAuthService') */
     store.commit('profileService/set_user', null)
 
     configLogoutMethods.redirectToHomePageAfterLogout()

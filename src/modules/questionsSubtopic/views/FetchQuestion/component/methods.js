@@ -152,15 +152,15 @@ export default {
         return
       }
 
-      console.log(dataAnswers)
-      console.log({
+      //console.log(dataAnswers)
+      //console.log({
         isTest,
         isCardMemory,
         isQuestionBinary
       })
     },
     syncValuesForm(response) {
-      console.log(response.data)
+      //console.log(response.data)
 
       this.loadingButtonCreateQuestion = false
       this.disabledButtonCreateQuestion = false

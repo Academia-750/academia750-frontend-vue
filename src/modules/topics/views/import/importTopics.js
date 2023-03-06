@@ -41,7 +41,7 @@ export default {
   },
   mounted() {
     this.loadNotifications()
-    //console.log(this.$refs['dropzoneFilesImportTopics'].$el)
+    ////console.log(this.$refs['dropzoneFilesImportTopics'].$el)
     this.$refs['dropzoneFilesImportTopics'].$el.innerHTML = /* html */`
       <div class="dz-default dz-message"><span>Adjuntar archivos o click para seleccionar</span></div>
     `
@@ -49,10 +49,10 @@ export default {
   methods: {
     ...mapActions('topicsService', ['importTopicsCSV', 'downloadTemplateImport']),
     vdropAddedFile(file) {
-      //console.log(file)
+      ////console.log(file)
     },
     vdropQueueCompleted() {
-      //console.log('Queue completed')
+      ////console.log('Queue completed')
     },
     vdropSuccessProcessSendFiles(files, response) {
       /* console.trace({
@@ -91,7 +91,7 @@ export default {
 
         this.GenerateDownloadTemplate(response.data)
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
         this.$swal.fire({
@@ -120,7 +120,7 @@ export default {
       }
 
       /* console.trace(files)
-      console.log(typeof files) */
+      //console.log(typeof files) */
       this.sendFilesTopicAction(files)
     },
     async sendFilesTopicAction(files) {
@@ -152,7 +152,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
         if (error.response === undefined) {
@@ -164,7 +164,7 @@ export default {
             timer: 7500
           })
         } else if (error.response?.status === 422) {
-          console.log(error.response)
+          //console.log(error.response)
         }
       }
     }

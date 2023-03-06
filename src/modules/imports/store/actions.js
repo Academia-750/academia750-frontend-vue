@@ -70,7 +70,7 @@ const getImportProcesses = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -106,7 +106,7 @@ const getImportRecords = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

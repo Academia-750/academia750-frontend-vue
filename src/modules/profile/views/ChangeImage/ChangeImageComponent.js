@@ -20,7 +20,7 @@ export default {
 
     /* window.$EchoJSInstanceAcademia750.private(`App.Models.User.${store.state.profileService.user.id}`)
       .listen('.user.logout.application', (data) => {
-        console.log(data)
+        //console.log(data)
       }) */
   },
   head: {

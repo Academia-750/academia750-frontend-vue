@@ -78,7 +78,7 @@ export default {
         this.loadingButtonCreateSubtopic = false
         this.disabledButtonCreateSubtopic = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateSubtopic = false
         this.disabledButtonCreateSubtopic = false

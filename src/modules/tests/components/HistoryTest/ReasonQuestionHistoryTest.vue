@@ -56,7 +56,7 @@ export default {
   },
   mounted () {
     this.loadImageQuestion()
-    console.log({
+    //console.log({
       question : this.question.attributes['question-text'],
       reason : this.question.attributes['reason-text'],
       pathImageQuestion: this.pathImageQuestion,
@@ -69,10 +69,10 @@ export default {
     /* (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
     !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true) */
 
-    console.log(!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true)
-    console.log(!(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)
+    //console.log(!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true)
+    //console.log(!(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true)
 
-    console.log(
+    //console.log(
       (!(this.question.attributes['reason-text'] && show_reason_text_in_test === 'yes') !== true ||
     !(this.pathImageQuestion && show_reason_image_in_test === 'yes') !== true))
   },

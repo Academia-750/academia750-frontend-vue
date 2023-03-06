@@ -51,7 +51,7 @@ const getSubtopics = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -64,7 +64,7 @@ const createSubtopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -77,7 +77,7 @@ const fetchSubtopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -89,7 +89,7 @@ const updateSubtopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -101,7 +101,7 @@ const deleteSubtopic = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -114,7 +114,7 @@ const importSubtopicsCSV = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -127,7 +127,7 @@ const downloadTemplateImport = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

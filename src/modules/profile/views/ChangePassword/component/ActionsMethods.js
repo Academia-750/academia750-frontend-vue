@@ -33,7 +33,7 @@ export default {
         //$remove_token_auth()
         //configLogoutMethods.redirectToHomePageAfterLogout()
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonChangePassword = false
         this.disabledButtonChangePassword = false

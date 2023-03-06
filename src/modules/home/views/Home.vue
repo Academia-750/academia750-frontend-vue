@@ -97,7 +97,7 @@ export default {
     scrollToSectionOfHomePage($refElement) {
       this.$refs['MenuHomePage'].drawer = false
 
-      //console.log(this.$refs[$refElement].offsetHeight)
+      ////console.log(this.$refs[$refElement].offsetHeight)
       /* const elemento = document.getElementById($refElement)
       const altura = elemento?.clientHeight
       const posicion = elemento?.getBoundingClientRect().top + window.pageYOffset - altura

@@ -34,7 +34,7 @@ export default {
           this.subtopicData = response.data.meta.subtopic
         })
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
   }

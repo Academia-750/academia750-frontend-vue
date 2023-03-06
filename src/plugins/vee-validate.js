@@ -28,7 +28,7 @@ for (const [rule, validation] of Object.entries(rules)) {
  */
 // Set Locale Config VueI18n in @/configs/locales.js
 
-//console.log(VueI18n.locale)
+////console.log(VueI18n.locale)
 localize(VueI18n.locale ?? 'es')
 
 Vue.component('ValidationProvider', ValidationProvider)

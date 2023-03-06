@@ -97,7 +97,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
         this.isDisabled = false
-        console.log(error)
+        //console.log(error)
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',

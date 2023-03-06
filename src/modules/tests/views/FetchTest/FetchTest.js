@@ -46,7 +46,7 @@ export default {
     this.SET_TOTAL_NUMBER_QUESTIONS_TEST(0)
     this.SET_NUMBER_QUESTIONS_RESOLVED(0)
 
-    console.log(this.$router.currentRoute.name)
+    //console.log(this.$router.currentRoute.name)
   },
   beforeDestroy() {
     this.removeEventsListenerActionsUser()
@@ -87,8 +87,8 @@ export default {
       return Math.ceil((response.data.meta.total / response.data.meta.per_page))
     },
     setDataStatisticProgress(numberQuestionsResolved, totalNumberQuestionsTest) {
-      /* console.log(numberQuestionsResolved)
-      console.log(totalNumberQuestionsTest) */
+      /* //console.log(numberQuestionsResolved)
+      //console.log(totalNumberQuestionsTest) */
       this.numberQuestionsResolved = parseInt(numberQuestionsResolved)
       this.totalNumberQuestionsTest = parseInt(totalNumberQuestionsTest)
     },
@@ -130,7 +130,7 @@ export default {
 
       } catch (error) {
         this.isLoading = false
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     },
@@ -170,7 +170,7 @@ export default {
         this.isLoadingCloseTest = false
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.isDisabledCloseTest = false
         this.isLoadingCloseTest = false
         this.$swal.fire({

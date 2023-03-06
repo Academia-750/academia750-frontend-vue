@@ -30,7 +30,7 @@ export default {
         })
         //this.ResetForm()
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonUpdateQuestion = false
         this.disabledButtonUpdateQuestion = false
@@ -68,7 +68,7 @@ export default {
         this.disabledButtonUpdateQuestion = false
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonUpdateQuestion = false
       }
@@ -83,7 +83,7 @@ export default {
           config: {}
         })
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
   }

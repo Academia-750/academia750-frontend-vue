@@ -81,7 +81,7 @@ export default {
     /* ,
     topicsSelectedData: {
       handler () {
-        console.log('dsdioshgiusoiug')
+        //console.log('dsdioshgiusoiug')
         this.getHistoryStatisticsDataGraphApi()
       },
       deep: true
@@ -173,7 +173,7 @@ export default {
         this.$refs['GraphStatisticsTopicsDialogComponent'].showGraphStatisticsStudent = true
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
       }
@@ -190,7 +190,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     }

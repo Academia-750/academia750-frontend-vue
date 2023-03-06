@@ -8,7 +8,7 @@ export const $websocketConnectionAction = function () {
     connectWebsockets( $getCredentialsWebsocketsConnection() )
   }
 
-  //console.log(window.$EchoJSInstanceAcademia750?.connector?.pusher)
+  ////console.log(window.$EchoJSInstanceAcademia750?.connector?.pusher)
 }
 
 export const $disconnectWebsocketsConnection = function (user_id = null) {
@@ -55,7 +55,7 @@ const connectWebsockets = function ({
 
 export const listenErrorEventConnectionWebsockets = function () {
   window.$EchoJSInstanceAcademia750.connector.error((error) => {
-    console.log({
+    //console.log({
       error
     } )
   })

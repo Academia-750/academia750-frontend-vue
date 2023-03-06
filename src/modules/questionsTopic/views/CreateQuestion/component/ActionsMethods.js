@@ -27,7 +27,7 @@ export default {
 
         this.ResetForm()
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateQuestion = false
         this.disabledButtonCreateQuestion = false

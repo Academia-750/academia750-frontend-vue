@@ -73,7 +73,7 @@ export default {
   methods: {
     submit(e) {
       if (this.$refs.form.validate()) {
-        console.log('submit')
+        //console.log('submit')
       }
     },
     resetEmail(email, password) {

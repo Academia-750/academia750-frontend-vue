@@ -52,7 +52,7 @@ export default {
   },
   watch: {
     questionWithAnswers (value) {
-      console.log(value)
+      //console.log(value)
       this.loadImageQuestion()
     }
   },

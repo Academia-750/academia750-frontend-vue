@@ -55,14 +55,14 @@ export default {
     numberQuestionsResolved: {
       handler () {
         this.calculateValueProgressQuestionsTest()
-        //console.log(this.numberQuestionsResolved)
+        ////console.log(this.numberQuestionsResolved)
       },
       deep: true
     },
     totalNumberQuestionsTest: {
       handler () {
         this.calculateValueProgressQuestionsTest()
-        //console.log(this.totalNumberQuestionsTest)
+        ////console.log(this.totalNumberQuestionsTest)
       },
       deep: true
     }
@@ -79,7 +79,7 @@ export default {
       this.isFixedMenu = window.scrollY >= 100
     },
     calculateValueProgressQuestionsTest() {
-      /* console.log({
+      /* //console.log({
         total: this.totalNumberQuestionsTest,
         progress: this.numberQuestionsResolved
       }) */

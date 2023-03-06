@@ -53,7 +53,7 @@ const getHistoryTestsCompletedByStudent = async ({ commit }, config) => {
 
   } catch (error) {
     commit('SET_STATUS_LOADING_ITEMS', false)
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -67,7 +67,7 @@ const getHistoryStatisticsDataGraph = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -118,7 +118,7 @@ const getHistoryQuestionsWrongByTopic = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     commit('SET_INFORMATION_META_QUESTIONS_WRONG', {
       current_page: 1,
       from: 1,
@@ -175,7 +175,7 @@ const getTestsByPeriodApi = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     commit('SET_INFORMATION_META_TESTS_BY_PERIOD', {
       current_page: 1,
       from: 1,
@@ -200,7 +200,7 @@ const getQuestionsByTestAndTypeQuestion = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -214,7 +214,7 @@ const getTopicsWorstInTestsStudent = async (_, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

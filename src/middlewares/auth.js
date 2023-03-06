@@ -10,10 +10,10 @@ import configLogout from '@/modules/auth/login/resources/configLogout'
 export default function ({ next }) {
 
   try {
-    /* console.log(Cookies.get('authorization')) */
+    /* //console.log(Cookies.get('authorization')) */
 
     if (!Cookies.get('authorization')) {
-      console.log('bhnasfosahf')
+      //console.log('bhnasfosahf')
       //$disconnectWebsocketsConnection()
 
       //configLogout.redirectToHomePageAfterLogout()
@@ -43,10 +43,10 @@ export default function ({ next }) {
 
     return next()
   } catch (error) {
-    /* console.log(Cookies.get('authorization'))
-    console.log('Error en middleware Auth') */
+    /* //console.log(Cookies.get('authorization'))
+    //console.log('Error en middleware Auth') */
     configLogout.redirectToHomePageAfterLogout()
-    console.log(error)
+    //console.log(error)
     activateError()
   }
 

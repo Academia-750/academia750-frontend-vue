@@ -11,8 +11,8 @@ const AuthService = axios.create({
 })
 
 const handleErrorResponse = (error) => {
-  /* console.log({ error })
-  console.log('error en AuthService') */
+  /* //console.log({ error })
+  //console.log('error en AuthService') */
 
   const isNotValidationErrorOrRejectAuthOrRejectAttemps =
     error.response.status !== 401 &&

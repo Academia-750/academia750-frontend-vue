@@ -8,7 +8,7 @@ const validateStructureDniSpain = (value) => {
 
   const numbersWithoutLastCharacter = value.substr( 0, (value.length - 1))
 
-  //console.log(REGEX_THERE_ARE_8_DIGITS.test(numbersWithoutLastCharacter) && REGEX_THERE_ARE_ONLY_LETTERS.test(lastLetter))
+  ////console.log(REGEX_THERE_ARE_8_DIGITS.test(numbersWithoutLastCharacter) && REGEX_THERE_ARE_ONLY_LETTERS.test(lastLetter))
   if (REGEX_THERE_ARE_8_DIGITS.test(numbersWithoutLastCharacter) && REGEX_THERE_ARE_ONLY_LETTERS.test(lastLetter)) {
     const lettersAlpha = 'TRWAGMYFPDXBNJZSQVHLCKE'
     const letterValid = lettersAlpha.substr( (numbersWithoutLastCharacter % 23) , 1)

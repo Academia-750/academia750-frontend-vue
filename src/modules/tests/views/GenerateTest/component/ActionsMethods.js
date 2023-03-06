@@ -36,7 +36,7 @@ export default {
           this.$router.push({ name: 'fetch-card-memory', params: { id: response.data.data.id } })
         }
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$swal.fire({
           icon: 'error',
           title: 'Tu Test no ha sido generado con éxito. Por favor, notifícalo al correo oficial de la academia.',

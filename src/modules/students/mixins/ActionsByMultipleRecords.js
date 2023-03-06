@@ -41,7 +41,7 @@ export default {
         await this.loadStudentsFromCurrentTab()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButton = false
         this.alertErrorRequest()

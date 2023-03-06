@@ -70,9 +70,9 @@ export default {
   },
   created () {
     this.loadImageAccount()
-    /* console.log(this.$userAuth())
-    console.log(this.$rolesUserAuth())
-    console.log(this.$permissionsUserAuth()) */
+    /* //console.log(this.$userAuth())
+    //console.log(this.$rolesUserAuth())
+    //console.log(this.$permissionsUserAuth()) */
   },
   methods: {
     loadImageProfileDefault () {
@@ -103,7 +103,7 @@ export default {
         return
       }
 
-      console.log(this.pathImageAccount)
+      //console.log(this.pathImageAccount)
     }
   }
 }

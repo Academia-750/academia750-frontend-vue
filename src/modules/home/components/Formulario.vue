@@ -234,7 +234,7 @@ export default {
             action: 'submit'
           })
           .then((token) => {
-            /* console.log({
+            /* //console.log({
               token
             }) */
 
@@ -256,13 +256,13 @@ export default {
       })
     },
     async validateFormOrSubmit(tokenRecaptcha) {
-      console.log('Se ejecuta validateFormOrSubmit')
+      //console.log('Se ejecuta validateFormOrSubmit')
       const responseValidation = await this.$refs[
         'FormSubmitContactUs'
       ].validate()
 
       if (!responseValidation) {
-        console.log('Hay error de validación')
+        //console.log('Hay error de validación')
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -274,7 +274,7 @@ export default {
 
         return
       } else {
-        console.log('No hay error de validación')
+        //console.log('No hay error de validación')
         this.$loadingApp.enableLoadingProgressLinear()
 
         this.submitActionContactUs(tokenRecaptcha)
@@ -326,7 +326,7 @@ export default {
           return
         }
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonSubmit = false
         this.disabledButtonSubmit = false

@@ -17,7 +17,7 @@ const MIXINS_COMPONENT = [
 export default {
   mixins: [...MIXINS_COMPONENT],
   async mounted () {
-    //console.log(this.$route.params.id)
+    ////console.log(this.$route.params.id)
     this.fetchDataTopic()
     this.fetchSubtopicsOppositionByTopicForUpdate()
   },

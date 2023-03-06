@@ -107,7 +107,7 @@ export default {
         this.resetFormValidator()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.$refs['ClaimFieldCardMemoryField'].claim_text = null
         this.resetFormValidator()

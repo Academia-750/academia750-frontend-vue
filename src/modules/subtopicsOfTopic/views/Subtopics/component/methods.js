@@ -16,7 +16,7 @@ export default {
       this.searchFieldExecuted(value)
     },
     loadDatatatable() {
-      console.log('shfbsdbf')
+      //console.log('shfbsdbf')
       this.getSubtopics({
         topic_id: this.$route.params.id,
         config: {

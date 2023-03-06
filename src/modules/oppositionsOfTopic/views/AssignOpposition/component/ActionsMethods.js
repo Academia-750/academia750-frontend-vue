@@ -48,7 +48,7 @@ export default {
         this.loadingButtonCreateOpposition = false
         this.disabledButtonCreateopposition = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonCreateOpposition = false
         this.disabledButtonCreateOpposition = false

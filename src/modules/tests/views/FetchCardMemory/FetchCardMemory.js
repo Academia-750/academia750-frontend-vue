@@ -34,20 +34,20 @@ export default {
     },
     ItemsQuestionsByCardsMemory (value) {
       if (value) {
-        console.log(value)
-        console.log(
+        //console.log(value)
+        //console.log(
           value.filter((question) => {
-            console.log(question.attributes.show_reason_text_in_card_memory)
+            //console.log(question.attributes.show_reason_text_in_card_memory)
 
             return question.attributes.show_reason_text_in_card_memory === 'yes'
           })
         )
-        /* console.log(
+        /* //console.log(
           value.filter((question) => {
             return !question.attributes['reason-text'] !== true
           })
         ) */
-        /* console.log(
+        /* //console.log(
           value.filter((question) => {
             return question.attributes.show_reason_text_in_test === 'yes'
           })
@@ -80,7 +80,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
       }
     }

@@ -47,7 +47,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
         this.isDisabled = false
-        console.log(error)
+        //console.log(error)
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
@@ -81,7 +81,7 @@ export default {
         })
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
         this.isDisabled = false
@@ -146,7 +146,7 @@ export default {
         }
 
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.isLoading = false
         this.isDisabled = false
         this.$loadingApp.disabledLoadingProgressLinear()

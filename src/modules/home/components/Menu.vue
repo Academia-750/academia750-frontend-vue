@@ -103,7 +103,7 @@ export default {
   methods: {
     ...mapMutations('profileService', ['set_user']),
     openNavigationDrawer () {
-      console.log('openNavigationDrawer')
+      //console.log('openNavigationDrawer')
       this.drawer = true
     },
     executeLoginAccountAction () {

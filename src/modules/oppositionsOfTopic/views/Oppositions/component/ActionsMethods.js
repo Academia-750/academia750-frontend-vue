@@ -34,7 +34,7 @@ export default {
           this.topicData = response.data.meta.topic
         } )
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
   }

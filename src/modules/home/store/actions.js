@@ -8,7 +8,7 @@ const verifyTokenAuthCookie = async (_ , config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -22,7 +22,7 @@ const sendInformationContactUSForm = async (_ , options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

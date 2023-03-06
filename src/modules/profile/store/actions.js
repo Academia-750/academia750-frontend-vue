@@ -20,7 +20,7 @@ const getDataMyProfileAction = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     commit('set_user', null)
 
     return Promise.reject(error)
@@ -39,7 +39,7 @@ const UpdateProfileAction = async ({ commit }, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -57,7 +57,7 @@ const UnsubscribeSystemAction = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -71,7 +71,7 @@ const ChangeMyPasswordAccountAction = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -85,7 +85,7 @@ const ChangeImageMyAccountProfile = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -124,7 +124,7 @@ const getNotifications = async ({ commit }, options) => {
     commit('set_notifications', [])
     commit('set_count_notifications_unread', '0')
 
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }
@@ -137,7 +137,7 @@ const readNotification = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
 
     return Promise.reject(error)
   }

@@ -23,7 +23,7 @@ export const loadUserAuth = async () => {
       disabledLoadingProgressCircular()
     } catch (error) {
       disabledLoadingProgressCircular()
-      console.log(error)
+      //console.log(error)
     }
   }
 }

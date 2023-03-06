@@ -6,14 +6,14 @@ export default {
       this.$refs['selectTopicsByDatatable'].topicsSelected = this.topicsSelected
     },
     clearTopicsSelected () {
-      /* console.log('Limpiar temas seleccionados')
-      console.log({
+      /* //console.log('Limpiar temas seleccionados')
+      //console.log({
         topicsSelected: this.topicsSelected
       }) */
 
       if (this.topicsSelected.length > 0) {
         this.topicsSelected = []
-        //console.log(this.$refs['selectTopicsByDatatable'])
+        ////console.log(this.$refs['selectTopicsByDatatable'])
 
         this.$refs['selectTopicsByDatatable'].topicsSelected = []
         this.$refs['selectTopicsByDatatable'].SET_ITEMS_DATATABLE([])

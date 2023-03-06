@@ -77,7 +77,7 @@ export default {
           this.entries = entries
         })
         .catch((err) => {
-          console.log(err)
+          //console.log(err)
         })
         .finally(() => (this.isLoading = false))
     }
@@ -110,7 +110,7 @@ export default {
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loading = false
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         this.loading = false
         this.$loadingApp.disabledLoadingProgressLinear()
       }
