@@ -2,7 +2,7 @@ import HomeView from './views/Home.vue'
 
 const moduleRoute = [
   {
-    path: '/home',
+    path: '/',
     name: 'home-website',
     component: HomeView,
     meta: {
