@@ -78,10 +78,17 @@ export default {
     GroupsByLevel,
     Testimonials
   },
-  data() {
-    return {}
+  mounted () {
+    //const API_PUBLIC_KEY_RECAPTCHA_SITE = process.env.VUE_APP_API_PUBLIC_KEY_RECAPTCHA
+
+    //console.log(this.$meta)
+    /* this.$meta().addScript({
+      src: `https://www.google.com/recaptcha/api.js?render=${API_PUBLIC_KEY_RECAPTCHA_SITE}`,
+      async: true,
+      defer: true,
+      body: true
+    }) */
   },
-  mounted() {},
   methods: {
     showDialogLoginAction() {
       this.$refs['DialogLoginForm'].showDialogLogin = true
@@ -139,6 +146,20 @@ export default {
       this.$refs['ContactUsFormComponent'].form.message =
         'He olvidado mi contraseña'
     }
+  },
+  head: {
+    title: {
+      inner: 'Academia 750'
+    },
+    script: [
+      {
+        //src: 'https://www.google.com/recaptcha/api.js?render=6LfEHeokAAAAAMCt6VfOCAuyZuV4LtTD989LWLEx',
+        src: `https://www.google.com/recaptcha/api.js?render=${process.env.VUE_APP_API_PUBLIC_KEY_RECAPTCHA}`,
+        async: true,
+        defer: true,
+        body: true
+      }
+    ]
   }
 }
 </script>

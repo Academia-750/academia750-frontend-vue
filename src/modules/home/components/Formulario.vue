@@ -180,7 +180,8 @@ export default {
         phone: '',
         email: '',
         message: '',
-        reason: null
+        reason: null,
+        apiPublicKeyRecaptcha: null
       },
       itemsMotivo: ['General', 'Recuperar Contraseña', 'Unete'],
       itemsReasonSelect: [
@@ -191,6 +192,9 @@ export default {
       disabledButtonSubmit: false,
       loadingButtonSubmit: false
     }
+  },
+  mounted () {
+    this.apiPublicKeyRecaptcha = process.env.VUE_APP_API_PUBLIC_KEY_RECAPTCHA
   },
   methods: {
     ...mapActions('homeService', ['sendInformationContactUSForm']),
@@ -230,7 +234,7 @@ export default {
       this.disabledButtonSubmit = true
       grecaptcha.ready(() => {
         grecaptcha
-          .execute('6Lc6PqckAAAAAEl7M5ZIhQPddhBimFxQgAr77t0w', {
+          .execute(this.apiPublicKeyRecaptcha, {
             action: 'submit'
           })
           .then((token) => {
