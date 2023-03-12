@@ -90,7 +90,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url('/images/academia750/portada.PNG');
+  background-image: url('/images/academia750/portada.png');
   height: 100vh !important;
   width: 100vw !important;
   background-position: center;
