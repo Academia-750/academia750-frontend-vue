@@ -276,10 +276,15 @@ export default {
           timer: 10000
         })
 
+        this.loadingButtonSubmit = false
+        this.disabledButtonSubmit = false
+
         return
       } else {
         //console.log('No hay error de validación')
         this.$loadingApp.enableLoadingProgressLinear()
+        this.loadingButtonSubmit = false
+        this.disabledButtonSubmit = false
 
         this.submitActionContactUs(tokenRecaptcha)
       }
@@ -346,6 +351,8 @@ export default {
 
           this.ResetForm()
         } else if (error.response?.status === 422) {
+          this.loadingButtonSubmit = false
+          this.disabledButtonSubmit = false
           this.handlingErrorValidation(error.response.data.errors)
         }
       }

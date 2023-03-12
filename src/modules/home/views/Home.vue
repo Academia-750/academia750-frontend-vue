@@ -94,10 +94,10 @@ export default {
       this.$refs['DialogLoginForm'].showDialogLogin = true
     },
     scrollToContactUsFormForRegister() {
-      this.$refs['ContactUsForm'].scrollIntoView({
+      this.$refs['ContactUsForm'].scrollIntoView(/* {
         behavior: 'smooth',
         block: 'start'
-      })
+      } */)
       this.$refs['ContactUsFormComponent'].form.message = null
       this.$refs['ContactUsFormComponent'].form.reason = 'inscription'
     },
@@ -137,10 +137,10 @@ export default {
     scrollToResetPasswordSection() {
       this.$refs['DialogLoginForm'].showDialogLogin = false
 
-      this.$refs['ContactUsForm'].scrollIntoView({
+      this.$refs['ContactUsForm'].scrollIntoView(/* {
         behavior: 'smooth',
         block: 'start'
-      })
+      } */)
 
       this.$refs['ContactUsFormComponent'].form.reason = 'reset-password'
       this.$refs['ContactUsFormComponent'].form.message =
