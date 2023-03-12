@@ -14,7 +14,7 @@
               class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
               @click="redirectToCallPhoneNumber"
             >
-              +34663261014
+              +34633261014
             </v-btn>
           </div>
           <div>
@@ -199,7 +199,7 @@ export default {
   methods: {
     ...mapActions('homeService', ['sendInformationContactUSForm']),
     redirectToCallPhoneNumber() {
-      window.open('tel:+34663261014', '_self')
+      window.open('tel:+34633261014', '_self')
     },
     redirectToSendMailAcademia() {
       window.open('mailto:hola@academia750.es', '_self')

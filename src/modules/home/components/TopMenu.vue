@@ -25,7 +25,7 @@
             class="font-weight-bold align-self-center ma-0 pa-0 ml-1"
             @click="redirectToCallPhoneNumber"
           >
-            +34663261014
+            +34633261014
           </v-btn>
           <v-btn
             icon
@@ -69,7 +69,7 @@ export default {
       window.open('https://www.instagram.com/academia.750/', '_blank')
     },
     redirectToCallPhoneNumber () {
-      window.open('tel:+34663261014', '_self')
+      window.open('tel:+34633261014', '_self')
     }
   }
 }

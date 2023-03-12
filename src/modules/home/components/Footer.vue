@@ -25,7 +25,7 @@
                   />
                   <FooterTres
                     ico-contacto="mdi-phone"
-                    items-contacto="+34663261014"
+                    items-contacto="+34633261014"
                   />
                   <FooterTres
                     ico-contacto="mdi-email"
@@ -92,7 +92,7 @@ export default {
       FooterMenu: ['Inicio', 'Qué ofrecemos', 'Tarifas', 'Contáctanos'],
       Contactanos: [
         'Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante',
-        '+34663261014',
+        '+34633261014',
         'hola@academia750.es'
       ]
     }

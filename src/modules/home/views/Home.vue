@@ -148,9 +148,6 @@ export default {
     }
   },
   head: {
-    title: {
-      inner: 'Academia 750'
-    },
     script: [
       {
         //src: 'https://www.google.com/recaptcha/api.js?render=6LfEHeokAAAAAMCt6VfOCAuyZuV4LtTD989LWLEx',
