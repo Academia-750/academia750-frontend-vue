@@ -1,4 +1,6 @@
 import ProfileRepository from '../repositories/ProfileRepository'
+import { $remove_token_auth } from '@/helpers/auth.js'
+import router from '@/router'
 
 const getDataMyProfileAction = async ({ commit }, options) => {
 
@@ -13,6 +15,8 @@ const getDataMyProfileAction = async ({ commit }, options) => {
       response = await ProfileRepository.getDataMyProfileBeforeLoadApp(options.configResponse)
     }
 
+    //console.log(response)
+
     if (response) {
       commit('set_user', response.data.data)
     }
@@ -22,6 +26,7 @@ const getDataMyProfileAction = async ({ commit }, options) => {
   } catch (error) {
     //console.log(error)
     commit('set_user', null)
+    $remove_token_auth()
 
     return Promise.reject(error)
   }
@@ -40,6 +45,11 @@ const UpdateProfileAction = async ({ commit }, options) => {
 
   } catch (error) {
     //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
@@ -57,7 +67,11 @@ const UnsubscribeSystemAction = async ({ commit }, config) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
@@ -71,7 +85,11 @@ const ChangeMyPasswordAccountAction = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
@@ -85,7 +103,11 @@ const ChangeImageMyAccountProfile = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
@@ -124,7 +146,11 @@ const getNotifications = async ({ commit }, options) => {
     commit('set_notifications', [])
     commit('set_count_notifications_unread', '0')
 
-    //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
@@ -137,7 +163,11 @@ const readNotification = async (_, options) => {
     return Promise.resolve(response)
 
   } catch (error) {
-    //console.log(error)
+    commit('set_user', null)
+    $remove_token_auth()
+    router.push({
+      name: 'login'
+    })
 
     return Promise.reject(error)
   }
