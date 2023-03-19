@@ -12,9 +12,10 @@ import configLogoutMethods from '@/modules/auth/login/resources/configLogout'
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
 const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
 const serverApiProduction = process.env.VUE_APP_BASE_URL_API_PRODUCTION
+const BaseURIApi = IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction
 
 const AuthService = axios.create({
-  baseURL: `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}/api/v1`
+  baseURL: `${BaseURIApi}/api/v1`
 })
 
 const handleErrorResponse = (error) => {
