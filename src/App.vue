@@ -44,7 +44,6 @@
 import { mapState, mapMutations } from 'vuex'
 
 // Demo Menu
-import CustomizationMenu from './components/demo/CustomizationMenu'
 
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
@@ -68,7 +67,6 @@ import CookiePoliciesDialogLegalVue from './modules/home/components/Legal/Cookie
 */
 export default {
   components: {
-    CustomizationMenu,
     defaultLayout,
     landingLayout,
     simpleLayout,
