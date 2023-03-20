@@ -1,3 +1,4 @@
+# Academia750
 <p align="center">Lux - Vue Admin Dashboard Template</p>
 
 - Vue js Admin with dark mode + RTL + Demo Apps
@@ -6,19 +7,15 @@
 
 <br/>
 
-### Documentation
-
-See - `LuxAdminPro-Documentation.pdf`
-
-## Commands
+## Comandos
 #### `npm install`
-> Installs package dependencies
+> Instala dependencias de paquetes
 
 #### `npm run dev` or `npm run serve` 
-> Compiles and hot-reloads for development
+> Compila y mantiene en tiempo real presnete cada cambio para refrescar la web de forma automática para el desarrollo
 
 #### `npm run build`
-> Compiles and minifies for production
+> Compila y minifica para producción - Entrega una carpeta dist en la raíz del proyecto, y el contenido dentro de este, contiene los HTML, CSS y Javascript que posteriormente tendrás que subir al servidor. Recuerda que es una SPA, por lo tanto dependiendo el servidor, necesitarás un .htaccess o un __redirects
 
 #### `npm run lint`
-> Lints and fixes files
+> Lints and fixes files - Funciona para entorno de desarrollo, y usa Eslint para codificar con buenas prácticas y reglas estándares de Vue JS versión 2.
