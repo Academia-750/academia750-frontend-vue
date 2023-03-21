@@ -10,7 +10,7 @@
           xl="12"
         >
           <v-container class="d-flex justify-center text-center pt-5">
-            <p class="titulo_1 white--text">Opinión de nuestros alumnos</p>
+            <h3 class="titulo_1 white--text">Opinión de nuestros alumnos</h3>
           </v-container>
         </v-col>
         <v-col

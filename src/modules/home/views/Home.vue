@@ -156,7 +156,10 @@ export default {
         defer: true,
         body: true
       }
-    ]
+    ],
+    title: {
+      inner: 'Academia de bomberos de Aspe, Alicante, con plataforma online'
+    }
   }
 }
 </script>

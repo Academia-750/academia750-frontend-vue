@@ -14,11 +14,11 @@
                 :class="manageClassResponsiveWrapperBanner"
                 class="text-start"
               >
-                <span
+                <h1
                   class="font-weight-black titulo_banner"
                 >
                   Academia de Bomberos 750
-                </span>
+                </h1>
               </div>
               <div
                 :class="manageClassResponsiveWrapperBanner"

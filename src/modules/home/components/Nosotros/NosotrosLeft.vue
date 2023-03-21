@@ -1,7 +1,7 @@
 <template>
   <div class="estilo_nosotros">
-    <h2>{{ numeroNosotros }}</h2>
-    <h2>{{ tituloNosotros }}</h2>
+    <h3>{{ numeroNosotros }}</h3>
+    <h3>{{ tituloNosotros }}</h3>
     <p>
       {{ contenidoNosotros }}
     </p>

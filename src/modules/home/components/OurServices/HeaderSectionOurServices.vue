@@ -7,9 +7,9 @@
       lg="10"
     >
       <div class="d-flex justify-center text-center mb-1">
-        <span class="titulo_1">
+        <h2 class="titulo_1">
           Descubre nuestros servicios
-        </span>
+        </h2>
       </div>
       <div class="d-flex justify-center text-center">
         <p class="text-center">Ofrecemos un servicio integral al opositor/a, adaptándonos al nivel y necesidades de cada uno de ell@s. Todos nuestros servicios se ofrecen de forma presencial y online para que puedas llevar el ritmo que mejor te convenga.</p>

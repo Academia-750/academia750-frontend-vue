@@ -1,7 +1,7 @@
 <template>
   <div class="section-contact-us-form pa-0 ma-0">
     <v-container>
-      <h2 class="white--text font-weight-black text-h5 text-sm-h4 text-md-h4 text-lg-h3 text-xl-h3">Contacta con nosotros</h2>
+      <h3 class="white--text font-weight-black text-h5 text-sm-h4 text-md-h4 text-lg-h3 text-xl-h3">Contacta con nosotros</h3>
       <p class="white--text text-caption font-weight-bold">Estaremos encantados de resolverte cualquier duda</p>
     </v-container>
   </div>

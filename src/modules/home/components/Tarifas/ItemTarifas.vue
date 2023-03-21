@@ -2,7 +2,7 @@
   <div>
     <div class="todo_tarifa">
       <div class="cabeza_tarifa">
-        <h2>{{ tituloTarifa }}</h2>
+        <h3>{{ tituloTarifa }}</h3>
         <h3>{{ precioTarifa }} €/mes</h3>
       </div>
       <div class="cuerpo_tarifa">

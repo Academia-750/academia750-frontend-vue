@@ -3,7 +3,7 @@
     <v-container>
       <v-row align="center">
         <v-col md="6" cols="12" class="mt-lg-5 text-lg-start text-center">
-          <h1 class="titulo_1">Sobre nosotros</h1>
+          <h2 class="titulo_1">Sobre nosotros</h2>
           <p>Nos gustaría que nos conocieses un poco mejor</p>
         </v-col>
         <v-col md="6" cols="12" class="mt-lg-5">
