@@ -3,7 +3,7 @@
     <div class="todo_tarifa">
       <div class="cabeza_tarifa">
         <h3>{{ tituloTarifa }}</h3>
-        <h3>{{ precioTarifa }} €/mes</h3>
+        <div class="tarifa">{{ precioTarifa }} €/mes</div>
       </div>
       <div class="cuerpo_tarifa">
         <p>{{ contenidoTarifa }}</p>
@@ -75,7 +75,7 @@ export default {
   font-size: 25px;
   color: var(--color_uno);
 }
-.cabeza_tarifa h3 {
+.cabeza_tarifa h3, .tarifa {
   font-size: 17px;
   font-family: var(--fuente_tres);
   line-height: 17px;
