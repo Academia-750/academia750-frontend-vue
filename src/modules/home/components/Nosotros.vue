@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .nosotros_seccion {
   background-image: url(/images/academia750/quienesSomos.png);
-  height: 875px;
+  height: 100%;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;

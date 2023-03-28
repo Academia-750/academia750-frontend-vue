@@ -30,7 +30,7 @@
           lg="9"
           xl="9"
         >
-          <h2 class="nombre_persona">{{ namePerson }}</h2>
+          <div class="nombre_persona">{{ namePerson }}</div>
           <v-rating
             :value="5"
             color="amber accent-2"

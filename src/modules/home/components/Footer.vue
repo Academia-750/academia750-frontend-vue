@@ -8,14 +8,14 @@
         <v-col lg="9" cols="12">
           <v-row align="start">
             <v-col lg="4" cols="12">
-              <h2>Academia 750</h2>
+              <div class="menu_footer_title">Academia 750</div>
               <div class="linea_footer"></div>
               <div>
                 <FooterDos @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"/>
               </div>
             </v-col>
             <v-col lg="4" md="6" cols="12">
-              <h2>Contáctanos</h2>
+              <div class="menu_footer_title">Contáctanos</div>
               <div class="linea_footer"></div>
               <div>
                 <ul class="lista_footer mt-2" style="list-style: none;">
@@ -35,7 +35,7 @@
               </div>
             </v-col>
             <v-col lg="4" md="6" cols="12">
-              <h2>Siguenos</h2>
+              <div class="menu_footer_title">Siguenos</div>
               <div class="linea_footer"></div>
               <div class="mt-2 text-center text-lg-start">
                 <FooterRedes
@@ -129,7 +129,7 @@ export default {
     padding-left: 0px!important;
 }
 
-.estilo_footer h2{
+.estilo_footer div.menu_footer_title{
     font-size: 16px;
     font-family: var(--fuente_cuatro);
 

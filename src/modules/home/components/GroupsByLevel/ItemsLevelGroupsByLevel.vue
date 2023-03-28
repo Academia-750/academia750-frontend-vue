@@ -1,6 +1,6 @@
 <template>
   <div class="item-level mt-2 mb-5">
-    <p class="titulo_3">{{ title }}</p>
+    <h3 class="titulo_3">{{ title }}</h3>
     <ul>
       <li v-for="(item, index) in itemsLevel" :key="index">{{ item }}</li>
     </ul>

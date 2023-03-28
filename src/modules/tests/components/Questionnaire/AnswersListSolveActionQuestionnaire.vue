@@ -4,7 +4,7 @@
     max-width="100%"
     tile
   >
-    <v-list rounded >
+    <v-list rounded class="color_personalizado" >
       <v-list-item-group
         v-model="answer_selected_id"
         color="primary"
@@ -79,5 +79,7 @@ export default {
       white-space: initial!important;
       color: #000;
   }
-
+  .color_personalizado{
+    background-color: #DCDCDC;
+  }
 </style>

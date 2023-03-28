@@ -1,6 +1,6 @@
 <template>
   <div class="estilo_nosotros">
-    <h3>{{ numeroNosotros }}</h3>
+    <div class="numeracion">{{ numeroNosotros }}</div>
     <h3>{{ tituloNosotros }}</h3>
     <p>
       {{ contenidoNosotros }}
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 <style>
-.estilo_nosotros h2 {
+.estilo_nosotros h2, .numeracion{
   font-size: 30px;
   font-family: var(--fuente_cuatro);
   color: #000;
