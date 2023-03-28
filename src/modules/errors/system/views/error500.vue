@@ -14,7 +14,12 @@
     <div class="overflow-y-auto">
       <image-describe-error />
       <section-main-error />
-      <button-action />
+      <div>
+        <button-action text-button="Volver a cargar" :href="$router.currentRoute.path" />
+      </div>
+      <div>
+        <button-action />
+      </div>
     </div>
   </v-card>
 </template>

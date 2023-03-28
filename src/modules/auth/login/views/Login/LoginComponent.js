@@ -15,7 +15,7 @@ export default {
   mounted () {
     //console.log(this.$refs['access-key-field'])
     if (this.$refs['access-key-field']) {
-      this.$refs['access-key-field']?.focus()
+      this.$refs['access-key-field']?.onFocusAccesKeyField()
     }
   },
   head: {
