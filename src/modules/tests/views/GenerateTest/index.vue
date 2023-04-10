@@ -123,6 +123,7 @@
             fab
             :disabled="false"
             title="Generar cuestionario"
+            :loading="loadingButtonCreateTest"
             @click="CreateTest"
           >
             <v-icon>mdi-pencil</v-icon>
