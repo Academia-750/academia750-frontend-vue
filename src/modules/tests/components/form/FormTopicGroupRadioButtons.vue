@@ -1,55 +1,7 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :class="classGroupCheckboxSectionTopicsGroup"
-    :vid="vid"
-    mode="aggressive"
-    name="Grupo de tema"
-    :rules="rules"
-  >
-    <!-- <div class="ma-2">
-      <v-checkbox
-        v-model="is_checked_all_options"
-        :error-messages="errors"
-        @change="selectAllTopicsGroups"
-      >
-        <template v-slot:label>
-          <span class="title font-weight-bold py-1">Seleccionar todos</span>
-        </template>
-      </v-checkbox>
-    </div>
-    <div v-for="topicGroup in topicsGroups" :key="topicGroup.id" class="ma-2">
-
-      <v-checkbox
-        v-model="topicGroupSelected"
-        :error-messages="errors"
-        :value="topicGroup.id"
-      >
-        <template v-slot:label>
-          <span class="title font-weight-bold py-1">{{ topicGroup.attributes.name }}</span>
-        </template>
-      </v-checkbox>
-    </div> -->
-    <div class="ma-2">
-      <form-datatable-select-topic-groups :items="topicsGroups" @emitSelectedItems="getTopicsGroupsSelectedDatatable"/>
-    </div>
-    <!-- <v-radio-group
-      v-model="topicGroupSelected"
-      :error-messages="errors"
-      :disabled="isDisabled"
-      row
-    >
-      <v-radio
-        v-for="topicGroup in topicsGroups"
-        :key="topicGroup.id"
-        :value="topicGroup.id"
-      >
-        <template #label>
-          <span class="title font-weight-bold py-1">{{ topicGroup.attributes.name }}</span>
-        </template>
-      </v-radio>
-    </v-radio-group> -->
-  </ValidationProvider>
+  <div class="ma-2">
+    <form-datatable-select-topic-groups :items="topicsGroups" @emitSelectedItems="getTopicsGroupsSelectedDatatable"/>
+  </div>
 </template>
 
 <script>
