@@ -23,7 +23,7 @@ export default {
 
     },
     realodDataWithFiltersBySearchTopics () {
-      if (this.oppositionSelected.length > 0 && this.topicGroupSelected.length > 0) {
+      if (this.oppositionSelected.length > 0 && this.topicsGroupSelected.length > 0) {
         return
       }
 

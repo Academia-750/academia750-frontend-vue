@@ -57,25 +57,25 @@
             ref="FormTopicGroupRadioButtons"
             vid="topic-group"
             rules="required"
-            @TopicGroupTestBinding="topicGroupSelected = $event"
+            @TopicGroupTestBinding="topicsGroupSelected = $event"
           />
           <v-divider class="my-1 blue-grey lighten-4" />
         </v-container>
         <v-container
-          v-show="oppositionSelected.length > 0 && topicGroupSelected.length > 0"
+          v-show="oppositionSelected.length > 0 && topicsGroupSelected.length > 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
           class="mx-auto"
         >
           <select-topics-by-datatable
             ref="selectTopicsByDatatable"
             :opposition-id="oppositionSelected.length > 0 ? oppositionSelected[0]?.id : ''"
-            :topics-group-id="topicGroupSelected"
+            :topics-group-id="topicsGroupSelected"
             @TopicsSelectedBinding="topicsSelected = $event"
           />
           <v-divider class="my-1 blue-grey lighten-4" />
         </v-container>
         <v-container
-          v-if="oppositionSelected.length === 0 || topicGroupSelected.length === 0"
+          v-if="oppositionSelected.length === 0 || topicsGroupSelected.length === 0"
           :class="{'ma-0': $vuetify.breakpoint.mdAndDown, 'pa-0': $vuetify.breakpoint.mdAndDown}"
           class="mx-auto d-flex justify-center"
         >

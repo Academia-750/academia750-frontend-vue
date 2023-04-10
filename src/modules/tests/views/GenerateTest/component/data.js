@@ -4,7 +4,7 @@ export default {
       oppositionSelected: [],
       numberOfQuestionsSelected: 0,
       typeTestSelected: null,
-      topicGroupSelected: [],
+      topicsGroupSelected: [],
       topicsSelected: [],
       loadingButtonCreateTest: false,
       disabledButtonCreateTest: false
