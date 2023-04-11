@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .layout-side {
-  width: 420px;
+  max-width: 420px;
 }
 
 .layout-content {
@@ -43,5 +43,6 @@ export default {
   background-image: url('/images/academia750/bomberos-login-background.png');
   background-size: cover;
   background-position: center;
+  min-height: 100vh;
 }
 </style>
