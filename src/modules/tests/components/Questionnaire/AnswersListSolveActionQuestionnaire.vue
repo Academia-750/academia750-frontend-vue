@@ -80,6 +80,6 @@ export default {
       color: #000;
   }
   .color_personalizado{
-    background-color: #DCDCDC;
+    background-color:#f0f0f0;
   }
 </style>
