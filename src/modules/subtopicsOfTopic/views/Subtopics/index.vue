@@ -62,7 +62,8 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null"
+              v-if="topicData !== null && metaData !== null"
+              :is-disabled="metaData.topic.attributes.is_available === 'no'"
               :config-route="{
                 name: 'create-subtopic',
                 params: { id: topicData.id }
@@ -106,14 +107,16 @@
             :config-route="{ name: 'fetch-subtopic', params: { id: $route.params.id, subtopic_id: item.id } }"
           />
           <resource-button-edit
-            v-if="topicData !== null"
-            :is-disabled="item.is_available === 'no'"
+            v-if="topicData !== null && metaData !== null"
+            :is-disabled="item.is_available === 'no' || metaData.topic.attributes.is_available === 'no'"
             :config-route="{
               name: 'update-subtopic',
               params: { id: topicData.id, subtopic_id: item.id }
             }"
           />
           <resource-button-delete
+            v-if="metaData !== null"
+            :is-disabled="item.is_available === 'no' || metaData.topic.attributes.is_available === 'no'"
             @actionConfirmShowDialogDelete="deleteSubtopicConfirm(item)"
           />
         </div>
