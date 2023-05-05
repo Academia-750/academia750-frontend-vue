@@ -127,6 +127,7 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
+          :is-disabled="item.is_available === 'no'"
           @click="
             $router.push({
               name: 'manage-subtopics-of-topic',
@@ -155,6 +156,7 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
+          :is-disabled="item.is_available === 'no'"
           @click="
             $router.push({
               name: 'manage-oppositions-of-topic',
@@ -183,6 +185,7 @@
           :x-small="!can_rendering_button_small"
           :small="can_rendering_button_small"
           color="success"
+          :is-disabled="item.is_available === 'no'"
           @click="
             $router.push({
               name: 'manage-questions-of-topic',

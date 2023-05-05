@@ -77,7 +77,7 @@ export default {
       })
     },
     deleteTopicConfirm (item) {
-      if (item.has_subtopics) {
+      /* if (item.has_subtopics) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -86,7 +86,7 @@ export default {
         })
 
         return
-      }
+      } */
 
       this.currentItemsSelectedForDelete = item
       this.$refs['dialogConfirmDeleteAction'].showDialog = true
