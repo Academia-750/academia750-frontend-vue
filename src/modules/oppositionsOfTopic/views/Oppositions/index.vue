@@ -41,23 +41,6 @@
               text-button="Agregar Oposición"
               :config-route="{ name: 'assing-opposition-to-topic', params: { id: topicData.id } }"
             />
-            <!-- <v-btn
-              small
-              elevation="24"
-              color="teal darken-2"
-              class="white--text ml-1"
-              title="Cargar nuevamente"
-              @click="loadDatatatable"
-            >
-              <v-icon
-                dark
-                small
-                class="mx-1"
-              >
-                mdi-reload
-              </v-icon>
-              <span class="d-none d-sm-inline">Cargar</span>
-            </v-btn> -->
           </div>
         </v-toolbar>
         <resource-text-field-search
@@ -73,10 +56,12 @@
         <div class="d-flex justify-space-around">
           <resource-button-edit
             v-if="topicData !== null"
+            :is-disabled="item.is_available === 'no'"
             text-button="Editar subtemas"
             :config-route="{ name: 'update-subtopics-opposition-by-topic', params: { id: topicData.id, opposition_id: item.id } }"
           />
           <resource-button-delete
+            :is-disabled="item.is_available === 'no'"
             @actionConfirmShowDialogDelete="unassignOppositionConfirm(item)"
           />
 

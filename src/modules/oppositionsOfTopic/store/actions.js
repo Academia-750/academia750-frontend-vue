@@ -6,6 +6,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       id: record.id,
       name: record.attributes.name,
       period: record.attributes.period,
+      is_available: record.attributes.is_available,
       'created-at': record.attributes.created_at
     }
   })
