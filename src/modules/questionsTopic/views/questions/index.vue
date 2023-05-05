@@ -54,7 +54,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null"
+              v-if="topicData !== null && topicData.attributes.is_available === 'yes'"
               :config-route="{ name: 'create-question-topic', params: {
                 id: topicData.id
               } }"

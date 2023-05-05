@@ -62,8 +62,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null && metaData !== null"
-              :is-disabled="metaData.topic.attributes.is_available === 'no'"
+              v-if="topicData !== null && metaData !== null && metaData.topic.attributes.is_available === 'yes'"
               :config-route="{
                 name: 'create-subtopic',
                 params: { id: topicData.id }
