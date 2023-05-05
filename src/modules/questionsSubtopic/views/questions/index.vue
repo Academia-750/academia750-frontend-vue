@@ -55,7 +55,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null && topicData.attributes.is_available === 'yes'"
+              v-if="subtopicData !== null && subtopicData.attributes.is_available === 'yes'"
               :config-route="{ name: 'create-question-subtopic' }"
             />
             <!-- <v-btn
@@ -105,12 +105,12 @@
             :config-route="{ name: 'fetch-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-edit
-            v-if="item.can_this_question_be_affected && metaData !== null && metaData.subtopic.attributes.is_available === 'no'"
+            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'no'"
             color-button="blue darken-1"
             :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-delete
-            v-if="item.can_this_question_be_affected && metaData !== null && metaData.subtopic.attributes.is_available === 'no'"
+            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'no'"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
         </div>

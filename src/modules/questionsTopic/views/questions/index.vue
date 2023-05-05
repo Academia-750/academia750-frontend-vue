@@ -94,7 +94,7 @@
             :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
           />
           <resource-button-delete
-            v-if="item.can_this_question_be_affected"
+            v-if="topicData !== null && item.can_this_question_be_affected"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
         </div>
