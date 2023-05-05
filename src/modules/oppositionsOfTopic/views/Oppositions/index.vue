@@ -37,7 +37,7 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null"
+              v-if="topicData !== null && topicData.attributes.is_available === 'yes'"
               text-button="Agregar Oposición"
               :config-route="{ name: 'assing-opposition-to-topic', params: { id: topicData.id } }"
             />
@@ -55,12 +55,13 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit
-            v-if="topicData !== null"
+            v-if="topicData !== null && topicData.attributes.is_available === 'yes' && item.is_available === 'yes'"
             :is-disabled="item.is_available === 'no'"
             text-button="Editar subtemas"
             :config-route="{ name: 'update-subtopics-opposition-by-topic', params: { id: topicData.id, opposition_id: item.id } }"
           />
           <resource-button-delete
+            v-if="topicData !== null && topicData.attributes.is_available === 'yes' && item.is_available === 'yes'"
             :is-disabled="item.is_available === 'no'"
             @actionConfirmShowDialogDelete="unassignOppositionConfirm(item)"
           />
