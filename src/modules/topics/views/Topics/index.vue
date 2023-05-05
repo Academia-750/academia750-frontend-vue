@@ -111,9 +111,11 @@
           />
           <resource-button-edit
             color-button="blue darken-1"
+            :is-disabled="item.is_available === 'no'"
             :config-route="{ name: 'update-topic', params: { id: item.id } }"
           />
           <resource-button-delete
+            :is-disabled="item.is_available === 'no'"
             @actionConfirmShowDialogDelete="deleteTopicConfirm(item)"
           />
         </div>

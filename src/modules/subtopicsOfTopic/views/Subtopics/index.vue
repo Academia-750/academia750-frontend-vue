@@ -102,10 +102,12 @@
             text-button="Ver"
             icon-button="mdi-eye"
             color-button="success"
+            :is-disabled="item.is_available === 'no'"
             :config-route="{ name: 'fetch-subtopic', params: { id: $route.params.id, subtopic_id: item.id } }"
           />
           <resource-button-edit
             v-if="topicData !== null"
+            :is-disabled="item.is_available === 'no'"
             :config-route="{
               name: 'update-subtopic',
               params: { id: topicData.id, subtopic_id: item.id }
