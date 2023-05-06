@@ -11,6 +11,13 @@ export default {
           show: true
         },
         {
+          text: '# Subtemas',
+          align: 'start',
+          sortable: false,
+          value: 'total-count-subtopics',
+          show: true
+        },
+        {
           text: 'Fecha de alta',
           align: 'start',
           sortable: true,
