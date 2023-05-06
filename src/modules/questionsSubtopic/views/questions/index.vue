@@ -105,12 +105,12 @@
             :config-route="{ name: 'fetch-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-edit
-            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'no'"
+            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'yes'"
             color-button="blue darken-1"
             :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
           />
           <resource-button-delete
-            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'no'"
+            v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'yes'"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
           />
         </div>
