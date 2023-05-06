@@ -1,14 +1,15 @@
 import TopicRepository from '../repositories/TopicRepository'
 
-const mapItemsDatatableFromApi = (itemsApi, metaInformation = {}) => {
-
-  const { count_subtopics_this_topic } = metaInformation
+const mapItemsDatatableFromApi = (itemsApi) => {
 
   return itemsApi.map((record) => {
+
+    const { has_subtopics, count_subtopics_this_topic } = record.meta
+
     return {
       id: record.id,
       name: record.attributes.name,
-      has_subtopics: record.meta.has_subtopics,
+      has_subtopics: has_subtopics,
       is_available: record.attributes.is_available,
       'total-count-subtopics': count_subtopics_this_topic,
       'created-at': record.attributes.created_at
@@ -62,7 +63,7 @@ const getTopics = async ({ commit }, config) => {
     if (response) {
       //console.trace(response)
 
-      commit('SET_ITEMS_DATATABLE', mapItemsDatatableFromApi(response.data.data, response.data.meta))
+      commit('SET_ITEMS_DATATABLE', mapItemsDatatableFromApi(response.data.data))
       commit('SET_STATUS_LOADING_ITEMS', false)
       commit('SET_INFORMATION_META', mapMetaInformationPagination(response))
 
