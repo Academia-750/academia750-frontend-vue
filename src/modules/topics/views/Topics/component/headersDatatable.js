@@ -18,6 +18,13 @@ export default {
           show: true
         },
         {
+          text: 'Grupo de tema',
+          align: 'start',
+          sortable: false,
+          value: 'topic_group',
+          show: true
+        },
+        {
           text: 'Fecha de alta',
           align: 'start',
           sortable: true,

@@ -5,6 +5,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
 
     const { has_subtopics, count_subtopics_this_topic } = record.meta
+    const { topic_group } = record.relationships
 
     return {
       id: record.id,
@@ -12,6 +13,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       has_subtopics: has_subtopics,
       is_available: record.attributes.is_available,
       'total-count-subtopics': count_subtopics_this_topic,
+      topic_group: topic_group.attributes.name,
       'created-at': record.attributes.created_at
     }
   })
