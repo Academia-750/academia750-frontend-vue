@@ -130,7 +130,7 @@
             <span class="caption d-none d-sm-none d-md-inline">
               👨‍🚒👩‍🚒Academia de oposiciones a Bomber@s
             </span>
-            .<v-icon small color="pink">mdi-heart</v-icon>
+            .<!-- <v-icon small color="pink">mdi-heart</v-icon> -->
             <span
               style="cursor: pointer;"
               class="text-decoration-none"

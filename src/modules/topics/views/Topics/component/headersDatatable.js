@@ -11,20 +11,6 @@ export default {
           show: true
         },
         {
-          text: '# Subtemas',
-          align: 'start',
-          sortable: false,
-          value: 'total-count-subtopics',
-          show: true
-        },
-        {
-          text: 'Grupo de tema',
-          align: 'start',
-          sortable: false,
-          value: 'topic_group',
-          show: true
-        },
-        {
           text: 'Fecha de alta',
           align: 'start',
           sortable: true,
@@ -61,6 +47,20 @@ export default {
           text: 'Preguntas',
           align: 'center',
           value: 'manage-questions',
+          show: true
+        },
+        {
+          text: '# Subtemas',
+          align: 'start',
+          sortable: false,
+          value: 'total-count-subtopics',
+          show: true
+        },
+        {
+          text: 'Grupo de tema',
+          align: 'start',
+          sortable: false,
+          value: 'topic_group',
           show: true
         }
       ]
