@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="viewResultsOfTestComponent">
     <v-toolbar>
       <v-toolbar-title class="d-flex align-items-center">
         <v-icon large class="mx-1">mdi-book-edit</v-icon>

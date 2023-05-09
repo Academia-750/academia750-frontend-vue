@@ -4,8 +4,10 @@ import HeadResultsHistoryTest from '@/modules/tests/components/HistoryTest/HeadR
 import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/SymbologyHistoryTest'
 import ResumeQuestionStateHistoryTest from '@/modules/tests/components/HistoryTest/ResumeQuestionStateHistoryTest'
 import ItemQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ItemQuestionHistoryTest'
+import BlockActionsUser from './../FetchTest/BlockActionsUser'
 
 export default {
+  mixins: [BlockActionsUser],
   components: {
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
     ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
@@ -35,6 +37,10 @@ export default {
   },
   mounted() {
     this.fetchRecordData()
+    this.blockActionsSelectionUser()
+  },
+  beforeDestroy() {
+    this.removeEventsListenerActionsUser()
   },
   watch: {
     pageNumber(number) {
@@ -43,6 +49,24 @@ export default {
   },
   methods: {
     ...mapActions('testsService', ['fetchHistoryTestComplete']),
+    blockActionsSelectionUser() {
+      const elementResolveTest = this.$refs['resolveTestView']
+
+      this.blockEventJavascript(elementResolveTest, 'copy')
+      this.blockEventJavascript(elementResolveTest, 'paste')
+      this.blockEventJavascript(elementResolveTest, 'keydown')
+      this.blockEventJavascript(elementResolveTest, 'mousedown')
+      this.blockEventJavascript(elementResolveTest, 'contextmenu')
+    },
+    removeEventsListenerActionsUser() {
+      const elementResolveTest = this.$refs['resolveTestView']
+
+      this.enableEventJavascript(elementResolveTest, 'copy')
+      this.enableEventJavascript(elementResolveTest, 'paste')
+      this.enableEventJavascript(elementResolveTest, 'keydown')
+      this.enableEventJavascript(elementResolveTest, 'mousedown')
+      this.enableEventJavascript(elementResolveTest, 'contextmenu')
+    },
     scrollToElementRefQuestion($nameElementRef) {
       const sectionQuestionHistory = document.querySelector(`#${$nameElementRef}`)
 
