@@ -89,13 +89,13 @@ export default {
               to: { name: 'fetch-resume-student-five-topics-to-improve' },
               roles: 'student'
             },
-            {
+            /* {
               icon: 'mdi-book-clock',
               key: '',
               text: 'Resultados por tema',
               to: { name: 'fetch-resume-student-results-per-topic' },
               roles: 'student'
-            },
+            }, */
             {
               icon: 'mdi-view-list',
               key: '',
