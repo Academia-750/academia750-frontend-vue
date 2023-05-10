@@ -3,7 +3,7 @@
     <v-container>
       <v-row align="center">
         <v-col lg="6" cols="12">
-          <h3>Contacta con nosotros</h3>
+          <h3 class="titulo_1">Contacta con nosotros</h3>
           <p>Estaremos encantados de resolverte cualquier duda.</p>
         </v-col>
         <v-col lg="6" cols="12" class="text-center">
