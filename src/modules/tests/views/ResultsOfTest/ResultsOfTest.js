@@ -50,7 +50,7 @@ export default {
   methods: {
     ...mapActions('testsService', ['fetchHistoryTestComplete']),
     blockActionsSelectionUser() {
-      const elementResolveTest = this.$refs['resolveTestView']
+      const elementResolveTest = this.$refs['viewResultsOfTestComponent']
 
       this.blockEventJavascript(elementResolveTest, 'copy')
       this.blockEventJavascript(elementResolveTest, 'paste')
@@ -59,7 +59,7 @@ export default {
       this.blockEventJavascript(elementResolveTest, 'contextmenu')
     },
     removeEventsListenerActionsUser() {
-      const elementResolveTest = this.$refs['resolveTestView']
+      const elementResolveTest = this.$refs['viewResultsOfTestComponent']
 
       this.enableEventJavascript(elementResolveTest, 'copy')
       this.enableEventJavascript(elementResolveTest, 'paste')
