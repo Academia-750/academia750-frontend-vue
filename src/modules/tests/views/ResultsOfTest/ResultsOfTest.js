@@ -54,7 +54,7 @@ export default {
 
       this.blockEventJavascript(elementResolveTest, 'copy')
       this.blockEventJavascript(elementResolveTest, 'paste')
-      this.blockEventJavascript(elementResolveTest, 'keydown')
+      //this.blockEventJavascript(elementResolveTest, 'keydown')
       this.blockEventJavascript(elementResolveTest, 'mousedown')
       this.blockEventJavascript(elementResolveTest, 'contextmenu')
     },
@@ -63,7 +63,7 @@ export default {
 
       this.enableEventJavascript(elementResolveTest, 'copy')
       this.enableEventJavascript(elementResolveTest, 'paste')
-      this.enableEventJavascript(elementResolveTest, 'keydown')
+      //this.enableEventJavascript(elementResolveTest, 'keydown')
       this.enableEventJavascript(elementResolveTest, 'mousedown')
       this.enableEventJavascript(elementResolveTest, 'contextmenu')
     },
