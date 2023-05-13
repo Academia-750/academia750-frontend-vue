@@ -10,7 +10,7 @@
       ref="claim-text-field"
       v-model="claim_text"
       :disabled="isDisabled"
-      label="Nombre"
+      label="Motivo de impugnación"
       placeholder="Escribe el motivo de impugnación"
       :error-messages="errors"
       filled
