@@ -28,7 +28,37 @@ const sendInformationContactUSForm = async (_ , options) => {
   }
 }
 
+const acceptCookies = async (_ , options) => {
+  try {
+
+    const response = await HomeRepository.acceptCookies(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    //console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const hasAcceptCookies = async (_ , options) => {
+  try {
+
+    const response = await HomeRepository.hasAcceptCookies(options.data, options.config)
+
+    return Promise.resolve(response)
+
+  } catch (error) {
+    //console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   verifyTokenAuthCookie,
-  sendInformationContactUSForm
+  sendInformationContactUSForm,
+  acceptCookies,
+  hasAcceptCookies
 }

@@ -32,7 +32,7 @@
       </v-btn>
     </v-snackbar>
 
-    <cookie-policies-dialog-legal-vue ref="CookiePoliciesDialogLegalVue"/>
+    <cookie-policies-dialog-legal-vue ref="CookiePoliciesDialogLegalVue" @acceptCookiesAgreement="acceptCookiesAgreement"/>
 
     <!-- Demo customization menu -->
     <!-- <customization-menu /> -->
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 // Demo Menu
 
@@ -53,7 +53,6 @@ import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
 import handleErrors from '@/modules/errors/system/views/handleErrors.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
-import jsCookie from 'js-cookie'
 import  './assets/fuentes/stylesheet.css'
 import CookiePoliciesDialogLegalVue from './modules/home/components/Legal/CookiePoliciesDialogLegal.vue'
 
@@ -99,11 +98,8 @@ export default {
     //window.addEventListener('beforeunload', this.preventNav)
   },
   mounted() {
-    if (!jsCookie.get('accept_cookies_agreement')) {
-      this.$refs['CookiePoliciesDialogLegalVue'].isOpenDialog = true
-    }
-
     this.set_response_error(null)
+    this.verifyAcceptCookies()
     /* ResourceService.post('/test/errors-validation/manually', {
       dni: '1234567891012',
       age: 200
@@ -114,12 +110,34 @@ export default {
   methods: {
     // Metodo para evitar cerrar la ventana del navegador
     ...mapMutations('errorsService', ['set_response_error']),
+    ...mapActions('homeService', ['acceptCookies', 'hasAcceptCookies']),
     preventNav(event) {
       if (!this.isEditing) return
 
       event.preventDefault()
 
       event.returnValue = ''
+    },
+    async verifyAcceptCookies() {
+
+      try {
+
+        const verifyStateAcceptCookies = await this.hasAcceptCookies({}, {})
+
+        if (verifyStateAcceptCookies.data.has_accept_cookies) return
+
+        this.$refs['CookiePoliciesDialogLegalVue'].isOpenDialog = true
+
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async acceptCookiesAgreement () {
+      try {
+        await this.acceptCookies({}, {})
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
