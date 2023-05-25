@@ -46,10 +46,10 @@ const UpdateProfileAction = async ({ commit }, options) => {
   } catch (error) {
     //console.log(error)
     commit('set_user', null)
-    $remove_token_auth()
-    router.push({
+    //$remove_token_auth()
+    /* router.push({
       name: 'login'
-    })
+    }) */
 
     return Promise.reject(error)
   }
