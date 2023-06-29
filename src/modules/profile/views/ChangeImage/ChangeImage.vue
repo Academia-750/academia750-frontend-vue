@@ -84,10 +84,10 @@
                 @change="Preview_image"
               ></v-file-input>
             </ValidationProvider>
-            <v-container v-if="image" class="d-flex justify-center" fluid>
+            <v-container v-if="image" class="d-flex justify-center">
               <v-img
-                max-width="300"
-                :aspect-ratio="16/9"
+                max-width="250"
+                :aspect-radio="16 / 9"
                 :src="urlImagePreview"
               ></v-img>
             </v-container>
