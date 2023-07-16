@@ -129,10 +129,17 @@ export default {
       roles: 'admin',
       items: [
         {
-          icon: 'mdi-account-group',
+          icon: 'mdi-account',
           key: '',
           text: 'Gestión de Alumnos',
           to: { name: 'manage-students' },
+          roles: 'admin'
+        },
+        {
+          icon: 'mdi-account-group',
+          key: '',
+          text: 'Gestión de Grupos',
+          to: { name: 'manage-groups' },
           roles: 'admin'
         },
         {
