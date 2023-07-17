@@ -1,6 +1,6 @@
 export default {
   methods: {
-    async fetchDataRoleStudent () {
+    async fetchDataRoleGroup() {
       try {
         const response = await this.fetchRoleStudentData({
           config: {}
@@ -10,18 +10,17 @@ export default {
       } catch (error) {
         //console.log(error)
       }
-
     },
-    async createStudentApi () {
+    async createGroupApi() {
       try {
         await this.createStudent({
           data: {
-            'dni': this.form.dni,
+            dni: this.form.dni,
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
-            'phone': this.form.phone,
-            'email': this.form.email,
-            'roles': [this.dataRoleStudent.id]
+            phone: this.form.phone,
+            email: this.form.email,
+            roles: [this.dataRoleStudent.id]
           },
           config: {}
         })
@@ -49,7 +48,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500
@@ -59,7 +59,7 @@ export default {
         }
       }
     },
-    async updateProfileApi () {
+    async updateProfileApi() {
       try {
         await this.updateStudent({
           id: this.currentUserForUpdate.id,
@@ -67,9 +67,9 @@ export default {
             //'dni': this.form.dni,
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
-            'phone': this.form.phone,
-            'email': this.form.email,
-            'roles': [this.dataRoleStudent.id]
+            phone: this.form.phone,
+            email: this.form.email,
+            roles: [this.dataRoleStudent.id]
           },
           config: {}
         })
@@ -99,7 +99,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500

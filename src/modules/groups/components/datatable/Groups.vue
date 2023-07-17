@@ -58,7 +58,7 @@
           />
           <resource-button-delete
             text-button="Dar de baja"
-            @actionConfirmShowDialogDelete="deleteStudentConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteGroupConfirm(item)"
           />
         </div>
       </template>
@@ -66,17 +66,16 @@
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"
       title="¿Estás seguro de eliminar el alumno?"
-      @actionDelete="deleteStudentAction"
+      @actionDelete="deleteGroupAction"
     >
       <template #identifier-record>
         <div
           v-if="currentItemsSelectedForDelete"
           class="d-flex justify-center align-center"
         >
-          <span class="mr-1 font-italic subtitle-1">Alumno:</span>
-          <span class="font-weight-bold subtitle-1"
-            >{{ currentItemsSelectedForDelete['first-name'] }}
-            {{ currentItemsSelectedForDelete['last-name'] }}</span
+          <span class="mr-1 font-italic subtitle-1">Groupo:</span>
+          <span class="font-weight-bold subtitle-1">
+            {{ currentItemsSelectedForDelete['Group-name'] }}</span
           >
         </div>
       </template>

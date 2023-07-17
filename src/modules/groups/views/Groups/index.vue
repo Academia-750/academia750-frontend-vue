@@ -1,6 +1,6 @@
 <template>
   <v-card-text>
-    <div ref="sectionTabsItemsStudentsByStatusAccount">
+    <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-tabs-items v-model="getCurrentTabView" touchless>
         <v-tab-item
           key="students-account-enable"

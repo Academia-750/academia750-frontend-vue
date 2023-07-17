@@ -1,13 +1,13 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageStudentsModule from '@/modules/students/views/Students'
+import ManageGroupsModule from '@/modules/students/views/Groups'
 /* import CreateTopicModule from '@/modules/students/views/CreateTopic'
 import UpdateTopicModule from '@/modules/students/views/UpdateTopic' */
 
 const shortcutRoutes = [
   {
     path: 'grupos',
-    redirect: { name: 'manage-students' },
+    redirect: { name: 'manage-groups' },
     meta: {
       middleware: [authMiddleware]
     }
@@ -18,44 +18,21 @@ const moduleRoute = [
   {
     path: '/',
     component: Module,
-    redirect: { name: 'manage-students' },
+    redirect: { name: 'manage-groups' },
     children: [
       {
         path: '/students',
         component: Module,
-        redirect: { name: 'manage-students' },
+        redirect: { name: 'manage-groups' },
         children: [
-          /* {
-            path: 'update',
-            redirect: { name: 'manage-students' },
-            meta: {
-              middleware: [authMiddleware]
-            }
-          }, */
           {
             path: 'list',
-            name: 'manage-students',
-            component: ManageStudentsModule,
+            name: 'manage-groups',
+            component: ManageGroupsModule,
             meta: {
               middleware: [authMiddleware]
             }
-          } /* ,
-          {
-            path: 'create',
-            name: 'create-topic',
-            component: CreateTopicModule,
-            meta: {
-              middleware: [authMiddleware]
-            }
-          },
-          {
-            path: 'update/:id',
-            name: 'update-topic',
-            component: UpdateTopicModule,
-            meta: {
-              middleware: [authMiddleware]
-            }
-          } */
+          }
         ]
       },
       ...shortcutRoutes

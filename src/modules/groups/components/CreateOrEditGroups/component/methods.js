@@ -2,11 +2,15 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent', 'fetchRoleStudentData']),
-    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
-    cancelProcessEditStudentData () {
-
-      if (this.isUpdateStudent) {
+    ...mapActions('groupsService', [
+      'getGroups',
+      'createGroup',
+      'updateGroup',
+      'fetchRoleGroupData'
+    ]),
+    ...mapMutations('groupsService', ['SET_CURRENT_USER_FOR_UPDATE']),
+    cancelProcessEditGroupData() {
+      if (this.isUpdateGroup) {
         this.loadDataUserForUpdate(this.currentUserForUpdate)
 
         return
@@ -14,17 +18,17 @@ export default {
 
       this.ResetForm()
     },
-    resetDataAndProcessEditStudent () {
+    resetDataAndProcessEditGroup() {
       this.cache.data.student.firstName = null
       this.cache.data.student.lastName = null
       this.cache.data.student.phone = null
       this.cache.data.student.email = null
 
       this.ResetForm()
-      this.isUpdateStudent = false
+      this.isUpdateGroup = false
       this.SET_CURRENT_USER_FOR_UPDATE(null)
     },
-    loadDataUserForUpdate (data) {
+    loadDataUserForUpdate(data) {
       const { dni, first_name, last_name, phone, email } = data
 
       this.$refs['DNIPersonInputComponent'].dni = dni
@@ -39,15 +43,15 @@ export default {
       this.form.phone = phone
       this.form.email = email
 
-      this.cache.data.student.firstName = first_name
-      this.cache.data.student.lastName = last_name
-      this.cache.data.student.phone = phone
-      this.cache.data.student.email = email
+      this.cache.data.group.firstName = first_name
+      this.cache.data.group.lastName = last_name
+      this.cache.data.group.phone = phone
+      this.cache.data.group.email = email
 
       this.isUpdateStudent = true
     },
     ResetForm() {
-      //await this.$refs['FormCreateOrEditStudent']['reset']()
+      //await this.$refs['FormCreateOrEditGroup']['reset']()
       this.$refs['DNIPersonInputComponent'].dni = ''
       this.$refs['namePersonInputComponent'].name_person = ''
       this.$refs['LastNamePersonInputComponent'].last_name = ''
@@ -61,43 +65,41 @@ export default {
       this.form.email = ''
 
       this.$nextTick(() => {
-        this.$refs['FormCreateOrEditStudent']['reset']()
+        this.$refs['FormCreateOrEditGroup']['reset']()
       })
 
       return true
     },
-    CreateOrUpdateStudent () {
-      this.$refs['FormCreateOrEditStudent'].validate().then( (status) => {
+    CreateOrUpdateGroup() {
+      this.$refs['FormCreateOrEditGroup'].validate().then((status) => {
         if (!status) {
           this.$swal.fire({
             icon: 'error',
             toast: true,
-            title: 'Por favor, complete correctamente los campos del formulario.',
+            title:
+              'Por favor, complete correctamente los campos del formulario.',
             showConfirmButton: true,
             confirmButtonText: 'Entendido',
             timer: 7500
           })
         } else {
-
           this.$loadingApp.enableLoadingProgressLinear()
-          this.loadingButtonCreateOrUpdateStudent = true
-          this.disabledButtonCreateOrUpdateStudent = true
+          this.loadingButtonCreateOrUpdateGroup = true
+          this.disabledButtonCreateOrUpdateGroup = true
 
           if (this.currentUserForUpdate === null) {
-            this.createStudentApi()
+            this.createGroupApi()
           } else {
             this.updateProfileApi()
           }
         }
-
-      } )
-
+      })
     },
 
     async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormCreateOrEditStudent']['setErrors'](errorResponse)
-      this.loadingButtonCreateOrUpdateStudent = false
-      this.disabledButtonCreateOrUpdateStudent = false
+      await this.$refs['FormCreateOrEditGroup']['setErrors'](errorResponse)
+      this.loadingButtonCreateOrUpdateGroup = false
+      this.disabledButtonCreateOrUpdateGroup = false
       this.$loadingApp.disabledLoadingProgressLinear()
     }
   }

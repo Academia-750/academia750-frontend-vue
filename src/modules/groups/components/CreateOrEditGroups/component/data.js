@@ -1,10 +1,10 @@
 export default {
-  data () {
+  data() {
     return {
-      loadingButtonCreateOrUpdateStudent: false,
-      disabledButtonCreateOrUpdateStudent: false,
-      isUpdateStudent: false,
-      form : {
+      loadingButtonCreateOrUpdateGroup: false,
+      disabledButtonCreateOrUpdateGroup: false,
+      isUpdateGroup: false,
+      form: {
         dni: '',
         firstName: '',
         lastName: '',
@@ -13,7 +13,7 @@ export default {
       },
       cache: {
         data: {
-          student: {
+          group: {
             firstName: '',
             lastName: '',
             phone: '',
@@ -21,7 +21,7 @@ export default {
           }
         }
       },
-      dataRoleStudent: null
+      dataRoleGroup: null
     }
   }
 }

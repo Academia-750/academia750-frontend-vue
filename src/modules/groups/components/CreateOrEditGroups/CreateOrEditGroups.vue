@@ -10,11 +10,11 @@
       <v-spacer></v-spacer>
 
       <!-- <v-btn
-        v-if="cancelProcessFormStudent"
+        v-if="cancelProcessFormGroup"
         color="red darken-1"
         class="white--text"
         title="cancelar"
-        @click="cancelProcessEditStudentData"
+        @click="cancelProcessEditGroupData"
       >
         <v-icon
           right
@@ -23,10 +23,10 @@
         >
           mdi-close-circle
         </v-icon>
-        <span class="d-none d-sm-inline">{{ textButtonCancelDataEditStudent }}</span>
+        <span class="d-none d-sm-inline">{{ textButtonCancelDataEditGroup }}</span>
       </v-btn> -->
     </v-toolbar>
-    <validation-observer ref="FormCreateOrEditStudent" v-slot="{ invalid }">
+    <validation-observer ref="FormCreateOrEditGroup" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">
         <v-row dense>
           <v-col cols="12" sm="12" md="6" lg="4">
@@ -73,12 +73,12 @@
           <v-col cols="12" class="d-flex flex-column flex-sm-row">
             <v-btn
               v-if="currentUserForUpdate === null"
-              :loading="loadingButtonCreateOrUpdateStudent"
-              :disabled="disabledButtonCreateOrUpdateStudent || invalid"
+              :loading="loadingButtonCreateOrUpdateGroup"
+              :disabled="disabledButtonCreateOrUpdateGroup || invalid"
               color="light-blue darken-3"
               class="mt-2 ml-2 white--text"
               :block="activeStyleBlockButton"
-              @click="CreateOrUpdateStudent"
+              @click="CreateOrUpdateGroup"
             >
               <v-icon right dark class="mr-1">
                 mdi-account-multiple-plus
@@ -86,24 +86,24 @@
               Crear
             </v-btn>
             <v-btn
-              v-if="currentUserForUpdate !== null && isUpdateStudent"
-              :loading="loadingButtonCreateOrUpdateStudent"
-              :disabled="disabledButtonCreateOrUpdateStudent || invalid"
+              v-if="currentUserForUpdate !== null && isUpdateGroup"
+              :loading="loadingButtonCreateOrUpdateGroup"
+              :disabled="disabledButtonCreateOrUpdateGroup || invalid"
               color="light-blue darken-3"
               class="mt-2 ml-2 white--text"
               :block="activeStyleBlockButton"
-              @click="CreateOrUpdateStudent"
+              @click="CreateOrUpdateGroup"
             >
               <v-icon right dark class="mx-1"> mdi-reload </v-icon>
               Actualizar
             </v-btn>
             <v-btn
-              v-if="currentUserForUpdate !== null && isUpdateStudent"
-              :loading="loadingButtonCreateOrUpdateStudent"
+              v-if="currentUserForUpdate !== null && isUpdateGroup"
+              :loading="loadingButtonCreateOrUpdateGroup"
               color="red"
               class="mt-2 ml-2 white--text"
               :block="activeStyleBlockButton"
-              @click="resetDataAndProcessEditStudent"
+              @click="resetDataAndProcessEditGroup"
             >
               <v-icon right dark class="mx-1"> mdi-close-circle </v-icon>
               Cancelar
