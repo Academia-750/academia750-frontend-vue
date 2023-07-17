@@ -39,7 +39,7 @@ export default {
         this.SET_CURRENT_USER_FOR_UPDATE(null)
         this.$emit('SuccessfullyProcessCreateOrUpdateStudent')
 
-        this.$emit('emitReloadDatatableStudents')
+        this.$emit('emitReloadDatatableGroups')
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -88,9 +88,9 @@ export default {
         this.ResetForm()
         this.SET_CURRENT_USER_FOR_UPDATE(null)
         this.$emit('SuccessfullyProcessCreateOrUpdateStudent')
-        this.loadStudentsFromCurrentTab()
+        this.loadGroupsFromCurrentTab()
 
-        this.$emit('emitReloadDatatableStudents')
+        this.$emit('emitReloadDatatableGroups')
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

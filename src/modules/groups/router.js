@@ -1,8 +1,8 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageGroupsModule from '@/modules/students/views/Groups'
-/* import CreateTopicModule from '@/modules/students/views/CreateTopic'
-import UpdateTopicModule from '@/modules/students/views/UpdateTopic' */
+import ManageGroupsModule from '@/modules/groups/views/Groups'
+/* import CreateTopicModule from '@/modules/groups/views/CreateTopic'
+import UpdateTopicModule from '@/modules/groups/views/UpdateTopic' */
 
 const shortcutRoutes = [
   {
@@ -21,7 +21,7 @@ const moduleRoute = [
     redirect: { name: 'manage-groups' },
     children: [
       {
-        path: '/students',
+        path: '/groups',
         component: Module,
         redirect: { name: 'manage-groups' },
         children: [
