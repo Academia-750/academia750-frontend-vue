@@ -1,5 +1,5 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
-import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import DatatableManageStudents from '../../mixins/DatatableManageGroups'
 import notifications from '@/mixins/notifications'
 
 export default {

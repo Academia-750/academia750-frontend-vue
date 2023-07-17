@@ -1,30 +1,30 @@
 import { mapState, mapActions } from 'vuex'
-import DatatableManageStudents from './DatatableManageStudents.js'
+import DatatableManageGroups from './DatatableManageGroups.js'
 
 export default {
-  mixins: [DatatableManageStudents],
-  data () {
+  mixins: [DatatableManageGroups],
+  data() {
     return {
       loadingButton: false
     }
   },
   computed: {
-    ...mapState('studentsService', ['usersSelected']),
-    hasSelectedAnyRecord () {
+    ...mapState('groupsService', ['usersSelected']),
+    hasSelectedAnyRecord() {
       return Array.isArray(this.usersSelected) && this.usersSelected.length > 0
     }
   },
   methods: {
-    ...mapActions('studentsService', ['actionsForMultipleRecords']),
-    async actionMultipleRecordsApiRequest ({ messageSuccess, action }) {
+    ...mapActions('groupsService', ['actionsForMultipleRecords']),
+    async actionMultipleRecordsApiRequest({ messageSuccess, action }) {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.loadingButton = true
 
         await this.actionsForMultipleRecords({
           data: {
-            'action': action,
-            'users': this.mapIdUsersSelected()
+            action: action,
+            users: this.mapIdUsersSelected()
           },
           config: {}
         })
@@ -38,8 +38,7 @@ export default {
           timer: 7500
         })
 
-        await this.loadStudentsFromCurrentTab()
-
+        await this.loadGroupsFromCurrentTab()
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -47,12 +46,14 @@ export default {
         this.alertErrorRequest()
       }
     },
-    mapIdUsersSelected () {
+    mapIdUsersSelected() {
       return this.usersSelected.map((user) => {
         return user.id
       })
     },
-    alertErrorRequest (messageError = 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde') {
+    alertErrorRequest(
+      messageError = 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde'
+    ) {
       this.$swal.fire({
         icon: 'error',
         title: messageError,
@@ -61,7 +62,7 @@ export default {
         timer: 7500
       })
     },
-    alertErrorNotSelectedAnyRecord ({ message }) {
+    alertErrorNotSelectedAnyRecord({ message }) {
       this.$swal.fire({
         icon: 'info',
         toast: true,

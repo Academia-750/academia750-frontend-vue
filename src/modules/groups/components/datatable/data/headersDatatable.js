@@ -20,7 +20,7 @@ export default {
         },
         {
           position: 3,
-          text: 'No Alumnos',
+          text: 'No. Alumnos',
           align: 'start',
           sortable: true,
           value: 'no-alumnos',

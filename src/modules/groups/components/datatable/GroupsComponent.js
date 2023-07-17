@@ -12,7 +12,7 @@ import methods from './component/methods'
 import computed from './component/computed'
 import watch from './component/watch'
 import ActionsMethods from './component/ActionsMethods'
-import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import DatatableManageGroups from '../../mixins/DatatableManageGroups'
 
 const COMPONENT_MIXINS = [
   props,
@@ -25,7 +25,7 @@ const COMPONENT_MIXINS = [
 ]
 
 const MIXINS = [
-  DatatableManageStudents,
+  DatatableManageGroups,
   URLBuilderResources,
   headersOppositionsTable,
   computedDatatable,
@@ -37,8 +37,8 @@ export default {
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 500)
   },
-  mounted () {
-    this.getStudents({
+  mounted() {
+    this.getGroups({
       params: this.getParamsUrlApi()
     })
   }

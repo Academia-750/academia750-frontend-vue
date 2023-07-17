@@ -4,7 +4,7 @@ import methods from './component/methods'
 import computed from './component/computed'
 import watch from './component/watch'
 import ActionsMethods from './component/ActionsMethods'
-import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import DatatableManageStudents from '../../mixins/DatatableManageGroups'
 
 export default {
   mixins: [
@@ -16,7 +16,7 @@ export default {
     computed,
     watch
   ],
-  mounted () {
+  mounted() {
     this.fetchDataRoleStudent()
   }
 }

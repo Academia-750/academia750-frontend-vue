@@ -1,4 +1,4 @@
-import StudentRepository from '../repositories/StudentRepository'
+import GroupRepository from '../repositories/GroupRepository'
 
 const mapItemsDatatableFromApi = (itemsApi) => {
   return itemsApi.map((record) => {
@@ -26,7 +26,6 @@ const mapMetaInformationPagination = (response) => {
 }
 
 const getStudents = async ({ commit }, config) => {
-
   try {
     commit('SET_USERS_SELECTED_DATATABLE', [])
     commit('SET_INFORMATION_META', {
@@ -41,19 +40,20 @@ const getStudents = async ({ commit }, config) => {
 
     commit('SET_ITEMS_DATATABLE', [])
 
-    const response = await StudentRepository.getAll(config)
+    const response = await GroupRepository.getAll(config)
 
     if (response) {
       //console.trace(response)
 
-      commit('SET_ITEMS_DATATABLE', mapItemsDatatableFromApi(response.data.data))
+      commit(
+        'SET_ITEMS_DATATABLE',
+        mapItemsDatatableFromApi(response.data.data)
+      )
       commit('SET_STATUS_LOADING_ITEMS', false)
       commit('SET_INFORMATION_META', mapMetaInformationPagination(response))
-
     }
 
     return Promise.resolve(response)
-
   } catch (error) {
     //console.log(error)
 
@@ -63,7 +63,7 @@ const getStudents = async ({ commit }, config) => {
 
 const createStudent = async (_, options) => {
   try {
-    const response = await StudentRepository.create(options.data)
+    const response = await GroupRepository.create(options.data)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -74,10 +74,9 @@ const createStudent = async (_, options) => {
 }
 
 const fetchStudent = async ({ commit }, options) => {
-
   try {
     commit('SET_USERS_SELECTED_DATATABLE', [])
-    const response = await StudentRepository.get(options.id, options.config)
+    const response = await GroupRepository.get(options.id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -89,7 +88,11 @@ const fetchStudent = async ({ commit }, options) => {
 
 const updateStudent = async (_, options) => {
   try {
-    const response = await StudentRepository.update(options.id, options.data, options.config)
+    const response = await GroupRepository.update(
+      options.id,
+      options.data,
+      options.config
+    )
 
     return Promise.resolve(response)
   } catch (error) {
@@ -101,7 +104,7 @@ const updateStudent = async (_, options) => {
 
 const deleteStudent = async (_, options) => {
   try {
-    const response = await StudentRepository.delete(options.id, options.config)
+    const response = await GroupRepository.delete(options.id, options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -113,7 +116,7 @@ const deleteStudent = async (_, options) => {
 
 const fetchStudentGroups = async (_, options) => {
   try {
-    const response = await StudentRepository.fetchStudentsGroups(options.config)
+    const response = await GroupRepository.fetchStudentsGroups(options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -125,7 +128,7 @@ const fetchStudentGroups = async (_, options) => {
 
 const fetchRoleStudentData = async (_, options) => {
   try {
-    const response = await StudentRepository.fetchRoleStudentData(options.config)
+    const response = await GroupRepository.fetchRoleStudentData(options.config)
 
     return Promise.resolve(response)
   } catch (error) {
@@ -137,7 +140,10 @@ const fetchRoleStudentData = async (_, options) => {
 
 const actionsForMultipleRecords = async ({ commit }, options) => {
   try {
-    const response = await StudentRepository.actionMassiveSelection(options.data, options.config)
+    const response = await GroupRepository.actionMassiveSelection(
+      options.data,
+      options.config
+    )
 
     commit('SET_USERS_SELECTED_DATATABLE', [])
 
