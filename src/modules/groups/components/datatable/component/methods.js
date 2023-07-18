@@ -2,14 +2,19 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('studentsService', ['getStudents', 'deleteStudent']),
-    ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE', 'SET_USERS_SELECTED_DATATABLE', 'SET_OPTIONS_DATATABLE_USERS', 'SET_MATCHES_RESET_OPTIONS_DATATABLE']),
+    ...mapActions('groupsService', ['getGroups', 'deleteGroup']),
+    ...mapMutations('groupsService', [
+      'SET_CURRENT_USER_FOR_UPDATE',
+      'SET_USERS_SELECTED_DATATABLE',
+      'SET_OPTIONS_DATATABLE_USERS',
+      'SET_MATCHES_RESET_OPTIONS_DATATABLE'
+    ]),
     loadDatatatable() {
-      this.getStudents({
+      this.getGroups({
         params: this.getParamsUrlApi()
       })
     },
-    setDataForUpdateUser (item) {
+    setDataForUpdateUser(item) {
       this.SET_CURRENT_USER_FOR_UPDATE({
         id: item.id,
         dni: item.dni,
@@ -19,14 +24,14 @@ export default {
         email: item.email
       })
 
-      this.$emit('emitScrollToCreateOrEditStudentForm')
+      this.$emit('emitScrollToCreateOrEditGroupForm')
     },
-    fetchInitialData () {
-      this.getStudents({
+    fetchInitialData() {
+      this.getGroups({
         params: this.getParamsUrlApi()
       })
     },
-    getParamsUrlApi () {
+    getParamsUrlApi() {
       const urlParams = this.buildQueryParamsRequest()
 
       urlParams['filter[role]'] = 'student'
@@ -34,35 +39,36 @@ export default {
 
       return urlParams
     },
-    searchFieldExecuted ($event) {
+    searchFieldExecuted($event) {
       this.searchWord = $event
-      this.getStudents({
+      this.getGroups({
         params: this.getParamsUrlApi()
       })
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
     },
-    deleteStudentConfirm (item) {
+    deleteGroupConfirm(item) {
       this.currentItemsSelectedForDelete = item
       //this.$refs['dialogConfirmDeleteAction'].showDialog = true
-      this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: 'DAR DE BAJA',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este alumno y los datos relacionados a este?',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.deleteStudentAction()
-
-        }
-      })
+      this.$swal
+        .fire({
+          toast: true,
+          width: '400px',
+          icon: 'question',
+          title: 'DAR DE BAJA',
+          html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este alumno y los datos relacionados a este?',
+          showConfirmButton: true,
+          showCancelButton: true,
+          confirmButtonColor: '#007bff',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.deleteGroupAction()
+          }
+        })
     }
   }
 }

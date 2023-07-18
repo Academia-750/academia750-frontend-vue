@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageGroupsModule from '@/modules/groups/views/Groups'
+import CreateGroupModule from '@/modules/topics/views/CreateGroup'
 /* import CreateTopicModule from '@/modules/groups/views/CreateTopic'
 import UpdateTopicModule from '@/modules/groups/views/UpdateTopic' */
 
@@ -8,6 +9,13 @@ const shortcutRoutes = [
   {
     path: 'grupos',
     redirect: { name: 'manage-groups' },
+    meta: {
+      middleware: [authMiddleware]
+    }
+  },
+  {
+    path: 'grupos/crear',
+    redirect: { name: 'create-group' },
     meta: {
       middleware: [authMiddleware]
     }
@@ -29,6 +37,14 @@ const moduleRoute = [
             path: 'list',
             name: 'manage-groups',
             component: ManageGroupsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'create',
+            name: 'create-group',
+            component: CreateGroupModule,
             meta: {
               middleware: [authMiddleware]
             }

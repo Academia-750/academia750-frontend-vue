@@ -29,7 +29,17 @@
           <resource-title-toolbar-datatable
             :title-text="getTitleByStateAccount"
           />
+
+          <v-spacer />
+
+          <resource-button-add
+            text-button="crear alumnos"
+            :config-route="{ name: 'crear-alumnos' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="setDataForUpdateUser(item)"
+          />
         </v-toolbar>
+
         <resource-text-field-search
           ref="ResourceTextFieldSearch"
           @emitSearchTextBinding="searchFieldWithDebounce"
@@ -42,8 +52,8 @@
       <template v-slot:[`item.alumnos`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-add
-            text-button="aluminos"
-            :config-route="{ name: 'crear-aluminos' }"
+            text-button="alumnos"
+            :config-route="{ name: 'crear-alumnos' }"
             :only-dispatch-click-event="true"
             @DispatchClickEvent="setDataForUpdateUser(item)"
           />

@@ -1,14 +1,14 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
-import DatatableManageStudents from '../../mixins/DatatableManageGroups'
+import DatatableManageGroups from '../../mixins/DatatableManageGroups'
 import notifications from '@/mixins/notifications'
 
 export default {
-  name: 'StudentsView',
-  mixins: [DatatableManageStudents, notifications],
+  name: 'GroupsView',
+  mixins: [DatatableManageGroups, notifications],
   components: {
-    StudentsDatatable: () =>
+    GroupsDatatable: () =>
       import(
-        /* webpackChunkName: "StudentsDatatableStudentsModule" */ '../../components/datatable/Groups.vue'
+        /* webpackChunkName: "GroupsDatatableStudentsModule" */ '../../components/datatable/Groups.vue'
       ),
     CreateOrEditStudent: () =>
       import(
@@ -16,7 +16,7 @@ export default {
       ),
     FormActionsButtons: () =>
       import(
-        /* webpackChunkName: "FormActionsButtonsStudentsModule" */ '@/modules/students/components/form/FormActionsButtons.vue'
+        /* webpackChunkName: "FormActionsButtonsStudentsModule" */ '@/modules/groups/components/form/FormActionsButtons.vue'
       )
   },
   data() {
@@ -25,13 +25,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('studentsService', ['tabViewStudents']),
+    ...mapState('groupsService', ['tabViewGroups']),
     getCurrentTabView: {
       get() {
-        return this.tabViewStudents
+        return this.tabViewGroups
       },
       set(value) {
-        this.SET_TAB_VIEW_STUDENTS(value)
+        this.SET_TAB_VIEW_GROUPS(value)
       }
     }
   },
@@ -42,28 +42,28 @@ export default {
     this.loadNotifications()
   },
   watch: {
-    tabViewStudents() {
+    tabViewGroups() {
       //this.loadStudentsFromCurrentTab()
 
-      this.loadStudentsFromCurrentTab()
+      this.loadGroupsFromCurrentTab()
       /* this.loadStudentsFromCurrentTab()
       this.$refs['sectionTabsItemsStudentsByStatusAccount'].scrollIntoView({ behavior: 'smooth', block: 'start' }) */
     }
   },
   methods: {
-    ...mapMutations('studentsService', [
-      'SET_TAB_VIEW_STUDENTS',
+    ...mapMutations('groupsService', [
+      'SET_TAB_VIEW_GROUPS',
       'SET_MATCHES_RESET_OPTIONS_DATATABLE'
     ]),
-    ...mapActions('studentsService', ['getStudents']),
-    ScrollToCreateOrEditStudentForm() {
-      this.$refs['CreateOrEditStudentSection'].scrollIntoView({
+    ...mapActions('groupsService', ['getGroups']),
+    ScrollToCreateOrEditGroupForm() {
+      this.$refs['CreateOrEditGroupSection'].scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       })
     },
-    ReloadDatatableStudents() {
-      this.loadStudentsFromCurrentTab()
+    ReloadDatatableGroups() {
+      this.loadGroupsFromCurrentTab()
     }
   },
   head: {

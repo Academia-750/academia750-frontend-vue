@@ -1,6 +1,6 @@
 <template>
   <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <!-- <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-tabs-items v-model="getCurrentTabView" touchless>
         <v-tab-item
           key="students-account-enable"
@@ -49,7 +49,8 @@
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-    </div>
+    </div> -->
+    hallo amigos
   </v-card-text>
 </template>
 

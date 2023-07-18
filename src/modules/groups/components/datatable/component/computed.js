@@ -3,7 +3,7 @@ import footerProps from '../data/footerProps'
 
 export default {
   computed: {
-    ...mapState('studentsService', [
+    ...mapState('groupsService', [
       'itemsDatatable',
       'stateLoadingItems',
       'informationMeta',
