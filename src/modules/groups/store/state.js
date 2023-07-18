@@ -2,7 +2,7 @@ const state = () => ({
   itemsDatatable: [],
   stateLoadingItems: false,
   currentUserForUpdate: null,
-  tabViewStudents: 'students-account-enable',
+  tabViewStudents: 'groups-account-enable',
   usersSelected: [],
   optionsDatatableUsers: {
     page: 1,

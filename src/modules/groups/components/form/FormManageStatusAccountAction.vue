@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-end flex-column flex-sm-row">
-    <form-button-enable-account v-if="!isEnableUsersTab"/>
-    <form-button-disable-account v-else/>
+    <form-button-enable-account v-if="!isEnableUsersTab" />
+    <form-button-disable-account v-else />
   </div>
 </template>
 
@@ -17,13 +17,11 @@ export default {
   },
   computed: {
     ...mapState('studentsService', ['tabViewStudents']),
-    isEnableUsersTab () {
-      return this.tabViewStudents === 'students-account-enable'
+    isEnableUsersTab() {
+      return this.tabViewStudents === 'groups-account-enable'
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
