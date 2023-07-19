@@ -2,34 +2,49 @@ import { mapActions } from 'vuex'
 
 export default {
   components: {
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    FormFieldNameTopic: () => import(/* webpackChunkName: "FormFieldNameTopic" */ '../../components/form/FormFieldNameTopic.vue'),
-    AutocompleteATopicGroup: () => import(/* webpackChunkName: "AutocompleteTopicGroup" */ '../../components/form/AutocompleteATopicGroup.vue')
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    FormFieldNameTopic: () =>
+      import(
+        /* webpackChunkName: "FormFieldNameTopic" */ '../../components/form/FormFieldNameTopic.vue'
+      ),
+    AutocompleteATopicGroup: () =>
+      import(
+        /* webpackChunkName: "AutocompleteTopicGroup" */ '../../components/form/AutocompleteATopicGroup.vue'
+      )
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
-  data () {
+  data() {
     return {
-      loadingButtonCreateTopic: false,
-      disabledButtonCreateTopic: false,
+      loadingButtonCreateGroup: false,
+      disabledButtonCreateGroup: false,
       form: {
         nameTopic: ''
       }
     }
   },
   methods: {
-    ...mapActions('topicsService', ['createTopic']),
-    CreateTopic () {
-
-      this.$refs['FormCreateTopic'].validate().then( (status) => {
+    ...mapActions('groupsService', ['createGroup']),
+    CreateGroup() {
+      this.$refs['FormCreateGroup'].validate().then((status) => {
         if (!status) {
           this.$swal.fire({
             icon: 'error',
             toast: true,
-            title: 'Por favor, complete correctamente los campos del formulario.',
+            title:
+              'Por favor, complete correctamente los campos del formulario.',
             showConfirmButton: true,
             confirmButtonText: 'Entendido',
             timer: 7500
@@ -37,33 +52,33 @@ export default {
 
           return
         }
-
-      } )
+      })
 
       this.$loadingApp.enableLoadingProgressLinear()
-      this.loadingButtonCreateTopic = true
-      this.disabledButtonCreateTopic = true
-      this.CreateTopicApi()
+      this.loadingButtonCreateGroup = true
+      this.disabledButtonCreateGroup = true
+      this.CreateGroupApi()
     },
     async ResetForm() {
-      //await this.$refs['FormCreateTopic']['reset']()
+      //await this.$refs['FormCreateGroup']['reset']()
       this.$nextTick(() => {
-        this.$refs['FormCreateTopic']['reset']()
+        this.$refs['FormCreateGroup']['reset']()
       })
-      this.loadingButtonCreateTopic = false
-      this.disabledButtonCreateTopic = false
+      this.loadingButtonCreateGroup = false
+      this.disabledButtonCreateGroup = false
 
       return true
     },
     async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormCreateTopic']['setErrors'](errorResponse)
+      await this.$refs['FormCreateGroup']['setErrors'](errorResponse)
     },
-    async CreateTopicApi () {
+    async CreateGroupApi() {
       try {
-        await this.createTopic({
+        await this.createGroup({
           data: {
-            'name': this.form.nameTopic,
-            'topic-group-id': this.$refs['AutocompleteATopicGroup']?.topicGroupSelected?.value
+            name: this.form.nameTopic,
+            'topic-group-id':
+              this.$refs['AutocompleteATopicGroup']?.topicGroupSelected?.value
           }
         })
 
@@ -75,21 +90,22 @@ export default {
         })
 
         this.$router.push({
-          name: 'manage-topics'
+          name: 'manage-groups'
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateTopic = false
-        this.disabledButtonCreateTopic = false
+        this.loadingButtonCreateGroup = false
+        this.disabledButtonCreateGroup = false
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonCreateTopic = false
-        this.disabledButtonCreateTopic = false
+        this.loadingButtonCreateGroup = false
+        this.disabledButtonCreateGroup = false
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500

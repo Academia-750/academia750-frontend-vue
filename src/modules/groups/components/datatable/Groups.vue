@@ -32,10 +32,8 @@
           <v-spacer />
 
           <resource-button-add
-            text-button="Crear Grupo"
-            :config-route="{ name: 'crear-alumnos' }"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="setDataForUpdateUser(item)"
+            text-button="crear grupo"
+            :config-route="{ name: 'create-group' }"
           />
         </v-toolbar>
 
