@@ -12,7 +12,9 @@ import configLogoutMethods from '@/modules/auth/login/resources/configLogout'
 const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
 const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
 const serverApiProduction = process.env.VUE_APP_BASE_URL_API_PRODUCTION
-const BaseURIApi = IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction
+const BaseURIApi = IsDevelopmentEnviroment
+  ? serverApiDevelopment
+  : serverApiProduction
 
 const AuthService = axios.create({
   baseURL: `${BaseURIApi}/api/v1`
@@ -22,15 +24,15 @@ const handleErrorResponse = (error) => {
   if (error.message === 'Network Error') {
     activateError({
       status: 500,
-      message: 'Ha ocurrido un error en la aplicacion. Por favor intente más tarde.'
+      message:
+        'Ha ocurrido un error en la aplicacion. Por favor intente más tarde.'
     })
 
     return Promise.reject(error)
   }
 
   const isNotValidationErrorOrRejectAuthOrRejectAttemps =
-    error.response.status !== 401 &&
-    error.response.status !== 422
+    error.response.status !== 401 && error.response.status !== 422
 
   if (isNotValidationErrorOrRejectAuthOrRejectAttemps) {
     activateError({
@@ -39,7 +41,7 @@ const handleErrorResponse = (error) => {
         ? error.response.data.message
           ? error.response.data.message
           : error.response.statusText
-        : 'Ha ocurrido un error en la aplicacion. Por favor intente más tarde.'
+        : 'Ha ocurrido un error en la aplicación. Por favor intentelo más tarde.'
     })
   }
 

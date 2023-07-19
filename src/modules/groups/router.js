@@ -1,6 +1,6 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageGroupsModule from '@/modules/groups/views/Groups'
+import ManageGroupsModule from '@/modules/groups/views/groups'
 import CreateGroupModule from '@/modules/groups/views/CreateGroup'
 /* import CreateTopicModule from '@/modules/groups/views/CreateTopic'
 import UpdateTopicModule from '@/modules/groups/views/UpdateTopic' */

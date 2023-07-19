@@ -75,7 +75,7 @@ export default {
 
           this.count = count
           this.entries = entries
-        })/*
+        }) /*
         .catch((err) => {
           console.log(err)
         }) */
@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     ...mapActions('topicsService', ['fetchTopicGroups']),
-    mapItemsTopicGroups (response) {
+    mapItemsTopicGroups(response) {
       return response.data.data.map((item) => {
         return {
           text: item.attributes.name,

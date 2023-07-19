@@ -1,6 +1,6 @@
 import ResourceService from '@/services/ResourceService'
 
-const resource = 'users'
+const resource = 'groups'
 
 // This will be replaced by the real groups data from the API
 export default {
