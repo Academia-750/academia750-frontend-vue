@@ -5,7 +5,13 @@
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
     <v-toolbar flat class="lighten-5 my-2" outlined elevation="2">
-      <v-icon right dark class="mx-1" color="black">mdi-account-group</v-icon>
+      <v-icon
+        large
+        right
+        dark
+        class="mx-1"
+        color="black"
+      >mdi-account-group</v-icon>
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Crear Grupo"
@@ -14,28 +20,58 @@
     <validation-observer ref="FormCreateGroup" v-slot="{ invalid }">
       <section class="px-2 py-2 d-flex align-center">
         <v-row dense>
-          SDFFN
-          <!-- CÓDIGO -->
-          <name-person-input
-            ref="namePersonInputComponent"
-            rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
-            @NamePersonBinding="form.firstName = $event"
-          />
-          <v-col cols="12" sm="12" md="6" lg="2">
-            <!-- Nombre -->
-            <name-person-input
-              ref="namePersonInputComponent"
-              rules="requiredFirstName|min:3|max:25|mustContainLettersAndOptionalTilde"
-              @NamePersonBinding="form.firstName = $event"
+          <v-col cols="12" md="6" lg="4" class="ml-1">
+            <!-- CÓDIGO -->
+            <CodigoFieldInput
+              ref="CodigoFieldInput"
+              :disabled="
+                disabledButtonUpdateGroup ||
+                  invalid ||
+                  !checkIfThereIsAtLeast_1ModifiedData
+              "
             />
           </v-col>
+          <v-col cols="12" sm="12" md="6" lg="4">
+            <!-- Nombre -->
+            <NombreFieldInput
+              ref="NombreFieldInput"
+              :disabled="
+                disabledButtonUpdateGroup ||
+                  invalid ||
+                  !checkIfThereIsAtLeast_1ModifiedData
+              "
+            />
+          </v-col>
+          <v-col cols="12" class="d-flex align-start">
+            <v-icon large>mdi-invert-colors</v-icon>
+            <p class="font-weight-regular text-h5 ml-5 mr-8">Color del Grupo</p>
+            <div class="colors-div">
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+          </v-col>
+
           <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
             <v-btn
               :loading="loadingButtoncreateGroup"
               :disabled="
                 disabledButtonUpdateGroup ||
-                invalid ||
-                !checkIfThereIsAtLeast_1ModifiedData
+                  invalid ||
+                  !checkIfThereIsAtLeast_1ModifiedData
               "
               color="light-blue darken-3"
               class="mt-3 white--text"
@@ -52,4 +88,139 @@
   </v-card-text>
 </template>
 
-<script src="./CreateGroup.js"></script>
+<script>
+import { mapActions } from 'vuex'
+export default {
+  components: {
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    NombreFieldInput: () =>
+      import(
+        /* webpackChunkName: "NombreFieldInput" */ '../../components/form/NombreFieldInput.vue'
+      ),
+    CodigoFieldInput: () =>
+      import(
+        /* webpackChunkName: "CodigoFieldInput" */ '../../components/form/CodigoFieldInput.vue'
+      )
+  },
+  data() {
+    return {
+      loadingButtonCreateGroup: false,
+      disabledButtonCreateGroup: false,
+      form: {
+        nameTopic: ''
+      }
+    }
+  },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
+  methods: {
+    ...mapActions('groupsService', ['createGroup']),
+    CreateGroup() {
+      this.$refs['FormCreateGroup'].validate().then((status) => {
+        if (!status) {
+          this.$swal.fire({
+            icon: 'error',
+            toast: true,
+            title:
+              'Por favor, complete correctamente los campos del formulario.',
+            showConfirmButton: true,
+            confirmButtonText: 'Entendido',
+            timer: 7500
+          })
+
+          return
+        }
+      })
+
+      this.$loadingApp.enableLoadingProgressLinear()
+      this.loadingButtonCreateGroup = true
+      this.disabledButtonCreateGroup = true
+      this.CreateGroupApi()
+    },
+    async ResetForm() {
+      //await this.$refs['FormCreateGroup']['reset']()
+      this.$nextTick(() => {
+        this.$refs['FormCreateGroup']['reset']()
+      })
+      this.loadingButtonCreateGroup = false
+      this.disabledButtonCreateGroup = false
+
+      return true
+    },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormCreateGroup']['setErrors'](errorResponse)
+    },
+    async CreateGroupApi() {
+      try {
+        await this.createGroup({
+          data: {
+            name: this.form.nameTopic,
+            'topic-group-id':
+              this.$refs['AutocompleteATopicGroup']?.topicGroupSelected?.value
+          }
+        })
+
+        this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: 'El tema ha sido creado con éxito.',
+          timer: 3000
+        })
+
+        this.$router.push({
+          name: 'manage-groups'
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateGroup = false
+        this.disabledButtonCreateGroup = false
+      } catch (error) {
+        //console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateGroup = false
+        this.disabledButtonCreateGroup = false
+        if (error.response === undefined) {
+          this.$swal.fire({
+            icon: 'error',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            showConfirmButton: true,
+            confirmButtonText: '¡Entendido!',
+            timer: 7500
+          })
+        } else if (error.response?.status === 422) {
+          this.ResetForm()
+          this.handlingErrorValidation(error.response.data.errors)
+        }
+      }
+    }
+  },
+  head: {
+    title: {
+      inner: 'Crear Groupo'
+    }
+  }
+}
+</script>
+<style>
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.colors-div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 11px;
+}
+</style>
