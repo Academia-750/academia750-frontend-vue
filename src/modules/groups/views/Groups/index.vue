@@ -1,20 +1,20 @@
 <template>
   <v-card-text>
-    <!-- <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-tabs-items v-model="getCurrentTabView" touchless>
         <v-tab-item
-          key="students-account-enable"
+          key="groups-account-enable"
           :transition="false"
-          value="students-account-enable"
+          value="groups-account-enable"
           style="min-height: 600px"
         >
-          <v-card v-if="getCurrentTabView === 'students-account-enable'" flat>
+          <v-card v-if="getCurrentTabView === 'groups-account-enable'" flat>
             <v-card-text>
-              <students-datatable
-                ref="studentsDatatableStateEnable"
+              <groups-datatable
+                ref="groupsDatatableStateEnable"
                 state-account="enable"
-                @emitScrollToCreateOrEditStudentForm="
-                  ScrollToCreateOrEditStudentForm
+                @emitScrollToCreateOrEditGrouptForm="
+                  ScrollToCreateOrEditGroupForm
                 "
               />
             </v-card-text>
@@ -26,18 +26,18 @@
           </v-card>
         </v-tab-item>
         <v-tab-item
-          key="students-account-disable"
+          key="groups-account-disable"
           :transition="false"
-          value="students-account-disable"
+          value="groups-account-disable"
           style="min-height: 600px"
         >
-          <v-card v-if="getCurrentTabView === 'students-account-disable'" flat>
+          <v-card v-if="getCurrentTabView === 'groups-account-disable'" flat>
             <v-card-text>
-              <students-datatable
-                ref="studentsDatatableStateDisable"
+              <groups-datatable
+                ref="groupsDatatableStateDisable"
                 state-account="disable"
-                @emitScrollToCreateOrEditStudentForm="
-                  ScrollToCreateOrEditStudentForm
+                @emitScrollToCreateOrEditGrouptForm="
+                  ScrollToCreateOrEditGroupForm
                 "
               />
             </v-card-text>
@@ -49,8 +49,7 @@
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-    </div> -->
-    hallo amigos
+    </div>
   </v-card-text>
 </template>
 

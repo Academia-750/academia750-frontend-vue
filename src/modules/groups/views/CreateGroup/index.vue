@@ -5,7 +5,10 @@
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
     <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-      <resource-button-go-back-router :width-number-limit="300" :path-route-go-back="{ name: 'manage-topics' }" />
+      <resource-button-go-back-router
+        :width-number-limit="300"
+        :path-route-go-back="{ name: 'manage-topics' }"
+      />
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Crear tema"
@@ -14,20 +17,10 @@
     <v-card-text>
       <validation-observer ref="FormCreateTopic" v-slot="{ invalid }">
         <v-row dense>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-          >
+          <v-col cols="12" sm="12" md="12" lg="12">
             <autocomplete-a-topic-group ref="AutocompleteATopicGroup" />
           </v-col>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-          >
+          <v-col cols="12" sm="12" md="12" lg="12">
             <form-field-name-topic
               ref="nameTopicInputComponent"
               rules="required|max:100"
@@ -55,4 +48,4 @@
   </v-card-text>
 </template>
 
-<script src="./CreateTopic.js"></script>
+<script src="./CreateGroup.js"></script>

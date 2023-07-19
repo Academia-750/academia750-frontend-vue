@@ -16,9 +16,9 @@ export default {
     FormButtonDisableAccount
   },
   computed: {
-    ...mapState('studentsService', ['tabViewStudents']),
+    ...mapState('groupsService', ['tabViewGroups']),
     isEnableUsersTab() {
-      return this.tabViewStudents === 'groups-account-enable'
+      return this.tabViewGroups === 'groups-account-enable'
     }
   }
 }
