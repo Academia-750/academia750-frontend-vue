@@ -1,3 +1,4 @@
+import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
 
 const resource = 'groups'
@@ -15,8 +16,15 @@ export default {
   /**
    * @param {string} id
    */
-  delete(id) {
-    return ResourceService.delete(`group/delete/${id}`)
+  async delete(id) {
+    const response = await ResourceService.delete(`group/${id}`)
+
+    if (response.status !== 200) {
+      // TODO handle error ?
+      return false
+    }
+
+    return true
   },
   /**
    * @param {string[]} codes
@@ -28,16 +36,27 @@ export default {
    * @param {number} offset
    * @param {number} limit
    */
-  list({ codes, names, colors, orderBy, limit, offset, content }) {
-    return ResourceService.get('group/list', {
+  async list({ codes, names, colors, orderBy, order, limit, offset, content }) {
+    const params = {
       codes,
       names,
       colors,
       orderBy,
+      order,
       limit,
       offset,
-      content
-    })
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('group/list', { params })
+
+    if (response.status !== 200) {
+      // TODO handle error ?
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results, total: response.data.total }
   },
   /**
    *

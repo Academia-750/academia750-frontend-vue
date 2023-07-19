@@ -28,7 +28,7 @@ export default {
         return {
           'font-italic': true,
           'font-weight-bold': true,
-          'title': true
+          title: true
         }
       }
     },
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .cursor-pointer {
-    cursor: pointer !important;
-  }
+.cursor-pointer {
+  cursor: pointer !important;
+}
 </style>

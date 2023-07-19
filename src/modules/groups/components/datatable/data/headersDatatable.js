@@ -7,7 +7,7 @@ export default {
           text: 'Código',
           align: 'start',
           sortable: true,
-          value: 'Código',
+          value: 'code',
           show: true
         },
         {
@@ -15,15 +15,15 @@ export default {
           text: 'Nombre',
           align: 'start',
           sortable: true,
-          value: 'first-Código',
+          value: 'name',
           show: true
         },
         {
           position: 3,
           text: 'No. Alumnos',
-          align: 'start',
+          align: 'center',
           sortable: true,
-          value: 'no-alumnos',
+          value: 'active_users',
           show: true
         },
         {
@@ -31,7 +31,7 @@ export default {
           sortable: true,
           text: 'Fecha',
           align: 'start',
-          value: 'created-at',
+          value: 'created_at',
           show: true
         },
         {
