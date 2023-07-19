@@ -4,55 +4,92 @@ const resource = 'groups'
 
 // This will be replaced by the real groups data from the API
 export default {
-  getAll(config = {}) {
-    return ResourceService.get(`${resource}`, config)
+  /**
+   * @param {string} code
+   * @param {string} name
+   * @param {string} color
+   */
+  create({ code, name, color }) {
+    return ResourceService.post('groups', { code, name, color })
   },
-  get(id, config = {}) {
-    return ResourceService.get(`${resource}/${id}`, config)
+  /**
+   * @param {string} id
+   */
+  delete(id) {
+    return ResourceService.delete(`group/delete/${id}`)
   },
-  create(data, config = {}) {
-    return ResourceService.post(`${resource}/create`, data, config)
+  /**
+   * @param {string[]} codes
+   * @param {string[]} names
+   * @param {string[]} colors
+   * @param {string} content Search by names or color from a partial value
+   * @param {string} orderBy (Only Allowed values)
+   * @param {number} order 1 (ASC) -1 (DESC)
+   * @param {number} offset
+   * @param {number} limit
+   */
+  list({ codes, names, colors, orderBy, limit, offset, content }) {
+    return ResourceService.get('group/list', {
+      codes,
+      names,
+      colors,
+      orderBy,
+      limit,
+      offset,
+      content
+    })
   },
-  update(id, data, config = {}) {
-    return ResourceService.patch(`${resource}/update/${id}`, data, config)
+  /**
+   *
+   */
+  colors() {
+    return ResourceService.get('group/colors')
   },
-  delete(id, config = {}) {
-    return ResourceService.delete(`${resource}/delete/${id}`, config)
+  /**
+   * @param {string} id
+   */
+  info(id) {
+    return ResourceService.get(`group/${id}`)
   },
-  actionMassiveSelection(data, config = {}) {
-    return ResourceService.post(
-      `${resource}/actions-on-multiple-records`,
-      data,
-      config
-    )
+  /**
+   * @param {string} code
+   * @param {string} name
+   * @param {string} color
+   */
+  update(id, { code, name, color }) {
+    return ResourceService.put(`group/update/${id}`, { code, name, color })
   },
-  fetchTopicsGroups(config = {}) {
-    return ResourceService.get('topic-groups', config)
+
+  /**
+   * @param {string} group_id
+   * @param {string} user_id
+   */
+  joinGroup({ group_id, user_id }) {
+    return ResourceService.post(`group/${group_id}/join`, { user_id })
   },
-  fetchRoleStudentData(config = {}) {
-    return ResourceService.get('roles/get-data/student', config)
+
+  /**
+   * @param {string} group_id
+   * @param {string} user_id
+   */
+  leaveGroup({ group_id, user_id }) {
+    return ResourceService.post(`group/${group_id}/leave`, { user_id })
   },
-  disableAccount(id, data, config = {}) {
-    return ResourceService.post(
-      `${resource}/disable-account/${id}`,
-      data,
-      config
-    )
-  },
-  enableAccount(id, data, config = {}) {
-    return ResourceService.post(
-      `${resource}/enable-account/${id}`,
-      data,
-      config
-    )
-  },
-  export(data, config = {}) {
-    return ResourceService.post(`${resource}/export`, data, config)
-  },
-  import(data, config = {}) {
-    return ResourceService.post(`${resource}/import`, data, config)
-  },
-  downloadTemplateImport(config = {}) {
-    return ResourceService.get(`${resource}/import/template`, config)
+  /**
+   * @param {boolean} discharged False: List of active students, true: list of current students
+   * @param {string} content Search by names or color from a partial value
+   * @param {string} orderBy (Only Allowed values)
+   * @param {number} order 1 (ASC) -1 (DESC)
+   * @param {number} offset
+   * @param {number} limit
+   */
+  studentsList(groupId, { discharged, orderBy, limit, offset, content }) {
+    return ResourceService.get(`group/${groupId}/list`, {
+      discharged,
+      orderBy,
+      limit,
+      offset,
+      content
+    })
   }
 }
