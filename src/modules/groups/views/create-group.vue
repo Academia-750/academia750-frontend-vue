@@ -122,15 +122,15 @@ export default {
 
       const group = this.editItem
         ? await GroupRepository.update(this.editItem.id, {
-            code: this.code,
-            name: this.name,
-            color: this.selectedColor
-          })
+          code: this.code,
+          name: this.name,
+          color: this.selectedColor
+        })
         : await GroupRepository.create({
-            code: this.code,
-            name: this.name,
-            color: this.selectedColor
-          })
+          code: this.code,
+          name: this.name,
+          color: this.selectedColor
+        })
 
       this.loading = false
       if (!group) {
