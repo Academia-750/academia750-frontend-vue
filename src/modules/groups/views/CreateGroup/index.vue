@@ -17,65 +17,43 @@
         title-text="Crear Grupo"
       />
     </v-toolbar>
-    <validation-observer ref="FormCreateGroup" v-slot="{ invalid }">
+    <validation-observer ref="FormCreateGroup">
       <section class="px-2 py-2 d-flex align-center">
         <v-row dense>
           <v-col cols="12" md="6" lg="4" class="ml-1">
             <!-- CÓDIGO -->
             <CodigoFieldInput
               ref="CodigoFieldInput"
-              :disabled="
-                disabledButtonUpdateGroup ||
-                  invalid ||
-                  !checkIfThereIsAtLeast_1ModifiedData
-              "
+              v-model="code"
             />
           </v-col>
           <v-col cols="12" sm="12" md="6" lg="4">
             <!-- Nombre -->
             <NombreFieldInput
               ref="NombreFieldInput"
-              :disabled="
-                disabledButtonUpdateGroup ||
-                  invalid ||
-                  !checkIfThereIsAtLeast_1ModifiedData
-              "
+              v-model="name"
             />
           </v-col>
           <v-col cols="12" class="d-flex align-start">
             <v-icon large>mdi-invert-colors</v-icon>
             <p class="font-weight-regular text-h5 ml-5 mr-8">Color del Grupo</p>
             <div class="colors-div">
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
+              <div
+                v-for="(color, index) in colors"
+                :key="index"
+                :style="{ backgroundColor: color }"
+                class="circle"
+                @click="selectColor(color)"
+              ></div>
             </div>
           </v-col>
 
           <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
             <v-btn
               :loading="loadingButtoncreateGroup"
-              :disabled="
-                disabledButtonUpdateGroup ||
-                  invalid ||
-                  !checkIfThereIsAtLeast_1ModifiedData
-              "
+              :disabled="true"
               color="light-blue darken-3"
               class="mt-3 white--text"
-              :block="activeStyleBlockButton"
               @click="createGroup"
             >
               <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
@@ -90,6 +68,9 @@
 
 <script>
 import { mapActions } from 'vuex'
+import GroupRepository from '../../repositories/GroupRepository'
+import voucher_codes from 'voucher-code-generator'
+
 export default {
   components: {
     ResourceTitleToolbarDatatable: () =>
@@ -115,8 +96,16 @@ export default {
       disabledButtonCreateGroup: false,
       form: {
         nameTopic: ''
-      }
+      },
+      colors: '',
+      code: '',
+      name: '',
+      selectedColor: ''
     }
+  },
+  mounted() {
+    this.getColors()
+    this.generateCode()
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
@@ -201,6 +190,23 @@ export default {
           this.handlingErrorValidation(error.response.data.errors)
         }
       }
+    },
+    async getColors() {
+      const res = await GroupRepository.colors()
+
+      this.colors = res.data.results
+    },
+    async generateCode() {
+      const codes = voucher_codes.generate({
+        length: 6,
+        count: 1,
+        charset: voucher_codes.charset('alphabetic')
+      })
+
+      this.code = codes[0].toUpperCase()
+    },
+    async selectColor(color) {
+      this.selectedColor = color
     }
   },
   head: {
@@ -215,7 +221,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: red;
+  cursor: pointer;
 }
 
 .colors-div {
