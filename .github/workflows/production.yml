@@ -11,9 +11,11 @@ jobs:
     env:
       SERVER: ${{ vars.PRODUCTION_SERVER }}
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
       VUE_APP_SECRET_KEY_DESCRYPT_TOKEN: ${{ secrets.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN }}
-      FOLDER_NAME: 'frontend'
-      VUE_APP_BASE_URL_API_PRODUCTION: "https://entrenamiento.academia750.es"
+      FOLDER_NAME: ${{ vars.FOLDER_NAME || '/var/www/academy750-frontend' }}
+      VUE_APP_BASE_URL_API_PRODUCTION: 'https://entrenamiento.academia750.es'
 
     steps:
       # - name: Only Main branch
@@ -43,9 +45,9 @@ jobs:
         with:
           SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ env.SERVER }}
-          REMOTE_USER: ubuntu
-          REMOTE_PORT: 22
+          REMOTE_USER: ${{ env.SSH_USER || 'ubuntu' }}
+          REMOTE_PORT: ${{ env.SSH_PORT || 22 }}
           SOURCE: './dist'
-          TARGET: '/var/www/${{ env.FOLDER_NAME }}'
+          TARGET: ${{ env.FOLDER_NAME }}
           ARGS: '-rltgoDzvO --delete'
           EXCLUDE: '.env'
