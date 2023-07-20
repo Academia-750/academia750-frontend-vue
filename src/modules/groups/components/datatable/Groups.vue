@@ -54,13 +54,12 @@
       <template v-slot:[`item.created_at`]="{ item }">
         {{ parseDate(item.created_at) }}
       </template>
-      <template v-slot:[`item.alumnos`]="{ item }">
+      <template v-slot:[`item.alumnos`]>
         <div class="d-flex justify-space-around">
           <resource-button-add
             text-button="Alumnos"
             :config-route="{ name: 'crear-alumnos' }"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="setDataForUpdateUser(item)"
           />
         </div>
       </template>
@@ -69,7 +68,7 @@
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="setDataForUpdateUser(item)"
+            @DispatchClickEvent="updateItem(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
@@ -180,7 +179,7 @@ export default {
 
   methods: {
     ...mapActions('groupsService', ['getGroups', 'deleteGroup']),
-    ...mapMutations('groupsService', ['SET_ITEMS_SELECTED']),
+    ...mapMutations('groupsService', ['SET_ITEMS_SELECTED', 'SET_EDIT_ITEM']),
     load() {
       this.getGroups({
         content: this.searchWord,
@@ -199,6 +198,10 @@ export default {
       }
 
       this.load()
+    },
+    updateItem(item) {
+      this.SET_ITEMS_SELECTED(item)
+      this.$router.push('/groups/edit')
     },
     async deleteGroupConfirm(item) {
       if (!item) {

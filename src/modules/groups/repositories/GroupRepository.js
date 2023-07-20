@@ -10,8 +10,20 @@ export default {
    * @param {string} name
    * @param {string} color
    */
-  create({ code, name, color }) {
-    return ResourceService.post('groups', { code, name, color })
+  async create({ code, name, color }) {
+    const response = await ResourceService.post('group', { code, name, color })
+
+    if (response.status === 409) {
+      // TODO handle duplicated code / color error
+      return false
+    }
+
+    if (response.status !== 200) {
+      // TODO handle error ?
+      return false
+    }
+
+    return response.data.result
   },
   /**
    * @param {string} id
@@ -61,8 +73,15 @@ export default {
   /**
    *
    */
-  colors() {
-    return ResourceService.get('group/colors')
+  async colors() {
+    const response = await ResourceService.get('group/colors')
+
+    if (response.status !== 200) {
+      // TODO handle error ?
+      return []
+    }
+
+    return Object.values(response.data.results)
   },
   /**
    * @param {string} id
@@ -75,8 +94,24 @@ export default {
    * @param {string} name
    * @param {string} color
    */
-  update(id, { code, name, color }) {
-    return ResourceService.put(`group/update/${id}`, { code, name, color })
+  async update(id, { code, name, color }) {
+    const response = await ResourceService.put(`group/${id}`, {
+      code,
+      name,
+      color
+    })
+
+    if (response.status === 409) {
+      // TODO handle duplicated code / color error
+      return false
+    }
+
+    if (response.status !== 200) {
+      // TODO handle error ?
+      return false
+    }
+
+    return response.data.result
   },
 
   /**

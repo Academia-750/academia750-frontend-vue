@@ -7,19 +7,15 @@
     :rules="rules"
   >
     <v-text-field
-      id="__group_name"
-      ref="name-group-field"
-      v-model="value"
-      name="__group_name"
+      :value="value"
+      name="name"
       :error-messages="errors"
       label="Nombre"
-      :filled="isFilled"
+      :filled="true"
       required
       clearable
+      @input="$emit('input', $event)"
     >
-      <template v-if="hasPrependIcon" v-slot:prepend>
-        <v-icon class="d-none d-sm-none d-md-block"> mdi-account-group </v-icon>
-      </template>
     </v-text-field>
   </ValidationProvider>
 </template>
@@ -32,9 +28,9 @@ export default {
       type: String,
       default: ''
     },
-    isFilled: {
-      type: Boolean,
-      default: true
+    rules: {
+      type: [Object, String],
+      required: true
     }
   }
 }

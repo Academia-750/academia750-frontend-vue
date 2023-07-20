@@ -8,9 +8,9 @@ export default {
     tabViewGroups: 'groups-account-enable',
     itemsSelected: [],
     totalItems: 0,
-    matchesResetOptionsDatatable: false
+    editItem: false
   },
-  getters: {},
+
   mutations: {
     SET_ITEMS_DATATABLE(state, payload) {
       state.itemsDatatable = payload
@@ -22,10 +22,13 @@ export default {
       state.currentUserForUpdate = payload
     },
     SET_ITEMS_SELECTED(state, payload) {
-      state.itemsSelected = payload
+      state.editItem = payload
     },
     SET_TOTAL_ITEMS(state, payload) {
       state.totalItems = payload
+    },
+    SET_EDIT_ITEM(state, payload) {
+      state.editItem = payload
     }
   },
   actions: {

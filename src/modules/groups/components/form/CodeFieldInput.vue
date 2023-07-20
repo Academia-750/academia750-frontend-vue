@@ -7,12 +7,10 @@
     :rules="rules"
   >
     <v-text-field
-      id="__group_code"
-      ref="code-group-field"
       v-model="value"
       class="mx-3"
       max-width="330"
-      name="__group_code"
+      name="group_code"
       :error-messages="errors"
       :disabled="true"
       :filled="true"
@@ -30,6 +28,10 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    rules: {
+      type: [Object, String],
+      required: true
     }
   }
 }

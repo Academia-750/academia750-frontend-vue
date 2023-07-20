@@ -5,8 +5,9 @@
         <v-icon large class="mx-1">mdi-account-circle</v-icon>
         <span
           class="font-weight-bold d-none d-sm-inline text-xs-caption text-sm-h6"
-          >Perfil de usuario</span
         >
+          Perfil de usuario
+        </span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
