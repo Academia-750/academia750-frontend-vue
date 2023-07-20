@@ -44,7 +44,9 @@
                 :style="{ backgroundColor: color }"
                 class="circle"
                 @click="selectColor(color)"
-              ></div>
+              >
+                {{ selectedColor === color ? '✓' : '' }}
+              </div>
             </div>
           </v-col>
 
@@ -206,6 +208,7 @@ export default {
       this.code = codes[0].toUpperCase()
     },
     async selectColor(color) {
+      console.log('=======selectedColor',color)
       this.selectedColor = color
     }
   },
