@@ -25,7 +25,7 @@
         ></div>
       </div>
       <input v-model="value" type="hidden" />
-      <div v-if="!errors.length" class="mt-2 ml-md-3 red--text">
+      <div v-if="errors.length" class="mt-2 ml-md-3 red--text">
         Seleccione un color
       </div>
     </div>
