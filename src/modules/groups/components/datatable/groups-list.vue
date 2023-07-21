@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
     <v-data-table
-      v-model="getSelectedItems"
+      v-model="getItemsSelected"
       :loading="stateLoadingItems"
       :headers="filter__headers_datatable"
       :items="itemsDatatable"
@@ -33,6 +33,7 @@
           <v-spacer />
 
           <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
+          <resource-button icon-button="mdi-autorenew" @click="resetOptions" />
         </v-toolbar>
 
         <!-- ------------ SEARCH ------------ -->
@@ -99,6 +100,7 @@ import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import DatatableManageGroups from '../../mixins/DatatableManageGroups'
 import moment from 'moment'
 import GroupRepository from '../../repositories/GroupRepository'
+import ResourceButton from '@/modules/resources/components/resources/ResourceButton.vue'
 
 export default {
   name: 'DatatableGroups',
@@ -130,6 +132,10 @@ export default {
     ResourceHeaderCrudTitle: () =>
       import(
         /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
   },
   mixins: [
@@ -144,7 +150,7 @@ export default {
       'itemsDatatable',
       'totalItems',
       'stateLoadingItems',
-      'usersSelected',
+      'itemsSelected',
       'tableOptions'
     ]),
     ...mapGetters('groupsService', ['vueTableOptions']),
@@ -158,12 +164,12 @@ export default {
         nextIcon: 'mdi-plus'
       }
     },
-    getSelectedItems: {
+    getItemsSelected: {
       get() {
-        return this.usersSelected
+        return this.itemsSelected
       },
-      set(value) {
-        this.SET_ITEMS_SELECTED(value)
+      set(item) {
+        this.SET_ITEMS_SELECTED(item)
       }
     }
   },
@@ -175,7 +181,11 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupsService', ['getGroups', 'deleteGroup']),
+    ...mapActions('groupsService', [
+      'getGroups',
+      'deleteGroup',
+      'resetOptions'
+    ]),
     ...mapMutations('groupsService', [
       'SET_ITEMS_SELECTED',
       'SET_EDIT_ITEM',
