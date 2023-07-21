@@ -1,8 +1,6 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
 
-const resource = 'groups'
-
 // This will be replaced by the real groups data from the API
 export default {
   /**
@@ -14,12 +12,20 @@ export default {
     const response = await ResourceService.post('group', { code, name, color })
 
     if (response.status === 409) {
-      // TODO handle duplicated code / color error
+      ResourceService.warning({
+        response,
+        title: 'Información Duplicada',
+        message: 'Ya existe un grupo con el mismo código o color'
+      })
+
       return false
     }
 
     if (response.status !== 200) {
-      // TODO handle error ?
+      ResourceService.warning({
+        response
+      })
+
       return false
     }
 
@@ -32,7 +38,10 @@ export default {
     const response = await ResourceService.delete(`group/${id}`)
 
     if (response.status !== 200) {
-      // TODO handle error ?
+      ResourceService.warning({
+        response
+      })
+
       return false
     }
 
@@ -64,7 +73,10 @@ export default {
     const response = await ResourceService.get('group/list', { params })
 
     if (response.status !== 200) {
-      // TODO handle error ?
+      ResourceService.warning({
+        response
+      })
+
       return { results: [], total: 0 }
     }
 
@@ -77,7 +89,10 @@ export default {
     const response = await ResourceService.get('group/colors')
 
     if (response.status !== 200) {
-      // TODO handle error ?
+      ResourceService.warning({
+        response
+      })
+
       return []
     }
 
@@ -88,9 +103,20 @@ export default {
   /**
    * @param {string} id
    */
-  info(id) {
-    return ResourceService.get(`group/${id}`)
+  async info(id) {
+    const response = await ResourceService.get(`group/${id}`)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.result
   },
+
   /**
    * @param {string} code
    * @param {string} name
@@ -104,12 +130,20 @@ export default {
     })
 
     if (response.status === 409) {
-      // TODO handle duplicated code / color error
+      ResourceService.warning({
+        response,
+        title: 'Información Duplicada',
+        message: 'Ya existe un grupo con el mismo código o color'
+      })
+
       return false
     }
 
     if (response.status !== 200) {
-      // TODO handle error ?
+      ResourceService.warning({
+        response
+      })
+
       return false
     }
 

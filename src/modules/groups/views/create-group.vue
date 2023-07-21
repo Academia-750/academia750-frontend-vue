@@ -21,7 +21,10 @@
           </v-col>
           <v-col cols="12" sm="12" md="6" lg="4">
             <!-- Nombre -->
-            <NameFieldInput v-model="name" rules="required" />
+            <NameFieldInput
+              v-model="name"
+              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+            />
           </v-col>
           <v-col cols="12" class="d-flex align-start">
             <SelectColorInput
