@@ -23,3 +23,8 @@
 
 DNI:  74237694L
 Password: academia750
+
+
+## Troublehsooting
+
+- Eslint version must be `6.7`, higher eslint version will break the compatibility with the images and won't build.
