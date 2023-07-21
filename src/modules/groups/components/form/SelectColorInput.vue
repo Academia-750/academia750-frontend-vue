@@ -4,9 +4,10 @@
     vid="group-color"
     mode="aggressive"
     :rules="rules"
-    class="d-flex align-start"
+    class="d-flex align-start justify-center"
+    :style="{ flexWrap: 'wrap' }"
   >
-    <div class="d-flex algin-center">
+    <div class="d-flex align-center">
       <v-icon large>mdi-invert-colors</v-icon>
       <div class="font-weight-regular text-h6 ml-2 mr-8">Color del Grupo</div>
     </div>
@@ -73,6 +74,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 11px;
+  margin-top: 15px;
 
   .circle {
     width: 25px;

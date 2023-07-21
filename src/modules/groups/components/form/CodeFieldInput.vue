@@ -8,7 +8,6 @@
   >
     <v-text-field
       v-model="value"
-      max-width="330"
       name="group_code"
       :error-messages="errors"
       :disabled="true"

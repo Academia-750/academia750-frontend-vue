@@ -1,21 +1,29 @@
 <template>
-  <v-card-text>
-    <resource-header-crud-title
-      text-header="Crear Grupo"
-      :can-rendering-header="$vuetify.breakpoint.width < 420"
-    />
-    <v-toolbar flat class="indigo lighten-5 my-2" outlined elevation="2">
+  <div>
+    <v-toolbar flat class="indigo lighten-5 my-md-2 mx-md-2" outlined elevation="2">
       <resource-button-go-back-router :width-number-limit="300" />
-      <v-icon large right class="mx-1"> mdi-account-group </v-icon>
-      <resource-title-toolbar-datatable
+      <!-- <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
         title-text="Crear Grupo"
-      />
+      /> -->
+      <v-toolbar-title class="d-flex align-end">
+        <v-icon large right class="mx-1"> mdi-account-group </v-icon>
+        <span
+          class="ml-2 font-weight-medium  text-xs-caption text-sm-h7"
+        >
+          Crear Grupo
+        </span>
+      </v-toolbar-title>
     </v-toolbar>
     <validation-observer ref="FormCreateGroup">
-      <section class="px-2 py-2 d-flex align-center">
-        <v-row dense>
-          <v-col cols="12" md="6" lg="4" class="ml-1">
+      <section class="px-2 py-2 d-flex flex-sm-column align-center">
+        <v-row dense :style="{ width: '-webkit-fill-available' }">
+          <v-col
+            cols="12" 
+            md="6"
+            lg="4"
+            class="ml-md-5"
+          >
             <!-- CÓDIGO -->
             <CodeFieldInput v-model="code" rules="required" />
           </v-col>
@@ -45,7 +53,7 @@
         </v-row>
       </section>
     </validation-observer>
-  </v-card-text>
+  </div>
 </template>
 
 <script>
@@ -55,14 +63,14 @@ import GroupRepository from '../repositories/GroupRepository'
 
 export default {
   components: {
-    ResourceTitleToolbarDatatable: () =>
-      import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-      ),
-    ResourceHeaderCrudTitle: () =>
-      import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-      ),
+    // ResourceTitleToolbarDatatable: () =>
+    //   import(
+    //     /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+    //   ),
+    // ResourceHeaderCrudTitle: () =>
+    //   import(
+    //     /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+    //   ),
     ResourceButtonGoBackRouter: () =>
       import(
         /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
