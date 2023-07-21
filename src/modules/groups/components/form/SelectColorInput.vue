@@ -4,25 +4,32 @@
     vid="group-color"
     mode="aggressive"
     :rules="rules"
-    class="d-flex align-start"
+    class="d-flex align-start justify-center"
+    :style="{ flexWrap: 'wrap' }"
   >
-    <div class="d-flex algin-center">
+    <div class="d-flex align-center">
       <v-icon large>mdi-invert-colors</v-icon>
       <div class="font-weight-regular text-h6 ml-2 mr-8">Color del Grupo</div>
     </div>
-    <div class="colors-div">
-      <div
-        v-for="(color, index) in colors"
-        :key="index"
-        :style="{ backgroundColor: color }"
-        :class="`circle ${value === color ? 'selected' : ''}`"
-        @click="selectColor(color)"
-      ></div>
+    <div
+      class="d-flex flex-column justify-center"
+      :style="{ flexWrap: 'wrap' }"
+    >
+      <div class="colors-div">
+        <div
+          v-for="(color, index) in colors"
+          :key="index"
+          :style="{ backgroundColor: color }"
+          :class="`circle ${value === color ? 'selected' : ''}`"
+          @click="selectColor(color)"
+        ></div>
+      </div>
+      <input v-model="value" type="hidden" />
+      <div v-if="errors.length" class="mt-2 ml-md-3 red--text">
+        Seleccione un color
+      </div>
     </div>
-    <input v-model="value" type="hidden" />
-    <div v-if="errors.length" class="mt-2 red--text">
-      Seleccione un color {{ errors }}
-    </div>
+    
   </ValidationProvider>
 </template>
 
@@ -73,6 +80,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 11px;
+  margin-top: 15px;
 
   .circle {
     width: 25px;
