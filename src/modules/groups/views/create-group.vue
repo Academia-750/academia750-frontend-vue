@@ -10,7 +10,7 @@
       <v-toolbar-title class="d-flex align-end">
         <v-icon large right class="mx-1"> mdi-account-group </v-icon>
         <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          Crear Grupo
+          {{ editItem ? 'Editar Grupo' : 'Crear Grupo' }}
         </span>
       </v-toolbar-title>
     </v-toolbar>

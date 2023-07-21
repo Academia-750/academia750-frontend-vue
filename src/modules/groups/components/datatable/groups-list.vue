@@ -188,6 +188,7 @@ export default {
     ]),
     ...mapMutations('groupsService', [
       'SET_ITEMS_SELECTED',
+      'SET_ITEMS_DATATABLE',
       'SET_EDIT_ITEM',
       'SET_TABLE_OPTIONS'
     ]),
@@ -209,7 +210,7 @@ export default {
       this.getGroups()
     },
     updateItem(item) {
-      this.SET_ITEMS_SELECTED(item)
+      this.SET_EDIT_ITEM(item)
       this.$router.push('/groups/edit')
     },
     async deleteGroupConfirm(item) {
