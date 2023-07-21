@@ -4,7 +4,8 @@
       text-header="Crear Grupo"
       :can-rendering-header="$vuetify.breakpoint.width < 420"
     />
-    <v-toolbar flat class="lighten-5 my-2" outlined elevation="2">
+    <v-toolbar flat class="indigo lighten-5 my-2" outlined elevation="2">
+      <resource-button-go-back-router :width-number-limit="300" />
       <v-icon large right class="mx-1"> mdi-account-group </v-icon>
       <resource-title-toolbar-datatable
         :width-limit-toolbar-title="420"
@@ -38,7 +39,7 @@
               @click="createGroup"
             >
               <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
-              {{ this.editItem ? 'Editar' : 'Crear' }}
+              {{ editItem ? 'Editar' : 'Crear' }}
             </v-btn>
           </v-col>
         </v-row>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import voucher_codes from 'voucher-code-generator'
 import GroupRepository from '../repositories/GroupRepository'
 
@@ -61,6 +62,10 @@ export default {
     ResourceHeaderCrudTitle: () =>
       import(
         /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
       ),
     NameFieldInput: () =>
       import(
@@ -103,6 +108,8 @@ export default {
 
   methods: {
     ...mapActions('groupsService', ['createGroup']),
+    ...mapMutations('groupsService', ['SET_EDIT_ITEM']),
+
     async createGroup() {
       const status = await this.$refs['FormCreateGroup'].validate()
 
@@ -122,15 +129,15 @@ export default {
 
       const group = this.editItem
         ? await GroupRepository.update(this.editItem.id, {
-          code: this.code,
-          name: this.name,
-          color: this.selectedColor
-        })
+            code: this.code,
+            name: this.name,
+            color: this.selectedColor
+          })
         : await GroupRepository.create({
-          code: this.code,
-          name: this.name,
-          color: this.selectedColor
-        })
+            code: this.code,
+            name: this.name,
+            color: this.selectedColor
+          })
 
       this.loading = false
       if (!group) {
@@ -146,6 +153,7 @@ export default {
         timer: 7500
       })
 
+      this.SET_EDIT_ITEM(false)
       this.$router.push('/groups/list')
     },
 
@@ -170,17 +178,3 @@ export default {
   }
 }
 </script>
-<style>
-.circle {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.colors-div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 11px;
-}
-</style>

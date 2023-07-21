@@ -4,19 +4,20 @@
     vid="group-color"
     mode="aggressive"
     :rules="rules"
+    class="d-flex align-start"
   >
-    <v-icon large>mdi-invert-colors</v-icon>
-    <p class="font-weight-regular text-h5 ml-5 mr-8">Color del Grupo</p>
+    <div class="d-flex algin-center">
+      <v-icon large>mdi-invert-colors</v-icon>
+      <div class="font-weight-regular text-h6 ml-2 mr-8">Color del Grupo</div>
+    </div>
     <div class="colors-div">
       <div
         v-for="(color, index) in colors"
         :key="index"
         :style="{ backgroundColor: color }"
-        class="circle"
+        :class="`circle ${value === color ? 'selected' : ''}`"
         @click="selectColor(color)"
-      >
-        {{ value === color ? '✓' : '' }}
-      </div>
+      ></div>
     </div>
     <input v-model="value" type="hidden" />
     <div v-if="errors.length" class="mt-2 red--text">
@@ -67,3 +68,20 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.colors-div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 11px;
+
+  .circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .selected {
+    border: solid 2px #0277bd;
+  }
+}
+</style>

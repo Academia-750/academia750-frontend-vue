@@ -8,7 +8,6 @@
   >
     <v-text-field
       v-model="value"
-      class="mx-3"
       max-width="330"
       name="group_code"
       :error-messages="errors"

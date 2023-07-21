@@ -30,10 +30,7 @@
 
           <v-spacer />
 
-          <ResourceButtonAdd
-            text-button="Crear grupo"
-            :config-route="{ name: 'create-group' }"
-          />
+          <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
         </v-toolbar>
 
         <!-- ------------ SEARCH ------------ -->
@@ -51,6 +48,15 @@
       </template>
 
       <!-- ------------ SLOTS ------------ -->
+      <template v-slot:[`item.name`]="{ item }">
+        <div class="d-flex align-center">
+          <span
+            :style="{ backgroundColor: item.color }"
+            class="circle mr-1"
+          ></span>
+          {{ item.name }}
+        </div>
+      </template>
       <template v-slot:[`item.created_at`]="{ item }">
         {{ parseDate(item.created_at) }}
       </template>
@@ -58,7 +64,8 @@
         <div class="d-flex justify-space-around">
           <resource-button-add
             text-button="Alumnos"
-            :config-route="{ name: 'crear-alumnos' }"
+            :disabled="true"
+            :config-route="{ name: 'add-students' }"
             :only-dispatch-click-event="true"
           />
         </div>
@@ -189,6 +196,10 @@ export default {
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
+    onCreate() {
+      this.SET_EDIT_ITEM(false)
+      this.$router.push('/groups/create')
+    },
     onOptionsUpdate(options) {
       this.options = {
         orderBy: options.sortBy[0] || 'created_at',
@@ -266,5 +277,11 @@ export default {
 
 .theme--light.v-divider {
   border-color: rgba(0, 0, 0, 0.6);
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
 </style>

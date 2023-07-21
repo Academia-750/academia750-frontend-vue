@@ -81,7 +81,9 @@ export default {
       return []
     }
 
-    return Object.values(response.data.results)
+    return response.data.results
+      .filter((item) => item.used === false)
+      .map((item) => item.color)
   },
   /**
    * @param {string} id

@@ -1,5 +1,5 @@
-import store from './store'
-import router from './router'
+import store from './group.store'
+import router from './group.router'
 
 export default {
   store,

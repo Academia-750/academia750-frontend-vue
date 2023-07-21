@@ -2,11 +2,17 @@
   <v-btn
     small
     color="primary"
-    dark
+    :dark="!disabled"
     class="mx-1 align-self-center"
-    @click="goToRouteCreateRecord"
+    :disabled="disabled"
+    @click="onClick"
   >
-    <span v-if="$vuetify.breakpoint.width >= widthLimit" class="font-weight-bold mr-1">{{ textButton }}</span>
+    <span
+      v-if="$vuetify.breakpoint.width >= widthLimit"
+      class="font-weight-bold mr-1"
+    >
+      {{ textButton }}
+    </span>
     <v-icon small dark>{{ iconButton }}</v-icon>
   </v-btn>
 </template>
@@ -19,6 +25,10 @@ export default {
       type: Number,
       default: 425
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     textButton: {
       type: String,
       default: 'Agregar'
@@ -29,19 +39,18 @@ export default {
     },
     configRoute: {
       type: Object,
-      required: true
+      default: () => {}
     }
   },
   methods: {
-    goToRouteCreateRecord () {
-      this.$router.push(
-        this.configRoute
-      )
+    onClick() {
+      if (this.configRoute && Object.keys(this.configRoute).length) {
+        this.$router.push(this.configRoute)
+      }
+      this.$emit('click')
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
