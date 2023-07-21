@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
 import DatatableManageGroups from '../mixins/DatatableManageGroups'
 import notifications from '@/mixins/notifications'
 
@@ -20,12 +19,8 @@ export default {
   components: {
     GroupsDatatable: () =>
       import(
-        /* webpackChunkName: "DatatableGroups" */ '../components/datatable/Groups.vue'
+        /* webpackChunkName: "DatatableGroups" */ '../components/datatable/groups-list.vue'
       )
-    // CreateOrEditStudent: () =>
-    //   import(
-    //     /* webpackChunkName: "CreateOrEditStudentStudentsModule" */ '../../components/CreateOrEditGroups/CreateOrEditGroups.vue'
-    //   ),
   },
   mixins: [DatatableManageGroups, notifications],
   data() {
@@ -33,24 +28,11 @@ export default {
       reloadDatatableUsers: false
     }
   },
-  computed: {
-    ...mapState('groupsService')
-  },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   mounted() {
     this.loadNotifications()
-  },
-  methods: {
-    ...mapMutations('groupsService', [
-      'SET_TAB_VIEW_GROUPS',
-      'SET_MATCHES_RESET_OPTIONS_DATATABLE'
-    ]),
-    ...mapActions('groupsService', ['getGroups']),
-    ReloadDatatableGroups() {
-      this.loadGroupsFromCurrentTab()
-    }
   },
   head: {
     title: {

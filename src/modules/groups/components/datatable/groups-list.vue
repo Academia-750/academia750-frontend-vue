@@ -7,13 +7,15 @@
       :items="itemsDatatable"
       item-key="id"
       show-select
-      sort-by="created_at"
       no-data-text="No hay datos disponibles"
-      :items-per-page="10"
       :mobile-breakpoint="700"
       class="elevation-1"
       :server-items-length="totalItems"
       :footer-props="footerProps"
+      :items-per-page="vueTableOptions.limit"
+      :sort-by="vueTableOptions.sortBy"
+      :sort-desc="vueTableOptions.sortDesc"
+      :page="vueTableOptions.page"
       @update:options="onOptionsUpdate"
     >
       <template v-slot:top>
@@ -35,7 +37,7 @@
 
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
-          ref="ResourceTextFieldSearch"
+          :search-word="tableOptions.content"
           label-text-field="Buscar por nombre o código"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
@@ -89,7 +91,7 @@
 
 <script>
 import _ from 'lodash'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headersOppositionsTable from './data/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
@@ -129,10 +131,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
       )
-    // ResourceDialogConfirmDelete: () =>
-    //   import(
-    //     /* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'
-    //   )
   },
   mixins: [
     DatatableManageGroups,
@@ -141,23 +139,15 @@ export default {
     computedDatatable,
     componentButtonsCrud
   ],
-  data() {
-    return {
-      options: {
-        orderBy: 'created_at',
-        oder: -1,
-        limit: 10,
-        offset: 0
-      }
-    }
-  },
   computed: {
     ...mapState('groupsService', [
       'itemsDatatable',
       'totalItems',
       'stateLoadingItems',
-      'usersSelected'
+      'usersSelected',
+      'tableOptions'
     ]),
+    ...mapGetters('groupsService', ['vueTableOptions']),
     footerProps() {
       return {
         ...this.get_items_per_page_options_datatable,
@@ -181,18 +171,16 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
   mounted() {
-    this.load()
+    this.getGroups()
   },
 
   methods: {
     ...mapActions('groupsService', ['getGroups', 'deleteGroup']),
-    ...mapMutations('groupsService', ['SET_ITEMS_SELECTED', 'SET_EDIT_ITEM']),
-    load() {
-      this.getGroups({
-        content: this.searchWord,
-        ...this.options
-      })
-    },
+    ...mapMutations('groupsService', [
+      'SET_ITEMS_SELECTED',
+      'SET_EDIT_ITEM',
+      'SET_TABLE_OPTIONS'
+    ]),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
@@ -201,14 +189,14 @@ export default {
       this.$router.push('/groups/create')
     },
     onOptionsUpdate(options) {
-      this.options = {
+      this.SET_TABLE_OPTIONS({
         orderBy: options.sortBy[0] || 'created_at',
         order: options.sortDesc[0] ? 1 : -1,
         limit: options.itemsPerPage,
         offset: (options.page - 1) * options.itemsPerPage
-      }
+      })
 
-      this.load()
+      this.getGroups()
     },
     updateItem(item) {
       this.SET_ITEMS_SELECTED(item)
@@ -247,12 +235,12 @@ export default {
         timer: 3000
       })
 
-      this.load()
+      this.getGroups()
     },
 
     searchFieldExecuted($event) {
-      this.searchWord = $event
-      this.load()
+      this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
+      this.getGroups()
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)

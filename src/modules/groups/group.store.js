@@ -8,12 +8,30 @@ export default {
     tabViewGroups: 'groups-account-enable',
     itemsSelected: [],
     totalItems: 0,
-    editItem: false
+    editItem: false,
+    tableOptions: {
+      orderBy: 'name',
+      order: 1,
+      limit: 10,
+      offset: 0,
+      content: ''
+    }
+  },
+  getters: {
+    vueTableOptions: (state) => ({
+      sortBy: [state.tableOptions.orderBy],
+      sortDesc: state.tableOptions.order === 1 ? [true] : [],
+      limit: state.tableOptions.limit,
+      page: state.tableOptions.offset / state.tableOptions.limit + 1
+    })
   },
 
   mutations: {
     SET_ITEMS_DATATABLE(state, payload) {
       state.itemsDatatable = payload
+    },
+    SET_TABLE_OPTIONS(state, payload) {
+      state.tableOptions = { ...state.tableOptions, ...payload }
     },
     SET_STATUS_LOADING_ITEMS(state, payload) {
       state.stateLoadingItems = payload
@@ -32,12 +50,9 @@ export default {
     }
   },
   actions: {
-    getGroups: async ({ commit }, config) => {
-      commit('SET_ITEMS_SELECTED', [])
+    getGroups: async ({ commit, state }) => {
       commit('SET_STATUS_LOADING_ITEMS', true)
-      commit('SET_ITEMS_DATATABLE', [])
-
-      const response = await GroupRepository.list(config)
+      const response = await GroupRepository.list(state.tableOptions)
 
       commit('SET_ITEMS_DATATABLE', response.results)
       commit('SET_TOTAL_ITEMS', response.total)
