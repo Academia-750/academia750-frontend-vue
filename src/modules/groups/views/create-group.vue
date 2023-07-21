@@ -2,10 +2,6 @@
   <div>
     <v-toolbar flat class="indigo lighten-5 my-md-2 mx-md-2" outlined elevation="2">
       <resource-button-go-back-router :width-number-limit="300" />
-      <!-- <resource-title-toolbar-datatable
-        :width-limit-toolbar-title="420"
-        title-text="Crear Grupo"
-      /> -->
       <v-toolbar-title class="d-flex align-end">
         <v-icon large right class="mx-1"> mdi-account-group </v-icon>
         <span
@@ -63,14 +59,6 @@ import GroupRepository from '../repositories/GroupRepository'
 
 export default {
   components: {
-    // ResourceTitleToolbarDatatable: () =>
-    //   import(
-    //     /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-    //   ),
-    // ResourceHeaderCrudTitle: () =>
-    //   import(
-    //     /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-    //   ),
     ResourceButtonGoBackRouter: () =>
       import(
         /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
