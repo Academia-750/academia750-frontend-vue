@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-list-item
-      v-if="!menuItem.items && ( $can(menuItem.can) || $hasRoles(menuItem.roles) )"
+      v-if="
+        !menuItem.items && ($can(menuItem.can) || $hasRoles(menuItem.roles))
+      "
       :input-value="menuItem.value"
       :to="calculateRouteLink(menuItem)"
       :exact="menuItem.exact"
@@ -22,17 +24,18 @@
     </v-list-item>
 
     <v-list-group
-      v-else-if="( $can(menuItem.can) || $hasRoles(menuItem.roles) )"
+      v-else-if="$can(menuItem.can) || $hasRoles(menuItem.roles)"
       :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
       :disabled="menuItem.disabled"
       :sub-group="subgroup"
-      :to="calculateRouteLink(menuItem)"
+      :to="{ name: 'manage-groups' }"
       link
     >
-
       <template v-slot:activator>
         <v-list-item-icon v-if="!subgroup">
-          <v-icon :small="small">{{ menuItem.icon || 'mdi-circle-medium' }}</v-icon>
+          <v-icon :small="small">{{
+            menuItem.icon || 'mdi-circle-medium'
+          }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>
@@ -42,7 +45,6 @@
       </template>
 
       <slot></slot>
-
     </v-list-group>
   </div>
 </template>
@@ -72,7 +74,7 @@ export default {
     }
   },
   methods: {
-    calculateRouteLink (itemMenu) {
+    calculateRouteLink(itemMenu) {
       let routeTo = itemMenu.link
 
       if (!routeTo) {

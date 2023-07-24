@@ -15,6 +15,7 @@ import imports from '@/modules/imports'
 import tests from '@/modules/tests'
 import home from '@/modules/home'
 import statistics from '@/modules/statistics'
+import groups from '@/modules/groups'
 
 registerModules({
   errors,
@@ -32,5 +33,6 @@ registerModules({
   tests,
   imports,
   home,
-  statistics
+  statistics,
+  groups
 })

@@ -1,21 +1,21 @@
 module.exports = {
   // https://cli.vuejs.org/config/#productionsourcemap
   productionSourceMap: false,
-  /* devServer: {
-    host: 'academia-bomberos750.test',
-    port: 8080,
-    https: false
-  }, */
+  // devServer: {
+  //   host: 'localhost',
+  //   port: 8080,
+  //   https: false
+  // },
 
   // https://cli.vuejs.org/config/#css-extract
   css: {
     extract: { ignoreOrder: true },
     loaderOptions: {
       sass: {
-        additionalData: '@import \'~@/assets/scss/vuetify/variables\''
+        additionalData: "@import '~@/assets/scss/vuetify/variables'"
       },
       scss: {
-        additionalData: '@import \'~@/assets/scss/vuetify/variables\';'
+        additionalData: "@import '~@/assets/scss/vuetify/variables';"
       }
     }
   },
@@ -28,9 +28,5 @@ module.exports = {
   },
 
   // https://cli.vuejs.org/config/#transpiledependencies
-  transpileDependencies: [
-    'vue-echarts',
-    'resize-detector',
-    'vuetify'
-  ]
+  transpileDependencies: ['vue-echarts', 'resize-detector', 'vuetify']
 }

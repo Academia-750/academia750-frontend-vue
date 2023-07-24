@@ -1,14 +1,14 @@
 <template>
   <v-btn
     small
-    color="primary"
+    :color="color"
     :dark="!disabled"
     class="mx-1 align-self-center"
     :disabled="disabled"
     @click="onClick"
   >
     <span
-      v-if="$vuetify.breakpoint.width >= widthLimit"
+      v-if="textButton && $vuetify.breakpoint.width >= widthLimit"
       class="font-weight-bold mr-1"
     >
       {{ textButton }}
@@ -25,28 +25,25 @@ export default {
       type: Number,
       default: 425
     },
+    color: {
+      type: String,
+      default: 'normal'
+    },
     disabled: {
       type: Boolean,
       default: false
     },
     textButton: {
       type: String,
-      default: 'Agregar'
+      default: ''
     },
     iconButton: {
       type: String,
       default: 'mdi-plus'
-    },
-    configRoute: {
-      type: Object,
-      default: () => {}
     }
   },
   methods: {
     onClick() {
-      if (this.configRoute && Object.keys(this.configRoute).length) {
-        this.$router.push(this.configRoute)
-      }
       this.$emit('click')
     }
   }

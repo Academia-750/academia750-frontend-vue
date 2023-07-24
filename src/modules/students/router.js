@@ -11,7 +11,7 @@ const shortcutRoutes = [
     meta: {
       middleware: [authMiddleware]
     }
-  }/* ,
+  } /* ,
   {
     path: 'alumnos/crear',
     redirect: { name: 'create-student' },
@@ -46,7 +46,7 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          }/* ,
+          } /* ,
           {
             path: 'create',
             name: 'create-topic',

@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="classesWrapper"
-  >
+  <div :class="classesWrapper">
     <v-text-field
       v-model="manageSearchWord"
       class="mx-3"
@@ -16,7 +14,7 @@
       <template v-slot:append>
         <v-icon
           large
-          style="cursor: pointer !important;"
+          style="cursor: pointer !important"
           @click="emitSearchWord"
         >
           {{ iconAppend }}
@@ -55,37 +53,38 @@ export default {
       default: 'Buscar'
     }
   },
-  data () {
+  data() {
     return {
       searchWordText: ''
     }
   },
   computed: {
     manageSearchWord: {
-      get () {
+      get() {
         return this.searchWordText
       },
-      set (value) {
+      set(value) {
         this.searchWordText = value
       }
     }
   },
   watch: {
-    searchWord (value) {
+    searchWord(value) {
       this.searchWordText = value
     },
-    searchWordText (value) {
+    searchWordText(value) {
       this.$emit('emitSearchTextBinding', value)
     }
   },
+  mounted() {
+    this.searchWordText = this.searchWord
+  },
   methods: {
-    emitSearchWord () {
+    emitSearchWord() {
       this.$emit('emitSearchWord', this.searchWordText)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
