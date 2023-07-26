@@ -153,8 +153,6 @@ export default {
         ...pagination
       }
 
-      console.log({ params })
-
       const res = await GroupRepository.list(params)
 
       return res
