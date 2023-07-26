@@ -150,6 +150,34 @@ const actionsForMultipleRecords = async ({ commit }, options) => {
   }
 }
 
+const disableAccountStudent = async ({ commit }, options) => {
+  try {
+    const response = await StudentRepository.disableAccount(options.id ,options.data, options.config)
+
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+
+    return Promise.resolve(response)
+  } catch (error) {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+
+    return Promise.reject(error)
+  }
+}
+
+const enableAccountStudent = async ({ commit }, options) => {
+  try {
+    const response = await StudentRepository.enableAccount(options.id ,options.data, options.config)
+
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+
+    return Promise.resolve(response)
+  } catch (error) {
+    commit('SET_USERS_SELECTED_DATATABLE', [])
+
+    return Promise.reject(error)
+  }
+}
+
 export default {
   getStudents,
   createStudent,
@@ -158,5 +186,7 @@ export default {
   deleteStudent,
   fetchStudentGroups,
   fetchRoleStudentData,
-  actionsForMultipleRecords
+  actionsForMultipleRecords,
+  disableAccountStudent,
+  enableAccountStudent
 }

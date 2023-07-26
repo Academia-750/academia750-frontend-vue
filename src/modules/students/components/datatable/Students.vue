@@ -45,8 +45,27 @@
         <div class="d-flex justify-space-around">
           <resource-button-edit
             :config-route="{}"
+            color-button="blue-grey lighten-3"
             :only-dispatch-click-event="true"
             @DispatchClickEvent="setDataForUpdateUser(item)"
+          />
+          <resource-button-edit
+            v-if="isEnableUsersTab"
+            :config-route="{}"
+            text-button="Desactivar"
+            color-button="deep-purple darken-1"
+            icon-button="mdi-close-circle"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="disableAccountStudentAction(item.id)"
+          />
+          <resource-button-edit
+            v-else
+            :config-route="{}"
+            text-button="Reactivar"
+            color-button="success"
+            icon-button="mdi-check-circle"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="enableAccountStudentAction(item.id)"
           />
           <resource-button-delete
             text-button="Dar de baja"
