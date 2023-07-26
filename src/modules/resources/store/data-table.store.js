@@ -4,18 +4,20 @@
  * component server-data-table
  */
 
+export const initialOptions = {
+  orderBy: 'updated_at',
+  order: -1,
+  limit: 10,
+  offset: 0,
+  content: ''
+}
+
 export default {
   state: {
     items: [],
     selected: [],
     totalItems: 0,
-    tableOptions: {
-      orderBy: 'updated_at',
-      order: -1,
-      limit: 10,
-      offset: 0,
-      content: ''
-    }
+    tableOptions: initialOptions
   },
   getters: {
     vueTableOptions: (state) => ({

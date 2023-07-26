@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('groupsService', ['editItem'])
+    ...mapState('groupStore', ['editItem'])
   },
   mounted() {
     if (this.editItem) {
@@ -104,8 +104,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupsService', ['createGroup']),
-    ...mapMutations('groupsService', ['SET_EDIT_ITEM']),
+    ...mapActions('groupStore', ['resetTableOptions']),
+    ...mapMutations('groupStore', ['SET_EDIT_ITEM']),
 
     async createGroup() {
       const status = await this.$refs['FormCreateGroup'].validate()
@@ -151,6 +151,7 @@ export default {
       })
 
       this.SET_EDIT_ITEM(false)
+      this.resetTableOptions()
       this.$router.push('/groups/list')
     },
 

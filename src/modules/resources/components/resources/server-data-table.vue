@@ -1,5 +1,6 @@
 <template>
   <v-data-table
+    :value="state.selected"
     :loading="loading"
     :headers="headers"
     :items="state.items"
@@ -15,6 +16,7 @@
     :sort-desc="vueTableOptions.sortDesc"
     :page="vueTableOptions.page"
     @update:options="onOptionsUpdate"
+    @input="setSelected"
   >
     <template v-for="(_, name) in $scopedSlots" v-slot:[name]="slotProps">
       <slot :name="name" v-bind="slotProps || {}"></slot>
@@ -22,8 +24,11 @@
   </v-data-table>
 </template>
 <script lang="ts">
+import computedDatatable from '@/modules/resources/mixins/computedDatatable'
+
 export default {
   name: 'ServerDataTable',
+  mixins: [computedDatatable],
   props: {
     headers: {
       type: Array,
@@ -53,6 +58,7 @@ export default {
     },
     footerProps() {
       return {
+        ...this.get_items_per_page_options_datatable,
         showFirstLastPage: true,
         firstIcon: 'mdi-arrow-collapse-left',
         lastIcon: 'mdi-arrow-collapse-right',
@@ -65,10 +71,10 @@ export default {
     }
   },
 
-  mounted() {
-    console.log('store', this)
-  },
   methods: {
+    setSelected(value) {
+      this.$store.commit(`${this.storeName}/SET_ITEMS_SELECTED`, value)
+    },
     onOptionsUpdate(options) {
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, {
         orderBy: options.sortBy[0] || 'updated_at',

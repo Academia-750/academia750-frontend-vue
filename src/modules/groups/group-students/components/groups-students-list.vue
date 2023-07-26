@@ -90,8 +90,6 @@ import _ from 'lodash'
 import { mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headersOppositionsTable from './students-table-columns'
-import computedDatatable from '@/modules/resources/mixins/computedDatatable'
-import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 import moment from 'moment'
 import GroupRepository from '@/services/GroupRepository'
 
@@ -123,7 +121,7 @@ export default {
         /* webpackChunkName: "ServerDataTable" */ '@/modules/resources/components/resources/server-data-table'
       )
   },
-  mixins: [URLBuilderResources, computedDatatable, componentButtonsCrud],
+  mixins: [componentButtonsCrud],
   data() {
     return {
       searchWordText: '',
