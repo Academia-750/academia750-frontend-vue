@@ -2,6 +2,7 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageGroupsModule from '@/modules/groups/views/groups'
 import CreateGroupModule from '@/modules/groups/views/create-group'
+import StudentModule from '@/modules/groups/views/students'
 /* import CreateTopicModule from '@/modules/groups/views/CreateTopic'
 import UpdateTopicModule from '@/modules/groups/views/UpdateTopic' */
 
@@ -23,6 +24,13 @@ const shortcutRoutes = [
   {
     path: 'grupos/editar',
     redirect: { name: 'create-group' },
+    meta: {
+      middleware: [authMiddleware]
+    }
+  },
+  {
+    path: 'grupos/alumnos',
+    redirect: { name: 'group-students' },
     meta: {
       middleware: [authMiddleware]
     }
@@ -60,6 +68,14 @@ const moduleRoute = [
             path: 'edit',
             name: 'edit-group',
             component: CreateGroupModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/students/list',
+            name: 'group-students',
+            component: StudentModule,
             meta: {
               middleware: [authMiddleware]
             }

@@ -47,12 +47,23 @@ export default {
     },
     SET_EDIT_ITEM(state, payload) {
       state.editItem = payload
+    },
+    SET_ACTIVE_STUDENTS(state, payload) {
+      state.editItem = payload
     }
   },
   actions: {
     getGroups: async ({ commit, state }) => {
       commit('SET_STATUS_LOADING_ITEMS', true)
       const response = await GroupRepository.list(state.tableOptions)
+
+      commit('SET_ITEMS_DATATABLE', response.results)
+      commit('SET_TOTAL_ITEMS', response.total)
+      commit('SET_STATUS_LOADING_ITEMS', false)
+    },
+    getGroupsStudentsList: async ({ commit, state }) => {
+      commit('SET_STATUS_LOADING_ITEMS', true)
+      const response = await GroupRepository.studentsList(state.tableOptions)
 
       commit('SET_ITEMS_DATATABLE', response.results)
       commit('SET_TOTAL_ITEMS', response.total)

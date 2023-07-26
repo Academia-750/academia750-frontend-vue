@@ -6,7 +6,8 @@ export default {
       'getGroups',
       'createGroup',
       'updateGroup',
-      'fetchRoleGroupData'
+      'fetchRoleGroupData',
+      'getGroupsStudents'
     ]),
     ...mapMutations('groupsService', ['SET_CURRENT_USER_FOR_UPDATE']),
     cancelProcessEditGroupData() {

@@ -62,12 +62,11 @@
       <template v-slot:[`item.created_at`]="{ item }">
         {{ parseDate(item.created_at) }}
       </template>
-      <template v-slot:[`item.alumnos`]>
+      <template v-slot:[`item.alumnos`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-add
             text-button="Alumnos"
-            :disabled="true"
-            :config-route="{ name: 'add-students' }"
+            :config-route="{name: 'group-students', params: { id: item.id }}"
             :only-dispatch-click-event="true"
           />
         </div>

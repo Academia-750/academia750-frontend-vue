@@ -154,8 +154,18 @@ export default {
    * @param {string} group_id
    * @param {string} user_id
    */
-  joinGroup({ group_id, user_id }) {
-    return ResourceService.post(`group/${group_id}/join`, { user_id })
+  async joinGroup({ group_id, user_id }) {
+    const response = await ResourceService.post(`group/${group_id}/join`, { user_id })
+    
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.result
   },
 
   /**
@@ -173,13 +183,27 @@ export default {
    * @param {number} offset
    * @param {number} limit
    */
-  studentsList(groupId, { discharged, orderBy, limit, offset, content }) {
-    return ResourceService.get(`group/${groupId}/list`, {
+  async studentsList(groupId, { discharged, orderBy, limit, offset, content }) {
+    const params = {
       discharged,
       orderBy,
       limit,
       offset,
-      content
-    })
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+
+    const response = await ResourceService.get(`group/${groupId}/list`, params )
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.results
   }
 }
