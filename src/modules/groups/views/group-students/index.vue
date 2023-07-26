@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DatatableManageStudents from '../mixins/DatatableManageStudents'
+import DatatableManageStudents from '../../mixins/DatatableManageStudents'
 import notifications from '@/mixins/notifications'
 
 export default {
@@ -19,7 +19,7 @@ export default {
   components: {
     StudentsDatatable: () =>
       import(
-        /* webpackChunkName: "DatatableStudents" */ '../components/datatable/groups-students-list.vue'
+        /* webpackChunkName: "DatatableStudents" */ '../../components/datatable/groups-students-list.vue'
       )
   },
   mixins: [DatatableManageStudents, notifications],

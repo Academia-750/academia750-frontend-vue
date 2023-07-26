@@ -155,8 +155,20 @@ export default {
    * @param {string} user_id
    */
   async joinGroup({ group_id, user_id }) {
-    const response = await ResourceService.post(`group/${group_id}/join`, { user_id })
-    
+    const response = await ResourceService.post(`group/${group_id}/join`, {
+      user_id
+    })
+
+    if (response.status === 409) {
+      ResourceService.warning({
+        response,
+        title: 'Warning',
+        message: 'Este usuario ya existe en el grupo.'
+      })
+
+      return false
+    }
+
     if (response.status !== 200) {
       ResourceService.warning({
         response
@@ -172,8 +184,20 @@ export default {
    * @param {string} group_id
    * @param {string} user_id
    */
-  leaveGroup({ group_id, user_id }) {
-    return ResourceService.post(`group/${group_id}/leave`, { user_id })
+  async leaveGroup({ group_id, user_id }) {
+    const response = await ResourceService.post(`group/${group_id}/leave`, {
+      user_id
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.result
   },
   /**
    * @param {boolean} discharged False: List of active students, true: list of current students
@@ -194,7 +218,7 @@ export default {
 
     deleteUndefined(params)
 
-    const response = await ResourceService.get(`group/${groupId}/list`, params )
+    const response = await ResourceService.get(`group/${groupId}/list`, params)
 
     if (response.status !== 200) {
       ResourceService.warning({

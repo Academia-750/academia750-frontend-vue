@@ -1,10 +1,8 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageGroupsModule from '@/modules/groups/views/groups'
-import CreateGroupModule from '@/modules/groups/views/create-group'
+import ManageGroupsModule from '@/modules/groups/views/group-list'
+import CreateGroupModule from '@/modules/groups/views/update-group'
 import StudentModule from '@/modules/groups/views/students'
-/* import CreateTopicModule from '@/modules/groups/views/CreateTopic'
-import UpdateTopicModule from '@/modules/groups/views/UpdateTopic' */
 
 const shortcutRoutes = [
   {

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DatatableManageGroups from '../mixins/DatatableManageGroups'
+import DatatableManageGroups from '../../mixins/DatatableManageGroups'
 import notifications from '@/mixins/notifications'
 
 export default {
@@ -19,7 +19,7 @@ export default {
   components: {
     GroupsDatatable: () =>
       import(
-        /* webpackChunkName: "DatatableGroups" */ '../components/datatable/groups-list.vue'
+        /* webpackChunkName: "DatatableGroups" */ '../../components/datatable/groups-list.vue'
       )
   },
   mixins: [DatatableManageGroups, notifications],

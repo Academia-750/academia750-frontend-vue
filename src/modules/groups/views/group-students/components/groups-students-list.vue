@@ -1,16 +1,14 @@
 <template>
   <v-card-text>
-
     <!-- ------------ ADD STUDENT TO GROUP ------------ -->
-    <template @click="onCreate= false">
+    <template @click="onCreate = false">
       <v-row justify="center">
-        <v-dialog
-          v-model="onCreate"
-          max-width="400px"
-        >
+        <v-dialog v-model="onCreate" max-width="400px">
           <v-card>
             <v-card-title>
-              <span class="text-subtitle-1 font-weight-bold">Agregar Alumnos Individualmente</span>
+              <span class="text-subtitle-1 font-weight-bold">
+                Agregar Alumnos Individualmente
+              </span>
             </v-card-title>
             <v-card-text>
               <div class="d-flex flex-wrap align-baseline card mt-1">
@@ -20,8 +18,6 @@
                     :items="itemsStudents"
                     dense
                     outlined
-                    :loading="loading"
-                    :error-messages="errors"
                     small-chips
                     clearable
                     item-text="text"
@@ -29,7 +25,6 @@
                     label="Buscar por Nombre,correo,DNI"
                     return-object
                   ></v-autocomplete>
-                    
                 </div>
                 <v-btn
                   dark
@@ -67,7 +62,6 @@
       <template v-slot:top>
         <!-- ------------ SEARCH ------------ -->
         <v-tabs
-          v-model="getCurrentTabView"
           grow
           background-color="cyan darken-1 mt-4"
           centered
@@ -102,7 +96,11 @@
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
-        <div v-if="active" class="d-flex justify-end mr-md-5" @click="onCreate = true">
+        <div
+          v-if="active"
+          class="d-flex justify-end mr-md-5"
+          @click="onCreate = true"
+        >
           <resource-button-add
             text-button="Alumnos"
             :disabled="false"
@@ -115,7 +113,7 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
-      
+
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.name`]="{ item }">
         <div class="d-flex align-center">
@@ -155,12 +153,12 @@
 import _ from 'lodash'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headersOppositionsTable from './data/headersStudentsDatatable'
+import headersOppositionsTable from '../group-list/data/headersStudentsDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
-import DatatableManageStudents from '../../mixins/DatatableManageStudents'
+import DatatableManageStudents from '../../../mixins/DatatableManageStudents'
 import moment from 'moment'
-import GroupRepository from '../../repositories/GroupRepository'
+import GroupRepository from '../../../repositories/GroupRepository'
 
 export default {
   name: 'DatatableStudents',
@@ -183,7 +181,7 @@ export default {
       )
   },
   mixins: [
-  DatatableManageStudents,
+    DatatableManageStudents,
     URLBuilderResources,
     headersOppositionsTable,
     computedDatatable,
@@ -241,7 +239,7 @@ export default {
       this.searchWordText = value
     }
   },
-  
+
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
@@ -251,7 +249,11 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupsService', ['getGroups', 'deleteGroup', 'getGroupsStudents']),
+    ...mapActions('groupsService', [
+      'getGroups',
+      'deleteGroup',
+      'getGroupsStudents'
+    ]),
     ...mapMutations('groupsService', [
       'SET_ITEMS_SELECTED',
       'SET_EDIT_ITEM',
@@ -270,10 +272,11 @@ export default {
       return option
     },
     async getGroupsMembers() {
+      console.log('>> Loading')
 
       const groupId = this.$route.params.id
       const params = {
-        discharged:'',
+        discharged: '',
         orderBy: '',
         limit: '',
         offset: '',
@@ -286,25 +289,29 @@ export default {
     },
     async loadStudents() {
       const res = await this.getStudents({
-          params: {
-            'filter[role]': 'student',
-            'sort': '-created-at',
-            'page[size]': 5,
-            'page[number]': 1
-          }
-        })
+        params: {
+          'filter[role]': 'student',
+          sort: '-created-at',
+          'page[size]': 5,
+          'page[number]': 1
+        }
+      })
 
-        this.itemsStudents = res.data.data.map((item) => {
-            return `${item.attributes['first_name']} ${item.attributes['last_name']}`
-        })
+      this.itemsStudents = res.data.data.map((item) => {
+        return `${item.attributes['first_name']} ${item.attributes['last_name']}`
+      })
 
-        return res
+      return res
     },
     async joinGroup() {
       this.isLoading = true
       const res = await this.loadStudents()
-      const student = res.data.data.find((item) => `${item.attributes['first_name']} ${item.attributes['last_name']}` === this.studentSelected)
-      
+      const student = res.data.data.find(
+        (item) =>
+          `${item.attributes['first_name']} ${item.attributes['last_name']}` ===
+          this.studentSelected
+      )
+
       const params = {
         group_id: this.$route.params.id,
         user_id: student.id
@@ -315,11 +322,9 @@ export default {
       this.studentSelected = null
       this.isLoading = false
       this.onCreate = false
-      
     },
     async leaveGroup(item) {
-
-    if (!item) {
+      if (!item) {
         return
       }
 
@@ -342,9 +347,9 @@ export default {
       }
 
       const params = {
-      group_id: this.$route.params.id,
-      user_id: item.id
-    }
+        group_id: this.$route.params.id,
+        user_id: item.uuid
+      }
 
       const res = await GroupRepository.leaveGroup(params)
 
@@ -359,16 +364,25 @@ export default {
       })
 
       this.getGroupsMembers()
-  },
+    },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
       this.getGroupsMembers()
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
+    },
+    onOptionsUpdate(options) {
+      this.SET_TABLE_OPTIONS({
+        orderBy: options.sortBy[0] || 'created_at',
+        order: options.sortDesc[0] ? 1 : -1,
+        limit: options.itemsPerPage,
+        offset: (options.page - 1) * options.itemsPerPage
+      })
+
+      this.getGroups()
     }
   }
-  
 }
 </script>
 <style scoped>
@@ -396,17 +410,16 @@ export default {
   border-radius: 50%;
 }
 
-.card{
+.card {
   width: 100%;
   justify-content: space-between;
 }
 
-.input{
-  width: 80%
+.input {
+  width: 80%;
 }
 
-.button{
-  width: 10%
+.button {
+  width: 10%;
 }
-
 </style>
