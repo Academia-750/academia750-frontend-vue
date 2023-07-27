@@ -7,56 +7,58 @@
           max-width="400px"
           @close="onClose"
         >
-          <v-card class="d-flex flex-column " >
-            <v-container class="pa-3">
-              <v-card-title class="d-flex justify-space-between pt-0 px-0">
-                <span class="text-h6 font-weight-bold">Create Workspace</span>
-                <v-icon class=" d-md-block" @click="onClose">
-                  mdi-close
-                </v-icon>
-              </v-card-title>
-              <v-text-field
-                label="Your landing page"
-                variant="outlined"
-                filled
-              ></v-text-field>
-              <v-card-actions class="d-flex justify-space-between pa-0">
-                <v-btn
-                  color="blue-darken-1"
-                  class="button flex-grow-1"
-                  variant="text"
-                  large
-                  outlined
-                  @click="onClose"
-                >
-                  Cancel
-                </v-btn>
-                <v-btn
-                  dark
-                  color="blue darken-1"
-                  class="button flex-grow-1"
-                  large
-                  @click="onClose"
-                >
-                  Create
-                </v-btn>
-              </v-card-actions>
-            </v-container>
-          </v-card>
+          <validation-observer ref="FormcreateWorkspace">
+            <v-card class="d-flex flex-column" >
+              <v-container class="pa-3">
+                <v-card-title class="d-flex justify-space-between pt-0 px-0">
+                  <span class="text-h6 font-weight-bold">Create Workspace</span>
+                  <v-icon class=" d-md-block" @click="onClose">
+                    mdi-close
+                  </v-icon>
+                </v-card-title>
+                <NameFieldInput
+                  v-model="name"
+                  rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+                />
+                <v-card-actions class="d-flex justify-space-between pa-0">
+                  <v-btn
+                    color="blue-darken-1"
+                    class="button flex-grow-1"
+                    variant="text"
+                    large
+                    outlined
+                    @click="onClose"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    dark
+                    color="blue darken-1"
+                    class="button flex-grow-1"
+                    large
+                    :loading="loading"
+                    @click="createWorkspace"
+                  >
+                    {{ editItem ? 'Edit' : 'Create' }}
+                  </v-btn>
+                </v-card-actions>
+              </v-container>
+            </v-card>
+          </validation-observer>
         </v-dialog>
       </v-row>
     </template>
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="groupStore"
+      store-name="workspaceStore"
       :load="loadGroups"
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
 
         <ResourceHeaderCrudTitle
-          text-header="Gestión de materiales"
+          text-header="Gestión de espacio de trabajo"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
 
@@ -118,15 +120,15 @@
 
 <script>
 import _ from 'lodash'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './materials-list-columns'
+import headers from './workspace-list-columns'
 import moment from 'moment'
-import GroupRepository from '@/services/GroupRepository'
+import WorkspaceRepository from '@/services/WorkspaceRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 
 export default {
-  name: 'MaterialesList',
+  name: 'WorkspaceList',
   components: {
     ResourceButtonEdit: () =>
       import(
@@ -160,20 +162,26 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
+      NameFieldInput: () =>
+      import(
+        /* webpackChunkName: "NameFieldInput" */ './NameFieldInput.vue'
+      ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      name: ''
     }
   },
   computed: {
+    ...mapState('workspaceStore', ['editItem']),
     headers() {
       return headers
     },
     store() {
-      return this.$store.state.groupStore
+      return this.$store.state.workspaceStore
     }
   },
   created() {
@@ -184,30 +192,34 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('groupStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
     onClose() {
       this.isOpen = false
     },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
+    },
     async loadGroups(pagination) {
       const params = {
         ...pagination
       }
 
-      const res = await GroupRepository.list(params)
+      const res = await WorkspaceRepository.list(params)
 
       return res
     },
     onCreate() {
-      console.log('onCreate')
+      this.name = ''
       this.isOpen = true
     },
     updateItem(item) {
       this.SET_EDIT_ITEM(item)
-      this.$router.push('/groups/edit')
+      this.name = item.name
+      this.isOpen = true
     },
     async deleteGroupConfirm(item) {
       if (!item) {
@@ -217,8 +229,8 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR GRUPO',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este grupo? Todos los alumnos seran dados de baja y perderas el histórico del grupo',
+        title: 'ELIMINAR Workspace',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los alumnos seran dados de baja y perderas el histórico del Workspace',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -230,7 +242,7 @@ export default {
         return
       }
 
-      const res = await GroupRepository.delete(item.id)
+      const res = await WorkspaceRepository.delete(item.id)
 
       if (!res) {
         return
@@ -238,11 +250,55 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'El grupo ha sido eliminado con éxito.',
+        title: 'El Workspace ha sido eliminado con éxito.',
         timer: 3000
       })
 
       this.$refs.table.reload()
+    },
+
+    async createWorkspace() {
+      const status = await this.$refs['FormcreateWorkspace'].validate()
+
+      if (!status) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, complete correctamente los campos del formulario.',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 7500
+        })
+
+        return
+      }
+      this.loading = true
+
+      const workspace = this.editItem
+        ? await WorkspaceRepository.update(this.editItem.id, {
+            name: this.name
+          })
+        : await WorkspaceRepository.create({
+            name: this.name
+          })
+
+      this.loading = false
+      if (!workspace) {
+        return
+      }
+
+      await this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: this.editItem ? 'Workspace Actualizado!' : 'Workspace Creado!',
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+        timer: 7500
+      })
+      this.isOpen = false
+      this.name = ''
+      this.$refs.table.reload()
+      this.SET_EDIT_ITEM(false)
     },
 
     searchFieldExecuted($event) {

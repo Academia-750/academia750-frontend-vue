@@ -16,7 +16,7 @@ import tests from '@/modules/tests'
 import home from '@/modules/home'
 import statistics from '@/modules/statistics'
 import groups from '@/modules/groups'
-import materials from '@/modules/materials'
+import workspaces from '@/modules/workspaces'
 
 registerModules({
   errors,
@@ -36,5 +36,5 @@ registerModules({
   home,
   statistics,
   groups,
-  materials
+  workspaces
 })

@@ -4,7 +4,7 @@ export default [
     text: 'Workspace Name',
     align: 'start',
     sortable: true,
-    value: 'workspace_name',
+    value: 'name',
     show: true
   },
   {
@@ -12,7 +12,7 @@ export default [
     text: 'Number Of Files',
     align: 'center',
     sortable: true,
-    value: 'number_of_files',
+    value: 'materials_count',
     show: true
   },
   {

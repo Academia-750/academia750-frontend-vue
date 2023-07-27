@@ -145,8 +145,8 @@ export default {
         {
           icon: 'mdi-folder-open',
           key: '',
-          text: 'Gestión de materiales',
-          to: { name: 'manage-materials' },
+          text: 'Gestión de espacio de trabajo',
+          to: { name: 'manage-workspaces' },
           roles: 'admin'
         },
         {

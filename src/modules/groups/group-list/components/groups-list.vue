@@ -72,7 +72,7 @@
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteGroupConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
           />
         </div>
       </template>
@@ -165,7 +165,7 @@ export default {
       this.SET_EDIT_ITEM(item)
       this.$router.push('/groups/edit')
     },
-    async deleteGroupConfirm(item) {
+    async deleteWorkspaceConfirm(item) {
       if (!item) {
         return
       }
@@ -186,7 +186,7 @@ export default {
         return
       }
 
-      const res = await GroupRepository.delete(item.id)
+      const res = await WorkspaceRepository.delete(item.id)
 
       if (!res) {
         return

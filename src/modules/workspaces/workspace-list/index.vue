@@ -3,7 +3,7 @@
     <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-card flat>
         <v-card-text>
-          <MaterialsList />
+          <WorkspaceList />
         </v-card-text>
       </v-card>
     </div>
@@ -14,10 +14,10 @@
 import notifications from '@/mixins/notifications'
 
 export default {
-  name: 'GroupsView',
+  name: 'WorkspaceView',
   components: {
-    MaterialsList: () =>
-      import(/* webpackChunkName: "GroupList" */ './components/materials-list.vue')
+    WorkspaceList: () =>
+      import(/* webpackChunkName: "WorkspaceList" */ './components/workspace-list.vue')
   },
   mixins: [notifications],
   data() {
@@ -33,7 +33,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de grupos'
+      inner: 'Gestión de espacio de trabajo'
     }
   }
 }

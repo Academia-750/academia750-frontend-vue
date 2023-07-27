@@ -1,11 +1,11 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageGroupsModule from './material-list'
+import ManageGroupsModule from './workspace-list'
 
 const shortcutRoutes = [
   {
     path: 'materiales',
-    redirect: { name: 'manage-materials' },
+    redirect: { name: 'manage-workspaces' },
     meta: {
       middleware: [authMiddleware]
     }
@@ -16,16 +16,16 @@ const moduleRoute = [
   {
     path: '/',
     component: Module,
-    redirect: { name: 'manage-materials' },
+    redirect: { name: 'manage-workspaces' },
     children: [
       {
-        path: '/materials',
+        path: '/workspace',
         component: Module,
-        redirect: { name: 'manage-groups' },
+        redirect: { name: 'manage-workspaces' },
         children: [
           {
             path: 'list',
-            name: 'manage-materials',
+            name: 'manage-workspaces',
             component: ManageGroupsModule,
             meta: {
               middleware: [authMiddleware]
