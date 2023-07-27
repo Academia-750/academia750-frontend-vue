@@ -15,36 +15,39 @@
       store-name="groupStudentStore"
     >
       <template v-slot:top>
-        <!-- ------------ SEARCH ------------ -->
+        <!-- ------------ ACTIONS ------------ -->
+        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+          <ResourceTitleToolbarDatatable title-text="Estudiantes del Grupo" />
+
+          <v-spacer />
+
+          <resource-button
+            icon-button="mdi-autorenew"
+            @click="$store.dispatch('groupStudentStore/resetTableOptions')"
+          />
+        </v-toolbar>
+        <!-- ------------ TABS ------------ -->
         <v-tabs
+          :value="tab === 'active' ? 0 : 1"
           grow
-          background-color="cyan darken-1 mt-4"
+          background-color="cyan darken-1"
           centered
           dark
           icons-and-text
         >
           <v-tabs-slider></v-tabs-slider>
 
-          <v-tab
-            key="section-students-account-enable"
-            href="#students-account-enable"
-            :active="tab === 'active'"
-            @click="changeTab('active')"
-          >
+          <v-tab @click="changeTab('active')">
             Activos
             <v-icon>mdi-account-circle</v-icon>
           </v-tab>
 
-          <v-tab
-            key="section-students-account-disable"
-            href="#students-account-disable"
-            :active="tab === 'non-active'"
-            @click="changeTab('non-active')"
-          >
+          <v-tab @click="changeTab('non-active')">
             Inactivos
             <v-icon>mdi-account-off</v-icon>
           </v-tab>
         </v-tabs>
+        <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
           :search-word="store.tableOptions.content"
           label-text-field="Buscar por nombre o código"
@@ -119,6 +122,14 @@ export default {
     ServerDataTable: () =>
       import(
         /* webpackChunkName: "ServerDataTable" */ '@/modules/resources/components/resources/server-data-table'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
   },
   mixins: [componentButtonsCrud],
@@ -153,6 +164,10 @@ export default {
 
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
+  },
+
+  mounted() {
+    this.$store.dispatch('groupStudentStore/setGroupId', this.$route.params.id)
   },
 
   methods: {
