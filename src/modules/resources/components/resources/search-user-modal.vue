@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="isOpen" max-width="400px">
+    <v-dialog v-model="isOpen" @close="onClose" max-width="400px">
       <v-card>
         <v-card-title>
           <span class="text-subtitle-1 font-weight-bold">
@@ -10,8 +10,8 @@
         <v-card-text>
           <div class="d-flex flex-wrap align-baseline card mt-1">
             <div class="input">
-              <StudentAutoComplete :limit="limit" @change="onSelect" />
-            </div>
+              <StudentAutoComplete ref="studentAutoComplete" :limit="limit" @change="onSelect" />
+            </div>  
             <v-btn
               dark
               color="blue darken-1"
@@ -60,7 +60,7 @@ export default {
 
   methods: {
     open() {
-      this.selectedItem = false
+      this.reset()
       this.isOpen = true
     },
     onSelect(value) {
@@ -69,6 +69,15 @@ export default {
     onOk() {
       this.$emit('ok', this.selectedItem)
       this.isOpen = false
+      this.reset()
+    },
+    onClose() {
+      this.reset()
+        this.isOpen = false
+    },
+    reset() {
+       // First time is not mounted
+      this.$refs.studentAutoComplete && this.$refs.studentAutoComplete.clear()
       this.selectedItem = false
     }
   }
@@ -78,7 +87,10 @@ export default {
 .input {
   width: 80%;
 }
-
+.card {
+  width: 100%;
+  justify-content: space-between;
+}
 .button {
   width: 10%;
 }

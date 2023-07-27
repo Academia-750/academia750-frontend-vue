@@ -221,7 +221,6 @@ export default {
     }
 
     deleteUndefined(params)
-    console.log({ params })
     const response = await ResourceService.get(`group/${groupId}/list`, {
       params
     })

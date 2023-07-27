@@ -1,5 +1,6 @@
 <template>
   <v-autocomplete
+    v-model="inputValue"
     :items="itemsStudents"
     dense
     outlined
@@ -33,7 +34,8 @@ export default {
   },
   data() {
     return {
-      itemsStudents: []
+      itemsStudents: [],
+      inputValue: ''
     }
   },
 
@@ -59,6 +61,9 @@ export default {
     },
     onSelect(value) {
       this.$emit('change', value)
+    },
+    clear() {
+      this.inputValue = ''
     }
   }
 }

@@ -183,8 +183,8 @@ export default {
       }
 
       await GroupRepository.joinGroup(params)
-      this.$refs.table.reload()
       this.isAddingUser = false
+      this.$refs.table.reload()
     },
     async leaveGroup(item) {
       if (!item) {
