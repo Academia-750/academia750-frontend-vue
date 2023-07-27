@@ -10,14 +10,14 @@
       <v-toolbar-title class="d-flex align-end">
         <v-icon large right class="mx-1"> mdi-account-group </v-icon>
         <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          {{ editItem ? 'Editar Grupo' : 'Crear Grupo' }}
+          Crear Grupo
         </span>
       </v-toolbar-title>
     </v-toolbar>
     <validation-observer ref="FormCreateGroup">
-      <section class="px-2 py-2 d-flex flex-sm-column align-center ml-md-5">
+      <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
-          <v-col cols="12" md="6" lg="4" class="">
+          <v-col cols="12" md="6" lg="4" class="ml-md-5">
             <!-- CÓDIGO -->
             <CodeFieldInput v-model="code" rules="required" />
           </v-col>
@@ -56,7 +56,7 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
 import voucher_codes from 'voucher-code-generator'
-import GroupRepository from '../repositories/GroupRepository'
+import GroupRepository from '@/services/GroupRepository'
 
 export default {
   components: {
@@ -66,15 +66,15 @@ export default {
       ),
     NameFieldInput: () =>
       import(
-        /* webpackChunkName: "NameFieldInput" */ '../components/form/NameFieldInput.vue'
+        /* webpackChunkName: "NameFieldInput" */ './components/NameFieldInput.vue'
       ),
     SelectColorInput: () =>
       import(
-        /* webpackChunkName: "SelectColorInput" */ '../components/form/SelectColorInput.vue'
+        /* webpackChunkName: "SelectColorInput" */ './components/SelectColorInput.vue'
       ),
     CodeFieldInput: () =>
       import(
-        /* webpackChunkName: "CodeFieldInput" */ '../components/form/CodeFieldInput.vue'
+        /* webpackChunkName: "CodeFieldInput" */ './components/CodeFieldInput.vue'
       )
   },
   data() {
@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('groupsService', ['editItem'])
+    ...mapState('groupStore', ['editItem'])
   },
   mounted() {
     if (this.editItem) {
@@ -104,8 +104,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupsService', ['createGroup', 'resetOptions']),
-    ...mapMutations('groupsService', ['SET_EDIT_ITEM']),
+    ...mapActions('groupStore', ['resetTableOptions']),
+    ...mapMutations('groupStore', ['SET_EDIT_ITEM']),
 
     async createGroup() {
       const status = await this.$refs['FormCreateGroup'].validate()
@@ -151,7 +151,7 @@ export default {
       })
 
       this.SET_EDIT_ITEM(false)
-      this.resetOptions()
+      this.resetTableOptions()
       this.$router.push('/groups/list')
     },
 

@@ -1,22 +1,10 @@
 <template>
   <v-card-text>
-    <v-data-table
-      v-model="getItemsSelected"
-      :loading="stateLoadingItems"
-      :headers="filter__headers_datatable"
-      :items="itemsDatatable"
-      item-key="id"
-      show-select
-      no-data-text="No hay datos disponibles"
-      :mobile-breakpoint="700"
-      class="elevation-1"
-      :server-items-length="totalItems"
-      :footer-props="footerProps"
-      :items-per-page="vueTableOptions.limit"
-      :sort-by="vueTableOptions.sortBy"
-      :sort-desc="vueTableOptions.sortDesc"
-      :page="vueTableOptions.page"
-      @update:options="onOptionsUpdate"
+    <ServerDataTable
+      ref="table"
+      :headers="headers"
+      store-name="groupStore"
+      :load="loadGroups"
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
@@ -33,12 +21,15 @@
           <v-spacer />
 
           <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
-          <resource-button icon-button="mdi-autorenew" @click="resetOptions" />
+          <resource-button
+            icon-button="mdi-autorenew"
+            @click="resetTableOptions"
+          />
         </v-toolbar>
 
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
-          :search-word="tableOptions.content"
+          :search-word="store.tableOptions.content"
           label-text-field="Buscar por nombre o código"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
@@ -60,15 +51,14 @@
           {{ item.name }}
         </div>
       </template>
-      <template v-slot:[`item.created_at`]="{ item }">
-        {{ parseDate(item.created_at) }}
+      <template v-slot:[`item.updated_at`]="{ item }">
+        {{ parseDate(item.updated_at) }}
       </template>
-      <template v-slot:[`item.alumnos`]>
+      <template v-slot:[`item.alumnos`]="{ item }">
         <div class="d-flex justify-space-around">
-          <resource-button-add
+          <ResourceButtonAdd
             text-button="Alumnos"
-            :disabled="true"
-            :config-route="{ name: 'add-students' }"
+            :config-route="{ name: 'group-students', params: { id: item.id } }"
             :only-dispatch-click-event="true"
           />
         </div>
@@ -86,24 +76,21 @@
           />
         </div>
       </template>
-    </v-data-table>
+    </ServerDataTable>
   </v-card-text>
 </template>
 
 <script>
 import _ from 'lodash'
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headersOppositionsTable from './data/headersDatatable'
-import computedDatatable from '@/modules/resources/mixins/computedDatatable'
-import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
-import DatatableManageGroups from '../../mixins/DatatableManageGroups'
+import headers from './group-list-columns'
 import moment from 'moment'
-import GroupRepository from '../../repositories/GroupRepository'
-import ResourceButton from '@/modules/resources/components/resources/ResourceButton.vue'
+import GroupRepository from '@/services/GroupRepository'
+import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 
 export default {
-  name: 'DatatableGroups',
+  name: 'GruposList',
   components: {
     ResourceButtonEdit: () =>
       import(
@@ -136,78 +123,43 @@ export default {
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-      )
+      ),
+    ServerDataTable
   },
-  mixins: [
-    DatatableManageGroups,
-    URLBuilderResources,
-    headersOppositionsTable,
-    computedDatatable,
-    componentButtonsCrud
-  ],
+  mixins: [componentButtonsCrud],
   computed: {
-    ...mapState('groupsService', [
-      'itemsDatatable',
-      'totalItems',
-      'stateLoadingItems',
-      'itemsSelected',
-      'tableOptions'
-    ]),
-    ...mapGetters('groupsService', ['vueTableOptions']),
-    footerProps() {
-      return {
-        ...this.get_items_per_page_options_datatable,
-        showFirstLastPage: true,
-        firstIcon: 'mdi-arrow-collapse-left',
-        lastIcon: 'mdi-arrow-collapse-right',
-        prevIcon: 'mdi-minus',
-        nextIcon: 'mdi-plus'
-      }
+    headers() {
+      return headers
     },
-    getItemsSelected: {
-      get() {
-        return this.itemsSelected
-      },
-      set(item) {
-        this.SET_ITEMS_SELECTED(item)
-      }
+    store() {
+      return this.$store.state.groupStore
     }
   },
   created() {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
   mounted() {
-    this.getGroups()
+    this.$refs.table.reload()
   },
 
   methods: {
-    ...mapActions('groupsService', [
-      'getGroups',
-      'deleteGroup',
-      'resetOptions'
-    ]),
-    ...mapMutations('groupsService', [
-      'SET_ITEMS_SELECTED',
-      'SET_ITEMS_DATATABLE',
-      'SET_EDIT_ITEM',
-      'SET_TABLE_OPTIONS'
-    ]),
+    ...mapActions('groupStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('groupStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
+    },
+    async loadGroups(pagination) {
+      const params = {
+        ...pagination
+      }
+
+      const res = await GroupRepository.list(params)
+
+      return res
     },
     onCreate() {
       this.SET_EDIT_ITEM(false)
       this.$router.push('/groups/create')
-    },
-    onOptionsUpdate(options) {
-      this.SET_TABLE_OPTIONS({
-        orderBy: options.sortBy[0] || 'created_at',
-        order: options.sortDesc[0] ? 1 : -1,
-        limit: options.itemsPerPage,
-        offset: (options.page - 1) * options.itemsPerPage
-      })
-
-      this.getGroups()
     },
     updateItem(item) {
       this.SET_EDIT_ITEM(item)
@@ -246,12 +198,12 @@ export default {
         timer: 3000
       })
 
-      this.getGroups()
+      this.$refs.table.reload()
     },
 
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
-      this.getGroups()
+      this.$refs.table.reload()
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)

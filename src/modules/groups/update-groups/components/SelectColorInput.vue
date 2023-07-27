@@ -29,12 +29,11 @@
         Seleccione un color
       </div>
     </div>
-    
   </ValidationProvider>
 </template>
 
 <script>
-import GroupRepository from '../../repositories/GroupRepository'
+import GroupRepository from '@/services/GroupRepository'
 
 export default {
   name: 'SelectColorInput',

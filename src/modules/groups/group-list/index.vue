@@ -3,7 +3,7 @@
     <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-card flat>
         <v-card-text>
-          <groups-datatable />
+          <GroupList />
         </v-card-text>
       </v-card>
     </div>
@@ -11,18 +11,15 @@
 </template>
 
 <script>
-import DatatableManageGroups from '../mixins/DatatableManageGroups'
 import notifications from '@/mixins/notifications'
 
 export default {
   name: 'GroupsView',
   components: {
-    GroupsDatatable: () =>
-      import(
-        /* webpackChunkName: "DatatableGroups" */ '../components/datatable/groups-list.vue'
-      )
+    GroupList: () =>
+      import(/* webpackChunkName: "GroupList" */ './components/groups-list.vue')
   },
-  mixins: [DatatableManageGroups, notifications],
+  mixins: [notifications],
   data() {
     return {
       reloadDatatableUsers: false

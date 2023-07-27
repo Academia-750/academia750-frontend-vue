@@ -19,19 +19,31 @@ export default {
     return ResourceService.delete(`${resource}/delete/${id}`, config)
   },
   actionMassiveSelection(data, config = {}) {
-    return ResourceService.post(`${resource}/actions-on-multiple-records`, data, config)
+    return ResourceService.post(
+      `${resource}/actions-on-multiple-records`,
+      data,
+      config
+    )
   },
-  fetchTopicsGroups (config = {}) {
+  fetchTopicsGroups(config = {}) {
     return ResourceService.get('topic-groups', config)
   },
-  fetchRoleStudentData (config = {}) {
+  fetchRoleStudentData(config = {}) {
     return ResourceService.get('roles/get-data/student', config)
   },
   disableAccount(id, data, config = {}) {
-    return ResourceService.post(`${resource}/disable-account/${id}`, data, config)
+    return ResourceService.post(
+      `${resource}/disable-account/${id}`,
+      data,
+      config
+    )
   },
   enableAccount(id, data, config = {}) {
-    return ResourceService.post(`${resource}/enable-account/${id}`, data, config)
+    return ResourceService.post(
+      `${resource}/enable-account/${id}`,
+      data,
+      config
+    )
   },
   export(data, config = {}) {
     return ResourceService.post(`${resource}/export`, data, config)
@@ -41,5 +53,24 @@ export default {
   },
   downloadTemplateImport(config = {}) {
     return ResourceService.get(`${resource}/import/template`, config)
+  },
+
+  async search({ content, limit }) {
+    const response = await ResourceService.get(`${resource}/search`, {
+      params: {
+        content: content || '',
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }
