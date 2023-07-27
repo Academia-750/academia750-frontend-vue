@@ -2,6 +2,8 @@
   <v-autocomplete
     v-model="inputValue"
     :items="itemsStudents"
+    :loading="loading"
+    auto-select-first
     dense
     outlined
     small-chips
@@ -10,6 +12,7 @@
     item-value="uuid"
     label="Buscar por Nombre o DNI"
     return-object
+    :no-filter="true"
     @change="onSelect"
     @update:search-input="loadStudents"
   >
@@ -35,7 +38,8 @@ export default {
   data() {
     return {
       itemsStudents: [],
-      inputValue: ''
+      inputValue: '',
+      loading: false
     }
   },
 
@@ -45,6 +49,7 @@ export default {
 
   methods: {
     async loadStudents(value) {
+      this.loading = true
       const students = await StudentRepository.search({
         content: value,
         limit: this.limit
@@ -52,15 +57,17 @@ export default {
 
       this.itemsStudents = students.map((item) => {
         return {
-          text: `${item['first_name']} ${item['last_name']} ${item.dni}`,
+          text: `${item['first_name']} ${item['last_name']}`,
           uuid: item.uuid,
           dni: item.dni,
           name: `${item['first_name']} ${item['last_name']}`
         }
       })
+      this.loading = false
     },
-    onSelect(value) {
-      this.$emit('change', value)
+
+    onSelect(item) {
+      this.$emit('change', item)
     },
     clear() {
       this.inputValue = ''
