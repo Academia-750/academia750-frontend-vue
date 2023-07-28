@@ -1,53 +1,11 @@
 <template>
   <v-card-text>
-    <template>
-      <v-row justify="center">
-        <v-dialog
-          v-model="isOpen"
-          max-width="400px"
-          @close="onClose"
-        >
-          <validation-observer ref="FormcreateWorkspace">
-            <v-card class="d-flex flex-column" >
-              <v-container class="pa-3">
-                <v-card-title class="d-flex justify-space-between pt-0 px-0">
-                  <span class="text-h6 font-weight-bold">Create Workspace</span>
-                  <v-icon class=" d-md-block" @click="onClose">
-                    mdi-close
-                  </v-icon>
-                </v-card-title>
-                <NameFieldInput
-                  v-model="name"
-                  rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
-                />
-                <v-card-actions class="d-flex justify-space-between pa-0">
-                  <v-btn
-                    color="blue-darken-1"
-                    class="button flex-grow-1"
-                    variant="text"
-                    large
-                    outlined
-                    @click="onClose"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    dark
-                    color="blue darken-1"
-                    class="button flex-grow-1"
-                    large
-                    :loading="loading"
-                    @click="createWorkspace"
-                  >
-                    {{ editItem ? 'Edit' : 'Create' }}
-                  </v-btn>
-                </v-card-actions>
-              </v-container>
-            </v-card>
-          </validation-observer>
-        </v-dialog>
-      </v-row>
-    </template>
+    <AddWorkspaceModal 
+      ref="addWorkSpace"
+      :item="item"
+      :name="name"
+      @create="create"
+    />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -110,7 +68,7 @@
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteGroupConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
           />
         </div>
       </template>
@@ -162,18 +120,17 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-      NameFieldInput: () =>
-      import(
-        /* webpackChunkName: "NameFieldInput" */ './NameFieldInput.vue'
-      ),
+    AddWorkspaceModal: () => 
+        import(
+          /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
+        ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
-      isOpen: false,
       name: '',
-      loading: false
+      item: {}
     }
   },
   computed: {
@@ -198,9 +155,6 @@ export default {
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
-    onClose() {
-      this.isOpen = false
-    },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
@@ -215,14 +169,17 @@ export default {
     },
     onCreate() {
       this.name = ''
-      this.isOpen = true
+      this.$refs.addWorkSpace.open()
     },
     updateItem(item) {
-      this.SET_EDIT_ITEM(item)
       this.name = item.name
-      this.isOpen = true
+      console.log('name', this.name)
+      console.log(item)
+      this.SET_EDIT_ITEM(item)
+      this.item = item
+      this.$refs.addWorkSpace.open()
     },
-    async deleteGroupConfirm(item) {
+    async deleteWorkspaceConfirm(item) {
       if (!item) {
         return
       }
@@ -258,48 +215,9 @@ export default {
       this.$refs.table.reload()
     },
 
-    async createWorkspace() {
-      this.loading = true
-      const status = await this.$refs['FormcreateWorkspace'].validate()
-
-      if (!status) {
-        this.$swal.fire({
-          icon: 'error',
-          toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
-          showConfirmButton: true,
-          confirmButtonText: 'Entendido',
-          timer: 7500
-        })
-
-        return
-      }
-
-      const workspace = this.editItem
-        ? await WorkspaceRepository.update(this.editItem.id, {
-            name: this.name
-          })
-        : await WorkspaceRepository.create({
-            name: this.name
-          })
-
-      if (!workspace) {
-        return
-      }
-
-      await this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: this.editItem ? 'Workspace Actualizado!' : 'Workspace Creado!',
-        showConfirmButton: true,
-        confirmButtonText: 'Entendido',
-        timer: 7500
-      })
-      this.isOpen = false
-      this.name = ''
+    async create(name) {
       this.$refs.table.reload()
       this.SET_EDIT_ITEM(false)
-      this.loading = false
     },
 
     searchFieldExecuted($event) {
