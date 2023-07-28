@@ -172,7 +172,8 @@ export default {
   data() {
     return {
       isOpen: false,
-      name: ''
+      name: '',
+      loading: false
     }
   },
   computed: {
@@ -258,6 +259,7 @@ export default {
     },
 
     async createWorkspace() {
+      this.loading = true
       const status = await this.$refs['FormcreateWorkspace'].validate()
 
       if (!status) {
@@ -272,7 +274,6 @@ export default {
 
         return
       }
-      this.loading = true
 
       const workspace = this.editItem
         ? await WorkspaceRepository.update(this.editItem.id, {
@@ -282,7 +283,6 @@ export default {
             name: this.name
           })
 
-      this.loading = false
       if (!workspace) {
         return
       }
@@ -299,6 +299,7 @@ export default {
       this.name = ''
       this.$refs.table.reload()
       this.SET_EDIT_ITEM(false)
+      this.loading = false
     },
 
     searchFieldExecuted($event) {
