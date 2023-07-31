@@ -93,6 +93,12 @@
             color-button="blue darken-1"
             :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
           />
+          <resource-button-add
+            v-if="topicData !== null && item.can_this_question_be_affected"
+            text-button="Clon"
+            color-button="blue darken-1"
+            :config-route="{ name: 'clone-question-topic', params: { id: topicData.id, question_id: item.id } }"
+          />
           <resource-button-delete
             v-if="topicData !== null && item.can_this_question_be_affected"
             @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
