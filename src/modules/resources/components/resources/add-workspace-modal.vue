@@ -14,7 +14,7 @@
                 mdi-close
               </v-icon>
             </v-card-title>
-            <NameFieldInput
+            <FieldInput
               v-model="name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
@@ -37,7 +37,7 @@
                 :loading="loading"
                 @click="onCreateWorkspace"
               >
-                {{ item ? 'Edit' : 'Create' }}
+                {{ workspace ? 'Edit' : 'Create' }}
               </v-btn>
             </v-card-actions>
           </v-container>
@@ -47,26 +47,22 @@
   </v-row>
 </template>
 <script>
-import NameFieldInput from './name-field-input.vue'
+import FieldInput from '@/modules/resources/components/form/input.vue'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 
 export default {
   name: 'AddWorkspaceModal',
-  components: { NameFieldInput },
+  components: { FieldInput },
   props: {
     title: {
       type: String,
       default: ''
     },
-    limit: {
-      type: Number,
-      default: 5
-    },
     loading: {
       type: Boolean,
       default: false
     },
-    item: {
+    workspace: {
       type: Object,
       default: null
     },
@@ -111,8 +107,8 @@ export default {
 
         return
       }
-      const workspace = this.item
-        ? await WorkspaceRepository.update(this.item.id, {
+      const workspace = this.workspace
+        ? await WorkspaceRepository.update(this.workspace.id, {
             name: this.name
           })
         : await WorkspaceRepository.create({
@@ -126,7 +122,7 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: this.editItem ? 'Workspace Actualizado!' : 'Workspace Creado!',
+        title: this.editworkspace ? 'Workspace Actualizado!' : 'Workspace Creado!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500

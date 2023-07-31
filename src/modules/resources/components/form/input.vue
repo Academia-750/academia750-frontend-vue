@@ -19,19 +19,19 @@
     </v-text-field>
   </ValidationProvider>
 </template>
-
-<script>
-export default {
-  name: 'NombreFieldInput',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    rules: {
-      type: [Object, String],
-      required: true
+  
+  <script>
+  export default {
+    name: 'NombreFieldInput',
+    props: {
+      value: {
+        type: String,
+        default: ''
+      },
+      rules: {
+        type: [Object, String],
+        required: true
+      }
     }
   }
-}
-</script>
+  </script>

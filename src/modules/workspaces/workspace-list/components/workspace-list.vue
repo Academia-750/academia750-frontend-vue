@@ -48,15 +48,6 @@
       </template>
 
       <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.name`]="{ item }">
-        <div class="d-flex align-center">
-          <span
-            :style="{ backgroundColor: item.color }"
-            class="circle mr-1"
-          ></span>
-          {{ item.name }}
-        </div>
-      </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between">
           <ResourceButtonAdd text-button="Add Materials" @click="onCreate" />
@@ -188,7 +179,7 @@ export default {
         width: '400px',
         icon: 'question',
         title: 'ELIMINAR Workspace',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los alumnos seran dados de baja y perderas el histórico del Workspace',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',

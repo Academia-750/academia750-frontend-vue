@@ -11,16 +11,6 @@ export default {
   async create({ name }) {
     const response = await ResourceService.post('workspace', { name })
 
-    if (response.status === 409) {
-      ResourceService.warning({
-        response,
-        title: 'Información Duplicada',
-        message: 'Ya existe un grupo con el mismo código o color'
-      })
-
-      return false
-    }
-
     if (response.status !== 200) {
       ResourceService.warning({
         response
