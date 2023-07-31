@@ -160,6 +160,7 @@ export default {
     },
     onCreate() {
       this.name = ''
+      this.workspace = null
       this.$refs.addWorkSpace.open()
     },
     updateWorkspace(workspace) {

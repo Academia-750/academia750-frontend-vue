@@ -99,9 +99,8 @@ export default {
         
         return
       }
-      console.log('=======worksapce',this.workspace)
       const workspace = this.workspace
-        ? await WorkspaceRepository.update(this.workspace.id, {
+        ? await WorkspaceRepository.update(this.workspace.id  , {
             name: this.name
           })
         : await WorkspaceRepository.create({
