@@ -2,7 +2,7 @@
   <v-card-text>
     <AddWorkspaceModal 
       ref="addWorkSpace"
-      :item="item"
+      :workspace="workspace"
       :name="name"
       @create="create"
     />
@@ -55,11 +55,11 @@
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateItem(item)"
+            @DispatchClickEvent="updateWorkspace(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(workspace)"
           />
         </div>
       </template>
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       name: '',
-      item: {}
+      workspace: {}
     }
   },
   computed: {
@@ -162,16 +162,14 @@ export default {
       this.name = ''
       this.$refs.addWorkSpace.open()
     },
-    updateItem(item) {
-      this.name = item.name
-      console.log('name', this.name)
-      console.log(item)
-      this.SET_EDIT_ITEM(item)
-      this.item = item
+    updateWorkspace(workspace) {
+      this.name = workspace.name
+      this.SET_EDIT_ITEM(workspace)
+      this.workspace = workspace
       this.$refs.addWorkSpace.open()
     },
-    async deleteWorkspaceConfirm(item) {
-      if (!item) {
+    async deleteWorkspaceConfirm(workspace) {
+      if (!workspace) {
         return
       }
       const result = await this.$swal.fire({
@@ -191,7 +189,7 @@ export default {
         return
       }
 
-      const res = await WorkspaceRepository.delete(item.id)
+      const res = await WorkspaceRepository.delete(workspace.id)
 
       if (!res) {
         return

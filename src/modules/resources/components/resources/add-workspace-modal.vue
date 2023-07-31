@@ -37,7 +37,7 @@
                 :loading="loading"
                 @click="onCreateWorkspace"
               >
-                {{ workspace ? 'Edit' : 'Create' }}
+                {{ workspace ? 'Editar' : 'Crear' }}
               </v-btn>
             </v-card-actions>
           </v-container>
@@ -58,10 +58,6 @@ export default {
       type: String,
       default: ''
     },
-    loading: {
-      type: Boolean,
-      default: false
-    },
     workspace: {
       type: Object,
       default: null
@@ -73,15 +69,10 @@ export default {
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      loading: false
     }
   },
-  watch: {
-    isOpen() {
-      this.reset()
-    }
-  },
-
   methods: {
     open() {
       this.isOpen = true
@@ -104,7 +95,8 @@ export default {
         })
         this.onClose()
         this.name = ''
-
+        this.loading = false
+        
         return
       }
       const workspace = this.workspace
@@ -116,6 +108,8 @@ export default {
           })
 
       if (!workspace) {
+        this.loading = false
+
         return
       }
 
@@ -131,6 +125,7 @@ export default {
       this.name = ''
       this.$emit('create', workspace)
       this.isOpen = false
+      this.loading = false
     }
   }
 }
