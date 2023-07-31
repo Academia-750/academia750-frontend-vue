@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       name: '',
-      workspace: {}
+      workspace: null
     }
   },
   computed: {

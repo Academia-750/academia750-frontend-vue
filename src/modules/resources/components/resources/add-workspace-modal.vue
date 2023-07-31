@@ -99,6 +99,7 @@ export default {
         
         return
       }
+      console.log('=======worksapce',this.workspace)
       const workspace = this.workspace
         ? await WorkspaceRepository.update(this.workspace.id, {
             name: this.name
@@ -109,7 +110,8 @@ export default {
 
       if (!workspace) {
         this.loading = false
-
+        this.workspace = null
+        
         return
       }
 
@@ -121,6 +123,7 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
+      this.workspace = null
       this.onClose()
       this.name = ''
       this.$emit('create', workspace)
