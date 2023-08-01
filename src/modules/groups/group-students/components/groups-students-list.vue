@@ -18,7 +18,7 @@
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <resource-button-go-back-router />
-          <ResourceTitleToolbarDatatable title-text="Estudiantes del Grupo" />
+          <ResourceTitleToolbarDatatable :title-text="`Students of Group ${groupName}`"/>
 
           <v-spacer />
 
@@ -138,7 +138,8 @@ export default {
   data() {
     return {
       searchWordText: '',
-      isAddingUser: false
+      isAddingUser: false,
+      groupName: ''
     }
   },
   computed: {
@@ -169,6 +170,7 @@ export default {
   },
 
   mounted() {
+    this.groupInfo()
     this.$store.dispatch('groupStudentStore/setGroupId', this.$route.params.id)
   },
 
@@ -189,6 +191,14 @@ export default {
 
       const res = await GroupRepository.studentsList(groupId, params)
 
+      return res
+    },
+    async groupInfo() {
+      const groupId = this.$route.params.id
+      const res = await GroupRepository.info(groupId)
+
+      this.groupName = res.name
+      
       return res
     },
 
