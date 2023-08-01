@@ -1,18 +1,12 @@
 <template>
   <v-row justify="center">
-    <v-dialog
-      v-model="isOpen"
-      max-width="400px"
-      @close="onClose"
-    >
+    <v-dialog v-model="isOpen" max-width="400px" @close="onClose">
       <validation-observer ref="formCreateWorkspace">
-        <v-card class="d-flex flex-column" >
+        <v-card class="d-flex flex-column">
           <v-container class="pa-3">
             <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold">Create Workspace</span>
-              <v-icon class=" d-md-block" @click="onClose">
-                mdi-close
-              </v-icon>
+              <span class="text-h6 font-weight-bold">Crear Workspace</span>
+              <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <FieldInput
               v-model="name"
@@ -96,11 +90,11 @@ export default {
         this.onClose()
         this.name = ''
         this.loading = false
-        
+
         return
       }
       const workspace = this.workspace
-        ? await WorkspaceRepository.update(this.workspace.id  , {
+        ? await WorkspaceRepository.update(this.workspace.id, {
             name: this.name
           })
         : await WorkspaceRepository.create({
@@ -110,7 +104,7 @@ export default {
       if (!workspace) {
         this.loading = false
         this.workspace = null
-        
+
         return
       }
 

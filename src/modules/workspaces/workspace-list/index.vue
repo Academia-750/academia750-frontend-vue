@@ -17,7 +17,9 @@ export default {
   name: 'WorkspaceView',
   components: {
     WorkspaceList: () =>
-      import(/* webpackChunkName: "WorkspaceList" */ './components/workspace-list.vue')
+      import(
+        /* webpackChunkName: "WorkspaceList" */ './components/workspace-list.vue'
+      )
   },
   mixins: [notifications],
   data() {
@@ -33,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de espacio de trabajo'
+      inner: 'Gestión de Workspaces'
     }
   }
 }

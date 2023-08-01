@@ -47,12 +47,13 @@ export default {
    * @param {number} offset
    * @param {number} limit
    */
-  async list({ withCount, orderBy, offset, limit }) {
+  async list({ withCount, orderBy, offset, limit, content }) {
     const params = {
       withCount,
       orderBy,
       offset,
-      limit
+      limit,
+      content: content || undefined
     }
 
     deleteUndefined(params)

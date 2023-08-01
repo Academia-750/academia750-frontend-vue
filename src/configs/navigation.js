@@ -145,7 +145,7 @@ export default {
         {
           icon: 'mdi-folder-open',
           key: '',
-          text: 'Gestión de espacio de trabajo',
+          text: 'Gestión de Workspaces',
           to: { name: 'manage-workspaces' },
           roles: 'admin'
         },
