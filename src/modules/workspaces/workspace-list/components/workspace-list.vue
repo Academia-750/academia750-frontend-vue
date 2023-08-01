@@ -59,7 +59,7 @@
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(workspace)"
+            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
           />
         </div>
       </template>
