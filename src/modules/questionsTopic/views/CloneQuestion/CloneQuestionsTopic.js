@@ -46,7 +46,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Crear pregunta para tema'
+      inner: 'Copiar pregunta'
     }
   }
 }

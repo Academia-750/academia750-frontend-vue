@@ -20,20 +20,6 @@
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
         <resource-button-add :config-route="{ name: 'create-question-topic' }"/>
-        <!-- <v-btn
-          small
-          color="light-blue darken-3"
-          class="white--text mx-1 align-self-center"
-          @click="fetchDataQuestionForUpdate"
-        >
-          <v-icon
-            right
-            dark
-            class="mr-1"
-          >
-            mdi-refresh
-          </v-icon>
-        </v-btn> -->
       </div>
     </v-toolbar>
     <v-card-text>
@@ -43,19 +29,10 @@
             cols="12"
             sm="12"
             md="12"
-            lg="12"
-          >
-            <p class="font-weight-bold">La pregunta está en modo edición. Mientras esté en modo edición la pregunta no estará disponible para los Tests</p>
-            <p class="font-weight-bold">Para salir del modo edición, solamente dar click a "actualizar" y listo</p>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
             lg="8"
             class="d-flex align-center"
           >
-            <form-question-text-field
+            <FormQuestionTextField
               ref="FormQuestionTextField"
               rules="required|max:65535"
             />
@@ -202,7 +179,6 @@
                     forbidden-grouper-answer
                     @AnswerIsGrouperValueBinding="bindingCheckGroupAnswer"
                   />
-                  <!-- <v-divider class="my-3"/> -->
                   <form-answer-field
                     v-show="isTestQuestion"
                     ref="FormAnswerAnotherFieldOfQuestionBinary"
@@ -222,10 +198,6 @@
               </v-col>
             </v-row>
           </v-col>
-          <!-- <v-divider
-            vertical
-          ></v-divider> -->
-          <!-- -------------------------------- -->
           <v-col
             cols="12"
             sm="12"
@@ -298,4 +270,488 @@
   </v-card-text>
 </template>
 
-<script src="./CloneQuestionsTopic.js"></script>
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  components: {
+  ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
+  ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
+  ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
+  ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
+  ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
+  FormQuestionTextField: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormQuestionTextField'),
+  FormQuestionTypeTestCheckbox: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormQuestionTypeTestCheckbox'),
+  FormQuestionTypeCardMemoryCheckbox: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormQuestionTypeCardMemoryCheckbox'),
+  FormReasonTextArea: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormReasonTextArea'),
+  FormAnswerField: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormAnswerField'),
+  FormAddQuestionImage: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormAddQuestionImage'),
+  FormQuestionIsVisibleCheckbox: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/components/questions/form/FormQuestionIsVisibleCheckbox')
+
+  },
+  data () {
+    return {
+      //namesRelationshipsIncludeRequest: 'topics'
+      topicData: null,
+      questionData: null,
+      loadingButtonCloneQuestion: false,
+      disabledButtonCloneQuestion: false,
+      removeImagenOfQuestion: false,
+      show_reason_text_in_test: true,
+      show_reason_text_in_card_memory: false,
+      show_reason_image_in_test: true,
+      show_reason_image_in_card_memory: false,
+      isThereImageQuestionUpdate: false,
+      isCardMemoryQuestion: false,
+      isTestQuestion: true,
+      answerGrouperSelected: '',
+      dataAnswersUuid: [],
+      isQuestionBinary: false,
+      imageReason: null,
+      reasonText: null
+    }
+  },
+  computed: {
+    getNameCurrentTopic() {
+      return `Pregunta del Tema: "${this.topicData?.attributes?.name}"`
+    },
+    getNameCurrentQuestion() {
+      return `Pregunta: "${this.questionData?.data?.attributes['question-text']}"`
+    },
+    getClassAnswersField() {
+      return {
+        'd-flex': true,
+        'justify-center': true,
+        'flex-column': this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.md,
+        'flex-row': this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl
+      }
+    },
+    getLabelByQuestionBinary () {
+      return this.isQuestionBinary ? 'Si' : 'No'
+    },
+    invalidComputedValidation () {
+      return !(this.isCardMemoryQuestion || this.isTestQuestion)
+    }
+  },
+  watch: {
+    questionData (value) {
+      this.setCloneModeQuestionApi(value.data.id, 'yes')
+    }
+  },
+  mounted() {
+    this.fetchDataQuestionForClone()
+  },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
+  beforeDestroy () {
+    this.setCloneModeQuestionApi(this.questionData.data.id, 'no')
+  },
+  created () {
+    this.dataAnswersUuid = [
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID(),
+      this.generateUUID()
+    ]
+  },
+  methods: {
+    ...mapActions('questionsTopicService', ['fetchQuestion','createQuestion', 'setEditModeQuestion']),
+    async CloneQuestionApi() {
+      try {
+        const FormDataQuestion = this.getFormDataForSaveQuestion()
+        
+        await this.createQuestion({
+          topic_id: this.$route.params.id,
+          data: FormDataQuestion,
+          config: {}
+        })
+
+        console.log('=========log', await this.createQuestion({
+          topic_id: this.$route.params.id,
+          data: FormDataQuestion,
+          config: {}
+        }))
+        this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: 'La pregunta ha sido actualizada con éxito.',
+          timer: 10000
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateQuestion = false
+        this.disabledButtonCreateQuestion = false
+
+        this.ResetForm()
+      } catch (error) {
+        console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateQuestion = false
+        this.disabledButtonCreateQuestion = false
+        if (error.response === undefined) {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            showConfirmButton: true,
+            confirmButtonText: '¡Entendido!',
+            timer: 7500
+          })
+        } else if (error.response?.status === 422) {
+          this.handlingErrorValidation(error.response.data.errors)
+        }
+      }
+    },
+    async fetchDataQuestionForClone() {
+      try {
+        this.$loadingApp.enableLoadingProgressLinear()
+        this.disabledButtonCreateQuestion = true
+
+        const response = await this.fetchQuestion({
+          topic_id: this.$route.params.id,
+          question_id: this.$route.params.question_id,
+          config: {
+            params: {
+              include: 'image,answers'
+            }
+          }
+        })
+
+        this.syncValuesForm(response)
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonCreateQuestion = false
+
+      } catch (error) {
+        //console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.disabledButtonCreateQuestion = false
+      }
+    },
+    async setCloneModeQuestionApi (question_id, isModeEdition) {
+      try {
+        const response = await this.setEditModeQuestion({
+          question_id: question_id,
+          data: {
+            'is-mode-edition-question': isModeEdition
+          },
+          config: {}
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormCreateQuestion']['setErrors'](errorResponse)
+    },
+    bindingCheckGroupAnswer({ value, uuid }) {
+      if (!value) {
+        this.answerGrouperSelected = ''
+
+        return
+      }
+
+      this.answerGrouperSelected = uuid
+    },
+    async ResetForm() {
+
+      this.loadingButtonCloneQuestion = false
+      this.disabledButtonCloneQuestion = false
+
+      this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = ''
+
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = ''
+
+      this.$refs['FormQuestionTextField'].question_text = ''
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = true
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = false
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = true
+      this.$refs['FormAnswerCorrectField'].answer_value = ''
+      this.$refs['FormAnswerCorrectField'].is_grouper_answer = ''
+      this.$refs['FormAnswerOneField'].answer_value = ''
+      this.$refs['FormAnswerOneField'].is_grouper_answer = ''
+      this.$refs['FormAnswerTwoField'].answer_value = ''
+      this.$refs['FormAnswerTwoField'].is_grouper_answer = ''
+      this.$refs['FormAnswerThreeField'].answer_value = ''
+      this.$refs['FormAnswerThreeField'].is_grouper_answer = ''
+      this.$refs['FormReasonTextArea'].reason_value = ''
+      this.$refs['FormAddQuestionImage'].image = null
+
+      this.dataAnswersUuid = [
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID(),
+        this.generateUUID()
+      ]
+
+      this.isCardMemoryQuestion = false
+      this.isTestQuestion = true
+      this.answerGrouperSelected = ''
+
+      this.isQuestionBinary = false
+      this.imageReason = null
+
+      this.$nextTick(() => {
+        this.$refs['FormCreateQuestion']['reset']()
+      })
+
+      return true
+    },
+    async createQuestion() {
+      const statusValidate = await this.$refs['FormCreateQuestion'].validate()
+
+      if (!statusValidate) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, complete correctamente los campos del formulario.',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 7500
+        })
+
+        return
+      }
+
+      this.$loadingApp.enableLoadingProgressLinear()
+      this.loadingButtonCloneQuestion = true
+      this.disabledButtonCloneQuestion = true
+      this.CloneQuestionApi()
+    },
+    generateUUID() {
+      let d = new Date().getTime()
+
+      let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0
+
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        let r = Math.random() * 16
+
+        if (d > 0) {
+
+          r = (d + r) % 16 | 0
+          d = Math.floor(d / 16)
+        } else {
+          r = (d2 + r) % 16 | 0
+          d2 = Math.floor(d2 / 16)
+        }
+
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+      })
+    },
+    bindingIsTestState (isTest) {
+      this.isTestQuestion = isTest
+      this.show_reason_text_in_test = isTest
+      this.show_reason_image_in_test = isTest
+    },
+    bindingIsCardMemoryState (isCardMemory) {
+      this.isCardMemoryQuestion = isCardMemory
+      this.show_reason_text_in_card_memory = isCardMemory
+      this.show_reason_image_in_card_memory = isCardMemory
+    },
+    getFormDataForSaveQuestion () {
+      const FormDataQuestion = new FormData()
+
+      FormDataQuestion.append('remove-image-existing', 'no')
+      FormDataQuestion.append('question-text', this.$refs['FormQuestionTextField'].question_text)
+      FormDataQuestion.append('is-test', this.$refs['FormQuestionTypeTestCheckbox'].is_test)
+      FormDataQuestion.append('is-card-memory', this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory)
+      FormDataQuestion.append('is-visible', this.$refs['FormQuestionIsVisibleCheckbox'].is_visible)
+      FormDataQuestion.append('reason-question', this.$refs['FormReasonTextArea'].reason_value)
+      FormDataQuestion.append('file-reason', this.$refs['FormAddQuestionImage'].image)
+
+      if (this.reasonText) {
+        FormDataQuestion.append('show_reason_text_in_test', this.show_reason_text_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', this.show_reason_text_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_text_in_test', 'no')
+        FormDataQuestion.append('show_reason_text_in_card_memory', 'no')
+      }
+
+      if (this.imageReason || this.isThereImageQuestionUpdate) {
+        FormDataQuestion.append('show_reason_image_in_test', this.show_reason_image_in_test ? 'yes' : 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', this.show_reason_image_in_card_memory ? 'yes' : 'no')
+      } else {
+        FormDataQuestion.append('show_reason_image_in_test', 'no')
+        FormDataQuestion.append('show_reason_image_in_card_memory', 'no')
+      }
+
+      if (!this.isTestQuestion) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'no')
+
+        return FormDataQuestion
+      }
+
+      if (this.isQuestionBinary) {
+        FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('another-answer-binary-alternative', this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value)
+        FormDataQuestion.append('is-question-binary-alternatives', 'yes')
+
+        return FormDataQuestion
+      }
+
+      FormDataQuestion.append('is-question-binary-alternatives', 'no')
+      FormDataQuestion.append('answer-correct', this.$refs['FormAnswerCorrectField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-correct', this.$refs['FormAnswerCorrectField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-one', this.$refs['FormAnswerOneField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-one', this.$refs['FormAnswerOneField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-two', this.$refs['FormAnswerTwoField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-two', this.$refs['FormAnswerTwoField'].is_grouper_answer)
+
+      FormDataQuestion.append('answer-three', this.$refs['FormAnswerThreeField'].answer_value)
+      FormDataQuestion.append('is-grouper-answer-three', this.$refs['FormAnswerThreeField'].is_grouper_answer)
+
+      return FormDataQuestion
+    },
+    loadImageQuestion (relationships) {
+      if (relationships.image) {
+        const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'
+        const serverApiDevelopment = process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
+        const serverApiProduction = process.env.VUE_APP_BASE_URL_API_PRODUCTION
+
+        if (relationships.image.attributes.type_path === 'url') {
+          this.$refs['FormAddQuestionImage'].urlImage = relationships.image.attributes.path
+          this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
+        }
+
+        if (relationships.image.attributes.type_path === 'local') {
+          this.$refs['FormAddQuestionImage'].urlImage = `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}${relationships.image.attributes.path}`
+          this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
+          this.isThereImageQuestionUpdate = true
+        }
+
+      }
+    },
+    loadAnswersQuestion (dataAnswers, { isTest, isCardMemory, isQuestionBinary }) {
+
+      const dataAnswersAlternativesNoCorrect = dataAnswers.filter((answer) => answer.attributes.is_correct_answer === 'no')
+      const answerCorrect = dataAnswers.find((answer) => answer.attributes.is_correct_answer === 'yes')
+
+      /* //console.log(dataAnswersAlternativesNoCorrect)
+      //console.log(answerCorrect) */
+
+      this.$refs['FormAnswerCorrectField'].answer_id = answerCorrect.id
+      this.$refs['FormAnswerCorrectField'].answer_value = answerCorrect.attributes.answer_text
+      this.$refs['FormAnswerCorrectField'].is_grouper_answer = answerCorrect.attributes.is_grouper_answer === 'yes'
+
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_id = answerCorrect.id
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].answer_value = answerCorrect.attributes.answer_text
+      this.$refs['FormAnswerCorrectFieldOfQuestionBinary'].is_grouper_answer = answerCorrect.attributes.is_grouper_answer === 'yes'
+
+      if (!isTest && isCardMemory && !isQuestionBinary && answerCorrect) {
+        console.info('Pregunta de tipo tarjeta de memoria')
+
+        return
+      }
+
+      if (isTest && !isQuestionBinary) {
+        console.info('Pregunta de tipo Test y pregunta de alternativas no binaria')
+
+        if (dataAnswersAlternativesNoCorrect && dataAnswersAlternativesNoCorrect.length > 0) {
+
+          this.$refs['FormAnswerOneField'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerOneField'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerOneField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[0].attributes.is_grouper_answer === 'yes'
+
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].is_grouper_answer = false
+
+          this.$refs['FormAnswerTwoField'].answer_id = dataAnswersAlternativesNoCorrect[1].id
+          this.$refs['FormAnswerTwoField'].answer_value = dataAnswersAlternativesNoCorrect[1].attributes.answer_text
+          this.$refs['FormAnswerTwoField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[1].attributes.is_grouper_answer === 'yes'
+
+          this.$refs['FormAnswerThreeField'].answer_id = dataAnswersAlternativesNoCorrect[2].id
+          this.$refs['FormAnswerThreeField'].answer_value = dataAnswersAlternativesNoCorrect[2].attributes.answer_text
+          this.$refs['FormAnswerThreeField'].is_grouper_answer = dataAnswersAlternativesNoCorrect[2].attributes.is_grouper_answer === 'yes'
+        }
+
+        return
+      }
+
+      if (isTest && isQuestionBinary) {
+        console.info('Pregunta de tipo Test y pregunta de alternativas binaria')
+
+        if (dataAnswersAlternativesNoCorrect && dataAnswersAlternativesNoCorrect.length > 0) {
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerAnotherFieldOfQuestionBinary'].is_grouper_answer = false
+
+          this.$refs['FormAnswerOneField'].answer_id = dataAnswersAlternativesNoCorrect[0].id
+          this.$refs['FormAnswerOneField'].answer_value = dataAnswersAlternativesNoCorrect[0].attributes.answer_text
+          this.$refs['FormAnswerOneField'].is_grouper_answer = false
+        }
+
+        return
+      }
+
+      //console.log(dataAnswers)
+      /* console.log({
+        isTest,
+        isCardMemory,
+        isQuestionBinary
+      }) */
+    },
+    syncValuesForm(response) {
+      ////console.log(response.data)
+
+      this.loadingButtonCreateQuestion = false
+      this.disabledButtonCreateQuestion = false
+
+      const { attributes, relationships } = response.data.data
+      const { topic } = response.data.meta
+
+      this.$refs['FormQuestionTextField'].question_text = attributes['question-text']
+
+      /* Consultar todo sobre el tipo de pregunta es */
+
+      const ITS_CARD_MEMORY_BOOLEAN = attributes.its_for_card_memory === 'yes'
+      const ITS_TEST_BOOLEAN = attributes.its_for_test === 'yes'
+      const ITS_BINARY_QUESTION_BOOLEAN = attributes.is_question_binary_alternatives === 'yes'
+      const ITS_VISABLE_QUESTION_BOOLEAN = attributes.is_visible === 'yes'
+
+      const SHOW_REASON_TEXT_IN_TEST = attributes.show_reason_text_in_test === 'yes'
+      const SHOW_REASON_TEXT_IN_CARD_MEMORY = attributes.show_reason_text_in_card_memory === 'yes'
+      const SHOW_REASON_IMAGE_IN_TEST = attributes.show_reason_image_in_test === 'yes'
+      const SHOW_REASON_IMAGE_IN_CARD_MEMORY = attributes.show_reason_image_in_card_memory === 'yes'
+
+      this.questionData = response.data
+      this.topicData = topic
+
+      this.isCardMemoryQuestion = ITS_CARD_MEMORY_BOOLEAN
+      this.isTestQuestion = ITS_TEST_BOOLEAN
+      this.isQuestionBinary = ITS_BINARY_QUESTION_BOOLEAN
+
+      this.$refs['FormQuestionTypeTestCheckbox'].is_test = ITS_TEST_BOOLEAN
+      this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory = ITS_CARD_MEMORY_BOOLEAN
+      this.$refs['FormQuestionIsVisibleCheckbox'].is_visible = ITS_VISABLE_QUESTION_BOOLEAN
+
+      this.show_reason_text_in_test = SHOW_REASON_TEXT_IN_TEST
+      this.show_reason_text_in_card_memory = SHOW_REASON_TEXT_IN_CARD_MEMORY
+      this.show_reason_image_in_test = SHOW_REASON_IMAGE_IN_TEST
+      this.show_reason_image_in_card_memory = SHOW_REASON_IMAGE_IN_CARD_MEMORY
+
+      this.answerGrouperSelected = ''
+
+      this.$refs['FormReasonTextArea'].reason_value = attributes['reason-text']
+      this.reasonText = attributes['reason-text']
+
+      this.loadAnswersQuestion(relationships.answers.data, {
+        isTest: ITS_TEST_BOOLEAN,
+        isCardMemory: ITS_CARD_MEMORY_BOOLEAN,
+        isQuestionBinary: ITS_BINARY_QUESTION_BOOLEAN
+      })
+      this.loadImageQuestion(relationships)
+
+    }
+  },
+  head: {
+    title: {
+      inner: 'Copiar pregunta'
+    }
+  }
+}
+</script>
