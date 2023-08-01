@@ -1,6 +1,6 @@
 <template>
   <v-card-text>
-    <AddWorkspaceModal 
+    <AddWorkspaceModal
       ref="addWorkSpace"
       :workspace="workspace"
       :name="name"
@@ -36,7 +36,7 @@
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o código"
+          label-text-field="Buscar por nombre"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -111,10 +111,10 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    AddWorkspaceModal: () => 
-        import(
-          /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
-        ),
+    AddWorkspaceModal: () =>
+      import(
+        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
+      ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -205,7 +205,7 @@ export default {
       this.$refs.table.reload()
     },
 
-    async create(name) {
+    async create() {
       this.$refs.table.reload()
       this.SET_EDIT_ITEM(false)
     },
