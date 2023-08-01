@@ -3,7 +3,7 @@
     <!-- <p class="text--darken-3 mt-2 mb-3 font-weight-bold"> {{ getIndexQuestion.index }}. - <span class="font-weight-bold">{{ questionWithAnswers?.attributes['question-text'] }}</span></p> -->
 
     <v-list-item-content class="mb-2">
-      <v-list-item-title class="text--darken-3 font-weight-bold">{{ getIndexQuestion.index }}. - {{ questionWithAnswers?.attributes['question-text'] }}</v-list-item-title>
+      <v-list-item-title class="text--darken-3 font-weight-bold">{{ getIndexQuestion?.index }}. - {{ questionWithAnswers?.attributes['question-text'] }}</v-list-item-title>
     </v-list-item-content>
     <!-- <p class="text--darken-3 my-3 font-weight-bold">{{ getIndexQuestion.index }}. - <span class="font-weight-bold">{{ questionWithAnswers?.attributes['question-text'] }}</span></p> -->
     <!-- <answers-radio-buttons-questionnaire
@@ -70,7 +70,7 @@ export default {
   computed: {
     ...mapState('testsService', ['questionsDataHistoryByTest', 'questionsDataResolved']),
     getIndexQuestion() {
-      return this.questionsDataHistoryByTest.find((question) => question.question_id === this.questionWithAnswers.id)
+      return this.questionsDataHistoryByTest.find((question) => question.question.uuid === this.questionWithAnswers.id)
     },
     getAnswersOfQuestion() {
 

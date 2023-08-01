@@ -29,7 +29,7 @@ export default {
       return answersNoGrouper
     },
     setAnswerResolved() {
-      const Question = this.questionsDataHistoryByTest.find((question) => question.question_id === this.questionWithAnswers.id)
+      const Question = this.questionsDataHistoryByTest.find((question) => question.question.uuid === this.questionWithAnswers.id)
 
       this.$refs[`answers-group-question-${this.questionWithAnswers.id}`].answer_selected_id = Question.answer_id
       this.answer_selected_id = Question.answer_id
