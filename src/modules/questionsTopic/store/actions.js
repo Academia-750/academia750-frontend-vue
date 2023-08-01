@@ -63,7 +63,6 @@ const getQuestions = async ({ commit }, options) => {
 
 const createQuestion = async (_, options) => {
   try {
-    console.log('got here')
     const response = await QuestionsTopicRepository.create(options.topic_id, options.data, options.config)
 
     return Promise.resolve(response)

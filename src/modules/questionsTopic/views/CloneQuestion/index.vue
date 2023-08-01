@@ -366,16 +366,11 @@ export default {
           data: FormDataQuestion,
           config: {}
         })
-
-        console.log('=========log', await this.createQuestion({
-          topic_id: this.$route.params.id,
-          data: FormDataQuestion,
-          config: {}
-        }))
+        
         this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: 'La pregunta ha sido actualizada con éxito.',
+          title: 'La pregunta ha sido creada con éxito.',
           timer: 10000
         })
 
@@ -496,27 +491,6 @@ export default {
       })
 
       return true
-    },
-    async createQuestion() {
-      const statusValidate = await this.$refs['FormCreateQuestion'].validate()
-
-      if (!statusValidate) {
-        this.$swal.fire({
-          icon: 'error',
-          toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
-          showConfirmButton: true,
-          confirmButtonText: 'Entendido',
-          timer: 7500
-        })
-
-        return
-      }
-
-      this.$loadingApp.enableLoadingProgressLinear()
-      this.loadingButtonCloneQuestion = true
-      this.disabledButtonCloneQuestion = true
-      this.CloneQuestionApi()
     },
     generateUUID() {
       let d = new Date().getTime()
