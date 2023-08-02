@@ -8,6 +8,7 @@
     outlined
     small-chips
     clearable
+    :autofocus="autofocus"
     item-text="text"
     item-value="uuid"
     label="Buscar por Nombre o DNI"
@@ -33,6 +34,10 @@ export default {
     limit: {
       type: Number,
       default: 5
+    },
+    autofocus: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

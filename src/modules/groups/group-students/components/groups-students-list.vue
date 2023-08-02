@@ -18,7 +18,7 @@
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <resource-button-go-back-router />
-          <ResourceTitleToolbarDatatable :title-text="`Students of Group ${groupName}`"/>
+          <ResourceTitleToolbarDatatable :title-text="`Grupo: ${groupName}`" />
 
           <v-spacer />
 
@@ -132,7 +132,10 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter')
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      )
   },
   mixins: [componentButtonsCrud],
   data() {
@@ -198,7 +201,7 @@ export default {
       const res = await GroupRepository.info(groupId)
 
       this.groupName = res.name
-      
+
       return res
     },
 
@@ -207,20 +210,6 @@ export default {
       const params = {
         group_id: this.$route.params.id,
         user_id: student.uuid
-      }
-
-      if  (!student) {
-        this.$swal.fire({
-          icon: 'error',
-          title:
-            'No podemos verificar autenticidad con Recaptcha. Por favor, recarga la página, y vuelve a intentarlo.',
-          showConfirmButton: true,
-          confirmButtonText: '¡Entendido!',
-          timer: 10000
-        })
-        this.isAddingUser = false
-        
-        return
       }
 
       await GroupRepository.joinGroup(params)
