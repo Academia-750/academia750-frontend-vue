@@ -26,7 +26,7 @@
 
           <v-spacer />
 
-          <ResourceButtonAdd text-button="Create Workspace" @click="onCreate" />
+          <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -50,7 +50,7 @@
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between">
-          <ResourceButtonAdd text-button="Add Materials" @click="onCreate" />
+          <ResourceButtonAdd text-button="Add Materials" :disabled="true" />
 
           <resource-button-edit
             :config-route="{}"

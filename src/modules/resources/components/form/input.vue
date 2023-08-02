@@ -10,7 +10,7 @@
       :value="value"
       name="name"
       :error-messages="errors"
-      label="Workspace Name"
+      label="Nombre"
       :filled="true"
       required
       clearable
@@ -19,19 +19,19 @@
     </v-text-field>
   </ValidationProvider>
 </template>
-  
-  <script>
-  export default {
-    name: 'NombreFieldInput',
-    props: {
-      value: {
-        type: String,
-        default: ''
-      },
-      rules: {
-        type: [Object, String],
-        required: true
-      }
+
+<script>
+export default {
+  name: 'NombreFieldInput',
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    rules: {
+      type: [Object, String],
+      required: true
     }
   }
-  </script>
+}
+</script>
