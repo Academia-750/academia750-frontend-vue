@@ -10,10 +10,10 @@
       :value="value"
       name="name"
       :error-messages="errors"
-      label="Workspace Name"
-      :filled="true"
+      :label="label"
       required
       clearable
+      outlined
       @input="$emit('input', $event)"
     >
     </v-text-field>
@@ -31,6 +31,10 @@
       rules: {
         type: [Object, String],
         required: true
+      },
+      label: {
+        type: String,
+        default: ''
       }
     }
   }

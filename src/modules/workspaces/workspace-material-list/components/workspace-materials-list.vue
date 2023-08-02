@@ -1,13 +1,13 @@
 <template>
   <v-card-text>
-    <AddWorkspaceModal
-      ref="addWorkSpace"
+    <AddMaterialModal
+      ref="addMaterial"
       :workspace="workspace"
       :name="name"
       @create="create"
     />
-    <AddMaterialModal
-      ref="addMaterial"
+    <AddRecordingModal
+      ref="addRecording"
       :workspace="workspace"
       :name="name"
       @create="create"
@@ -28,11 +28,10 @@
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Workspace" />
+          <resource-title-toolbar-datatable title-text="Materials" />
 
           <v-spacer />
 
-          <ResourceButtonAdd text-button="Create Workspace" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -46,6 +45,19 @@
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
+        <!-- ------------ TYPE SECTION ------------ -->
+        <div class="d-flex align-center mx-3 type-section">
+          <p class="mr-2 font-weight-bold">Types:</p>
+          <v-select
+            :items="items"
+            label="Materials"
+            dense
+            outlined
+            class="mr-2"
+          ></v-select>
+          <ResourceButtonAdd text-button="Crear" class="mb-3" @click="onAddRecording" />
+        </div>
+
       </template>
 
       <!-- ------------ NO DATA ------------ -->
@@ -55,13 +67,19 @@
 
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-between">
-          <ResourceButtonAdd text-button="Add Materials" @click="onAddMaterial" />
-          <ResourceButtonSee 
-            text-button="ver" 
-            :config-route="{ name: 'manage-materials', params: { id: item.id }}"
-          />
-
+        <div class="d-flex justify-space-between align-center">
+          <div>
+            <v-icon color="primary">mdi-cloud-download</v-icon>
+          </div>
+          <div>
+            <v-select
+              :items="items"
+              label="Transfer"
+              dense
+              outlined
+              class="mt-3"
+            ></v-select>
+          </div>
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -81,7 +99,7 @@
 import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './workspace-list-columns'
+import headers from './workspace-materials-list-columns'
 import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
@@ -121,17 +139,13 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    AddWorkspaceModal: () =>
-      import(
-        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
-      ),
     AddMaterialModal: () =>
       import(
-        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-material-modal'
+        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
-    ResourceButtonSee: () =>
+    AddRecordingModal: () =>
       import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonSee'
+        /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
       ),
     ServerDataTable
   },
@@ -176,61 +190,15 @@ export default {
 
       return res
     },
-    onCreate() {
-      this.name = ''
-      this.workspace = null
-      this.$refs.addWorkSpace.open()
-    },
     onAddMaterial() {
       this.name = ''
       this.workspace = null
       this.$refs.addMaterial.open()
     },
-    updateWorkspace(workspace) {
-      this.name = workspace.name
-      this.SET_EDIT_ITEM(workspace)
-      this.workspace = workspace
-      this.$refs.addWorkSpace.open()
-    },
-    async deleteWorkspaceConfirm(workspace) {
-      if (!workspace) {
-        return
-      }
-      const result = await this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: 'ELIMINAR Workspace',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      })
-
-      if (!result.isConfirmed) {
-        return
-      }
-
-      const res = await WorkspaceRepository.delete(workspace.id)
-
-      if (!res) {
-        return
-      }
-      this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: 'El Workspace ha sido eliminado con éxito.',
-        timer: 3000
-      })
-
-      this.$refs.table.reload()
-    },
-
-    async create() {
-      this.$refs.table.reload()
-      this.SET_EDIT_ITEM(false)
+    onAddRecording() {
+      this.name = ''
+      this.workspace = null
+      this.$refs.addRecording.open()
     },
 
     searchFieldExecuted($event) {
@@ -266,5 +234,9 @@ export default {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+}
+
+.type-section{
+  width: 30%;
 }
 </style>

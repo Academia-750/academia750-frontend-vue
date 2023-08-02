@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
-import ManageGroupsModule from './workspace-list'
+import ManageWorkspacesModule from './workspace-list'
+import ManageMaterialsModule from './workspace-material-list'
 
 const shortcutRoutes = [
   {
@@ -26,7 +27,15 @@ const moduleRoute = [
           {
             path: 'list',
             name: 'manage-workspaces',
-            component: ManageGroupsModule,
+            component: ManageWorkspacesModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/materials',
+            name: 'manage-materials',
+            component: ManageMaterialsModule,
             meta: {
               middleware: [authMiddleware]
             }
