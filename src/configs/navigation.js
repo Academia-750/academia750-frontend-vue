@@ -143,6 +143,13 @@ export default {
           roles: 'admin'
         },
         {
+          icon: 'mdi-folder-open',
+          key: '',
+          text: 'Gestión de Workspaces',
+          to: { name: 'manage-workspaces' },
+          roles: 'admin'
+        },
+        {
           icon: 'mdi-book-open-variant',
           key: '',
           text: 'Gestión de Oposiciones',

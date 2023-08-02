@@ -1,26 +1,32 @@
 <template>
   <v-card-text>
+    <AddWorkspaceModal
+      ref="addWorkSpace"
+      :workspace="workspace"
+      :name="name"
+      @create="create"
+    />
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="groupStore"
+      store-name="workspaceStore"
       :load="loadGroups"
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
 
         <ResourceHeaderCrudTitle
-          text-header="Gestión de Grupos"
+          text-header="Gestión de espacio de trabajo"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Gestión de Grupos" />
+          <resource-title-toolbar-datatable title-text="Workspace" />
 
           <v-spacer />
 
-          <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
+          <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -30,7 +36,7 @@
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o código"
+          label-text-field="Buscar por nombre"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -42,33 +48,14 @@
       </template>
 
       <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.name`]="{ item }">
-        <div class="d-flex align-center">
-          <span
-            :style="{ backgroundColor: item.color }"
-            class="circle mr-1"
-          ></span>
-          {{ item.name }}
-        </div>
-      </template>
-      <template v-slot:[`item.updated_at`]="{ item }">
-        {{ parseDate(item.updated_at) }}
-      </template>
-      <template v-slot:[`item.alumnos`]="{ item }">
-        <div class="d-flex justify-space-around">
-          <ResourceButtonAdd
-            text-button="Alumnos"
-            :config-route="{ name: 'group-students', params: { id: item.id } }"
-            :only-dispatch-click-event="true"
-          />
-        </div>
-      </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-around">
+        <div class="d-flex justify-space-between">
+          <ResourceButtonAdd text-button="Add Materials" :disabled="true" />
+
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateItem(item)"
+            @DispatchClickEvent="updateWorkspace(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
@@ -82,15 +69,15 @@
 
 <script>
 import _ from 'lodash'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './group-list-columns'
+import headers from './workspace-list-columns'
 import moment from 'moment'
-import GroupRepository from '@/services/GroupRepository'
+import WorkspaceRepository from '@/services/WorkspaceRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 
 export default {
-  name: 'GruposList',
+  name: 'WorkspaceList',
   components: {
     ResourceButtonEdit: () =>
       import(
@@ -124,15 +111,26 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
+    AddWorkspaceModal: () =>
+      import(
+        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
+      ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
+  data() {
+    return {
+      name: '',
+      workspace: null
+    }
+  },
   computed: {
+    ...mapState('workspaceStore', ['editItem']),
     headers() {
       return headers
     },
     store() {
-      return this.$store.state.groupStore
+      return this.$store.state.workspaceStore
     }
   },
   created() {
@@ -143,38 +141,44 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('groupStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
+    },
+    async handlingErrorValidation(errorResponse = {}) {
+      await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
     async loadGroups(pagination) {
       const params = {
         ...pagination
       }
 
-      const res = await GroupRepository.list(params)
+      const res = await WorkspaceRepository.list(params)
 
       return res
     },
     onCreate() {
-      this.SET_EDIT_ITEM(false)
-      this.$router.push('/groups/create')
+      this.name = ''
+      this.workspace = null
+      this.$refs.addWorkSpace.open()
     },
-    updateItem(item) {
-      this.SET_EDIT_ITEM(item)
-      this.$router.push('/groups/edit')
+    updateWorkspace(workspace) {
+      this.name = workspace.name
+      this.SET_EDIT_ITEM(workspace)
+      this.workspace = workspace
+      this.$refs.addWorkSpace.open()
     },
-    async deleteWorkspaceConfirm(item) {
-      if (!item) {
+    async deleteWorkspaceConfirm(workspace) {
+      if (!workspace) {
         return
       }
       const result = await this.$swal.fire({
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR GRUPO',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este grupo? Todos los alumnos seran dados de baja y perderas el histórico del grupo',
+        title: 'ELIMINAR Workspace',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -186,7 +190,7 @@ export default {
         return
       }
 
-      const res = await WorkspaceRepository.delete(item.id)
+      const res = await WorkspaceRepository.delete(workspace.id)
 
       if (!res) {
         return
@@ -194,11 +198,16 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'El grupo ha sido eliminado con éxito.',
+        title: 'El Workspace ha sido eliminado con éxito.',
         timer: 3000
       })
 
       this.$refs.table.reload()
+    },
+
+    async create() {
+      this.$refs.table.reload()
+      this.SET_EDIT_ITEM(false)
     },
 
     searchFieldExecuted($event) {
