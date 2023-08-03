@@ -12,6 +12,9 @@
       :question-uuid="questionWithAnswers.id"
       @changeSelectedAnswer="changeSelectionAnswerResolvedInQuestion"
     /> -->
+    <pre>
+      {{ answer_selected_id }}
+    </pre>
     <answers-list-solve-action-questionnaire
       :ref="`answers-group-question-${questionWithAnswers.id}`"
       :answers="getAnswersOfQuestion"
