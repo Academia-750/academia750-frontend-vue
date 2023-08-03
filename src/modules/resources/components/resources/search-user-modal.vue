@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title>
           <span class="text-subtitle-1 font-weight-bold">
-            {{ title || 'Agregar Alumnos Individualmente' }}
+            {{ title || 'Agregar alumnos individualmente' }}
           </span>
         </v-card-title>
         <v-card-text>
@@ -12,6 +12,7 @@
             <div class="input">
               <StudentAutoComplete
                 ref="studentAutoComplete"
+                :autofocus="autofocus"
                 :limit="limit"
                 @change="onSelect"
               />
@@ -33,6 +34,7 @@
 </template>
 <script>
 import StudentAutoComplete from '../form/student-auto-complete.vue'
+import Swal from 'sweetalert2/dist/sweetalert2'
 
 export default {
   name: 'SearchUserModal',
@@ -45,6 +47,10 @@ export default {
     limit: {
       type: Number,
       default: 5
+    },
+    autofocus: {
+      type: Boolean,
+      default: true
     },
     loading: {
       type: Boolean,
@@ -74,6 +80,17 @@ export default {
       this.selectedItem = value
     },
     onOk() {
+      if (!this.selectedItem) {
+        Swal.fire({
+          toast: true,
+          timer: 1000,
+          icon: 'warning',
+          title: 'Seleccione a un alumno'
+        })
+
+        return
+      }
+
       this.$emit('ok', this.selectedItem)
       this.isOpen = false
     },
