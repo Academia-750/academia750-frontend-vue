@@ -32,7 +32,7 @@
 
           <v-spacer />
 
-          <ResourceButtonAdd text-button="Create Workspace" @click="onCreate" />
+          <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"

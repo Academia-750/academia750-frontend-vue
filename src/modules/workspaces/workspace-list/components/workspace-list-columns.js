@@ -1,7 +1,7 @@
 export default [
   {
     position: 1,
-    text: 'Workspace Name',
+    text: 'Nombre',
     align: 'start',
     sortable: true,
     value: 'name',
@@ -9,7 +9,7 @@ export default [
   },
   {
     position: 2,
-    text: 'Number Of Files',
+    text: 'No. de Ficheros',
     align: 'center',
     sortable: true,
     value: 'materials_count',
