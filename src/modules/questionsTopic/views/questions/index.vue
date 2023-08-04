@@ -81,28 +81,36 @@
         />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-around">
-          <resource-button-edit
-            text-button="Ver"
-            icon-button="mdi-eye"
-            color-button="success"
-            :config-route="{ name: 'fetch-question-topic', params: { question_id: item.id } }"
-          />
-          <resource-button-edit
-            v-if="topicData !== null && item.can_this_question_be_affected"
-            color-button="blue darken-1"
-            :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
-          />
-          <resource-button-copy
-            v-if="topicData !== null && item.can_this_question_be_affected"
-            text-button="Copiar"
-            color-button="blue darken-1"
-            :config-route="{ name: 'clone-question-topic', params: { id: topicData.id, question_id: item.id } }"
-          />
-          <resource-button-delete
-            v-if="topicData !== null && item.can_this_question_be_affected"
-            @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
-          />
+        <div class="d-flex flex-wrap justify-space-around">
+          <div class="mt-1">
+            <resource-button-edit
+              text-button="Ver"
+              icon-button="mdi-eye"
+              color-button="success"
+              :config-route="{ name: 'fetch-question-topic', params: { question_id: item.id } }"
+            />
+          </div>
+          <div class="mt-1">
+            <resource-button-edit
+              v-if="topicData !== null && item.can_this_question_be_affected"
+              color-button="blue darken-1"
+              :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
+            />
+          </div>
+          <div class="mt-1">
+            <resource-button-copy
+              v-if="topicData !== null && item.can_this_question_be_affected"
+              text-button="Copiar"
+              color-button="blue darken-1"
+              :config-route="{ name: 'clone-question-topic', params: { id: topicData.id, question_id: item.id } }"
+            />
+          </div>
+          <div class="mt-1">
+            <resource-button-delete
+              v-if="topicData !== null && item.can_this_question_be_affected"
+              @actionConfirmShowDialogDelete="deleteQuestionConfirm(item)"
+            />
+          </div>
         </div>
         <!-- <div v-else class="d-flex justify-center">
           <span class="font-weight-bold">Esta pregunta está siendo usada en un Test y no se puede modificar</span>

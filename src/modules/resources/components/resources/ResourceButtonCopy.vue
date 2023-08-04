@@ -1,22 +1,33 @@
 <template>
-  <v-btn
-    small
-    color="primary"
-    :dark="!disabled"
-    class="mx-1 align-self-center"
-    :disabled="disabled"
-    @click="onClick"
-  >
-    <span >{{ textButton }}</span>
-    <v-icon small dark class="ml-1">
-      mdi-content-copy
-    </v-icon>
-  </v-btn>
+  <div>
+    <v-btn
+      class="mx-1 align-self-center"
+      dark
+      :x-small="!can_rendering_button_small"
+      :small="can_rendering_button_small"
+      color="primary"
+      :disabled="disabled"
+      @click="onClick"
+    >
+      <span >{{ textButton }}</span>
+      <v-icon 
+        dark 
+        class="ml-1"
+        :x-small="!can_rendering_icon_small"
+        :small="can_rendering_icon_small"
+      >
+        mdi-content-copy
+      </v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
+import buttonsActionsDatatable from '@/modules/resources/mixins/componentButtonsCrud'
+
 export default {
   name: 'ResourceButtonCopy',
+  mixins: [buttonsActionsDatatable],
   props: {
     widthLimit: {
       type: Number,
