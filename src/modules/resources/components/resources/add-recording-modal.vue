@@ -27,8 +27,11 @@
                 outlined
               ></v-text-field>
               <v-select
-                v-model="value"
-                :items="items"
+                v-model="workspace"
+                :items="tags"
+                item-text="label"
+                item-value="key"
+                persistent-hint
                 label="Tags"
                 multiple
                 outlined

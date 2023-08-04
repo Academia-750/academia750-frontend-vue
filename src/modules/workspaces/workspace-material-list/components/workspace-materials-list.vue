@@ -16,7 +16,7 @@
       ref="table"
       :headers="headers"
       store-name="workspaceStore"
-      :load="loadWorkspaces"
+      :load="loadMaterials"
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
@@ -49,13 +49,36 @@
         <div class="d-flex align-center mx-3 type-section">
           <p class="mr-2 font-weight-bold">Types:</p>
           <v-select
-            :items="items"
-            label="Materials"
+            :items="materials"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Material"
             dense
             outlined
             class="mr-2"
           ></v-select>
-          <ResourceButtonAdd text-button="Crear" class="mb-3" @click="onAddRecording" />
+          <v-select
+            :items="workspaces"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Workspace"
+            dense
+            outlined
+            class="mr-2"
+          ></v-select>
+          <v-select
+            :items="tags"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Tag"
+            dense
+            outlined
+            class="mr-2"
+          ></v-select>
+          <ResourceButtonAdd text-button="Add Material" class="mb-3" @click="onAddMaterial" />
         </div>
 
       </template>
@@ -72,22 +95,15 @@
             <v-icon color="primary">mdi-cloud-download</v-icon>
           </div>
           <div>
-            <v-select
-              :items="items"
-              label="Transfer"
-              dense
-              outlined
-              class="mt-3"
-            ></v-select>
           </div>
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateWorkspace(item)"
+            @DispatchClickEvent="updateWorkspaceMaterial(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
+            @actionConfirmShowDialogDelete="deleteWorkspaceMaterialConfirm(item)"
           />
         </div>
       </template>
@@ -102,6 +118,7 @@ import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCru
 import headers from './workspace-materials-list-columns'
 import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 
 export default {
@@ -153,7 +170,10 @@ export default {
   data() {
     return {
       name: '',
-      workspace: null
+      workspace: null,
+      workspaces: {},
+      materials: {},
+      tags: {}
     }
   },
   computed: {
@@ -170,6 +190,9 @@ export default {
   },
   mounted() {
     this.$refs.table.reload()
+    this.loadWorkspaces()
+    this.loadMaterials()
+    this.loadTags()
   },
 
   methods: {
@@ -188,7 +211,79 @@ export default {
 
       const res = await WorkspaceRepository.list(params)
 
+      this.workspaces = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
       return res
+    },
+    async loadMaterials(pagination) {
+      const params = {
+        ...pagination
+      }
+
+      const res = await WorkspaceMaterialRepository.list(params)
+
+      this.materials = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
+      return res
+    },
+    async loadTags(pagination) {
+      const params = {
+        ...pagination
+      }
+
+      const res = await WorkspaceMaterialRepository.listOfTags(params)
+
+      this.tags = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
+      return res
+    },
+    async create() {
+      this.$refs.table.reload()
+      this.SET_EDIT_ITEM(false)
+    },
+    async deleteWorkspaceMaterialConfirm(material) {
+      if (!material) {
+        return
+      }
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'ELIMINAR Material',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Material? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        return
+      }
+
+      const res = await WorkspaceMaterialRepository.delete(material.id)
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'El Workspace ha sido eliminado con éxito.',
+        timer: 3000
+      })
+
+      this.$refs.table.reload()
     },
     onAddMaterial() {
       this.name = ''
@@ -200,7 +295,13 @@ export default {
       this.workspace = null
       this.$refs.addRecording.open()
     },
-
+    updateWorkspaceMaterial(material) {
+      this.name = material.name
+      this.SET_EDIT_ITEM(material)
+      console.log(material)
+      this.workspace = { key: material.workspace_id, label: material.workspace_name }
+      this.$refs.addMaterial.open()
+    },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
       this.$refs.table.reload()
@@ -237,6 +338,6 @@ export default {
 }
 
 .type-section{
-  width: 30%;
+  width: 80%;
 }
 </style>

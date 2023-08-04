@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="isOpen" max-width="450px" @close="onClose">
-      <validation-observer ref="formCreateWorkspace">
+      <validation-observer ref="formCreateWorkspaceMaterial">
         <v-card class="d-flex flex-column">
           <v-container class="pa-3">
             <v-card-title class="d-flex justify-space-between pt-0 px-0">
@@ -9,12 +9,14 @@
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <v-select
+              v-model="workspace"
               :items="workspaces"
               item-text="label"
               item-value="key"
-              persistent-hint
               label="Selecciona un workspace"
               outlined
+              :disabled="workspace? true : false"
+              @change="onSelect"
             ></v-select>
             <FieldInput
               v-model="name"
@@ -32,16 +34,31 @@
                   type="file"
                   name=""
                   hidden
+                  multiple
+                  @change="handleFileUpload"
                 />
               </div>
             </div>
-            
+            <div v-if="uploadedFiles.length > 0">
+              <ul class="file-container mb-2">
+                <li v-for="(file, index) in uploadedFiles" :key="index">{{ file.name }}</li>
+              </ul>
+            </div>
+            <v-progress-linear
+              v-if="uploading"
+              :value="uploadProgress"
+              color="primary"
+              height="6"
+            ></v-progress-linear>
             <v-select
-              v-model="value"
-              :items="workspaces"
+              :items="tags"
+              item-text="label"
+              item-value="key"
+              persistent-hint
               label="Tags"
               multiple
               outlined
+              @change="onSelectTags"
             ></v-select>
             
             <v-card-actions class="d-flex justify-space-between pa-0">
@@ -61,7 +78,7 @@
                 class="button flex-grow-1"
                 large
                 :loading="loading"
-                @click="onUploadFile"
+                @click="onCreateWorkspaceMaterial"
               >
                 {{ workspace ? 'Editar' : 'Crear' }}
               </v-btn>
@@ -75,6 +92,7 @@
 <script>
 import FieldInput from '@/modules/resources/components/form/input.vue'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 
 export default {
   name: 'AddMaterialModal',
@@ -88,6 +106,10 @@ export default {
       type: Object,
       default: null
     },
+    material: {
+      type: Object,
+      default: null
+    },
     name: {
       type: String,
       default: ''
@@ -98,11 +120,20 @@ export default {
       isOpen: false,
       loading: false,
       workspaces: {},
-      selectedWorkspace: null
+      selectedWorkspace: null,
+      uploadedFiles: [],
+      uploading: false,
+      uploadProgress: 0,
+      tags: {},
+      type: 'pdf',
+      selectedItem: false,
+      selectedTags: []
     }
   },
   mounted() {
     this.loadWorkspaces()
+    this.loadTags()
+    this.workspace = false
   },
   methods: {
     open() {
@@ -110,6 +141,22 @@ export default {
     },
     onClose() {
       this.isOpen = false
+      this.selectedItem = false
+    },
+    onSelectTags(value) {
+      console.log('---------select a tag',value)
+      this.selectedTags = value
+    },
+    async materialInfo() {
+      
+      const res = await WorkspaceRepository.info(id)
+
+      this.selectedItem = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
+      return res
     },
     async loadWorkspaces(pagination) {
       const params = {
@@ -125,11 +172,97 @@ export default {
 
       return res
     },
-    async onUploadFile() {
-      console.log('onUploadFile')
+    onSelect(value) {
+      this.selectedItem = value
+      console.log('=========selectedItem',this.selectedItem)
     },
     async uploadFileclicked() {
       this.$refs.fileInput.click()
+    },
+    async handleFileUpload(event) {
+      // Handle the file upload event and store the uploaded files in the array
+      const { files } = event.target
+
+      this.uploading = true
+
+      const totalFiles = files.length
+      let filesUploaded = 0
+
+      const interval = setInterval(() => {
+        filesUploaded++
+        this.uploadProgress = (filesUploaded / totalFiles) * 100
+
+        if (filesUploaded === totalFiles) {
+          clearInterval(interval)
+          this.uploading = false // Set uploading flag to false after file upload is completed
+          this.uploadProgress = 0 // Reset progress
+          this.uploadedFiles = Array.from(files)
+        }
+      }, 200)
+    },
+    async loadTags(pagination) {
+      const params = {
+        ...pagination
+      }
+
+      const res = await WorkspaceMaterialRepository.listOfTags(params)
+
+      this.tags = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
+      return res
+    },
+    async onCreateWorkspaceMaterial() {
+      console.log('=======selectedTags', this.selectedTags)
+      // this.loading = true
+      // const status = await this.$refs['formCreateWorkspaceMaterial'].validate()
+
+      // if (!status) {
+      //   this.$swal.fire({
+      //     icon: 'error',
+      //     toast: true,
+      //     title: 'Por favor, complete correctamente los campos del formulario.',
+      //     showConfirmButton: true,
+      //     confirmButtonText: 'Entendido',
+      //     timer: 7500
+      //   })
+      //   this.onClose()
+      //   this.name = ''
+      //   this.loading = false
+
+      //   return
+      // }
+      // const material = this.workspace
+      //   ? await WorkspaceMaterialRepository.update(this.material.id, {
+      //       name: this.name
+      //     })
+      //   : await WorkspaceMaterialRepository.create(this.selectedItem,{
+      //       name: this.name,
+      //       type: this.type,
+      //       tags: this.selectedTags
+      //     })
+
+      // if (!material) {
+      //   this.loading = false
+
+      //   return
+      // }
+
+      // await this.$swal.fire({
+      //   icon: 'success',
+      //   toast: true,
+      //   title: this.workspace ? 'Workspace Actualizado!' : 'Workspace Creado!',
+      //   showConfirmButton: true,
+      //   confirmButtonText: 'Entendido',
+      //   timer: 7500
+      // })
+      // this.onClose()
+      // this.name = ''
+      // this.$emit('create', material)
+      // this.isOpen = false
+      // this.loading = false
     }
   }
 }
@@ -150,5 +283,27 @@ export default {
   justify-content: center;
   border: 2px dashed #ccc;
   margin-bottom: 20px;
+}
+.file-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.file-container li{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 </style>

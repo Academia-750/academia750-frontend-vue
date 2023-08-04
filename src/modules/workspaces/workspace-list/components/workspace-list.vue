@@ -56,12 +56,10 @@
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between">
-          <ResourceButtonAdd text-button="Add Materials" @click="onAddMaterial" />
-          <ResourceButtonSee 
-            text-button="ver" 
+          <ResourceButtonMaterials 
+            text-button="Materials" 
             :config-route="{ name: 'manage-materials', params: { id: item.id }}"
           />
-
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -129,9 +127,9 @@ export default {
       import(
         /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
-    ResourceButtonSee: () =>
+    ResourceButtonMaterials: () =>
       import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonSee'
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonMaterials'
       ),
     ServerDataTable
   },
