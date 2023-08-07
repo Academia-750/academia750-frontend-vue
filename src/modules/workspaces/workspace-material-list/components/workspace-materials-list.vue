@@ -63,6 +63,7 @@
             @change="onChangeType"
           ></v-select>
           <v-select
+            v-model="workspace"
             :items="workspaces"
             item-text="label"
             item-value="key"
@@ -71,6 +72,7 @@
             dense
             outlined
             class="mr-2"
+            clearable
             @change="onChangeWorkspace"
           ></v-select>
           <v-select
@@ -83,6 +85,7 @@
             outlined
             class="mr-2"
             multiple
+            clearable
             @change="onChangeTags"
           ></v-select>
           <ResourceButtonAdd text-button="Add Material" class="mb-3" @click="onAddMaterial" />

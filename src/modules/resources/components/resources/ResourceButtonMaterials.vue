@@ -5,7 +5,7 @@
     :dark="!disabled"
     class="mx-1 align-self-center"
     :disabled="disabled"
-    @click="onClick"
+    @click="pushRouteListMaterials"
   >
     <span
       v-if="$vuetify.breakpoint.width >= widthLimit"
@@ -18,12 +18,19 @@
 </template>
 
 <script>
+import buttonsActionsDatatable from '@/modules/resources/mixins/componentButtonsCrud'
+
 export default {
   name: 'ResourceButtonAdd',
+  mixins: [buttonsActionsDatatable],
   props: {
     widthLimit: {
       type: Number,
       default: 425
+    },
+    onlyDispatchClickEvent: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,
@@ -43,11 +50,14 @@ export default {
     }
   },
   methods: {
-    onClick() {
-      if (this.configRoute && Object.keys(this.configRoute).length) {
-        this.$router.push(this.configRoute)
+    pushRouteListMaterials() {
+      if (this.onlyDispatchClickEvent) {
+        this.$emit('DispatchClickEvent')
+
+        return
       }
-      this.$emit('click')
+
+      this.$router.push(this.configRoute)
     }
   }
 }

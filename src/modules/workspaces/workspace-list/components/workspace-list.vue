@@ -62,7 +62,9 @@
         <div class="d-flex justify-space-between">
           <ResourceButtonMaterials 
             text-button="Materials" 
-            :config-route="{ name: 'manage-materials', params: { id: item.id }}"
+            :config-route="{ name: 'manage-materials'}"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="setWorkspace(item)"
           />
           <resource-button-edit
             :config-route="{}"
@@ -165,6 +167,7 @@ export default {
   methods: {
     ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
     ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
@@ -195,6 +198,10 @@ export default {
       this.SET_EDIT_ITEM(workspace)
       this.workspace = workspace
       this.$refs.addWorkSpace.open()
+    },
+    setWorkspace(workspace) {
+      this.SET_WORKSPACE(workspace.id)
+      this.$router.push({ name: 'manage-materials' })
     },
     async deleteWorkspaceConfirm(workspace) {
       if (!workspace) {
