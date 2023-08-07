@@ -1,3 +1,5 @@
+Temporal branch for fixies of v1.0.0 while v2.0.0 is already on development
+
 # Academia750
 <p align="center">Lux - Vue Admin Dashboard Template</p>
 
