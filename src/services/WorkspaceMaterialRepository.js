@@ -54,21 +54,24 @@ export default {
     return true
   },
   /**
-   * @param {string[]} codes
-   * @param {string[]} names
-   * @param {string[]} colors
    * @param {string} content Search by names or color from a partial value
    * @param {string} orderBy (Only Allowed values)
    * @param {number} order 1 (ASC) -1 (DESC)
    * @param {number} offset
    * @param {number} limit
+   * @param {number} tags
+   * @param {number} type
+   * @param {number} workspace
    */
-  async list({ withCount, orderBy, offset, limit, content }) {
+  async list({ withCount, orderBy, offset, limit, type, tags, workspace, content }) {
     const params = {
       withCount,
       orderBy,
       offset,
       limit,
+      type: type || undefined,
+      tags: tags || undefined,
+      workspace: workspace || undefined,
       content: content || undefined
     }
 

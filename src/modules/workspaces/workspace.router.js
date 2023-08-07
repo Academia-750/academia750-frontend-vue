@@ -33,6 +33,14 @@ const moduleRoute = [
             }
           },
           {
+            path: '/materials',
+            name: 'manage-materials',
+            component: ManageMaterialsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
             path: ':id/materials',
             name: 'manage-materials',
             component: ManageMaterialsModule,

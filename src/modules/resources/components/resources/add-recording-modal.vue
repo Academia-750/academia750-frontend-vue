@@ -8,14 +8,14 @@
               <span class="text-h6 font-weight-bold">Upload a Recording</span>
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
-            <v-select
+            <!-- <v-select
               :items="workspaces"
               item-text="label"
               item-value="key"
               persistent-hint
               label="Selecciona un workspace"
               outlined
-            ></v-select>
+            ></v-select> -->
             <FieldInput
               v-model="name"
               label="Material Name"
@@ -26,7 +26,7 @@
                 label="Paste Vimeo Link Here"
                 outlined
               ></v-text-field>
-              <v-select
+              <!-- <v-select
                 v-model="workspace"
                 :items="tags"
                 item-text="label"
@@ -35,7 +35,7 @@
                 label="Tags"
                 multiple
                 outlined
-              ></v-select>
+              ></v-select> -->
             </div>
             
             <v-card-actions class="d-flex justify-space-between pa-0">

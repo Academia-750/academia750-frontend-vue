@@ -1,7 +1,7 @@
 export default [
   {
     position: 1,
-    text: 'Workspace Name',
+    text: 'Workspace',
     align: 'start',
     sortable: true,
     value: 'workspace_name',
@@ -9,7 +9,7 @@ export default [
   },
   {
     position: 2,
-    text: 'Name',
+    text: 'Nombre',
     align: 'start',
     sortable: true,
     value: 'name',
@@ -17,10 +17,10 @@ export default [
   },
   {
     position: 3,
-    text: 'File Type',
+    text: 'Tipo',
     align: 'start',
     sortable: true,
-    value: 'file_type',
+    value: 'type',
     show: true
   },
   {
@@ -33,22 +33,6 @@ export default [
   },
   {
     position: 5,
-    text: 'File',
-    align: 'start',
-    sortable: true,
-    value: 'file',
-    show: true
-  },
-  {
-    position: 6,
-    text: 'User',
-    align: 'start',
-    sortable: true,
-    value: 'user',
-    show: true
-  },
-  {
-    position: 7,
     sortable: false,
     text: 'Acciones',
     align: 'center',

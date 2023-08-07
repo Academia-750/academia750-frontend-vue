@@ -1,5 +1,6 @@
 <template>
   <ValidationProvider
+    ref="validationProvider"
     v-slot="{ errors }"
     vid="workspace-name"
     mode="aggressive"
@@ -35,6 +36,11 @@
       label: {
         type: String,
         default: ''
+      }
+    },
+    methods: {
+      resetErrors() {
+        this.$refs.validationProvider.reset()
       }
     }
   }

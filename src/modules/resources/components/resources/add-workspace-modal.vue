@@ -9,6 +9,7 @@
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <FieldInput
+              ref="nameInput"
               v-model="name"
               label="Workspace Name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
@@ -74,6 +75,8 @@ export default {
     },
     onClose() {
       this.isOpen = false
+      this.$refs.nameInput.resetErrors()
+      this.$emit('input', '')
     },
     async onCreateWorkspace() {
       this.loading = true

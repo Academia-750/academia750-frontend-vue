@@ -1,6 +1,6 @@
 <template>
   <v-card-text>
-    <AddMaterialModal
+    <!-- <AddMaterialModal
       ref="addMaterial"
       :workspace="workspace"
       :name="name"
@@ -11,7 +11,7 @@
       :workspace="workspace"
       :name="name"
       @create="create"
-    />
+    /> -->
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -28,6 +28,7 @@
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+          <resource-button-go-back-router />
           <resource-title-toolbar-datatable title-text="Materials" />
 
           <v-spacer />
@@ -47,16 +48,19 @@
         />
         <!-- ------------ TYPE SECTION ------------ -->
         <div class="d-flex align-center mx-3 type-section">
-          <p class="mr-2 font-weight-bold">Types:</p>
+          <p class="mr-2 font-weight-bold">Tipos:</p>
           <v-select
-            :items="materials"
+            :items="types"
             item-text="label"
             item-value="key"
             persistent-hint
-            label="Material"
+            label="Tipos"
+            :value="type"
             dense
             outlined
             class="mr-2"
+            clearable
+            @change="onChangeType"
           ></v-select>
           <v-select
             :items="workspaces"
@@ -67,6 +71,7 @@
             dense
             outlined
             class="mr-2"
+            @change="onChangeWorkspace"
           ></v-select>
           <v-select
             :items="tags"
@@ -77,6 +82,8 @@
             dense
             outlined
             class="mr-2"
+            multiple
+            @change="onChangeTags"
           ></v-select>
           <ResourceButtonAdd text-button="Add Material" class="mb-3" @click="onAddMaterial" />
         </div>
@@ -92,7 +99,7 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <v-icon color="primary">mdi-cloud-download</v-icon>
+            <v-icon color="primary" :disabled="item.url ? false:true">mdi-cloud-download</v-icon>
           </div>
           <div>
           </div>
@@ -156,28 +163,37 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
-    AddRecordingModal: () =>
-      import(
-        /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
-      ),
+    // AddMaterialModal: () =>
+    //   import(
+    //     /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
+    //   ),
+    // AddRecordingModal: () =>
+    //   import(
+    //     /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
+    //   ),
+    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
+    
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
       name: '',
-      workspace: null,
-      workspaces: {},
-      materials: {},
-      tags: {}
+      types: [
+        {
+          key: 'material',
+          label: 'Materiales'
+        },
+        {
+          key: 'recording',
+          label: 'Grabaciones'
+        }
+      ],
+      workspaces: {}
     }
   },
   computed: {
-    ...mapState('workspaceStore', ['editItem']),
+    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'type', 'tags']),
     headers() {
       return headers
     },
@@ -192,37 +208,38 @@ export default {
     this.$refs.table.reload()
     this.loadWorkspaces()
     this.loadMaterials()
-    this.loadTags()
+    // this.loadTags()
   },
 
   methods: {
-    ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
-    async loadWorkspaces(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceRepository.list(params)
-
-      this.workspaces = res.results.map((item) => ({
-        key: item.id,
-        label: item.name
-      }))
-
-      return res
+    onChangeType(value) {
+      this.SET_TYPE(value)
+      this.$refs.table.reload()
+    },
+    onChangeWorkspace(value) {
+      this.SET_WORKSPACE(value)
+      this.$refs.table.reload()
+    },
+    onChangeTags(value) {
+      this.SET_TAGS(value)
+      this.$refs.table.reload()
     },
     async loadMaterials(pagination) {
       const params = {
-        ...pagination
+        ...pagination,
+        type: this.type,
+        workspace: this.workspace,
+        tags: this.tags
       }
-
+      
       const res = await WorkspaceMaterialRepository.list(params)
 
       this.materials = res.results.map((item) => ({
@@ -240,6 +257,20 @@ export default {
       const res = await WorkspaceMaterialRepository.listOfTags(params)
 
       this.tags = res.results.map((item) => ({
+        key: item.id,
+        label: item.name
+      }))
+
+      return res
+    },
+    async loadWorkspaces(pagination) {
+      const params = {
+        ...pagination
+      }
+      
+      const res = await WorkspaceRepository.list(params)
+
+      this.workspaces = res.results.map((item) => ({
         key: item.id,
         label: item.name
       }))

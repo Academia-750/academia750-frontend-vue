@@ -1,5 +1,6 @@
 <template>
   <ValidationProvider
+    ref="validationProvider"
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
@@ -60,6 +61,10 @@ export default {
     }
   },
   methods: {
+    resetErrors() {
+    console.log('resetErrors')
+    this.$refs.validationProvider.reset()
+  },
     update(value) {
       this.$emit('input', value)
     }

@@ -28,10 +28,14 @@
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+          <resource-button-go-back-router />
           <resource-title-toolbar-datatable title-text="Workspace" />
 
           <v-spacer />
-
+          <ResourceButtonMaterials 
+            text-button="All Materials" 
+            :config-route="{ name: 'manage-materials' }"
+          />
           <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
@@ -131,6 +135,8 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonMaterials'
       ),
+    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
+    
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -198,7 +204,7 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR Workspace',
+        title: 'Eliminar Workspace',
         html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
         showConfirmButton: true,
         showCancelButton: true,
