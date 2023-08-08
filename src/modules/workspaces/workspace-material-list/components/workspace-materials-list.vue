@@ -75,19 +75,11 @@
             clearable
             @change="onChangeWorkspace"
           ></v-select>
-          <v-select
-            :items="tags"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Tag"
-            dense
-            outlined
-            class="mr-2"
-            multiple
-            clearable
+          <ResourceTagAutoComplete
+            :dense="true"
             @change="onChangeTags"
-          ></v-select>
+            @remove="onRemoveTags"
+          />
           <ResourceButtonAdd text-button="Add Material" class="mb-3" @click="onAddMaterial" />
         </div>
 
@@ -188,6 +180,7 @@ export default {
         /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
       ),
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
+    ResourceTagAutoComplete: () => import(/* webpackChunkName: "ResourceTagAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'),
     
     ServerDataTable
   },
@@ -205,7 +198,8 @@ export default {
           label: 'Grabaciones'
         }
       ],
-      workspaces: {}
+      workspaces: {},
+      tagsList: []
     }
   },
   computed: {
@@ -224,7 +218,7 @@ export default {
     this.$refs.table.reload()
     this.loadWorkspaces()
     this.loadMaterials()
-    // this.loadTags()
+    this.loadTags()
   },
 
   methods: {
@@ -245,7 +239,9 @@ export default {
       this.$refs.table.reload()
     },
     onChangeTags(value) {
-      this.SET_TAGS(value)
+      this.$refs.table.reload()
+    },
+    onRemoveTags (item) {
       this.$refs.table.reload()
     },
     async loadMaterials(pagination) {
@@ -272,10 +268,9 @@ export default {
 
       const res = await WorkspaceMaterialRepository.listOfTags(params)
 
-      this.tags = res.results.map((item) => ({
-        key: item.id,
-        label: item.name
-      }))
+      this.tagsList = res.results.map((item) => (
+        item.name
+      ))
 
       return res
     },

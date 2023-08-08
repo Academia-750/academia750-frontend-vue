@@ -39,7 +39,6 @@
               persistent-hint
               label="Tipos"
               :value="type"
-              dense
               outlined
               class="mr-2"
               clearable
@@ -54,7 +53,6 @@
               persistent-hint
               label="Tipos"
               :value="type"
-              dense
               outlined
               class="mr-2"
               clearable
@@ -92,17 +90,11 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <v-select
-              :items="tags"
-              item-text="label"
-              item-value="label"
-              persistent-hint
-              label="Etiquetas"
-              multiple
-              outlined
-              @change="onSelectTags"
-            ></v-select>
-            
+            <ResourceTagAutoComplete
+              :dense="false"
+              @change="onChangeTags"
+              @remove="onRemoveTags"
+            />
             <v-card-actions class="d-flex justify-space-between pa-0">
               <v-btn
                 color="blue-darken-1"
@@ -132,14 +124,19 @@
   </v-row>
 </template>
 <script>
-import FieldInput from '@/modules/resources/components/form/input.vue'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import { mapMutations, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'AddMaterialModal',
-  components: { FieldInput },
+  components: {
+    FieldInput: () =>
+      import(
+        /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
+      ),
+    ResourceTagAutoComplete: () => import(/* webpackChunkName: "ResourceTagAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete')
+  },
   props: {
     title: {
       type: String,
@@ -152,22 +149,17 @@ export default {
     name: {
       type: String,
       default: ''
-    },
-    workspace: {
-      type: Object,
-      default: null
     }
   },
   data() {
     return {
       isOpen: false,
       loading: false,
-      workspaces: {},
+      workspaces: [],
       selectedWorkspace: null,
       uploadedFiles: [],
       uploading: false,
       uploadProgress: 0,
-      tags: {},
       selectedItem: false,
       selectedTags: [],
       types: [
@@ -183,7 +175,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'type'])
+    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'tags', 'type'])
   },
   mounted() {
     this.loadWorkspaces()
@@ -195,6 +187,9 @@ export default {
     open() {
       this.isOpen = true
     },
+    onRemoveTags (item) {
+      this.$refs.table.reload()
+    },
     onClose() {
       this.isOpen = false
       this.SET_EDIT_ITEM(false)
@@ -203,7 +198,7 @@ export default {
       this.SET_TYPE(value)
       this.$refs.table.reload()
     },
-    onSelectTags(value) {
+    onChangeTags(value) {
       this.selectedTags = value
     },
     async materialInfo() {
@@ -301,7 +296,7 @@ export default {
     }
     const material = await WorkspaceMaterialRepository.update(materialId, {
           name: this.name,
-          tags: this.selectedTags,
+          tags: this.tags,
           url: ''
     })
         

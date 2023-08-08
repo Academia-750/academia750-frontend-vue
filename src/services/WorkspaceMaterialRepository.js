@@ -111,9 +111,9 @@ export default {
     return { results: response.data.results, total: response.data.total }
   },
   /**
-   * @param {string} code
    * @param {string} name
-   * @param {string} color
+   * @param {string} type
+   * @param {string} tags
    */
   async update(id, { name, type, tags }) {
     const response = await ResourceService.put(`material/${id}`, {
@@ -141,5 +141,23 @@ export default {
     }
 
     return response.data.result
+  },
+  async searchTags({ content, limit }) {
+    const response = await ResourceService.get('material/tag', {
+      params: {
+        content: content || undefined,
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }
