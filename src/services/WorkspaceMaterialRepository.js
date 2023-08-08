@@ -115,10 +115,11 @@ export default {
    * @param {string} name
    * @param {string} color
    */
-  async update(id, { name, type }) {
+  async update(id, { name, type, tags }) {
     const response = await ResourceService.put(`material/${id}`, {
       name,
-      type
+      type,
+      tags
     })
 
     if (response.status === 409) {

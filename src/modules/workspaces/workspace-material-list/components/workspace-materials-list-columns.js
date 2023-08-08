@@ -28,7 +28,7 @@ export default [
     text: 'Tags',
     align: 'start',
     sortable: true,
-    value: 'file_type',
+    value: 'tags',
     show: true
   },
   {

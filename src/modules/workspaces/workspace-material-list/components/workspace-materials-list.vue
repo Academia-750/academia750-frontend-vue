@@ -97,6 +97,19 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
+      <template v-slot:[`item.tags`]="{ item }">
+        <div v-if="item.tags">
+          <v-chip
+            v-for="(tag, index) in item.tags.split(',')"
+            :key="index"
+            class="ma-1"
+            label
+            small
+          >
+            {{ tag }}
+          </v-chip>
+        </div>
+      </template>
 
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">

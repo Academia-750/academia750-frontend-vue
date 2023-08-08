@@ -95,9 +95,9 @@
             <v-select
               :items="tags"
               item-text="label"
-              item-value="key"
+              item-value="label"
               persistent-hint
-              label="Tags"
+              label="Etiquetas"
               multiple
               outlined
               @change="onSelectTags"
@@ -285,30 +285,26 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
-      this.name = ''
-      this.loading = false
-      this.onClose()
-
-      return
-    }
-    const material = this.editItem
-      ? await WorkspaceMaterialRepository.update(this.editItem.workspace_id, {
-          name: this.name,
-          type: this.type,
-          tags: this.selectedTags
-        })
-      : await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
-          name: this.name,
-          type: this.type,
-          tags: this.selectedTags
-        })
-
-    if (!material) {
       this.loading = false
 
       return
     }
+    let materialId = this.editItem.id
 
+    if ( !this.editItem ) {
+     const material = await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
+          name: this.name,
+          type: this.type
+        })
+
+      materialId = material.id
+    }
+    const material = await WorkspaceMaterialRepository.update(materialId, {
+          name: this.name,
+          tags: this.selectedTags,
+          url: ''
+    })
+        
     await this.$swal.fire({
       icon: 'success',
       toast: true,
