@@ -9,14 +9,56 @@
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <v-select
+              v-if="editItem"
+              v-model="editItem.workspace_id"
+              :items="workspaces"
+              item-text="label"
+              item-value="key"
+              label="Selecciona un workspace"
+              outlined
+              :disabled="editItem? true : false"
+              @change="onSelect"
+            ></v-select>
+            <v-select
+              v-else
               v-model="workspace"
               :items="workspaces"
               item-text="label"
               item-value="key"
               label="Selecciona un workspace"
               outlined
-              :disabled="workspace? true : false"
+              :disabled="editItem? true : false"
               @change="onSelect"
+            ></v-select>
+            <v-select
+              v-if="editItem"
+              v-model="editItem.type"
+              :items="types"
+              item-text="label"
+              item-value="key"
+              persistent-hint
+              label="Tipos"
+              :value="type"
+              dense
+              outlined
+              class="mr-2"
+              clearable
+              @change="onChangeType"
+            ></v-select>
+            <v-select
+              v-else
+              v-model="type"
+              :items="types"
+              item-text="label"
+              item-value="key"
+              persistent-hint
+              label="Tipos"
+              :value="type"
+              dense
+              outlined
+              class="mr-2"
+              clearable
+              @change="onChangeType"
             ></v-select>
             <FieldInput
               v-model="name"
@@ -80,7 +122,7 @@
                 :loading="loading"
                 @click="onCreateWorkspaceMaterial"
               >
-                {{ workspace ? 'Editar' : 'Crear' }}
+                {{ editItem ? 'Editar' : 'Crear' }}
               </v-btn>
             </v-card-actions>
           </v-container>
@@ -93,6 +135,7 @@
 import FieldInput from '@/modules/resources/components/form/input.vue'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
+import { mapMutations, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'AddMaterialModal',
@@ -102,10 +145,6 @@ export default {
       type: String,
       default: ''
     },
-    workspace: {
-      type: Object,
-      default: null
-    },
     material: {
       type: Object,
       default: null
@@ -113,6 +152,10 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    workspace: {
+      type: Object,
+      default: null
     }
   },
   data() {
@@ -125,26 +168,42 @@ export default {
       uploading: false,
       uploadProgress: 0,
       tags: {},
-      type: 'pdf',
       selectedItem: false,
-      selectedTags: []
+      selectedTags: [],
+      types: [
+        {
+          key: 'material',
+          label: 'Materiales'
+        },
+        {
+          key: 'recording',
+          label: 'Grabaciones'
+        }
+      ]
     }
+  },
+  computed: {
+    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'type'])
   },
   mounted() {
     this.loadWorkspaces()
     this.loadTags()
-    this.workspace = false
   },
   methods: {
+    ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
     open() {
       this.isOpen = true
     },
     onClose() {
       this.isOpen = false
-      this.selectedItem = false
+      this.SET_EDIT_ITEM(false)
+    },
+    onChangeType(value) {
+      this.SET_TYPE(value)
+      this.$refs.table.reload()
     },
     onSelectTags(value) {
-      console.log('---------select a tag',value)
       this.selectedTags = value
     },
     async materialInfo() {
@@ -174,7 +233,6 @@ export default {
     },
     onSelect(value) {
       this.selectedItem = value
-      console.log('=========selectedItem',this.selectedItem)
     },
     async uploadFileclicked() {
       this.$refs.fileInput.click()
@@ -215,55 +273,56 @@ export default {
       return res
     },
     async onCreateWorkspaceMaterial() {
-      console.log('=======selectedTags', this.selectedTags)
-      // this.loading = true
-      // const status = await this.$refs['formCreateWorkspaceMaterial'].validate()
+    this.loading = true
+    const status = await this.$refs['formCreateWorkspaceMaterial'].validate()
 
-      // if (!status) {
-      //   this.$swal.fire({
-      //     icon: 'error',
-      //     toast: true,
-      //     title: 'Por favor, complete correctamente los campos del formulario.',
-      //     showConfirmButton: true,
-      //     confirmButtonText: 'Entendido',
-      //     timer: 7500
-      //   })
-      //   this.onClose()
-      //   this.name = ''
-      //   this.loading = false
+    if (!status) {
+      this.$swal.fire({
+        icon: 'error',
+        toast: true,
+        title: 'Por favor, complete correctamente los campos del formulario.',
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+        timer: 7500
+      })
+      this.name = ''
+      this.loading = false
+      this.onClose()
 
-      //   return
-      // }
-      // const material = this.workspace
-      //   ? await WorkspaceMaterialRepository.update(this.material.id, {
-      //       name: this.name
-      //     })
-      //   : await WorkspaceMaterialRepository.create(this.selectedItem,{
-      //       name: this.name,
-      //       type: this.type,
-      //       tags: this.selectedTags
-      //     })
-
-      // if (!material) {
-      //   this.loading = false
-
-      //   return
-      // }
-
-      // await this.$swal.fire({
-      //   icon: 'success',
-      //   toast: true,
-      //   title: this.workspace ? 'Workspace Actualizado!' : 'Workspace Creado!',
-      //   showConfirmButton: true,
-      //   confirmButtonText: 'Entendido',
-      //   timer: 7500
-      // })
-      // this.onClose()
-      // this.name = ''
-      // this.$emit('create', material)
-      // this.isOpen = false
-      // this.loading = false
+      return
     }
+    const material = this.editItem
+      ? await WorkspaceMaterialRepository.update(this.editItem.workspace_id, {
+          name: this.name,
+          type: this.type,
+          tags: this.selectedTags
+        })
+      : await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
+          name: this.name,
+          type: this.type,
+          tags: this.selectedTags
+        })
+
+    if (!material) {
+      this.loading = false
+
+      return
+    }
+
+    await this.$swal.fire({
+      icon: 'success',
+      toast: true,
+      title: this.editItem ? 'Workspace Actualizado!' : 'Workspace Creado!',
+      showConfirmButton: true,
+      confirmButtonText: 'Entendido',
+      timer: 7500
+    })
+    this.onClose()
+    this.name = ''
+    this.$emit('create', material)
+    this.isOpen = false
+    this.loading = false
+  }
   }
 }
 </script>

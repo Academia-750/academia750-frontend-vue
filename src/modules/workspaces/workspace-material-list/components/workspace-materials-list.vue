@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
-    <!-- <AddMaterialModal
-      ref="addMaterial"
+    <AddMaterialModal
+      ref="addWorkspaceMaterial"
       :workspace="workspace"
       :name="name"
       @create="create"
@@ -11,7 +11,7 @@
       :workspace="workspace"
       :name="name"
       @create="create"
-    /> -->
+    />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -166,14 +166,14 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    // AddMaterialModal: () =>
-    //   import(
-    //     /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-    //   ),
-    // AddRecordingModal: () =>
-    //   import(
-    //     /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
-    //   ),
+    AddMaterialModal: () =>
+      import(
+        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
+      ),
+    AddRecordingModal: () =>
+      import(
+        /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
+      ),
     ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
     
     ServerDataTable
@@ -281,8 +281,8 @@ export default {
       return res
     },
     async create() {
-      this.$refs.table.reload()
       this.SET_EDIT_ITEM(false)
+      this.$refs.table.reload()
     },
     async deleteWorkspaceMaterialConfirm(material) {
       if (!material) {
@@ -320,21 +320,18 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
+      this.SET_EDIT_ITEM(false)
       this.name = ''
-      this.workspace = null
-      this.$refs.addMaterial.open()
+      this.$refs.addWorkspaceMaterial.open()
     },
-    onAddRecording() {
+    onAddRecording(item) {
       this.name = ''
-      this.workspace = null
       this.$refs.addRecording.open()
     },
     updateWorkspaceMaterial(material) {
       this.name = material.name
       this.SET_EDIT_ITEM(material)
-      console.log(material)
-      this.workspace = { key: material.workspace_id, label: material.workspace_name }
-      this.$refs.addMaterial.open()
+      this.$refs.addWorkspaceMaterial.open()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
