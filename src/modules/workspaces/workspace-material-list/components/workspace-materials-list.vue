@@ -3,7 +3,9 @@
     <AddMaterialModal
       ref="addWorkspaceMaterial"
       :workspace="workspace"
+      :type="type"
       :name="name"
+      :editItem="editItem"
       @create="create"
     />
     <AddRecordingModal
@@ -198,7 +200,11 @@ export default {
         }
       ],
       workspaces: {},
-      tagsList: []
+      tagsList: [],
+      tags: [],
+      type: '',
+      workspace: '',
+      editItem: false
     }
   },
   computed: {
@@ -217,7 +223,6 @@ export default {
     this.$refs.table.reload()
     this.loadWorkspaces()
     this.loadMaterials()
-    this.loadTags()
   },
 
   methods: {
@@ -259,19 +264,6 @@ export default {
         key: item.id,
         label: item.name
       }))
-
-      return res
-    },
-    async loadTags(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceMaterialRepository.listOfTags(params)
-
-      this.tagsList = res.results.map((item) => (
-        item.name
-      ))
 
       return res
     },
@@ -339,7 +331,11 @@ export default {
       this.$refs.addRecording.open()
     },
     updateWorkspaceMaterial(material) {
+      console.log(material)
       this.name = material.name
+      this.type = material.type
+      this.workspace = material.workspace_id
+      this.editItem = true
       this.SET_EDIT_ITEM(material)
       this.$refs.addWorkspaceMaterial.onResetErrors()
       this.$refs.addWorkspaceMaterial.open()

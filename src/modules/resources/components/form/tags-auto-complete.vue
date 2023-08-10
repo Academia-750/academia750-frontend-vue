@@ -30,7 +30,6 @@
 
 <script>
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
-import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'TagsAutoComplete',
   props: {
