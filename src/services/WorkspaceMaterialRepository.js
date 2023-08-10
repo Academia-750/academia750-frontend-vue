@@ -63,9 +63,10 @@ export default {
    * @param {number} type
    * @param {number} workspace
    */
-  async list({ withCount, orderBy, offset, limit, type, tags, workspace, content }) {
+  async list({ withCount, order, orderBy, offset, limit, type, tags, workspace, content }) {
     const params = {
       withCount,
+      order,
       orderBy,
       offset,
       limit,
@@ -88,9 +89,10 @@ export default {
 
     return { results: response.data.results, total: response.data.total }
   },
-  async listOfTags({ withCount, orderBy, offset, limit, content }) {
+  async listOfTags({ withCount, order, orderBy, offset, limit, content }) {
     const params = {
       withCount,
+      order,
       orderBy,
       offset,
       limit,

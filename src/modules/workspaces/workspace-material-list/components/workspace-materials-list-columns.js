@@ -19,7 +19,7 @@ export default [
     position: 3,
     text: 'Tipo',
     align: 'start',
-    sortable: true,
+    sortable: false,
     value: 'type',
     show: true
   },
@@ -27,7 +27,7 @@ export default [
     position: 4,
     text: 'Tags',
     align: 'start',
-    sortable: true,
+    sortable: false,
     value: 'tags',
     show: true
   },

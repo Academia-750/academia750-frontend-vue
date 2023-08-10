@@ -42,6 +42,7 @@
               outlined
               class="mr-2"
               clearable
+              :disabled="editItem? true : false"
               @change="onChangeType"
             ></v-select>
             <v-select
@@ -53,12 +54,14 @@
               persistent-hint
               label="Tipos"
               :value="type"
+              :disabled="editItem? true : false"
               outlined
               class="mr-2"
               clearable
               @change="onChangeType"
             ></v-select>
             <FieldInput
+              ref="nameInput"
               v-model="name"
               label="Material Name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
@@ -92,6 +95,8 @@
             ></v-progress-linear>
             <ResourceTagAutoComplete
               :dense="false"
+              :editItem="editItem"
+              :tags="tags"
               @change="onChangeTags"
               @remove="onRemoveTags"
             />
@@ -171,7 +176,9 @@ export default {
           key: 'recording',
           label: 'Grabaciones'
         }
-      ]
+      ],
+      editItem: false,
+      tags: []
     }
   },
   computed: {
@@ -188,17 +195,24 @@ export default {
       this.isOpen = true
     },
     onRemoveTags (item) {
+      this.tags.splice(this.tags.indexOf(item), 1)
       this.$refs.table.reload()
+    },
+    async onResetErrors() {
+      this.$refs['nameInput'].resetErrors()
+      this.name = ''
     },
     onClose() {
       this.isOpen = false
       this.SET_EDIT_ITEM(false)
+      this.onResetErrors()
     },
     onChangeType(value) {
       this.SET_TYPE(value)
       this.$refs.table.reload()
     },
     onChangeTags(value) {
+      this.SET_TAGS(value)
       this.selectedTags = value
     },
     async materialInfo() {

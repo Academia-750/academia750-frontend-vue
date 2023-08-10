@@ -1,6 +1,6 @@
 <template>
   <v-combobox
-    v-model="tags"
+    v-model="editItem.tags"
     :items="tagsList"
     :loading="loading"
     tags-list
@@ -41,6 +41,14 @@ export default {
     dense: {
       type: Boolean,
       default: false
+    },
+    tags: {
+      type: Array,
+      default: () => []
+    },
+    editItem: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -49,14 +57,10 @@ export default {
       loading: false
     }
   },
-  computed: {
-    ...mapState('workspaceMaterialStore', ['tags'])
-  },
   mounted() {
     this.loadTags()
   },
   methods: {
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
     async loadTags(value) {
       this.loading = true
       const tags = await WorkspaceMaterialRepository.searchTags({
@@ -72,11 +76,9 @@ export default {
       return tags
     },
     onChangeTags(value) {
-      this.SET_TAGS(value)
       this.$emit('change', value)
     },
     remove (item) {
-      this.tags.splice(this.tags.indexOf(item), 1)
       this.$emit('remove', item)
     }
   }

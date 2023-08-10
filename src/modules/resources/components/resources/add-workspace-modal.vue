@@ -43,12 +43,16 @@
   </v-row>
 </template>
 <script>
-import FieldInput from '@/modules/resources/components/form/input.vue'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 
 export default {
   name: 'AddWorkspaceModal',
-  components: { FieldInput },
+  components: { 
+    FieldInput: () =>
+      import(
+        /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
+      )
+   },
   props: {
     title: {
       type: String,
@@ -73,9 +77,13 @@ export default {
     open() {
       this.isOpen = true
     },
+    async onResetErrors() {
+      this.$refs['nameInput'].resetErrors()
+      this.name = ''
+    },
     onClose() {
       this.isOpen = false
-      this.$refs.nameInput.resetErrors()
+      this.onResetErrors
       this.$emit('input', '')
     },
     async onCreateWorkspace() {

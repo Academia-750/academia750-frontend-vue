@@ -35,6 +35,8 @@
           <ResourceButtonMaterials 
             text-button="All Materials" 
             :config-route="{ name: 'manage-materials' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="clearReducer()"
           />
           <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
           <resource-button
@@ -186,6 +188,7 @@ export default {
     onCreate() {
       this.name = ''
       this.workspace = null
+      this.$refs.addWorkSpace.onResetErrors()
       this.$refs.addWorkSpace.open()
     },
     onAddMaterial() {
@@ -197,10 +200,18 @@ export default {
       this.name = workspace.name
       this.SET_EDIT_ITEM(workspace)
       this.workspace = workspace
+      this.$refs.addWorkSpace.onResetErrors()
       this.$refs.addWorkSpace.open()
     },
     setWorkspace(workspace) {
       this.SET_WORKSPACE(workspace.id)
+      this.$router.push({ name: 'manage-materials' })
+    },
+    clearReducer() {
+      this.SET_WORKSPACE('')
+      this.SET_TYPE('')
+      this.SET_TAGS([])
+      this.SET_EDIT_ITEM(false)
       this.$router.push({ name: 'manage-materials' })
     },
     async deleteWorkspaceConfirm(workspace) {
