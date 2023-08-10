@@ -8,8 +8,8 @@ export default {
    * @param {string} name
    * @param {string} color
    */
-  async create(id, { name, type }) {
-    const response = await ResourceService.post(`workspace/${id}/add`, { name, type })
+  async create(id, { name, type, url }) {
+    const response = await ResourceService.post(`workspace/${id}/add`, { name, type, url })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -115,11 +115,12 @@ export default {
    * @param {string} type
    * @param {string} tags
    */
-  async update(id, { name, type, tags }) {
+  async update(id, { name, type, tags, url }) {
     const response = await ResourceService.put(`material/${id}`, {
       name,
       type,
-      tags
+      tags,
+      url
     })
 
     if (response.status === 409) {

@@ -76,6 +76,7 @@
             @change="onChangeWorkspace"
           ></v-select>
           <ResourceTagAutoComplete
+            value="tags"
             :dense="true"
             @change="onChangeTags"
             @remove="onRemoveTags"

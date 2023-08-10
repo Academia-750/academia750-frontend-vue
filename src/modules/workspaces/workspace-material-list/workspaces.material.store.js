@@ -9,7 +9,8 @@ export default {
     editItem: false,
     workspace: '',
     type: '',
-    tags: []
+    tags: [],
+    uploadFile: {}
   },
   getters: {
     ...DataTableStore.getters
@@ -28,6 +29,9 @@ export default {
     },
     SET_TAGS(state, payload) {
       state.tags = payload
+    },
+    SET_UPLOAD_FILE(state, payload) {
+      state.uploadFile = payload
     }
   },
   actions: {
@@ -37,6 +41,7 @@ export default {
       commit('SET_TYPE', '')
       commit('SET_TAGS', [])
       commit('SET_WORKSPACE', '')
+      commit('SET_UPLOAD_FILE', {})
     }
   }
 }

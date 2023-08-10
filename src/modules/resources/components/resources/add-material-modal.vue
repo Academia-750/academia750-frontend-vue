@@ -63,7 +63,7 @@
               label="Material Name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
-            <div class="file-upload">
+            <div v-if="!editItem" class="file-upload">
               <div class="file-upload__area" @click="uploadFileclicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Drop your files here.</h4>
@@ -81,9 +81,35 @@
             </div>
             <div v-if="uploadedFiles.length > 0">
               <ul class="file-container mb-2">
-                <li v-for="(file, index) in uploadedFiles" :key="index">{{ file.name }}</li>
+                <li v-for="(file, index) in uploadedFiles" :key="index" class="d-flex flex-row justify-space-between">
+                  <div>{{ file.name }}</div>
+                  <v-icon @click="clearFileUpload">mdi-close</v-icon>
+                </li>
               </ul>
             </div>
+            <v-chip
+              v-if="!uploadedFiles.length > 0 && editItem.url && getFileName(editItem.url)"
+              class="ma-2"
+              color="cyan"
+              label
+              close
+              large
+              text-color="white"
+              max-width="100%"
+              close-icon="mdi-pencil"
+              @click="uploadFileclicked"
+            >
+              {{ fileName }}
+              <input
+                id=""
+                ref="fileInput"
+                type="file"
+                name=""
+                hidden
+                multiple
+                @change="handleFileUpload"
+              />
+            </v-chip>
             <v-progress-linear
               v-if="uploading"
               :value="uploadProgress"
@@ -127,6 +153,7 @@
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import { mapMutations, mapActions, mapState } from 'vuex'
+import Cloudinary from '@/services/CloudinaryService'
 
 export default {
   name: 'AddMaterialModal',
@@ -162,6 +189,7 @@ export default {
       uploadProgress: 0,
       selectedItem: false,
       selectedTags: [],
+      fileName: '',
       types: [
         {
           key: 'material',
@@ -175,15 +203,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'tags', 'type'])
+    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'tags', 'type', 'uploadFile'])
   },
   mounted() {
     this.loadWorkspaces()
-    this.loadTags()
+    this.getFileName()
   },
   methods: {
     ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS', 'SET_UPLOAD_FILE']),
     open() {
       this.isOpen = true
     },
@@ -212,7 +240,18 @@ export default {
 
       return res
     },
+    async getFileName(url) {
+      if (!this.editItem) {
+        return
+      }
+      // Extract the name using a regular expression
+      const matches = url.match(/\/([^/]+)\.\w+$/)
+      const fileName = matches && matches[1]
+
+      this.fileName = fileName
+    },
     async loadWorkspaces(pagination) {
+
       const params = {
         ...pagination
       }
@@ -232,10 +271,16 @@ export default {
     async uploadFileclicked() {
       this.$refs.fileInput.click()
     },
+    async clearFileUpload() {
+      this.uploading = false// Set uploading flag to false
+      this.uploadProgress = 0 // Reset progress
+      this.uploadedFiles = []// Clear the uploaded files array
+    },
     async handleFileUpload(event) {
       // Handle the file upload event and store the uploaded files in the array
       const { files } = event.target
-
+      
+      this.SET_UPLOAD_FILE(files[0])
       this.uploading = true
 
       const totalFiles = files.length
@@ -252,20 +297,6 @@ export default {
           this.uploadedFiles = Array.from(files)
         }
       }, 200)
-    },
-    async loadTags(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceMaterialRepository.listOfTags(params)
-
-      this.tags = res.results.map((item) => ({
-        key: item.id,
-        label: item.name
-      }))
-
-      return res
     },
     async onCreateWorkspaceMaterial() {
     this.loading = true
@@ -285,21 +316,28 @@ export default {
       return
     }
     let materialId = this.editItem.id
+    let res = undefined
 
+    if (this.uploadFile) {
+
+    res = await Cloudinary.upload(this.uploadFile)
+    }
     if ( !this.editItem ) {
      const material = await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
           name: this.name,
-          type: this.type
+          type: this.type,
+          url: res.url
         })
 
       materialId = material.id
     }
+    Cloudinary.deleteCloudinaryFile(this.fileName)
     const material = await WorkspaceMaterialRepository.update(materialId, {
-          name: this.name,
-          tags: this.tags,
-          url: ''
+      name: this.name,
+      tags: this.tags,
+      url: res.url
     })
-        
+    
     await this.$swal.fire({
       icon: 'success',
       toast: true,
@@ -310,10 +348,14 @@ export default {
     })
     this.onClose()
     this.name = ''
+    this.SET_UPLOAD_FILE({})
     this.$emit('create', material)
     this.isOpen = false
     this.loading = false
-  }
+    this.uploading = false// Set uploading flag to false
+    this.uploadProgress = 0 // Reset progress
+    this.uploadedFiles = []
+    }
   }
 }
 </script>

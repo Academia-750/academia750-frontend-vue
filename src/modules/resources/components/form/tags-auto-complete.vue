@@ -41,6 +41,10 @@ export default {
     dense: {
       type: Boolean,
       default: false
+    },
+    value: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -50,7 +54,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['tags'])
+    ...mapState('workspaceMaterialStore', ['tags', 'editItem'])
   },
   mounted() {
     this.loadTags()
