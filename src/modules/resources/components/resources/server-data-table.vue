@@ -76,9 +76,10 @@ export default {
       this.$store.commit(`${this.storeName}/SET_ITEMS_SELECTED`, value)
     },
     onOptionsUpdate(options) {
+      console.log({ options })
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, {
         orderBy: options.sortBy[0] || 'updated_at',
-        order: options.sortDesc[0] ? 1 : -1,
+        order: options.sortDesc[0] ? -1 : 1,
         limit: options.itemsPerPage,
         offset: (options.page - 1) * options.itemsPerPage
       })
