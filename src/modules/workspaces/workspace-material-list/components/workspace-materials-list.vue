@@ -8,6 +8,7 @@
       :tags="tags"
       :edit-item="editItem"
       :edit-item-id="editItemId"
+      :edit-item-url="editItemUrl"
       @create="create"
     />
     <AddRecordingModal
@@ -337,7 +338,12 @@ export default {
     },
     onAddMaterial() {
       this.SET_EDIT_ITEM(false)
+      this.editItem = false
       this.name = ''
+      this.tags = []
+      this.workspace = ''
+      this.uploadedFiles = []
+      this.editItemUrl = ''
       this.$refs.addWorkspaceMaterial.onResetErrors()
       this.$refs.addWorkspaceMaterial.open()
     },
@@ -351,6 +357,7 @@ export default {
       this.tags = material.tags.split(',')
       this.workspace = material.workspace_id
       this.editItemId = material.id
+      this.editItemUrl = material.url
       this.editItem = true
       this.SET_EDIT_ITEM(material)
       this.$refs.addWorkspaceMaterial.onResetErrors()
