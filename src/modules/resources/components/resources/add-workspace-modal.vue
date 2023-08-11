@@ -115,7 +115,7 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: this.workspace ? 'Workspace Actualizado!' : 'Workspace Creado!',
+        title: this.workspace ? 'Categoria Actualizado!' : 'Categoria Creado!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500

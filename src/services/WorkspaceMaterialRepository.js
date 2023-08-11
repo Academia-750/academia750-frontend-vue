@@ -4,15 +4,13 @@ import ResourceService from '@/services/ResourceService'
 // This will be replaced by the real groups data from the API
 export default {
   /**
-   * @param {string} code
+   * @param {string} type
    * @param {string} name
-   * @param {string} color
    */
-  async create(id, { name, type, url }) {
+  async create(id, { name, type }) {
     const response = await ResourceService.post(`workspace/${id}/add`, {
       name,
-      type,
-      url
+      type
     })
 
     if (response.status !== 200) {
@@ -68,7 +66,6 @@ export default {
    * @param {number} workspace
    */
   async list({
-    withCount,
     order,
     orderBy,
     offset,
@@ -79,7 +76,6 @@ export default {
     content
   }) {
     const params = {
-      withCount,
       order,
       orderBy,
       offset,
@@ -89,6 +85,8 @@ export default {
       workspace: workspace || undefined,
       content: content || undefined
     }
+
+    console.log({ params })
 
     deleteUndefined(params)
     const response = await ResourceService.get('material/list', { params })
@@ -103,9 +101,9 @@ export default {
 
     return { results: response.data.results, total: response.data.total }
   },
-  async listOfTags({ withCount, order, orderBy, offset, limit, content }) {
+
+  async listOfTags({ order, orderBy, offset, limit, content }) {
     const params = {
-      withCount,
       order,
       orderBy,
       offset,
@@ -130,6 +128,7 @@ export default {
    * @param {string} name
    * @param {string} type
    * @param {string} tags
+   * @param {string} url
    */
   async update(id, { name, type, tags, url }) {
     const response = await ResourceService.put(`material/${id}`, {
@@ -159,10 +158,11 @@ export default {
 
     return response.data.result
   },
-  async searchTags({ content, limit }) {
+  async searchTags({ content, limit, type }) {
     const response = await ResourceService.get('material/tag', {
       params: {
         content: content || undefined,
+        type,
         limit
       }
     })

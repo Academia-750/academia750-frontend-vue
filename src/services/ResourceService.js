@@ -75,7 +75,7 @@ ResourceService.warning = ({ response, title, message }) => {
     showConfirmButton: false,
     timer: 3000,
     icon: 'warning',
-    title: title || `[${response.status}] ${response.statusText}`,
+    title: title || `${response.status} ${response.statusText}`,
     text: message || response.data.message || response.data.error
   })
 }

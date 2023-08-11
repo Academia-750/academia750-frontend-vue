@@ -21,7 +21,7 @@ export default {
   },
   getters: {
     vueTableOptions: (state) => ({
-      content: state.tableOptions || '',
+      content: state.tableOptions.content || '',
       sortBy: [state.tableOptions.orderBy],
       sortDesc: state.tableOptions.order === 1 ? [true] : [],
       limit: state.tableOptions.limit,

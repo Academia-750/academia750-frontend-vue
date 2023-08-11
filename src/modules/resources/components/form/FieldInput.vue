@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     resetErrors() {
-    this.$refs.validationProvider.reset()
+      this.$refs.validationProvider.reset()
     },
     update(value) {
       this.$emit('input', value)

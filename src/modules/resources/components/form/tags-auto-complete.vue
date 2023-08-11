@@ -1,6 +1,6 @@
 <template>
-  <v-combobox
-    v-model="tags"
+  <v-autocomplete
+    :value="tags"
     :items="tagsList"
     :loading="loading"
     tags-list
@@ -22,10 +22,11 @@
         @click="select"
         @click:close="remove(item)"
       >
-        <strong>{{ item }}</strong>&nbsp;
+        <strong>{{ item }}</strong
+        >&nbsp;
       </v-chip>
     </template>
-  </v-combobox>
+  </v-autocomplete>
 </template>
 
 <script>
@@ -41,13 +42,13 @@ export default {
       type: Boolean,
       default: false
     },
+    tagType: {
+      type: String,
+      required: true
+    },
     tags: {
       type: Array,
       default: () => []
-    },
-    editItem: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -64,21 +65,21 @@ export default {
       this.loading = true
       const tags = await WorkspaceMaterialRepository.searchTags({
         content: value,
-        limit: this.limit
+        limit: this.limit,
+        type: this.tagType
       })
 
-      this.tagsList = tags.map((item) => (
-        item.name
-      ))
+      this.tagsList = tags.map((item) => item.name)
       this.loading = false
-
-      return tags
     },
     onChangeTags(value) {
       this.$emit('change', value)
     },
-    remove (item) {
-      this.$emit('remove', item)
+    remove(item) {
+      this.$emit(
+        'change',
+        this.tags.filter((tag) => tag !== item)
+      )
     }
   }
 }

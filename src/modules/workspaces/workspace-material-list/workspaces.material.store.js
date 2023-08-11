@@ -22,16 +22,14 @@ export default {
       state.editItem = payload
     },
     SET_WORKSPACE(state, payload) {
-      state.workspace = payload.toString()
+      // Workspace ID is a number, but for the select we need to cast to string
+      state.workspace = payload ? payload.toString() : undefined
     },
     SET_TYPE(state, payload) {
       state.type = payload
     },
     SET_TAGS(state, payload) {
       state.tags = payload
-    },
-    SET_UPLOAD_FILE(state, payload) {
-      state.uploadFile = payload
     }
   },
   actions: {
@@ -41,7 +39,6 @@ export default {
       commit('SET_TYPE', '')
       commit('SET_TAGS', [])
       commit('SET_WORKSPACE', '')
-      commit('SET_UPLOAD_FILE', {})
     }
   }
 }

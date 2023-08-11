@@ -2,25 +2,14 @@
   <v-card-text>
     <AddMaterialModal
       ref="addWorkspaceMaterial"
-      :workspace="workspace"
-      :type="type"
-      :name="name"
-      :tags="tags"
-      :edit-item="editItem"
-      :edit-item-id="editItemId"
-      :edit-item-url="editItemUrl"
-      @create="create"
-    />
-    <AddRecordingModal
-      ref="addRecording"
-      :workspace="workspace"
-      :name="name"
+      :default-workspace="workspace"
+      :workspaces="workspaces"
       @create="create"
     />
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="workspaceStore"
+      store-name="workspaceMaterialStore"
       :load="loadMaterials"
     >
       <template v-slot:top>
@@ -46,7 +35,7 @@
 
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
-          :search-word="store.tableOptions.content"
+          :search-word="content"
           label-text-field="Buscar por nombre"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
@@ -79,15 +68,15 @@
             clearable
             @change="onChangeWorkspace"
           ></v-select>
-          <ResourceTagAutoComplete
-            value="tags"
+          <TagsAutoComplete
+            :tags="tags"
+            tag-type="material"
             :dense="true"
             @change="onChangeTags"
-            @remove="onRemoveTags"
           />
         </div>
         <ResourceButtonAdd
-          text-button="Add Material"
+          text-button="Nuevo Material"
           class="mb-2 mx-3"
           @click="onAddMaterial"
         />
@@ -115,8 +104,22 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <v-icon color="primary" :disabled="item.url ? false : true">
+            <v-icon
+              v-if="item.type === 'material'"
+              :class="item.url ? 'cursor-pointer' : ''"
+              color="primary"
+              :disabled="item.url ? false : true"
+              @click="download(item)"
+            >
               mdi-cloud-download
+            </v-icon>
+            <v-icon
+              v-else
+              :class="item.url ? 'cursor-pointer' : ''"
+              color="primary"
+              :disabled="true"
+            >
+              mdi-camera
             </v-icon>
           </div>
           <div></div>
@@ -146,6 +149,7 @@ import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
+import axios from 'axios'
 
 export default {
   name: 'WorkspaceList',
@@ -186,17 +190,14 @@ export default {
       import(
         /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
-    AddRecordingModal: () =>
-      import(
-        /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
-      ),
+
     ResourceButtonGoBackRouter: () =>
       import(
         /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
       ),
-    ResourceTagAutoComplete: () =>
+    TagsAutoComplete: () =>
       import(
-        /* webpackChunkName: "ResourceTagAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
+        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
       ),
 
     ServerDataTable
@@ -226,8 +227,8 @@ export default {
     headers() {
       return headers
     },
-    store() {
-      return this.$store.state.workspaceStore
+    content() {
+      return this.$store.state.workspaceMaterialStore.content
     }
   },
   created() {
@@ -244,7 +245,6 @@ export default {
       'resetTableOptions'
     ]),
     ...mapMutations('workspaceMaterialStore', [
-      'SET_EDIT_ITEM',
       'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
@@ -262,18 +262,17 @@ export default {
       this.SET_TABLE_OPTIONS({ offset: 0 })
     },
     onChangeWorkspace(value) {
-      console.log({ value })
       this.SET_WORKSPACE(value)
-      this.$refs.table.reload()
       this.SET_TABLE_OPTIONS({ offset: 0 })
-    },
-    onChangeTags() {
       this.$refs.table.reload()
     },
-    onRemoveTags(item) {
+    onChangeTags(value) {
+      this.SET_TAGS(value)
       this.$refs.table.reload()
     },
+
     async loadMaterials(pagination) {
+      console.log({ pagination })
       const params = {
         ...pagination,
         type: this.type,
@@ -298,7 +297,6 @@ export default {
       }))
     },
     async create() {
-      this.SET_EDIT_ITEM(false)
       this.$refs.table.reload()
     },
     async deleteWorkspaceMaterialConfirm(material) {
@@ -330,38 +328,22 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'El Workspace ha sido eliminado con éxito.',
+        title:
+          material.type === 'material'
+            ? 'El material ha sido eliminado con éxito.'
+            : 'La grabación ha sido eliminada con éxito',
         timer: 3000
       })
 
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      this.SET_EDIT_ITEM(false)
-      this.editItem = false
-      this.name = ''
-      this.tags = []
-      this.workspace = ''
-      this.uploadedFiles = []
-      this.editItemUrl = ''
-      this.$refs.addWorkspaceMaterial.onResetErrors()
+      console.log({ refs: this.$refs })
       this.$refs.addWorkspaceMaterial.open()
     },
-    onAddRecording(item) {
-      this.name = ''
-      this.$refs.addRecording.open()
-    },
+
     updateWorkspaceMaterial(material) {
-      this.name = material.name
-      this.type = material.type
-      this.tags = material.tags.split(',')
-      this.workspace = material.workspace_id
-      this.editItemId = material.id
-      this.editItemUrl = material.url
-      this.editItem = true
-      this.SET_EDIT_ITEM(material)
-      this.$refs.addWorkspaceMaterial.onResetErrors()
-      this.$refs.addWorkspaceMaterial.open()
+      this.$refs.addWorkspaceMaterial.open(material)
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
@@ -369,6 +351,29 @@ export default {
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
+    },
+    fileNameAndType(url) {
+      // Extract the name using a regular expression
+      const matches = url.match(/\/([^/]+)\.\w+$/)
+      const fileName = matches && matches[1]
+
+      return fileName.split('.')
+    },
+    download(material) {
+      const [_name, type] = this.fileNameAndType(material.url)
+
+      axios
+        .get(material.url, { responseType: 'blob' })
+        .then((response) => {
+          const blob = new Blob([response.data], {})
+          const link = document.createElement('a')
+
+          link.href = URL.createObjectURL(blob)
+          link.download = `${material.name}.${type}`
+          link.click()
+          URL.revokeObjectURL(link.href)
+        })
+        .catch(console.error)
     }
   }
 }
@@ -400,5 +405,8 @@ export default {
 
 .type-section {
   width: 80%;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

@@ -6,12 +6,7 @@
       :name="name"
       @create="create"
     />
-    <AddMaterialModal
-      ref="addMaterial"
-      :workspace="workspace"
-      :name="name"
-      @create="create"
-    />
+    <AddMaterialModal ref="addMaterial" @create="create" />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -231,7 +226,7 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'El Workspace ha sido eliminado con éxito.',
+        title: 'La categoría ha sido eliminada con éxito.',
         timer: 3000
       })
 
