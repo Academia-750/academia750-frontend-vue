@@ -326,7 +326,12 @@ export default {
     },
     onAddMaterial() {
       this.SET_EDIT_ITEM(false)
+      this.editItem = false
       this.name = ''
+      this.tags = []
+      this.workspace = ''
+      this.uploadedFiles = []
+      this.editItemUrl = ''
       this.$refs.addWorkspaceMaterial.onResetErrors()
       this.$refs.addWorkspaceMaterial.open()
     },
@@ -335,7 +340,6 @@ export default {
       this.$refs.addRecording.open()
     },
     updateWorkspaceMaterial(material) {
-      console.log(material)
       this.name = material.name
       this.type = material.type
       this.tags = material.tags.split(',')

@@ -15,6 +15,7 @@
               item-value="key"
               label="Selecciona un workspace"
               outlined
+              clearable
               :disabled="editItem? true : false"
               @change="onSelectWorkspace"
             ></v-select>
@@ -27,7 +28,6 @@
               label="Tipos"
               :value="type"
               outlined
-              class="mr-2"
               clearable
               :disabled="editItem? true : false"
               @change="onChangeType"
@@ -38,7 +38,14 @@
               label="Material Name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
-            <div v-if="!editItem" class="file-upload">
+            <FieldInput
+              v-if="type === 'recording'"
+              ref="vimeoUrlInput"
+              v-model="editItemUrl"
+              label="Paste Vimeo Link Here"
+              rules="required"
+            />
+            <div v-if="!editItem && type === 'material'" class="file-upload">
               <div class="file-upload__area" @click="uploadFileclicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Drop your files here.</h4>
@@ -65,7 +72,7 @@
               </ul>
             </div>
             <v-chip
-              v-if="!uploadedFiles.length > 0 && editItemUrl && getFileName(editItemUrl)"
+              v-if="!uploadedFiles.length > 0 && editItemUrl && type ==='material' && getFileName(editItemUrl)"
               class="ma-2"
               color="cyan"
               label
@@ -321,16 +328,17 @@ export default {
       return
     }
     let materialId = this.editItemId
-    let res = undefined
 
-    if (this.uploadedFiles) {
-    res = await Cloudinary.upload(this.uploadedFiles[0], `workspace_${this.workspace}`)
+    if (this.uploadedFiles && this.type !== 'recording') {
+      const res = await Cloudinary.upload(this.uploadedFiles[0], `workspace_${this.workspace}`)
+
+      this.editItemUrl = res.url
     }
     if ( !this.editItem ) {
      const material = await WorkspaceMaterialRepository.create(this.workspace ,{
           name: this.name,
           type: this.type,
-          url: res.url
+          url: this.editItemUrl
         })
 
       materialId = material.id
@@ -338,7 +346,7 @@ export default {
     const material = await WorkspaceMaterialRepository.update(materialId, {
       name: this.name,
       tags: this.tags,
-      url: res.url
+      url: this.editItemUrl
     })
     
     await this.$swal.fire({
