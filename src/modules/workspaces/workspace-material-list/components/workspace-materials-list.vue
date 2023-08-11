@@ -5,7 +5,9 @@
       :workspace="workspace"
       :type="type"
       :name="name"
+      :tags="tags"
       :editItem="editItem"
+      :editItemId="editItemId"
       @create="create"
     />
     <AddRecordingModal
@@ -204,11 +206,11 @@ export default {
       tags: [],
       type: '',
       workspace: '',
-      editItem: false
+      editItem: false,
+      editItemId: null
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'type', 'tags']),
     headers() {
       return headers
     },
@@ -334,7 +336,9 @@ export default {
       console.log(material)
       this.name = material.name
       this.type = material.type
+      this.tags = material.tags.split(',')
       this.workspace = material.workspace_id
+      this.editItemId = material.id
       this.editItem = true
       this.SET_EDIT_ITEM(material)
       this.$refs.addWorkspaceMaterial.onResetErrors()

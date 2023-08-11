@@ -79,7 +79,7 @@ export default {
       default: ''
     },
     workspace: {
-      type: Object,
+      type: String,
       default: null
     },
     name: {

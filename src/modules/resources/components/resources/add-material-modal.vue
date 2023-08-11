@@ -136,7 +136,7 @@ export default {
       default: ''
     },
     workspace: {
-      type: Object,
+      type: String,
       default: null
     },
     tags: {
@@ -146,6 +146,10 @@ export default {
     editItem: {
       type: Boolean,
       default: false
+    },
+    editItemId: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -166,8 +170,7 @@ export default {
           key: 'recording',
           label: 'Grabaciones'
         }
-      ],
-      editItem: false
+      ]
     }
   },
   computed: {
@@ -189,7 +192,6 @@ export default {
     },
     onClose() {
       this.isOpen = false
-      this.SET_EDIT_ITEM(false)
       this.onResetErrors()
     },
     onChangeType(value) {
@@ -260,7 +262,7 @@ export default {
 
       return
     }
-    let materialId = this.editItem.id
+    let materialId = this.editItemId
 
     if ( !this.editItem ) {
      const material = await WorkspaceMaterialRepository.create(this.workspace,{
@@ -293,6 +295,7 @@ export default {
     this.$emit('create', material)
     this.isOpen = false
     this.loading = false
+    this.$refs.table.reload()
   }
   }
 }

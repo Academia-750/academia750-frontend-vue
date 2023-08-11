@@ -1,6 +1,6 @@
 <template>
   <v-combobox
-    v-model="editItem.tags"
+    v-model="tags"
     :items="tagsList"
     :loading="loading"
     tags-list
@@ -46,8 +46,8 @@ export default {
       default: () => []
     },
     editItem: {
-      type: Object,
-      default: () => {}
+      type: Boolean,
+      default: false
     }
   },
   data() {
