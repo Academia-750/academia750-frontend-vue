@@ -75,8 +75,8 @@ ResourceService.warning = ({ response, title, message }) => {
     showConfirmButton: false,
     timer: 3000,
     icon: 'warning',
-    title: title || `Error del Servidor: ${response.status}`,
-    text: message || response.data.message || response.statusText
+    title: title || `[${response.status}] ${response.statusText}`,
+    text: message || response.data.message || response.data.error
   })
 }
 export default ResourceService

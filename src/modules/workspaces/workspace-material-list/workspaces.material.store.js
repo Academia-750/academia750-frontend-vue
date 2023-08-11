@@ -22,7 +22,7 @@ export default {
       state.editItem = payload
     },
     SET_WORKSPACE(state, payload) {
-      state.workspace = payload
+      state.workspace = payload.toString()
     },
     SET_TYPE(state, payload) {
       state.type = payload

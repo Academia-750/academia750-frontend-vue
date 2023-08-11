@@ -6,8 +6,8 @@
       :type="type"
       :name="name"
       :tags="tags"
-      :editItem="editItem"
-      :editItemId="editItemId"
+      :edit-item="editItem"
+      :edit-item-id="editItemId"
       @create="create"
     />
     <AddRecordingModal
@@ -66,7 +66,7 @@
             @change="onChangeType"
           ></v-select>
           <v-select
-            v-model="workspace"
+            :value="workspace"
             :items="workspaces"
             item-text="label"
             item-value="key"
@@ -85,8 +85,11 @@
             @remove="onRemoveTags"
           />
         </div>
-        <ResourceButtonAdd text-button="Add Material" class="mb-2 mx-3" @click="onAddMaterial" />
-
+        <ResourceButtonAdd
+          text-button="Add Material"
+          class="mb-2 mx-3"
+          @click="onAddMaterial"
+        />
       </template>
 
       <!-- ------------ NO DATA ------------ -->
@@ -111,10 +114,11 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <v-icon color="primary" :disabled="item.url ? false:true">mdi-cloud-download</v-icon>
+            <v-icon color="primary" :disabled="item.url ? false : true">
+              mdi-cloud-download
+            </v-icon>
           </div>
-          <div>
-          </div>
+          <div></div>
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -122,7 +126,9 @@
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteWorkspaceMaterialConfirm(item)"
+            @actionConfirmShowDialogDelete="
+              deleteWorkspaceMaterialConfirm(item)
+            "
           />
         </div>
       </template>
@@ -183,9 +189,15 @@ export default {
       import(
         /* webpackChunkName: "AddRecordingModal" */ '@/modules/resources/components/resources/add-recording-modal'
       ),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceTagAutoComplete: () => import(/* webpackChunkName: "ResourceTagAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'),
-    
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceTagAutoComplete: () =>
+      import(
+        /* webpackChunkName: "ResourceTagAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
+      ),
+
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -202,16 +214,14 @@ export default {
           label: 'Grabaciones'
         }
       ],
-      workspaces: {},
-      tagsList: [],
-      tags: [],
-      type: '',
-      workspace: '',
+      workspaces: [],
       editItem: false,
       editItemId: null
     }
   },
   computed: {
+    ...mapState('workspaceMaterialStore', ['workspace', 'type', 'tags']),
+
     headers() {
       return headers
     },
@@ -225,12 +235,20 @@ export default {
   mounted() {
     this.$refs.table.reload()
     this.loadWorkspaces()
-    this.loadMaterials()
   },
 
   methods: {
-    ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS', 'SET_TABLE_OPTIONS']),
+    ...mapActions('workspaceMaterialStore', [
+      'deleteGroup',
+      'resetTableOptions'
+    ]),
+    ...mapMutations('workspaceMaterialStore', [
+      'SET_EDIT_ITEM',
+      'SET_WORKSPACE',
+      'SET_TYPE',
+      'SET_TAGS',
+      'SET_TABLE_OPTIONS'
+    ]),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
@@ -243,6 +261,7 @@ export default {
       this.SET_TABLE_OPTIONS({ offset: 0 })
     },
     onChangeWorkspace(value) {
+      console.log({ value })
       this.SET_WORKSPACE(value)
       this.$refs.table.reload()
       this.SET_TABLE_OPTIONS({ offset: 0 })
@@ -250,7 +269,7 @@ export default {
     onChangeTags() {
       this.$refs.table.reload()
     },
-    onRemoveTags (item) {
+    onRemoveTags(item) {
       this.$refs.table.reload()
     },
     async loadMaterials(pagination) {
@@ -260,13 +279,8 @@ export default {
         workspace: this.workspace,
         tags: this.tags
       }
-      
-      const res = await WorkspaceMaterialRepository.list(params)
 
-      this.materials = res.results.map((item) => ({
-        key: item.id,
-        label: item.name
-      }))
+      const res = await WorkspaceMaterialRepository.list(params)
 
       return res
     },
@@ -274,15 +288,13 @@ export default {
       const params = {
         ...pagination
       }
-      
+
       const res = await WorkspaceRepository.list(params)
 
       this.workspaces = res.results.map((item) => ({
-        key: item.id,
+        key: item.id.toString(),
         label: item.name
       }))
-
-      return res
     },
     async create() {
       this.SET_EDIT_ITEM(false)
@@ -334,7 +346,6 @@ export default {
       this.$refs.addRecording.open()
     },
     updateWorkspaceMaterial(material) {
-      console.log(material)
       this.name = material.name
       this.type = material.type
       this.tags = material.tags.split(',')
@@ -380,7 +391,7 @@ export default {
   border-radius: 50%;
 }
 
-.type-section{
+.type-section {
   width: 80%;
 }
 </style>

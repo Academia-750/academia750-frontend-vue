@@ -4,19 +4,14 @@ export default {
   name: 'workspaceStore',
   namespaced: true,
   state: {
-    ...DataTableStore.state,
-    currentUserForUpdate: null,
-    editItem: false
+    ...DataTableStore.state
   },
   getters: {
     ...DataTableStore.getters
   },
 
   mutations: {
-    ...DataTableStore.mutations,
-    SET_EDIT_ITEM(state, payload) {
-      state.editItem = payload
-    }
+    ...DataTableStore.mutations
   },
   actions: {
     ...DataTableStore.actions

@@ -9,7 +9,11 @@ export default {
    * @param {string} color
    */
   async create(id, { name, type, url }) {
-    const response = await ResourceService.post(`workspace/${id}/add`, { name, type, url })
+    const response = await ResourceService.post(`workspace/${id}/add`, {
+      name,
+      type,
+      url
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -63,7 +67,17 @@ export default {
    * @param {number} type
    * @param {number} workspace
    */
-  async list({ withCount, order, orderBy, offset, limit, type, tags, workspace, content }) {
+  async list({
+    withCount,
+    order,
+    orderBy,
+    offset,
+    limit,
+    type,
+    tags,
+    workspace,
+    content
+  }) {
     const params = {
       withCount,
       order,
@@ -71,7 +85,7 @@ export default {
       offset,
       limit,
       type: type || undefined,
-      tags: tags || undefined,
+      tags: tags.length ? tags : undefined,
       workspace: workspace || undefined,
       content: content || undefined
     }

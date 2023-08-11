@@ -5,13 +5,13 @@
         <v-card class="d-flex flex-column">
           <v-container class="pa-3">
             <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold">Crear Workspace</span>
+              <span class="text-h6 font-weight-bold">Crear Categoría</span>
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <FieldInput
               ref="nameInput"
               v-model="name"
-              label="Workspace Name"
+              label="Nombre"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
@@ -23,7 +23,7 @@
                 outlined
                 @click="onClose"
               >
-                Cancel
+                Cancelar
               </v-btn>
               <v-btn
                 dark
@@ -47,43 +47,36 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 
 export default {
   name: 'AddWorkspaceModal',
-  components: { 
+  components: {
     FieldInput: () =>
       import(
         /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
       )
-   },
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    workspace: {
-      type: String,
-      default: null
-    },
-    name: {
-      type: String,
-      default: ''
-    }
   },
+  props: {},
   data() {
     return {
       isOpen: false,
-      loading: false
+      loading: false,
+      name: '',
+      workspace: ''
     }
   },
   methods: {
-    open() {
+    open(workspace) {
       this.isOpen = true
+      this.reset()
+      if (workspace) {
+        this.workspace = workspace
+        this.name = workspace.name
+      }
     },
-    async onResetErrors() {
+    async reset() {
       this.$refs['nameInput'].resetErrors()
       this.name = ''
     },
     onClose() {
       this.isOpen = false
-      this.onResetErrors
       this.$emit('input', '')
     },
     async onCreateWorkspace() {

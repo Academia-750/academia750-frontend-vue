@@ -28,17 +28,16 @@
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Workspace" />
+          <resource-title-toolbar-datatable title-text="Categorias" />
 
           <v-spacer />
-          <ResourceButtonMaterials 
-            text-button="All Materials" 
+          <ResourceButtonMaterials
+            text-button="Ver todos"
             :config-route="{ name: 'manage-materials' }"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="clearReducer()"
+            @DispatchClickEvent="goToMaterials()"
           />
-          <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
+          <ResourceButtonAdd text-button="Crear Categoría" @click="onCreate" />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -62,9 +61,9 @@
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between">
-          <ResourceButtonMaterials 
-            text-button="Materials" 
-            :config-route="{ name: 'manage-materials'}"
+          <ResourceButtonMaterials
+            text-button="Materiales"
+            :config-route="{ name: 'manage-materials' }"
             :only-dispatch-click-event="true"
             @DispatchClickEvent="setWorkspace(item)"
           />
@@ -139,8 +138,7 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonMaterials'
       ),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    
+
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -168,8 +166,8 @@ export default {
 
   methods: {
     ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
+    ...mapMutations('workspaceStore', ['SET_TABLE_OPTIONS']),
+    ...mapMutations('workspaceMaterialStore', ['SET_WORKSPACE']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
@@ -186,32 +184,22 @@ export default {
       return res
     },
     onCreate() {
-      this.name = ''
-      this.workspace = null
-      this.$refs.addWorkSpace.onResetErrors()
       this.$refs.addWorkSpace.open()
     },
     onAddMaterial() {
-      this.name = ''
-      this.workspace = null
       this.$refs.addMaterial.open()
     },
     updateWorkspace(workspace) {
-      this.name = workspace.name
-      this.SET_EDIT_ITEM(workspace)
-      this.workspace = workspace
-      this.$refs.addWorkSpace.onResetErrors()
-      this.$refs.addWorkSpace.open()
+      this.$refs.addWorkSpace.open(workspace)
     },
     setWorkspace(workspace) {
+      this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
       this.SET_WORKSPACE(workspace.id)
+
       this.$router.push({ name: 'manage-materials' })
     },
-    clearReducer() {
-      this.SET_WORKSPACE('')
-      this.SET_TYPE('')
-      this.SET_TAGS([])
-      this.SET_EDIT_ITEM(false)
+    goToMaterials() {
+      this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
       this.$router.push({ name: 'manage-materials' })
     },
     async deleteWorkspaceConfirm(workspace) {
@@ -252,7 +240,6 @@ export default {
 
     async create() {
       this.$refs.table.reload()
-      this.SET_EDIT_ITEM(false)
     },
 
     searchFieldExecuted($event) {
