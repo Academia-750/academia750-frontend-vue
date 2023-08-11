@@ -319,7 +319,6 @@ export default {
     let res = undefined
 
     if (this.uploadFile) {
-    console.log('-----this.workspace', this.workspace)
 
     res = await Cloudinary.upload(this.uploadFile, `workspace_${this.workspace}`)
     }
