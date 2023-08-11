@@ -8,6 +8,7 @@
       :tags="tags"
       :editItem="editItem"
       :editItemId="editItemId"
+      :editItemUrl="editItemUrl"
       @create="create"
     />
     <AddRecordingModal
@@ -340,6 +341,7 @@ export default {
       this.tags = material.tags.split(',')
       this.workspace = material.workspace_id
       this.editItemId = material.id
+      this.editItemUrl = material.url
       this.editItem = true
       this.SET_EDIT_ITEM(material)
       this.$refs.addWorkspaceMaterial.onResetErrors()

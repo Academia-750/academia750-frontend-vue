@@ -9,19 +9,7 @@
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <v-select
-              v-if="editItem"
               v-model="editItem.workspace_id"
-              :items="workspaces"
-              item-text="label"
-              item-value="key"
-              label="Selecciona un workspace"
-              outlined
-              :disabled="editItem? true : false"
-              @change="onSelectWorkspace"
-            ></v-select>
-            <v-select
-              v-else
-              v-model="workspace"
               :items="workspaces"
               item-text="label"
               item-value="key"
@@ -77,7 +65,7 @@
               </ul>
             </div>
             <v-chip
-              v-if="!uploadedFiles.length > 0 && editItem.url && getFileName(editItem.url)"
+              v-if="!uploadedFiles.length > 0 && editItemUrl && getFileName(editItemUrl)"
               class="ma-2"
               color="cyan"
               label
@@ -185,6 +173,10 @@ export default {
     },
     editItemId: {
       type: Number,
+      default: null
+    },
+    editItemUrl: {
+      type: String,
       default: null
     }
   },
