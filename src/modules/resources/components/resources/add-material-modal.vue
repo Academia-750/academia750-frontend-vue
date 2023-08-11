@@ -319,8 +319,9 @@ export default {
     let res = undefined
 
     if (this.uploadFile) {
+    console.log('-----this.workspace', this.workspace)
 
-    res = await Cloudinary.upload(this.uploadFile)
+    res = await Cloudinary.upload(this.uploadFile, this.workspace)
     }
     if ( !this.editItem ) {
      const material = await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
@@ -331,7 +332,6 @@ export default {
 
       materialId = material.id
     }
-    Cloudinary.deleteCloudinaryFile(this.fileName)
     const material = await WorkspaceMaterialRepository.update(materialId, {
       name: this.name,
       tags: this.tags,
