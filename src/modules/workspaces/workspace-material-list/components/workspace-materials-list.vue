@@ -3,7 +3,11 @@
     <AddMaterialModal
       ref="addWorkspaceMaterial"
       :workspace="workspace"
+      :type="type"
       :name="name"
+      :tags="tags"
+      :editItem="editItem"
+      :editItemId="editItemId"
       @create="create"
     />
     <AddRecordingModal
@@ -48,7 +52,6 @@
         />
         <!-- ------------ TYPE SECTION ------------ -->
         <div class="d-flex align-center mx-3 type-section">
-          <p class="mr-2 font-weight-bold">Tipos:</p>
           <v-select
             :items="types"
             item-text="label"
@@ -81,8 +84,8 @@
             @change="onChangeTags"
             @remove="onRemoveTags"
           />
-          <ResourceButtonAdd text-button="Add Material" class="mb-3" @click="onAddMaterial" />
         </div>
+        <ResourceButtonAdd text-button="Add Material" class="mb-2 mx-3" @click="onAddMaterial" />
 
       </template>
 
@@ -200,11 +203,15 @@ export default {
         }
       ],
       workspaces: {},
-      tagsList: []
+      tagsList: [],
+      tags: [],
+      type: '',
+      workspace: '',
+      editItem: false,
+      editItemId: null
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'type', 'tags']),
     headers() {
       return headers
     },
@@ -219,12 +226,11 @@ export default {
     this.$refs.table.reload()
     this.loadWorkspaces()
     this.loadMaterials()
-    this.loadTags()
   },
 
   methods: {
     ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS', 'SET_TABLE_OPTIONS']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
@@ -234,12 +240,14 @@ export default {
     onChangeType(value) {
       this.SET_TYPE(value)
       this.$refs.table.reload()
+      this.SET_TABLE_OPTIONS({ offset: 0 })
     },
     onChangeWorkspace(value) {
       this.SET_WORKSPACE(value)
       this.$refs.table.reload()
+      this.SET_TABLE_OPTIONS({ offset: 0 })
     },
-    onChangeTags(value) {
+    onChangeTags() {
       this.$refs.table.reload()
     },
     onRemoveTags (item) {
@@ -259,19 +267,6 @@ export default {
         key: item.id,
         label: item.name
       }))
-
-      return res
-    },
-    async loadTags(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceMaterialRepository.listOfTags(params)
-
-      this.tagsList = res.results.map((item) => (
-        item.name
-      ))
 
       return res
     },
@@ -331,6 +326,7 @@ export default {
     onAddMaterial() {
       this.SET_EDIT_ITEM(false)
       this.name = ''
+      this.$refs[addWorkspaceMaterial].onResetErrors()
       this.$refs.addWorkspaceMaterial.open()
     },
     onAddRecording(item) {
@@ -338,8 +334,15 @@ export default {
       this.$refs.addRecording.open()
     },
     updateWorkspaceMaterial(material) {
+      console.log(material)
       this.name = material.name
+      this.type = material.type
+      this.tags = material.tags.split(',')
+      this.workspace = material.workspace_id
+      this.editItemId = material.id
+      this.editItem = true
       this.SET_EDIT_ITEM(material)
+      this.$refs.addWorkspaceMaterial.onResetErrors()
       this.$refs.addWorkspaceMaterial.open()
     },
     searchFieldExecuted($event) {

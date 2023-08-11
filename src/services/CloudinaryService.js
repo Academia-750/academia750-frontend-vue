@@ -4,7 +4,6 @@ export default {
   async upload(files, folderName) {
     const form = new FormData()
 
-    console.log('------- folderName', folderName)
     form.append('file', files)
     form.append('upload_preset', 'testcase1')
     form.append('public_id', `${folderName}/${files.name}`)

@@ -30,7 +30,6 @@
 
 <script>
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
-import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'TagsAutoComplete',
   props: {
@@ -42,9 +41,13 @@ export default {
       type: Boolean,
       default: false
     },
-    value: {
+    tags: {
       type: Array,
       default: () => []
+    },
+    editItem: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -53,14 +56,10 @@ export default {
       loading: false
     }
   },
-  computed: {
-    ...mapState('workspaceMaterialStore', ['tags', 'editItem'])
-  },
   mounted() {
     this.loadTags()
   },
   methods: {
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS']),
     async loadTags(value) {
       this.loading = true
       const tags = await WorkspaceMaterialRepository.searchTags({
@@ -76,11 +75,9 @@ export default {
       return tags
     },
     onChangeTags(value) {
-      this.SET_TAGS(value)
       this.$emit('change', value)
     },
     remove (item) {
-      this.tags.splice(this.tags.indexOf(item), 1)
       this.$emit('remove', item)
     }
   }

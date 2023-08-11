@@ -31,21 +31,6 @@
               @change="onSelectWorkspace"
             ></v-select>
             <v-select
-              v-if="editItem"
-              v-model="editItem.type"
-              :items="types"
-              item-text="label"
-              item-value="key"
-              persistent-hint
-              label="Tipos"
-              :value="type"
-              outlined
-              class="mr-2"
-              clearable
-              @change="onChangeType"
-            ></v-select>
-            <v-select
-              v-else
               v-model="type"
               :items="types"
               item-text="label"
@@ -56,9 +41,11 @@
               outlined
               class="mr-2"
               clearable
+              :disabled="editItem? true : false"
               @change="onChangeType"
             ></v-select>
             <FieldInput
+              ref="nameInput"
               v-model="name"
               label="Material Name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
@@ -82,8 +69,10 @@
             <div v-if="uploadedFiles.length > 0">
               <ul class="file-container mb-2">
                 <li v-for="(file, index) in uploadedFiles" :key="index" class="d-flex flex-row justify-space-between">
-                  <div>{{ file.name }}</div>
-                  <v-icon @click="clearFileUpload">mdi-close</v-icon>
+                  <div>
+                    {{ file.name }}
+                  </div>
+                  <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
                 </li>
               </ul>
             </div>
@@ -118,6 +107,8 @@
             ></v-progress-linear>
             <ResourceTagAutoComplete
               :dense="false"
+              :edit-item="editItem"
+              :tags="tags"
               @change="onChangeTags"
               @remove="onRemoveTags"
             />
@@ -152,7 +143,6 @@
 <script>
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
-import { mapMutations, mapActions, mapState } from 'vuex'
 import Cloudinary from '@/services/CloudinaryService'
 
 export default {
@@ -176,6 +166,26 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    workspace: {
+      type: String,
+      default: null
+    },
+    tags: {
+      type: Array,
+      default: () => []
+    },
+    editItem: {
+      type: Boolean,
+      default: false
+    },
+    editItemId: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -187,7 +197,6 @@ export default {
       uploadedFiles: [],
       uploading: false,
       uploadProgress: 0,
-      workspace: false,
       selectedTags: [],
       fileName: '',
       types: [
@@ -203,31 +212,31 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['editItem', 'workspace', 'tags', 'type', 'uploadFile'])
   },
   mounted() {
     this.loadWorkspaces()
-    this.getFileName()
   },
   methods: {
-    ...mapActions('workspaceMaterialStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM', 'SET_WORKSPACE', 'SET_TYPE', 'SET_TAGS', 'SET_UPLOAD_FILE']),
     open() {
       this.isOpen = true
     },
     onRemoveTags (item) {
+      this.tags.splice(this.tags.indexOf(item), 1)
       this.$refs.table.reload()
+    },
+    async onResetErrors() {
+      this.$refs['nameInput'].resetErrors()
+      this.name = ''
     },
     onClose() {
       this.isOpen = false
-      this.SET_EDIT_ITEM(false)
+      this.onResetErrors()
     },
     onChangeType(value) {
-      this.SET_TYPE(value)
-      this.$refs.table.reload()
+      this.type = value
     },
     onChangeTags(value) {
-      this.selectedTags = value
+      this.tags = value
     },
     async materialInfo() {
       
@@ -280,7 +289,6 @@ export default {
       // Handle the file upload event and store the uploaded files in the array
       const { files } = event.target
       
-      this.SET_UPLOAD_FILE(files[0])
       this.uploading = true
 
       const totalFiles = files.length
@@ -297,6 +305,9 @@ export default {
           this.uploadedFiles = Array.from(files)
         }
       }, 200)
+    },
+    async onRemovefile(index) {
+      this.uploadedFiles.splice(index, 1)
     },
     async onCreateWorkspaceMaterial() {
     this.loading = true
@@ -315,11 +326,11 @@ export default {
 
       return
     }
-    let materialId = this.editItem.id
+    let materialId = this.editItemId
     let res = undefined
 
-    if (this.uploadFile) {
-
+    if (this.uploadedFiles) {
+    console.log('------workspace', this.workspace)
     res = await Cloudinary.upload(this.uploadFile, `workspace_${this.workspace}`)
     }
     if ( !this.editItem ) {
@@ -347,14 +358,15 @@ export default {
     })
     this.onClose()
     this.name = ''
-    this.SET_UPLOAD_FILE({})
+    this.type = ''
+    this.tags = []
+    this.workspace = ''
+    this.uploadedFiles = []
     this.$emit('create', material)
     this.isOpen = false
     this.loading = false
-    this.uploading = false// Set uploading flag to false
-    this.uploadProgress = 0 // Reset progress
-    this.uploadedFiles = []
-    }
+    this.$refs.table.reload()
+  }
   }
 }
 </script>
