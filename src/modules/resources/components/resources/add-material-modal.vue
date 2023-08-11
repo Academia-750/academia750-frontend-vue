@@ -208,7 +208,8 @@ export default {
           key: 'recording',
           label: 'Grabaciones'
         }
-      ]
+      ],
+      uploadFile: []
     }
   },
   computed: {
@@ -289,6 +290,7 @@ export default {
       // Handle the file upload event and store the uploaded files in the array
       const { files } = event.target
       
+      this.uploadFile = files[0]
       this.uploading = true
 
       const totalFiles = files.length
@@ -330,8 +332,7 @@ export default {
     let res = undefined
 
     if (this.uploadedFiles) {
-    console.log('------workspace', this.workspace)
-    res = await Cloudinary.upload(this.uploadFile, `workspace_${this.workspace}`)
+    res = await Cloudinary.upload(this.uploadedFiles[0], `workspace_${this.workspace}`)
     }
     if ( !this.editItem ) {
      const material = await WorkspaceMaterialRepository.create(this.workspace ,{

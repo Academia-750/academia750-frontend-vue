@@ -326,7 +326,7 @@ export default {
     onAddMaterial() {
       this.SET_EDIT_ITEM(false)
       this.name = ''
-      this.$refs[addWorkspaceMaterial].onResetErrors()
+      this.$refs.addWorkspaceMaterial.onResetErrors()
       this.$refs.addWorkspaceMaterial.open()
     },
     onAddRecording(item) {
