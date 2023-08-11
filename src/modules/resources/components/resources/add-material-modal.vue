@@ -17,7 +17,7 @@
               label="Selecciona un workspace"
               outlined
               :disabled="editItem? true : false"
-              @change="onSelect"
+              @change="onSelectWorkspace"
             ></v-select>
             <v-select
               v-else
@@ -28,7 +28,7 @@
               label="Selecciona un workspace"
               outlined
               :disabled="editItem? true : false"
-              @change="onSelect"
+              @change="onSelectWorkspace"
             ></v-select>
             <v-select
               v-if="editItem"
@@ -187,7 +187,7 @@ export default {
       uploadedFiles: [],
       uploading: false,
       uploadProgress: 0,
-      selectedItem: false,
+      workspace: false,
       selectedTags: [],
       fileName: '',
       types: [
@@ -233,7 +233,7 @@ export default {
       
       const res = await WorkspaceRepository.info(id)
 
-      this.selectedItem = res.results.map((item) => ({
+      this.workspace = res.results.map((item) => ({
         key: item.id,
         label: item.name
       }))
@@ -265,8 +265,8 @@ export default {
 
       return res
     },
-    onSelect(value) {
-      this.selectedItem = value
+    onSelectWorkspace(value) {
+      this.workspace = value
     },
     async uploadFileclicked() {
       this.$refs.fileInput.click()
@@ -321,10 +321,10 @@ export default {
     if (this.uploadFile) {
     console.log('-----this.workspace', this.workspace)
 
-    res = await Cloudinary.upload(this.uploadFile, this.workspace)
+    res = await Cloudinary.upload(this.uploadFile, `workspace_${this.workspace}`)
     }
     if ( !this.editItem ) {
-     const material = await WorkspaceMaterialRepository.create(this.workspace || this.selectedItem,{
+     const material = await WorkspaceMaterialRepository.create(this.workspace ,{
           name: this.name,
           type: this.type,
           url: res.url
