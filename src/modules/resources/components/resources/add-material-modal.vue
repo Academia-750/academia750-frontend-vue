@@ -325,7 +325,7 @@ export default {
 
             return
           }
-          this.url = res.url
+          this.url = res.secure_url
         }
 
         material = await WorkspaceMaterialRepository.update(material.id, {
