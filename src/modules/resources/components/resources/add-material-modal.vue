@@ -59,7 +59,7 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div v-if="!material && type === 'material'" class="file-upload">
+            <div v-if="!getFileName && type === 'material'" class="file-upload">
               <div class="file-upload__area" @click="uploadFileClicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Sube tu fichero aqui.</h4>
@@ -310,8 +310,7 @@ export default {
         if (!this.material) {
           material = await WorkspaceMaterialRepository.create(this.workspace, {
             name: this.name,
-            type: this.type,
-            url: this.url
+            type: this.type
           })
         }
         if (this.uploadedFiles.length && this.type !== 'recording') {
@@ -331,7 +330,7 @@ export default {
         material = await WorkspaceMaterialRepository.update(material.id, {
           name: this.name,
           tags: this.tags,
-          url: this.url
+          url: this.url || undefined
         })
         if (!material) {
           this.loading = false
