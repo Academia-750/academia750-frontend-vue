@@ -4,9 +4,10 @@
       ref="addWorkSpace"
       :workspace="workspace"
       :name="name"
-      @create="create"
+      @create="createWorkspace"
     />
-    <AddMaterialModal ref="addMaterial" @create="create" />
+    <AddMaterialModal ref="addMaterial" @create="onAddMaterial" />
+
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -32,7 +33,14 @@
             :only-dispatch-click-event="true"
             @DispatchClickEvent="goToMaterials()"
           />
-          <ResourceButtonAdd text-button="Crear Categoría" @click="onCreate" />
+          <ResourceButtonAdd
+            text-button="Crear Categoría"
+            @click="openAddCategory"
+          />
+          <ResourceButtonAdd
+            text-button="Crear Material"
+            @click="openAddMaterial"
+          />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -178,10 +186,10 @@ export default {
 
       return res
     },
-    onCreate() {
+    openAddCategory() {
       this.$refs.addWorkSpace.open()
     },
-    onAddMaterial() {
+    openAddMaterial() {
       this.$refs.addMaterial.open()
     },
     updateWorkspace(workspace) {
@@ -233,10 +241,14 @@ export default {
       this.$refs.table.reload()
     },
 
-    async create() {
+    async createWorkspace() {
+      this.resetTableOptions()
       this.$refs.table.reload()
     },
-
+    async onAddMaterial(material) {
+      this.SET_WORKSPACE(material.workspace_id)
+      this.$router.push({ name: 'manage-materials' })
+    },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
       this.$refs.table.reload()

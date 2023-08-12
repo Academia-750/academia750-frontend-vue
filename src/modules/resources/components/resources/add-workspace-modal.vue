@@ -77,7 +77,6 @@ export default {
     },
     onClose() {
       this.isOpen = false
-      this.$emit('input', '')
     },
     async onCreateWorkspace() {
       this.loading = true
@@ -112,6 +111,8 @@ export default {
         return
       }
 
+      this.loading = false
+      this.$emit('create', workspace)
       await this.$swal.fire({
         icon: 'success',
         toast: true,
@@ -120,11 +121,8 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
+
       this.onClose()
-      this.name = ''
-      this.$emit('create', workspace)
-      this.isOpen = false
-      this.loading = false
     }
   }
 }
