@@ -22,10 +22,11 @@
               @change="onChangeType"
             ></v-select>
             <ValidationProvider
-              ref="validationProvider"
+              ref="workspaceInput"
               v-slot="{ errors }"
               mode="aggressive"
               rules="required"
+              name="Categoría"
             >
               <v-select
                 v-model="workspace"
@@ -238,6 +239,8 @@ export default {
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
+      this.$refs['workspaceInput'] && this.$refs['workspaceInput'].reset()
+
       this.name = ''
       this.workspace = this.defaultWorkspace || ''
       this.url = ''
