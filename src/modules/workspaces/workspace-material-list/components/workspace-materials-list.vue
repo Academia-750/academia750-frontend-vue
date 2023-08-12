@@ -228,7 +228,7 @@ export default {
       return headers
     },
     content() {
-      return this.$store.state.workspaceMaterialStore.content
+      return this.$store.state.workspaceMaterialStore.tableOptions.content
     }
   },
   created() {
