@@ -150,6 +150,13 @@ export default {
           roles: 'admin'
         },
         {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Manejar lecciones',
+          to: { name: 'manage-lessons' },
+          roles: 'admin'
+        },
+        {
           icon: 'mdi-book-open-variant',
           key: '',
           text: 'Gestión de Oposiciones',

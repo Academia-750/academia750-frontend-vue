@@ -11,7 +11,7 @@
     >
       <span>{{ textButton }}</span>
       <v-icon
-        v-if="can_rendering_icon_button"
+        v-if="can_rendering_icon_button && iconButton !== ''"
         class="ml-1"
         :x-small="!can_rendering_icon_small"
         :small="can_rendering_icon_small"
