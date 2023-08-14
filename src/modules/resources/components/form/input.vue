@@ -1,5 +1,6 @@
 <template>
   <ValidationProvider
+    ref="validationProvider"
     v-slot="{ errors }"
     vid="workspace-name"
     mode="aggressive"
@@ -10,28 +11,37 @@
       :value="value"
       name="name"
       :error-messages="errors"
-      label="Nombre"
-      :filled="true"
+      :label="label"
       required
       clearable
+      outlined
       @input="$emit('input', $event)"
     >
     </v-text-field>
   </ValidationProvider>
 </template>
-
-<script>
-export default {
-  name: 'NombreFieldInput',
-  props: {
-    value: {
-      type: String,
-      default: ''
+  
+  <script>
+  export default {
+    name: 'NombreFieldInput',
+    props: {
+      value: {
+        type: String,
+        default: ''
+      },
+      rules: {
+        type: [Object, String],
+        required: true
+      },
+      label: {
+        type: String,
+        default: ''
+      }
     },
-    rules: {
-      type: [Object, String],
-      required: true
+    methods: {
+      resetErrors() {
+        this.$refs.validationProvider.reset()
+      }
     }
   }
-}
-</script>
+  </script>

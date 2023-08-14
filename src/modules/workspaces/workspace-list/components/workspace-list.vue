@@ -4,13 +4,15 @@
       ref="addWorkSpace"
       :workspace="workspace"
       :name="name"
-      @create="create"
+      @create="createWorkspace"
     />
+    <AddMaterialModal ref="addMaterial" @create="onAddMaterial" />
+
     <ServerDataTable
       ref="table"
       :headers="headers"
       store-name="workspaceStore"
-      :load="loadGroups"
+      :load="loadWorkspaces"
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
@@ -22,11 +24,23 @@
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Workspace" />
+          <resource-title-toolbar-datatable title-text="Categorias" />
 
           <v-spacer />
-
-          <ResourceButtonAdd text-button="Crear Workspace" @click="onCreate" />
+          <ResourceButtonMaterials
+            text-button="Ver todos"
+            :config-route="{ name: 'manage-materials' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="goToMaterials()"
+          />
+          <ResourceButtonAdd
+            text-button="Crear Categoría"
+            @click="openAddCategory"
+          />
+          <ResourceButtonAdd
+            text-button="Crear Material"
+            @click="openAddMaterial"
+          />
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
@@ -50,8 +64,12 @@
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between">
-          <ResourceButtonAdd text-button="Add Materials" :disabled="true" />
-
+          <ResourceButtonMaterials
+            text-button="Materiales"
+            :config-route="{ name: 'manage-materials' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="setWorkspace(item)"
+          />
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -115,6 +133,15 @@ export default {
       import(
         /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
       ),
+    AddMaterialModal: () =>
+      import(
+        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-material-modal'
+      ),
+    ResourceButtonMaterials: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonMaterials'
+      ),
+
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -142,14 +169,15 @@ export default {
 
   methods: {
     ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
-    ...mapMutations('workspaceStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapMutations('workspaceStore', ['SET_TABLE_OPTIONS']),
+    ...mapMutations('workspaceMaterialStore', ['SET_WORKSPACE']),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
-    async loadGroups(pagination) {
+    async loadWorkspaces(pagination) {
       const params = {
         ...pagination
       }
@@ -158,16 +186,24 @@ export default {
 
       return res
     },
-    onCreate() {
-      this.name = ''
-      this.workspace = null
+    openAddCategory() {
       this.$refs.addWorkSpace.open()
     },
+    openAddMaterial() {
+      this.$refs.addMaterial.open()
+    },
     updateWorkspace(workspace) {
-      this.name = workspace.name
-      this.SET_EDIT_ITEM(workspace)
-      this.workspace = workspace
-      this.$refs.addWorkSpace.open()
+      this.$refs.addWorkSpace.open(workspace)
+    },
+    setWorkspace(workspace) {
+      this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
+      this.SET_WORKSPACE(workspace.id)
+
+      this.$router.push({ name: 'manage-materials' })
+    },
+    goToMaterials() {
+      this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
+      this.$router.push({ name: 'manage-materials' })
     },
     async deleteWorkspaceConfirm(workspace) {
       if (!workspace) {
@@ -177,7 +213,7 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR Workspace',
+        title: 'Eliminar Workspace',
         html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
         showConfirmButton: true,
         showCancelButton: true,
@@ -198,18 +234,21 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'El Workspace ha sido eliminado con éxito.',
+        title: 'La categoría ha sido eliminada con éxito.',
         timer: 3000
       })
 
       this.$refs.table.reload()
     },
 
-    async create() {
+    async createWorkspace() {
+      this.resetTableOptions()
       this.$refs.table.reload()
-      this.SET_EDIT_ITEM(false)
     },
-
+    async onAddMaterial(material) {
+      this.SET_WORKSPACE(material.workspace_id)
+      this.$router.push({ name: 'manage-materials' })
+    },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
       this.$refs.table.reload()

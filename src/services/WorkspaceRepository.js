@@ -4,9 +4,7 @@ import ResourceService from '@/services/ResourceService'
 // This will be replaced by the real groups data from the API
 export default {
   /**
-   * @param {string} code
    * @param {string} name
-   * @param {string} color
    */
   async create({ name }) {
     const response = await ResourceService.post('workspace', { name })
@@ -37,19 +35,17 @@ export default {
 
     return true
   },
+
   /**
-   * @param {string[]} codes
-   * @param {string[]} names
-   * @param {string[]} colors
    * @param {string} content Search by names or color from a partial value
    * @param {string} orderBy (Only Allowed values)
    * @param {number} order 1 (ASC) -1 (DESC)
    * @param {number} offset
    * @param {number} limit
    */
-  async list({ withCount, orderBy, offset, limit, content }) {
+  async list({ order, orderBy, offset, limit, content } = {}) {
     const params = {
-      withCount,
+      order,
       orderBy,
       offset,
       limit,
@@ -70,9 +66,7 @@ export default {
     return { results: response.data.results, total: response.data.total }
   },
   /**
-   * @param {string} code
    * @param {string} name
-   * @param {string} color
    */
   async update(id, { name }) {
     const response = await ResourceService.put(`workspace/${id}`, {

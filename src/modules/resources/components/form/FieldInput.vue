@@ -1,12 +1,12 @@
 <template>
   <ValidationProvider
+    ref="validationProvider"
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
     :rules="rules"
   >
     <v-text-field
-      v-model="email"
       :error-messages="errors"
       :disabled="disabled"
       filled
@@ -59,7 +59,13 @@ export default {
       this.update(value)
     }
   },
+  mounted() {
+    this.resetErrors()
+  },
   methods: {
+    resetErrors() {
+      this.$refs.validationProvider.reset()
+    },
     update(value) {
       this.$emit('input', value)
     }
