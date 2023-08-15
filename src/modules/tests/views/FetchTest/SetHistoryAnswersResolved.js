@@ -12,7 +12,7 @@ export default {
           return {
             question_id: question.id,
             answer_id: this.questionsDataHistoryByTest.find(
-              (questionHistory) => questionHistory.question_id === question.id
+              (questionHistory) => questionHistory.question.uuid === question.id
             )?.answer_id
           }
         }

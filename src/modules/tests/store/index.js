@@ -1,5 +1,26 @@
 import TestsRepository from '../repositories/TestsRepository'
 
+const mapItemsDatatableFromApi = (itemsApi) => {
+  return itemsApi.map((record) => {
+    return {
+      id: record.id,
+      'created-at': record.attributes.created_at,
+      'test-questions-count': record.attributes.number_of_questions_generated
+    }
+  })
+}
+
+const mapMetaInformationPagination = (response) => {
+  return {
+    current_page: response.data.meta.current_page,
+    from: response.data.meta.from,
+    last_page: response.data.meta.last_page,
+    per_page: response.data.meta.per_page,
+    to: response.data.meta.to,
+    total: response.data.meta.total
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -87,28 +108,6 @@ export default {
     }
   },
   actions: {
-    mapItemsDatatableFromApi: (itemsApi) => {
-      return itemsApi.map((record) => {
-        return {
-          id: record.id,
-          'created-at': record.attributes.created_at,
-          'test-questions-count':
-            record.attributes.number_of_questions_generated
-        }
-      })
-    },
-
-    mapMetaInformationPagination: (response) => {
-      return {
-        current_page: response.data.meta.current_page,
-        from: response.data.meta.from,
-        last_page: response.data.meta.last_page,
-        per_page: response.data.meta.per_page,
-        to: response.data.meta.to,
-        total: response.data.meta.total
-      }
-    },
-
     createAQuiz: async (_, options) => {
       try {
         const response = await TestsRepository.generateTestWithQuestions(

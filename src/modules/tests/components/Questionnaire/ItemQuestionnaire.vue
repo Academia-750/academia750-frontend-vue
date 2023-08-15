@@ -104,28 +104,28 @@ export default {
     this.setAnswerResolved()
   },
   methods: {
-    ...mapMutations('testsService', ['SET_QUESTIONS_DATA_RESOLVED'])
-    //   saveQuestionAnswerInStore() {
-    //     const questionsResolved = this.questionsDataResolved
+    ...mapMutations('testsService', ['SET_QUESTIONS_DATA_RESOLVED']),
+    saveQuestionAnswerInStore() {
+      const questionsResolved = this.questionsDataResolved
 
-    //     const questionIndex = this.questionsDataResolved.findIndex(
-    //       (question) => question.question_id === this.questionUuid
-    //     )
+      const questionIndex = this.questionsDataResolved.findIndex(
+        (question) => question.question.uuid === this.questionUuid
+      )
 
-    //     if (questionIndex >= 0) {
-    //       return
-    //     }
+      if (questionIndex >= 0) {
+        return
+      }
 
-    //     questionsResolved.push({
-    //       question_text: this.questionWithAnswers.attributes.question,
-    //       answer_text: this.questionWithAnswers.relationships[
-    //         'answers-test'
-    //       ].data.find((answer) => answer.id === this.answer_selected_id),
-    //       question_id: this.questionWithAnswers.id,
-    //       answer_id: this.answer_selected_id
-    //     })
-    //     this.SET_QUESTIONS_DATA_RESOLVED(questionsResolved)
-    //   }
+      questionsResolved.push({
+        question_text: this.questionWithAnswers.attributes.question,
+        answer_text: this.questionWithAnswers.relationships[
+          'answers-test'
+        ].data.find((answer) => answer.id === this.answer_selected_id),
+        question_id: this.questionWithAnswers.id,
+        answer_id: this.answer_selected_id
+      })
+      this.SET_QUESTIONS_DATA_RESOLVED(questionsResolved)
+    }
   }
 }
 </script>
