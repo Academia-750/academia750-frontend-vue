@@ -14,31 +14,127 @@
         </span>
       </v-toolbar-title>
     </v-toolbar>
-    <validation-observer ref="FormCreateGroup">
+    <validation-observer ref="FormCreateLesson">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
-          <v-col cols="12" md="6" lg="4" class="ml-md-5">
-            <!-- CÓDIGO -->
-            <CodeFieldInput v-model="code" rules="required" />
-          </v-col>
-          <v-col cols="12" sm="12" md="6" lg="4">
-            <!-- Nombre -->
+          <v-col cols="12" sm="12" md="6" lg="6">
             <NameFieldInput
               v-model="name"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
-            <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
-              <v-btn
-                :loading="loading"
-                color="light-blue darken-3"
-                class="mt-3 white--text"
-                @click="createGroup"
-              >
-                <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
-                {{ editItem ? 'Editar' : 'Crear' }}
-              </v-btn>
-            </v-col>
-          </v-col></v-row>
+            <v-menu
+              ref="datePicker"
+              v-model="menu1"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="dateFormatted"
+                  label="Date"
+                  hint="MM/DD/YYYY format"
+                  persistent-hint
+                  prepend-icon="mdi-calendar"
+                  v-bind="attrs"
+                  filled
+                  @blur="date = parseDate(dateFormatted)"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="date"
+                no-title
+                @input="menu1 = false"
+              ></v-date-picker>
+            </v-menu>
+            <v-row>
+              <v-col>
+                <v-menu
+                  ref="startTime"
+                  v-model="openStartTimeModal"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      label="Start Time"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      filled
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="openStartTimeModal"
+                    v-model="time"
+                    full-width
+                    @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
+              </v-col>
+              <v-col>
+                <v-menu
+                  ref="endTime"
+                  v-model="openEndTimeModal"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      label="End Time"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      filled
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="openEndTimeModal"
+                    v-model="time"
+                    full-width
+                    @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class=""
+          >
+            <CommentFieldInput v-model="code" rules="required" />
+          </v-col>
+          <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
+            <v-btn
+              :loading="loading"
+              color="light-blue darken-3"
+              class="mt-3 white--text"
+            >
+              <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
+              {{ editItem ? 'Editar' : 'Crear' }}
+            </v-btn>
+          </v-col>
+        </v-row>
       </section>
     </validation-observer>
   </div>
@@ -46,8 +142,6 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
-import voucher_codes from 'voucher-code-generator'
-import GroupRepository from '@/services/GroupRepository'
 
 export default {
   components: {
@@ -59,106 +153,62 @@ export default {
       import(
         /* webpackChunkName: "NameFieldInput" */ './components/NameFieldInput.vue'
       ),
-    CodeFieldInput: () =>
+    CommentFieldInput: () =>
       import(
-        /* webpackChunkName: "CodeFieldInput" */ './components/CodeFieldInput.vue'
+        /* webpackChunkName: "CommentFieldInput" */ './components/CommentFieldInput.vue'
       )
   },
-  data() {
-    return {
+  data: (vm) => ({
       loading: false,
       code: '',
       name: '',
-      selectedColor: ''
-    }
-  },
+      selectedColor: '',
+      time: null,
+      menu1: false,
+      openStartTimeModal: false,
+      openEndTimeModal: false,
+      modal2: false,
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10))
+  }),
   computed: {
-    ...mapState('groupStore', ['editItem'])
-  },
-  mounted() {
-    if (this.editItem) {
-      this.code = this.editItem.code
-      this.name = this.editItem.name
-      this.selectedColor = this.editItem.color
-
-      return
+    computedDateFormatted () {
+      return this.formatDate(this.date)
     }
-
-    this.generateCode()
+  },
+  watch: {
+      date (val) {
+        this.dateFormatted = this.formatDate(this.date)
+      }
+    },
+  mounted() {
+    
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
-
   methods: {
-    ...mapActions('groupStore', ['resetTableOptions']),
-    ...mapMutations('groupStore', ['SET_EDIT_ITEM']),
-
-    async createGroup() {
-      const status = await this.$refs['FormCreateGroup'].validate()
-
-      if (!status) {
-        this.$swal.fire({
-          icon: 'error',
-          toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
-          showConfirmButton: true,
-          confirmButtonText: 'Entendido',
-          timer: 7500
-        })
-
-        return
-      }
-      this.loading = true
-
-      const group = this.editItem
-        ? await GroupRepository.update(this.editItem.id, {
-            code: this.code,
-            name: this.name,
-            color: this.selectedColor
-          })
-        : await GroupRepository.create({
-            code: this.code,
-            name: this.name,
-            color: this.selectedColor
-          })
-
-      this.loading = false
-      if (!group) {
-        return
-      }
-
-      await this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: this.editItem ? 'Grupo Actualizado!' : 'Grupo Creado!',
-        showConfirmButton: true,
-        confirmButtonText: 'Entendido',
-        timer: 7500
-      })
-
-      this.SET_EDIT_ITEM(false)
-      this.resetTableOptions()
-      this.$router.push('/groups/list')
-    },
-
     async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormCreateGroup']['setErrors'](errorResponse)
+      await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
     },
+    async formatDate (date) {
+        if (!date) return null
 
-    async generateCode() {
-      const codes = voucher_codes.generate({
-        length: 6,
-        count: 1,
-        charset: voucher_codes.charset('alphabetic')
-      })
+        const [year, month, day] = date.split('-')
 
-      this.code = codes[0].toUpperCase()
+        return `${month}/${day}/${year}`
+    },
+    async parseDate (date) {
+        if (!date) return null
+
+        const [month, day, year] = date.split('/')
+
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   },
   head: {
     title: {
-      inner: 'Crear Groupo'
+      inner: 'Crear lession'
     }
   }
 }

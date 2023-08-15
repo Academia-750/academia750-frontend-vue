@@ -3,25 +3,21 @@
     v-slot="{ errors }"
     vid="code"
     mode="aggressive"
-    name="Codigo"
+    name="comment"
     :rules="rules"
   >
-    <v-text-field
-      v-model="value"
-      name="group_code"
+    <v-textarea
       :error-messages="errors"
-      :disabled="true"
+      name="input-7-4"
+      label="comment"
       :filled="true"
-      label="Código"
-      required
-      clearable
     />
   </ValidationProvider>
 </template>
 
 <script>
 export default {
-  name: 'CodigoFieldInput',
+  name: 'CommentFieldInput',
   props: {
     value: {
       type: String,
