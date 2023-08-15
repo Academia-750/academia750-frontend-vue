@@ -10,7 +10,7 @@
       :value="value"
       name="name"
       :error-messages="errors"
-      label="Workspace Name"
+      label="Nombre"
       :filled="true"
       required
       clearable
