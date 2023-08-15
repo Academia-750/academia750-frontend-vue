@@ -4,7 +4,6 @@
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
-    :rules="rules"
   >
     <v-menu
       ref="timePicker"

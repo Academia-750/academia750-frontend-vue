@@ -44,26 +44,56 @@
                 />
               </v-col>
             </v-row>
+            <v-row class="ml-1">
+              <v-col cols="12" sm="4" md="4" lg="4">
+                <SwitchInput label="Active" @activate="activeLesson"/>
+              </v-col>
+              <v-col cols="12" sm="4" md="4" lg="4">
+                <SwitchInput label="Is Online" @activate="OnlineLesson"/>
+              </v-col>
+            </v-row>
           </v-col>
           <v-col
             cols="12"
             sm="12"
             md="6"
             lg="6"
-            class=""
           >
-            <CommentFieldInput v-model="code" rules="required" />
+            <CommentFieldInput v-model="comment" rules="required" />
           </v-col>
-          <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
-            <v-btn
-              :loading="loading"
-              color="light-blue darken-3"
-              class="mt-3 white--text"
+          <v-row>
+            <v-col
+              cols="12"
+              sm="12"
+              md="5"
+              lg="6"
+              class="d-flex ml-1 justify-start flex-column flex-sm-row"
             >
-              <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
-              Crear
-            </v-btn>
-          </v-col>
+              <v-btn
+                :loading="loading"
+                color="light-blue darken-3"
+                class="mt-3 white--text"
+              >
+                <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
+                Crear
+              </v-btn>
+            </v-col>
+            <v-col
+              class="d-flex justify-end flex-column flex-sm-row"
+            >
+              <ResourceButtonAdd
+                text-button="Agregar Materiales"
+              />
+              <ResourceButtonAdd
+                text-button="Agregar Estudiantes"
+              />
+              <div class="mt-2">
+                <resource-button-delete
+                  text-button="Eliminar"
+                />
+              </div>
+            </v-col>
+          </v-row>
         </v-row>
       </section>
     </validation-observer>
@@ -90,23 +120,33 @@ export default {
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/time-input.vue'
       ),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      ),
     CommentFieldInput: () =>
       import(
         /* webpackChunkName: "CommentFieldInput" */ './components/CommentFieldInput.vue'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
+      ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       )
   },
   data() {
     return {
       loading: false,
-      code: '',
+      comment: '',
       name: '',
       date: null,
-      selectedColor: '',
       startTime: null,
       endTime: null,
-      openStartTimeModal: false,
-      openEndTimeModal: false,
-      modal2: false
+      isActiveLesson: false,
+      isOnlineLesson: false
     }
   },
   mounted() {
@@ -127,6 +167,12 @@ export default {
     },
     selectedEndTime(time) {
       this.startTime = time
+    },
+    activeLesson(active) {
+      this.isActiveLesson = active
+    },
+    OnlineLesson(active) {
+      this.isOnlineLesson = active
     }
   },
   head: {

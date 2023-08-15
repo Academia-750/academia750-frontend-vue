@@ -4,7 +4,6 @@
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
-    :rules="rules"
   >
     <v-menu
       ref="datePicker"
@@ -43,7 +42,7 @@ export default {
   name: 'DateInput',
   props: {
     date: {
-      type: Date,
+      type: String,
       default: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     }
   },
