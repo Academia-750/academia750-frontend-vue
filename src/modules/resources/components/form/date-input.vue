@@ -19,7 +19,7 @@
           v-model="dateFormatted"
           :error-messages="errors"
           label="Date"
-          hint="MM/DD/YYYY format"
+          hint="YYYY/MM/DD format"
           persistent-hint
           prepend-icon="mdi-calendar"
           v-bind="attrs"
@@ -43,7 +43,7 @@ export default {
   props: {
     date: {
       type: String,
-      default: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      default: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
     }
   },
   data: (vm) => ({
@@ -62,7 +62,7 @@ export default {
 
         const [year, month, day] = date.split('-')
 
-        return `${month}/${day}/${year}`
+        return `${year}/${month}/${day}`
     },
     parseDate (date) {
         if (!date) return null

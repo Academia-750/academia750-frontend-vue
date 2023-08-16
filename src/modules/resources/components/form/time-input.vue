@@ -43,8 +43,8 @@ export default {
   name: 'TimeInput',
   props: {
     time: {
-      type: Date,
-      default: null
+      type: String,
+      default: ''
     },
     label: {
       type: String,

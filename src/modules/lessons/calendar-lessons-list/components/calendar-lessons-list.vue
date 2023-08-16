@@ -36,12 +36,14 @@
         text-button="Materials"
         :config-route="{}"
         :only-dispatch-click-event="true"
+        :is-disabled="true"
       />
       <resource-button-edit
         text-button="Students"
         :config-route="{}"
         icon-button=""
         :only-dispatch-click-event="true"
+        :is-disabled="true"
       />
       
     </v-toolbar>

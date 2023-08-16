@@ -1,27 +1,22 @@
 <template>
   <div>
-    <v-toolbar
-      flat
-      class="indigo lighten-5 my-md-2 mx-md-2"
-      outlined
-      elevation="2"
-    >
-      <resource-button-go-back-router :width-number-limit="300" />
-      <v-toolbar-title class="d-flex align-end">
-        <v-icon large right class="mx-1">mdi-book-open-page-variant</v-icon>
-        <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          Crear Lessione
-        </span>
-      </v-toolbar-title>
-    </v-toolbar>
+    <Vtoolbar title="Crear Lessione" icon="mdi-book-open-variant"/>
     <validation-observer ref="FormCreateLesson">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
-          <v-col cols="12" sm="12" md="6" lg="6">
+          <v-col
+            cols="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class="py-0"
+          >
             <FieldInput
               ref="lessonInput"
               v-model="name"
               label="Nombre del Lession"
+              :filled="true"
+              :outlined="false"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <DateInput
@@ -29,14 +24,14 @@
               @datePicked="datePicked"
             />
             <v-row>
-              <v-col>
+              <v-col class="py-0">
                 <TimeInput
                   ref="StartimePicker"
                   label="Start Time"
                   @timeSelected="selectedStartTime"
                 />
               </v-col>
-              <v-col>
+              <v-col class="py-0">
                 <TimeInput
                   ref="endTimePicker"
                   label="End Time"
@@ -45,13 +40,29 @@
               </v-col>
             </v-row>
             <v-row class="ml-1">
-              <v-col cols="12" sm="4" md="4" lg="4">
-                <SwitchInput label="Active" @activate="activeLesson"/>
-              </v-col>
-              <v-col cols="12" sm="4" md="4" lg="4">
+              <v-col
+                cols="12"
+                sm="4"
+                md="3"
+                lg="4"
+                class="py-0"
+              >
                 <SwitchInput label="Is Online" @activate="OnlineLesson"/>
               </v-col>
+              <v-col v-if="isOnlineLesson" class="py-0">
+                <FieldInput
+                  ref="lessonMeetingUrlInput"
+                  v-model="lessonMeetingUrl"
+                  :filled="true"
+                  :outlined="false"
+                  label="URL de la sala de reuniones de la lección"
+                  rules=""
+                />
+              </v-col>
             </v-row>
+            <v-col class="py-0 ml-1">
+              <SwitchInput label="Active" @activate="activeLesson"/>
+            </v-col>
           </v-col>
           <v-col
             cols="12"
@@ -73,6 +84,7 @@
                 :loading="loading"
                 color="light-blue darken-3"
                 class="mt-3 white--text"
+                @click="createLesson"
               >
                 <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
                 Crear
@@ -83,9 +95,11 @@
             >
               <ResourceButtonAdd
                 text-button="Agregar Materiales"
+                :disabled="true"
               />
               <ResourceButtonAdd
                 text-button="Agregar Estudiantes"
+                :disabled="true"
               />
               <div class="mt-2">
                 <resource-button-delete
@@ -101,16 +115,16 @@
 </template>
 
 <script>
-
+import LessonRepository from '@/services/LessonRepository'
 export default {
   components: {
-    ResourceButtonGoBackRouter: () =>
+    Vtoolbar: () =>
       import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+        /* webpackChunkName: "Vtoolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     FieldInput: () =>
       import(
-        /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/FieldInput.vue'
+        /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
       ),
     DateInput: () =>
       import(
@@ -137,14 +151,21 @@ export default {
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       )
   },
+  props: {
+    lesson: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       loading: false,
+      lessonMeetingUrl: '',
       comment: '',
       name: '',
       date: null,
-      startTime: null,
-      endTime: null,
+      start_time: null,
+      end_time: null,
       isActiveLesson: false,
       isOnlineLesson: false
     }
@@ -158,21 +179,107 @@ export default {
   methods: {
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
+      if (!status) {
+        return
+      }
+    },
+    reset() {
+      this.name = '',
+      this.date = '',
+      this.comment = '',
+      this.date = null,
+      this.start_time = null,
+      this.end_time = null,
+      this.url = ''
+      this.lessonMeetingUrl = ''
+      this.isActiveLesson = false,
+      this.isOnlineLesson = false
     },
     datePicked(date) {
       this.date = date
     },
     selectedStartTime(time) {
-      this.startTime = time
+      this.start_time = time
     },
     selectedEndTime(time) {
-      this.startTime = time
+      this.end_time = time
     },
     activeLesson(active) {
       this.isActiveLesson = active
     },
     OnlineLesson(active) {
       this.isOnlineLesson = active
+    },
+    async createLesson() {
+      const status = await this.$refs['FormCreateLesson'].validate()
+
+      if (!status) {
+        return
+      }
+      this.loading = true
+
+      let { lesson } = this
+
+      try {
+        if (!this.lesson) {
+          lesson = await LessonRepository.create({
+            name: this.name,
+            date: this.date,
+            start_time: this.start_time,
+            end_time: this.end_time
+          })
+        }
+        lesson = await LessonRepository.update(lesson.id, {
+          name: this.name,
+          description: this.comment,
+          date: this.date,
+          start_time: this.start_time,
+          end_time: this.end_time,
+          url: this.lessonMeetingUrl || undefined
+        })
+
+        if (this.isActiveLesson) {
+          const res = await LessonRepository.active(lesson.id, {
+            active: this.isActiveLesson
+          })
+        }
+
+        if (!lesson) {
+          this.loading = false
+
+          return
+        }
+        this.loading = false
+        this.reset()
+        await this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: this.lesson ? 'Lession Actualizado!' : 'Lession Creado!',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 7500
+        })
+        this.$router.push({ name: 'manage-lessons' })
+      } catch (error) {
+        console.error(error)
+        this.loading = false
+      }
+    },
+    async deleteLesson(lesson) {
+      const res = await LessonRepository.delete(lesson.id)
+
+      if (!res) {
+        return
+      }
+      await this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'Lession Eliminado!',
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+        timer: 7500
+      })
+      this.$router.push({ name: 'manage-lessons' })
     }
   },
   head: {

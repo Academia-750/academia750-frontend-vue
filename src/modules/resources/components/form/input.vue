@@ -12,9 +12,10 @@
       name="name"
       :error-messages="errors"
       :label="label"
+      :filled="filled"
       required
       clearable
-      outlined
+      :outlined="outlined"
       @input="$emit('input', $event)"
     >
     </v-text-field>
@@ -23,7 +24,7 @@
   
   <script>
   export default {
-    name: 'NombreFieldInput',
+    name: 'InputField',
     props: {
       value: {
         type: String,
@@ -36,6 +37,14 @@
       label: {
         type: String,
         default: ''
+      },
+      filled: {
+        type: Boolean,
+        default: false
+      },
+      outlined: {
+        type: Boolean,
+        default: true
       }
     },
     methods: {
