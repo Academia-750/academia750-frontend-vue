@@ -1,12 +1,12 @@
 <template>
   <ValidationProvider
+    ref="autocomplete"
     v-slot="{ errors }"
     mode="aggressive"
     :rules="rules"
     name="etiquetas"
   >
     <v-autocomplete
-      ref="autocomplete"
       :value="tags"
       :items="tagsList"
       :loading="loading"
@@ -95,7 +95,7 @@ export default {
       )
     },
     resetErrors() {
-      this.$refs['autocomplete'] && this.$refs['autocomplete'].resetValidation()
+      this.$refs['autocomplete'] && this.$refs['autocomplete'].reset()
     }
   }
 }

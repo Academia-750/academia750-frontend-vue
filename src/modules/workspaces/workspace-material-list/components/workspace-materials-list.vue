@@ -27,10 +27,7 @@
 
           <v-spacer />
 
-          <resource-button
-            icon-button="mdi-autorenew"
-            @click="resetTableOptions"
-          />
+          <resource-button icon-button="mdi-autorenew" @click="reset()" />
         </v-toolbar>
 
         <!-- ------------ SEARCH ------------ -->
@@ -378,6 +375,10 @@ export default {
           URL.revokeObjectURL(link.href)
         })
         .catch(console.error)
+    },
+    reset() {
+      this.resetTableOptions()
+      this.$refs.table.reload()
     }
   }
 }

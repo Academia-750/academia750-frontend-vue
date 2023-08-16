@@ -121,6 +121,7 @@
               :dense="false"
               tag-type="material"
               :tags="tags"
+              rules="required"
               @change="onChangeTags"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
