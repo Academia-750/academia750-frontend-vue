@@ -35,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de Workspaces'
+      inner: 'Gestión de Categorías'
     }
   }
 }

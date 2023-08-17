@@ -23,14 +23,11 @@
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Materials" />
+          <resource-title-toolbar-datatable title-text="Materiales" />
 
           <v-spacer />
 
-          <resource-button
-            icon-button="mdi-autorenew"
-            @click="resetTableOptions"
-          />
+          <resource-button icon-button="mdi-autorenew" @click="reset()" />
         </v-toolbar>
 
         <!-- ------------ SEARCH ------------ -->
@@ -61,7 +58,7 @@
             item-text="label"
             item-value="key"
             persistent-hint
-            label="Workspace"
+            label="Categoría"
             dense
             outlined
             class="mr-2"
@@ -86,6 +83,8 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
+
+      <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.tags`]="{ item }">
         <div v-if="item.tags">
           <v-chip
@@ -99,8 +98,6 @@
           </v-chip>
         </div>
       </template>
-
-      <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
@@ -136,6 +133,9 @@
           />
         </div>
       </template>
+      <template v-slot:[`item.type`]="{ item }">
+        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
+      </template>
     </ServerDataTable>
   </v-card-text>
 </template>
@@ -150,7 +150,7 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import axios from 'axios'
-
+import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 export default {
   name: 'WorkspaceList',
   components: {
@@ -205,6 +205,7 @@ export default {
   mixins: [componentButtonsCrud],
   data() {
     return {
+      MATERIAL_TYPES_LABELS,
       name: '',
       types: [
         {
@@ -374,6 +375,10 @@ export default {
           URL.revokeObjectURL(link.href)
         })
         .catch(console.error)
+    },
+    reset() {
+      this.resetTableOptions()
+      this.$refs.table.reload()
     }
   }
 }
