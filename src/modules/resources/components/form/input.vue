@@ -16,6 +16,7 @@
       required
       clearable
       :outlined="outlined"
+      :disabled="disabled"
       @input="$emit('input', $event)"
     >
     </v-text-field>
@@ -49,6 +50,10 @@ export default {
     outlined: {
       type: Boolean,
       default: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

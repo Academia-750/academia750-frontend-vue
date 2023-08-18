@@ -13,6 +13,7 @@
       type="time"
       :error-messages="errors"
       :label="label"
+      :disabled="disabled"
       prepend-icon="mdi-clock-time-four-outline"
       @change="onChange"
     ></v-text-field>
@@ -38,6 +39,10 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

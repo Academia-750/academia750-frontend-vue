@@ -2,19 +2,20 @@
   <ValidationProvider
     ref="validationProvider"
     v-slot="{ errors }"
-    vid="comment"
+    :vid="name"
     mode="aggressive"
-    name="descripcción"
+    :name="label"
     :rules="rules"
   >
     <v-textarea
       :value="value"
       :error-messages="errors"
-      name="input-7-4"
-      label="Descripción  de la clase"
+      :name="name"
+      :label="label"
       :filled="true"
       required
       clearable
+      :disabled="disabled"
       @input="$emit('input', $event)"
     />
   </ValidationProvider>
@@ -22,8 +23,18 @@
 
 <script>
 export default {
-  name: 'CommentFieldInput',
+  name: 'TextAreaInput',
   props: {
+    name: {
+      type: String,
+      default: '',
+      require: true
+    },
+    label: {
+      type: String,
+      default: '',
+      require: true
+    },
     value: {
       type: String,
       default: ''
@@ -31,8 +42,13 @@ export default {
     rules: {
       type: [Object, String],
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
+
   methods: {
     resetErrors() {
       this.$refs.validationProvider.reset()

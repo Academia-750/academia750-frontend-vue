@@ -9,7 +9,12 @@ export default {
    * @param {string} end_time
    */
   async create({ name, date, start_time, end_time }) {
-    const response = await ResourceService.post('lesson', { name, date, start_time, end_time })
+    const response = await ResourceService.post('lesson', {
+      name,
+      date,
+      start_time,
+      end_time
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -21,7 +26,7 @@ export default {
 
     return response.data.result
   },
-   /**
+  /**
    * @param {string} name
    * @param {string} description
    * @param {string} date
@@ -30,7 +35,10 @@ export default {
    * @param {string} is_online
    * @param {string} url
    */
-   async update(id, { name, description, date, start_time, end_time, is_online, url }) {
+  async update(
+    id,
+    { name, description, date, start_time, end_time, is_online, url }
+  ) {
     const response = await ResourceService.put(`lesson/${id}`, {
       name,
       description,
@@ -123,7 +131,9 @@ export default {
    * @param {string} active
    */
   async active(id, { active }) {
-    const response = await ResourceService.put(`lesson/${id}/active`,{ active })
+    const response = await ResourceService.put(`lesson/${id}/active`, {
+      active: active
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -133,7 +143,6 @@ export default {
       return false
     }
 
-    return response.message
+    return true
   }
-
 }

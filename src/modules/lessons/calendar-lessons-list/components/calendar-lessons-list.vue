@@ -1,90 +1,36 @@
 <template>
-  <div >
-    <v-toolbar 
-      flat 
-      class="indigo lighten-5" 
-      outlined
-    >
-      <div class="d-flex justify-space-between flex-wrap" :style="{ width: '-webkit-fill-available'}">
-        <resource-title-toolbar-datatable title-text="Lessiones" />
-        <div class="d-flex justify-space-between flex-wrap" :style="{ width: '60%'}">
-          <!-- Column for Class Name -->
-          <div class="">
-            <div>
-              <span class="font-weight-bold subtitle-2">Clase: </span>
-              {{ lesson.name }}
-            </div>
-          </div>
-
-          <!-- Column for Date -->
-          <div>
-            <div>
-              <span class="font-weight-bold subtitle-2">Fecha: </span>
-              {{ lesson.date }}
-            </div>
-          </div>
-
-          <!-- Column for Time -->
-          <div>
-            <div>
-              <span class="font-weight-bold subtitle-2">Hora: </span>
-              {{ `${lesson.start_time} - ${lesson.end_time}` }}
-            </div>
-          </div>
-
-          <!-- Column for Student Count -->
-          <div>
-            <div>
-              <span class="font-weight-bold subtitle-2">No. de alumnos: </span>
-              {{ lesson.student_count }}
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-wrap">
-          <resource-button-edit :config-route="{ name: 'create-lessons' }" />
-          <resource-button-edit
-            text-button="Materiales"
-            :config-route="{}"
-            :only-dispatch-click-event="true"
-          />
-          <resource-button-edit
-            text-button="Alumnos"
-            :config-route="{}"
-            icon-button=""
-            :only-dispatch-click-event="true"
-          />
-        </div>
-      </div>
-    </v-toolbar>
+  <div>
     <v-row>
       <v-col>
         <v-sheet>
-          <v-toolbar flat class="d-flex justify-end flex-wrap">
-            <v-btn fab x-small color="primary" @click="prev">
-              <v-icon small> mdi-chevron-left </v-icon>
-            </v-btn>
-            <v-toolbar-title
-              v-if="$refs.calendar"
-              class="mx-3 font-weight-medium text-h5"
-            >
-              {{ $refs.calendar.title }}
-            </v-toolbar-title>
-            <v-btn
-              fab
-              x-small
-              color="primary"
-              class="mr-16"
-              :style="{ marginRight: '300px !important' }"
-              @click="next"
-            >
-              <v-icon small> mdi-chevron-right </v-icon>
-            </v-btn>
+          <div flat class="d-flex justify-end flex-wrap">
+            <div class="flex-1 justify-center">
+              <v-btn fab x-small color="primary" @click="prev">
+                <v-icon small> mdi-chevron-left </v-icon>
+              </v-btn>
+              <div
+                v-if="$refs.calendar"
+                class="mx-3 font-weight-medium text-h5"
+              >
+                {{ title }}
+              </div>
+              <v-btn
+                fab
+                x-small
+                color="primary"
+                class="mr-16"
+                :style="{ marginRight: '300px !important' }"
+                @click="next"
+              >
+                <v-icon small> mdi-chevron-right </v-icon>
+              </v-btn>
+            </div>
             <ResourceButtonAdd
               class="ml-16"
               text-button="Crear Clase"
               @click="addLesson"
             />
-          </v-toolbar>
+          </div>
         </v-sheet>
         <v-sheet height="600">
           <v-calendar
@@ -93,42 +39,16 @@
             color="primary"
             :events="events"
             :event-color="getEventColor"
-            :type="type"
+            :type="$vuetify.breakpoint.xs ? 'day' : 'month'"
+            :first-interval="9"
+            :interval-minutes="60"
+            :interval-count="12"
+            locale="es-MX"
             @click:event="showEvent"
             @click:more="viewDay"
             @click:date="viewDay"
             @change="updateRange"
           ></v-calendar>
-          <v-menu
-            v-model="selectedOpen"
-            :close-on-content-click="false"
-            :activator="selectedElement"
-            offset-x
-          >
-            <v-card color="grey lighten-4" min-width="350px" flat>
-              <v-toolbar :color="selectedEvent.color" dark>
-                <v-btn icon>
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-                <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </v-toolbar>
-              <v-card-text>
-                <span v-html="selectedEvent.details"></span>
-              </v-card-text>
-              <v-card-actions>
-                <v-btn text color="secondary" @click="selectedOpen = false">
-                  Cancel
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-menu>
         </v-sheet>
       </v-col>
     </v-row>
@@ -144,14 +64,6 @@ import LessonRepository from '@/services/LessonRepository'
 export default {
   name: 'CalendarLessonsList',
   components: {
-    ResourceButtonEdit: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
-      ),
-    ResourceTitleToolbarDatatable: () =>
-      import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-      ),
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
@@ -162,25 +74,16 @@ export default {
     focus: '',
     from: '',
     to: '',
-    content: '',
-    lessons: [],
-    type: 'month',
-    typeToLabel: {
-      month: 'Month',
-      week: 'Week',
-      day: 'Day',
-      '4day': '4 Days'
-    },
-    selectedEvent: {},
-    selectedElement: null,
-    selectedOpen: false,
-    events: [],
-    colors: [],
-    names: []
+    lessons: [], // Full lesson object
+    events: [] // Formatted for the calendar
   }),
   computed: {
     ...mapState('lessonsStore', ['lesson']),
+    title() {
+      const { title } = this.$refs.calendar
 
+      return title.charAt(0).toUpperCase() + title.slice(1)
+    },
     headers() {
       return headers
     }
@@ -189,7 +92,6 @@ export default {
     this.$refs.calendar.checkChange()
   },
   methods: {
-    ...mapActions('lessonsStore', ['lesson']),
     ...mapMutations('lessonsStore', ['SET_LESSON']),
     viewDay({ date }) {
       this.focus = date
@@ -222,8 +124,7 @@ export default {
     async getCalendarLessons({ start, end }) {
       const params = {
         from: start.date,
-        to: end.date,
-        content: this.content
+        to: end.date
       }
       const lessons = await LessonRepository.calendar(params)
 
@@ -246,11 +147,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: green;
-}
-</style>
+<style lang="scss" scoped></style>

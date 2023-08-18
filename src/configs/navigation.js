@@ -152,7 +152,7 @@ export default {
         {
           icon: 'mdi-book-open-page-variant',
           key: '',
-          text: 'Manejar lecciones',
+          text: 'Gestionar Clases',
           to: { name: 'manage-lessons' },
           roles: 'admin'
         },

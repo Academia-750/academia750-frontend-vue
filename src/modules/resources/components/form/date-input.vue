@@ -4,6 +4,7 @@
     :close-on-content-click="false"
     transition="scale-transition"
     offset-y
+    :disabled="disabled"
     max-width="290px"
     min-width="auto"
   >
@@ -21,6 +22,7 @@
           :name="name"
           :error-messages="errors"
           :label="label"
+          :disabled="disabled"
           prepend-icon="mdi-calendar"
           v-bind="attrs"
           filled
@@ -58,6 +60,10 @@ export default {
     rules: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({

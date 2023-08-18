@@ -12,6 +12,7 @@
               :filled="true"
               name="nombre"
               :outlined="false"
+              :disabled="!canEdit"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <DateInput
@@ -19,6 +20,7 @@
               name="lesson_date"
               label="Fecha"
               :value="date"
+              :disabled="!canEdit"
               rules="required|valid_date"
               @datePicked="datePicked"
             />
@@ -26,6 +28,7 @@
               <v-col class="py-0">
                 <TimeInput
                   name="start_time"
+                  :disabled="!canEdit"
                   :value="start_time"
                   label="Hora de inicio"
                   rules="required"
@@ -36,6 +39,7 @@
                 <TimeInput
                   name="end_time"
                   :value="end_time"
+                  :disabled="!canEdit"
                   label="Hora de finalización"
                   rules="required|after:@start_time,la hora de inicio"
                   @change="selectedEndTime"
@@ -47,6 +51,7 @@
                 <SwitchInput
                   name="is_online"
                   :value="isOnlineLesson"
+                  :disabled="!canEdit"
                   label="Clase Online"
                   @change="setOnline"
                 />
@@ -58,6 +63,7 @@
                   rules="required|url"
                   :filled="true"
                   :outlined="false"
+                  :disabled="!canEdit"
                   name="URL"
                   label="URL de la sala de reuniones de la lección"
                 />
@@ -75,15 +81,18 @@
                 name="is_active"
                 :value="isActiveLesson"
                 :label="isActiveLesson ? 'Activa' : 'Inactiva'"
-                @change="setActive"
+                @change="activateLesson"
               />
             </v-col>
           </v-col>
           <v-col cols="12" sm="12" md="6" lg="6">
-            <CommentFieldInput
+            <TextAreaInput
               ref="commentInput"
               v-model="lesson.description"
+              name="comment"
+              label="Descripción"
               rules="required"
+              :disabled="!canEdit"
             />
           </v-col>
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
@@ -106,7 +115,10 @@
                 :disabled="true"
               />
 
-              <ResourceButtonDelete text-button="Eliminar" />
+              <ResourceButtonDelete
+                text-button="Eliminar"
+                @actionConfirmShowDialogDelete="deleteLesson"
+              />
             </div>
           </v-row>
         </v-row>
@@ -142,9 +154,9 @@ export default {
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       ),
-    CommentFieldInput: () =>
+    TextAreaInput: () =>
       import(
-        /* webpackChunkName: "CommentFieldInput" */ './components/CommentFieldInput.vue'
+        /* webpackChunkName: "TextAreaInput" */ '@/modules/resources/components/form/text-area-input.vue'
       ),
     ResourceButtonDelete: () =>
       import(
@@ -158,12 +170,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
-  },
-  props: {
-    lesson: {
-      type: Object,
-      default: null
-    }
   },
   data() {
     return {
@@ -182,6 +188,9 @@ export default {
     ...mapState('lessonsStore', ['lesson']),
     title() {
       return !this.lesson ? 'Nueva Clase' : `Editar ${this.lesson.name}`
+    },
+    canEdit() {
+      return this.isActiveLesson === false
     },
     headers() {
       return headers
@@ -206,12 +215,6 @@ export default {
   methods: {
     ...mapMutations('lessonsStore', ['SET_LESSON']),
 
-    async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
-      if (!status) {
-        return
-      }
-    },
     reset() {
       this.name = ''
       this.date = ''
@@ -220,7 +223,8 @@ export default {
       this.start_time = ''
       this.end_time = ''
       this.lessonMeetingUrl = ''
-      ;(this.isActiveLesson = false), (this.isOnlineLesson = false)
+      this.isActiveLesson = false
+      this.isOnlineLesson = false
     },
     datePicked(date) {
       this.date = date
@@ -256,15 +260,7 @@ export default {
             end_time: this.end_time
           })
         }
-        console.log({
-          name: this.name,
-          description: this.comment,
-          date: this.date,
-          start_time: this.start_time,
-          end_time: this.end_time,
-          is_online: this.isOnlineLesson,
-          url: this.lessonMeetingUrl || undefined
-        })
+
         lesson = await LessonRepository.update(lesson.id, {
           name: this.name,
           description: this.comment,
@@ -274,12 +270,6 @@ export default {
           is_online: this.isOnlineLesson,
           url: this.lessonMeetingUrl || undefined
         })
-
-        if (this.isActiveLesson) {
-          const res = await LessonRepository.active(lesson.id, {
-            active: this.isActiveLesson
-          })
-        }
 
         if (!lesson) {
           this.loading = false
@@ -303,8 +293,40 @@ export default {
         this.loading = false
       }
     },
-    async deleteLesson(lesson) {
-      const res = await LessonRepository.delete(lesson.id)
+
+    async activateLesson(value) {
+      const active = value || false // is returning  NULL instead of false
+
+      const res = await LessonRepository.active(this.lesson.id, {
+        active
+      })
+
+      if (!res) {
+        return
+      }
+      this.isActiveLesson = active
+      this.lesson.is_active = active
+      this.SET_LESSON(this.lesson)
+    },
+    async deleteLesson() {
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'ELIMINAR CLASE',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar esta clase?',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        return
+      }
+
+      const res = await LessonRepository.delete(this.lesson.id)
 
       if (!res) {
         return
@@ -312,11 +334,12 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'Lession Eliminado!',
+        title: 'Clase eliminada!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500
       })
+      this.SET_LESSON(false)
       this.$router.push({ name: 'manage-lessons' })
     }
   },
