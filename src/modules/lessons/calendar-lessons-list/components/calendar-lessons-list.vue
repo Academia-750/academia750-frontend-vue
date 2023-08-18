@@ -1,51 +1,60 @@
 <template>
-  <div>
-    <v-toolbar flat class="indigo lighten-5" outlined>
-      <resource-title-toolbar-datatable title-text="Lessiones" />
-
-      <v-row class="ml-1">
-        <v-col cols="auto">
-          <span class="circle"></span>
-        </v-col>
-        <v-col cols="auto">
+  <div >
+    <v-toolbar 
+      flat 
+      class="indigo lighten-5" 
+      outlined
+    >
+      <div class="d-flex justify-space-between flex-wrap" :style="{ width: '-webkit-fill-available'}">
+        <resource-title-toolbar-datatable title-text="Lessiones" />
+        <div class="d-flex justify-space-between flex-wrap" :style="{ width: '60%'}">
+          <!-- Column for Class Name -->
           <div class="">
-            <span class="font-weight-bold subtitle-2">Clase: </span>
-            {{ lesson.name }}
+            <div>
+              <span class="font-weight-bold subtitle-2">Clase: </span>
+              {{ lesson.name }}
+            </div>
           </div>
-        </v-col>
-        <v-col cols="auto">
-          <div>
-            <span class="font-weight-bold subtitle-2">Fecha: </span
-            >{{ lesson.date }}
-          </div>
-        </v-col>
-        <v-col cols="auto">
-          <div>
-            <span class="font-weight-bold subtitle-2">Hora: </span
-            >{{ `${lesson.start_time} - ${lesson.end_time}` }}
-          </div>
-        </v-col>
-        <v-col cols="auto">
-          <div>
-            <span class="font-weight-bold subtitle-2">No. de alumnos: </span
-            >{{ lesson.student_count }}
-          </div>
-        </v-col>
-      </v-row>
 
-      <v-spacer />
-      <resource-button-edit :config-route="{ name: 'create-lessons' }" />
-      <resource-button-edit
-        text-button="Materiales"
-        :config-route="{}"
-        :only-dispatch-click-event="true"
-      />
-      <resource-button-edit
-        text-button="Alumnos"
-        :config-route="{}"
-        icon-button=""
-        :only-dispatch-click-event="true"
-      />
+          <!-- Column for Date -->
+          <div>
+            <div>
+              <span class="font-weight-bold subtitle-2">Fecha: </span>
+              {{ lesson.date }}
+            </div>
+          </div>
+
+          <!-- Column for Time -->
+          <div>
+            <div>
+              <span class="font-weight-bold subtitle-2">Hora: </span>
+              {{ `${lesson.start_time} - ${lesson.end_time}` }}
+            </div>
+          </div>
+
+          <!-- Column for Student Count -->
+          <div>
+            <div>
+              <span class="font-weight-bold subtitle-2">No. de alumnos: </span>
+              {{ lesson.student_count }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap">
+          <resource-button-edit :config-route="{ name: 'create-lessons' }" />
+          <resource-button-edit
+            text-button="Materiales"
+            :config-route="{}"
+            :only-dispatch-click-event="true"
+          />
+          <resource-button-edit
+            text-button="Alumnos"
+            :config-route="{}"
+            icon-button=""
+            :only-dispatch-click-event="true"
+          />
+        </div>
+      </div>
     </v-toolbar>
     <v-row>
       <v-col>
