@@ -14,36 +14,33 @@
           ></span>
         </v-col>
         <v-col cols="auto">
-          <div class=""><span class="font-weight-bold subtitle-2">Lession:</span> El nombre de la lección va aquí</div>
+          <div class=""><span class="font-weight-bold subtitle-2">Lession: </span> {{ lesson.name }}</div>
         </v-col>
         <v-col cols="auto">
-          <div><span class="font-weight-bold subtitle-2">Fecha:</span>03 August 2023</div>
+          <div><span class="font-weight-bold subtitle-2">Fecha: </span>{{ lesson.date }}</div>
         </v-col>
         <v-col cols="auto">
-          <div><span class="font-weight-bold subtitle-2">tiempo:</span>09:00 - 10:00</div>
+          <div><span class="font-weight-bold subtitle-2">tiempo: </span>{{ `${lesson.start_time} - ${lesson.end_time}` }}</div>
         </v-col>
         <v-col cols="auto">
-          <div><span class="font-weight-bold subtitle-2">Estudiantes totales:</span>245</div>
+          <div><span class="font-weight-bold subtitle-2">Estudiantes totales: </span>{{ lesson.student_count }}</div>
         </v-col>
       </v-row>
 
       <v-spacer />
       <resource-button-edit
-        :config-route="{}"
-        :only-dispatch-click-event="true"
+        :config-route="{ name: 'create-lessons' }"
       />
       <resource-button-edit
         text-button="Materials"
         :config-route="{}"
         :only-dispatch-click-event="true"
-        :is-disabled="true"
       />
       <resource-button-edit
         text-button="Students"
         :config-route="{}"
         icon-button=""
         :only-dispatch-click-event="true"
-        :is-disabled="true"
       />
       
     </v-toolbar>
@@ -82,7 +79,7 @@
             <ResourceButtonAdd
               class="ml-16" 
               text-button="Crear lession"
-              :config-route="{ name: 'create-lessons' }"
+              @click="addLesson"
             />
           </v-toolbar>
         </v-sheet>
@@ -149,7 +146,9 @@
 
 <script>
 import _ from 'lodash'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
+import LessonRepository from '@/services/LessonRepository'
 
 export default {
   name: 'CalendarLessonsList',
@@ -170,6 +169,10 @@ export default {
   mixins: [componentButtonsCrud],
   data: () => ({
       focus: '',
+      from: '',
+      to: '',
+      content: '',
+      lessons: [],
       type: 'month',
       typeToLabel: {
         month: 'Month',
@@ -181,13 +184,26 @@ export default {
       selectedElement: null,
       selectedOpen: false,
       events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party']
+      colors: [],
+      names: []
     }),
+  computed: {
+    ...mapState('lessonsStore', ['lesson']),
+
+    headers() {
+      return headers
+    }
+  },
   mounted () {
       this.$refs.calendar.checkChange()
     },
     methods: {
+      ...mapActions('lessonsStore', [
+      'lesson'
+    ]),
+    ...mapMutations('lessonsStore', [
+      'SET_LESSON'
+    ]),
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
@@ -204,50 +220,45 @@ export default {
       next () {
         this.$refs.calendar.next()
       },
-      showEvent ({ nativeEvent, event }) {
-        const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
-        }
+      async showEvent ({ event }) {
+        const lesson = this.lessons.find(
+          (item) => item.id === event.id
+        )
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          requestAnimationFrame(() => requestAnimationFrame(() => open()))
-        } else {
-          open()
-        }
+        this.SET_LESSON(lesson)
 
-        nativeEvent.stopPropagation()
+      },
+      addLesson() {
+        this.$router.push({ name: 'create-lesson' })
       },
       updateRange ({ start, end }) {
-        const events = []
-
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
-
-        for (let i = 0; i < eventCount; i++) {
-          const allDay = this.rnd(0, 3) === 0
-          const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          const second = new Date(first.getTime() + secondTimestamp)
-
-          events.push({
-            name: this.names[this.rnd(0, this.names.length - 1)],
-            start: first,
-            end: second,
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            timed: !allDay
-          })
-        }
-
-        this.events = events
+        this.getCalendarLessons({ start, end })
       },
-      rnd (a, b) {
-        return Math.floor((b - a + 1) * Math.random()) + a
+      async getCalendarLessons({ start, end }) {
+        const params = {
+          from: start.date,
+          to: end.date,
+          content: this.content
+        }
+        const lessons = await LessonRepository.calendar(params)
+
+        if (!lessons) {
+          return
+        }
+        this.lessons = lessons.results
+        this.SET_LESSON(this.lessons[0])
+        this.events = lessons.results.map(
+          (item) => {
+            return {
+              id: item.id,
+              name: item.name,
+              start: item.date + ' ' + item.start_time,
+              end: item.date + ' ' + item.end_time,
+              color: item.color || 'red',
+              timed: false
+            }
+          }
+        )
       }
     }
 }

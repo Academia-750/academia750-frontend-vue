@@ -13,7 +13,7 @@
           >
             <FieldInput
               ref="lessonInput"
-              v-model="name"
+              v-model="lesson.name"
               label="Nombre del Lession"
               :filled="true"
               :outlined="false"
@@ -21,20 +21,25 @@
             />
             <DateInput
               ref="datePicker"
+              :date="parseDate(lesson.date)"
               @datePicked="datePicked"
             />
             <v-row>
               <v-col class="py-0">
                 <TimeInput
                   ref="StartimePicker"
+                  :time="lesson.start_time"
                   label="Start Time"
+                  rules="required"
                   @timeSelected="selectedStartTime"
                 />
               </v-col>
               <v-col class="py-0">
                 <TimeInput
                   ref="endTimePicker"
+                  :time="lesson.end_time"
                   label="End Time"
+                  rules="required"
                   @timeSelected="selectedEndTime"
                 />
               </v-col>
@@ -47,21 +52,26 @@
                 lg="4"
                 class="py-0"
               >
-                <SwitchInput label="Is Online" @activate="OnlineLesson"/>
+                <SwitchInput :active="Boolean(lesson.is_online)" label="Is Online" @activate="OnlineLesson"/>
               </v-col>
-              <v-col v-if="isOnlineLesson" class="py-0">
+              <v-col v-if="isOnlineLesson || lesson.url !== ''" class="py-0">
                 <FieldInput
                   ref="lessonMeetingUrlInput"
-                  v-model="lessonMeetingUrl"
+                  v-model="lesson.url"
                   :filled="true"
                   :outlined="false"
                   label="URL de la sala de reuniones de la lección"
-                  rules=""
                 />
               </v-col>
             </v-row>
-            <v-col class="py-0 ml-1">
-              <SwitchInput label="Active" @activate="activeLesson"/>
+            <v-col
+              cols="12"
+              sm="4"
+              md="3"
+              lg="4"
+              class="py-0 ml-1"
+            >
+              <SwitchInput :active="Boolean(lesson.is_active)" label="Active" @activate="activeLesson"/>
             </v-col>
           </v-col>
           <v-col
@@ -70,7 +80,7 @@
             md="6"
             lg="6"
           >
-            <CommentFieldInput v-model="comment" rules="required" />
+            <CommentFieldInput ref="commentInput" v-model="lesson.description" rules="required" />
           </v-col>
           <v-row>
             <v-col
@@ -87,7 +97,7 @@
                 @click="createLesson"
               >
                 <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
-                Crear
+                {{ lesson ? 'Editar' : 'Crear' }}
               </v-btn>
             </v-col>
             <v-col
@@ -115,7 +125,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
+import moment from 'moment'
+
 export default {
   components: {
     Vtoolbar: () =>
@@ -170,6 +183,13 @@ export default {
       isOnlineLesson: false
     }
   },
+  computed: {
+    ...mapState('lessonsStore', ['lesson']),
+
+    headers() {
+      return headers
+    }
+  },
   mounted() {
     
   },
@@ -177,6 +197,11 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
+    parseDate(date) {
+      console.log(moment(date).format('YYYY/MM/DD'))
+
+      return moment(date).format('YYYY/MM/DD')
+    },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
       if (!status) {
@@ -184,6 +209,9 @@ export default {
       }
     },
     reset() {
+      this.$refs['lessonMeetingUrlInput'] && this.$refs['lessonInput'].resetErrors()
+      this.$refs['commentInput'].resetErrors()
+
       this.name = '',
       this.date = '',
       this.comment = '',

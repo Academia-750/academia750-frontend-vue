@@ -59,6 +59,7 @@ export default {
   methods: {
     formatDate (date) {
         if (!date) return null
+        console.log(date)
 
         const [year, month, day] = date.split('-')
 

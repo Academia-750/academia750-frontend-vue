@@ -4,6 +4,7 @@
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
+    :rules="rules"
   >
     <v-menu
       ref="timePicker"
@@ -49,6 +50,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    rules: {
+        type: [Object, String],
+        required: true
     }
   },
   data() {

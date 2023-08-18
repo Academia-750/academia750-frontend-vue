@@ -100,7 +100,7 @@ export default {
       return { results: [], total: 0 }
     }
 
-    return { results: response.data.results, total: response.data.total }
+    return { results: response.data.results }
   },
   /**
    * @param {string} id
@@ -116,7 +116,7 @@ export default {
       return { results: [], total: 0 }
     }
 
-    return { results: response.data.results, total: response.data.total }
+    return response.data.result
   },
   /**
    * @param {string} id
