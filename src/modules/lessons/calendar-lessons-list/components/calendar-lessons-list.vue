@@ -229,7 +229,7 @@ export default {
 
       },
       addLesson() {
-        this.$router.push({ name: 'create-lesson' })
+        this.$router.push({ name: 'create-lessons' })
       },
       updateRange ({ start, end }) {
         this.getCalendarLessons({ start, end })
