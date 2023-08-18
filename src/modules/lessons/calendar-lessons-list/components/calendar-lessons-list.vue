@@ -4,7 +4,7 @@
       <v-col>
         <v-sheet>
           <div flat class="d-flex justify-end flex-wrap">
-            <div class="flex-1 justify-center">
+            <div class="flex-1 d-flex mb-2 justify-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
