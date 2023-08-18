@@ -1,35 +1,33 @@
 <template>
   <div>
-    <Vtoolbar title="Crear Lessione" icon="mdi-book-open-variant"/>
+    <Vtoolbar title="Crear Clase" icon="mdi-book-open-variant" />
     <validation-observer ref="FormCreateLesson">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
-          <v-col
-            cols="12"
-            sm="12"
-            md="6"
-            lg="6"
-            class="py-0"
-          >
+          <v-col cols="12" sm="12" md="6" lg="6" class="py-0">
             <FieldInput
               ref="lessonInput"
-              v-model="lesson.name"
-              label="Nombre del Lession"
+              v-model="name"
+              label="Nombre de la clase"
               :filled="true"
               :outlined="false"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
+
             <DateInput
               ref="datePicker"
-              :date="parseDate(lesson.date)"
+              label="Fecha"
+              :value="date"
+              rules="required"
               @datePicked="datePicked"
             />
+
             <v-row>
               <v-col class="py-0">
                 <TimeInput
                   ref="StartimePicker"
-                  :time="lesson.start_time"
-                  label="Start Time"
+                  :time="start_time"
+                  label="Hora de Inicio"
                   rules="required"
                   @timeSelected="selectedStartTime"
                 />
@@ -37,50 +35,48 @@
               <v-col class="py-0">
                 <TimeInput
                   ref="endTimePicker"
-                  :time="lesson.end_time"
-                  label="End Time"
+                  :time="end_time"
+                  label="Hora de finalización"
                   rules="required"
                   @timeSelected="selectedEndTime"
                 />
               </v-col>
             </v-row>
             <v-row class="ml-1">
+              <v-col cols="12" sm="4" md="3" lg="4" class="py-0">
+                <SwitchInput
+                  :active="isOnlineLesson"
+                  label="Clase Online"
+                  @activate="OnlineLesson"
+                />
+              </v-col>
               <v-col
-                cols="12"
-                sm="4"
-                md="3"
-                lg="4"
+                v-if="isOnlineLesson || lessonMeetingUrl !== ''"
                 class="py-0"
               >
-                <SwitchInput :active="Boolean(lesson.is_online)" label="Is Online" @activate="OnlineLesson"/>
-              </v-col>
-              <v-col v-if="isOnlineLesson || lesson.url !== ''" class="py-0">
                 <FieldInput
                   ref="lessonMeetingUrlInput"
-                  v-model="lesson.url"
+                  v-model="lessonMeetingUrl"
                   :filled="true"
                   :outlined="false"
                   label="URL de la sala de reuniones de la lección"
                 />
               </v-col>
             </v-row>
-            <v-col
-              cols="12"
-              sm="4"
-              md="3"
-              lg="4"
-              class="py-0 ml-1"
-            >
-              <SwitchInput :active="Boolean(lesson.is_active)" label="Active" @activate="activeLesson"/>
+            <v-col cols="12" sm="4" md="3" lg="4" class="py-0 ml-1">
+              <SwitchInput
+                :active="isActiveLesson"
+                :label="isActiveLesson ? 'Activa' : 'Inactiva'"
+                @activate="activeLesson"
+              />
             </v-col>
           </v-col>
-          <v-col
-            cols="12"
-            sm="12"
-            md="6"
-            lg="6"
-          >
-            <CommentFieldInput ref="commentInput" v-model="lesson.description" rules="required" />
+          <v-col cols="12" sm="12" md="6" lg="6">
+            <CommentFieldInput
+              ref="commentInput|max:1500"
+              v-model="comment"
+              rules="required"
+            />
           </v-col>
           <v-row>
             <v-col
@@ -100,21 +96,17 @@
                 {{ lesson ? 'Editar' : 'Crear' }}
               </v-btn>
             </v-col>
-            <v-col
-              class="d-flex justify-end flex-column flex-sm-row"
-            >
+            <v-col class="d-flex justify-end flex-column flex-sm-row">
               <ResourceButtonAdd
-                text-button="Agregar Materiales"
+                text-button="Añadir Materiales"
                 :disabled="true"
               />
               <ResourceButtonAdd
-                text-button="Agregar Estudiantes"
+                text-button="Añadir Estudiantes"
                 :disabled="true"
               />
               <div class="mt-2">
-                <resource-button-delete
-                  text-button="Eliminar"
-                />
+                <resource-button-delete text-button="Eliminar" />
               </div>
             </v-col>
           </v-row>
@@ -164,12 +156,6 @@ export default {
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       )
   },
-  props: {
-    lesson: {
-      type: Object,
-      default: null
-    }
-  },
   data() {
     return {
       loading: false,
@@ -191,17 +177,22 @@ export default {
     }
   },
   mounted() {
-    
+    this.reset()
+    if (this.lesson) {
+      this.name = this.lesson.name
+      this.date = moment(this.lesson.date).format('YYYY-MM-DD')
+      this.comment = this.lesson.comment
+      this.start_time = this.lesson.start_time
+      this.end_time = this.lesson.end_time
+      this.lessonMeetingUrl = this.lesson.url
+      this.isActiveLesson = Boolean(this.lesson.is_active)
+      this.isOnlineLesson = Boolean(this.lesson.is_online)
+    }
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    parseDate(date) {
-      console.log(moment(date).format('YYYY/MM/DD'))
-
-      return moment(date).format('YYYY/MM/DD')
-    },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
       if (!status) {
@@ -209,18 +200,19 @@ export default {
       }
     },
     reset() {
-      this.$refs['lessonMeetingUrlInput'] && this.$refs['lessonInput'].resetErrors()
-      this.$refs['commentInput'].resetErrors()
+      this.$refs['lessonMeetingUrlInput'] &&
+        this.$refs['lessonMeetingUrlInput'].resetErrors()
+      this.$refs['lessonInput'] && this.$refs['lessonInput'].resetErrors()
+      this.$refs['lessonInput'] && this.$refs['commentInput'].resetErrors()
 
-      this.name = '',
-      this.date = '',
-      this.comment = '',
-      this.date = null,
-      this.start_time = null,
-      this.end_time = null,
-      this.url = ''
+      this.name = ''
+      this.date = ''
+      this.comment = ''
+      this.date = new Date()
+      this.start_time = moment().add(1, 'hours').format('hh:00')
+      this.end_time = moment().add(2, 'hours').format('hh:00')
       this.lessonMeetingUrl = ''
-      this.isActiveLesson = false,
+      this.isActiveLesson = false
       this.isOnlineLesson = false
     },
     datePicked(date) {

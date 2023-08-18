@@ -21,36 +21,36 @@
     </v-text-field>
   </ValidationProvider>
 </template>
-  
-  <script>
-  export default {
-    name: 'InputField',
-    props: {
-      value: {
-        type: String,
-        default: ''
-      },
-      rules: {
-        type: [Object, String],
-        required: true
-      },
-      label: {
-        type: String,
-        default: ''
-      },
-      filled: {
-        type: Boolean,
-        default: false
-      },
-      outlined: {
-        type: Boolean,
-        default: true
-      }
+
+<script>
+export default {
+  name: 'InputField',
+  props: {
+    value: {
+      type: String,
+      default: ''
     },
-    methods: {
-      resetErrors() {
-        this.$refs.validationProvider.reset()
-      }
+    rules: {
+      type: [Object, String],
+      default: ''
+    },
+    label: {
+      type: String,
+      default: ''
+    },
+    filled: {
+      type: Boolean,
+      default: false
+    },
+    outlined: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    resetErrors() {
+      this.$refs.validationProvider.reset()
     }
   }
-  </script>
+}
+</script>

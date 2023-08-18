@@ -4,11 +4,13 @@ import { $get_token_auth } from '@/helpers/auth'
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
 import ResourceService from '@/services/ResourceService'
-import { /* $websocketConnectionAction,  */$disconnectWebsocketsConnection } from '@/helpers/WebsocketsConnection'
+import {
+  /* $websocketConnectionAction,  */ $disconnectWebsocketsConnection
+} from '@/helpers/WebsocketsConnection'
 import configLogout from '@/modules/auth/login/resources/configLogout'
+import { activateError } from '@/helpers/manageErrors'
 
 export default function ({ next }) {
-
   try {
     /* //console.log(Cookies.get('authorization')) */
 
@@ -35,7 +37,8 @@ export default function ({ next }) {
 
     const TOKEN_AUTH = `Bearer ${$get_token_auth()}`
 
-    ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = TOKEN_AUTH
+    ProfileServiceAfterLogin.defaults.headers.common['Authorization'] =
+      TOKEN_AUTH
     ProfileAuthService.defaults.headers.common['Authorization'] = TOKEN_AUTH
     ResourceService.defaults.headers.common['Authorization'] = TOKEN_AUTH
 
@@ -43,11 +46,8 @@ export default function ({ next }) {
 
     return next()
   } catch (error) {
-    /* //console.log(Cookies.get('authorization'))
-    //console.log('Error en middleware Auth') */
     configLogout.redirectToHomePageAfterLogout()
-    //console.log(error)
+    console.log(error)
     activateError()
   }
-
 }

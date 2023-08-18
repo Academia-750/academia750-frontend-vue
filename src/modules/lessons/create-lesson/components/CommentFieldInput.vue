@@ -4,14 +4,14 @@
     v-slot="{ errors }"
     vid="comment"
     mode="aggressive"
-    name="comment"
+    name="descripcción"
     :rules="rules"
   >
     <v-textarea
       :value="value"
       :error-messages="errors"
       name="input-7-4"
-      label="comment"
+      label="Descripcción  de la clase"
       :filled="true"
       required
       clearable
@@ -30,13 +30,13 @@ export default {
     },
     rules: {
       type: [Object, String],
-      required: true
+      default: ''
     }
   },
   methods: {
-      resetErrors() {
-        this.$refs.validationProvider.reset()
-      }
+    resetErrors() {
+      this.$refs.validationProvider.reset()
     }
+  }
 }
 </script>

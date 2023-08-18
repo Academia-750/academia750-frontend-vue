@@ -35,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Manejar lecciones'
+      inner: 'Gestionar Clases'
     }
   }
 }
