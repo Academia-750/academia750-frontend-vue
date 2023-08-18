@@ -222,7 +222,7 @@ export default {
         return
       }
       this.lessons = lessons.results
-      this.SET_LESSON(this.lessons[0])
+      this.SET_LESSON(this.lessons[0]) // TODO this is not right
       this.events = lessons.results.map((item) => {
         return {
           id: item.id,

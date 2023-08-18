@@ -3,10 +3,12 @@
     ref="validationProvider"
     v-slot="{ errors }"
     mode="aggressive"
+    :vid="name"
     :name="label"
     :rules="rules"
   >
     <v-text-field
+      :name="name"
       :error-messages="errors"
       :disabled="disabled"
       filled
@@ -26,7 +28,7 @@
 
 <script>
 export default {
-  name: 'EmailFieldInput',
+  name: 'FieldInput',
   props: {
     name: {
       type: String,
@@ -45,8 +47,8 @@ export default {
       default: false
     },
     rules: {
-      type: [Object, String],
-      required: true
+      type: String,
+      default: ''
     }
   },
   data() {

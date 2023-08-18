@@ -4,12 +4,14 @@
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
+    :vid="name"
   >
     <v-switch
-      v-model="active"
+      :name="name"
+      :value="value"
       :error-messages="errors"
       :label="label"
-      @click="activate(active)"
+      @change="onClick"
     ></v-switch>
   </ValidationProvider>
 </template>
@@ -18,18 +20,22 @@
 export default {
   name: 'SwitchInput',
   props: {
-    active: {
+    value: {
       type: Boolean,
       default: false
     },
     label: {
       type: String,
-      default: 'active'
+      default: ''
+    },
+    name: {
+      type: String,
+      required: true
     }
   },
   methods: {
-    activate(active) {
-      this.$emit('activate', active)
+    onClick(value) {
+      this.$emit('change', value)
     }
   }
 }

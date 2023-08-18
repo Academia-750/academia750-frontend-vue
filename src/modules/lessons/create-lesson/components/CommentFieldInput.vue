@@ -11,7 +11,7 @@
       :value="value"
       :error-messages="errors"
       name="input-7-4"
-      label="Descripcción  de la clase"
+      label="Descripción  de la clase"
       :filled="true"
       required
       clearable

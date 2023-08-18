@@ -4,12 +4,12 @@
     v-slot="{ errors }"
     vid="workspace-name"
     mode="aggressive"
-    name="Nombre"
+    :name="label"
     :rules="rules"
   >
     <v-text-field
       :value="value"
-      name="name"
+      :name="name"
       :error-messages="errors"
       :label="label"
       :filled="filled"
@@ -33,6 +33,10 @@ export default {
     rules: {
       type: [Object, String],
       default: ''
+    },
+    name: {
+      type: String,
+      required: true
     },
     label: {
       type: String,

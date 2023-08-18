@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Vtoolbar title="Crear Clase" icon="mdi-book-open-variant" />
+    <Vtoolbar :title="title" icon="mdi-book-open-variant" />
     <validation-observer ref="FormCreateLesson">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
@@ -10,64 +10,74 @@
               v-model="name"
               label="Nombre de la clase"
               :filled="true"
+              name="nombre"
               :outlined="false"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
 
             <DateInput
               ref="datePicker"
+              name="lesson_date"
               label="Fecha"
               :value="date"
-              rules="required"
+              rules="required|valid_date"
               @datePicked="datePicked"
             />
 
             <v-row>
               <v-col class="py-0">
                 <TimeInput
-                  ref="StartimePicker"
-                  :time="start_time"
-                  label="Hora de Inicio"
+                  name="start_time"
+                  :value="start_time"
+                  label="Hora de inicio"
                   rules="required"
-                  @timeSelected="selectedStartTime"
+                  @change="selectedStartTime"
                 />
               </v-col>
               <v-col class="py-0">
                 <TimeInput
-                  ref="endTimePicker"
-                  :time="end_time"
+                  name="end_time"
+                  :value="end_time"
                   label="Hora de finalización"
-                  rules="required"
-                  @timeSelected="selectedEndTime"
+                  rules="required|after:@start_time,la hora de inicio"
+                  @change="selectedEndTime"
                 />
               </v-col>
             </v-row>
-            <v-row class="ml-1">
+            <v-row class="mt-2 ml-1">
               <v-col cols="12" sm="4" md="3" lg="4" class="py-0">
                 <SwitchInput
-                  :active="isOnlineLesson"
+                  name="is_online"
+                  :value="isOnlineLesson"
                   label="Clase Online"
-                  @activate="OnlineLesson"
+                  @change="setOnline"
                 />
               </v-col>
-              <v-col
-                v-if="isOnlineLesson || lessonMeetingUrl !== ''"
-                class="py-0"
-              >
+              <v-col v-if="isOnlineLesson" class="py-0">
                 <FieldInput
                   ref="lessonMeetingUrlInput"
                   v-model="lessonMeetingUrl"
+                  rules="required|url"
                   :filled="true"
                   :outlined="false"
+                  name="URL"
                   label="URL de la sala de reuniones de la lección"
                 />
               </v-col>
             </v-row>
-            <v-col cols="12" sm="4" md="3" lg="4" class="py-0 ml-1">
+            <v-col
+              v-if="lesson"
+              cols="12"
+              sm="4"
+              md="3"
+              lg="4"
+              class="py-0 ml-1"
+            >
               <SwitchInput
-                :active="isActiveLesson"
+                name="is_active"
+                :value="isActiveLesson"
                 :label="isActiveLesson ? 'Activa' : 'Inactiva'"
-                @activate="activeLesson"
+                @change="setActive"
               />
             </v-col>
           </v-col>
@@ -78,25 +88,17 @@
               rules="required"
             />
           </v-col>
-          <v-row>
-            <v-col
-              cols="12"
-              sm="12"
-              md="5"
-              lg="6"
-              class="d-flex ml-1 justify-start flex-column flex-sm-row"
-            >
-              <v-btn
+          <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
+            <div>
+              <ResourceButton
                 :loading="loading"
+                :text-button="lesson ? 'Editar' : 'Crear'"
                 color="light-blue darken-3"
-                class="mt-3 white--text"
+                icon-button="mdi-account-group"
                 @click="createLesson"
-              >
-                <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
-                {{ lesson ? 'Editar' : 'Crear' }}
-              </v-btn>
-            </v-col>
-            <v-col class="d-flex justify-end flex-column flex-sm-row">
+              />
+            </div>
+            <div v-if="lesson" class="d-flex">
               <ResourceButtonAdd
                 text-button="Añadir Materiales"
                 :disabled="true"
@@ -105,10 +107,9 @@
                 text-button="Añadir Estudiantes"
                 :disabled="true"
               />
-              <div class="mt-2">
-                <resource-button-delete text-button="Eliminar" />
-              </div>
-            </v-col>
+
+              <ResourceButtonDelete text-button="Eliminar" />
+            </div>
           </v-row>
         </v-row>
       </section>
@@ -117,7 +118,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 
@@ -154,6 +155,10 @@ export default {
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
   },
   data() {
@@ -171,7 +176,9 @@ export default {
   },
   computed: {
     ...mapState('lessonsStore', ['lesson']),
-
+    title() {
+      return !this.lesson ? 'Nueva Clase' : `Editar ${this.lesson.name}`
+    },
     headers() {
       return headers
     }
@@ -181,7 +188,7 @@ export default {
     if (this.lesson) {
       this.name = this.lesson.name
       this.date = moment(this.lesson.date).format('YYYY-MM-DD')
-      this.comment = this.lesson.comment
+      this.comment = this.lesson.description
       this.start_time = this.lesson.start_time
       this.end_time = this.lesson.end_time
       this.lessonMeetingUrl = this.lesson.url
@@ -193,6 +200,8 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
+    ...mapMutations('lessonsStore', ['SET_LESSON']),
+
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateLesson']['setErrors'](errorResponse)
       if (!status) {
@@ -200,17 +209,12 @@ export default {
       }
     },
     reset() {
-      this.$refs['lessonMeetingUrlInput'] &&
-        this.$refs['lessonMeetingUrlInput'].resetErrors()
-      this.$refs['lessonInput'] && this.$refs['lessonInput'].resetErrors()
-      this.$refs['lessonInput'] && this.$refs['commentInput'].resetErrors()
-
       this.name = ''
       this.date = ''
       this.comment = ''
-      this.date = new Date()
-      this.start_time = moment().add(1, 'hours').format('hh:00')
-      this.end_time = moment().add(2, 'hours').format('hh:00')
+      this.date = ''
+      this.start_time = ''
+      this.end_time = ''
       this.lessonMeetingUrl = ''
       this.isActiveLesson = false
       this.isOnlineLesson = false
@@ -224,10 +228,10 @@ export default {
     selectedEndTime(time) {
       this.end_time = time
     },
-    activeLesson(active) {
+    setActive(active) {
       this.isActiveLesson = active
     },
-    OnlineLesson(active) {
+    setOnline(active) {
       this.isOnlineLesson = active
     },
     async createLesson() {
@@ -249,12 +253,22 @@ export default {
             end_time: this.end_time
           })
         }
+        console.log({
+          name: this.name,
+          description: this.comment,
+          date: this.date,
+          start_time: this.start_time,
+          end_time: this.end_time,
+          is_online: this.isOnlineLesson,
+          url: this.lessonMeetingUrl || undefined
+        })
         lesson = await LessonRepository.update(lesson.id, {
           name: this.name,
           description: this.comment,
           date: this.date,
           start_time: this.start_time,
           end_time: this.end_time,
+          is_online: this.isOnlineLesson,
           url: this.lessonMeetingUrl || undefined
         })
 
@@ -270,16 +284,17 @@ export default {
           return
         }
         this.loading = false
-        this.reset()
         await this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: this.lesson ? 'Lession Actualizado!' : 'Lession Creado!',
+          title: this.lesson ? 'Lección Actualizada!' : 'Lession Creada!',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.$router.push({ name: 'manage-lessons' })
+
+        this.SET_LESSON(lesson)
+        // this.$router.push({ name: 'manage-lessons' })
       } catch (error) {
         console.error(error)
         this.loading = false
@@ -304,7 +319,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Crear lession'
+      inner: 'Crear Clase'
     }
   }
 }

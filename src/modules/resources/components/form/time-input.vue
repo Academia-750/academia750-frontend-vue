@@ -2,40 +2,20 @@
   <ValidationProvider
     ref="validationProvider"
     v-slot="{ errors }"
+    :vid="name"
     mode="aggressive"
     :name="label"
     :rules="rules"
   >
-    <v-menu
-      ref="timePicker"
-      v-model="open"
-      :close-on-content-click="false"
-      :nudge-right="40"
-      :return-value.sync="time"
-      transition="scale-transition"
-      offset-y
-      max-width="290px"
-      min-width="290px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="time"
-          :error-messages="errors"
-          :label="label"
-          prepend-icon="mdi-clock-time-four-outline"
-          readonly
-          v-bind="attrs"
-          filled
-          v-on="on"
-        ></v-text-field>
-      </template>
-      <v-time-picker
-        v-if="open"
-        v-model="time"
-        full-width
-        @click:minute="selectTime(time)"
-      ></v-time-picker>
-    </v-menu>
+    <v-text-field
+      v-model="time"
+      :name="name"
+      type="time"
+      :error-messages="errors"
+      :label="label"
+      prepend-icon="mdi-clock-time-four-outline"
+      @change="onChange"
+    ></v-text-field>
   </ValidationProvider>
 </template>
 
@@ -43,7 +23,11 @@
 export default {
   name: 'TimeInput',
   props: {
-    time: {
+    name: {
+      type: String,
+      required: true
+    },
+    value: {
       type: String,
       default: ''
     },
@@ -52,39 +36,26 @@ export default {
       default: ''
     },
     rules: {
-        type: [Object, String],
-        required: true
+      type: [Object, String],
+      required: true
     }
   },
   data() {
     return {
-      open: false
+      time: ''
     }
   },
   watch: {
-      date () {
-        this.dateFormatted = this.formatDate(this.date)
-        this.$emit('datePicked', this.dateFormatted)
-      }
-    },
+    value(value) {
+      this.time = this.value
+    }
+  },
+  mounted() {
+    this.time = this.value
+  },
   methods: {
-    formatDate (date) {
-        if (!date) return null
-
-        const [year, month, day] = date.split('-')
-
-        return `${month}/${day}/${year}`
-    },
-    parseDate (date) {
-        if (!date) return null
-
-        const [month, day, year] = date.split('/')
-
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-    },
-    selectTime(time) {
-      this.$refs.timePicker.save(time)
-      this.$emit('timeSelected', time)
+    onChange(time) {
+      this.$emit('change', time)
     }
   }
 }
