@@ -229,6 +229,7 @@ export default {
 
       },
       addLesson() {
+        this.SET_LESSON(null)
         this.$router.push({ name: 'create-lessons' })
       },
       updateRange ({ start, end }) {

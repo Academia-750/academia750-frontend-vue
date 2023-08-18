@@ -2,7 +2,7 @@ export default {
   name: 'lessonsStore',
   namespaced: true,
   state: {
-    lesson: {}
+    lesson: null
   },
   mutations: {
     SET_LESSON(state, payload) {
