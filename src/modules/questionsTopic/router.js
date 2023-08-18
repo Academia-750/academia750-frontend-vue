@@ -5,6 +5,7 @@ import importQuestions from '@/modules/questionsTopic/views/import'
 import CreateQuestionsTopicModule from './views/CreateQuestion'
 import FetchQuestionTopicModule from './views/FetchQuestion'
 import UpdateQuestionsTopicModule from './views/UpdateQuestion'
+import CloneQuestionsTopicModule from './views/CloneQuestion'
 /* import CreateSubtopicModule from '@/modules/subtopicsOfTopic/views/CreateSubtopic'
 import UpdateSubtopicModule from '@/modules/subtopicsOfTopic/views/UpdateSubtopic' */
 
@@ -81,7 +82,16 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
+          },
+          {
+            path: ':id/questions/clone/:question_id',
+            name: 'clone-question-topic',
+            component: CloneQuestionsTopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
           }
+
         ]
       }/* ,
       ...shortcutRoutes */

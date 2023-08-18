@@ -44,7 +44,7 @@
               ref="nameInput"
               v-model="name"
               label="Nombre del Material"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              rules="required|min:3|max:50|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <FieldInput
               v-if="type === 'recording'"
@@ -117,9 +117,11 @@
               </li>
             </ul>
             <TagsAutoComplete
+              ref="tagsInput"
               :dense="false"
               tag-type="material"
               :tags="tags"
+              rules="required"
               @change="onChangeTags"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
@@ -240,6 +242,7 @@ export default {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
       this.$refs['workspaceInput'] && this.$refs['workspaceInput'].reset()
+      this.$refs['tagsInput'] && this.$refs['tagsInput'].resetErrors()
 
       this.name = ''
       this.workspace = this.defaultWorkspace || ''

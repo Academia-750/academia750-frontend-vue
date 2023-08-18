@@ -1,32 +1,41 @@
 <template>
-  <v-autocomplete
-    :value="tags"
-    :items="tagsList"
-    :loading="loading"
-    tags-list
-    clearable
-    label="Etiquetas"
-    multiple
-    solo
-    outlined
-    :dense="dense"
-    @change="onChangeTags"
-    @update:search-input="loadTags"
+  <ValidationProvider
+    ref="autocomplete"
+    v-slot="{ errors }"
+    mode="aggressive"
+    :rules="rules"
+    name="etiquetas"
   >
-    <template v-slot:selection="{ attrs, item, select, selected }">
-      <v-chip
-        v-bind="attrs"
-        :input-value="selected"
-        close
-        small
-        @click="select"
-        @click:close="remove(item)"
-      >
-        <strong>{{ item }}</strong
-        >&nbsp;
-      </v-chip>
-    </template>
-  </v-autocomplete>
+    <v-autocomplete
+      :value="tags"
+      :items="tagsList"
+      :loading="loading"
+      :error-messages="errors"
+      tags-list
+      clearable
+      label="Etiquetas"
+      multiple
+      solo
+      outlined
+      :dense="dense"
+      @change="onChangeTags"
+      @update:search-input="loadTags"
+    >
+      <template v-slot:selection="{ attrs, item, select, selected }">
+        <v-chip
+          v-bind="attrs"
+          :input-value="selected"
+          close
+          small
+          @click="select"
+          @click:close="remove(item)"
+        >
+          <strong>{{ item }}</strong>
+          &nbsp;
+        </v-chip>
+      </template>
+    </v-autocomplete>
+  </ValidationProvider>
 </template>
 
 <script>
@@ -49,6 +58,10 @@ export default {
     tags: {
       type: Array,
       default: () => []
+    },
+    rules: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -80,6 +93,9 @@ export default {
         'change',
         this.tags.filter((tag) => tag !== item)
       )
+    },
+    resetErrors() {
+      this.$refs['autocomplete'] && this.$refs['autocomplete'].reset()
     }
   }
 }
