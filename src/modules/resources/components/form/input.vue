@@ -2,14 +2,14 @@
   <ValidationProvider
     ref="validationProvider"
     v-slot="{ errors }"
-    vid="workspace-name"
+    :vid="id"
     mode="aggressive"
     :name="label"
     :rules="rules"
   >
     <v-text-field
       :value="value"
-      :name="name"
+      :name="id"
       :error-messages="errors"
       :label="label"
       :filled="filled"
@@ -35,7 +35,7 @@ export default {
       type: [Object, String],
       default: ''
     },
-    name: {
+    id: {
       type: String,
       required: true
     },

@@ -2,18 +2,21 @@
   <ValidationProvider
     ref="validationProvider"
     v-slot="{ errors }"
-    :vid="name"
+    :vid="id"
     mode="aggressive"
     :name="label"
     :rules="rules"
   >
     <v-text-field
+      :id="id"
       v-model="time"
-      :name="name"
+      :name="id"
       type="time"
       :error-messages="errors"
       :label="label"
+      :filled="filled"
       :disabled="disabled"
+      :outlined="outlined"
       prepend-icon="mdi-clock-time-four-outline"
       @change="onChange"
     ></v-text-field>
@@ -24,7 +27,7 @@
 export default {
   name: 'TimeInput',
   props: {
-    name: {
+    id: {
       type: String,
       required: true
     },
@@ -39,6 +42,14 @@ export default {
     rules: {
       type: [Object, String],
       required: true
+    },
+    outlined: {
+      type: Boolean,
+      default: false
+    },
+    filled: {
+      type: Boolean,
+      default: true
     },
     disabled: {
       type: Boolean,

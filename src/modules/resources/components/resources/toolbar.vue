@@ -5,8 +5,11 @@
     outlined
     elevation="2"
   >
-    <resource-button-go-back-router :width-number-limit="300" />
-    <v-toolbar-title class="d-flex align-end">
+    <resource-button-go-back-router
+      v-if="backButton"
+      :width-number-limit="300"
+    />
+    <v-toolbar-title class="d-flex align-center">
       <v-icon large right class="mx-1">{{ icon }}</v-icon>
       <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
         {{ title }}
@@ -15,7 +18,6 @@
   </v-toolbar>
 </template>
 <script lang="ts">
-
 export default {
   name: 'Toolbar',
   components: {
@@ -36,6 +38,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    backButton: {
+      type: Boolean,
+      default: true
     }
   }
 }

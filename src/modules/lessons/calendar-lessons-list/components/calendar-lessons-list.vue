@@ -3,8 +3,8 @@
     <v-row>
       <v-col>
         <v-sheet>
-          <div flat class="d-flex justify-end flex-wrap">
-            <div class="flex-1 d-flex mb-2 justify-center">
+          <div flat class="d-flex justify-center mb-2">
+            <div class="d-flex justify-center align-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
@@ -14,35 +14,23 @@
               >
                 {{ title }}
               </div>
-              <v-btn
-                fab
-                x-small
-                color="primary"
-                class="mr-16"
-                :style="{ marginRight: '300px !important' }"
-                @click="next"
-              >
+              <v-btn fab x-small color="primary" @click="next">
                 <v-icon small> mdi-chevron-right </v-icon>
               </v-btn>
             </div>
-            <ResourceButtonAdd
-              class="ml-16"
-              text-button="Crear Clase"
-              @click="addLesson"
-            />
           </div>
         </v-sheet>
-        <v-sheet height="600">
+        <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
           <v-calendar
             ref="calendar"
             v-model="focus"
             color="primary"
             :events="events"
             :event-color="getEventColor"
-            :type="$vuetify.breakpoint.xs ? 'day' : 'month'"
-            :first-interval="9"
+            :type="type"
+            :first-interval="7"
             :interval-minutes="60"
-            :interval-count="12"
+            :interval-count="15"
             locale="es-MX"
             @click:event="showEvent"
             @click:more="viewDay"
@@ -57,18 +45,13 @@
 
 <script>
 import _ from 'lodash'
-import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import LessonRepository from '@/services/LessonRepository'
+import moment from 'moment'
 
 export default {
   name: 'CalendarLessonsList',
-  components: {
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      )
-  },
+  components: {},
   mixins: [componentButtonsCrud],
   data: () => ({
     focus: '',
@@ -78,11 +61,20 @@ export default {
     events: [] // Formatted for the calendar
   }),
   computed: {
-    ...mapState('lessonsStore', ['lesson']),
     title() {
       const { title } = this.$refs.calendar
 
       return title.charAt(0).toUpperCase() + title.slice(1)
+    },
+    type() {
+      if (this.$vuetify.breakpoint.xs) {
+        return 'day'
+      }
+      if (this.$vuetify.breakpoint.sm) {
+        return '4day'
+      }
+
+      return 'month'
     },
     headers() {
       return headers
@@ -92,7 +84,6 @@ export default {
     this.$refs.calendar.checkChange()
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON']),
     viewDay({ date }) {
       this.focus = date
       this.type = 'day'
@@ -112,11 +103,7 @@ export default {
     async showEvent({ event }) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
-      this.SET_LESSON(lesson)
-    },
-    addLesson() {
-      this.SET_LESSON(false)
-      this.$router.push({ name: 'create-lessons' })
+      this.$emit('lesson', lesson || false)
     },
     updateRange({ start, end }) {
       this.getCalendarLessons({ start, end })
@@ -132,17 +119,24 @@ export default {
         return
       }
       this.lessons = lessons.results
-      this.SET_LESSON(this.lessons[0]) // TODO this is not right
       this.events = lessons.results.map((item) => {
         return {
           id: item.id,
           name: item.name,
           start: item.date + ' ' + item.start_time,
           end: item.date + ' ' + item.end_time,
-          color: item.color || 'red',
+          color: item.color || '#cccccc',
           timed: false
         }
       })
+
+      // Auto select the first next lesson or the last lesson if all is in the past
+      const nextLesson =
+        this.lessons
+          .filter((lesson) => lesson.date > moment().format('YYYY-MM-DD'))
+          .pop() || [...this.lessons].pop()
+
+      nextLesson && this.$emit('load', nextLesson)
     }
   }
 }

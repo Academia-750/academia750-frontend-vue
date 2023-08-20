@@ -40,11 +40,7 @@ extend('url', {
 })
 
 extend('after', {
-  validate: (value, { target }) => {
-    console.log({ value, target })
-
-    return value > target
-  },
+  validate: (value, { target }) => value > target,
   message: 'El valor debe ser posterior a {field}',
   params: ['target', 'field']
 })

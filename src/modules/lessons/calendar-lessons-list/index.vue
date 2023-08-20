@@ -3,8 +3,8 @@
     <div>
       <v-card flat>
         <v-card-text>
-          <LessonToolBar>
-            <template slot="info">
+          <LessonToolBar v-show="!isMobile">
+            <template v-if="lesson" slot="info">
               <div class="d-flex align-center">
                 <div
                   :class="'mr-1 circle ' + (lesson.is_active ? 'active' : '')"
@@ -35,24 +35,40 @@
                 {{ lesson.student_count }}
               </div>
             </template>
-            <template slot="actions">
-              <resource-button-edit
-                :config-route="{ name: 'create-lessons' }"
+            <template v-else slot="info">
+              <div class="d-flex w-full justify-center">
+                Selecciona una clase
+              </div>
+            </template>
+            <template v-if="lesson" slot="actions">
+              <resource-button
+                text-button="Editar"
+                icon-button="mdi-pencil"
+                color="primary"
+                @click="$router.push({ name: 'create-lessons' })"
               />
-              <resource-button-edit
+              <resource-button
                 text-button="Materiales"
-                :config-route="{}"
-                :only-dispatch-click-event="true"
+                icon-button="mdi-folder-open"
+                color="success"
+                :disabled="true"
               />
-              <resource-button-edit
+              <resource-button
                 text-button="Alumnos"
-                :config-route="{}"
-                icon-button=""
-                :only-dispatch-click-event="true"
+                icon-button="mdi-account-group"
+                color="success"
+                :disabled="true"
               />
             </template>
           </LessonToolBar>
-          <CalendarLessonsList />
+          <div class="d-flex justify-end my-2">
+            <ResourceButtonAdd
+              class="ml-16"
+              text-button="Crear Clase"
+              @click="addLesson"
+            />
+          </div>
+          <CalendarLessonsList @lesson="onLesson" @load="onLessonLoad" />
         </v-card-text>
       </v-card>
     </div>
@@ -61,7 +77,7 @@
 
 <script>
 import notifications from '@/mixins/notifications'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'CalendarLesson',
   components: {
@@ -74,9 +90,13 @@ export default {
         /* webpackChunkName: "CalendarLessonsList" */ '../common/lesson-tool-bar.vue'
       ),
 
-    ResourceButtonEdit: () =>
+    ResourceButton: () =>
       import(
-        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
+      ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       )
   },
   mixins: [notifications],
@@ -86,13 +106,36 @@ export default {
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson'])
+    ...mapState('lessonsStore', ['lesson']),
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
+    }
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   mounted() {
     this.loadNotifications()
+  },
+  methods: {
+    ...mapMutations('lessonsStore', ['SET_LESSON']),
+    addLesson() {
+      this.SET_LESSON(false)
+      this.$router.push({ name: 'create-lessons' })
+    },
+    onLesson(lesson) {
+      this.SET_LESSON(lesson || false)
+      if (this.isMobile) {
+        this.$router.push({ name: 'create-lessons' })
+      }
+    },
+    onLessonLoad(lesson) {
+      // Only on first load
+      if (this.lesson) {
+        return
+      }
+      this.SET_LESSON(lesson || false)
+    }
   },
   head: {
     title: {

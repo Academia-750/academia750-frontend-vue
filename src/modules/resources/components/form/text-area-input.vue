@@ -2,15 +2,16 @@
   <ValidationProvider
     ref="validationProvider"
     v-slot="{ errors }"
-    :vid="name"
+    :vid="id"
     mode="aggressive"
     :name="label"
     :rules="rules"
   >
     <v-textarea
+      :id="id"
       :value="value"
       :error-messages="errors"
-      :name="name"
+      :name="id"
       :label="label"
       :filled="true"
       required
@@ -25,7 +26,7 @@
 export default {
   name: 'TextAreaInput',
   props: {
-    name: {
+    id: {
       type: String,
       default: '',
       require: true
