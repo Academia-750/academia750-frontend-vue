@@ -144,5 +144,94 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} content Search by names from a partial value
+   * @param {string} orderBy (Only Allowed values)
+   * @param {number} order 1 (ASC) -1 (DESC)
+   * @param {number} offset
+   * @param {number} limit
+   * @param {string} lessonId
+   */
+  async lessonStudentList( lessonId, { orderBy, order, limit, offset, content } = {}) {
+    const params = {
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${lessonId}/students`, { params })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results }
+  },
+  /**
+   * @param {string} id
+   * @param {string} student_id
+   */
+  async addStudentToLesson(id, { student_id }) {
+    const response = await ResourceService.post(`lesson/${id}/student`, {
+      user_id: student_id
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} active
+   */
+  async addGroupToLesson(id, { group_id }) {
+    const response = await ResourceService.post(`lesson/${id}/group`, {
+      group_id
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return { count: response.data.count }
+  },
+  /**
+   * @param {string} id
+   * @param {string} student_id
+   */
+  async deleteStudentFromLesson(id, { student_id }) {
+    const response = await ResourceService.delete(`lesson/${id}/student`, {
+      data: {
+        user_id: student_id
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }

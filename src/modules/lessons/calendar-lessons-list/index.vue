@@ -46,9 +46,7 @@
               />
               <resource-button-edit
                 text-button="Alumnos"
-                :config-route="{}"
-                icon-button=""
-                :only-dispatch-click-event="true"
+                :config-route="{ name: 'add-students', params: { id: lesson.id } }"
               />
             </template>
           </LessonToolBar>

@@ -1,7 +1,7 @@
 <template>
   <v-toolbar
     flat
-    class="indigo lighten-5 my-md-2 mx-md-2"
+    class="indigo lighten-5 my-md-2"
     outlined
     elevation="2"
   >
@@ -12,6 +12,10 @@
         {{ title }}
       </span>
     </v-toolbar-title>
+
+    <v-spacer />
+
+    <slot name="actions" />
   </v-toolbar>
 </template>
 <script lang="ts">
@@ -25,10 +29,6 @@ export default {
       )
   },
   props: {
-    headers: {
-      type: Array,
-      default: () => []
-    },
     icon: {
       type: String,
       default: ''
