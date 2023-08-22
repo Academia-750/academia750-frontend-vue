@@ -8,46 +8,46 @@
     :rules="rules"
   >
     <v-text-field
-      :value="value"
+      :id="id"
+      v-model="time"
       :name="id"
+      type="time"
       :error-messages="errors"
       :label="label"
       :filled="filled"
-      required
-      clearable
-      :outlined="outlined"
       :disabled="disabled"
-      @input="$emit('input', $event)"
-    >
-    </v-text-field>
+      :outlined="outlined"
+      prepend-icon="mdi-clock-time-four-outline"
+      @change="onChange"
+    ></v-text-field>
   </ValidationProvider>
 </template>
 
 <script>
 export default {
-  name: 'InputField',
+  name: 'TimeInput',
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    rules: {
-      type: [Object, String],
-      default: ''
-    },
     id: {
       type: String,
       required: true
+    },
+    value: {
+      type: String,
+      default: ''
     },
     label: {
       type: String,
       default: ''
     },
-    filled: {
+    rules: {
+      type: [Object, String],
+      required: true
+    },
+    outlined: {
       type: Boolean,
       default: false
     },
-    outlined: {
+    filled: {
       type: Boolean,
       default: true
     },
@@ -56,9 +56,22 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      time: ''
+    }
+  },
+  watch: {
+    value(value) {
+      this.time = this.value
+    }
+  },
+  mounted() {
+    this.time = this.value
+  },
   methods: {
-    resetErrors() {
-      this.$refs.validationProvider.reset()
+    onChange(time) {
+      this.$emit('change', time)
     }
   }
 }

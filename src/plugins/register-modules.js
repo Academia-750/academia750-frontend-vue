@@ -17,6 +17,7 @@ import home from '@/modules/home'
 import statistics from '@/modules/statistics'
 import groups from '@/modules/groups'
 import workspaces from '@/modules/workspaces'
+import lessons from '@/modules/lessons'
 
 registerModules({
   errors,
@@ -36,5 +37,6 @@ registerModules({
   home,
   statistics,
   groups,
-  workspaces
+  workspaces,
+  lessons
 })
