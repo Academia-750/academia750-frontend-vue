@@ -72,7 +72,7 @@
               sm="4"
               md="3"
               lg="4"
-              class="py-0 ml-1"
+              class="py-0 pl-0"
             >
               <SwitchInput
                 id="is_active"
@@ -304,11 +304,23 @@ export default {
       this.SET_LESSON(this.lesson)
     },
     async deleteLesson() {
+      if (this.lesson.is_active) {
+        await this.$swal.fire({
+          toast: true,
+          width: '400px',
+          title: 'No se puede eliminar',
+          html: 'Las clases activas no pueden ser eliminadas',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido'
+        })
+
+        return
+      }
       const result = await this.$swal.fire({
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR CLASE',
+        title: 'Eliminar',
         html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar esta clase?',
         showConfirmButton: true,
         showCancelButton: true,

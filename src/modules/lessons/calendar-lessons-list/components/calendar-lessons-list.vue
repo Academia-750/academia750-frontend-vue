@@ -86,7 +86,7 @@ export default {
   methods: {
     viewDay({ date }) {
       this.focus = date
-      this.type = 'day'
+      this.$emit('lesson', false)
     },
     getEventColor(event) {
       return event.color

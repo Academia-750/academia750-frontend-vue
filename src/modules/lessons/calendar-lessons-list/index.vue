@@ -36,9 +36,14 @@
               </div>
             </template>
             <template v-else slot="info">
-              <div class="d-flex w-full justify-center">
-                Selecciona una clase
+              <div class="d-flex w-full justify-between">
+                Selecciona o crea una clase
               </div>
+              <ResourceButtonAdd
+                class="ml-16"
+                text-button="Crear Clase"
+                @click="addLesson"
+              />
             </template>
             <template v-if="lesson" slot="actions">
               <resource-button
@@ -61,6 +66,8 @@
               />
             </template>
           </LessonToolBar>
+
+          <CalendarLessonsList @lesson="onLesson" @load="onLessonLoad" />
           <div class="d-flex justify-end my-2">
             <ResourceButtonAdd
               class="ml-16"
@@ -68,7 +75,6 @@
               @click="addLesson"
             />
           </div>
-          <CalendarLessonsList @lesson="onLesson" @load="onLessonLoad" />
         </v-card-text>
       </v-card>
     </div>
