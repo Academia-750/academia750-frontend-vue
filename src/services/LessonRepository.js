@@ -173,7 +173,7 @@ export default {
       return { results: [], total: 0 }
     }
 
-    return { results: response.data.results }
+    return { results: response.data.results, groups: response.data.groups, total: response.data.total }
   },
   /**
    * @param {string} id
@@ -221,6 +221,27 @@ export default {
     const response = await ResourceService.delete(`lesson/${id}/student`, {
       data: {
         user_id: student_id
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} group_id
+   */
+  async deleteGroupFromLesson(id, { group_id }) {
+    const response = await ResourceService.delete(`lesson/${id}/group`, {
+      data: {
+        group_id
       }
     })
 

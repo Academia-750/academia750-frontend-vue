@@ -61,8 +61,7 @@ export default {
         content: value,
         limit: this.limit
       })
-
-      console.log('we are here', { groups })
+      
       this.itemsGroups = groups.results.map((item) => {
         return {
           text: `${item.name}`,

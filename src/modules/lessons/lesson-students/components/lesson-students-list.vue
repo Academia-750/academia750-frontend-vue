@@ -1,25 +1,43 @@
 <template>
   <v-card-text>
-    <!-- ------------ ADD STUDENT TO GROUP ------------ -->
-    <StudentAutoComplete
-      ref="searchStudent"
+    <!-- ------------ ADD STUDENT TO LESSON ------------ -->
+    <AddStudentsModal
+      ref="addStudents"
       :loading="loading"
-      @created="isCreated"
+      @created="tableReload"
+    />
+    <DeleteGroupModal
+      ref="deleteGroupModal"
+      @deleted="tableReload"
     />
 
     <ServerDataTable
       ref="table"
       :headers="headers"
+      store-name="lessonStudentStore"
       :load="loadLessonStudents"
-      store-name="groupStudentStore"
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Clase alumnos" icon="mdi-account-multiple">
           <template slot="actions">
+            <resource-button-delete
+              text-button="eliminar un grupo"
+              @actionConfirmShowDialogDelete="deleteGroupFromLesson()"
+            />
             <ResourceButtonAdd text-button="Aggregar Alumno" @click="addStudents()" />
+            <resource-button
+              icon-button="mdi-autorenew"
+              @click="resetTableOptions"
+            />
           </template>
         </Toolbar>
+        <resource-text-field-search
+          :search-word="store.tableOptions.content"
+          label-text-field="Buscar por nombre o código"
+          @emitSearchTextBinding="searchFieldWithDebounce"
+          @emitSearchWord="searchFieldExecuted"
+        />
       </template>
 
       <!-- ------------ NO DATA ------------ -->
@@ -42,7 +60,7 @@
 
 <script>
 import _ from 'lodash'
-import { mapState } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import LessonRepository from '@/services/LessonRepository'
 import headers from './students-table-columns'
@@ -62,9 +80,13 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    StudentAutoComplete: () =>
+    AddStudentsModal: () =>
       import(
-        /* webpackChunkName: "ServerDataTable" */ '@/modules/resources/components/resources/add-student-to-lesson'
+        /* webpackChunkName: "ServerDataTable" */ './add-student-to-lesson'
+      ),
+    DeleteGroupModal: () =>
+      import(
+        /* webpackChunkName: "ServerDataTable" */ './delete-group-from-lesson'
       ),
     ServerDataTable: () =>
       import(
@@ -73,6 +95,14 @@ export default {
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
+      ),
+    ResourceTextFieldSearch: () =>
+      import(
+        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
   },
   mixins: [componentButtonsCrud],
@@ -86,6 +116,9 @@ export default {
   computed: {
     headers() {
       return headers
+    },
+    store() {
+      return this.$store.state.lessonStudentStore
     }
   },
   watch: {
@@ -94,14 +127,23 @@ export default {
     }
   },
 
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
+  },
+
   mounted() {
   },
 
   methods: {
+    ...mapActions('lessonStudentStore', ['resetTableOptions']),
+    ...mapMutations('lessonStudentStore', ['SET_TABLE_OPTIONS']),
     addStudents() {
-      this.$refs.searchStudent.open()
+      this.$refs.addStudents.open()
     },
-    isCreated() {
+    deleteGroupFromLesson() {
+      this.$refs.deleteGroupModal.open()
+    },
+    tableReload() {
       this.$refs.table.reload()
     },
     async loadLessonStudents(pagination) {
@@ -140,8 +182,15 @@ export default {
       const res = await LessonRepository.deleteStudentFromLesson(lessonId, { student_id })
 
       if (res) {
-        this.$refs.table.reload()
+        this.tableReload()
       }
+    },
+    searchFieldExecuted($event) {
+      this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
+      this.tableReload()
+    },
+    searchFieldWithDebounce(value) {
+      this.searchFieldExecuted(value)
     }
   }
 }
