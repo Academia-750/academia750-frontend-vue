@@ -66,21 +66,23 @@
                 />
               </v-col>
             </v-row>
-            <v-col
-              v-if="lesson"
-              cols="12"
-              sm="4"
-              md="3"
-              lg="4"
-              class="py-0 pl-0"
-            >
-              <SwitchInput
-                id="is_active"
-                :value="isActiveLesson"
-                :label="isActiveLesson ? 'Activa' : 'Inactiva'"
-                @change="activateLesson"
-              />
-            </v-col>
+            <v-row class="ml-1 align-start">
+              <v-col
+                v-if="lesson"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="4"
+                class="py-0 pl-0"
+              >
+                <SwitchInput
+                  id="is_active"
+                  :value="isActiveLesson"
+                  :label="isActiveLesson ? 'Activa' : 'Inactiva'"
+                  @change="activateLesson"
+                />
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="12" md="6">
             <TextAreaInput
@@ -197,6 +199,7 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
+    ...mapMutations('lessonsStore', ['SET_LESSON']),
     reset() {
       this.name = ''
       this.date = ''
@@ -236,8 +239,6 @@ export default {
     },
     async createLesson() {
       const status = await this.$refs['FormCreateLesson'].validate()
-
-      console.log({ status })
 
       if (!status) {
         return

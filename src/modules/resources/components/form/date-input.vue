@@ -79,7 +79,6 @@ export default {
       return moment(this.date).format('YYYY-MM-DD')
     },
     validDate() {
-      console.log({ valid: moment(this.date).isValid() })
       // Not valid date can break the popup
       if (moment(this.date).isValid()) {
         return this.date
@@ -90,7 +89,6 @@ export default {
   },
   watch: {
     value() {
-      console.log('HEEERE!!')
       this.date = this.value
     }
   },

@@ -3,7 +3,22 @@
     <v-row>
       <v-col>
         <v-sheet>
-          <div flat class="d-flex justify-center mb-2">
+          <div flat class="d-none justify-end d-md-flex">
+            <div class="w-200">
+              <v-select
+                v-model="type"
+                :items="types"
+                item-text="label"
+                item-value="key"
+                dense
+                outlined
+                hide-details
+                class="ma-2"
+                :full-width="false"
+              ></v-select>
+            </div>
+          </div>
+          <div flat class="d-flex justify-center mb-4">
             <div class="d-flex justify-center align-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
@@ -20,6 +35,7 @@
             </div>
           </div>
         </v-sheet>
+
         <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
           <v-calendar
             ref="calendar"
@@ -27,7 +43,7 @@
             color="primary"
             :events="events"
             :event-color="getEventColor"
-            :type="type"
+            :type="computedType"
             :first-interval="7"
             :interval-minutes="60"
             :interval-count="15"
@@ -58,7 +74,12 @@ export default {
     from: '',
     to: '',
     lessons: [], // Full lesson object
-    events: [] // Formatted for the calendar
+    events: [], // Formatted for the calendar
+    types: [
+      { key: 'month', label: 'Mensual' },
+      { key: 'week', label: 'Semanal' }
+    ],
+    type: 'month'
   }),
   computed: {
     title() {
@@ -66,7 +87,7 @@ export default {
 
       return title.charAt(0).toUpperCase() + title.slice(1)
     },
-    type() {
+    computedType() {
       if (this.$vuetify.breakpoint.xs) {
         return 'day'
       }
@@ -74,7 +95,7 @@ export default {
         return '4day'
       }
 
-      return 'month'
+      return this.type
     },
     headers() {
       return headers
