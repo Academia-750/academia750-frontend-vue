@@ -62,7 +62,6 @@
                 text-button="Alumnos"
                 icon-button="mdi-account-group"
                 color="success"
-                :disabled="true"
                 :config-route="{ name: 'add-students', params: { id: lesson.id } }"
               />
             </template>

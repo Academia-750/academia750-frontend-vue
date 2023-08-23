@@ -83,6 +83,7 @@ export default {
     },
     open() {
       this.isOpen = true
+      this.$refs.studentAutoComplete.clearAutoComplete()
     },
     onClose() {
       this.isOpen = false
@@ -119,6 +120,7 @@ export default {
       this.$emit('created', this.selectedItem)
       this.selectedItem = false
       this.$refs.studentAutoComplete.clearAutoComplete()
+      this.name = ''
 
       await this.$swal.fire({
         icon: 'success',
@@ -162,6 +164,7 @@ export default {
       this.$emit('created', this.selectedItem)
       this.selectedItem = false
       this.$refs.groupAutoComplete.clearAutoComplete()
+      this.name = ''
 
       await this.$swal.fire({
         icon: 'success',
