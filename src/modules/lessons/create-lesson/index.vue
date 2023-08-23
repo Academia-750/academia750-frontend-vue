@@ -6,9 +6,9 @@
         <v-row dense :style="{ width: '-webkit-fill-available' }">
           <v-col cols="12" md="6">
             <FieldInput
-              id="name"
-              v-model="name"
-              label="Nombre del Lession"
+              ref="lessonInput"
+              v-model="lesson.name"
+              label="Nombre del Clase"
               :filled="true"
               :outlined="false"
               :disabled="!canEdit"
@@ -276,7 +276,7 @@ export default {
         await this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: this.lesson ? 'Lección Actualizada!' : 'Lession Creada!',
+          title: this.lesson ? 'Clase Actualizada!' : 'Clase Creada!',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
