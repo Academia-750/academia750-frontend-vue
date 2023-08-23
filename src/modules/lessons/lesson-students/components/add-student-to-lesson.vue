@@ -5,7 +5,9 @@
         <v-card class="d-flex flex-column">
           <v-container class="pa-3">
             <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold">Agregar Alumnos o Grupo</span>
+              <span class="text-h6 font-weight-bold"
+                >Agregar Alumnos o Grupo</span
+              >
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <div>
@@ -23,7 +25,7 @@
                   :loading="isAddingStudent"
                   @click="onAddStudentToLesson"
                 >
-                  ok
+                  OK
                 </v-btn>
               </div>
               <div class="d-flex justify-space-between my-1">
@@ -40,7 +42,7 @@
                   :loading="isAddingGroup"
                   @click="addGroupToLesson"
                 >
-                  ok
+                  OK
                 </v-btn>
               </div>
             </div>
@@ -105,9 +107,12 @@ export default {
 
         return
       }
-      const res = await LessonRepository.addStudentToLesson(this.$route.params.id, {
-        student_id: this.selectedItem.uuid
-      })
+      const res = await LessonRepository.addStudentToLesson(
+        this.$route.params.id,
+        {
+          student_id: this.selectedItem.uuid
+        }
+      )
 
       if (!res) {
         this.isAddingStudent = false
@@ -129,7 +134,6 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
-
     },
     async addGroupToLesson() {
       this.isAddingGroup = true
@@ -149,9 +153,12 @@ export default {
 
         return
       }
-      const res = await LessonRepository.addGroupToLesson(this.$route.params.id, {
-        group_id: this.selectedItem.id
-      })
+      const res = await LessonRepository.addGroupToLesson(
+        this.$route.params.id,
+        {
+          group_id: this.selectedItem.id
+        }
+      )
 
       if (!res) {
         this.isAddingGroup = false
@@ -173,7 +180,6 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
-
     }
   }
 }

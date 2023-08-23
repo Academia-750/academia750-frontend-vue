@@ -1,26 +1,26 @@
 <template>
   <v-row justify="center">
-    <v-dialog
-      v-model="isOpen"
-      max-width="350"
-    >
+    <v-dialog v-model="isOpen" max-width="350">
       <v-card>
-        <v-card-title class="text-h6">
-          Eliminar Grupo
-        </v-card-title>
-        <div class="d-flex flex-column">
-          <div class="d-flex justify-space-between mx-3 my-1" v-for="(item, index) in groups" :key="index">
+        <v-card-title class="text-h6"> Eliminar Grupo </v-card-title>
+        <div class="d-flex flex-column py-3">
+          <div
+            v-for="(item, index) in groups"
+            :key="index"
+            class="d-flex justify-space-between mx-3 my-1"
+          >
             <div>{{ item.group_name }}</div>
             <resource-button-delete
-              text-button="Baja"
-              @actionConfirmShowDialogDelete="deleteGroupFromLesson(item.group_id)"
+              text-button="Eliminar"
+              @actionConfirmShowDialogDelete="
+                deleteGroupFromLesson(item.group_id)
+              "
             />
           </div>
           <div v-if="groups.length == 0" class="d-flex justify center mx-3">
-            <p> No hay grupo para eliminar</p>
+            <p>No hay grupo para eliminar</p>
           </div>
         </div>
-  
       </v-card>
     </v-dialog>
   </v-row>
@@ -60,7 +60,7 @@ export default {
       }
 
       const res = await LessonRepository.lessonStudentList(lessonId, params)
-      
+
       this.groups = res.groups
 
       return res
@@ -77,7 +77,7 @@ export default {
         width: '400px',
         icon: 'question',
         title: 'ELIMINAR Alumno',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este grupo? Todos los alumnos seran dados de baja y perderas el histórico del grupo',
+        html: '¿Seguro que deseas eliminar este grupo? Todos los alumnos asociados a este grupo serán eliminados de la clase y perderán el acceso a sus materiales',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -89,8 +89,10 @@ export default {
         return
       }
 
-      const res = await LessonRepository.deleteGroupFromLesson(lessonId, { group_id })
-      
+      const res = await LessonRepository.deleteGroupFromLesson(lessonId, {
+        group_id
+      })
+
       this.onClose()
       if (res) {
         this.$emit('deleted', this.groups)

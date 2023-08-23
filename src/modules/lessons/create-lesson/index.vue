@@ -8,7 +8,7 @@
             <FieldInput
               ref="lessonInput"
               v-model="lesson.name"
-              label="Nombre del Lession"
+              label="Nombre del Clase"
               :filled="true"
               name="nombre"
               :outlined="false"

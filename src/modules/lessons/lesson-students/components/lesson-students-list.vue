@@ -6,10 +6,7 @@
       :loading="loading"
       @created="tableReload"
     />
-    <DeleteGroupModal
-      ref="deleteGroupModal"
-      @deleted="tableReload"
-    />
+    <DeleteGroupModal ref="deleteGroupModal" @deleted="tableReload" />
 
     <ServerDataTable
       ref="table"
@@ -19,13 +16,17 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Clase alumnos" icon="mdi-account-multiple">
+        <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
-            <resource-button-delete
-              text-button="eliminar un grupo"
-              @actionConfirmShowDialogDelete="deleteGroupFromLesson()"
+            <ResourceButtonAdd
+              text-button="Aggregar Alumno"
+              @click="addStudents()"
             />
-            <ResourceButtonAdd text-button="Aggregar Alumno" @click="addStudents()" />
+            <resource-button
+              text-button="Gestionar un Grupos"
+              color="success"
+              @click="deleteGroupFromLesson()"
+            />
             <resource-button
               icon-button="mdi-autorenew"
               @click="resetTableOptions"
@@ -34,7 +35,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o código"
+          label-text-field="Buscar por nombre o DNI"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -49,7 +50,7 @@
       <template v-slot:[`item.actions`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-delete
-            text-button="Baja"
+            text-button="Eliminar"
             @actionConfirmShowDialogDelete="deleteStudentFromLesson(item)"
           />
         </div>
@@ -131,8 +132,7 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
 
-  mounted() {
-  },
+  mounted() {},
 
   methods: {
     ...mapActions('lessonStudentStore', ['resetTableOptions']),
@@ -167,8 +167,8 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR Alumno',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este grupo? Todos los alumnos seran dados de baja y perderas el histórico del grupo',
+        title: 'Eliminar Alumno',
+        html: '¿Seguro que deseas eliminar este alumno? El alumno no tendra acceso a la clase y sus materiales',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -179,7 +179,9 @@ export default {
       if (!result.isConfirmed) {
         return
       }
-      const res = await LessonRepository.deleteStudentFromLesson(lessonId, { student_id })
+      const res = await LessonRepository.deleteStudentFromLesson(lessonId, {
+        student_id
+      })
 
       if (res) {
         this.tableReload()
