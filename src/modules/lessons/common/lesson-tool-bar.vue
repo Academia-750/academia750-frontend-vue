@@ -12,7 +12,7 @@
         <div class="lessons-attributes">
           <slot name="info"> </slot>
         </div>
-        <div class="lessons-actions">
+        <div v-if="$slots.actions" class="lessons-actions">
           <slot name="actions"> </slot>
         </div>
       </div>

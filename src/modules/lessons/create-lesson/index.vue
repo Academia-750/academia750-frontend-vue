@@ -4,20 +4,18 @@
     <validation-observer ref="FormCreateLesson">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
-          <v-col cols="12" sm="12" md="6" lg="6" class="py-0">
+          <v-col cols="12" md="6">
             <FieldInput
-              ref="lessonInput"
-              v-model="lesson.name"
+              id="name"
+              v-model="name"
               label="Nombre del Lession"
               :filled="true"
-              name="nombre"
               :outlined="false"
               :disabled="!canEdit"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              rules="required|min:3|max:50|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <DateInput
-              ref="datePicker"
-              name="lesson_date"
+              id="lesson_date"
               label="Fecha"
               :value="date"
               :disabled="!canEdit"
@@ -27,7 +25,7 @@
             <v-row>
               <v-col class="py-0">
                 <TimeInput
-                  name="start_time"
+                  id="start_time"
                   :disabled="!canEdit"
                   :value="start_time"
                   label="Hora de inicio"
@@ -37,7 +35,7 @@
               </v-col>
               <v-col class="py-0">
                 <TimeInput
-                  name="end_time"
+                  id="end_time"
                   :value="end_time"
                   :disabled="!canEdit"
                   label="Hora de finalización"
@@ -46,50 +44,50 @@
                 />
               </v-col>
             </v-row>
-            <v-row class="mt-2 ml-1">
-              <v-col cols="12" sm="4" md="3" lg="4" class="py-0">
+            <v-row class="ml-1 align-start">
+              <v-col cols="12" md="4" class="py-0 pl-0">
                 <SwitchInput
-                  name="is_online"
+                  id="is_online"
                   :value="isOnlineLesson"
                   :disabled="!canEdit"
                   label="Clase Online"
                   @change="setOnline"
                 />
               </v-col>
-              <v-col v-if="isOnlineLesson" class="py-0">
+              <v-col v-if="isOnlineLesson" cols="12" md="8" class="py-0 pl-0">
                 <FieldInput
-                  ref="lessonMeetingUrlInput"
+                  id="url"
                   v-model="lessonMeetingUrl"
                   rules="required|url"
                   :filled="true"
                   :outlined="false"
                   :disabled="!canEdit"
-                  name="URL"
                   label="URL de la sala de reuniones de la lección"
                 />
               </v-col>
             </v-row>
-            <v-col
-              v-if="lesson"
-              cols="12"
-              sm="4"
-              md="3"
-              lg="4"
-              class="py-0 ml-1"
-            >
-              <SwitchInput
-                name="is_active"
-                :value="isActiveLesson"
-                :label="isActiveLesson ? 'Activa' : 'Inactiva'"
-                @change="activateLesson"
-              />
-            </v-col>
+            <v-row class="ml-1 align-start">
+              <v-col
+                v-if="lesson"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="4"
+                class="py-0 pl-0"
+              >
+                <SwitchInput
+                  id="is_active"
+                  :value="isActiveLesson"
+                  :label="isActiveLesson ? 'Activa' : 'Inactiva'"
+                  @change="activateLesson"
+                />
+              </v-col>
+            </v-row>
           </v-col>
-          <v-col cols="12" sm="12" md="6" lg="6">
+          <v-col cols="12" md="6">
             <TextAreaInput
-              ref="commentInput"
-              v-model="lesson.description"
-              name="comment"
+              id="comment"
+              v-model="comment"
               label="Descripción"
               rules="required"
               :disabled="!canEdit"
@@ -100,24 +98,30 @@
               <ResourceButton
                 :loading="loading"
                 :text-button="lesson ? 'Editar' : 'Crear'"
-                color="light-blue darken-3"
+                color="primary"
                 icon-button="mdi-account-group"
                 @click="createLesson"
               />
             </div>
             <div v-if="lesson" class="d-flex">
-              <ResourceButtonAdd
-                text-button="Agregar Materiales"
+              <resource-button
+                text-button="Materiales"
+                icon-button="mdi-folder-open"
+                color="success"
                 :disabled="true"
               />
-              <ResourceButtonAdd
-                text-button="Agregar Estudiantes"
+              <resource-button
+                text-button="Alumnos"
+                icon-button="mdi-account-group"
+                color="success"
                 :disabled="true"
               />
 
-              <ResourceButtonDelete
+              <resource-button
                 text-button="Eliminar"
-                @actionConfirmShowDialogDelete="deleteLesson"
+                icon-button="mdi-delete"
+                color="red"
+                @click="deleteLesson"
               />
             </div>
           </v-row>
@@ -158,14 +162,6 @@ export default {
       import(
         /* webpackChunkName: "TextAreaInput" */ '@/modules/resources/components/form/text-area-input.vue'
       ),
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
@@ -198,23 +194,12 @@ export default {
   },
   mounted() {
     this.reset()
-    if (this.lesson) {
-      this.name = this.lesson.name
-      this.date = moment(this.lesson.date).format('YYYY-MM-DD')
-      this.comment = this.lesson.description
-      this.start_time = this.lesson.start_time
-      this.end_time = this.lesson.end_time
-      this.lessonMeetingUrl = this.lesson.url
-      this.isActiveLesson = Boolean(this.lesson.is_active)
-      this.isOnlineLesson = Boolean(this.lesson.is_online)
-    }
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
     ...mapMutations('lessonsStore', ['SET_LESSON']),
-
     reset() {
       this.name = ''
       this.date = ''
@@ -225,6 +210,16 @@ export default {
       this.lessonMeetingUrl = ''
       this.isActiveLesson = false
       this.isOnlineLesson = false
+      if (this.lesson) {
+        this.name = this.lesson.name
+        this.date = moment(this.lesson.date).format('YYYY-MM-DD')
+        this.comment = this.lesson.description
+        this.start_time = this.lesson.start_time
+        this.end_time = this.lesson.end_time
+        this.lessonMeetingUrl = this.lesson.url
+        this.isActiveLesson = Boolean(this.lesson.is_active)
+        this.isOnlineLesson = Boolean(this.lesson.is_online)
+      }
     },
     datePicked(date) {
       this.date = date
@@ -237,6 +232,7 @@ export default {
     },
     setActive(active) {
       this.isActiveLesson = active
+      this.reset()
     },
     setOnline(active) {
       this.isOnlineLesson = active
@@ -309,11 +305,23 @@ export default {
       this.SET_LESSON(this.lesson)
     },
     async deleteLesson() {
+      if (this.lesson.is_active) {
+        await this.$swal.fire({
+          toast: true,
+          width: '400px',
+          title: 'No se puede eliminar',
+          html: 'Las clases activas no pueden ser eliminadas',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido'
+        })
+
+        return
+      }
       const result = await this.$swal.fire({
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR CLASE',
+        title: 'Eliminar',
         html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar esta clase?',
         showConfirmButton: true,
         showCancelButton: true,

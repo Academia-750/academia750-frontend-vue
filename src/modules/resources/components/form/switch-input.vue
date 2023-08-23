@@ -4,10 +4,12 @@
     v-slot="{ errors }"
     mode="aggressive"
     :name="label"
-    :vid="name"
+    :vid="id"
   >
     <v-switch
-      :name="name"
+      :id="id"
+      class="py-0"
+      :name="id"
       :value="value"
       :error-messages="errors"
       :label="label"
@@ -28,7 +30,7 @@ export default {
       type: String,
       default: ''
     },
-    name: {
+    id: {
       type: String,
       required: true
     }

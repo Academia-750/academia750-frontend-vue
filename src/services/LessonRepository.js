@@ -1,6 +1,9 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
+<<<<<<< HEAD
 import Swal from 'sweetalert2/dist/sweetalert2'
+=======
+>>>>>>> fb0e981d1bb665a81974710f47ea0191077ee9ee
 
 export default {
   /**

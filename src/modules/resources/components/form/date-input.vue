@@ -13,13 +13,14 @@
         ref="validationProvider"
         v-slot="{ errors }"
         mode="aggressive"
-        :vid="name"
+        :vid="id"
         :name="label"
         :rules="rules"
       >
         <v-text-field
+          :id="id"
           v-model="date"
-          :name="name"
+          :name="id"
           :error-messages="errors"
           :label="label"
           :disabled="disabled"
@@ -45,7 +46,7 @@ import moment from 'moment'
 export default {
   name: 'DateInput',
   props: {
-    name: {
+    id: {
       type: String,
       required: true
     },
@@ -78,7 +79,6 @@ export default {
       return moment(this.date).format('YYYY-MM-DD')
     },
     validDate() {
-      console.log({ valid: moment(this.date).isValid() })
       // Not valid date can break the popup
       if (moment(this.date).isValid()) {
         return this.date
@@ -89,7 +89,6 @@ export default {
   },
   watch: {
     value() {
-      console.log('HEEERE!!')
       this.date = this.value
     }
   },
