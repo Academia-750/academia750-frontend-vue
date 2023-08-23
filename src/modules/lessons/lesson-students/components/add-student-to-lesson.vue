@@ -21,14 +21,14 @@
                   color="blue darken-1"
                   class="button ml-2"
                   :loading="isAddingStudent"
-                  @click="onAddToLesson"
+                  @click="onAddStudentToLesson"
                 >
                   ok
                 </v-btn>
               </div>
               <div class="d-flex justify-space-between my-1">
                 <GroupAutoComplete
-                  ref="studentAutoComplete"
+                  ref="groupAutoComplete"
                   :autofocus="autofocus"
                   :limit="limit"
                   @change="onSelectGroup"
@@ -87,7 +87,7 @@ export default {
     onClose() {
       this.isOpen = false
     },
-    async onAddToLesson() {
+    async onAddStudentToLesson() {
       this.isAddingStudent = true
       const status = await this.$refs['formAddStudentsToLesson'].validate()
 
@@ -101,7 +101,6 @@ export default {
           timer: 7500
         })
         this.onClose()
-        this.name = ''
         this.isAddingStudent = false
 
         return
@@ -120,6 +119,7 @@ export default {
       this.$emit('created', this.selectedItem)
       this.selectedItem = false
       this.$refs.studentAutoComplete.clearAutoComplete()
+      this.name = ''
 
       await this.$swal.fire({
         icon: 'success',
@@ -145,7 +145,6 @@ export default {
           timer: 7500
         })
         this.onClose()
-        this.name = ''
         this.isAddingGroup = false
 
         return
@@ -163,7 +162,8 @@ export default {
       this.isAddingGroup = false
       this.$emit('created', this.selectedItem)
       this.selectedItem = false
-      this.$refs.studentAutoComplete.clearAutoComplete()
+      this.$refs.groupAutoComplete.clearAutoComplete()
+      this.name = ''
 
       await this.$swal.fire({
         icon: 'success',

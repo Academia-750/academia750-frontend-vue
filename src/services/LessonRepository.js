@@ -1,5 +1,6 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
+import Swal from 'sweetalert2/dist/sweetalert2'
 
 export default {
   /**
@@ -184,11 +185,24 @@ export default {
       user_id: student_id
     })
 
+    if (response.status === 409) {
+      Swal.fire({
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        icon: 'warning',
+        title: `${response.status} ${response.statusText}`,
+        text: 'La estudiante ya existe'
+      })
+    
+      return false
+    }
+    
     if (response.status !== 200) {
       ResourceService.warning({
         response
       })
-
+    
       return false
     }
 
@@ -202,7 +216,7 @@ export default {
     const response = await ResourceService.post(`lesson/${id}/group`, {
       group_id
     })
-
+    
     if (response.status !== 200) {
       ResourceService.warning({
         response
