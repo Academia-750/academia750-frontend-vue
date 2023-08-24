@@ -13,7 +13,8 @@
       :value="value"
       :error-messages="errors"
       :label="label"
-      @change="onClick"
+      readonly
+      @click="onClick"
     ></v-switch>
   </ValidationProvider>
 </template>
@@ -35,9 +36,17 @@ export default {
       required: true
     }
   },
+  watch: {
+    value: {
+      handler(value) {
+        console.log({ value })
+      },
+      immediate: true
+    }
+  },
   methods: {
-    onClick(value) {
-      this.$emit('change', value)
+    onClick() {
+      this.$emit('click', !this.value)
     }
   }
 }

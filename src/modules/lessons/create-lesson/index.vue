@@ -79,7 +79,7 @@
                   id="is_active"
                   :value="isActiveLesson"
                   :label="isActiveLesson ? 'Activa' : 'Inactiva'"
-                  @change="activateLesson"
+                  @click="activateLesson"
                 />
               </v-col>
             </v-row>
@@ -293,6 +293,29 @@ export default {
     async activateLesson(value) {
       const active = value || false // is returning  NULL instead of false
 
+      if (active === true) {
+        const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'Eliminar',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar esta clase?',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        this.$nextTick(() => {
+          this.isActiveLesson = false
+        })
+
+        return
+      }
+      }
+
       const res = await LessonRepository.active(this.lesson.id, {
         active
       })
@@ -303,6 +326,7 @@ export default {
       this.isActiveLesson = active
       this.lesson.is_active = active
       this.SET_LESSON(this.lesson)
+      this.reset()
     },
     async deleteLesson() {
       if (this.lesson.is_active) {

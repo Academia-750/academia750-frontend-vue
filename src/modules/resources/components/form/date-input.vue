@@ -1,6 +1,7 @@
 <template>
   <v-menu
     ref="datePicker"
+    v-model="isOpen"
     :close-on-content-click="false"
     transition="scale-transition"
     offset-y
@@ -68,7 +69,8 @@ export default {
     }
   },
   data: () => ({
-    date: ''
+    date: '',
+    isOpen: false
   }),
   computed: {
     dateFormatted() {
@@ -100,6 +102,7 @@ export default {
     onCalendarChange(value) {
       this.date = value
       this.emitDate()
+      this.isOpen = false
     },
     emitDate() {
       this.$emit('datePicked', this.dateFormatted)

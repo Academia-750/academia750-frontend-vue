@@ -18,7 +18,7 @@
 
               <div>
                 <span class="font-weight-bold subtitle-2">Fecha: </span>
-                {{ lesson.date }}
+                {{ dateFormat(lesson.date) }}
               </div>
 
               <!-- Column for Time -->
@@ -67,7 +67,7 @@
             </template>
           </LessonToolBar>
 
-          <CalendarLessonsList @lesson="onLesson" @load="onLessonLoad" />
+          <CalendarLessonsList @onFocus="onFocus" @lesson="onLesson" @load="onLessonLoad" :focus="date" />
           <div class="d-flex justify-end my-2">
             <ResourceButtonAdd
               class="ml-16"
@@ -84,12 +84,14 @@
 <script>
 import notifications from '@/mixins/notifications'
 import { mapState, mapMutations } from 'vuex'
+import moment from 'moment'
+
 export default {
   name: 'CalendarLesson',
   components: {
     CalendarLessonsList: () =>
       import(
-        /* webpackChunkName: "CalendarLessonsList" */ './components/calendar-lessons-list.vue'
+        /* webpackChunkName: "CalendarLessonsList" */ '../common/calendar-lessons-list.vue'
       ),
     LessonToolBar: () =>
       import(
@@ -112,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson']),
+    ...mapState('lessonsStore', ['lesson', 'date']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     }
@@ -124,7 +126,13 @@ export default {
     this.loadNotifications()
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON']),
+    ...mapMutations('lessonsStore', ['SET_LESSON', 'SET_DATE']),
+    dateFormat(date) {
+      return moment(date).format('DD-MM-YYYY')
+    },
+    onFocus(value) {
+      this.SET_DATE(value)
+    },
     addLesson() {
       this.SET_LESSON(false)
       this.$router.push({ name: 'create-lessons' })

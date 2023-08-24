@@ -39,20 +39,22 @@
         <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
           <v-calendar
             ref="calendar"
-            v-model="focus"
+            :value="focus"
             color="primary"
             :events="events"
             :event-color="getEventColor"
             :type="computedType"
-            :first-interval="7"
+            :first-interval="8"
             :interval-minutes="60"
-            :interval-count="15"
+            :interval-count="13"
             locale="es-MX"
+            :weekdays="calendarDay"
             @click:event="showEvent"
             @click:more="viewDay"
             @click:date="viewDay"
             @change="updateRange"
           ></v-calendar>
+
         </v-sheet>
       </v-col>
     </v-row>
@@ -69,8 +71,13 @@ export default {
   name: 'CalendarLessonsList',
   components: {},
   mixins: [componentButtonsCrud],
+  props: {
+    focus:{
+      type: String,
+      default: ''
+    }
+  },
   data: () => ({
-    focus: '',
     from: '',
     to: '',
     lessons: [], // Full lesson object
@@ -86,6 +93,9 @@ export default {
       const { title } = this.$refs.calendar
 
       return title.charAt(0).toUpperCase() + title.slice(1)
+    },
+    calendarDay() {
+      return [1, 2, 3, 4, 5, 6, 0]
     },
     computedType() {
       if (this.$vuetify.breakpoint.xs) {
@@ -120,6 +130,8 @@ export default {
     },
     next() {
       this.$refs.calendar.next()
+      console.log('focus', this.focus)
+      this.$emit('onFocus', this.focus)
     },
     async showEvent({ event }) {
       const lesson = this.lessons.find((item) => item.id === event.id)
