@@ -330,20 +330,14 @@ export default {
       return !(this.isCardMemoryQuestion || this.isTestQuestion)
     }
   },
-  watch: {
-    questionData(value) {
-      this.setCloneModeQuestionApi(value.data.id, 'yes')
-    }
-  },
+
   mounted() {
     this.fetchDataQuestionForClone()
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
-  beforeDestroy() {
-    this.setCloneModeQuestionApi(this.questionData.data.id, 'no')
-  },
+
   created() {
     this.dataAnswersUuid = [
       this.generateUUID(),
@@ -353,11 +347,7 @@ export default {
     ]
   },
   methods: {
-    ...mapActions('questionsTopicService', [
-      'fetchQuestion',
-      'createQuestion',
-      'setEditModeQuestion'
-    ]),
+    ...mapActions('questionsTopicService', ['fetchQuestion', 'createQuestion']),
     async CloneQuestionApi() {
       try {
         const FormDataQuestion = this.getFormDataForSaveQuestion()
@@ -424,19 +414,7 @@ export default {
         this.disabledButtonCreateQuestion = false
       }
     },
-    async setCloneModeQuestionApi(question_id, isModeEdition) {
-      try {
-        const response = await this.setEditModeQuestion({
-          question_id: question_id,
-          data: {
-            'is-mode-edition-question': isModeEdition
-          },
-          config: {}
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    },
+
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateQuestion']['setErrors'](errorResponse)
     },
