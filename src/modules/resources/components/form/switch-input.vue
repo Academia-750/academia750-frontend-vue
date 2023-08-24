@@ -13,6 +13,7 @@
       :value="value"
       :error-messages="errors"
       :label="label"
+      :disabled="disabled"
       readonly
       @click="onClick"
     ></v-switch>
@@ -31,21 +32,21 @@ export default {
       type: String,
       default: ''
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     id: {
       type: String,
       required: true
     }
   },
-  watch: {
-    value: {
-      handler(value) {
-        console.log({ value })
-      },
-      immediate: true
-    }
-  },
+
   methods: {
     onClick() {
+      if (this.disabled) {
+        return
+      }
       this.$emit('click', !this.value)
     }
   }

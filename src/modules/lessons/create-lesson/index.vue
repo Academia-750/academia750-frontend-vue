@@ -8,7 +8,7 @@
             <FieldInput
               id="name"
               v-model="name"
-              label="Nombre del Lession"
+              label="Nombre de la Clase"
               :filled="true"
               :outlined="false"
               :disabled="!canEdit"
@@ -29,7 +29,7 @@
                   :disabled="!canEdit"
                   :value="start_time"
                   label="Hora de inicio"
-                  rules="required"
+                  rules="required|after:07:00, 7:00"
                   @change="selectedStartTime"
                 />
               </v-col>
@@ -39,7 +39,7 @@
                   :value="end_time"
                   :disabled="!canEdit"
                   label="Hora de finalización"
-                  rules="required|after:@start_time,la hora de inicio"
+                  rules="required|after:@start_time,la hora de inicio|before:21:00, 21:00"
                   @change="selectedEndTime"
                 />
               </v-col>
@@ -51,7 +51,7 @@
                   :value="isOnlineLesson"
                   :disabled="!canEdit"
                   label="Clase Online"
-                  @change="setOnline"
+                  @click="setOnline"
                 />
               </v-col>
               <v-col v-if="isOnlineLesson" cols="12" md="8" class="py-0 pl-0">
@@ -204,7 +204,7 @@ export default {
       this.name = ''
       this.date = ''
       this.comment = ''
-      this.date = ''
+      this.date = this.$route.query.date || ''
       this.start_time = ''
       this.end_time = ''
       this.lessonMeetingUrl = ''
@@ -276,7 +276,7 @@ export default {
         await this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: this.lesson ? 'Lección Actualizada!' : 'Lession Creada!',
+          title: this.lesson ? 'Clase Actualizada!' : 'Clase Creada!',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
@@ -295,25 +295,25 @@ export default {
 
       if (active === true) {
         const result = await this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: 'Eliminar',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar esta clase?',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      })
-
-      if (!result.isConfirmed) {
-        this.$nextTick(() => {
-          this.isActiveLesson = false
+          toast: true,
+          width: '400px',
+          icon: 'question',
+          title: 'Activar Clase',
+          html: 'Si activa esta clase, los alumnos serán notificados y podrán acceder a los materiales.',
+          showConfirmButton: true,
+          showCancelButton: true,
+          confirmButtonColor: '#007bff',
+          confirmButtonText: 'Sí, activala',
+          cancelButtonText: 'Cancelar'
         })
 
-        return
-      }
+        if (!result.isConfirmed) {
+          this.$nextTick(() => {
+            this.isActiveLesson = false
+          })
+
+          return
+        }
       }
 
       const res = await LessonRepository.active(this.lesson.id, {
