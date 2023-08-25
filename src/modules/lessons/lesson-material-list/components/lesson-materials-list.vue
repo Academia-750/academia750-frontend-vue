@@ -46,37 +46,12 @@
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
-          <div>
-            <v-icon
-              v-if="item.type === 'material'"
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="item.url ? false : true"
-              @click="download(item)"
-            >
-              mdi-cloud-download
-            </v-icon>
-            <v-icon
-              v-else
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="true"
-            >
-              mdi-camera
-            </v-icon>
-          </div>
           <div></div>
           <ResourceButtonAdd
             ref="tagsInput"
             text-button="Agregar"
             class="mb-2 mx-3"
             @click="onAddMaterial(item)"
-          />
-          <resource-button-delete
-            text-button="Eliminar"
-            @actionConfirmShowDialogDelete="
-              deleteWorkspaceMaterialConfirm(item)
-            "
           />
         </div>
       </template>

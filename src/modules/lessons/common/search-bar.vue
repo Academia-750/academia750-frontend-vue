@@ -4,6 +4,7 @@
     <!-- ------------ SEARCH ------------ -->
     <resource-text-field-search
       :search-word="state.tableOptions.content"
+      :classes-wrapper="{}"
       label-text-field="Buscar por nombre"
       @emitSearchTextBinding="searchFieldWithDebounce"
       @emitSearchWord="searchFieldExecuted"

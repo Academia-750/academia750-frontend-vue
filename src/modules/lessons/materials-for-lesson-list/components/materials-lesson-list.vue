@@ -9,7 +9,7 @@
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="lessonMaterialsStore"
+      store-name="materialsForLessonStore"
       :load="loadMaterials"
     >
       <template v-slot:top>
