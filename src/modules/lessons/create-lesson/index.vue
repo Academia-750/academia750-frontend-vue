@@ -6,9 +6,9 @@
         <v-row dense :style="{ width: '-webkit-fill-available' }">
           <v-col cols="12" md="6">
             <FieldInput
-              id="name"
-              v-model="name"
-              label="Nombre de la Clase"
+              ref="lessonInput"
+              v-model="lesson.name"
+              label="Nombre del Clase"
               :filled="true"
               :outlined="false"
               :disabled="!canEdit"

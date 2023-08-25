@@ -86,8 +86,6 @@ export default {
       content: content || undefined
     }
 
-    console.log({ params })
-
     deleteUndefined(params)
     const response = await ResourceService.get('material/list', { params })
 
