@@ -6,7 +6,7 @@
           <div flat class="d-none justify-end d-md-flex">
             <div class="w-200">
               <v-select
-                v-model="type"
+                :value="type"
                 :items="types"
                 item-text="label"
                 item-value="key"
@@ -15,20 +15,39 @@
                 hide-details
                 class="ma-2"
                 :full-width="false"
+                @input="$emit('type', $event)"
               ></v-select>
             </div>
           </div>
-          <div flat class="d-flex justify-center mb-4">
+
+          <div v-if="$refs.calendar" flat class="d-flex justify-center mb-4">
             <div class="d-flex justify-center align-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
-              <div
-                v-if="$refs.calendar"
-                class="mx-3 font-weight-medium text-h5"
+              <v-menu
+                v-model="calendarMenu"
+                :close-on-content-click="false"
+                transition="scale-transition"
               >
-                {{ title }}
-              </div>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    class="mx-3 font-weight-medium text-h5 text-center"
+                    text
+                    v-on="on"
+                  >
+                    {{ title }}
+                  </v-btn>
+                </template>
+                <v-date-picker
+                  v-value="focus"
+                  position="left"
+                  elevation="4"
+                  no-title
+                  @input="onMiniCalendar"
+                ></v-date-picker>
+              </v-menu>
               <v-btn fab x-small color="primary" @click="next">
                 <v-icon small> mdi-chevron-right </v-icon>
               </v-btn>
@@ -39,19 +58,21 @@
         <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
           <v-calendar
             ref="calendar"
-            v-model="focus"
+            :value="focus"
             color="primary"
             :events="events"
             :event-color="getEventColor"
             :type="computedType"
-            :first-interval="7"
+            :first-interval="8"
             :interval-minutes="60"
-            :interval-count="15"
+            :interval-count="13"
             locale="es-MX"
+            :weekdays="calendarDay"
             @click:event="showEvent"
-            @click:more="viewDay"
-            @click:date="viewDay"
-            @change="updateRange"
+            @click:more="setWeekMode"
+            @click:date="onDateClick"
+            @change="getCalendarLessons"
+            @input="onInputChange"
           ></v-calendar>
         </v-sheet>
       </v-col>
@@ -69,8 +90,18 @@ export default {
   name: 'CalendarLessonsList',
   components: {},
   mixins: [componentButtonsCrud],
+  props: {
+    focus: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      default: 'month'
+    }
+  },
   data: () => ({
-    focus: '',
+    calendarMenu: false,
     from: '',
     to: '',
     lessons: [], // Full lesson object
@@ -78,14 +109,17 @@ export default {
     types: [
       { key: 'month', label: 'Mensual' },
       { key: 'week', label: 'Semanal' }
-    ],
-    type: 'month'
+    ]
   }),
+
   computed: {
     title() {
       const { title } = this.$refs.calendar
 
       return title.charAt(0).toUpperCase() + title.slice(1)
+    },
+    calendarDay() {
+      return [1, 2, 3, 4, 5, 6, 0]
     },
     computedType() {
       if (this.$vuetify.breakpoint.xs) {
@@ -101,19 +135,27 @@ export default {
       return headers
     }
   },
+
   mounted() {
     this.$refs.calendar.checkChange()
   },
   methods: {
-    viewDay({ date }) {
-      this.focus = date
+    onDateClick() {
       this.$emit('lesson', false)
+    },
+    onMiniCalendar(value) {
+      this.calendarMenu = false
+      this.$emit('focus', value)
+    },
+    onInputChange(value) {
+      this.$emit('focus', value)
+    },
+    setWeekMode({ date }) {
+      this.$emit('focus', date)
+      this.$emit('type', 'week')
     },
     getEventColor(event) {
       return event.color
-    },
-    setToday() {
-      this.focus = ''
     },
     prev() {
       this.$refs.calendar.prev()
@@ -125,9 +167,6 @@ export default {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
       this.$emit('lesson', lesson || false)
-    },
-    updateRange({ start, end }) {
-      this.getCalendarLessons({ start, end })
     },
     async getCalendarLessons({ start, end }) {
       const params = {

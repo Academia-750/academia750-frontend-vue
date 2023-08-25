@@ -13,7 +13,9 @@
       :value="value"
       :error-messages="errors"
       :label="label"
-      @change="onClick"
+      :disabled="disabled"
+      readonly
+      @click="onClick"
     ></v-switch>
   </ValidationProvider>
 </template>
@@ -30,14 +32,22 @@ export default {
       type: String,
       default: ''
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     id: {
       type: String,
       required: true
     }
   },
+
   methods: {
-    onClick(value) {
-      this.$emit('change', value)
+    onClick() {
+      if (this.disabled) {
+        return
+      }
+      this.$emit('click', !this.value)
     }
   }
 }
