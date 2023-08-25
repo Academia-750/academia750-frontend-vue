@@ -18,7 +18,7 @@
 
               <div>
                 <span class="font-weight-bold subtitle-2">Fecha: </span>
-                {{ lesson.date }}
+                {{ dateFormat(lesson.date) }}
               </div>
 
               <!-- Column for Time -->
@@ -42,7 +42,7 @@
               <ResourceButtonAdd
                 class="ml-16"
                 text-button="Crear Clase"
-                @click="addLesson"
+                @click="addLesson(date)"
               />
             </template>
             <template v-if="lesson" slot="actions">
@@ -67,7 +67,14 @@
             </template>
           </LessonToolBar>
 
-          <CalendarLessonsList @lesson="onLesson" @load="onLessonLoad" />
+          <CalendarLessonsList
+            :focus="date"
+            :type="type"
+            @type="SET_TYPE"
+            @lesson="onLesson"
+            @load="onLessonLoad"
+            @focus="SET_DATE"
+          />
           <div class="d-flex justify-end my-2">
             <ResourceButtonAdd
               class="ml-16"
@@ -84,12 +91,14 @@
 <script>
 import notifications from '@/mixins/notifications'
 import { mapState, mapMutations } from 'vuex'
+import moment from 'moment'
+
 export default {
   name: 'CalendarLesson',
   components: {
     CalendarLessonsList: () =>
       import(
-        /* webpackChunkName: "CalendarLessonsList" */ './components/calendar-lessons-list.vue'
+        /* webpackChunkName: "CalendarLessonsList" */ '../common/calendar-lessons-list.vue'
       ),
     LessonToolBar: () =>
       import(
@@ -112,7 +121,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson']),
+    ...mapState('lessonsStore', ['lesson', 'date', 'type']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     }
@@ -124,10 +133,14 @@ export default {
     this.loadNotifications()
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON']),
-    addLesson() {
+    ...mapMutations('lessonsStore', ['SET_LESSON', 'SET_DATE', 'SET_TYPE']),
+    dateFormat(date) {
+      return moment(date).format('DD/MM/YYYY')
+    },
+
+    addLesson(date = undefined) {
       this.SET_LESSON(false)
-      this.$router.push({ name: 'create-lessons' })
+      this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
       this.SET_LESSON(lesson || false)
@@ -135,6 +148,7 @@ export default {
         this.$router.push({ name: 'create-lessons' })
       }
     },
+
     onLessonLoad(lesson) {
       // Only on first load
       if (this.lesson) {

@@ -28,7 +28,7 @@ extend('valid_date', {
 })
 
 extend('before', {
-  validate: (value, { target }) => value < target,
+  validate: (value, { target }) => value <= target,
   message: 'El valor debe ser inferior a {field}',
   params: ['target', 'field']
 })
@@ -40,7 +40,7 @@ extend('url', {
 })
 
 extend('after', {
-  validate: (value, { target }) => value > target,
+  validate: (value, { target }) => value >= target,
   message: 'El valor debe ser posterior a {field}',
   params: ['target', 'field']
 })
