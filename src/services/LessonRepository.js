@@ -154,7 +154,10 @@ export default {
    * @param {number} limit
    * @param {string} lessonId
    */
-  async lessonStudentList( lessonId, { orderBy, order, limit, offset, content } = {}) {
+  async lessonStudentList(
+    lessonId,
+    { orderBy, order, limit, offset, content } = {}
+  ) {
     const params = {
       orderBy,
       order,
@@ -164,7 +167,9 @@ export default {
     }
 
     deleteUndefined(params)
-    const response = await ResourceService.get(`lesson/${lessonId}/students`, { params })
+    const response = await ResourceService.get(`lesson/${lessonId}/students`, {
+      params
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -174,7 +179,11 @@ export default {
       return { results: [], total: 0 }
     }
 
-    return { results: response.data.results, groups: response.data.groups, total: response.data.total }
+    return {
+      results: response.data.results,
+      groups: response.data.groups,
+      total: response.data.total
+    }
   },
   /**
    * @param {string} id
@@ -191,18 +200,17 @@ export default {
         showConfirmButton: false,
         timer: 3000,
         icon: 'warning',
-        title: `${response.status} ${response.statusText}`,
-        text: 'La estudiante ya existe'
+        text: 'Este estudiante ya existe en esta clase'
       })
-    
+
       return false
     }
-    
+
     if (response.status !== 200) {
       ResourceService.warning({
         response
       })
-    
+
       return false
     }
 
@@ -216,7 +224,7 @@ export default {
     const response = await ResourceService.post(`lesson/${id}/group`, {
       group_id
     })
-    
+
     if (response.status !== 200) {
       ResourceService.warning({
         response

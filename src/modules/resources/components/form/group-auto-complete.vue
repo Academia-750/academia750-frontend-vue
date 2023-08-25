@@ -11,7 +11,7 @@
     :autofocus="autofocus"
     item-text="text"
     item-value="uuid"
-    label="Buscar por Nombre"
+    label="Buscar grupos por nombre"
     return-object
     :no-filter="true"
     @change="onSelect"
@@ -61,7 +61,7 @@ export default {
         content: value,
         limit: this.limit
       })
-      
+
       this.itemsGroups = groups.results.map((item) => {
         return {
           text: `${item.name}`,
