@@ -5,9 +5,9 @@
         <v-card class="d-flex flex-column">
           <v-container class="pa-3">
             <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold"
-                >Agregar Alumnos o Grupo</span
-              >
+              <span
+                class="text-h6 font-weight-bold"
+              >Agregar Alumnos o Grupo</span>
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <div>

@@ -9,73 +9,33 @@
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="workspaceMaterialStore"
+      store-name="lessonMaterialsStore"
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de espacio de trabajo"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
-
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Materiales" />
-
-          <v-spacer />
-
-          <resource-button icon-button="mdi-autorenew" @click="reset()" />
-        </v-toolbar>
-
-        <!-- ------------ SEARCH ------------ -->
-        <resource-text-field-search
+        <Toolbar title="Materiales" icon="mdi-folder-open">
+          <template slot="actions">
+            <ResourceButtonAdd
+              text-button="Seleccionar Lección"
+              @click="$router.push({ name: 'add-materials', params: { id: $route.params.id } })"
+            />
+            <ResourceButtonAdd
+              text-button="Nuevo Material"
+              @click="onAddMaterial()"
+            />
+            <resource-button icon-button="mdi-autorenew" @click="reset()" />
+          </template>
+        </Toolbar>
+        <SearchBar
           :search-word="content"
-          label-text-field="Buscar por nombre"
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
-        />
-        <!-- ------------ TYPE SECTION ------------ -->
-        <div class="d-flex align-center mx-3 type-section">
-          <v-select
-            :items="types"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Tipos"
-            :value="type"
-            dense
-            outlined
-            class="mr-2"
-            clearable
-            @change="onChangeType"
-          ></v-select>
-          <v-select
-            :value="workspace"
-            :items="workspaces"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Categoría"
-            dense
-            outlined
-            class="mr-2"
-            clearable
-            @change="onChangeWorkspace"
-          ></v-select>
-          <TagsAutoComplete
-            :tags="tags"
-            tag-type="material"
-            :dense="true"
-            @change="onChangeTags"
-          />
-        </div>
-        <ResourceButtonAdd
-          text-button="Nuevo Material"
-          class="mb-2 mx-3"
-          @click="onAddMaterial"
+          :workspace="workspace"
+          :type="type"
+          store-name="materialsForLessonStore"
+          @onChangeType="onChangeType"
+          @onChangeWorkspace="onChangeWorkspace"
+          @onChangeTags="onChangeTags"
+          @searchFieldExecuted="searchFieldExecuted"
+          @searchFieldWithDebounce="searchFieldWithDebounce"
         />
       </template>
 
@@ -100,35 +60,10 @@
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
-          <div>
-            <v-icon
-              v-if="item.type === 'material'"
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="item.url ? false : true"
-              @click="download(item)"
-            >
-              mdi-cloud-download
-            </v-icon>
-            <v-icon
-              v-else
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="true"
-            >
-              mdi-camera
-            </v-icon>
-          </div>
-          <div></div>
-          <resource-button-edit
-            :config-route="{}"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateWorkspaceMaterial(item)"
-          />
           <resource-button-delete
             text-button="Eliminar"
             @actionConfirmShowDialogDelete="
-              deleteWorkspaceMaterialConfirm(item)
+              deleteMaterialsFromLesson(item)
             "
           />
         </div>
@@ -144,60 +79,44 @@
 import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './workspace-materials-list-columns'
+import headers from './materials-lesson-list-columns'
 import moment from 'moment'
-import WorkspaceRepository from '@/services/WorkspaceRepository'
+import LessonRepository from '@/services/LessonRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import axios from 'axios'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 export default {
-  name: 'WorkspaceList',
+  name: 'LessonMaterialsList',
   components: {
-    ResourceButtonEdit: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
-      ),
     ResourceButtonDelete: () =>
       import(
         /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      ),
-    ResourceTextFieldSearch: () =>
-      import(
-        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
       ),
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
+    
+    SearchBar: () =>
       import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+        /* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'
       ),
-    ResourceHeaderCrudTitle: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-      ),
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
+    ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
+    ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
     AddMaterialModal: () =>
       import(
         /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
-
-    ResourceButtonGoBackRouter: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
-      ),
-    TagsAutoComplete: () =>
-      import(
-        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
       ),
 
     ServerDataTable
@@ -223,13 +142,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['workspace', 'type', 'tags']),
+    ...mapState('materialsForLessonStore', ['workspace', 'type', 'tags']),
 
     headers() {
       return headers
     },
     content() {
-      return this.$store.state.workspaceMaterialStore.tableOptions.content
+      return this.$store.state.materialsForLessonStore.tableOptions.content
     }
   },
   created() {
@@ -237,15 +156,14 @@ export default {
   },
   mounted() {
     this.$refs.table.reload()
-    this.loadWorkspaces()
   },
 
   methods: {
-    ...mapActions('workspaceMaterialStore', [
+    ...mapActions('materialsForLessonStore', [
       'deleteGroup',
       'resetTableOptions'
     ]),
-    ...mapMutations('workspaceMaterialStore', [
+    ...mapMutations('materialsForLessonStore', [
       'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
@@ -254,8 +172,8 @@ export default {
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
-    async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
+    async create() {
+      this.$refs.table.reload()
     },
     onChangeType(value) {
       this.SET_TYPE(value)
@@ -271,35 +189,24 @@ export default {
       this.SET_TAGS(value)
       this.$refs.table.reload()
     },
-
+    onAddMaterial() {
+      this.$refs.addWorkspaceMaterial.open()
+    },
     async loadMaterials(pagination) {
       const params = {
         ...pagination,
-        type: this.type,
-        workspace: this.workspace,
         tags: this.tags
       }
 
-      const res = await WorkspaceMaterialRepository.list(params)
+      const res = await LessonRepository.listOfMaterials(this.$route.params.id,params)
+      
+      console.log({ res })
 
       return res
     },
-    async loadWorkspaces(pagination) {
-      const params = {
-        ...pagination
-      }
+    async deleteMaterialsFromLesson(material) {
+      const { material_id } = material
 
-      const res = await WorkspaceRepository.list(params)
-
-      this.workspaces = res.results.map((item) => ({
-        key: item.id.toString(),
-        label: item.name
-      }))
-    },
-    async create() {
-      this.$refs.table.reload()
-    },
-    async deleteWorkspaceMaterialConfirm(material) {
       if (!material) {
         return
       }
@@ -320,7 +227,7 @@ export default {
         return
       }
 
-      const res = await WorkspaceMaterialRepository.delete(material.id)
+      const res = await LessonRepository.deleteMaterialsFromLesson(this.$route.params.id,{ material_id })
 
       if (!res) {
         return
@@ -336,14 +243,6 @@ export default {
       })
 
       this.$refs.table.reload()
-    },
-    onAddMaterial() {
-      console.log({ refs: this.$refs })
-      this.$refs.addWorkspaceMaterial.open()
-    },
-
-    updateWorkspaceMaterial(material) {
-      this.$refs.addWorkspaceMaterial.open(material)
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })

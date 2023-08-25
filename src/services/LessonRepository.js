@@ -268,5 +268,84 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} type
+   * @param {string} tags[0]
+   * @param {string} orderBy
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async listOfMaterials(id, { type, tags, orderBy, order, limit, offset, content  } = {}) {
+    const params = {
+      type,
+      tags,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    console.log('params', params)
+
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${id}/materials`, { params })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results }
+  },
+  /**
+   * @param {string} id
+   * @param {string} material_id
+   */
+  async addMaterialsToLesson(id, { material_id } = {}) {
+    const params = {
+      material_id
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.post(`lesson/${id}/material`, params)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} material_id
+   */
+  async deleteMaterialsFromLesson(id, { material_id } = {}) {
+    const response = await ResourceService.delete(`lesson/${id}/material`, {
+      data: {
+        material_id
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }

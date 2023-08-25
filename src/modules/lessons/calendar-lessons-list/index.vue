@@ -56,7 +56,7 @@
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
-                :disabled="true"
+                :config-route="{ name: 'list-of-materials', params: { id: lesson.id } }"
               />
               <resource-button
                 text-button="Alumnos"
