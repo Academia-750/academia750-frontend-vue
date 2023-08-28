@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="isOpen" max-width="350">
       <v-card>
-        <v-card-title class="text-h6"> Eliminar Grupo </v-card-title>
+        <v-card-title class="text-h6"> Gestión de Grupos </v-card-title>
         <div class="d-flex flex-column py-3">
           <div
             v-for="(item, index) in groups"
@@ -18,7 +18,7 @@
             />
           </div>
           <div v-if="groups.length == 0" class="d-flex justify center mx-3">
-            <p>No hay grupo para eliminar</p>
+            <p>No hay grupos para eliminar</p>
           </div>
         </div>
       </v-card>
@@ -76,7 +76,7 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR Alumno',
+        title: 'Eliminar Grupo',
         html: '¿Seguro que deseas eliminar este grupo? Todos los alumnos asociados a este grupo serán eliminados de la clase y perderán el acceso a sus materiales',
         showConfirmButton: true,
         showCancelButton: true,

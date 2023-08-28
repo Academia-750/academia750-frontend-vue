@@ -18,13 +18,11 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
-            <ResourceButtonAdd
-              text-button="Aggregar Alumno"
-              @click="addStudents()"
-            />
+            <ResourceButtonAdd text-button="Aggregar" @click="addStudents()" />
             <resource-button
               text-button="Gestionar un Grupos"
               color="success"
+              icon-button="mdi-account-multiple"
               @click="deleteGroupFromLesson()"
             />
             <resource-button
@@ -35,7 +33,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI"
+          label-text-field="Buscar por nombre o DNI o nombre del grupo"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />

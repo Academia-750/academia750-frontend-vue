@@ -12,7 +12,7 @@
     :autofocus="autofocus"
     item-text="text"
     item-value="uuid"
-    label="Buscar por Nombre o DNI"
+    label="Buscar estudiantes por nombre o DNI"
     return-object
     :no-filter="true"
     class="align-center"

@@ -1,54 +1,52 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="isOpen" max-width="450px" @close="onClose">
-      <validation-observer ref="formAddStudentsToLesson">
-        <v-card class="d-flex flex-column">
-          <v-container class="pa-3">
-            <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span
-                class="text-h6 font-weight-bold"
-              >Agregar Alumnos o Grupo</span>
-              <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
-            </v-card-title>
-            <div>
-              <div class="d-flex justify-space-between my-1">
-                <StudentAutoComplete
-                  ref="studentAutoComplete"
-                  :autofocus="autofocus"
-                  :limit="limit"
-                  @change="onSelect"
-                />
-                <v-btn
-                  dark
-                  color="blue darken-1"
-                  class="button ml-2"
-                  :loading="isAddingStudent"
-                  @click="onAddStudentToLesson"
-                >
-                  OK
-                </v-btn>
-              </div>
-              <div class="d-flex justify-space-between my-1">
-                <GroupAutoComplete
-                  ref="groupAutoComplete"
-                  :autofocus="autofocus"
-                  :limit="limit"
-                  @change="onSelectGroup"
-                />
-                <v-btn
-                  dark
-                  color="blue darken-1"
-                  class="button ml-2"
-                  :loading="isAddingGroup"
-                  @click="addGroupToLesson"
-                >
-                  OK
-                </v-btn>
-              </div>
+      <v-card class="d-flex flex-column">
+        <v-container class="pa-3">
+          <v-card-title class="d-flex justify-space-between pt-0 px-0">
+            <span class="text-h6 font-weight-bold">
+              Agregar Alumnos o Grupo
+            </span>
+            <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
+          </v-card-title>
+          <div>
+            <div class="d-flex justify-space-between my-1">
+              <StudentAutoComplete
+                ref="studentAutoComplete"
+                :autofocus="autofocus"
+                :limit="limit"
+                @change="onSelect"
+              />
+              <v-btn
+                dark
+                color="blue darken-1"
+                class="button ml-2"
+                :loading="isAddingStudent"
+                @click="onAddStudentToLesson"
+              >
+                OK
+              </v-btn>
             </div>
-          </v-container>
-        </v-card>
-      </validation-observer>
+            <div class="d-flex justify-space-between my-1">
+              <GroupAutoComplete
+                ref="groupAutoComplete"
+                :autofocus="autofocus"
+                :limit="limit"
+                @change="onSelectGroup"
+              />
+              <v-btn
+                dark
+                color="blue darken-1"
+                class="button ml-2"
+                :loading="isAddingGroup"
+                @click="addGroupToLesson"
+              >
+                OK
+              </v-btn>
+            </div>
+          </div>
+        </v-container>
+      </v-card>
     </v-dialog>
   </v-row>
 </template>
@@ -73,37 +71,40 @@ export default {
       isAddingStudent: false,
       isAddingGroup: false,
       limit: 5,
-      autofocus: true
+      autofocus: true,
+      selectedStudent: false,
+      selectedGroup: false
     }
   },
   methods: {
     onSelect(value) {
-      this.selectedItem = value
+      this.selectedStudent = value
     },
     onSelectGroup(value) {
-      this.selectedItem = value
+      this.selectedGroup = value
     },
     open() {
       this.isOpen = true
-      this.$refs.studentAutoComplete.clearAutoComplete()
+      this.$refs.studentAutoComplete &&
+        this.$refs.studentAutoComplete.clearAutoComplete()
+      this.$refs.groupAutoComplete &&
+        this.$refs.groupAutoComplete.clearAutoComplete()
     },
     onClose() {
       this.isOpen = false
     },
     async onAddStudentToLesson() {
       this.isAddingStudent = true
-      const status = await this.$refs['formAddStudentsToLesson'].validate()
 
-      if (!status) {
+      if (!this.selectedStudent) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
+          text: 'Seleccione primero un estudiante.',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.onClose()
         this.isAddingStudent = false
 
         return
@@ -111,7 +112,7 @@ export default {
       const res = await LessonRepository.addStudentToLesson(
         this.$route.params.id,
         {
-          student_id: this.selectedItem.uuid
+          student_id: this.selectedStudent.uuid
         }
       )
 
@@ -122,8 +123,8 @@ export default {
       }
 
       this.isAddingStudent = false
-      this.$emit('created', this.selectedItem)
-      this.selectedItem = false
+      this.$emit('created', this.selectedStudent)
+      this.selectedStudent = false
       this.$refs.studentAutoComplete.clearAutoComplete()
       this.name = ''
 
@@ -138,18 +139,16 @@ export default {
     },
     async addGroupToLesson() {
       this.isAddingGroup = true
-      const status = await this.$refs['formAddStudentsToLesson'].validate()
 
-      if (!status) {
+      if (!this.selectedGroup) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
+          text: 'Seleccione primero un grupo.',
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.onClose()
         this.isAddingGroup = false
 
         return
@@ -157,7 +156,7 @@ export default {
       const res = await LessonRepository.addGroupToLesson(
         this.$route.params.id,
         {
-          group_id: this.selectedItem.id
+          group_id: this.selectedGroup.id
         }
       )
 
@@ -168,15 +167,15 @@ export default {
       }
 
       this.isAddingGroup = false
-      this.$emit('created', this.selectedItem)
-      this.selectedItem = false
+      this.$emit('created', this.selectedGroup)
+      this.selectedGroup = false
       this.$refs.groupAutoComplete.clearAutoComplete()
       this.name = ''
 
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'grupo añadido',
+        title: 'Grupo añadido',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500
