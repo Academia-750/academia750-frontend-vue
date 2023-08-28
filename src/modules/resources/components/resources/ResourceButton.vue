@@ -40,10 +40,17 @@ export default {
     iconButton: {
       type: String,
       default: 'mdi-plus'
+    },
+    configRoute: {
+      type: Object,
+      default: () => {}
     }
   },
   methods: {
     onClick() {
+      if (this.configRoute && Object.keys(this.configRoute).length) {
+        this.$router.push(this.configRoute)
+      }
       this.$emit('click')
     }
   }

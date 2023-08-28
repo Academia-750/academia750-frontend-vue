@@ -1,8 +1,7 @@
 <template>
   <v-autocomplete
-    ref="autocomplete"
     v-model="inputValue"
-    :items="itemsStudents"
+    :items="itemsGroups"
     :loading="loading"
     auto-select-first
     dense
@@ -12,26 +11,24 @@
     :autofocus="autofocus"
     item-text="text"
     item-value="uuid"
-    label="Buscar estudiantes por nombre o DNI"
+    label="Buscar grupos por nombre"
     return-object
     :no-filter="true"
-    class="align-center"
     @change="onSelect"
-    @update:search-input="loadStudents"
+    @update:search-input="loadGroups"
   >
     <template v-slot:item="data">
       <v-list-item-content>
         <v-list-item-title>{{ data.item.name }}</v-list-item-title>
-        <v-list-item-subtitle>{{ data.item.dni }}</v-list-item-subtitle>
       </v-list-item-content>
     </template>
   </v-autocomplete>
 </template>
 
 <script>
-import StudentRepository from '@/services/StudentRepository'
+import GroupRepository from '@/services/GroupRepository'
 export default {
-  name: 'StudentAutoComplete',
+  name: 'GroupAutoComplete',
   props: {
     limit: {
       type: Number,
@@ -44,37 +41,37 @@ export default {
   },
   data() {
     return {
-      itemsStudents: [],
+      itemsGroups: [],
       inputValue: '',
       loading: false
     }
   },
 
   mounted() {
-    this.loadStudents('')
+    this.loadGroups('')
   },
 
   methods: {
     clearAutoComplete() {
       this.inputValue = ''
     },
-    async loadStudents(value) {
+    async loadGroups(value) {
       this.loading = true
-      const students = await StudentRepository.search({
+      const groups = await GroupRepository.list({
         content: value,
         limit: this.limit
       })
 
-      this.itemsStudents = students.map((item) => {
+      this.itemsGroups = groups.results.map((item) => {
         return {
-          text: `${item['first_name']} ${item['last_name']}`,
-          uuid: item.uuid,
-          dni: item.dni,
-          name: `${item['first_name']} ${item['last_name']}`
+          text: `${item.name}`,
+          name: `${item.name}`,
+          id: `${item.id}`
         }
       })
       this.loading = false
     },
+
     onSelect(item) {
       this.$emit('change', item)
     },

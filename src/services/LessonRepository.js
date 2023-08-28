@@ -1,5 +1,6 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
+import Swal from 'sweetalert2/dist/sweetalert2'
 
 export default {
   /**
@@ -133,6 +134,137 @@ export default {
   async active(id, { active }) {
     const response = await ResourceService.put(`lesson/${id}/active`, {
       active: active
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} content Search by names from a partial value
+   * @param {string} orderBy (Only Allowed values)
+   * @param {number} order 1 (ASC) -1 (DESC)
+   * @param {number} offset
+   * @param {number} limit
+   * @param {string} lessonId
+   */
+  async lessonStudentList(
+    lessonId,
+    { orderBy, order, limit, offset, content } = {}
+  ) {
+    const params = {
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${lessonId}/students`, {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return {
+      results: response.data.results,
+      groups: response.data.groups,
+      total: response.data.total
+    }
+  },
+  /**
+   * @param {string} id
+   * @param {string} student_id
+   */
+  async addStudentToLesson(id, { student_id }) {
+    const response = await ResourceService.post(`lesson/${id}/student`, {
+      user_id: student_id
+    })
+
+    if (response.status === 409) {
+      Swal.fire({
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        icon: 'warning',
+        text: 'Este estudiante ya existe en esta clase'
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} active
+   */
+  async addGroupToLesson(id, { group_id }) {
+    const response = await ResourceService.post(`lesson/${id}/group`, {
+      group_id
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return { count: response.data.count }
+  },
+  /**
+   * @param {string} id
+   * @param {string} student_id
+   */
+  async deleteStudentFromLesson(id, { student_id }) {
+    const response = await ResourceService.delete(`lesson/${id}/student`, {
+      data: {
+        user_id: student_id
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} group_id
+   */
+  async deleteGroupFromLesson(id, { group_id }) {
+    const response = await ResourceService.delete(`lesson/${id}/group`, {
+      data: {
+        group_id
+      }
     })
 
     if (response.status !== 200) {

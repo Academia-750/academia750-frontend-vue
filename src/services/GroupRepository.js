@@ -1,6 +1,8 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
 
+const resource = 'groups'
+
 // This will be replaced by the real groups data from the API
 export default {
   /**
@@ -234,5 +236,27 @@ export default {
     }
 
     return { total: response.data.total, results: response.data.results }
+  },
+  /**
+   * @param {string} content
+   * @param {string} limit
+   */
+  async search({ content, limit }) {
+    const response = await ResourceService.get(`${resource}/search`, {
+      params: {
+        content: content || '',
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }
