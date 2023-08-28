@@ -150,6 +150,13 @@ export default {
           roles: 'admin'
         },
         {
+          icon: 'mdi-tag',
+          key: '',
+          text: 'Gestión de Tags',
+          to: { name: 'manage-tags' },
+          roles: 'admin'
+        },
+        {
           icon: 'mdi-book-open-page-variant',
           key: '',
           text: 'Gestionar Clases',

@@ -135,7 +135,7 @@ export default {
       ),
     AddMaterialModal: () =>
       import(
-        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-material-modal'
+        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
     ResourceButtonMaterials: () =>
       import(

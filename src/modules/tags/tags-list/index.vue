@@ -3,7 +3,7 @@
     <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-card flat>
         <v-card-text>
-          <TagsList />
+          <tags-datatable />
         </v-card-text>
       </v-card>
     </div>
@@ -16,9 +16,9 @@ import notifications from '@/mixins/notifications'
 export default {
   name: 'TagsView',
   components: {
-    TagsList: () =>
+    TagsDatatable: () =>
       import(
-        /* webpackChunkName: "TagsList" */ './components/tags-list.vue'
+        /* webpackChunkName: "TagsDatatable" */ './components/tags-list.vue'
       )
   },
   mixins: [notifications],
@@ -35,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de Categorías'
+      inner: 'Gestión de tags'
     }
   }
 }

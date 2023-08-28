@@ -1,7 +1,7 @@
 import DataTableStore from '@/modules/resources/store/data-table.store'
 
 export default {
-  name: 'tagsStore',
+  name: 'TagStore',
   namespaced: true,
   state: {
     ...DataTableStore.state
