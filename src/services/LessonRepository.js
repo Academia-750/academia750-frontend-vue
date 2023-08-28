@@ -210,6 +210,7 @@ export default {
       ResourceService.warning({
         response
       })
+      
       return false
     }
 
@@ -223,6 +224,7 @@ export default {
     const response = await ResourceService.post(`lesson/${id}/group`, {
       group_id
     })
+
     if (response.status !== 200) {
       ResourceService.warning({
         response

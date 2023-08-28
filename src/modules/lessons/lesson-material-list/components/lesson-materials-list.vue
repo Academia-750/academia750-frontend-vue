@@ -80,10 +80,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
