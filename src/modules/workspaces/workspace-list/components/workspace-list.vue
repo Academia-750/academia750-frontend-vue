@@ -28,6 +28,13 @@
 
           <v-spacer />
           <ResourceButtonMaterials
+            text-button="Agregar Etiqueta"
+            icon-button="mdi-tag"
+            :config-route="{ name: 'manage-tags' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="goToTags()"
+          />
+          <ResourceButtonMaterials
             text-button="Ver todos"
             :config-route="{ name: 'manage-materials' }"
             :only-dispatch-click-event="true"
@@ -204,6 +211,9 @@ export default {
     goToMaterials() {
       this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
       this.$router.push({ name: 'manage-materials' })
+    },
+    goToTags() {
+      this.$router.push({ name: 'manage-tags' })
     },
     async deleteWorkspaceConfirm(workspace) {
       if (!workspace) {
