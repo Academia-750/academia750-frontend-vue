@@ -54,5 +54,21 @@ export default {
       groups: response.data.groups,
       total: response.data.total
     }
+  },
+  /**
+   * @param {string} id
+   */
+  async delete(id) {
+    const response = await ResourceService.delete(`material/tag/${id}`)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }

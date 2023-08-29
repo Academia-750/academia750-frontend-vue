@@ -3,7 +3,6 @@
     <!-- ------------ ADD STUDENT TAGS ------------ -->
     <AddTagModal
       ref="addTag"
-      :tag="tag"
       :name="name"
       @create="createTag"
     />
@@ -35,6 +34,16 @@
       <!-- ------------ NO DATA ------------ -->
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
+      </template>
+
+      <!-- ------------ SLOTS ------------ -->
+      <template v-slot:[`item.actions`]="{ item }">
+        <div class="d-flex justify-center">
+          <resource-button-delete
+            text-button="Eliminar"
+            @actionConfirmShowDialogDelete="deleteTag(item)"
+          />
+        </div>
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -77,14 +86,17 @@ export default {
     AddTagModal: () =>
       import(
         /* webpackChunkName: "AddTagModal" */ '@/modules/resources/components/resources/add-tag-modal'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
       )
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
       searchWordText: '',
-      loading: false,
-      groupName: ''
+      loading: false
     }
   },
   computed: {
@@ -127,6 +139,41 @@ export default {
     },
     async createTag() {
       this.resetTableOptions()
+      this.$refs.table.reload()
+    },
+    async deleteTag(tag) {
+      if (!tag) {
+        return
+      }
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'Eliminar Etiqueta',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Etiqueta? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        return
+      }
+
+      const res = await TagRepository.delete(tag.id)
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'La categoría ha sido eliminada con éxito.',
+        timer: 3000
+      })
+
       this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
