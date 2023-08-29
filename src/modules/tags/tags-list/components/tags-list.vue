@@ -15,7 +15,7 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Tags" icon="mdi-tag">
+        <Toolbar title="Etiquetas" icon="mdi-tag">
           <template slot="actions">
             <ResourceButtonAdd text-button="Aggregar" @click="addTag()" />
             <resource-button
@@ -26,7 +26,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI o nombre del tag"
+          label-text-field="Buscar por nombre de la etiqueta."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -36,8 +36,6 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
-      <!-- <template v-slot:abel> ABEL </template> -->
-      <!-- ------------ SLOTS ------------ -->
     </ServerDataTable>
   </v-card-text>
 </template>

@@ -2,16 +2,6 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageTagsModule from './tags-list'
 
-const shortcutRoutes = [
-  {
-    path: 'tags',
-    redirect: { name: 'manage-tags' },
-    meta: {
-      middleware: [authMiddleware]
-    }
-  }
-]
-
 const moduleRoute = [
   {
     path: '/',
@@ -32,8 +22,7 @@ const moduleRoute = [
             }
           }
         ]
-      },
-      ...shortcutRoutes
+      }
     ]
   }
 ]

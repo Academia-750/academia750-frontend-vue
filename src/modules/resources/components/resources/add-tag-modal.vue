@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     open(tag) {
-      console.log('tag', tag)
       this.isOpen = true
       this.reset()
       if (tag) {
