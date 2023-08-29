@@ -13,11 +13,16 @@
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <Toolbar title="Materiales" icon="mdi-folder-open">
+        <Toolbar title="Materiales de la clase <<NAME>>" icon="mdi-folder-open">
           <template slot="actions">
             <ResourceButtonAdd
-              text-button="Seleccionar Lección"
-              @click="$router.push({ name: 'add-materials', params: { id: $route.params.id } })"
+              text-button="Buscar Material"
+              @click="
+                $router.push({
+                  name: 'add-materials',
+                  params: { id: $route.params.id }
+                })
+              "
             />
             <ResourceButtonAdd
               text-button="Nuevo Material"
@@ -62,9 +67,7 @@
         <div class="d-flex justify-space-between align-center">
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="
-              deleteMaterialsFromLesson(item)
-            "
+            @actionConfirmShowDialogDelete="deleteMaterialsFromLesson(item)"
           />
         </div>
       </template>
@@ -97,19 +100,17 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    
+
     SearchBar: () =>
-      import(
-        /* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'
-      ),
+      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
-    ),
+      ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-    ),
+      ),
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
@@ -198,8 +199,11 @@ export default {
         tags: this.tags
       }
 
-      const res = await LessonRepository.listOfMaterials(this.$route.params.id,params)
-      
+      const res = await LessonRepository.listOfMaterials(
+        this.$route.params.id,
+        params
+      )
+
       console.log({ res })
 
       return res
@@ -227,7 +231,10 @@ export default {
         return
       }
 
-      const res = await LessonRepository.deleteMaterialsFromLesson(this.$route.params.id,{ material_id })
+      const res = await LessonRepository.deleteMaterialsFromLesson(
+        this.$route.params.id,
+        { material_id }
+      )
 
       if (!res) {
         return

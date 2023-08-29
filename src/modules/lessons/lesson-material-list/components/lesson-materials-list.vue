@@ -7,7 +7,7 @@
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <Toolbar title="Materiales" icon="mdi-folder-open">
+        <Toolbar title="Buscar Materiales" icon="mdi-folder-open">
           <template slot="actions">
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
@@ -84,19 +84,17 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    
+
     SearchBar: () =>
-      import(
-        /* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'
-      ),
+      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
-    ),
+      ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-    ),
+      ),
 
     ServerDataTable
   },
@@ -138,10 +136,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('lessonMaterialsStore', [
-      'deleteGroup',
-      'resetTableOptions'
-    ]),
+    ...mapActions('lessonMaterialsStore', ['deleteGroup', 'resetTableOptions']),
     ...mapMutations('lessonMaterialsStore', [
       'SET_WORKSPACE',
       'SET_TYPE',
@@ -217,29 +212,15 @@ export default {
       this.$refs.table.reload()
     },
     async onAddMaterial(material) {
-      const material_id = material.id
-
       if (!material) {
         return
       }
-      const result = await this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: 'Aggegar Material',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Material? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, Aggegar',
-        cancelButtonText: 'Cancelar'
-      })
+      const material_id = material.id
 
-      if (!result.isConfirmed) {
-        return
-      }
-
-      const res = await LessonRepository.addMaterialsToLesson(this.$route.params.id,{ material_id })
+      const res = await LessonRepository.addMaterialsToLesson(
+        this.$route.params.id,
+        { material_id }
+      )
 
       if (!res) {
         return
@@ -247,15 +228,11 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title:
-          material.type === 'material'
-            ? 'El material ha sido eliminado con éxito.'
-            : 'La grabación ha sido eliminada con éxito',
+        title: 'Acción completada.',
         timer: 3000
       })
 
       this.$refs.table.reload()
-
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
