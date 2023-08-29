@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <div
-      v-for="(answer, index) in answers"
-      :key="index"
-    >
+    <div v-for="(answer, index) in answers" :key="index">
       <answer-item-history-test
         :index="index"
         :answer-correct="getCorrectAnswer"
@@ -36,26 +33,25 @@ export default {
     }
   },
   computed: {
-    answersWithIndexComputed () {
-      const indexAnswers = [
-        'a)',
-        'b)',
-        'c)',
-        'd)'
-      ]
+    answersWithIndexComputed() {
+      const indexAnswers = ['a)', 'b)', 'c)', 'd)']
 
       indexAnswers.slice(0, this.answers.length)
 
       return this.answers.map((answer, i) => {
-
-        return this.answers[i]['index-answer'] = indexAnswers[i]
+        return (this.answers[i]['index-answer'] = indexAnswers[i])
       })
     },
     getQuestionHistory() {
-      return this.questionsDataHistory.find((questionHistory) => questionHistory.question_id === this.question.id)
+      return this.questionsDataHistory.find(
+        (questionHistory) =>
+          questionHistory.question_id === this.question.attributes.id
+      )
     },
     getCorrectAnswer() {
-      return this.answers.find((answerHistory) => answerHistory.attributes.is_correct_answer === 'yes')
+      return this.answers.find(
+        (answerHistory) => answerHistory.attributes.is_correct_answer === 'yes'
+      )
     }
   }
 }
