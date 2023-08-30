@@ -36,6 +36,7 @@
           :search-word="content"
           :workspace="workspace"
           :type="type"
+          :hide-workspace="true"
           store-name="materialsForLessonStore"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
@@ -101,7 +102,7 @@ export default {
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'
+      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'
       ),
     Toolbar: () =>
       import(

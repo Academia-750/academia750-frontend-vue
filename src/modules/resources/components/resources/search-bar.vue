@@ -10,39 +10,45 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <!-- ------------ TYPE SECTION ------------ -->
-    <div class="d-flex align-center mx-3 type-section">
-      <v-select
-        :items="types"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Tipos"
-        :value="state.type"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeType"
-      ></v-select>
-      <v-select
-        :value="state.workspace"
-        :items="workspaces"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Categoría"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeWorkspace"
-      ></v-select>
-      <TagsAutoComplete
-        tag-type="material"
-        :dense="true"
-        @change="onChangeTags"
-      />
-    </div>
+    <v-row class="ml-1">
+      <v-col cols="12" md="3">
+        <v-select
+          :items="types"
+          item-text="label"
+          item-value="key"
+          persistent-hint
+          label="Tipos"
+          :value="state.type"
+          dense
+          outlined
+          clearable
+          @change="onChangeType"
+        ></v-select>
+      </v-col>
+      <v-col v-if="hideworkspace" cols="12" md="3">
+        <v-select
+          :value="state.workspace"
+          :items="workspaces"
+          item-text="label"
+          item-value="key"
+          persistent-hint
+          label="Categoría"
+          dense
+          outlined
+          clearable
+          @change="onChangeWorkspace"
+        ></v-select>
+      </v-col>
+      <v-col cols="12" md="4">
+        <TagsAutoComplete
+          tag-type="material"
+          :dense="true"
+          @change="onChangeTags"
+        />
+      </v-col>
+    </v-row>
+    <!-- <div class="d-flex align-center mx-3 type-section">
+    </div> -->
   </div>
 </template>
 
@@ -66,6 +72,10 @@ export default {
     storeName: {
       type: String,
       required: true
+    },
+    hideworkspace: {
+      type: Boolean,
+      defaulte: false
     }
   },
   data() {

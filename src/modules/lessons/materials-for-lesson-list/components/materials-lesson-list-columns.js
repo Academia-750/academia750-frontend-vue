@@ -9,6 +9,14 @@ export default [
   },
   {
     position: 2,
+    text: 'Tipo',
+    align: 'start',
+    sortable: false,
+    value: 'type',
+    show: true
+  },
+  {
+    position: 3,
     text: 'Tags',
     align: 'start',
     sortable: false,
@@ -16,7 +24,7 @@ export default [
     show: true
   },
   {
-    position: 3,
+    position: 4,
     sortable: false,
     text: 'Acciones',
     align: 'start',

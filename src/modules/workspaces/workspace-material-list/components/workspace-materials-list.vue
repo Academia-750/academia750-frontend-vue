@@ -29,49 +29,20 @@
 
           <resource-button icon-button="mdi-autorenew" @click="reset()" />
         </v-toolbar>
-
-        <!-- ------------ SEARCH ------------ -->
-        <resource-text-field-search
-          :search-word="content"
-          label-text-field="Buscar por nombre"
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
-        />
         <!-- ------------ TYPE SECTION ------------ -->
-        <div class="d-flex align-center mx-3 type-section">
-          <v-select
-            :items="types"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Tipos"
-            :value="type"
-            dense
-            outlined
-            class="mr-2"
-            clearable
-            @change="onChangeType"
-          ></v-select>
-          <v-select
-            :value="workspace"
-            :items="workspaces"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Categoría"
-            dense
-            outlined
-            class="mr-2"
-            clearable
-            @change="onChangeWorkspace"
-          ></v-select>
-          <TagsAutoComplete
-            :tags="tags"
-            tag-type="material"
-            :dense="true"
-            @change="onChangeTags"
-          />
-        </div>
+
+        <SearchBar
+          :search-word="content"
+          :workspace="workspace"
+          :type="type"
+          store-name="lessonMaterialsStore"
+          @onChangeType="onChangeType"
+          @onChangeWorkspace="onChangeWorkspace"
+          @onChangeTags="onChangeTags"
+          @searchFieldExecuted="searchFieldExecuted"
+          @searchFieldWithDebounce="searchFieldWithDebounce"
+        />
+
         <ResourceButtonAdd
           text-button="Nuevo Material"
           class="mb-2 mx-3"
@@ -196,10 +167,8 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
       ),
-    TagsAutoComplete: () =>
-      import(
-        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
-      ),
+    SearchBar: () =>
+      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'),
 
     ServerDataTable
   },

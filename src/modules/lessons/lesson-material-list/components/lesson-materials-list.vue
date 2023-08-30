@@ -87,7 +87,7 @@ export default {
       ),
 
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'),
+      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
