@@ -45,5 +45,5 @@ In the phase 2 we have simplify the folder structure, you may see this change in
 ## Default User
 ### Default Super Admin
 
-DNI:  74237694L
+DNI:  00000000T
 Password: academia750

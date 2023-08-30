@@ -1,11 +1,7 @@
 <template>
   <v-card-text>
     <!-- ------------ ADD STUDENT TAGS ------------ -->
-    <AddTagModal
-      ref="addTag"
-      :name="name"
-      @create="createTag"
-    />
+    <AddTagModal ref="addTag" :name="name" @create="createTag" />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -149,8 +145,8 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'Eliminar Etiqueta',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Etiqueta? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        title: '¿Seguro que deseas eliminar este Etiqueta? ',
+        html: 'No podrá etiquetar nuevos materiales ni filtrar por ella. Los materiales ya etiquetados seguiran teniendo la etiqueta, será necesario eliminarla manualmente.',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',

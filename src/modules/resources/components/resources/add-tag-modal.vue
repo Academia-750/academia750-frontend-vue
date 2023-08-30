@@ -11,7 +11,7 @@
             <FieldInput
               ref="nameInput"
               v-model="name"
-              label="Nombre"
+              label="Etiqueta"
               rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
@@ -98,8 +98,8 @@ export default {
         return
       }
       const tag = await TagRepository.create({
-          name: this.name
-        })
+        name: this.name
+      })
 
       if (!tag) {
         this.loading = false
@@ -112,7 +112,7 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'Tag Creado!',
+        title: 'Etiqueta creada!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500

@@ -28,7 +28,7 @@
 
           <v-spacer />
           <ResourceButtonMaterials
-            text-button="Agregar Etiqueta"
+            text-button="Gestionar Etiquetas"
             icon-button="mdi-tag"
             :config-route="{ name: 'manage-tags' }"
             :only-dispatch-click-event="true"
@@ -70,7 +70,7 @@
 
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-between">
+        <div class="d-flex justify-center">
           <ResourceButtonMaterials
             text-button="Materiales"
             :config-route="{ name: 'manage-materials' }"
