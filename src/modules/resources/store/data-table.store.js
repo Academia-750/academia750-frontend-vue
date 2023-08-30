@@ -34,7 +34,6 @@ export default {
       state.items = payload
     },
     SET_TABLE_OPTIONS(state, payload) {
-      console.log('SET_TABLE_OPTIONS', payload)
       state.tableOptions = { ...state.tableOptions, ...payload }
     },
     SET_ITEMS_SELECTED(state, payload) {

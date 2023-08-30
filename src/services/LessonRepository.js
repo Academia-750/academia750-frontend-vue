@@ -298,8 +298,6 @@ export default {
       content: content || undefined
     }
 
-    console.log('params', params)
-
     deleteUndefined(params)
     const response = await ResourceService.get(`lesson/${id}/materials`, { params })
 
@@ -324,6 +322,16 @@ export default {
 
     deleteUndefined(params)
     const response = await ResourceService.post(`lesson/${id}/material`, params)
+
+    if (response.status === 409) {
+      ResourceService.warning({
+        response,
+        title: 'Información Duplicada',
+        message: 'el material ya existe'
+      })
+
+      return false
+    }
 
     if (response.status !== 200) {
       ResourceService.warning({

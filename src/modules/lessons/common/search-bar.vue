@@ -93,7 +93,6 @@ export default {
   },
   methods: {
     onChangeType(value) {
-      console.log('storename', this.storeName)
       this.$emit('onChangeType', value)
     },
     onChangeWorkspace(value) {

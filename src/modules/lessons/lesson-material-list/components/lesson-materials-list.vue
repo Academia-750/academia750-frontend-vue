@@ -56,7 +56,7 @@
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || 'Tipo Desconocido' }}
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -71,8 +71,9 @@ import moment from 'moment'
 import LessonRepository from '@/services/LessonRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import axios from 'axios'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import downloadFile from '@/utils/DownloadMaterial'
+
 export default {
   name: 'LessonMaterialsList',
   components: {
@@ -248,21 +249,10 @@ export default {
 
       return fileName.split('.')
     },
-    download(material) {
+    async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
-
-      axios
-        .get(material.url, { responseType: 'blob' })
-        .then((response) => {
-          const blob = new Blob([response.data], {})
-          const link = document.createElement('a')
-
-          link.href = URL.createObjectURL(blob)
-          link.download = `${material.name}.${type}`
-          link.click()
-          URL.revokeObjectURL(link.href)
-        })
-        .catch(console.error)
+      
+      await downloadFile(material.url, material.name, type)
     },
     reset() {
       this.resetTableOptions()

@@ -13,10 +13,11 @@
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <Toolbar title="Materiales de la clase <<NAME>>" icon="mdi-folder-open">
+        <Toolbar :title="`Materiales de la clase ${ lesson.name }`" icon="mdi-folder-open">
           <template slot="actions">
             <ResourceButtonAdd
               text-button="Buscar Material"
+              icon-button="mdi-folder-open"
               @click="
                 $router.push({
                   name: 'add-materials',
@@ -85,7 +86,6 @@ import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCru
 import headers from './materials-lesson-list-columns'
 import moment from 'moment'
 import LessonRepository from '@/services/LessonRepository'
-import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import axios from 'axios'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
@@ -100,9 +100,9 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'),
+      import(/* webpackChunkName: "SearchBar" */ '../../common/search-bar.vue'
+      ),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
@@ -144,7 +144,7 @@ export default {
   },
   computed: {
     ...mapState('materialsForLessonStore', ['workspace', 'type', 'tags']),
-
+    ...mapState('lessonsStore', ['lesson']),
     headers() {
       return headers
     },
@@ -157,6 +157,11 @@ export default {
   },
   mounted() {
     this.$refs.table.reload()
+    if (!this.lesson) {
+      this.$router.push({
+        name: 'manage-lessons'
+      })
+    }
   },
 
   methods: {
@@ -173,7 +178,28 @@ export default {
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
     },
-    async create() {
+    async create(material) {
+      if (!material) {
+        return
+      }
+      const material_id = material.id
+
+      const res = await LessonRepository.addMaterialsToLesson(
+        this.$route.params.id,
+        { material_id }
+      )
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'Acción completada.',
+        timer: 3000
+      })
+
+      this.$refs.table.reload()
       this.$refs.table.reload()
     },
     onChangeType(value) {
@@ -203,8 +229,6 @@ export default {
         this.$route.params.id,
         params
       )
-
-      console.log({ res })
 
       return res
     },
