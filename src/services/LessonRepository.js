@@ -53,8 +53,8 @@ export default {
     if (response.status === 409) {
       ResourceService.warning({
         response,
-        title: 'Información Duplicada',
-        message: 'Ya existe un grupo con el mismo código o color'
+        title: 'Acción no requerida',
+        message: 'Este material ya está disponible en la lección.'
       })
 
       return false
