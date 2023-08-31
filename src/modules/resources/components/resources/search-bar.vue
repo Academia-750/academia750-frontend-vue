@@ -105,6 +105,7 @@ export default {
   },
   mounted() {
     this.loadWorkspaces()
+    console.log('work',this.hideworkspace)
   },
   methods: {
     onChangeType(value) {

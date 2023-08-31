@@ -36,6 +36,7 @@
           :workspace="workspace"
           :type="type"
           store-name="lessonMaterialsStore"
+          :hideworkspace="true"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
