@@ -28,6 +28,13 @@
 
           <v-spacer />
           <ResourceButtonMaterials
+            text-button="Gestionar Etiquetas"
+            icon-button="mdi-tag"
+            :config-route="{ name: 'manage-tags' }"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="goToTags()"
+          />
+          <ResourceButtonMaterials
             text-button="Ver todos"
             :config-route="{ name: 'manage-materials' }"
             :only-dispatch-click-event="true"
@@ -63,7 +70,7 @@
 
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-between">
+        <div class="d-flex justify-center">
           <ResourceButtonMaterials
             text-button="Materiales"
             :config-route="{ name: 'manage-materials' }"
@@ -135,7 +142,7 @@ export default {
       ),
     AddMaterialModal: () =>
       import(
-        /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-material-modal'
+        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
     ResourceButtonMaterials: () =>
       import(
@@ -204,6 +211,9 @@ export default {
     goToMaterials() {
       this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
       this.$router.push({ name: 'manage-materials' })
+    },
+    goToTags() {
+      this.$router.push({ name: 'manage-tags' })
     },
     async deleteWorkspaceConfirm(workspace) {
       if (!workspace) {

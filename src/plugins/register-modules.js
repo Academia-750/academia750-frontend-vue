@@ -20,6 +20,7 @@ import workspaces from '@/modules/workspaces'
 import lessons from '@/modules/lessons'
 import permissions from '@/modules/permissions'
 
+
 registerModules({
   errors,
   loading,
