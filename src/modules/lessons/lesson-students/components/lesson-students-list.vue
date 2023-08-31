@@ -18,7 +18,7 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
-            <ResourceButtonAdd text-button="Aggregar" @click="addStudents()" />
+            <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
             <resource-button
               text-button="Gestionar un Grupos"
               color="success"

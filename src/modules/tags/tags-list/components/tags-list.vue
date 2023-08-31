@@ -12,7 +12,7 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Etiquetas" icon="mdi-tag">
           <template slot="actions">
-            <ResourceButtonAdd text-button="Aggregar" @click="addTag()" />
+            <ResourceButtonAdd text-button="Agregar" @click="addTag()" />
             <resource-button
               icon-button="mdi-autorenew"
               @click="resetTableOptions"
@@ -166,7 +166,7 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'La categoría ha sido eliminada con éxito.',
+        title: 'La etiqueta ha sido eliminada correctamente.',
         timer: 3000
       })
 
