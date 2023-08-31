@@ -72,6 +72,7 @@ export default {
   },
   mounted() {
     this.loadTags()
+    console.log('tags', this.loadTags())
   },
   methods: {
     async loadTags(value) {
@@ -89,6 +90,7 @@ export default {
       this.$emit('change', value)
     },
     remove(item) {
+      console.log('onclick', item)
       this.$emit(
         'change',
         this.tags.filter((tag) => tag !== item)

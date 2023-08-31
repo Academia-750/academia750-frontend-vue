@@ -42,6 +42,7 @@
       <v-col cols="12" md="4">
         <TagsAutoComplete
           tag-type="material"
+          :tags="tags"
           :dense="true"
           @change="onChangeTags"
         />
@@ -75,7 +76,11 @@ export default {
     },
     hideworkspace: {
       type: Boolean,
-      defaulte: false
+      default: false
+    },
+    tags: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
