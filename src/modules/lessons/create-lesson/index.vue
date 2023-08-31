@@ -183,7 +183,7 @@ export default {
   computed: {
     ...mapState('lessonsStore', ['lesson']),
     title() {
-      return !this.lesson ? 'Nueva Clase' : `Editar ${this.lesson.name}`
+      return !this.lesson ? 'Nueva Clase' : `Editar "${this.lesson.name}":`
     },
     canEdit() {
       return this.isActiveLesson === false

@@ -17,9 +17,10 @@ jobs:
       VUE_APP_BASE_URL_API_PRODUCTION: 'https://entrenamiento.academia750.es'
 
     steps:
-      - name: Only Main branch
-        if: endsWith(github.ref, 'main') == false
-        run: exit -1
+      # This is not really working need to debug
+      # - name: Only Main branch
+      #   if: endsWith(github.ref, 'main') == false
+      #   run: exit -1
 
       - name: 🚚 Checkout code
         uses: actions/checkout@v2

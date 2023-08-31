@@ -1,30 +1,18 @@
 <template>
   <v-card-text>
-    <!-- ------------ ADD STUDENT TO LESSON ------------ -->
-    <AddStudentsModal
-      ref="addStudents"
-      :loading="loading"
-      @created="tableReload"
-    />
-    <DeleteGroupModal ref="deleteGroupModal" @deleted="tableReload" />
-
+    <!-- ------------ ADD STUDENT TAGS ------------ -->
+    <AddTagModal ref="addTag" :name="name" @create="createTag" />
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="lessonStudentStore"
-      :load="loadLessonStudents"
+      store-name="TagStore"
+      :load="loadTags"
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Alumnos" icon="mdi-account-multiple">
+        <Toolbar title="Etiquetas" icon="mdi-tag">
           <template slot="actions">
-            <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
-            <resource-button
-              text-button="Gestionar un Grupos"
-              color="success"
-              icon-button="mdi-account-multiple"
-              @click="deleteGroupFromLesson()"
-            />
+            <ResourceButtonAdd text-button="Agregar" @click="addTag()" />
             <resource-button
               icon-button="mdi-autorenew"
               @click="resetTableOptions"
@@ -33,7 +21,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI o nombre del grupo"
+          label-text-field="Buscar por nombre de la etiqueta."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -43,13 +31,13 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
-      <!-- <template v-slot:abel> ABEL </template> -->
+
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.actions`]="{ item }">
-        <div class="d-flex justify-space-around">
+        <div class="d-flex justify-center">
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteStudentFromLesson(item)"
+            @actionConfirmShowDialogDelete="deleteTag(item)"
           />
         </div>
       </template>
@@ -61,16 +49,12 @@
 import _ from 'lodash'
 import { mapActions, mapMutations } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import LessonRepository from '@/services/LessonRepository'
-import headers from './students-table-columns'
+import TagRepository from '@/services/TagRepository'
+import headers from './tags-table-columns'
 
 export default {
-  name: 'DatatableStudents',
+  name: 'DatatableTags',
   components: {
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
@@ -78,14 +62,6 @@ export default {
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
-      ),
-    AddStudentsModal: () =>
-      import(
-        /* webpackChunkName: "ServerDataTable" */ './add-student-to-lesson'
-      ),
-    DeleteGroupModal: () =>
-      import(
-        /* webpackChunkName: "ServerDataTable" */ './delete-group-from-lesson'
       ),
     ServerDataTable: () =>
       import(
@@ -102,14 +78,21 @@ export default {
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
+      ),
+    AddTagModal: () =>
+      import(
+        /* webpackChunkName: "AddTagModal" */ '@/modules/resources/components/resources/add-tag-modal'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
       )
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
       searchWordText: '',
-      loading: false,
-      groupName: ''
+      loading: false
     }
   },
   computed: {
@@ -117,7 +100,7 @@ export default {
       return headers
     },
     store() {
-      return this.$store.state.lessonStudentStore
+      return this.$store.state.TagStore
     }
   },
   watch: {
@@ -133,40 +116,37 @@ export default {
   mounted() {},
 
   methods: {
-    ...mapActions('lessonStudentStore', ['resetTableOptions']),
-    ...mapMutations('lessonStudentStore', ['SET_TABLE_OPTIONS']),
-    addStudents() {
-      this.$refs.addStudents.open()
-    },
-    deleteGroupFromLesson() {
-      this.$refs.deleteGroupModal.open()
+    ...mapActions('TagStore', ['resetTableOptions']),
+    ...mapMutations('TagStore', ['SET_TABLE_OPTIONS']),
+    addTag() {
+      this.$refs.addTag.open()
     },
     tableReload() {
       this.$refs.table.reload()
     },
-    async loadLessonStudents(pagination) {
-      const lessonId = this.$route.params.id
+    async loadTags(pagination) {
       const params = {
         ...pagination
       }
 
-      const res = await LessonRepository.lessonStudentList(lessonId, params)
+      const res = await TagRepository.list(params)
 
       return res
     },
-    async deleteStudentFromLesson(student) {
-      const lessonId = this.$route.params.id
-      const student_id = student.uuid
-
-      if (!student) {
+    async createTag() {
+      this.resetTableOptions()
+      this.$refs.table.reload()
+    },
+    async deleteTag(tag) {
+      if (!tag) {
         return
       }
       const result = await this.$swal.fire({
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'Eliminar Alumno',
-        html: '¿Seguro que deseas eliminar este alumno? El alumno no tendra acceso a la clase y sus materiales',
+        title: '¿Seguro que deseas eliminar este Etiqueta? ',
+        html: 'No podrá etiquetar nuevos materiales ni filtrar por ella. Los materiales ya etiquetados seguiran teniendo la etiqueta, será necesario eliminarla manualmente.',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -177,13 +157,20 @@ export default {
       if (!result.isConfirmed) {
         return
       }
-      const res = await LessonRepository.deleteStudentFromLesson(lessonId, {
-        student_id
+
+      const res = await TagRepository.delete(tag.id)
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'La etiqueta ha sido eliminada correctamente.',
+        timer: 3000
       })
 
-      if (res) {
-        this.tableReload()
-      }
+      this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
