@@ -48,8 +48,7 @@ export default {
 
       if (
         this.questionHistory.status_question === 'wrong' &&
-        // The questionHistoryAnswer Id is not an UUID.
-        this.questionHistory.answer_id === this.answer.attributes.id
+        this.questionHistory.answer_id === this.answer.id
       ) {
         return 'red darken-1 white--text'
       }
