@@ -210,7 +210,7 @@ export default {
       ResourceService.warning({
         response
       })
-      
+
       return false
     }
 
@@ -287,9 +287,12 @@ export default {
    * @param {string} offset
    * @param {string} content
    */
-  async listOfMaterials(id, { type, tags, orderBy, order, limit, offset, content  } = {}) {
+  async listOfMaterials(
+    id,
+    { type, tags, orderBy, order, limit, offset, content } = {}
+  ) {
     const params = {
-      type,
+      type: type || undefined,
       tags,
       orderBy,
       order,
@@ -299,7 +302,9 @@ export default {
     }
 
     deleteUndefined(params)
-    const response = await ResourceService.get(`lesson/${id}/materials`, { params })
+    const response = await ResourceService.get(`lesson/${id}/materials`, {
+      params
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -327,7 +332,7 @@ export default {
       ResourceService.warning({
         response,
         title: 'Información Duplicada',
-        message: 'el material ya existe'
+        message: 'El material ya esta siendo usado en esta clase'
       })
 
       return false

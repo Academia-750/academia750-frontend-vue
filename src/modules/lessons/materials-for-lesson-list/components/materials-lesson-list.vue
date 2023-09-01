@@ -13,7 +13,10 @@
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <Toolbar :title="`Materiales de la clase ${ lesson.name }`" icon="mdi-folder-open">
+        <Toolbar
+          :title="`Materiales de la clase ${lesson.name}`"
+          icon="mdi-folder-open"
+        >
           <template slot="actions">
             <ResourceButtonAdd
               text-button="Buscar Material"
@@ -34,12 +37,10 @@
         </Toolbar>
         <SearchBar
           :search-word="content"
-          :workspace="workspace"
           :type="type"
           :tags="tags"
           store-name="materialsForLessonStore"
           @onChangeType="onChangeType"
-          @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
           @searchFieldExecuted="searchFieldExecuted"
           @searchFieldWithDebounce="searchFieldWithDebounce"
@@ -102,7 +103,8 @@ export default {
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'
+      import(
+        /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
       ),
     Toolbar: () =>
       import(
@@ -205,11 +207,6 @@ export default {
     },
     onChangeType(value) {
       this.SET_TYPE(value)
-      this.$refs.table.reload()
-      this.SET_TABLE_OPTIONS({ offset: 0 })
-    },
-    onChangeWorkspace(value) {
-      this.SET_WORKSPACE(value)
       this.SET_TABLE_OPTIONS({ offset: 0 })
       this.$refs.table.reload()
     },
@@ -223,7 +220,8 @@ export default {
     async loadMaterials(pagination) {
       const params = {
         ...pagination,
-        tags: this.tags
+        tags: this.tags,
+        type: this.type
       }
 
       const res = await LessonRepository.listOfMaterials(

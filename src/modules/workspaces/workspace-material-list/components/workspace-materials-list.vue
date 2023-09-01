@@ -35,8 +35,9 @@
           :search-word="content"
           :workspace="workspace"
           :type="type"
-          store-name="lessonMaterialsStore"
-          :hideworkspace="true"
+          :tags="tags"
+          store-name="workspaceMaterialStore"
+          :display-workspace="true"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
@@ -165,7 +166,9 @@ export default {
         /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
       ),
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'),
+      import(
+        /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
+      ),
 
     ServerDataTable
   },

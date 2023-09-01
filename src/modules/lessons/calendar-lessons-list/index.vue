@@ -32,7 +32,7 @@
                 <span class="font-weight-bold subtitle-2">
                   No. de alumnos:
                 </span>
-                {{ lesson.student_count }}
+                {{ lesson.student_count || 0 }}
               </div>
             </template>
             <template v-else slot="info">
@@ -56,13 +56,19 @@
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
-                :config-route="{ name: 'list-of-materials', params: { id: lesson.id } }"
+                :config-route="{
+                  name: 'list-of-materials',
+                  params: { id: lesson.id }
+                }"
               />
               <resource-button
                 text-button="Alumnos"
                 icon-button="mdi-account-group"
                 color="success"
-                :config-route="{ name: 'add-students', params: { id: lesson.id } }"
+                :config-route="{
+                  name: 'add-students',
+                  params: { id: lesson.id }
+                }"
               />
             </template>
           </LessonToolBar>

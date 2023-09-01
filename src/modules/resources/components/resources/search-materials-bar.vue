@@ -25,7 +25,7 @@
           @change="onChangeType"
         ></v-select>
       </v-col>
-      <v-col v-if="hideworkspace" cols="12" md="3">
+      <v-col v-if="displayWorkspace" cols="12" md="3">
         <v-select
           :value="state.workspace"
           :items="workspaces"
@@ -74,7 +74,7 @@ export default {
       type: String,
       required: true
     },
-    hideworkspace: {
+    displayWorkspace: {
       type: Boolean,
       default: false
     },

@@ -18,7 +18,7 @@
           :type="type"
           :tags="tags"
           store-name="lessonMaterialsStore"
-          :hideworkspace="true"
+          :display-workspace="true"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
@@ -89,7 +89,9 @@ export default {
       ),
 
     SearchBar: () =>
-      import(/* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-bar.vue'),
+      import(
+        /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
+      ),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
@@ -253,7 +255,7 @@ export default {
     },
     async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
-      
+
       await downloadFile(material.url, material.name, type)
     },
     reset() {
