@@ -8,9 +8,12 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Prefil" icon="mdi-clipboard-account">
+        <Toolbar title="Perfil" icon="mdi-clipboard-account">
           <template slot="actions">
-            <ResourceButtonAdd text-button="Crear un perfil" @click="addProfile()" />
+            <ResourceButtonAdd
+              text-button="Crear un perfil"
+              @click="addProfile()"
+            />
             <resource-button
               icon-button="mdi-autorenew"
               @click="resetTableOptions"
@@ -19,7 +22,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre de la prefil."
+          label-text-field="Buscar por nombre del perfil."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -113,20 +116,20 @@ export default {
 
   methods: {
     ...mapActions('profilesStore', ['resetTableOptions']),
-    ...mapMutations('profilesStore', ['SET_EDIT_ITEM','SET_TABLE_OPTIONS']),
+    ...mapMutations('profilesStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
     addProfile() {
       this.$router.push({
-          name: 'create-profile'
-        })
+        name: 'create-profile'
+      })
     },
     updateItem(item) {
       this.SET_EDIT_ITEM(item)
       this.$router.push({
-          name: 'create-profile',
-          params: {
-            id: item.id
-          }
-        })
+        name: 'create-profile',
+        params: {
+          id: item.id
+        }
+      })
     },
     canEdit(profile) {
       if (!profile) {

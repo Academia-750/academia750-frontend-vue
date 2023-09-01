@@ -10,7 +10,7 @@
       <v-toolbar-title class="d-flex align-end">
         <v-icon large right class="mx-1"> mdi-account-group </v-icon>
         <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          Crear Prefil
+          Crear Perfil
         </span>
       </v-toolbar-title>
     </v-toolbar>
@@ -29,7 +29,7 @@
               id="is_default_profile"
               :value="isDefaultRole"
               :disabled="false"
-              label="Default prefil"
+              label="Predeterminado"
               @click="setDefaultProfile"
             />
           </v-col>
@@ -115,12 +115,12 @@ export default {
       }
       this.loading = true
 
-      const profile = this.editItem ?
-       await ProfileRepository.update(this.editItem.id, {
+      const profile = this.editItem
+        ? await ProfileRepository.update(this.editItem.id, {
             name: this.name,
             default_role: this.isDefaultRole
           })
-          : await ProfileRepository.create({
+        : await ProfileRepository.create({
             name: this.name
           })
 
@@ -132,7 +132,7 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'Prefil Creado!',
+        title: this.editItem ? 'Perfil Editado!' : 'Perfil Creado!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500

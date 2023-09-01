@@ -35,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de prefil'
+      inner: 'Gestión de permisos'
     }
   }
 }
