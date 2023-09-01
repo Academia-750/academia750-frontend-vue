@@ -6,8 +6,9 @@
         <v-row dense :style="{ width: '-webkit-fill-available' }">
           <v-col cols="12" md="6">
             <FieldInput
+              id="lessonName"
               ref="lessonInput"
-              v-model="lesson.name"
+              v-model="name"
               label="Nombre de la Clase"
               :filled="true"
               :outlined="false"
@@ -19,7 +20,7 @@
               label="Fecha"
               :value="date"
               :disabled="!canEdit"
-              rules="required|valid_date"
+              rules="required"
               @datePicked="datePicked"
             />
             <v-row>
@@ -89,7 +90,7 @@
               id="comment"
               v-model="comment"
               label="Descripción"
-              rules="required"
+              rules="required|min:4"
               :disabled="!canEdit"
             />
           </v-col>
