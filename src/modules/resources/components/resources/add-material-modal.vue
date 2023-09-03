@@ -44,7 +44,7 @@
               ref="nameInput"
               v-model="name"
               label="Nombre del Material"
-              rules="required|min:3|max:50|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              rules="required|min:3|max:50|regex:{{validRegex}}"
             />
             <FieldInput
               v-if="type === 'recording'"

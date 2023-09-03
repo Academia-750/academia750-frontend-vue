@@ -22,7 +22,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre del perfil."
+          label-text-field="Buscar por nombre del prefil."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -34,6 +34,19 @@
       </template>
 
       <!-- ------------ SLOTS ------------ -->
+      <template v-slot:[`item.default_role`]="{ item }">
+        <div>
+          <v-chip
+            class="ma-1"
+            label
+            small
+            :color="item.default_role ? 'primary' : ''"
+          >
+            {{ item.default_role ? 'SI' : 'NO' }}
+          </v-chip>
+        </div>
+      </template>
+        
       <template v-slot:[`item.actions`]="{ item }">
         <div class="d-flex justify-center">
           <resource-button-edit
@@ -41,6 +54,12 @@
             :config-route="{}"
             :only-dispatch-click-event="true"
             @DispatchClickEvent="updateItem(item)"
+          />
+          <resource-button-delete
+            text-button="Eliminar"
+            @actionConfirmShowDialogDelete="
+              deleteRole(item)
+            "
           />
         </div>
       </template>
@@ -54,6 +73,7 @@ import { mapActions, mapMutations } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headers from './profiles-table-columns'
 import ProfileRepository from '@/services/ProfileRepository'
+import Toast from '@/utils/toast'
 
 export default {
   name: 'DatatableProfiles',
@@ -85,6 +105,10 @@ export default {
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
       )
   },
   mixins: [componentButtonsCrud],
@@ -118,6 +142,7 @@ export default {
     ...mapActions('profilesStore', ['resetTableOptions']),
     ...mapMutations('profilesStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
     addProfile() {
+      this.SET_EDIT_ITEM('')
       this.$router.push({
         name: 'create-profile'
       })
@@ -125,7 +150,7 @@ export default {
     updateItem(item) {
       this.SET_EDIT_ITEM(item)
       this.$router.push({
-        name: 'create-profile',
+        name: 'edit-profile',
         params: {
           id: item.id
         }
@@ -135,9 +160,9 @@ export default {
       if (!profile) {
         return
       }
-      const Protected = profile.protected
+      const isProtected = profile.protected
 
-      return Protected === 1 ? true : false
+      return isProtected === 1
     },
     tableReload() {
       this.$refs.table.reload()
@@ -150,6 +175,27 @@ export default {
       const res = await ProfileRepository.list(params)
 
       return res
+    },
+    async deleteRole(role) {
+      if (!role) {
+        return
+      }
+      const response = await Toast.dialog('ELIMINAR Role', '¿Seguro que deseas eliminar este Role? Todos los Role seran borrados del servidor y los alumnos no podrán acceder a ellos')
+
+      if (!response.isConfirmed) {
+        console.log({ response })
+
+        return
+      }
+
+      const res = await ProfileRepository.delete(role.id)
+
+      if (!res) {
+        return
+      }
+      Toast.success('La role ha sido eliminada con éxito.')
+
+      this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })

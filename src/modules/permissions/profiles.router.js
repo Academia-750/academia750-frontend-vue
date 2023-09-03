@@ -28,6 +28,14 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-profile',
+            component: CreateProfileModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
           }
         ]
       }

@@ -66,15 +66,38 @@ export default {
       default_role
     })
 
-    if (response.status === 409) {
+    if (response.status !== 200) {
       ResourceService.warning({
-        response,
-        title: 'Información Duplicada',
-        message: 'Ya existe un grupo con el mismo código o color'
+        response
       })
 
       return false
     }
+
+    return response.data.result
+  },
+  /**
+   * @param {string} id
+   */
+  async delete(id) {
+    const response = await ResourceService.delete(`role/${id}`)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+   /**
+   * @param {string} id
+   */
+   async info(id) {
+    const roleId = id
+    const response = await ResourceService.get(`role/${roleId}`)
 
     if (response.status !== 200) {
       ResourceService.warning({

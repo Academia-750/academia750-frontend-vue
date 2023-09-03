@@ -159,7 +159,7 @@ export default {
         {
           icon: 'mdi-clipboard-account',
           key: '',
-          text: 'Profile',
+          text: 'Gestión de Permisos',
           to: { name: 'manage-profiles' },
           roles: 'admin'
         },

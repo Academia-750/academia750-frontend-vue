@@ -25,7 +25,7 @@
             <!-- Nombre -->
             <NameFieldInput
               v-model="name"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
           </v-col>
           <v-col cols="12" class="d-flex align-start">
@@ -57,6 +57,7 @@
 import { mapActions, mapState, mapMutations } from 'vuex'
 import voucher_codes from 'voucher-code-generator'
 import GroupRepository from '@/services/GroupRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   components: {
@@ -82,7 +83,8 @@ export default {
       loading: false,
       code: '',
       name: '',
-      selectedColor: ''
+      selectedColor: '',
+      validRegex: inputValidRegex
     }
   },
   computed: {

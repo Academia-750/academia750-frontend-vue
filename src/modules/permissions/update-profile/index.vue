@@ -21,7 +21,7 @@
             <!-- Nombre -->
             <NameFieldInput
               v-model="name"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
           </v-col>
           <v-col cols="12" md="4" class="py-0 pl-0">
@@ -54,6 +54,8 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
 import ProfileRepository from '@/services/ProfileRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 
 export default {
   components: {
@@ -74,19 +76,15 @@ export default {
     return {
       loading: false,
       name: '',
-      isDefaultRole: false
+      isDefaultRole: false,
+      validRegex: inputValidRegex
     }
   },
   computed: {
     ...mapState('profilesStore', ['editItem'])
   },
   mounted() {
-    if (this.editItem) {
-      this.name = this.editItem.name
-      this.isDefaultRole = this.editItem.default_role === 1 ? true : false
-
-      return
-    }
+    this.info()
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
@@ -98,18 +96,23 @@ export default {
     setDefaultProfile() {
       this.isDefaultRole = !this.isDefaultRole
     },
+    async info() {
+      const { id } = this.$route.params
+
+      if (id) {
+        const role = await ProfileRepository.info(id)
+
+        this.name = role.alias_name
+        this.isDefaultRole = role.default_role
+
+        return
+      }
+    },
     async createProfile() {
       const status = await this.$refs['FormCreateProfile'].validate()
 
       if (!status) {
-        this.$swal.fire({
-          icon: 'error',
-          toast: true,
-          title: 'Por favor, complete correctamente los campos del formulario.',
-          showConfirmButton: true,
-          confirmButtonText: 'Entendido',
-          timer: 7500
-        })
+        Toast.error('Por favor, complete correctamente los campos del formulario.')
 
         return
       }
@@ -129,20 +132,9 @@ export default {
         return
       }
 
-      await this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: this.editItem ? 'Perfil Editado!' : 'Perfil Creado!',
-        showConfirmButton: true,
-        confirmButtonText: 'Entendido',
-        timer: 7500
-      })
+      Toast.success(this.editItem ? 'Perfil Editado!' : 'Perfil Creado!')
 
-      this.SET_EDIT_ITEM(false)
-      this.resetTableOptions()
-      this.$router.push({
-        name: 'manage-profiles'
-      })
+      this.SET_EDIT_ITEM(profile)
     },
 
     async handlingErrorValidation(errorResponse = {}) {
