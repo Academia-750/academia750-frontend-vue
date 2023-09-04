@@ -26,6 +26,7 @@ export default [
     {
       position: 3,
       text: 'Rol predeterminado',
+      sortable: false,
       align: 'center',
       value: 'default_role',
       show: true
