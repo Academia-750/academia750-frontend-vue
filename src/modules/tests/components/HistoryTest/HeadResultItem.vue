@@ -3,9 +3,16 @@
     class="py-1 cursor-pointer d-flex justify-center"
     width="100%"
     :color="getColorQuestion"
-    @click="$emit('scrollToElementRefQuestion', `element-item-question-result-${question.id}`)"
+    @click="
+      $emit(
+        'scrollToElementRefQuestion',
+        `element-item-question-result-${question.id}`
+      )
+    "
   >
-    <span v-if="getDataQuestionInHistory" class="title font-weight-black">{{ getDataQuestionInHistory.index }}</span>
+    <span v-if="getDataQuestionInHistory" class="title font-weight-black">{{
+      getDataQuestionInHistory.index
+    }}</span>
   </v-sheet>
 </template>
 
@@ -24,7 +31,9 @@ export default {
   },
   computed: {
     getDataQuestionInHistory() {
-      return this.questionsDataHistory.find((question) => question.question_id === this.question.id)
+      return this.questionsDataHistory.find(
+        (question) => question.question.uuid === this.question.id
+      )
     },
     getColorQuestion() {
       const questionState = this.getDataQuestionInHistory.status_question
@@ -43,6 +52,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

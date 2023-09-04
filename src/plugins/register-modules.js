@@ -18,6 +18,7 @@ import statistics from '@/modules/statistics'
 import groups from '@/modules/groups'
 import workspaces from '@/modules/workspaces'
 import lessons from '@/modules/lessons'
+import tags from '@/modules/tags'
 
 registerModules({
   errors,
@@ -38,5 +39,6 @@ registerModules({
   statistics,
   groups,
   workspaces,
-  lessons
+  lessons,
+  tags
 })
