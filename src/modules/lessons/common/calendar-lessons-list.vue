@@ -41,10 +41,11 @@
                   </v-btn>
                 </template>
                 <v-date-picker
-                  v-value="focus"
+                  v-model="focus"
                   position="left"
                   elevation="4"
                   no-title
+                  :first-day-of-week="1"
                   @input="onMiniCalendar"
                 ></v-date-picker>
               </v-menu>

@@ -24,8 +24,6 @@ Object.keys(rules).forEach((rule) => {
 
 extend('valid_date', {
   validate: (value, { format }) => {
-    console.log({ value, format })
-
     return moment(value, format).isValid()
   },
   message: 'La fecha no es válida. {format}',
