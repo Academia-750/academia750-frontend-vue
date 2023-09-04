@@ -22,7 +22,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre del prefil."
+          label-text-field="Buscar por nombre del perfil."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -46,7 +46,7 @@
           </v-chip>
         </div>
       </template>
-        
+
       <template v-slot:[`item.actions`]="{ item }">
         <div class="d-flex justify-center">
           <resource-button-edit
@@ -57,9 +57,7 @@
           />
           <resource-button-delete
             text-button="Eliminar"
-            @actionConfirmShowDialogDelete="
-              deleteRole(item)
-            "
+            @actionConfirmShowDialogDelete="deleteRole(item)"
           />
         </div>
       </template>
@@ -158,11 +156,10 @@ export default {
     },
     canEdit(profile) {
       if (!profile) {
-        return
+        return false
       }
-      const isProtected = profile.protected
 
-      return isProtected === 1
+      return profile.protected === 1
     },
     tableReload() {
       this.$refs.table.reload()
@@ -180,11 +177,12 @@ export default {
       if (!role) {
         return
       }
-      const response = await Toast.dialog('ELIMINAR Role', '¿Seguro que deseas eliminar este Role? Todos los Role seran borrados del servidor y los alumnos no podrán acceder a ellos')
+      const response = await Toast.delete(
+        '¿Seguro que deseas eliminar este Role?',
+        'Todos los usuarios asociados a este perfil seran asignados al perfil por defecto.'
+      )
 
       if (!response.isConfirmed) {
-        console.log({ response })
-
         return
       }
 
@@ -193,7 +191,7 @@ export default {
       if (!res) {
         return
       }
-      Toast.success('La role ha sido eliminada con éxito.')
+      Toast.success('El perfil ha sido eliminada con éxito.')
 
       this.$refs.table.reload()
     },
