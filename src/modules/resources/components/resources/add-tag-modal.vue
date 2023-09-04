@@ -12,7 +12,7 @@
               ref="nameInput"
               v-model="name"
               label="Etiqueta"
-              rules="required|min:3|max:25|regex:{{validRegex}}"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
               <v-btn
