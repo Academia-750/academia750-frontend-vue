@@ -70,7 +70,6 @@ export default {
       return this.$store.getters[`${this.storeName}/vueTableOptions`]
     }
   },
-
   methods: {
     setSelected(value) {
       this.$store.commit(`${this.storeName}/SET_ITEMS_SELECTED`, value)

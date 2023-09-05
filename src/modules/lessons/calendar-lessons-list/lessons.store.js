@@ -16,5 +16,34 @@ export default {
     SET_TYPE(state, payload) {
       state.type = payload
     }
+  },
+  actions: {
+    setLesson({ dispatch, commit }, payload) {
+      commit('SET_LESSON', payload)
+
+      // We also clear the tables related to the selected lesson
+      dispatch('lessonMaterialsStore/resetTableOptions', null, { root: true })
+      dispatch(
+        'lessonMaterialsStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+
+      dispatch('lessonStudentStore/resetTableOptions', null, { root: true })
+      dispatch(
+        'lessonStudentStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+
+      dispatch('materialsForLessonStore/resetTableOptions', null, {
+        root: true
+      })
+      dispatch(
+        'materialsForLessonStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+    }
   }
 }

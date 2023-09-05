@@ -74,7 +74,11 @@
             @click:date="onDateClick"
             @change="getCalendarLessons"
             @input="onInputChange"
-          ></v-calendar>
+          >
+            <template v-slot:event="{ event }">
+              <span class="pl-1"> {{ format(event) }} </span>
+            </template>
+          </v-calendar>
         </v-sheet>
       </v-col>
     </v-row>
@@ -164,6 +168,9 @@ export default {
     next() {
       this.$refs.calendar.next()
     },
+    format(event) {
+      return `${moment(event.start).format('HH:mm')}   ${event.name}`
+    },
     async showEvent({ event }) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
@@ -190,7 +197,6 @@ export default {
           timed: false
         }
       })
-
       // Auto select the first next lesson or the last lesson if all is in the past
       const nextLesson =
         this.lessons

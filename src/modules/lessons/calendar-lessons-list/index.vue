@@ -96,7 +96,7 @@
 
 <script>
 import notifications from '@/mixins/notifications'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -139,17 +139,18 @@ export default {
     this.loadNotifications()
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON', 'SET_DATE', 'SET_TYPE']),
+    ...mapMutations('lessonsStore', ['SET_DATE', 'SET_TYPE']),
+    ...mapActions('lessonsStore', ['setLesson']),
     dateFormat(date) {
       return moment(date).format('DD/MM/YYYY')
     },
 
     addLesson(date = undefined) {
-      this.SET_LESSON(false)
+      this.setLesson(false)
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
-      this.SET_LESSON(lesson || false)
+      this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })
       }
@@ -160,7 +161,7 @@ export default {
       if (this.lesson) {
         return
       }
-      this.SET_LESSON(lesson || false)
+      this.setLesson(lesson || false)
     }
   },
   head: {

@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 
@@ -206,7 +206,8 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON']),
+    ...mapActions('lessonsStore', ['setLesson']),
+
     reset() {
       this.name = ''
       this.date = ''
@@ -289,7 +290,7 @@ export default {
           timer: 7500
         })
 
-        this.SET_LESSON(lesson)
+        this.setLesson(lesson)
         // this.$router.push({ name: 'manage-lessons' })
       } catch (error) {
         console.error(error)
@@ -332,7 +333,7 @@ export default {
       }
       this.isActiveLesson = active
       this.lesson.is_active = active
-      this.SET_LESSON(this.lesson)
+      this.setLesson(this.lesson)
       this.reset()
     },
     async deleteLesson() {
@@ -378,7 +379,7 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
-      this.SET_LESSON(false)
+      this.setLesson(false)
       this.$router.push({ name: 'manage-lessons' })
     }
   },
