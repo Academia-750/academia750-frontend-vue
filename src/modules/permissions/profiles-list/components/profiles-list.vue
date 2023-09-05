@@ -185,8 +185,9 @@ export default {
       if (!role) {
         return
       }
-      const response = await Toast.delete(
-        '¿Seguro que deseas eliminar este Role?',
+
+      const response = await Toast.dialog(
+        '¿Seguro que deseas eliminar este Rol?',
         'Todos los usuarios asociados a este perfil seran asignados al perfil por defecto.'
       )
 
