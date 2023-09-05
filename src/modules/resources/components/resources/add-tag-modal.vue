@@ -44,6 +44,7 @@
 </template>
 <script>
 import TagRepository from '@/services/TagRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddTagModal',
@@ -59,7 +60,8 @@ export default {
       isOpen: false,
       loading: false,
       name: '',
-      tag: ''
+      tag: '',
+      validRegex: inputValidRegex
     }
   },
   methods: {

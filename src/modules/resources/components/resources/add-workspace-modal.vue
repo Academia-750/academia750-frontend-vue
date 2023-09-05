@@ -44,6 +44,7 @@
 </template>
 <script>
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddWorkspaceModal',
@@ -59,7 +60,8 @@ export default {
       isOpen: false,
       loading: false,
       name: '',
-      workspace: ''
+      workspace: '',
+      validRegex: inputValidRegex
     }
   },
   methods: {

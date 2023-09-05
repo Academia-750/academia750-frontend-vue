@@ -157,6 +157,7 @@
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddMaterialModal',
@@ -179,6 +180,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      validRegex: inputValidRegex,
       selectedWorkspace: null,
       uploadedFiles: [],
       loading: false,
