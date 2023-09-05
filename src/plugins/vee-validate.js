@@ -23,8 +23,11 @@ Object.keys(rules).forEach((rule) => {
 })
 
 extend('valid_date', {
-  validate: (value) => moment(value).isValid(),
-  message: 'La fecha no es válida'
+  validate: (value, { format }) => {
+    return moment(value, format).isValid()
+  },
+  message: 'La fecha no es válida. {format}',
+  params: ['format']
 })
 
 extend('before', {

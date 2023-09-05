@@ -1,54 +1,29 @@
 <template>
   <v-card-text>
-    <AddMaterialModal
-      ref="addWorkspaceMaterial"
-      :default-workspace="workspace"
-      :workspaces="workspaces"
-      @create="create"
-    />
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="workspaceMaterialStore"
+      store-name="lessonMaterialsStore"
       :load="loadMaterials"
     >
       <template v-slot:top>
-        <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de espacio de trabajo"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
-
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Materiales" />
-
-          <v-spacer />
-
-          <resource-button icon-button="mdi-autorenew" @click="reset()" />
-        </v-toolbar>
-        <!-- ------------ TYPE SECTION ------------ -->
-
+        <Toolbar title="Buscar Materiales" icon="mdi-folder-open">
+          <template slot="actions">
+            <resource-button icon-button="mdi-autorenew" @click="reset()" />
+          </template>
+        </Toolbar>
         <SearchBar
           :search-word="content"
           :workspace="workspace"
           :type="type"
           :tags="tags"
-          store-name="workspaceMaterialStore"
+          store-name="lessonMaterialsStore"
           :display-workspace="true"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
           @searchFieldExecuted="searchFieldExecuted"
           @searchFieldWithDebounce="searchFieldWithDebounce"
-        />
-
-        <ResourceButtonAdd
-          text-button="Nuevo Material"
-          class="mb-2 mx-3"
-          @click="onAddMaterial"
         />
       </template>
 
@@ -73,41 +48,17 @@
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
-          <div>
-            <v-icon
-              v-if="item.type === 'material'"
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="item.url ? false : true"
-              @click="download(item)"
-            >
-              mdi-cloud-download
-            </v-icon>
-            <v-icon
-              v-else
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="true"
-            >
-              mdi-camera
-            </v-icon>
-          </div>
           <div></div>
-          <resource-button-edit
-            :config-route="{}"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateWorkspaceMaterial(item)"
-          />
-          <resource-button-delete
-            text-button="Eliminar"
-            @actionConfirmShowDialogDelete="
-              deleteWorkspaceMaterialConfirm(item)
-            "
+          <ResourceButtonAdd
+            ref="tagsInput"
+            text-button="Agregar"
+            class="mb-2 mx-3"
+            @click="onAddMaterial(item)"
           />
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || 'Tipo Desconocido' }}
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -117,25 +68,17 @@
 import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './workspace-materials-list-columns'
+import headers from './lesson-materials-list-columns'
 import moment from 'moment'
-import WorkspaceRepository from '@/services/WorkspaceRepository'
+import LessonRepository from '@/services/LessonRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
-import DownloadFile from '@/utils/DownloadMaterial'
+import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
-  name: 'WorkspaceList',
+  name: 'LessonMaterialsList',
   components: {
-    ResourceButtonEdit: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
-      ),
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
@@ -144,30 +87,18 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
+
+    SearchBar: () =>
       import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+        /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
       ),
-    ResourceHeaderCrudTitle: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-      ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
-
-    ResourceButtonGoBackRouter: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
-      ),
-    SearchBar: () =>
-      import(
-        /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
       ),
 
     ServerDataTable
@@ -193,13 +124,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaceMaterialStore', ['workspace', 'type', 'tags']),
+    ...mapState('lessonMaterialsStore', ['workspace', 'type', 'tags']),
 
     headers() {
       return headers
     },
     content() {
-      return this.$store.state.workspaceMaterialStore.tableOptions.content
+      return this.$store.state.lessonMaterialsStore.tableOptions.content
     }
   },
   created() {
@@ -207,15 +138,11 @@ export default {
   },
   mounted() {
     this.$refs.table.reload()
-    this.loadWorkspaces()
   },
 
   methods: {
-    ...mapActions('workspaceMaterialStore', [
-      'deleteGroup',
-      'resetTableOptions'
-    ]),
-    ...mapMutations('workspaceMaterialStore', [
+    ...mapActions('lessonMaterialsStore', ['deleteGroup', 'resetTableOptions']),
+    ...mapMutations('lessonMaterialsStore', [
       'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
@@ -223,9 +150,6 @@ export default {
     ]),
     parseDate(date) {
       return moment(date).format('YYYY-MM-DD hh:mm')
-    },
-    async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
     onChangeType(value) {
       this.SET_TYPE(value)
@@ -253,21 +177,6 @@ export default {
       const res = await WorkspaceMaterialRepository.list(params)
 
       return res
-    },
-    async loadWorkspaces(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceRepository.list(params)
-
-      this.workspaces = res.results.map((item) => ({
-        key: item.id.toString(),
-        label: item.name
-      }))
-    },
-    async create() {
-      this.$refs.table.reload()
     },
     async deleteWorkspaceMaterialConfirm(material) {
       if (!material) {
@@ -307,13 +216,28 @@ export default {
 
       this.$refs.table.reload()
     },
-    onAddMaterial() {
-      console.log({ refs: this.$refs })
-      this.$refs.addWorkspaceMaterial.open()
-    },
+    async onAddMaterial(material) {
+      if (!material) {
+        return
+      }
+      const material_id = material.id
 
-    updateWorkspaceMaterial(material) {
-      this.$refs.addWorkspaceMaterial.open(material)
+      const res = await LessonRepository.addMaterialsToLesson(
+        this.$route.params.id,
+        { material_id }
+      )
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title: 'Acción completada.',
+        timer: 3000
+      })
+
+      this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
@@ -332,7 +256,7 @@ export default {
     async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
 
-      DownloadFile(material.url, material.name, type)
+      await downloadFile(material.url, material.name, type)
     },
     reset() {
       this.resetTableOptions()

@@ -6,7 +6,8 @@
         <v-row dense :style="{ width: '-webkit-fill-available' }">
           <v-col cols="12" md="6">
             <FieldInput
-              id="name"
+              id="lessonName"
+              ref="lessonInput"
               v-model="name"
               label="Nombre de la Clase"
               :filled="true"
@@ -19,7 +20,7 @@
               label="Fecha"
               :value="date"
               :disabled="!canEdit"
-              rules="required|valid_date"
+              rules="required"
               @datePicked="datePicked"
             />
             <v-row>
@@ -89,7 +90,7 @@
               id="comment"
               v-model="comment"
               label="Descripción"
-              rules="required"
+              rules="required|min:4"
               :disabled="!canEdit"
             />
           </v-col>
@@ -108,13 +109,19 @@
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
-                :disabled="true"
+                :config-route="{
+                  name: 'list-of-materials',
+                  params: { id: lesson.id }
+                }"
               />
               <resource-button
                 text-button="Alumnos"
                 icon-button="mdi-account-group"
                 color="success"
-                :disabled="true"
+                :config-route="{
+                  name: 'add-students',
+                  params: { id: lesson.id }
+                }"
               />
 
               <resource-button
@@ -132,7 +139,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 import { inputValidRegex } from '@/utils/inputValidRegex'
@@ -201,7 +208,8 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON']),
+    ...mapActions('lessonsStore', ['setLesson']),
+
     reset() {
       this.name = ''
       this.date = ''
@@ -284,7 +292,7 @@ export default {
           timer: 7500
         })
 
-        this.SET_LESSON(lesson)
+        this.setLesson(lesson)
         // this.$router.push({ name: 'manage-lessons' })
       } catch (error) {
         console.error(error)
@@ -327,7 +335,7 @@ export default {
       }
       this.isActiveLesson = active
       this.lesson.is_active = active
-      this.SET_LESSON(this.lesson)
+      this.setLesson(this.lesson)
       this.reset()
     },
     async deleteLesson() {
@@ -373,7 +381,7 @@ export default {
         confirmButtonText: 'Entendido',
         timer: 7500
       })
-      this.SET_LESSON(false)
+      this.setLesson(false)
       this.$router.push({ name: 'manage-lessons' })
     }
   },

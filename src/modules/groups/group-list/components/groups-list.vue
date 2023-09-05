@@ -186,7 +186,7 @@ export default {
         return
       }
 
-      const res = await WorkspaceRepository.delete(item.id)
+      const res = await GroupRepository.delete(item.id)
 
       if (!res) {
         return

@@ -1,8 +1,5 @@
 <template>
-  <p
-    class="subtitle-2 font-weight-bold pa-2"
-    :class="getClassAnswerBlock"
-  >
+  <p class="subtitle-2 font-weight-bold pa-2" :class="getClassAnswerBlock">
     <!-- {{ getIndexAnswerQuestion }}  -->{{ answer.attributes.answer_text }}
   </p>
 </template>
@@ -29,30 +26,37 @@ export default {
     }
   },
   computed: {
-    getIndexAnswerQuestion () {
-      const indexAnswers = [
-        'a)',
-        'b)',
-        'c)',
-        'd)'
-      ]
+    getIndexAnswerQuestion() {
+      const indexAnswers = ['a)', 'b)', 'c)', 'd)']
 
       return indexAnswers[this.index]
     },
     getClassAnswerBlock() {
-      if ( this.questionHistory.status_question === 'unanswered' && this.answerCorrect.id === this.answer.id ) {
+      if (
+        this.questionHistory.status_question === 'unanswered' &&
+        this.answerCorrect.id === this.answer.id
+      ) {
         return 'green darken-1 white--text'
       }
 
-      if ( this.questionHistory.status_question === 'correct' && this.answerCorrect.id === this.answer.id) {
+      if (
+        this.questionHistory.status_question === 'correct' &&
+        this.answerCorrect.id === this.answer.id
+      ) {
         return 'green darken-1 white--text'
       }
 
-      if (this.questionHistory.status_question === 'wrong' && this.questionHistory.answer_id === this.answer.id) {
+      if (
+        this.questionHistory.status_question === 'wrong' &&
+        this.questionHistory.answer_id === this.answer.id
+      ) {
         return 'red darken-1 white--text'
       }
 
-      if (this.questionHistory.status_question === 'wrong' && this.answerCorrect.id === this.answer.id) {
+      if (
+        this.questionHistory.status_question === 'wrong' &&
+        this.answerCorrect.id === this.answer.id
+      ) {
         return 'secondary'
       }
 

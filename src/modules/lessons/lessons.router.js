@@ -3,6 +3,8 @@ import authMiddleware from '@/middlewares/auth'
 import ManageLessonsModule from './calendar-lessons-list'
 import CreateLessonsModule from './create-lesson'
 import AddStudentToLessonsModule from './lesson-students'
+import AddMaterialsToLessonsModule from './lesson-material-list'
+import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
 
 const shortcutRoutes = [
   {
@@ -45,6 +47,22 @@ const moduleRoute = [
             path: ':id/students',
             name: 'add-students',
             component: AddStudentToLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/list/materials',
+            name: 'add-materials',
+            component: AddMaterialsToLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/materials',
+            name: 'list-of-materials',
+            component: ListOfMaterialsForLessonsModule,
             meta: {
               middleware: [authMiddleware]
             }
