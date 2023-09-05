@@ -10,7 +10,7 @@
       <v-toolbar-title class="d-flex align-end">
         <v-icon large right class="mx-1"> mdi-account-group </v-icon>
         <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          Crear Perfil
+          {{ editItem ? 'Editar Perfil' : ' Crear Perfil' }}
         </span>
       </v-toolbar-title>
     </v-toolbar>
@@ -93,10 +93,23 @@ export default {
   methods: {
     ...mapActions('profilesStore', ['resetTableOptions']),
     ...mapMutations('profilesStore', ['SET_EDIT_ITEM']),
-    setDefaultProfile() {
-      this.isDefaultRole = !this.isDefaultRole
+    setDefaultProfile(value) {
+      if (!value) {
+        Toast.warning(
+          'Selecciona otro rol por defecto para que este deje de serlo'
+        )
+
+        return
+      }
+      this.isDefaultRole = value
     },
     async info() {
+      if (this.editItem) {
+        this.name = this.editItem.alias_name
+
+        return
+      }
+
       const { id } = this.$route.params
 
       if (id) {
@@ -104,6 +117,7 @@ export default {
 
         this.name = role.alias_name
         this.isDefaultRole = role.default_role
+        this.SET_EDIT_ITEM(role)
 
         return
       }
@@ -123,19 +137,21 @@ export default {
       const profile = this.editItem
         ? await ProfileRepository.update(this.editItem.id, {
             name: this.name,
-            default_role: this.isDefaultRole
+            default_role: this.isDefaultRole ? this.isDefaultRole : undefined
           })
         : await ProfileRepository.create({
             name: this.name
           })
 
       this.loading = false
+
       if (!profile) {
         return
       }
 
+      !this.editItem && this.$router.replace(`${profile.id}/edit`)
+
       Toast.success(this.editItem ? 'Perfil Editado!' : 'Perfil Creado!')
-      console.log({ profile })
       this.SET_EDIT_ITEM(profile)
     },
 
@@ -145,7 +161,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Crear Groupo'
+      inner: 'Perfil de Usuario'
     }
   }
 }

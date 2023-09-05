@@ -23,6 +23,16 @@ export default {
 
     return true
   },
+  async warning(title) {
+    Swal.fire({
+      icon: 'warning',
+      toast: true,
+      title,
+      timer: 3000
+    })
+
+    return true
+  },
   async dialog(title, message) {
     const result = await Swal.fire({
       toast: true,

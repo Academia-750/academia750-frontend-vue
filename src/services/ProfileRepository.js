@@ -11,6 +11,16 @@ export default {
       name
     })
 
+    if (response.status === 409) {
+      ResourceService.warning({
+        response,
+        title: 'Ya existe un perfil con ese nombre',
+        message: ''
+      })
+
+      return false
+    }
+
     if (response.status !== 200) {
       ResourceService.warning({
         response
@@ -28,8 +38,7 @@ export default {
    * @param {number} offset
    * @param {number} limit
    */
-  async list({ orderBy, order, limit, offset, content } = {}
-  ) {
+  async list({ orderBy, order, limit, offset, content } = {}) {
     const params = {
       orderBy,
       order,
@@ -66,6 +75,16 @@ export default {
       default_role
     })
 
+    if (response.status === 409) {
+      ResourceService.warning({
+        response,
+        title: 'Ya existe un perfil con ese nombre',
+        message: ''
+      })
+
+      return false
+    }
+
     if (response.status !== 200) {
       ResourceService.warning({
         response
@@ -92,10 +111,10 @@ export default {
 
     return true
   },
-   /**
+  /**
    * @param {string} id
    */
-   async info(id) {
+  async info(id) {
     const roleId = id
     const response = await ResourceService.get(`role/${roleId}`)
 

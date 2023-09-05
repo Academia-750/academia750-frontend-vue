@@ -173,7 +173,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Crear Groupo'
+      inner: 'Grupo'
     }
   }
 }
