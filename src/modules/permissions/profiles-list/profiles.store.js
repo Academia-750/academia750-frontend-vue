@@ -4,7 +4,8 @@ export default {
   name: 'profilesStore',
   namespaced: true,
   state: {
-    ...DataTableStore.state
+    ...DataTableStore.state,
+    editItem: false
   },
   getters: {
     ...DataTableStore.getters

@@ -24,7 +24,7 @@
               :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
           </v-col>
-          <v-col cols="12" md="4" class="py-0 pl-0">
+          <v-col v-show="editItem" cols="12" md="4" class="py-0 pl-0">
             <SwitchInput
               id="is_default_profile"
               :value="isDefaultRole"
@@ -112,7 +112,9 @@ export default {
       const status = await this.$refs['FormCreateProfile'].validate()
 
       if (!status) {
-        Toast.error('Por favor, complete correctamente los campos del formulario.')
+        Toast.error(
+          'Por favor, complete correctamente los campos del formulario.'
+        )
 
         return
       }
@@ -133,7 +135,7 @@ export default {
       }
 
       Toast.success(this.editItem ? 'Perfil Editado!' : 'Perfil Creado!')
-
+      console.log({ profile })
       this.SET_EDIT_ITEM(profile)
     },
 
