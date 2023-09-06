@@ -106,6 +106,7 @@ export default {
     async info() {
       if (this.editItem) {
         this.name = this.editItem.alias_name
+        this.isDefaultRole = this.editItem.default_role === 1
 
         return
       }
@@ -116,7 +117,7 @@ export default {
         const role = await ProfileRepository.info(id)
 
         this.name = role.alias_name
-        this.isDefaultRole = role.default_role
+        this.isDefaultRole = role.default_role === 1
         this.SET_EDIT_ITEM(role)
 
         return

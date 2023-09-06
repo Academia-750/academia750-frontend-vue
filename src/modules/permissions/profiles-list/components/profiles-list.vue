@@ -186,8 +186,17 @@ export default {
         return
       }
 
+      if (role.default_role) {
+        await Toast.warning(
+          'No puedes borrar el perfil por defecto.',
+          'Para eliminar este rol asigna antes otro perfil por defacto.'
+        )
+
+        return
+      }
+
       const response = await Toast.dialog(
-        '¿Seguro que deseas eliminar este Rol?',
+        '¿Seguro que deseas eliminar este perfil?',
         'Todos los usuarios asociados a este perfil seran asignados al perfil por defecto.'
       )
 

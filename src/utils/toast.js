@@ -23,11 +23,12 @@ export default {
 
     return true
   },
-  async warning(title) {
+  async warning(title, message = '') {
     Swal.fire({
       icon: 'warning',
       toast: true,
       title,
+      html: message ? `${message}` : undefined,
       timer: 3000
     })
 
