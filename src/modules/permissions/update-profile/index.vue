@@ -27,7 +27,7 @@
         </v-row>
       </section>
     </validation-observer>
-    <ServerDataTable ref="table" :headers="headers" store-name="profilesStore" :load="loadPermissions">
+    <ServerDataTable v-if="editItem" ref="table" :headers="headers" store-name="profilesStore" :load="loadPermissions">
       <!-- ------------ NO DATA ------------ -->
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
