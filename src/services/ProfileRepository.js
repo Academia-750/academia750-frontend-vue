@@ -127,5 +127,74 @@ export default {
     }
 
     return response.data.result
+  },
+  /**
+   * @param {string} content Search by names from a partial value
+   * @param {string} orderBy (Only Allowed values)
+   * @param {number} order 1 (ASC) -1 (DESC)
+   * @param {number} offset
+   * @param {number} limit
+   */
+  async listOfPermissions({ orderBy, order, limit, offset, content } = {}) {
+    const params = {
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('role/permissions', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return {
+      results: response.data.results,
+      total: response.data.total
+    }
+  },
+  /**
+   * @param {string} permission_id
+   * @param {string} roleId
+   */
+  async addPermission(permission_id, roleId) {
+    const response = await ResourceService.post(`role/${roleId}/permission`,{ permission_id })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} permission_id
+   * @param {string} roleId
+   */
+  async deletePermission(permission_id, roleId) {
+    console.log({ permission_id, roleId })
+    const response = await ResourceService.delete(`role/${roleId}/permission`,{ data: { permission_id } })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }

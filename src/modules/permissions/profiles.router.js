@@ -2,6 +2,8 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageProfiles from './profiles-list'
 import CreateProfileModule from './update-profile'
+import ManagePermissions from './permission-list'
+
 const moduleRoute = [
   {
     path: '/',
@@ -33,6 +35,21 @@ const moduleRoute = [
             path: ':id/edit',
             name: 'edit-profile',
             component: CreateProfileModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+        ]
+      },
+      {
+        path: ':id/permission',
+        component: Module,
+        redirect: { name: 'manage-permissions' },
+        children: [
+          {
+            path: 'list',
+            name: 'manage-permissions',
+            component: ManagePermissions,
             meta: {
               middleware: [authMiddleware]
             }
