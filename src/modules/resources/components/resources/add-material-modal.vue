@@ -349,7 +349,6 @@ export default {
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-
         this.$emit('create', material)
         this.onClose()
       } catch (err) {

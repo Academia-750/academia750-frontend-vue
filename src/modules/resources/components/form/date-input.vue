@@ -16,7 +16,7 @@
         mode="aggressive"
         :vid="id"
         :name="label"
-        :rules="rules"
+        :rules="rules + valid_date"
       >
         <v-text-field
           :id="id"
@@ -63,6 +63,10 @@ export default {
       type: String,
       default: ''
     },
+    format: {
+      type: String,
+      default: 'DD/MM/YYYY'
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -73,17 +77,26 @@ export default {
     isOpen: false
   }),
   computed: {
-    dateFormatted() {
+    valid_date() {
+      // In case they already pass this prop
+      if (this.rules && this.rules.includes('valid_date')) {
+        return ''
+      }
+      // Append the rule validation according to the format
+      const rule =
+        (this.rules ? '|' : '') +
+        'valid_date' +
+        (this.format ? `:${this.format}` : '')
+
+      return rule
+    },
+    validDate() {
       if (!this.date) {
         return ''
       }
-
-      return moment(this.date).format('YYYY-MM-DD')
-    },
-    validDate() {
       // Not valid date can break the popup
-      if (moment(this.date).isValid()) {
-        return this.date
+      if (moment(this.date, this.format).isValid()) {
+        return moment(this.date, this.format).format('YYYY-MM-DD')
       }
 
       return ''
@@ -91,21 +104,21 @@ export default {
   },
   watch: {
     value() {
-      this.date = this.value
+      this.date = this.value ? moment(this.value).format(this.format) : ''
     }
   },
   mounted() {
-    this.date = this.value || ''
+    this.date = this.value ? moment(this.value).format(this.format) : ''
   },
 
   methods: {
     onCalendarChange(value) {
-      this.date = value
+      this.date = moment(value).format(this.format)
       this.emitDate()
       this.isOpen = false
     },
     emitDate() {
-      this.$emit('datePicked', this.dateFormatted)
+      this.$emit('datePicked', this.validDate)
     }
   }
 }

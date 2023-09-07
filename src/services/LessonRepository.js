@@ -53,8 +53,8 @@ export default {
     if (response.status === 409) {
       ResourceService.warning({
         response,
-        title: 'Información Duplicada',
-        message: 'Ya existe un grupo con el mismo código o color'
+        title: 'Acción no requerida',
+        message: 'Este material ya está disponible en la lección.'
       })
 
       return false
@@ -264,6 +264,98 @@ export default {
     const response = await ResourceService.delete(`lesson/${id}/group`, {
       data: {
         group_id
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} type
+   * @param {string} tags[0]
+   * @param {string} orderBy
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async listOfMaterials(
+    id,
+    { type, tags, orderBy, order, limit, offset, content } = {}
+  ) {
+    const params = {
+      type: type || undefined,
+      tags,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${id}/materials`, {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results }
+  },
+  /**
+   * @param {string} id
+   * @param {string} material_id
+   */
+  async addMaterialsToLesson(id, { material_id } = {}) {
+    const params = {
+      material_id
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.post(`lesson/${id}/material`, params)
+
+    if (response.status === 409) {
+      ResourceService.warning({
+        response,
+        title: 'Información Duplicada',
+        message: 'El material ya esta siendo usado en esta clase'
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} material_id
+   */
+  async deleteMaterialsFromLesson(id, { material_id } = {}) {
+    const response = await ResourceService.delete(`lesson/${id}/material`, {
+      data: {
+        material_id
       }
     })
 

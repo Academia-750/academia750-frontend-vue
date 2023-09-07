@@ -32,7 +32,7 @@
                 <span class="font-weight-bold subtitle-2">
                   No. de alumnos:
                 </span>
-                {{ lesson.student_count }}
+                {{ lesson.student_count || 0 }}
               </div>
             </template>
             <template v-else slot="info">
@@ -56,13 +56,19 @@
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
-                :disabled="true"
+                :config-route="{
+                  name: 'list-of-materials',
+                  params: { id: lesson.id }
+                }"
               />
               <resource-button
                 text-button="Alumnos"
                 icon-button="mdi-account-group"
                 color="success"
-                :config-route="{ name: 'add-students', params: { id: lesson.id } }"
+                :config-route="{
+                  name: 'add-students',
+                  params: { id: lesson.id }
+                }"
               />
             </template>
           </LessonToolBar>
@@ -90,7 +96,7 @@
 
 <script>
 import notifications from '@/mixins/notifications'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -133,17 +139,18 @@ export default {
     this.loadNotifications()
   },
   methods: {
-    ...mapMutations('lessonsStore', ['SET_LESSON', 'SET_DATE', 'SET_TYPE']),
+    ...mapMutations('lessonsStore', ['SET_DATE', 'SET_TYPE']),
+    ...mapActions('lessonsStore', ['setLesson']),
     dateFormat(date) {
       return moment(date).format('DD/MM/YYYY')
     },
 
     addLesson(date = undefined) {
-      this.SET_LESSON(false)
+      this.setLesson(false)
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
-      this.SET_LESSON(lesson || false)
+      this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })
       }
@@ -154,7 +161,7 @@ export default {
       if (this.lesson) {
         return
       }
-      this.SET_LESSON(lesson || false)
+      this.setLesson(lesson || false)
     }
   },
   head: {

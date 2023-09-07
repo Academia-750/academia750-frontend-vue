@@ -3,7 +3,7 @@
     <div ref="sectionTabsItemsGroupsByStatusAccount">
       <v-card flat>
         <v-card-text>
-          <WorkspaceMaterialsList />
+          <LessonMaterialsList />
         </v-card-text>
       </v-card>
     </div>
@@ -14,11 +14,11 @@
 import notifications from '@/mixins/notifications'
 
 export default {
-  name: 'WorkspaceMaterialsView',
+  name: 'LessonMaterialsView',
   components: {
-    WorkspaceMaterialsList: () =>
+    LessonMaterialsList: () =>
       import(
-        /* webpackChunkName: "WorkspaceMaterialsList" */ './components/workspace-materials-list.vue'
+        /* webpackChunkName: "LessonMaterialsList" */ './components/search-materials-list.vue'
       )
   },
   mixins: [notifications],

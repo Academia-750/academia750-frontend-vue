@@ -4,7 +4,6 @@ const cloudinary_preset = process.env.VUE_APP_CLOUDINARY_PRESET || 'academy750'
 
 const cloudinary_id = process.env.VUE_APP_CLOUDINARY_ID || ''
 
-console.log({ cloudinary_id, cloudinary_preset, env: process.env })
 export default {
   async upload(files, folderName) {
     const form = new FormData()
