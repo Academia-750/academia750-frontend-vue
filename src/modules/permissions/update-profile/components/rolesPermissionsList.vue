@@ -54,7 +54,6 @@
   },
     mounted() {
     this.info()
-    console.log('roleId', this.roleId)
     },
     methods: {
       hasPermission(item) {
