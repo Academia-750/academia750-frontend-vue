@@ -184,7 +184,6 @@ export default {
    * @param {string} roleId
    */
   async deletePermission(permission_id, roleId) {
-    console.log({ permission_id, roleId })
     const response = await ResourceService.delete(`role/${roleId}/permission`,{ data: { permission_id } })
 
     if (response.status !== 200) {

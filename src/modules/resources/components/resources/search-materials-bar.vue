@@ -10,6 +10,7 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <!-- ------------ TYPE SECTION ------------ -->
+<<<<<<< Updated upstream:src/modules/resources/components/resources/search-materials-bar.vue
     <v-row class="ml-1">
       <v-col cols="12" md="3">
         <v-select
@@ -50,6 +51,42 @@
     </v-row>
     <!-- <div class="d-flex align-center mx-3 type-section">
     </div> -->
+=======
+    <div class="d-flex align-center mx-3 type-section">
+      <v-select
+        :items="types"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Tipos"
+        :value="state.type"
+        dense
+        outlined
+        class="mr-2"
+        clearable
+        @change="onChangeType"
+      ></v-select>
+      <v-select
+        :value="state.workspace"
+        :items="workspaces"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Categoría"
+        dense
+        outlined
+        class="mr-2"
+        clearable
+        @change="onChangeWorkspace"
+      ></v-select>
+      <TagsAutoComplete
+        :tags="state.tags"
+        tag-type="material"
+        :dense="true"
+        @change="onChangeTags"
+      />
+    </div>
+>>>>>>> Stashed changes:src/modules/lessons/common/search-bar.vue
   </div>
 </template>
 
@@ -114,6 +151,7 @@ export default {
       this.$emit('onChangeWorkspace', value)
     },
     onChangeTags(value) {
+      this.$state.commit(`${this.storeName}/SET_TAGS`, value)
       this.$emit('onChangeTags', value)
     },
     searchFieldExecuted($event) {

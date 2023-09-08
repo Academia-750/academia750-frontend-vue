@@ -38,28 +38,9 @@
         </v-row>
       </section>
     </validation-observer>
-    <ServerDataTable
-      v-if="editItem"
-      ref="table"
-      :headers="headers"
-      store-name="profilesStore"
-      :load="loadPermissions"
-    >
-      <!-- ------------ NO DATA ------------ -->
-      <template v-slot:no-data>
-        <resource-banner-no-data-datatable />
-      </template>
-
-      <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.name`]="{ item }">
-        <SwitchInput
-          :id="'permissions_' + item.id"
-          :value="hasPermission(item)"
-          :label="hasPermission(item) ? 'Si' : 'No'"
-          @click="permissionsAction(item.id)"
-        />
-      </template>
-    </ServerDataTable>
+    <template v-if="editItem">
+      <PermisssionsList roleId="" />
+    </template>
   </v-card-text>
 </template>
 
@@ -84,9 +65,9 @@ export default {
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       ),
-    ServerDataTable: () =>
+    PermisssionsList: () =>
       import(
-        /* webpackChunkName: "ServerDataTable" */ '@/modules/resources/components/resources/server-data-table'
+        /* webpackChunkName: "ServerDataTable" */ './components/rolesPermissionsList.vue'
       )
   },
   data() {
@@ -96,7 +77,8 @@ export default {
       isDefaultRole: false,
       validRegex: inputValidRegex,
       searchWordText: '',
-      permissions: []
+      permissions: [],
+      roleId: ''
     }
   },
   computed: {
@@ -133,6 +115,8 @@ export default {
     },
     async info() {
       const { id } = this.$route.params
+
+      this.roleId = id
 
       if (!id) {
         return
