@@ -75,10 +75,7 @@ export default {
       loading: false,
       name: '',
       isDefaultRole: false,
-      validRegex: inputValidRegex,
-      searchWordText: '',
-      permissions: [],
-      roleId: ''
+      validRegex: inputValidRegex
     }
   },
   computed: {
@@ -96,10 +93,8 @@ export default {
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
-
   methods: {
-    ...mapActions('profilesStore', ['resetTableOptions']),
-    ...mapMutations('profilesStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
+    ...mapMutations('profilesStore', ['SET_EDIT_ITEM']),
     setDefaultProfile(value) {
       if (!value) {
         Toast.warning(
@@ -110,13 +105,8 @@ export default {
       }
       this.isDefaultRole = value
     },
-    hasPermission(item) {
-      return this.permissions.includes(item.id)
-    },
     async info() {
       const { id } = this.$route.params
-
-      this.roleId = id
 
       if (!id) {
         return
@@ -129,35 +119,6 @@ export default {
       this.permissions = role.permissions.map((obj) => obj.id)
 
       this.SET_EDIT_ITEM(role)
-    },
-    async permissionsAction(id) {
-      const permission_id = id
-      const roleId = this.$route.params.id
-
-      // Modify in the server
-      const res = this.permissions.includes(id)
-        ? await ProfileRepository.deletePermission(permission_id, roleId)
-        : await ProfileRepository.addPermission(permission_id, roleId)
-
-      if (!res) {
-        return
-      }
-
-      // Modify the local data
-      this.permissions = this.permissions.includes(id)
-        ? this.permissions.filter((permissionId) => permissionId !== id)
-        : [...this.permissions, id]
-
-      return
-    },
-    async loadPermissions(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await ProfileRepository.listOfPermissions(params)
-
-      return res
     },
     async createProfile() {
       const status = await this.$refs['FormCreateProfile'].validate()
@@ -193,16 +154,6 @@ export default {
     },
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormCreateProfile']['setErrors'](errorResponse)
-    },
-    tableReload() {
-      this.$refs.table.reload()
-    },
-    searchFieldExecuted($event) {
-      this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
-      this.tableReload()
-    },
-    searchFieldWithDebounce(value) {
-      this.searchFieldExecuted(value)
     }
   },
   head: {
