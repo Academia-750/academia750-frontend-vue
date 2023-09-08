@@ -48,8 +48,6 @@
         />
       </v-col>
     </v-row>
-    <!-- <div class="d-flex align-center mx-3 type-section">
-    </div> -->
     <div class="d-flex align-center mx-3 type-section">
       <v-select
         :items="types"
@@ -84,8 +82,6 @@
         @change="onChangeTags"
       />
     </div>
-=======
->>>>>>> 44ccef72dedff82981a2eb7f1501e9397160c1e2
   </div>
 </template>
 
