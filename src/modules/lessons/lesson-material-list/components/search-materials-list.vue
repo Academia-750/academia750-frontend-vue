@@ -13,13 +13,6 @@
           </template>
         </Toolbar>
         <SearchBar
-<<<<<<< Updated upstream:src/modules/lessons/lesson-material-list/components/search-materials-list.vue
-          :search-word="content"
-          :workspace="workspace"
-          :type="type"
-          :tags="tags"
-=======
->>>>>>> Stashed changes:src/modules/lessons/lesson-material-list/components/lesson-materials-list.vue
           store-name="lessonMaterialsStore"
           :display-workspace="true"
           @onChangeType="onChangeType"

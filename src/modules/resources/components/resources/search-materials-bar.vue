@@ -10,7 +10,6 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <!-- ------------ TYPE SECTION ------------ -->
-<<<<<<< Updated upstream:src/modules/resources/components/resources/search-materials-bar.vue
     <v-row class="ml-1">
       <v-col cols="12" md="3">
         <v-select
@@ -51,7 +50,6 @@
     </v-row>
     <!-- <div class="d-flex align-center mx-3 type-section">
     </div> -->
-=======
     <div class="d-flex align-center mx-3 type-section">
       <v-select
         :items="types"
@@ -86,7 +84,8 @@
         @change="onChangeTags"
       />
     </div>
->>>>>>> Stashed changes:src/modules/lessons/common/search-bar.vue
+=======
+>>>>>>> 44ccef72dedff82981a2eb7f1501e9397160c1e2
   </div>
 </template>
 
@@ -151,7 +150,6 @@ export default {
       this.$emit('onChangeWorkspace', value)
     },
     onChangeTags(value) {
-      this.$state.commit(`${this.storeName}/SET_TAGS`, value)
       this.$emit('onChangeTags', value)
     },
     searchFieldExecuted($event) {
