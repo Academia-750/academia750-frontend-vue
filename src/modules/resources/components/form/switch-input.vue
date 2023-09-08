@@ -10,7 +10,7 @@
       :id="id"
       class="py-0"
       :name="id"
-      :value="value"
+      :input-value="value"
       :error-messages="errors"
       :label="label"
       :disabled="disabled"
@@ -41,7 +41,6 @@ export default {
       required: true
     }
   },
-
   methods: {
     onClick() {
       if (this.disabled) {

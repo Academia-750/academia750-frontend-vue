@@ -1,17 +1,23 @@
 <template>
   <v-card-text>
-    <Toolbar title="Crear Perfil" icon="mdi-account-group" />
+    <Toolbar
+      :title="editItem ? 'Editar Perfil' : 'Crear Perfil'"
+      icon="mdi-account-group"
+    />
     <validation-observer ref="FormCreateProfile">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
           <v-col cols="12" sm="12" md="6" lg="4">
             <!-- Nombre -->
-            <NameFieldInput v-model="name" :rules="`required|min:3|max:25|regex:${validRegex}`" />
+            <NameFieldInput
+              v-model="name"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
+            />
           </v-col>
           <v-col v-show="editItem" cols="12" md="4" class="py-0 pl-0">
             <SwitchInput
               id="is_default_profile"
-              :value="isDefaultRole"
+              :value="isDefaultRole === 1"
               :disabled="false"
               label="Predeterminado"
               @click="setDefaultProfile"
@@ -19,7 +25,12 @@
           </v-col>
 
           <v-col cols="12" class="d-flex justify-start flex-column flex-sm-row">
-            <v-btn :loading="loading" color="light-blue darken-3" class="mt-3 white--text" @click="createProfile">
+            <v-btn
+              :loading="loading"
+              color="light-blue darken-3"
+              class="mt-3 white--text"
+              @click="createProfile"
+            >
               <v-icon right dark class="mr-1"> mdi-account-group </v-icon>
               {{ editItem ? 'Editar' : 'Crear' }}
             </v-btn>
@@ -27,7 +38,13 @@
         </v-row>
       </section>
     </validation-observer>
-    <ServerDataTable v-if="editItem" ref="table" :headers="headers" store-name="profilesStore" :load="loadPermissions">
+    <ServerDataTable
+      v-if="editItem"
+      ref="table"
+      :headers="headers"
+      store-name="profilesStore"
+      :load="loadPermissions"
+    >
       <!-- ------------ NO DATA ------------ -->
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
@@ -36,10 +53,9 @@
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.name`]="{ item }">
         <SwitchInput
-          id="permissions"
+          :id="'permissions_' + item.id"
           :value="hasPermission(item)"
-          :disabled="false"
-          label="Read"
+          :label="hasPermission(item) ? 'Si' : 'No'"
           @click="permissionsAction(item.id)"
         />
       </template>
@@ -113,9 +129,6 @@ export default {
       this.isDefaultRole = value
     },
     hasPermission(item) {
-      // this.info()
-      console.log('has access to', this.permissions.includes(item.id))
-
       return this.permissions.includes(item.id)
     },
     async info() {
@@ -124,53 +137,34 @@ export default {
       if (!id) {
         return
       }
-      
-      const role = await ProfileRepository.info(id)
 
-      console.log('role', this.role)
+      const role = await ProfileRepository.info(id)
 
       this.name = role.alias_name
       this.isDefaultRole = role.default_role
-      this.SET_EDIT_ITEM(role)
-      console.log('here', role.permissions.map((obj) => obj.id))
       this.permissions = role.permissions.map((obj) => obj.id)
+
+      this.SET_EDIT_ITEM(role)
     },
     async permissionsAction(id) {
       const permission_id = id
       const roleId = this.$route.params.id
 
-      if (this.permissions.includes(id)) {
-        const res = await ProfileRepository.deletePermission(permission_id, roleId)
+      // Modify in the server
+      const res = this.permissions.includes(id)
+        ? await ProfileRepository.deletePermission(permission_id, roleId)
+        : await ProfileRepository.addPermission(permission_id, roleId)
 
       if (!res) {
         return
       }
-      await this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: 'Permiso eliminado!',
-        showConfirmButton: true,
-        confirmButtonText: 'Entendido',
-        timer: 7500
-      })
-      this.tableReload()
+
+      // Modify the local data
+      this.permissions = this.permissions.includes(id)
+        ? this.permissions.filter((permissionId) => permissionId !== id)
+        : [...this.permissions, id]
 
       return
-      }
-      const res = await ProfileRepository.addPermission(permission_id, roleId)
-
-      if (!res) {
-        return
-      }
-      await this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: 'Permiso agregada!',
-        showConfirmButton: true,
-        confirmButtonText: 'Entendido',
-        timer: 7500
-      })
-      this.tableReload()
     },
     async loadPermissions(pagination) {
       const params = {
@@ -195,12 +189,12 @@ export default {
 
       const profile = this.editItem
         ? await ProfileRepository.update(this.editItem.id, {
-          name: this.name,
-          default_role: this.isDefaultRole ? this.isDefaultRole : undefined
-        })
+            name: this.name,
+            default_role: this.isDefaultRole ? this.isDefaultRole : undefined
+          })
         : await ProfileRepository.create({
-          name: this.name
-        })
+            name: this.name
+          })
 
       this.loading = false
 
