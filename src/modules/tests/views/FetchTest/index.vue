@@ -158,7 +158,7 @@ export default {
     //console.log(this.$router.currentRoute.name)
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermission('see-tests')
   },
   beforeDestroy() {
     this.removeEventsListenerActionsUser()

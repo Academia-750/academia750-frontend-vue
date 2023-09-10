@@ -1,5 +1,10 @@
 <template>
-  <ServerDataTable ref="table" :headers="headers" store-name="profilesStore" :load="loadPermissions">
+  <ServerDataTable
+    ref="table"
+    :headers="headers"
+    store-name="profilesStore"
+    :load="loadPermissions"
+  >
     <!-- ------------ NO DATA ------------ -->
     <template v-slot:no-data>
       <resource-banner-no-data-datatable />
@@ -10,21 +15,20 @@
       <SwitchInput
         id="permissions"
         :value="hasPermission(item)"
-        :disabled="false"
-        label="Read"
+        :label="hasPermission(item) ? 'Si' : 'No'"
         @click="permissionsAction(item.id)"
       />
     </template>
   </ServerDataTable>
 </template>
-  
-  <script>
-  import ProfileRepository from '@/services/ProfileRepository'
-  import headers from './permissions-table-columns'
 
-  export default {
-    name: 'RolesPermissionsList',
-    components: {
+<script>
+import ProfileRepository from '@/services/ProfileRepository'
+import headers from './permissions-table-columns'
+
+export default {
+  name: 'RolesPermissionsList',
+  components: {
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
@@ -38,13 +42,13 @@
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       )
   },
-    data() {
-      return {
-        permissions: [],
-        roleId: ''
-      }
-    },
-    computed: {
+  data() {
+    return {
+      permissions: [],
+      roleId: ''
+    }
+  },
+  computed: {
     headers() {
       return headers
     },
@@ -52,14 +56,14 @@
       return this.$store.state.profilesStore
     }
   },
-    mounted() {
+  mounted() {
     this.info()
-    },
-    methods: {
-      hasPermission(item) {
+  },
+  methods: {
+    hasPermission(item) {
       return this.permissions.includes(item.id)
-      },
-      async loadPermissions(pagination) {
+    },
+    async loadPermissions(pagination) {
       const params = {
         ...pagination
       }
@@ -67,8 +71,8 @@
       const res = await ProfileRepository.listOfPermissions(params)
 
       return res
-      },
-      async permissionsAction(id) {
+    },
+    async permissionsAction(id) {
       const permission_id = id
 
       // Modify in the server
@@ -86,8 +90,8 @@
         : [...this.permissions, id]
 
       return
-      },
-      async info() {
+    },
+    async info() {
       const { id } = this.$route.params
 
       this.roleId = id
@@ -100,6 +104,6 @@
 
       this.permissions = role.permissions.map((obj) => obj.id)
     }
-    }
   }
-  </script>
+}
+</script>

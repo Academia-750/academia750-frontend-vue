@@ -17,8 +17,7 @@
           <v-col v-show="editItem" cols="12" md="4" class="py-0 pl-0">
             <SwitchInput
               id="is_default_profile"
-              :value="isDefaultRole === 1"
-              :disabled="false"
+              :value="!!isDefaultRole"
               label="Predeterminado"
               @click="setDefaultProfile"
             />
@@ -39,7 +38,7 @@
       </section>
     </validation-observer>
     <template v-if="editItem">
-      <PermisssionsList roleId="" />
+      <PermissionsList :role-id="roleId" />
     </template>
   </v-card-text>
 </template>
@@ -65,7 +64,7 @@ export default {
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       ),
-    PermisssionsList: () =>
+    PermissionsList: () =>
       import(
         /* webpackChunkName: "ServerDataTable" */ './components/rolesPermissionsList.vue'
       )
@@ -85,6 +84,9 @@ export default {
     },
     store() {
       return this.$store.state.profilesStore
+    },
+    roleId() {
+      return this.$route.params.id
     }
   },
   mounted() {
@@ -103,7 +105,11 @@ export default {
 
         return
       }
+      // Automatically call to the API
       this.isDefaultRole = value
+      ProfileRepository.update(this.editItem.id, {
+        default_role: true
+      })
     },
     async info() {
       const { id } = this.$route.params
@@ -116,7 +122,7 @@ export default {
 
       this.name = role.alias_name
       this.isDefaultRole = role.default_role
-      this.permissions = role.permissions.map((obj) => obj.id)
+      this.permissions = role.permissions.map((permission) => permission.id)
 
       this.SET_EDIT_ITEM(role)
     },
@@ -134,8 +140,7 @@ export default {
 
       const profile = this.editItem
         ? await ProfileRepository.update(this.editItem.id, {
-            name: this.name,
-            default_role: this.isDefaultRole ? this.isDefaultRole : undefined
+            name: this.name
           })
         : await ProfileRepository.create({
             name: this.name
