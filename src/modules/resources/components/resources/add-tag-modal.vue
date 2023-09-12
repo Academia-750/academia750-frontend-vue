@@ -12,7 +12,7 @@
               ref="nameInput"
               v-model="name"
               label="Etiqueta"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
               <v-btn
@@ -44,6 +44,7 @@
 </template>
 <script>
 import TagRepository from '@/services/TagRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddTagModal',
@@ -59,7 +60,8 @@ export default {
       isOpen: false,
       loading: false,
       name: '',
-      tag: ''
+      tag: '',
+      validRegex: inputValidRegex
     }
   },
   methods: {

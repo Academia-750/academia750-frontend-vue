@@ -134,7 +134,7 @@ const fetchRoleStudentData = async (_, options) => {
 
     return Promise.resolve(response)
   } catch (error) {
-    //console.log(error)
+    console.log(error)
 
     return Promise.reject(error)
   }

@@ -13,7 +13,7 @@
               :filled="true"
               :outlined="false"
               :disabled="!canEdit"
-              rules="required|min:3|max:50|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:50|regex:${validRegex}`"
             />
             <DateInput
               id="lesson_date"
@@ -142,6 +142,7 @@
 import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   components: {
@@ -184,7 +185,8 @@ export default {
       start_time: null,
       end_time: null,
       isActiveLesson: false,
-      isOnlineLesson: false
+      isOnlineLesson: false,
+      validRegex: inputValidRegex
     }
   },
   computed: {

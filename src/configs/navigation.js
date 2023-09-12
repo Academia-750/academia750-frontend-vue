@@ -157,6 +157,13 @@ export default {
           roles: 'admin'
         },
         {
+          icon: 'mdi-clipboard-account',
+          key: '',
+          text: 'Gestión de Permisos',
+          to: { name: 'manage-profiles' },
+          roles: 'admin'
+        },
+        {
           icon: 'mdi-book-open-variant',
           key: '',
           text: 'Gestión de Oposiciones',

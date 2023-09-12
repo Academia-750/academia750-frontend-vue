@@ -13,10 +13,6 @@
           </template>
         </Toolbar>
         <SearchBar
-          :search-word="content"
-          :workspace="workspace"
-          :type="type"
-          :tags="tags"
           store-name="lessonMaterialsStore"
           :display-workspace="true"
           @onChangeType="onChangeType"

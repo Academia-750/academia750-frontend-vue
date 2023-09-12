@@ -48,8 +48,40 @@
         />
       </v-col>
     </v-row>
-    <!-- <div class="d-flex align-center mx-3 type-section">
-    </div> -->
+    <div class="d-flex align-center mx-3 type-section">
+      <v-select
+        :items="types"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Tipos"
+        :value="state.type"
+        dense
+        outlined
+        class="mr-2"
+        clearable
+        @change="onChangeType"
+      ></v-select>
+      <v-select
+        :value="state.workspace"
+        :items="workspaces"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Categoría"
+        dense
+        outlined
+        class="mr-2"
+        clearable
+        @change="onChangeWorkspace"
+      ></v-select>
+      <TagsAutoComplete
+        :tags="state.tags"
+        tag-type="material"
+        :dense="true"
+        @change="onChangeTags"
+      />
+    </div>
   </div>
 </template>
 

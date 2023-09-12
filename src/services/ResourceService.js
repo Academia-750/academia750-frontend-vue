@@ -76,7 +76,10 @@ ResourceService.warning = ({ response, title, message }) => {
     timer: 3000,
     icon: 'warning',
     title: title || `${response.status} ${response.statusText}`,
-    text: message || response.data.message || response.data.error
+    text:
+      message === '' // Allow Empty message
+        ? ''
+        : message || response.data?.message || response.data?.error || ''
   })
 }
 export default ResourceService

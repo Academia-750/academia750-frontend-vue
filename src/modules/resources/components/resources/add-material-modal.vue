@@ -44,7 +44,7 @@
               ref="nameInput"
               v-model="name"
               label="Nombre del Material"
-              rules="required|min:3|max:50|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:50|regex:${validRegex}`"
             />
             <FieldInput
               v-if="type === 'recording'"
@@ -157,6 +157,7 @@
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddMaterialModal',
@@ -179,6 +180,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      validRegex: inputValidRegex,
       selectedWorkspace: null,
       uploadedFiles: [],
       loading: false,

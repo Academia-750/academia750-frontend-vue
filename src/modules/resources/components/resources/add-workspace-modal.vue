@@ -12,7 +12,7 @@
               ref="nameInput"
               v-model="name"
               label="Nombre"
-              rules="required|min:3|max:25|regex:^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$"
+              :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
               <v-btn
@@ -44,6 +44,7 @@
 </template>
 <script>
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   name: 'AddWorkspaceModal',
@@ -59,7 +60,8 @@ export default {
       isOpen: false,
       loading: false,
       name: '',
-      workspace: ''
+      workspace: '',
+      validRegex: inputValidRegex
     }
   },
   methods: {
