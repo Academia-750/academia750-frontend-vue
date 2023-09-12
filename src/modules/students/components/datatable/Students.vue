@@ -41,6 +41,21 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable/>
       </template>
+      <template v-slot:[`item.groups`]="{ item }">
+        <div class="d-flex justify-space-around">
+          <div v-if="item.groups">
+            <v-chip
+              v-for="(group, index) in item.groups"
+              :key="index"
+              class="ma-1"
+              label
+              small
+            >
+              {{ group.name }}
+            </v-chip>
+          </div>
+        </div>
+      </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
           <resource-button-edit

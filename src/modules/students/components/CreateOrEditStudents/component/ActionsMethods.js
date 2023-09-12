@@ -1,16 +1,5 @@
 export default {
   methods: {
-    async fetchDataRoleStudent() {
-      try {
-        const response = await this.fetchRoleStudentData({
-          config: {}
-        })
-
-        this.dataRoleStudent = response.data.data
-      } catch (error) {
-        //console.log(error)
-      }
-    },
     async createStudentApi() {
       try {
         await this.createStudent({

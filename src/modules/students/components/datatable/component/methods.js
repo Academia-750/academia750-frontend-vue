@@ -29,7 +29,6 @@ export default {
     getParamsUrlApi () {
       const urlParams = this.buildQueryParamsRequest()
 
-      urlParams['filter[role]'] = 'student'
       urlParams['filter[state-account]'] = this.stateAccount
 
       return urlParams

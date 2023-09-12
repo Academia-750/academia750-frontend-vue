@@ -2,7 +2,7 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent', 'fetchRoleStudentData']),
+    ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent']),
     ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
     cancelProcessEditStudentData () {
 
