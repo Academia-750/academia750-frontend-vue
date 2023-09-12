@@ -84,8 +84,6 @@
         @change="onChangeTags"
       />
     </div>
-=======
->>>>>>> 44ccef72dedff82981a2eb7f1501e9397160c1e2
   </div>
 </template>
 

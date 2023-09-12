@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 
-import headersOppositionsTable from './data/headersDatatable'
+import headersOppositionsTable from './data/students-table-columns'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
 

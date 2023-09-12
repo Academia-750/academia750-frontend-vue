@@ -3,8 +3,10 @@ import ResourceService from '@/services/ResourceService'
 const resource = 'users'
 
 export default {
-  getAll(config = {}) {
-    return ResourceService.get(`${resource}`, config)
+  async getAll(config = {}) {
+    const res = ResourceService.get(`${resource}`, config)
+    
+    return (await res).data.data
   },
   get(id, config = {}) {
     return ResourceService.get(`${resource}/${id}`, config)

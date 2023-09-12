@@ -1,4 +1,4 @@
-/* import menuUI from './menus/ui.menu'
+ /* import menuUI from './menus/ui.menu'
 import menuApps from './menus/apps.menu'
 import menuPages from './menus/pages.menu' */
 
@@ -124,7 +124,7 @@ export default {
       ]
     },
     {
-      text: 'Gestión administrativa',
+      text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',
       items: [
@@ -143,26 +143,40 @@ export default {
           roles: 'admin'
         },
         {
-          icon: 'mdi-folder-open',
-          key: '',
-          text: 'Categorías y Materiales',
-          to: { name: 'manage-workspaces' },
-          roles: 'admin'
-        },
-        {
-          icon: 'mdi-book-open-page-variant',
-          key: '',
-          text: 'Gestionar Clases',
-          to: { name: 'manage-lessons' },
-          roles: 'admin'
-        },
-        {
           icon: 'mdi-clipboard-account',
           key: '',
           text: 'Gestión de Permisos',
           to: { name: 'manage-profiles' },
           roles: 'admin'
+        }
+      ]
+    },
+    {
+      text: 'Gestión de Clases',
+      key: '',
+      roles: 'admin',
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Gestión Clases',
+          to: { name: 'manage-lessons' },
+          roles: 'admin'
         },
+        {
+          icon: 'mdi-folder-open',
+          key: '',
+          text: 'Gestión de Materiales',
+          to: { name: 'manage-workspaces' },
+          roles: 'admin'
+        }
+      ]
+    },
+    {
+      text: 'Gestión de Opisiciones',
+      key: '',
+      roles: 'admin',
+      items: [
         {
           icon: 'mdi-book-open-variant',
           key: '',
@@ -176,8 +190,7 @@ export default {
           text: 'Gestión de Temas',
           to: { name: 'manage-topics' },
           roles: 'admin'
-        } /* ,
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */,
+        },
         {
           icon: 'mdi-database-import',
           key: '',
@@ -207,7 +220,7 @@ export default {
               roles: 'admin'
             }
           ]
-        }
+        } 
       ]
     },
     {

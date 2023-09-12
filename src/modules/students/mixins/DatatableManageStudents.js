@@ -12,7 +12,7 @@ export default {
       const currentTab = valueTab ?? this.tabViewStudents
 
       if (currentTab === 'students-account-enable') {
-        await this.getStudents({
+        const res = await this.getStudents({
           params: {
             'filter[role]': 'student',
             'filter[state-account]': 'enable',
@@ -22,6 +22,7 @@ export default {
           }
         })
 
+        console.log('-------response', res)
         this.SET_MATCHES_RESET_OPTIONS_DATATABLE(true)
 
         return
