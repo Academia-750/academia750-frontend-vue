@@ -1,5 +1,11 @@
 <template>
   <v-card-text>
+    <SearchRoleModal
+      ref="searchStudent"
+      :loading="isAddingRole"
+      @change="onSelect"
+      @ok="assignRole"
+    />
     <v-data-table
       v-model="getSelectedItems"
       :loading="stateLoadingItems"
@@ -52,6 +58,21 @@
               small
             >
               {{ group.name }}
+            </v-chip>
+          </div>
+        </div>
+      </template>
+      <template v-slot:[`item.role`]="{ item }">
+        <div class="d-flex justify-space-around">
+          <div @click="openRoleModal(item)">
+            <v-chip
+              class="ma-1"
+              label
+              small
+              color="primary"
+            >
+              {{ item.role }}
+              <v-icon small class="ml-2">mdi-pencil</v-icon>
             </v-chip>
           </div>
         </div>

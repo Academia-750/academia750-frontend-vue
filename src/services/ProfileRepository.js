@@ -195,5 +195,31 @@ export default {
     }
 
     return true
+  },
+   /**
+   * @param {string} userId
+   * @param {string} roleId
+   */
+   async assignRole(user_id, role_id) {
+    const response = await ResourceService.post('users/role', { user_id, role_id })
+
+    if (response.status === 403) {
+      ResourceService.warning({
+        response,
+        title: 'Información',
+        message: 'No se puede cambiar el rol de un usuario administrador'
+      })
+
+      return false
+    }
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }
