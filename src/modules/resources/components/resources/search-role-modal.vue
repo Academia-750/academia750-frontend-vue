@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title>
           <span class="text-subtitle-1 font-weight-bold">
-            {{ title || 'Agregar alumnos individualmente' }}
+            {{ title || 'Selecciona un perfil de usuario' }}
           </span>
         </v-card-title>
         <v-card-text>
@@ -21,9 +21,9 @@
                 small-chips
                 clearable
                 :autofocus="autofocus"
-                item-text="text"
-                item-value="uuid"
-                label="Buscar estudiantes por nombre o DNI"
+                item-text="name"
+                item-value="alias_name"
+                label="Buscar por nombre"
                 return-object
                 :no-filter="true"
                 class="align-center"
@@ -32,7 +32,9 @@
               >
                 <template v-slot:item="data">
                   <v-list-item-content>
-                    <v-list-item-title>{{ data.item.alias_name }}</v-list-item-title>
+                    <v-list-item-title>{{
+                      data.item.alias_name
+                    }}</v-list-item-title>
                   </v-list-item-content>
                 </template>
               </v-autocomplete>
@@ -79,7 +81,6 @@ export default {
       roles: [],
       inputValue: '',
       loading: false
-
     }
   },
   watch: {
@@ -131,7 +132,7 @@ export default {
 
       this.roles = res.results
 
-      console.log('roles',  res.results )
+      console.log('roles', res.results)
 
       this.loading = false
 
