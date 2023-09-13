@@ -2,7 +2,7 @@
   <div>
     <v-list-item
       v-if="
-        !menuItem.items && ($can(menuItem.can) || $hasRoles(menuItem.roles))
+        !menuItem.items && ($can(menuItem.can) || $hasRoles(menuItem.roles) || $hasPermission(menuItem.permissions !== undefined && menuItem.permissions))
       "
       :input-value="menuItem.value"
       :to="calculateRouteLink(menuItem)"

@@ -13,10 +13,7 @@ export const hasRoles = (roles, rolesUserAuth = null, permissionsUserAuth = null
     const rolesArray = Array.isArray(roles) ? roles : [roles]
     
     rolesArray.forEach((roles) => {
-      if (rolesUserAuth[0] === 'admin' && rolesUserAuth.includes(roles) ) {
-        canDisplayItem = true
-      }
-      if (permissionsUserAuth[0] === 'generate-tests' && !roles.includes('admin')) {
+      if (rolesUserAuth.includes(roles) ) {
         canDisplayItem = true
       }
     })
@@ -25,6 +22,17 @@ export const hasRoles = (roles, rolesUserAuth = null, permissionsUserAuth = null
   }
 
   return roles === '*'
+}
+
+export const hasPermission = (permissions, permissionsUserAuth = null) => {
+  let canDisplayItem = false
+
+  permissionsUserAuth = permissionsUserAuth ?? $store.getters['profileService/get_permissions']
+  // permissions = permissions ? permissions : '*'
+  console.log(permissionsUserAuth.includes(permissions[0]))
+  canDisplayItem = permissionsUserAuth.includes(permissions[0])
+
+  return canDisplayItem
 }
 
 export const hasRoleMiddleware = (role) => {

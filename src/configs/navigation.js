@@ -36,13 +36,13 @@ export default {
     {
       text: 'Zona de entrenamiento',
       key: '',
-      roles: 'student',
+      permissions: ['generate-tests'],
       items: [
         {
           icon: 'mdi-book-edit',
           key: '',
           text: 'Zona de entrenamiento',
-          roles: 'student',
+          permissions: ['generate-tests'],
           regex: /^\/Zona de Entrenamiento/,
           items: [
             {
@@ -50,21 +50,21 @@ export default {
               key: '',
               text: 'Generar cuestionario',
               to: { name: 'generate-questionnaire' },
-              roles: 'student'
+              permissions: ['generate-tests']
             },
             {
               icon: 'mdi-book-clock',
               key: '',
               text: 'Tests sin completar',
               to: { name: 'list-questionnaires-of-student-not-complete' },
-              roles: 'student'
+              permissions: ['generate-tests']
             },
             {
               icon: 'mdi-view-list',
               key: '',
               text: 'Tarjetas de memoria',
               to: { name: 'list-cards-memory' },
-              roles: 'student'
+              permissions: ['generate-tests']
             }
           ]
         }
@@ -73,13 +73,13 @@ export default {
     {
       text: 'Mi evolución',
       key: '',
-      roles: 'student',
+      permissions: ['generate-tests'],
       items: [
         {
           icon: 'mdi-chart-areaspline',
           key: '',
           text: 'Resumen',
-          roles: 'student',
+          permissions: ['generate-tests'],
           regex: /^\/Resumen/,
           items: [
             {
@@ -87,21 +87,21 @@ export default {
               key: '',
               text: '5 temas a mejorar',
               to: { name: 'fetch-resume-student-five-topics-to-improve' },
-              roles: 'student'
+              permissions: ['generate-tests']
             },
             {
               icon: 'mdi-book-clock',
               key: '',
               text: 'Resultados por tema',
               to: { name: 'fetch-resume-student-results-per-topic' },
-              roles: 'student'
+              permissions: ['generate-tests']
             },
             {
               icon: 'mdi-view-list',
               key: '',
               text: 'Errores por tema',
               to: { name: 'fetch-resume-student-questions-wrong-per-topic' },
-              roles: 'student'
+              permissions: ['generate-tests']
             }
           ]
         },
@@ -112,14 +112,14 @@ export default {
           to: {
             name: 'fetch-history-questions-student-by-tests-period-type-question'
           },
-          roles: 'student'
+          permissions: ['generate-tests']
         },
         {
           icon: 'mdi-notebook-check',
           key: '',
           text: 'Tests completados',
           to: { name: 'fetch-history-tests-completed' },
-          roles: 'student'
+          permissions: ['generate-tests']
         }
       ]
     },
