@@ -1,17 +1,22 @@
 import $store from '@/store'
 import { activateError } from '@/helpers/manageErrors'
 
-export const hasRoles = (roles, rolesUserAuth = null) => {
+export const hasRoles = (roles, rolesUserAuth = null, permissionsUserAuth = null) => {
+  let canDisplayItem = false
 
+  permissionsUserAuth = permissionsUserAuth ?? $store.getters['profileService/get_permissions']
+  // permissions = permissions ? permissions : '*'
   rolesUserAuth = rolesUserAuth ?? $store.getters['profileService/get_roles']
-  //permissions = permissions ? permissions : '*'
+  //roles = roles ? roles : '*'
 
   if (roles !== '*' && roles) {
     const rolesArray = Array.isArray(roles) ? roles : [roles]
-    let canDisplayItem = false
-
+    
     rolesArray.forEach((roles) => {
-      if (rolesUserAuth.includes(roles)) {
+      if (rolesUserAuth[0] === 'admin' && rolesUserAuth.includes(roles) ) {
+        canDisplayItem = true
+      }
+      if (permissionsUserAuth[0] === 'generate-tests' && !roles.includes('admin')) {
         canDisplayItem = true
       }
     })

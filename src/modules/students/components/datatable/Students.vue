@@ -64,16 +64,9 @@
       </template>
       <template v-slot:[`item.role`]="{ item }">
         <div class="d-flex justify-space-around">
-          <div @click="openRoleModal(item)">
-            <v-chip
-              class="ma-1"
-              label
-              small
-              color="primary"
-            >
-              {{ item.role }}
-              <v-icon small class="ml-2">mdi-pencil</v-icon>
-            </v-chip>
+          <div class="d-flex">
+            {{ item.role }}
+            <v-icon small class="ml-2" @click="openRoleModal(item)">mdi-pencil</v-icon>
           </div>
         </div>
       </template>
