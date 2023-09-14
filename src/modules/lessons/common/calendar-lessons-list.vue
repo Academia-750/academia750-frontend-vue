@@ -103,6 +103,10 @@ export default {
     type: {
       type: String,
       default: 'month'
+    },
+    role: {
+      type: String,
+      default: ''
     }
   },
   data: () => ({
@@ -181,7 +185,14 @@ export default {
         from: start.date,
         to: end.date
       }
-      const lessons = await LessonRepository.calendar(params)
+      
+      let lessons = undefined
+
+      if (this.role === 'student') {
+        lessons = await LessonRepository.studentCalendar(params)
+      } else {
+        lessons = await LessonRepository.calendar(params)
+      }
 
       if (!lessons) {
         return

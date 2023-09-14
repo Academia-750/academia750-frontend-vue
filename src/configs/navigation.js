@@ -117,7 +117,21 @@ export default {
       ]
     },
     {
-      text: 'Gestión de Usuarios',
+      text: 'Área de lección',
+      key: '',
+      permissions: [PermissionEnum.GENERATE_TESTS],
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'lección',
+          to: { name: 'manage-students-lessons' },
+          permissions: [PermissionEnum.GENERATE_TESTS]
+        }
+      ]
+    },
+    {
+      text: 'Gestión administrativa',
       key: '',
       roles: 'admin',
       items: [

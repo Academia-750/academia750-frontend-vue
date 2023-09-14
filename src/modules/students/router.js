@@ -1,6 +1,7 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageStudentsModule from '@/modules/students/views/Students'
+import ManageStudentsLessonsModule from '@/modules/students/views/StudentsLessons'
 /* import CreateTopicModule from '@/modules/students/views/CreateTopic'
 import UpdateTopicModule from '@/modules/students/views/UpdateTopic' */
 
@@ -46,7 +47,16 @@ const moduleRoute = [
             meta: {
               middleware: [authMiddleware]
             }
-          } /* ,
+          },
+          {
+            path: 'lessons',
+            name: 'manage-students-lessons',
+            component: ManageStudentsLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+          /* ,
           {
             path: 'create',
             name: 'create-topic',
