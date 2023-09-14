@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       headersDatatable: [
         {
@@ -44,7 +44,7 @@ export default {
         },
         {
           position: 6,
-          text: 'Groups',
+          text: 'Grupos',
           align: 'start',
           sortable: false,
           value: 'groups',
@@ -52,7 +52,7 @@ export default {
         },
         {
           position: 7,
-          text: 'role',
+          text: 'Perfil',
           align: 'start',
           sortable: false,
           value: 'role',
