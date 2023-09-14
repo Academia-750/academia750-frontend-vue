@@ -1,9 +1,13 @@
 const state = () => ({
   itemsDatatable: [],
+  namespaced: true,
   stateLoadingItems: false,
   currentUserForUpdate: null,
   tabViewStudents: 'students-account-enable',
   usersSelected: [],
+  lesson: false,
+  date: '',
+  type: 'month',
   optionsDatatableUsers: {
     page: 1,
     itemsPerPage: 10,

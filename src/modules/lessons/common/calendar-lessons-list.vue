@@ -189,6 +189,7 @@ export default {
       let lessons = undefined
 
       if (this.role === 'student') {
+        console.log('got here')
         lessons = await LessonRepository.studentCalendar(params)
       } else {
         lessons = await LessonRepository.calendar(params)
