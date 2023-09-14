@@ -10,33 +10,69 @@ import footerProps from './component/footerProps'
 import PreviewTopicsWorstTests from '@/modules/statistics/components/previewTopicsWorstTests'
 import GraphStatisticsTopicsDialog from '@/modules/statistics/components/graphStatisticsTopics/Dialog/graphStatisticsTopicsDialog'
 import GraphStatisticsTopicsComponent from '@/modules/statistics/components/graphStatisticsTopics'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [
+    URLBuilderResources,
+    headersOppositionsTable,
+    computedDatatable,
+    componentButtonsCrud
+  ],
   components: {
-    ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
-    ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
-    ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
-    ResourceTextFieldSearch: () => import(/* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
+    ResourceButtonEdit: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
+      ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
+      ),
+    ResourceTextFieldSearch: () =>
+      import(
+        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceBannerNoDataDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceDividerTitleDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceDialogConfirmDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'
+      ),
     PreviewTopicsWorstTests,
     GraphStatisticsTopicsDialog,
     GraphStatisticsTopicsComponent
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
-  mounted () {
+  mounted() {
     this.topicsWorstDataInTestsStudent = []
 
     this.getTopicsWorstInTestsStudentApi()
   },
-  data () {
+  data() {
     return {
       arrayCountsQuestionsCorrect: [],
       arrayCountsQuestionsWrong: [],
@@ -51,7 +87,7 @@ export default {
   },
   methods: {
     ...mapActions('statisticsService', ['getTopicsWorstInTestsStudent']),
-    async getTopicsWorstInTestsStudentApi () {
+    async getTopicsWorstInTestsStudentApi() {
       // Los 5 temas a mejorar
       try {
         this.$loadingApp.enableLoadingProgressLinear()
@@ -59,14 +95,19 @@ export default {
         const response = await this.getTopicsWorstInTestsStudent({})
 
         this.categoriesTopics = response.data.map((topic) => topic.topic_name)
-        this.arrayCountsQuestionsCorrect = response.data.map((topic) => parseInt(topic.total_questions_correct))
-        this.arrayCountsQuestionsWrong = response.data.map((topic) => parseInt(topic.total_questions_wrong))
-        this.arrayCountsQuestionsUnanswered = response.data.map((topic) => parseInt(topic.total_questions_unanswered))
+        this.arrayCountsQuestionsCorrect = response.data.map((topic) =>
+          parseInt(topic.total_questions_correct)
+        )
+        this.arrayCountsQuestionsWrong = response.data.map((topic) =>
+          parseInt(topic.total_questions_wrong)
+        )
+        this.arrayCountsQuestionsUnanswered = response.data.map((topic) =>
+          parseInt(topic.total_questions_unanswered)
+        )
 
         this.topicsWorstDataInTestsStudent = response.data
 
         this.$loadingApp.disabledLoadingProgressLinear()
-
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

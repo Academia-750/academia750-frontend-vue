@@ -10,30 +10,65 @@ import footerProps from './component/footerProps'
 import selectTopicsByDatatable from '@/modules/statistics/components/selectTopicsByDatatable'
 import GraphStatisticsTopicsDialog from '@/modules/statistics/components/graphStatisticsTopics/Dialog/graphStatisticsTopicsDialog'
 import GraphStatisticsTopicsComponent from '@/modules/statistics/components/graphStatisticsTopics'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [
+    URLBuilderResources,
+    headersOppositionsTable,
+    computedDatatable,
+    componentButtonsCrud
+  ],
   components: {
-    ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
-    ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
-    ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
-    ResourceTextFieldSearch: () => import(/* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
+    ResourceButtonEdit: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
+      ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
+      ),
+    ResourceTextFieldSearch: () =>
+      import(
+        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceBannerNoDataDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceDividerTitleDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceDialogConfirmDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'
+      ),
     selectTopicsByDatatable,
     GraphStatisticsTopicsDialog,
     GraphStatisticsTopicsComponent
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
-  mounted () {
-  },
-  data () {
+  mounted() {},
+  data() {
     return {
       topicsSelectedData: [],
       period: 'last-month',
@@ -55,12 +90,16 @@ export default {
   },
   methods: {
     ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph']),
-    showGraphTopicsToImproveInDialog () {
-      this.$refs['GraphStatisticsTopicsToImproveDialogComponent'].showGraphStatisticsStudent = true
+    showGraphTopicsToImproveInDialog() {
+      this.$refs[
+        'GraphStatisticsTopicsToImproveDialogComponent'
+      ].showGraphStatisticsStudent = true
     },
-    getHistoryStatisticsDataGraphApiAction () {
-
-      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length === 0) {
+    getHistoryStatisticsDataGraphApiAction() {
+      if (
+        Array.isArray(this.topicsSelectedData) &&
+        this.topicsSelectedData.length === 0
+      ) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -73,7 +112,10 @@ export default {
         return
       }
 
-      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length > 5) {
+      if (
+        Array.isArray(this.topicsSelectedData) &&
+        this.topicsSelectedData.length > 5
+      ) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -101,7 +143,7 @@ export default {
 
       this.getHistoryStatisticsDataGraphApi()
     },
-    async getHistoryStatisticsDataGraphApi () {
+    async getHistoryStatisticsDataGraphApi() {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.disabledButtonFetchRecord = true
@@ -114,16 +156,25 @@ export default {
           config: {}
         })
 
-        this.categoriesTopics = response.data.data.map((topic) => topic.topic.name)
-        this.arrayCountsQuestionsCorrect = response.data.data.map((topic) => parseInt(topic.correct))
-        this.arrayCountsQuestionsWrong = response.data.data.map((topic) => parseInt(topic.wrong))
-        this.arrayCountsQuestionsUnanswered = response.data.data.map((topic) => parseInt(topic.unanswered))
+        this.categoriesTopics = response.data.data.map(
+          (topic) => topic.topic.name
+        )
+        this.arrayCountsQuestionsCorrect = response.data.data.map((topic) =>
+          parseInt(topic.correct)
+        )
+        this.arrayCountsQuestionsWrong = response.data.data.map((topic) =>
+          parseInt(topic.wrong)
+        )
+        this.arrayCountsQuestionsUnanswered = response.data.data.map((topic) =>
+          parseInt(topic.unanswered)
+        )
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
 
-        this.$refs['GraphStatisticsTopicsDialogComponent'].showGraphStatisticsStudent = true
-
+        this.$refs[
+          'GraphStatisticsTopicsDialogComponent'
+        ].showGraphStatisticsStudent = true
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

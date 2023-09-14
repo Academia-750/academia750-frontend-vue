@@ -8,8 +8,7 @@ export default {
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
             phone: this.form.phone,
-            email: this.form.email,
-            roles: [this.dataRoleStudent.id]
+            email: this.form.email
           },
           config: {}
         })
@@ -57,8 +56,7 @@ export default {
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
             phone: this.form.phone,
-            email: this.form.email,
-            roles: [this.dataRoleStudent.id]
+            email: this.form.email
           },
           config: {}
         })

@@ -2,19 +2,14 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('studentsService', ['getStudents','createStudent', 'updateStudent']),
+    ...mapActions('studentsService', [
+      'getStudents',
+      'createStudent',
+      'updateStudent'
+    ]),
     ...mapMutations('studentsService', ['SET_CURRENT_USER_FOR_UPDATE']),
-    cancelProcessEditStudentData () {
 
-      if (this.isUpdateStudent) {
-        this.loadDataUserForUpdate(this.currentUserForUpdate)
-
-        return
-      }
-
-      this.ResetForm()
-    },
-    resetDataAndProcessEditStudent () {
+    resetDataAndProcessEditStudent() {
       this.cache.data.student.firstName = null
       this.cache.data.student.lastName = null
       this.cache.data.student.phone = null
@@ -24,7 +19,7 @@ export default {
       this.isUpdateStudent = false
       this.SET_CURRENT_USER_FOR_UPDATE(null)
     },
-    loadDataUserForUpdate (data) {
+    loadDataUserForUpdate(data) {
       const { dni, first_name, last_name, phone, email } = data
 
       this.$refs['DNIPersonInputComponent'].dni = dni
@@ -66,19 +61,19 @@ export default {
 
       return true
     },
-    CreateOrUpdateStudent () {
-      this.$refs['FormCreateOrEditStudent'].validate().then( (status) => {
+    CreateOrUpdateStudent() {
+      this.$refs['FormCreateOrEditStudent'].validate().then((status) => {
         if (!status) {
           this.$swal.fire({
             icon: 'error',
             toast: true,
-            title: 'Por favor, complete correctamente los campos del formulario.',
+            title:
+              'Por favor, complete correctamente los campos del formulario.',
             showConfirmButton: true,
             confirmButtonText: 'Entendido',
             timer: 7500
           })
         } else {
-
           this.$loadingApp.enableLoadingProgressLinear()
           this.loadingButtonCreateOrUpdateStudent = true
           this.disabledButtonCreateOrUpdateStudent = true
@@ -89,9 +84,7 @@ export default {
             this.updateProfileApi()
           }
         }
-
-      } )
-
+      })
     },
 
     async handlingErrorValidation(errorResponse = {}) {

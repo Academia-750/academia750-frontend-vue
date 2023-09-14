@@ -1,20 +1,33 @@
 import { mapActions, mapState } from 'vuex'
 import CardMemoryItem from '../../components/CardMemory/CardMemoryItem'
 import CopyLabel from '@/components/common/CopyLabel'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   components: {
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceDividerTitleDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'
+      ),
     CopyLabel,
     CardMemoryItem
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
-  data () {
+  data() {
     return {
       pageNumber: 1,
       numberItemsPerPage: 21,
@@ -24,44 +37,20 @@ export default {
   computed: {
     ...mapState('testsService', ['ItemsQuestionsByCardsMemory'])
   },
-  mounted () {
+  mounted() {
     this.fetchRecordData()
-
   },
   watch: {
-    pageNumber(number) {
+    pageNumber() {
       this.fetchRecordData()
-    },
-    ItemsQuestionsByCardsMemory (value) {
-      if (value) {
-        //console.log(value)
-        /* console.log(
-          value.filter((question) => {
-            //console.log(question.attributes.show_reason_text_in_card_memory)
-
-            return question.attributes.show_reason_text_in_card_memory === 'yes'
-          })
-        ) */
-        /* //console.log(
-          value.filter((question) => {
-            return !question.attributes['reason-text'] !== true
-          })
-        ) */
-        /* //console.log(
-          value.filter((question) => {
-            return question.attributes.show_reason_text_in_test === 'yes'
-          })
-        ) */
-      }
-
     }
   },
   methods: {
     ...mapActions('testsService', ['fetchACardMemory']),
     getTotalNumberPages(response) {
-      return Math.ceil((response.data.meta.total / response.data.meta.per_page))
+      return Math.ceil(response.data.meta.total / response.data.meta.per_page)
     },
-    async fetchRecordData () {
+    async fetchRecordData() {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
 
@@ -78,7 +67,6 @@ export default {
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

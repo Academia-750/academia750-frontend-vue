@@ -11,20 +11,56 @@ import QuestionsWrongByTopic from '../../components/QuestionsWrongByTopic'
 //import GraphStatisticsTopics from '../../components/graphStatisticsTopics'
 import PreviewTopicsWorstTests from '../../components/previewTopicsWorstTests'
 import GraphStatisticsTopicsDialog from '@/modules/statistics/components/graphStatisticsTopics/Dialog/graphStatisticsTopicsDialog'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  mixins: [URLBuilderResources, headersOppositionsTable, computedDatatable, componentButtonsCrud],
+  mixins: [
+    URLBuilderResources,
+    headersOppositionsTable,
+    computedDatatable,
+    componentButtonsCrud
+  ],
   components: {
-    ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
-    ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
-    ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
-    ResourceTextFieldSearch: () => import(/* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'),
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceBannerNoDataDatatable: () => import(/* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDialogConfirmDelete: () => import(/* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'),
+    ResourceButtonEdit: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'
+      ),
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
+      ),
+    ResourceButtonAdd: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
+      ),
+    ResourceTextFieldSearch: () =>
+      import(
+        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceBannerNoDataDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceDividerTitleDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceDialogConfirmDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceDialogConfirmDelete" */ '@/modules/resources/components/resources/ResourceDialogConfirmDelete'
+      ),
     selectTopicsByDatatable,
     //GraphStatisticsTopics,
     QuestionsWrongByTopic,
@@ -32,16 +68,16 @@ export default {
     GraphStatisticsTopicsDialog
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
-  mounted () {
+  mounted() {
     this.topicsWorstDataInTestsStudent = []
 
     this.SET_ITEMS_DATATABLE_QUESTIONS_WRONG([])
 
     this.getTopicsWorstInTestsStudentApi()
   },
-  data () {
+  data() {
     return {
       topicsSelectedData: [],
       period: 'last-month',
@@ -60,12 +96,16 @@ export default {
     }
   },
   computed: {
-    ...mapState('statisticsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta']),
+    ...mapState('statisticsService', [
+      'itemsDatatable',
+      'stateLoadingItems',
+      'informationMeta'
+    ]),
     ...footerProps
   },
   watch: {
     optionsDatatable: {
-      handler () {
+      handler() {
         this.getHistoryTestsCompletedByStudent({
           params: this.buildQueryParamsRequest()
         })
@@ -73,8 +113,9 @@ export default {
       deep: true
     },
     topicSelectedForQueryQuestionsWrong: {
-      handler () {
-        this.$refs['QuestionsWrongByTopic'].topic_id = this.topicSelectedForQueryQuestionsWrong?.id
+      handler() {
+        this.$refs['QuestionsWrongByTopic'].topic_id =
+          this.topicSelectedForQueryQuestionsWrong?.id
       },
       deep: true
     }
@@ -88,9 +129,14 @@ export default {
     } */
   },
   methods: {
-    ...mapMutations('statisticsService', ['SET_ITEMS_DATATABLE_QUESTIONS_WRONG']),
-    ...mapActions('statisticsService', ['getHistoryStatisticsDataGraph', 'getTopicsWorstInTestsStudent']),
-    getHistoryStatisticsQuestionsFailedTests () {
+    ...mapMutations('statisticsService', [
+      'SET_ITEMS_DATATABLE_QUESTIONS_WRONG'
+    ]),
+    ...mapActions('statisticsService', [
+      'getHistoryStatisticsDataGraph',
+      'getTopicsWorstInTestsStudent'
+    ]),
+    getHistoryStatisticsQuestionsFailedTests() {
       if (!this.topicSelectedForQueryQuestionsWrong) {
         this.$swal.fire({
           icon: 'error',
@@ -106,9 +152,11 @@ export default {
 
       this.$refs['QuestionsWrongByTopic'].loadDatatatable()
     },
-    getHistoryStatisticsDataGraphApiAction () {
-
-      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length === 0) {
+    getHistoryStatisticsDataGraphApiAction() {
+      if (
+        Array.isArray(this.topicsSelectedData) &&
+        this.topicsSelectedData.length === 0
+      ) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -121,7 +169,10 @@ export default {
         return
       }
 
-      if (Array.isArray(this.topicsSelectedData) && this.topicsSelectedData.length > 5) {
+      if (
+        Array.isArray(this.topicsSelectedData) &&
+        this.topicsSelectedData.length > 5
+      ) {
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -149,7 +200,7 @@ export default {
 
       this.getHistoryStatisticsDataGraphApi()
     },
-    async getHistoryStatisticsDataGraphApi () {
+    async getHistoryStatisticsDataGraphApi() {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.disabledButtonFetchRecord = true
@@ -162,23 +213,32 @@ export default {
           config: {}
         })
 
-        this.categoriesTopics = response.data.data.map((topic) => topic.topic.name)
-        this.arrayCountsQuestionsCorrect = response.data.data.map((topic) => parseInt(topic.correct))
-        this.arrayCountsQuestionsWrong = response.data.data.map((topic) => parseInt(topic.wrong))
-        this.arrayCountsQuestionsUnanswered = response.data.data.map((topic) => parseInt(topic.unanswered))
+        this.categoriesTopics = response.data.data.map(
+          (topic) => topic.topic.name
+        )
+        this.arrayCountsQuestionsCorrect = response.data.data.map((topic) =>
+          parseInt(topic.correct)
+        )
+        this.arrayCountsQuestionsWrong = response.data.data.map((topic) =>
+          parseInt(topic.wrong)
+        )
+        this.arrayCountsQuestionsUnanswered = response.data.data.map((topic) =>
+          parseInt(topic.unanswered)
+        )
 
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
 
-        this.$refs['GraphStatisticsTopicsDialogComponent'].showGraphStatisticsStudent = true
-
+        this.$refs[
+          'GraphStatisticsTopicsDialogComponent'
+        ].showGraphStatisticsStudent = true
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.disabledButtonFetchRecord = false
       }
     },
-    async getTopicsWorstInTestsStudentApi () {
+    async getTopicsWorstInTestsStudentApi() {
       // Los 5 temas a mejorar
       try {
         this.$loadingApp.enableLoadingProgressLinear()
@@ -188,7 +248,6 @@ export default {
         this.topicsWorstDataInTestsStudent = response.data
 
         this.$loadingApp.disabledLoadingProgressLinear()
-
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

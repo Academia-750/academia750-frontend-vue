@@ -98,7 +98,7 @@ import QuestionnaireItem from '../../components/Questionnaire/ItemQuestionnaire'
 import SetHistoryAnswersResolved from './SetHistoryAnswersResolved'
 import _ from 'lodash'
 import BlockActionsUser from './BlockActionsUser'
-import ProgressLinearStateTest from './components/progressLinearStateTest'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   components: {
@@ -158,7 +158,7 @@ export default {
     //console.log(this.$router.currentRoute.name)
   },
   beforeCreate() {
-    this?.$hasPermission('see-tests')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
   beforeDestroy() {
     this.removeEventsListenerActionsUser()

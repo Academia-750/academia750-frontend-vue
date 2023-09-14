@@ -1,38 +1,19 @@
 import $store from '@/store'
 import { activateError } from '@/helpers/manageErrors'
 
-export const hasRoles = (roles, rolesUserAuth = null, permissionsUserAuth = null) => {
-  let canDisplayItem = false
-
-  permissionsUserAuth = permissionsUserAuth ?? $store.getters['profileService/get_permissions']
-  // permissions = permissions ? permissions : '*'
+export const hasRoles = (roles, rolesUserAuth = null) => {
   rolesUserAuth = rolesUserAuth ?? $store.getters['profileService/get_roles']
-  //roles = roles ? roles : '*'
 
-  if (roles !== '*' && roles) {
-    const rolesArray = Array.isArray(roles) ? roles : [roles]
-    
-    rolesArray.forEach((roles) => {
-      if (rolesUserAuth.includes(roles) ) {
-        canDisplayItem = true
-      }
-    })
-
-    return canDisplayItem
+  if (!roles) {
+    return false
+  }
+  if (roles === '*') {
+    return true
   }
 
-  return roles === '*'
-}
+  const rolesArray = Array.isArray(roles) ? roles : [roles]
 
-export const hasPermission = (permissions, permissionsUserAuth = null) => {
-  let canDisplayItem = false
-
-  permissionsUserAuth = permissionsUserAuth ?? $store.getters['profileService/get_permissions']
-  // permissions = permissions ? permissions : '*'
-  console.log(permissionsUserAuth.includes(permissions[0]))
-  canDisplayItem = permissionsUserAuth.includes(permissions[0])
-
-  return canDisplayItem
+  return rolesArray.some((roles) => rolesUserAuth.includes(roles))
 }
 
 export const hasRoleMiddleware = (role) => {

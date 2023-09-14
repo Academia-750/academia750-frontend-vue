@@ -21,8 +21,8 @@
                 small-chips
                 clearable
                 :autofocus="autofocus"
-                item-text="name"
-                item-value="alias_name"
+                item-text="alias_name"
+                item-value="name"
                 label="Buscar por nombre"
                 return-object
                 :no-filter="true"
@@ -94,9 +94,6 @@ export default {
   },
 
   methods: {
-    clearAutoComplete() {
-      this.inputValue = ''
-    },
     open() {
       this.isOpen = true
     },
@@ -104,16 +101,13 @@ export default {
       this.selectedItem = item
       this.$emit('change', item)
     },
-    clear() {
-      this.inputValue = ''
-    },
     onOk() {
       if (!this.selectedItem) {
         Swal.fire({
           toast: true,
           timer: 1000,
           icon: 'warning',
-          title: 'Seleccione a un role'
+          title: 'Seleccione a un perfil'
         })
 
         return
@@ -137,9 +131,9 @@ export default {
       return res
     },
     reset() {
-      // First time is not mounted
       this.$refs.studentAutoComplete && this.$refs.studentAutoComplete.clear()
       this.selectedItem = false
+      this.inputValue = ''
     }
   }
 }
