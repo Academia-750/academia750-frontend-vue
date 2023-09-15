@@ -93,7 +93,7 @@
         />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex flex-wrap justify-space-around">
+        <div class="d-flex flex-wrap justify-right">
           <div class="mt-1">
             <resource-button-edit
               text-button="Ver"
@@ -102,6 +102,17 @@
               :config-route="{
                 name: 'fetch-question-topic',
                 params: { question_id: item.id }
+              }"
+            />
+          </div>
+          <div class="mt-1">
+            <resource-button-copy
+              v-if="topicData !== null"
+              text-button="Copiar"
+              color-button="blue darken-1"
+              :config-route="{
+                name: 'clone-question-topic',
+                params: { id: topicData.id, question_id: item.id }
               }"
             />
           </div>
@@ -115,17 +126,7 @@
               }"
             />
           </div>
-          <div class="mt-1">
-            <resource-button-copy
-              v-if="topicData !== null && item.can_this_question_be_affected"
-              text-button="Copiar"
-              color-button="blue darken-1"
-              :config-route="{
-                name: 'clone-question-topic',
-                params: { id: topicData.id, question_id: item.id }
-              }"
-            />
-          </div>
+
           <div class="mt-1">
             <resource-button-delete
               v-if="topicData !== null && item.can_this_question_be_affected"

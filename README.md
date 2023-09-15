@@ -1,5 +1,3 @@
-Temporal branch for fixes of v1.0.0 while v2.0.0 is already on development
-
 # Academia750
 
 - Vue js Admin with dark mode + RTL + Demo Apps
