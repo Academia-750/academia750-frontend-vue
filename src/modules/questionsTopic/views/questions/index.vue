@@ -48,16 +48,24 @@
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router :path-route-go-back="{ name: 'manage-topics' }"/>
+          <resource-button-go-back-router
+            :path-route-go-back="{ name: 'manage-topics' }"
+          />
           <resource-title-toolbar-datatable title-text="Gestión de preguntas" />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null && topicData.attributes.is_available === 'yes'"
-              :config-route="{ name: 'create-question-topic', params: {
-                id: topicData.id
-              } }"
+              v-if="
+                topicData !== null &&
+                topicData.attributes.is_available === 'yes'
+              "
+              :config-route="{
+                name: 'create-question-topic',
+                params: {
+                  id: topicData.id
+                }
+              }"
             />
           </div>
         </v-toolbar>
@@ -68,7 +76,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="Este tema no tiene preguntas disponibles"/>
+        <resource-banner-no-data-datatable
+          message-text="Este tema no tiene preguntas disponibles"
+        />
       </template>
       <template v-slot:[`item.question-is-visible`]="{ item }">
         <!-- <pre>
@@ -77,34 +87,46 @@
         <change-state-visibility-question-switch
           :question-id="item.id"
           :state-question-visibility="item['is-visible'] === 'yes'"
-          @emitStateQuestionVisibility="ChangeStateVisibilityQuestionSwitchMethod(item.id, $event)"
+          @emitStateQuestionVisibility="
+            ChangeStateVisibilityQuestionSwitchMethod(item.id, $event)
+          "
         />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex flex-wrap justify-space-around">
+        <div class="d-flex flex-wrap justify-right">
           <div class="mt-1">
             <resource-button-edit
               text-button="Ver"
               icon-button="mdi-eye"
               color-button="success"
-              :config-route="{ name: 'fetch-question-topic', params: { question_id: item.id } }"
+              :config-route="{
+                name: 'fetch-question-topic',
+                params: { question_id: item.id }
+              }"
+            />
+          </div>
+          <div class="mt-1">
+            <resource-button-copy
+              v-if="topicData !== null"
+              text-button="Copiar"
+              color-button="blue darken-1"
+              :config-route="{
+                name: 'clone-question-topic',
+                params: { id: topicData.id, question_id: item.id }
+              }"
             />
           </div>
           <div class="mt-1">
             <resource-button-edit
               v-if="topicData !== null && item.can_this_question_be_affected"
               color-button="blue darken-1"
-              :config-route="{ name: 'update-question-topic', params: { id: topicData.id, question_id: item.id } }"
+              :config-route="{
+                name: 'update-question-topic',
+                params: { id: topicData.id, question_id: item.id }
+              }"
             />
           </div>
-          <div class="mt-1">
-            <resource-button-copy
-              v-if="topicData !== null && item.can_this_question_be_affected"
-              text-button="Copiar"
-              color-button="blue darken-1"
-              :config-route="{ name: 'clone-question-topic', params: { id: topicData.id, question_id: item.id } }"
-            />
-          </div>
+
           <div class="mt-1">
             <resource-button-delete
               v-if="topicData !== null && item.can_this_question_be_affected"
