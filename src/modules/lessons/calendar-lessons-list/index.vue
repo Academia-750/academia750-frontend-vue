@@ -1,5 +1,8 @@
 <template>
   <v-card-text>
+    <LessonInfoModal
+      ref="lessonInfoModal"
+    />
     <div>
       <v-card flat>
         <v-card-text>
@@ -118,6 +121,10 @@ export default {
     ResourceButtonAdd: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
+      ),
+      LessonInfoModal: () =>
+      import(
+        /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       )
   },
   mixins: [notifications],
@@ -150,6 +157,7 @@ export default {
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
+      this.$refs.lessonInfoModal.open(lesson)
       this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })
