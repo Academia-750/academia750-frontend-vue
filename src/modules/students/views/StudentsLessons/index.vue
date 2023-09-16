@@ -1,10 +1,12 @@
 <template>
   <v-card-text>
+    <LessonInfoModal
+      ref="lessonInfoModal"
+    />
     <div>
       <v-card flat>
         <v-card-text>
           <LessonToolBar v-show="!isMobile">
-            
             <template v-if="lesson" slot="info">
               <div class="">
                 My lessons
@@ -101,13 +103,13 @@
         import(
           /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
         ),
-      ResourceButtonAdd: () =>
-        import(
-          /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-        ),
         SwitchInput: () =>
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      ),
+      LessonInfoModal: () =>
+      import(
+        /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       )
     },
     mixins: [DatatableManageStudents,notifications],
@@ -140,6 +142,7 @@
         this.$router.push({ name: 'create-lessons', query: { date } })
       },
       onLesson(lesson) {
+        this.$refs.lessonInfoModal.open(lesson)
         this.setLesson(lesson || false)
         if (this.isMobile) {
           this.$router.push({ name: 'create-lessons' })

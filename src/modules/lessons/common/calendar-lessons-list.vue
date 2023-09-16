@@ -188,8 +188,8 @@ export default {
       
       let lessons = undefined
 
+      // I will have to keep this in "student" in a util as a variable if the logic Abel confirms
       if (this.role === 'student') {
-        console.log('got here')
         lessons = await LessonRepository.studentCalendar(params)
       } else {
         lessons = await LessonRepository.calendar(params)
