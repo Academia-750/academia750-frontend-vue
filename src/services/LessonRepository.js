@@ -393,5 +393,24 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} id
+   *  @param {string} join
+   */
+  async StudentJoinLesson(id, join) {
+    const response = await ResourceService.put(`student-lessons/${id}/join`, {
+      join
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
   }
 }

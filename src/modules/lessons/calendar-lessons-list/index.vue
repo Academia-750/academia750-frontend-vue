@@ -50,6 +50,12 @@
             </template>
             <template v-if="lesson" slot="actions">
               <resource-button
+                text-button="More infromation"
+                icon-button="mdi-information-variant"
+                color="success"
+                @click="openInfoModal(lesson)"
+              />
+              <resource-button
                 text-button="Editar"
                 icon-button="mdi-pencil"
                 color="primary"
@@ -157,13 +163,14 @@ export default {
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
-      this.$refs.lessonInfoModal.open(lesson)
       this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })
       }
     },
-
+    openInfoModal (lesson) {
+        this.$refs.lessonInfoModal.open(lesson)
+      },
     onLessonLoad(lesson) {
       // Only on first load
       if (this.lesson) {

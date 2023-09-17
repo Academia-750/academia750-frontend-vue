@@ -23,9 +23,9 @@
               <!-- Column for Time -->
               <div>
                 <SwitchInput
-                  id="permissions"
-                  :value="true"
-                  @click=""
+                  id="joinLesson"
+                  :value="hasJoinedLesson"
+                  @click="joinLesson"
                 />
               </div>
             </template>
@@ -39,10 +39,7 @@
                 text-button="More infromation"
                 icon-button="mdi-information-variant"
                 color="success"
-                :config-route="{
-                  name: 'list-of-materials',
-                  params: { id: lesson.id }
-                }"
+                @click="openInfoModal(lesson)"
               />
               <resource-button
                 text-button="Materiales"
@@ -86,7 +83,8 @@
   import moment from 'moment'
   import { PermissionEnum } from '@/utils/enums'
   import DatatableManageStudents from '../../mixins/DatatableManageStudents'
-  
+  import LessonRepository from '@/services/LessonRepository'
+
   export default {
     name: 'StudentsLessons',
     components: {
@@ -115,7 +113,8 @@
     mixins: [DatatableManageStudents,notifications],
     data() {
       return {
-        reloadDatatableUsers: false
+        reloadDatatableUsers: false,
+        hasJoinedLesson: false
       }
     },
     computed: {
@@ -136,25 +135,42 @@
       dateFormat(date) {
         return moment(date).format('DD/MM/YYYY')
       },
-  
+      joinedLesson(value) {
+        console.log({ value })
+
+        return value === 1
+      },
       addLesson(date = undefined) {
         this.setLesson(false)
         this.$router.push({ name: 'create-lessons', query: { date } })
       },
       onLesson(lesson) {
-        this.$refs.lessonInfoModal.open(lesson)
+        console.log({ lesson })
+        this.hasJoinedLesson = Boolean(this.lesson.will_join)
+        console.log(this.lesson.will_join )
         this.setLesson(lesson || false)
         if (this.isMobile) {
           this.$router.push({ name: 'create-lessons' })
         }
       },
-  
+      openInfoModal (lesson) {
+        this.$refs.lessonInfoModal.open(lesson)
+      },
       onLessonLoad(lesson) {
         // Only on first load
         if (this.lesson) {
           return
         }
+        this.hasJoinedLesson = Boolean(this.lesson.will_join)
         this.setLesson(lesson || false)
+      },
+      async joinLesson(value) {
+        const res = LessonRepository.StudentJoinLesson(this.lesson.id, value)
+        
+        if (!res) {
+        return
+      }
+      this.hasJoinedLesson = value
       }
     },
     head: {
