@@ -131,7 +131,7 @@ export default {
       ]
     },
     {
-      text: 'Gestión administrativa',
+      text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',
       items: [
