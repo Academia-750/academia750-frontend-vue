@@ -8,26 +8,21 @@ import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCru
 import headersOppositionsTable from './component/headersDatatable'
 import computedDatatable from '@/modules/resources/mixins/computedDatatable'
 import URLBuilderResources from '@/modules/resources/mixins/URLBuilderResources'
+import { PermissionEnum } from '@/utils/enums'
 
-const MIXIN_COMPONENT = [
-  components,
-  data,
-  methods,
-  computed,
-  ActionsMethods
-]
+const MIXIN_COMPONENT = [components, data, methods, computed, ActionsMethods]
 
 const MIXINS_EXTRA = [
-  URLBuilderResources, headersOppositionsTable/* , computedDatatable */, componentButtonsCrud
+  URLBuilderResources,
+  headersOppositionsTable /* , computedDatatable */,
+  componentButtonsCrud
 ]
 
 export default {
   mixins: [...MIXINS_EXTRA, ...MIXIN_COMPONENT],
-  components: {
-
-  },
+  components: {},
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
   computed: {
     getTextButtonCreateTest() {
@@ -42,10 +37,8 @@ export default {
       return 'Crear Test'
     }
   },
-  mounted () {
-  },
-  methods: {
-  },
+  mounted() {},
+  methods: {},
   head: {
     title: {
       inner: 'Generar cuestionario'

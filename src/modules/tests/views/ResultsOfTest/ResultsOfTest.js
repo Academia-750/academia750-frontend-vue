@@ -5,21 +5,34 @@ import SymbologyHistoryTest from '@/modules/tests/components/HistoryTest/Symbolo
 import ResumeQuestionStateHistoryTest from '@/modules/tests/components/HistoryTest/ResumeQuestionStateHistoryTest'
 import ItemQuestionHistoryTest from '@/modules/tests/components/HistoryTest/ItemQuestionHistoryTest'
 import BlockActionsUser from './../FetchTest/BlockActionsUser'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   mixins: [BlockActionsUser],
   components: {
-    ResourceButtonGoBackRouter: () => import(/* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'),
-    ResourceTitleToolbarDatatable: () => import(/* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'),
-    ResourceHeaderCrudTitle: () => import(/* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'),
-    ResourceDividerTitleDatatable: () => import(/* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'),
+    ResourceButtonGoBackRouter: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+      ),
+    ResourceTitleToolbarDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+      ),
+    ResourceHeaderCrudTitle: () =>
+      import(
+        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+      ),
+    ResourceDividerTitleDatatable: () =>
+      import(
+        /* webpackChunkName: "ResourceDividerTitleDatatable" */ '@/modules/resources/components/resources/ResourceDividerTitleDatatable'
+      ),
     HeadResultsHistoryTest,
     SymbologyHistoryTest,
     ResumeQuestionStateHistoryTest,
     ItemQuestionHistoryTest
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('student')
+    this?.$hasPermissionMiddleware(PermissionEnum.GENERATE_TESTS)
   },
   data() {
     return {
@@ -33,8 +46,7 @@ export default {
   computed: {
     ...mapState('testsService', ['questionsDataHistoryByTest'])
   },
-  created() {
-  },
+  created() {},
   mounted() {
     this.fetchRecordData()
     this.blockActionsSelectionUser()
@@ -68,12 +80,17 @@ export default {
       this.enableEventJavascript(elementResolveTest, 'contextmenu')
     },
     scrollToElementRefQuestion($nameElementRef) {
-      const sectionQuestionHistory = document.querySelector(`#${$nameElementRef}`)
+      const sectionQuestionHistory = document.querySelector(
+        `#${$nameElementRef}`
+      )
 
-      sectionQuestionHistory.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      sectionQuestionHistory.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
     },
     getTotalNumberPages(response) {
-      return Math.ceil((response.data.meta.total / response.data.meta.per_page))
+      return Math.ceil(response.data.meta.total / response.data.meta.per_page)
     },
     async fetchRecordData() {
       try {
@@ -94,7 +111,6 @@ export default {
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()

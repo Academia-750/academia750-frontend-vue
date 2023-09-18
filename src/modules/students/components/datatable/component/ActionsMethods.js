@@ -1,3 +1,4 @@
+import ProfileRepository from '@/services/ProfileRepository'
 export default {
   methods: {
     async deleteStudentAction () {
@@ -25,6 +26,19 @@ export default {
       } catch (error) {
         //console.log(error)
       }
+    },
+    openRoleModal(item) {
+      this.$refs.searchStudent.open()
+      this.user_id = item.id
+    },
+    onSelect(value) {
+      this.role_id = value.id
+    },
+    async assignRole() {
+      this.isAddingRole = true
+      await ProfileRepository.assignRole(this.user_id,this.role_id)
+      this.isAddingUser = false
+      this.loadStudentsFromCurrentTab()
     }
   }
 }

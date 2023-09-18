@@ -13,7 +13,9 @@ Vue.use(VueI18n)
 
 const messages = {}
 
-availableLocales.forEach((l) => { messages[l.code] = l.messages })
+availableLocales.forEach((l) => {
+  messages[l.code] = l.messages
+})
 
 export const i18n = new VueI18n({
   locale,

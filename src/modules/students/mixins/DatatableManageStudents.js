@@ -14,7 +14,6 @@ export default {
       if (currentTab === 'students-account-enable') {
         await this.getStudents({
           params: {
-            'filter[role]': 'student',
             'filter[state-account]': 'enable',
             'sort': '-created-at',
             'page[size]': 10,
@@ -30,7 +29,6 @@ export default {
       if (currentTab === 'students-account-disable') {
         await this.getStudents({
           params: {
-            'filter[role]': 'student',
             'filter[state-account]': 'disable',
             'sort': '-created-at',
             'page[size]': 10,

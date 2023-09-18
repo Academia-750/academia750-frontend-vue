@@ -20,18 +20,12 @@
         <v-list-item-title class="text-16 font-weight-regular">
           {{ user.attributes.first_name }}
         </v-list-item-title>
-        <!-- <v-divider class="d-block" /> -->
       </v-list-item-content>
     </v-list-item>
     <v-divider></v-divider>
     <v-list v-if="user" nav dense>
       <div v-for="(item, index) in menu" :key="index">
-        <div
-          v-if="
-            (item.key || item.text) && ($can(item.can) || $hasRoles(item.roles))
-          "
-          class="pa-1 mt-2 overline"
-        >
+        <div v-if="display(item)" class="pa-1 mt-2 overline">
           {{ item.key ? $t(item.key) : item.text }}
         </div>
         <nav-menu :menu="item.items" />
@@ -74,14 +68,24 @@ export default {
   },
   created() {
     this.loadImageAccount()
-    /* //console.log(this.$userAuth())
-    //console.log(this.$rolesUserAuth())
-    //console.log(this.$permissionsUserAuth()) */
   },
   methods: {
     loadImageProfileDefault() {
       this.hasErrorImage = true
       this.pathImageAccount = '/images/academia750/avatar_default_photo.svg'
+    },
+    display(item) {
+      if (!(item.key || item.text)) {
+        return false
+      }
+
+      // No permission requested
+      if (!(item.roles || item.permissions)) {
+        return true
+      }
+
+      // Any or both conditions
+      return this.$hasRoles(item.roles) || this.$hasPermission(item.permissions)
     },
     loadImageAccount() {
       const IsDevelopmentEnviroment = process.env.NODE_ENV === 'development'

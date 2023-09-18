@@ -9,7 +9,9 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       'last-name': record.attributes.last_name,
       phone: record.attributes.phone,
       email: record.attributes.email,
-      'created-at': record.attributes.created_at
+      'created-at': record.attributes.created_at,
+      groups: record.relationships.groups,
+      role: record.relationships.roles.data[0].attributes.roleAliasName
     }
   })
 }
@@ -126,20 +128,6 @@ const fetchStudentGroups = async (_, options) => {
   }
 }
 
-const fetchRoleStudentData = async (_, options) => {
-  try {
-    const response = await StudentRepository.fetchRoleStudentData(
-      options.config
-    )
-
-    return Promise.resolve(response)
-  } catch (error) {
-    console.log(error)
-
-    return Promise.reject(error)
-  }
-}
-
 const actionsForMultipleRecords = async ({ commit }, options) => {
   try {
     const response = await StudentRepository.actionMassiveSelection(
@@ -165,6 +153,5 @@ export default {
   updateStudent,
   deleteStudent,
   fetchStudentGroups,
-  fetchRoleStudentData,
   actionsForMultipleRecords
 }
