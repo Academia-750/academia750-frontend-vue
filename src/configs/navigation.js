@@ -117,16 +117,16 @@ export default {
       ]
     },
     {
-      text: 'Área de lección',
+      text: 'Mi classes',
       key: '',
-      permissions: [PermissionEnum.GENERATE_TESTS],
+      permissions: [PermissionEnum.SEE_LESSONS],
       items: [
         {
           icon: 'mdi-book-open-page-variant',
           key: '',
-          text: 'lección',
+          text: 'Clases',
           to: { name: 'manage-students-lessons' },
-          permissions: [PermissionEnum.GENERATE_TESTS]
+          permissions: [PermissionEnum.SEE_LESSONS]
         }
       ]
     },

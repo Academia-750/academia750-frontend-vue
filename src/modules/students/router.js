@@ -2,8 +2,6 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageStudentsModule from '@/modules/students/views/Students'
 import ManageStudentsLessonsModule from '@/modules/students/views/StudentsLessons'
-/* import CreateTopicModule from '@/modules/students/views/CreateTopic'
-import UpdateTopicModule from '@/modules/students/views/UpdateTopic' */
 
 const shortcutRoutes = [
   {
@@ -12,14 +10,7 @@ const shortcutRoutes = [
     meta: {
       middleware: [authMiddleware]
     }
-  } /* ,
-  {
-    path: 'alumnos/crear',
-    redirect: { name: 'create-student' },
-    meta: {
-      middleware: [authMiddleware]
-    }
-  } */
+  }
 ]
 
 const moduleRoute = [
@@ -33,13 +24,6 @@ const moduleRoute = [
         component: Module,
         redirect: { name: 'manage-students' },
         children: [
-          /* {
-            path: 'update',
-            redirect: { name: 'manage-students' },
-            meta: {
-              middleware: [authMiddleware]
-            }
-          }, */
           {
             path: 'list',
             name: 'manage-students',
@@ -56,23 +40,6 @@ const moduleRoute = [
               middleware: [authMiddleware]
             }
           }
-          /* ,
-          {
-            path: 'create',
-            name: 'create-topic',
-            component: CreateTopicModule,
-            meta: {
-              middleware: [authMiddleware]
-            }
-          },
-          {
-            path: 'update/:id',
-            name: 'update-topic',
-            component: UpdateTopicModule,
-            meta: {
-              middleware: [authMiddleware]
-            }
-          } */
         ]
       },
       ...shortcutRoutes
