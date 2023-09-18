@@ -14,9 +14,10 @@
               </div>
 
               <!-- Column for Time -->
-              <div>
+              <div v-if="isActiveLesson(lesson)" class="d-flex px-2">
                 <SwitchInput
                   id="joinLesson"
+                  label="Asistir"
                   :value="hasJoinedLesson"
                   @click="joinLesson"
                 />
@@ -34,27 +35,30 @@
                 color="success"
                 @click="openInfoModal(lesson)"
               />
-              <resource-button
-                text-button="Materiales"
-                icon-button="mdi-folder-open"
-                color="success"
-                :config-route="{
-                  name: 'list-of-materials',
-                  params: { id: lesson.id }
-                }"
-              />
-              <resource-button
-                text-button="Grabaciones"
-                icon-button="mdi-camera"
-                color="success"
-                :config-route="{
-                  name: 'add-students',
-                  params: { id: lesson.id }
-                }"
-              />
+              <template v-if="isActiveLesson(lesson)">
+                <resource-button
+                  text-button="Materiales"
+                  icon-button="mdi-folder-open"
+                  color="success"
+                  :config-route="{
+                    name: 'list-of-materials',
+                    params: { id: lesson.id }
+                  }"
+                  :disabled="true"
+                />
+                <resource-button
+                  text-button="Grabaciones"
+                  icon-button="mdi-camera"
+                  color="success"
+                  :config-route="{
+                    name: 'add-students',
+                    params: { id: lesson.id }
+                  }"
+                  :disabled="true"
+                />
+              </template>
             </template>
           </LessonToolBar>
-
           <CalendarLessonsList
             :focus="date"
             :type="type"
@@ -120,6 +124,7 @@ export default {
     this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
   },
   mounted() {
+    this.initialData()
     this.loadNotifications()
   },
   methods: {
@@ -128,9 +133,10 @@ export default {
     dateFormat(date) {
       return moment(date).format('DD/MM/YYYY')
     },
+    isActiveLesson(lesson) {
+      return lesson.is_active === 1
+    },
     joinedLesson(value) {
-      console.log({ value })
-
       return value === 1
     },
     addLesson(date = undefined) {
@@ -138,9 +144,7 @@ export default {
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
-      console.log({ lesson })
-      this.hasJoinedLesson = Boolean(this.lesson.will_join)
-      console.log(this.lesson.will_join)
+      this.openInfoModal(lesson)
       this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })
