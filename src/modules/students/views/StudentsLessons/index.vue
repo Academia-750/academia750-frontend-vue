@@ -14,11 +14,11 @@
               </div>
 
               <!-- Column for Time -->
-              <div v-if="isActiveLesson(lesson)" class="d-flex px-2">
+              <div v-if="isActiveLesson(lesson)" class="d-flex px-2 mt-2">
                 <SwitchInput
                   id="joinLesson"
                   label="Asistir"
-                  :value="hasJoinedLesson"
+                  :value="hasJoinedLesson(lesson)"
                   @click="joinLesson"
                 />
               </div>
@@ -110,8 +110,7 @@ export default {
   mixins: [DatatableManageStudents, notifications],
   data() {
     return {
-      reloadDatatableUsers: false,
-      hasJoinedLesson: false
+      reloadDatatableUsers: false
     }
   },
   computed: {
@@ -124,31 +123,20 @@ export default {
     this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
   },
   mounted() {
-    this.initialData()
     this.loadNotifications()
   },
   methods: {
     ...mapMutations('studentsService', ['SET_DATE', 'SET_TYPE']),
     ...mapActions('studentsService', ['setLesson']),
-    dateFormat(date) {
-      return moment(date).format('DD/MM/YYYY')
-    },
     isActiveLesson(lesson) {
-      return lesson.is_active === 1
+      return lesson.is_active === 1 || this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
     },
-    joinedLesson(value) {
-      return value === 1
-    },
-    addLesson(date = undefined) {
-      this.setLesson(false)
-      this.$router.push({ name: 'create-lessons', query: { date } })
+    hasJoinedLesson(lesson) {
+      return lesson.will_join === 1
     },
     onLesson(lesson) {
       this.openInfoModal(lesson)
       this.setLesson(lesson || false)
-      if (this.isMobile) {
-        this.$router.push({ name: 'create-lessons' })
-      }
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
@@ -167,7 +155,7 @@ export default {
       if (!res) {
         return
       }
-      this.hasJoinedLesson = value
+      this.hasJoinedLesson(this.lesson)
     }
   },
   head: {

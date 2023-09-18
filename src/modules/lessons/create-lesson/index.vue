@@ -59,7 +59,7 @@
                 <FieldInput
                   id="url"
                   v-model="lessonMeetingUrl"
-                  rules="required|url"
+                  rules="required|url|max:550"
                   :filled="true"
                   :outlined="false"
                   :disabled="!canEdit"
