@@ -163,6 +163,7 @@ export default {
       this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onLesson(lesson) {
+      this.openInfoModal(lesson)
       this.setLesson(lesson || false)
       if (this.isMobile) {
         this.$router.push({ name: 'create-lessons' })

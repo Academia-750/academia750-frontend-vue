@@ -23,13 +23,13 @@
               <p class="text-h6 font-weight-black black--text">
                 Hora de comienzo:
               </p>
-              <p class="text-h6 font-weight-black">{{ date }}</p>
+              <p class="text-h6 font-weight-black">{{ start_time }}</p>
             </div>
             <div class="flex flex-column">
               <p class="text-h6 font-weight-black black--text text-center">
                 Hora de finalización:
               </p>
-              <p class="text-h6 font-weight-black text-center">{{ date }}</p>
+              <p class="text-h6 font-weight-black text-center">{{ end_time }}</p>
             </div>
           </div>
         </v-card-text>
@@ -47,13 +47,16 @@ export default {
       isOpen: false,
       loading: false,
       lesson: {},
-      date: ''
+      start_time: '',
+      end_time: ''
     }
   },
   methods: {
     open(lesson) {
       this.lesson = lesson
-      this.date = moment(lesson.date).format('DD MMMM YYYY')
+      console.log(lesson.start_time)
+      this.start_time = lesson.start_time
+      this.end_time = lesson.end_time
       this.isOpen = true
     },
     onClose() {

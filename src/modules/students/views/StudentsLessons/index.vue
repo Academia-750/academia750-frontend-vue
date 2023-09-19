@@ -14,10 +14,11 @@
               </div>
 
               <!-- Column for Time -->
-              <div>
+              <div v-if="isActiveLesson(lesson)" class="d-flex px-2 mt-2">
                 <SwitchInput
                   id="joinLesson"
-                  :value="hasJoinedLesson"
+                  label="Asistir"
+                  :value="hasJoinedLesson(lesson)"
                   @click="joinLesson"
                 />
               </div>
@@ -34,27 +35,30 @@
                 color="success"
                 @click="openInfoModal(lesson)"
               />
-              <resource-button
-                text-button="Materiales"
-                icon-button="mdi-folder-open"
-                color="success"
-                :config-route="{
-                  name: 'list-of-materials',
-                  params: { id: lesson.id }
-                }"
-              />
-              <resource-button
-                text-button="Grabaciones"
-                icon-button="mdi-camera"
-                color="success"
-                :config-route="{
-                  name: 'add-students',
-                  params: { id: lesson.id }
-                }"
-              />
+              <template v-if="isActiveLesson(lesson)">
+                <resource-button
+                  text-button="Materiales"
+                  icon-button="mdi-folder-open"
+                  color="success"
+                  :config-route="{
+                    name: 'list-of-materials',
+                    params: { id: lesson.id }
+                  }"
+                  :disabled="true"
+                />
+                <resource-button
+                  text-button="Grabaciones"
+                  icon-button="mdi-camera"
+                  color="success"
+                  :config-route="{
+                    name: 'add-students',
+                    params: { id: lesson.id }
+                  }"
+                  :disabled="true"
+                />
+              </template>
             </template>
           </LessonToolBar>
-
           <CalendarLessonsList
             :focus="date"
             :type="type"
@@ -106,8 +110,7 @@ export default {
   mixins: [DatatableManageStudents, notifications],
   data() {
     return {
-      reloadDatatableUsers: false,
-      hasJoinedLesson: false
+      reloadDatatableUsers: false
     }
   },
   computed: {
@@ -125,26 +128,16 @@ export default {
   methods: {
     ...mapMutations('studentsService', ['SET_DATE', 'SET_TYPE']),
     ...mapActions('studentsService', ['setLesson']),
-    dateFormat(date) {
-      return moment(date).format('DD/MM/YYYY')
+    isActiveLesson(lesson) {
+      return lesson.is_active === 1 || this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
     },
-    joinedLesson(value) {
-      console.log({ value })
-
-      return value === 1
-    },
-    addLesson(date = undefined) {
-      this.setLesson(false)
-      this.$router.push({ name: 'create-lessons', query: { date } })
+    hasJoinedLesson(lesson) {
+      
+      return lesson.will_join === 1
     },
     onLesson(lesson) {
-      console.log({ lesson })
-      this.hasJoinedLesson = Boolean(this.lesson.will_join)
-      console.log(this.lesson.will_join)
+      this.openInfoModal(lesson)
       this.setLesson(lesson || false)
-      if (this.isMobile) {
-        this.$router.push({ name: 'create-lessons' })
-      }
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
@@ -154,7 +147,8 @@ export default {
       if (this.lesson) {
         return
       }
-      this.hasJoinedLesson = Boolean(this.lesson.will_join)
+
+      this.hasJoinedLesson(lesson.will_join)
       this.setLesson(lesson || false)
     },
     async joinLesson(value) {
@@ -163,7 +157,7 @@ export default {
       if (!res) {
         return
       }
-      this.hasJoinedLesson = value
+      this.hasJoinedLesson(this.lesson)
     }
   },
   head: {
