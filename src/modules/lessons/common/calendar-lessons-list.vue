@@ -56,7 +56,7 @@
           </div>
         </v-sheet>
 
-        <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
+        <v-sheet v-if="!isMobile" :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
           <v-calendar
             ref="calendar"
             :value="focus"
@@ -80,6 +80,15 @@
             </template>
           </v-calendar>
         </v-sheet>
+        <template v-else>
+          <v-date-picker
+            ref="calendar"
+            :value="focus"
+            :event-color="getEventColor"
+            :events="events"
+            locale="es-MX"
+          ></v-date-picker>
+        </template>
       </v-col>
     </v-row>
   </div>
@@ -122,6 +131,9 @@ export default {
   }),
 
   computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
+    },
     title() {
       const { title } = this.$refs.calendar
 
@@ -130,6 +142,11 @@ export default {
     calendarDay() {
       return [1, 2, 3, 4, 5, 6, 0]
     },
+    computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
+    }
+  },
     computedType() {
       if (this.$vuetify.breakpoint.xs) {
         return 'day'

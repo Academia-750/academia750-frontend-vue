@@ -132,6 +132,7 @@ export default {
       return lesson.is_active === 1 || this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
     },
     hasJoinedLesson(lesson) {
+      
       return lesson.will_join === 1
     },
     onLesson(lesson) {
@@ -146,7 +147,8 @@ export default {
       if (this.lesson) {
         return
       }
-      this.hasJoinedLesson = Boolean(this.lesson.will_join)
+
+      this.hasJoinedLesson(lesson.will_join)
       this.setLesson(lesson || false)
     },
     async joinLesson(value) {
