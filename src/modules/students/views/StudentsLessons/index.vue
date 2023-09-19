@@ -18,7 +18,7 @@
                 <SwitchInput
                   id="joinLesson"
                   label="Asistir"
-                  :value="hasJoinedLesson(lesson)"
+                  :value="willJoin"
                   @click="joinLesson"
                 />
               </div>
@@ -59,15 +59,26 @@
               </template>
             </template>
           </LessonToolBar>
-          <CalendarLessonsList
-            :focus="date"
-            :type="type"
-            role="student"
-            @type="SET_TYPE"
-            @lesson="onLesson"
-            @load="onLessonLoad"
-            @focus="SET_DATE"
-          />
+          <template v-if="!isMobile">
+            <CalendarLessonsList
+              :focus="date"
+              :type="type"
+              role="student"
+              @type="SET_TYPE"
+              @lesson="onLesson"
+              @load="onLessonLoad"
+              @focus="SET_DATE"
+            />
+          </template>
+          <template v-else>
+            <v-date-picker
+              :value="focus"
+              :event-color="getEventColor"
+              :events="events"
+              color="primary"
+              locale="es-MX"
+            ></v-date-picker>
+          </template>
         </v-card-text>
       </v-card>
     </div>
@@ -110,7 +121,8 @@ export default {
   mixins: [DatatableManageStudents, notifications],
   data() {
     return {
-      reloadDatatableUsers: false
+      reloadDatatableUsers: false,
+      willJoin: false
     }
   },
   computed: {
@@ -131,10 +143,6 @@ export default {
     isActiveLesson(lesson) {
       return lesson.is_active === 1 || this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
     },
-    hasJoinedLesson(lesson) {
-      
-      return lesson.will_join === 1
-    },
     onLesson(lesson) {
       this.openInfoModal(lesson)
       this.setLesson(lesson || false)
@@ -147,8 +155,7 @@ export default {
       if (this.lesson) {
         return
       }
-
-      this.hasJoinedLesson(lesson.will_join)
+      this.willJoin = lesson.will_join === 1
       this.setLesson(lesson || false)
     },
     async joinLesson(value) {
@@ -157,7 +164,7 @@ export default {
       if (!res) {
         return
       }
-      this.hasJoinedLesson(this.lesson)
+      this.willJoin = value
     }
   },
   head: {
