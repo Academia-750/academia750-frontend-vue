@@ -29,7 +29,9 @@
               <p class="text-h6 font-weight-black black--text text-center">
                 Hora de finalización:
               </p>
-              <p class="text-h6 font-weight-black text-center">{{ end_time }}</p>
+              <p class="text-h6 font-weight-black text-center">
+                {{ end_time }}
+              </p>
             </div>
           </div>
         </v-card-text>
@@ -54,7 +56,6 @@ export default {
   methods: {
     open(lesson) {
       this.lesson = lesson
-      console.log(lesson.start_time)
       this.start_time = lesson.start_time
       this.end_time = lesson.end_time
       this.isOpen = true

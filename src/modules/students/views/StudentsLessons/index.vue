@@ -61,6 +61,7 @@
           </LessonToolBar>
           <template v-if="!isMobile">
             <CalendarLessonsList
+              ref="calendar"
               :focus="date"
               :type="type"
               role="student"
@@ -141,11 +142,15 @@ export default {
     ...mapMutations('studentsService', ['SET_DATE', 'SET_TYPE']),
     ...mapActions('studentsService', ['setLesson']),
     isActiveLesson(lesson) {
-      return lesson.is_active === 1 || this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
+      return (
+        lesson.is_active === 1 ||
+        this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
+      )
     },
     onLesson(lesson) {
       this.openInfoModal(lesson)
       this.setLesson(lesson || false)
+      this.willJoin = lesson.will_join === 1
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
@@ -164,7 +169,13 @@ export default {
       if (!res) {
         return
       }
+      // The switch accepts a flag
       this.willJoin = value
+      // But the object expects 1 or 0. Update current selected and on the array
+      this.setLesson({ ...this.lesson, will_join: value ? 1 : 0 })
+      this.$refs.calendar.updateLesson(this.lesson.id, {
+        will_join: value ? 1 : 0
+      })
     }
   },
   head: {

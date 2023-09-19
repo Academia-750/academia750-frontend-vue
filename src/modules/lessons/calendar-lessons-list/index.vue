@@ -1,8 +1,6 @@
 <template>
   <v-card-text>
-    <LessonInfoModal
-      ref="lessonInfoModal"
-    />
+    <LessonInfoModal ref="lessonInfoModal" />
     <div>
       <v-card flat>
         <v-card-text>
@@ -128,7 +126,7 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
-      LessonInfoModal: () =>
+    LessonInfoModal: () =>
       import(
         /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       )
@@ -169,9 +167,9 @@ export default {
         this.$router.push({ name: 'create-lessons' })
       }
     },
-    openInfoModal (lesson) {
-        this.$refs.lessonInfoModal.open(lesson)
-      },
+    openInfoModal(lesson) {
+      this.$refs.lessonInfoModal.open(lesson)
+    },
     onLessonLoad(lesson) {
       // Only on first load
       if (this.lesson) {

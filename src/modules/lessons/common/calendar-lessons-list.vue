@@ -135,7 +135,7 @@ export default {
   computed: {
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
-      },
+    },
     title() {
       const { title } = this.$refs.calendar
 
@@ -192,6 +192,8 @@ export default {
     async showEvent({ event }) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
+      console.log({ id: lesson.id, will_join: lesson.will_join })
+
       this.$emit('lesson', lesson || false)
     },
     async getCalendarLessons({ start, end }) {
@@ -199,7 +201,7 @@ export default {
         from: start.date,
         to: end.date
       }
-      
+
       let lessons = undefined
 
       // I will have to keep this in "student" in a util as a variable if the logic Abel confirms
@@ -230,6 +232,15 @@ export default {
           .pop() || [...this.lessons].pop()
 
       nextLesson && this.$emit('load', nextLesson)
+    },
+
+    updateLesson(id, data) {
+      const index = this.lessons.findIndex((lesson) => lesson.id === id)
+
+      if (index < 0) {
+        return
+      }
+      this.$set(this.lessons, index, { ...this.lessons[index], ...data })
     }
   }
 }
