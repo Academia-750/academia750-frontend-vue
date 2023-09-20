@@ -104,7 +104,8 @@ export default {
   data() {
     return {
       reloadDatatableUsers: false,
-      willJoin: false
+      willJoin: false,
+      events: []
     }
   },
   computed: {
@@ -135,6 +136,38 @@ export default {
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
+    },
+    async getCalendarLessons({ start, end }) {
+      const params = {
+        from: start.date,
+        to: end.date
+      }
+      
+      let lessons = undefined
+
+      // I will have to keep this in "student" in a util as a variable if the logic Abel confirms
+      if (this.role === 'student') {
+        lessons = await LessonRepository.studentCalendar(params)
+      } else {
+        lessons = await LessonRepository.calendar(params)
+      }
+
+      if (!lessons) {
+        return
+      }
+      this.lessons = lessons.results
+      this.events = lessons.results.map((item) => {
+        return [
+        item.date + ' ' + item.start_time
+        ]
+      })
+      // Auto select the first next lesson or the last lesson if all is in the past
+      const nextLesson =
+        this.lessons
+          .filter((lesson) => lesson.date > moment().format('YYYY-MM-DD'))
+          .pop() || [...this.lessons].pop()
+
+      nextLesson && this.$emit('load', nextLesson)
     },
     onLessonLoad(lesson) {
       // Only on first load
