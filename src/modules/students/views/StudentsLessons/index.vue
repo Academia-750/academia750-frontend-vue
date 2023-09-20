@@ -35,28 +35,7 @@
                 color="success"
                 @click="openInfoModal(lesson)"
               />
-              <template v-if="isActiveLesson(lesson)">
-                <resource-button
-                  text-button="Materiales"
-                  icon-button="mdi-folder-open"
-                  color="success"
-                  :config-route="{
-                    name: 'list-of-materials',
-                    params: { id: lesson.id }
-                  }"
-                  :disabled="true"
-                />
-                <resource-button
-                  text-button="Grabaciones"
-                  icon-button="mdi-camera"
-                  color="success"
-                  :config-route="{
-                    name: 'add-students',
-                    params: { id: lesson.id }
-                  }"
-                  :disabled="true"
-                />
-              </template>
+              
             </template>
           </LessonToolBar>
           <template v-if="!isMobile">

@@ -20,10 +20,10 @@
           </div>
           <div class="mb-2 d-flex justify-space-between align-center">
             <div class="flex flex-column">
-              <p class="text-h6 font-weight-black black--text">
+              <p class="text-h6 font-weight-black black--text ">
                 Hora de comienzo:
               </p>
-              <p class="text-h6 font-weight-black">{{ start_time }}</p>
+              <p class="text-h6 font-weight-black ml-8">{{ start_time }}</p>
             </div>
             <div class="flex flex-column">
               <p class="text-h6 font-weight-black black--text text-center">
@@ -34,15 +34,44 @@
               </p>
             </div>
           </div>
+          <template v-if="isActiveLesson(lesson)">
+            <resource-button
+              text-button="Materiales"
+              icon-button="mdi-folder-open"
+              color="success"
+              :config-route="{
+                name: 'list-of-materials',
+                params: { id: lesson.id }
+              }"
+              :disabled="true"
+            />
+            <resource-button
+              text-button="Grabaciones"
+              icon-button="mdi-camera"
+              color="success"
+              :config-route="{
+                name: 'add-students',
+                params: { id: lesson.id }
+              }"
+              :disabled="true"
+            />
+          </template>
         </v-card-text>
       </v-card>
     </v-dialog>
   </v-row>
 </template>
 <script>
-import moment from 'moment'
+import { PermissionEnum } from '@/utils/enums'
+
 export default {
   name: 'LessonInfoModal',
+  components: {
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ './ResourceButton.vue'
+      )
+  },
   props: {},
   data() {
     return {
@@ -62,6 +91,12 @@ export default {
     },
     onClose() {
       this.isOpen = false
+    },
+    isActiveLesson(lesson) {
+      return (
+        lesson.is_active === 1 ||
+        this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
+      )
     }
   }
 }
