@@ -1,10 +1,10 @@
 export default {
-  data () {
+  data() {
     return {
       loadingButtonCreateOrUpdateStudent: false,
       disabledButtonCreateOrUpdateStudent: false,
       isUpdateStudent: false,
-      form : {
+      form: {
         dni: '',
         firstName: '',
         lastName: '',
@@ -20,8 +20,7 @@ export default {
             email: ''
           }
         }
-      },
-      dataRoleStudent: null
+      }
     }
   }
 }

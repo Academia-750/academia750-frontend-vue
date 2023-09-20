@@ -1,5 +1,9 @@
 export default {
   components: {
+    SearchRoleModal: () =>
+          import(
+            /* webpackChunkName: "SearchRoleModal" */ '@/modules/resources/components/resources/search-role-modal'
+        ),
     ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
     ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
     ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),

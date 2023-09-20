@@ -2,7 +2,8 @@ export default {
   data () {
     return {
       //namesRelationshipsIncludeRequest: 'topics'
-      currentItemsSelectedForDelete: null
+      currentItemsSelectedForDelete: null,
+      isAddingRole: false
     }
   }
 }

@@ -1,48 +1,41 @@
-/* import menuUI from './menus/ui.menu'
-import menuApps from './menus/apps.menu'
-import menuPages from './menus/pages.menu' */
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  // main navigation - side menu
   menu: [
     {
       text: 'Mi cuenta',
       key: '',
-      can: '*',
       items: [
         {
           icon: 'mdi-account-circle',
           key: '',
           text: 'Perfil de usuario',
-          to: { name: 'update-my-profile' },
-          can: '*'
+          to: { name: 'update-my-profile' }
         },
         {
           icon: 'mdi-camera',
           key: '',
           text: 'Cambiar mi foto',
-          to: { name: 'update-image-account' },
-          can: '*'
+          to: { name: 'update-image-account' }
         },
         {
           icon: 'mdi-lock',
           key: '',
           text: 'Cambiar contraseña',
-          to: { name: 'change-password' },
-          can: '*'
+          to: { name: 'change-password' }
         }
       ]
     },
     {
       text: 'Zona de entrenamiento',
       key: '',
-      roles: 'student',
+      permissions: [PermissionEnum.GENERATE_TESTS],
       items: [
         {
           icon: 'mdi-book-edit',
           key: '',
           text: 'Zona de entrenamiento',
-          roles: 'student',
+          permissions: [PermissionEnum.GENERATE_TESTS],
           regex: /^\/Zona de Entrenamiento/,
           items: [
             {
@@ -50,21 +43,21 @@ export default {
               key: '',
               text: 'Generar cuestionario',
               to: { name: 'generate-questionnaire' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             },
             {
               icon: 'mdi-book-clock',
               key: '',
               text: 'Tests sin completar',
               to: { name: 'list-questionnaires-of-student-not-complete' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             },
             {
               icon: 'mdi-view-list',
               key: '',
               text: 'Tarjetas de memoria',
               to: { name: 'list-cards-memory' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             }
           ]
         }
@@ -73,13 +66,13 @@ export default {
     {
       text: 'Mi evolución',
       key: '',
-      roles: 'student',
+      permissions: [PermissionEnum.GENERATE_TESTS],
       items: [
         {
           icon: 'mdi-chart-areaspline',
           key: '',
           text: 'Resumen',
-          roles: 'student',
+          permissions: [PermissionEnum.GENERATE_TESTS],
           regex: /^\/Resumen/,
           items: [
             {
@@ -87,21 +80,21 @@ export default {
               key: '',
               text: '5 temas a mejorar',
               to: { name: 'fetch-resume-student-five-topics-to-improve' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             },
             {
               icon: 'mdi-book-clock',
               key: '',
               text: 'Resultados por tema',
               to: { name: 'fetch-resume-student-results-per-topic' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             },
             {
               icon: 'mdi-view-list',
               key: '',
               text: 'Errores por tema',
               to: { name: 'fetch-resume-student-questions-wrong-per-topic' },
-              roles: 'student'
+              permissions: [PermissionEnum.GENERATE_TESTS]
             }
           ]
         },
@@ -112,19 +105,19 @@ export default {
           to: {
             name: 'fetch-history-questions-student-by-tests-period-type-question'
           },
-          roles: 'student'
+          permissions: [PermissionEnum.GENERATE_TESTS]
         },
         {
           icon: 'mdi-notebook-check',
           key: '',
           text: 'Tests completados',
           to: { name: 'fetch-history-tests-completed' },
-          roles: 'student'
+          permissions: [PermissionEnum.GENERATE_TESTS]
         }
       ]
     },
     {
-      text: 'Gestión administrativa',
+      text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',
       items: [
@@ -136,33 +129,47 @@ export default {
           roles: 'admin'
         },
         {
-          icon: 'mdi-account-group',
-          key: '',
-          text: 'Gestión de Grupos',
-          to: { name: 'manage-groups' },
-          roles: 'admin'
-        },
-        {
-          icon: 'mdi-folder-open',
-          key: '',
-          text: 'Categorías y Materiales',
-          to: { name: 'manage-workspaces' },
-          roles: 'admin'
-        },
-        {
-          icon: 'mdi-book-open-page-variant',
-          key: '',
-          text: 'Gestionar Clases',
-          to: { name: 'manage-lessons' },
-          roles: 'admin'
-        },
-        {
           icon: 'mdi-clipboard-account',
           key: '',
           text: 'Gestión de Permisos',
           to: { name: 'manage-profiles' },
           roles: 'admin'
         },
+        {
+          icon: 'mdi-account-group',
+          key: '',
+          text: 'Gestión de Grupos',
+          to: { name: 'manage-groups' },
+          roles: 'admin'
+        }
+      ]
+    },
+    {
+      text: 'Gestión de Clases',
+      key: '',
+      roles: 'admin',
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Gestión Clases',
+          to: { name: 'manage-lessons' },
+          roles: 'admin'
+        },
+        {
+          icon: 'mdi-folder-open',
+          key: '',
+          text: 'Gestión de Materiales',
+          to: { name: 'manage-workspaces' },
+          roles: 'admin'
+        }
+      ]
+    },
+    {
+      text: 'Gestión de Opisiciones',
+      key: '',
+      roles: 'admin',
+      items: [
         {
           icon: 'mdi-book-open-variant',
           key: '',
@@ -176,8 +183,7 @@ export default {
           text: 'Gestión de Temas',
           to: { name: 'manage-topics' },
           roles: 'admin'
-        } /* ,
-        { icon: 'mdi-file-document-multiple-outline', key: '', text: 'Gestión de Subtemas', to: { name: 'manage-subtopics' }, can: 'list-subtopics' } */,
+        },
         {
           icon: 'mdi-database-import',
           key: '',
@@ -224,54 +230,5 @@ export default {
         }
       ]
     }
-    /* ,
-    {
-      text: 'Apps',
-      items: menuApps
-    },
-    {
-      text: 'Landing Pages',
-      can: 'list-students-system',
-      items: [
-        { icon: 'mdi-airplane-landing', key: 'menu.landingPage', text: 'Landing Page', link: '/landing', can: 'list-students-system' },
-        { icon: 'mdi-cash-usd-outline', key: 'menu.pricingPage', text: 'Pricing Page', link: '/landing/pricing' }
-      ]
-    },
-    {
-      text: 'UI - Theme Preview',
-      items: menuUI
-    },
-    {
-      text: 'Pages',
-      key: 'menu.pages',
-      items: menuPages
-    },
-    {
-      text: 'Other',
-      key: 'menu.others',
-      items: [
-        { icon: 'mdi-file-outline', key: 'menu.blank', text: 'Blank Page', link: '/blank' },
-        { key: 'menu.levels', text: 'Menu Levels',
-          items: [
-            { text: 'Menu Levels 2.1' },
-            { text: 'Menu Levels 2.2',
-              items: [
-                { text: 'Menu Levels 3.1' },
-                { text: 'Menu Levels 3.2' }
-              ]
-            }
-          ]
-        },
-        { key: 'menu.disabled', text: 'Menu Disabled', disabled: true }
-      ]
-    } */
   ]
-
-  // footer links
-  /* footer: [{
-    text: 'Docs',
-    key: 'menu.docs',
-    href: 'https://vuetifyjs.com',
-    target: '_blank'
-  }] */
 }

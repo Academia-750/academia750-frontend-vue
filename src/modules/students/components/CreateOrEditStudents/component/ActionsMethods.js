@@ -1,16 +1,5 @@
 export default {
   methods: {
-    async fetchDataRoleStudent() {
-      try {
-        const response = await this.fetchRoleStudentData({
-          config: {}
-        })
-
-        this.dataRoleStudent = response.data.data
-      } catch (error) {
-        //console.log(error)
-      }
-    },
     async createStudentApi() {
       try {
         await this.createStudent({
@@ -19,8 +8,7 @@ export default {
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
             phone: this.form.phone,
-            email: this.form.email,
-            roles: [this.dataRoleStudent.id]
+            email: this.form.email
           },
           config: {}
         })
@@ -68,8 +56,7 @@ export default {
             'first-name': this.form.firstName,
             'last-name': this.form.lastName,
             phone: this.form.phone,
-            email: this.form.email,
-            roles: [this.dataRoleStudent.id]
+            email: this.form.email
           },
           config: {}
         })

@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-list-item
-      v-if="
-        !menuItem.items && ($can(menuItem.can) || $hasRoles(menuItem.roles))
-      "
+      v-if="!menuItem.items && display(menuItem)"
       :input-value="menuItem.value"
       :to="calculateRouteLink(menuItem)"
       :exact="menuItem.exact"
@@ -24,11 +22,10 @@
     </v-list-item>
 
     <v-list-group
-      v-else-if="$can(menuItem.can) || $hasRoles(menuItem.roles)"
+      v-else-if="display(menuItem)"
       :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
       :disabled="menuItem.disabled"
       :sub-group="subgroup"
-      :to="{ name: 'manage-groups' }"
       link
     >
       <template v-slot:activator>
@@ -88,6 +85,18 @@ export default {
       }
 
       return routeTo
+    },
+    display(menuItem) {
+      // No permission requested
+      if (!(menuItem.roles || menuItem.permissions)) {
+        return true
+      }
+
+      // Any or both conditions
+      return (
+        this.$hasRoles(menuItem.roles) ||
+        this.$hasPermission(menuItem.permissions)
+      )
     }
   }
 }

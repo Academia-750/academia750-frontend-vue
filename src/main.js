@@ -11,9 +11,21 @@ import router from './router'
 import manageErrors from './helpers/manageErrors'
 import manageLoading from './helpers/manageLoading'
 import manageTokenAuth from '@/helpers/auth.js'
-import { loadUserAuth, getUserAuth, getRolesUserAuth, getPermissionsUserAuth } from '@/helpers/loadUserAuth'
-import { hasPermissions } from '@/helpers/managePermissions'
-import { hasRoles, hasRoleMiddleware } from '@/helpers/manageRoles'
+import {
+  loadUserAuth,
+  getUserAuth,
+  getRolesUserAuth,
+  getPermissionsUserAuth
+} from '@/helpers/loadUserAuth'
+import {
+  hasPermissions,
+  hasPermissionsMiddleware
+} from '@/helpers/managePermissions'
+import {
+  hasRoles,
+  hasPermission,
+  hasRoleMiddleware
+} from '@/helpers/manageRoles'
 import { $KeepOneTabOpenInTheBrowserLocalStorage } from '@/helpers/KeepOneTabOpenInTheBrowser'
 
 // PLUGINS
@@ -71,11 +83,14 @@ Vue.prototype.$loadUserAuth = loadUserAuth
 
 loadUserAuth()
 
-Vue.$can = hasPermissions
-Vue.prototype.$can = hasPermissions
-
 Vue.$hasRoles = hasRoles
 Vue.prototype.$hasRoles = hasRoles
+
+Vue.$hasPermission = hasPermissions
+Vue.prototype.$hasPermission = hasPermissions
+
+Vue.$hasPermissionMiddleware = hasPermissionsMiddleware
+Vue.prototype.$hasPermissionMiddleware = hasPermissionsMiddleware
 
 Vue.$hasRoleMiddleware = hasRoleMiddleware
 Vue.prototype.$hasRoleMiddleware = hasRoleMiddleware
