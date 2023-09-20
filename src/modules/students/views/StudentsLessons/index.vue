@@ -7,6 +7,9 @@
           <LessonToolBar v-show="!isMobile">
             <template v-if="lesson" slot="info">
               <div class="d-flex align-center">
+                <div class="text-bold mr-2 subtitle-1 font-weight-bold">Mis lecciones</div>
+              </div>
+              <div class="d-flex align-center">
                 <div class="text-bold mr-2">Clase:</div>
                 <span class="font-weight-bold subtitle-2">
                   {{ lesson.name }}
@@ -35,7 +38,6 @@
                 color="success"
                 @click="openInfoModal(lesson)"
               />
-              
             </template>
           </LessonToolBar>
           <template v-if="!isMobile">

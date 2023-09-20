@@ -47,7 +47,7 @@ export default {
     flex: 1;
     gap: 8px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
   }
 }
@@ -62,9 +62,10 @@ export default {
       margin-right: 20px;
     }
     .lessons-actions {
+      background-color: red;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: end;
       align-items: flex-end;
     }
   }
