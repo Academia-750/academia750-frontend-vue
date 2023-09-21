@@ -54,14 +54,48 @@
           </template>
           <template v-else>
             <v-date-picker
-              :value="focus"
-              :event-color="getEventColor"
-              :events="events"
-              color="primary"
-              locale="es-MX"
+              v-model="date2"
+              :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
+              :events="functionEvents"
             ></v-date-picker>
           </template>
         </v-card-text>
+        <div class="d-flex w-full elevation-2 relative lessonSelectedDescription">
+          <div>
+            <div class="d-flex flex-column justify-center">
+              <span class=" font-weight-medium text-xs-caption text-sm-h7">
+                Fire Lesson
+              </span>
+              <span class="font-weight-medium text-xs-caption text-sm-h7">
+                09:00 AM to 10:00 AM
+              </span>
+            </div>
+          </div>
+          <div class="d-flex">
+            <SwitchInput
+              id="joinLesson"
+              label="Asistir"
+              :value="willJoin"
+              @click="joinLesson"
+            />
+          </div>
+          <div class="d-flex px-2">
+            <v-icon
+              color="success"
+              :dark="!disabled"
+            >
+              mdi-information
+            </v-icon>
+          </div>
+        </div>
+        <div class="lessonSelectedDate d-flex flex-column items-center blue lighten-2 p-2">
+          <span class="font-weight-medium text-xs-caption text-sm-h7">
+            17
+          </span>
+          <span class="font-weight-medium text-xs-caption text-sm-h7">
+            Aug
+          </span>
+        </div>
       </v-card>
     </div>
   </v-card-text>
@@ -105,7 +139,9 @@ export default {
     return {
       reloadDatatableUsers: false,
       willJoin: false,
-      events: []
+      events: [],
+      lessons: [],
+      date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
     }
   },
   computed: {
@@ -137,37 +173,48 @@ export default {
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
     },
-    async getCalendarLessons({ start, end }) {
+    functionEvents (date) {
+      console.log( 'calleds')
+      const [year,monthNumber, day] = date.split('-')
+
+      const firstDay = new Date(year, monthNumber - 1, 1)
+      const firstDayFormatted = `${year}-${monthNumber}-01`
+
+      // Calculate the last day of the month
+      const lastDay = new Date(year, monthNumber, 0)
+      const lastDayFormatted = `${year}-${monthNumber}-${lastDay.getDate()}`
+
+          const startDate = moment(firstDayFormatted).format('YYYY-MM-DD')
+          const endDate = moment(lastDayFormatted).format('YYYY-MM-DD')
+        
+      // this.getCalendarLessons(startDate, endDate)
+
+      const LessonsDate = this.lessons.results.map((item) => {
+      return item.date
+      })
+      const dayValues = LessonsDate.map((dateString) => {
+        const parts = dateString.split('-')
+
+        // Split the date string by '-'
+        return parseInt(parts[2]) // Get the day part (index 2) and convert it to a number
+      })
+
+      console.log(dayValues)
+      if (dayValues.includes(parseInt(day, 10))) return ['red']
+
+      return false
+    },
+    async getCalendarLessons(start, end) {
       const params = {
-        from: start.date,
-        to: end.date
+        from: start,
+        to: end
       }
       
-      let lessons = undefined
-
       // I will have to keep this in "student" in a util as a variable if the logic Abel confirms
-      if (this.role === 'student') {
-        lessons = await LessonRepository.studentCalendar(params)
-      } else {
-        lessons = await LessonRepository.calendar(params)
-      }
+      
+        this.lessons = await LessonRepository.studentCalendar(params)
 
-      if (!lessons) {
-        return
-      }
-      this.lessons = lessons.results
-      this.events = lessons.results.map((item) => {
-        return [
-        item.date + ' ' + item.start_time
-        ]
-      })
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        this.lessons
-          .filter((lesson) => lesson.date > moment().format('YYYY-MM-DD'))
-          .pop() || [...this.lessons].pop()
-
-      nextLesson && this.$emit('load', nextLesson)
+        return true
     },
     onLessonLoad(lesson) {
       // Only on first load
@@ -209,5 +256,14 @@ export default {
   &.active {
     background-color: #66ff99;
   }
+}
+.lessonSelectedDate {
+  position: absolute;
+  bottom: 15px;
+  padding: 5px;
+  align-items: center;
+}
+.lessonSelectedDescription {
+  margin-left: 37px;
 }
 </style>

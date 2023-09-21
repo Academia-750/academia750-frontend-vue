@@ -1,0 +1,26 @@
+// const firstDay = new Date(year, monthNumber - 1, 1)
+      // const firstDayFormatted = `${year}-${monthNumber}-01`
+
+      // // Calculate the last day of the month
+      // const lastDay = new Date(year, monthNumber, 0)
+      // const lastDayFormatted = `${year}-${monthNumber}-${lastDay.getDate()}`
+
+      // const params = {
+      //     from: moment(firstDayFormatted).format('YYYY-MM-DD'),
+      //     to: moment(lastDayFormatted).format('YYYY-MM-DD')
+      //   }
+        
+      //   let lessons = undefined
+
+      // // I will have to keep this in "student" in a util as a variable if the logic Abel confirms
+      // lessons = await LessonRepository.studentCalendar(params)
+
+      // const LessonsDate = lessons.results.map((item) => {
+      // return item.date
+      // })
+      // const dayValues = LessonsDate.map((dateString) => {
+      //   const parts = dateString.split('-')
+
+      //   // Split the date string by '-'
+      //   return parts[2] // Get the day part (index 2) and convert it to a number
+      // })
