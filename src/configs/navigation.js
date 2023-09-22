@@ -127,6 +127,20 @@ export default {
           text: 'Clases',
           to: { name: 'manage-students-lessons' },
           permissions: [PermissionEnum.SEE_LESSONS]
+        },
+        {
+          icon: 'mdi-file-pdf',
+          key: '',
+          text: 'Materiales',
+          to: { name: 'manage-students-materials' },
+          permissions: [PermissionEnum.SEE_LESSON_MATERIALS]
+        },
+        {
+          icon: 'mdi-camera',
+          key: '',
+          text: 'Recordings',
+          to: { name: 'manage-students-recordings' },
+          permissions: [PermissionEnum.SEE_LESSON_RECORDINGS]
         }
       ]
     },
