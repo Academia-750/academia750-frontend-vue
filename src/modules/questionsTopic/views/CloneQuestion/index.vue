@@ -367,7 +367,6 @@ export default {
           data: FormDataQuestion,
           config: {}
         })
-
         this.$swal.fire({
           icon: 'success',
           toast: true,
