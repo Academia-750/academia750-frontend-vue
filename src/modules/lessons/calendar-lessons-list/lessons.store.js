@@ -1,9 +1,11 @@
+import moment from 'moment'
+
 export default {
   name: 'lessonsStore',
   namespaced: true,
   state: {
     lesson: false,
-    date: '',
+    date: moment().format('YYYY-MM-DD'),
     type: 'month'
   },
   mutations: {

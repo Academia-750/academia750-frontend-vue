@@ -21,7 +21,7 @@
             <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
             <resource-button
               text-button="Gestionar un Grupos"
-              color="success"
+              color="secondary"
               icon-button="mdi-account-multiple"
               @click="deleteGroupFromLesson()"
             />

@@ -1,7 +1,6 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageStudentsModule from '@/modules/students/views/Students'
-import ManageStudentsLessonsModule from '@/modules/students/views/StudentsLessons'
 
 const shortcutRoutes = [
   {
@@ -28,14 +27,6 @@ const moduleRoute = [
             path: 'list',
             name: 'manage-students',
             component: ManageStudentsModule,
-            meta: {
-              middleware: [authMiddleware]
-            }
-          },
-          {
-            path: 'lessons',
-            name: 'manage-students-lessons',
-            component: ManageStudentsLessonsModule,
             meta: {
               middleware: [authMiddleware]
             }

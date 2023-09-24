@@ -117,15 +117,15 @@ export default {
       ]
     },
     {
-      text: 'Mi classes',
+      text: 'Clases y Matriales',
       key: '',
       permissions: [PermissionEnum.SEE_LESSONS],
       items: [
         {
           icon: 'mdi-book-open-page-variant',
           key: '',
-          text: 'Clases',
-          to: { name: 'manage-students-lessons' },
+          text: 'Mis Clases',
+          to: { name: 'my-lessons' },
           permissions: [PermissionEnum.SEE_LESSONS]
         }
       ]

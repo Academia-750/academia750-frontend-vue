@@ -111,12 +111,12 @@ export default {
 
     return { results: response.data.results }
   },
-   /**
+  /**
    * @param {string} from
    * @param {string} to
    * @param {number} content
    */
-   async studentCalendar({ from, to, content } = {}) {
+  async studentCalendar({ from, to, content } = {}) {
     const params = {
       from,
       to,
@@ -124,7 +124,9 @@ export default {
     }
 
     deleteUndefined(params)
-    const response = await ResourceService.get('student-lessons/calendar', { params })
+    const response = await ResourceService.get('student-lessons/calendar', {
+      params
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -398,7 +400,7 @@ export default {
    * @param {string} id
    *  @param {string} join
    */
-  async StudentJoinLesson(id, join) {
+  async joinLesson(id, join) {
     const response = await ResourceService.put(`student-lessons/${id}/join`, {
       join
     })
