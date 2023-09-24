@@ -26,9 +26,6 @@ export default {
       reloadDatatableUsers: false
     }
   },
-  beforeCreate() {
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) && this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
-  },
   mounted() {
     this.loadNotifications()
   },

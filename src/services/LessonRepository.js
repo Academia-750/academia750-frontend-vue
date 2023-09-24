@@ -450,5 +450,43 @@ export default {
     }
 
     return { results: response.data.results }
+  },
+   /**
+   * @param {string} id
+   */
+   async downloadStudentMaterial(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/download`)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { status: response.status, url: response.url }
+    }
+
+    return false
+  },
+  /**
+   * @param {string} content
+   * @param {number} limit
+   */
+  async searchLessons({ content, limit }) {
+    const response = await ResourceService.get('student-lessons/search', {
+      params: {
+        content: content || undefined,
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }
