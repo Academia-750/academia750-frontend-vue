@@ -1,62 +1,9 @@
 <template>
-  <MaterialsRecordingsTable :type="type" />
-</template>
-
-<script>
-import _ from 'lodash'
-import { mapMutations, mapActions, mapState } from 'vuex'
-import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './students-materials-columns'
-import LessonRepository from '@/services/LessonRepository'
-import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import DownloadFile from '@/utils/DownloadMaterial'
-import { PermissionEnum } from '@/utils/enums'
-
-export default {
-  name: 'StudentsMaterialsList',
-  components: {
-      MaterialsRecordingsTable: () =>
-      import(
-        /* webpackChunkName: "MaterialsRecordingsTable" */ '../components/materials-recordings-table.vue'
-      )
-  },
-  mixins: [componentButtonsCrud],
-  data() {
-    return {
-      type : ''
-    }},
-  computed: {
-    ...mapState('studentsMaterialsStore', ['tags','lessons']),
-    headers() {
-      return headers
-    },
-    store() {
-      return this.$store.state.studentsMaterialsStore
-    }
-  },
-  beforeCreate() {
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) && this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
-  },
-  mounted() {
-    this.getType()
-  },
-  methods: {
-    getType() {
-      const { path } = this.$route
-      const segments = path.split('/')// Split the path by '/'
-
-      this.type = segments[segments.length - 1].slice(0, -1)
-      console.log(this.type)
-    }
-  }
-}
-</script>
-<template>
   <v-card-text>
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="studentsMaterialsStore"
+      :store-name="storeName"
       :load="loadStudentsMaterials"
     >
       <template v-slot:top>
@@ -126,7 +73,7 @@ export default {
   import { PermissionEnum } from '@/utils/enums'
   
   export default {
-    name: 'StudentsMaterialsList',
+    name: 'StudentsMaterialsBase',
     components: {
       ResourceBannerNoDataDatatable: () =>
         import(
@@ -142,7 +89,7 @@ export default {
         ),
       SearchBar: () =>
         import(
-          /* webpackChunkName: "SearchBar" */ '../components/search-materials-bar.vue'
+          /* webpackChunkName: "SearchBar" */ '../searchBar/search-materials-bar.vue'
         ),
       ResourceButton: () =>
         import(
@@ -159,6 +106,10 @@ export default {
       storeName: {
         type: String,
         required: true
+      },
+      type: {
+        type: String,
+        required: true
       }
     },
     data() {
@@ -171,16 +122,14 @@ export default {
         return headers
       },
       store() {
-        return this.$store.state.studentsMaterialsStore
+        return this.$store.state.storeName
       }
-    },
-    beforeCreate() {
-      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) && this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
     },
     created() {
       this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
     },
     mounted() {
+      this.loadStudentsMaterials()
       this.$refs.table.reload()
     },
     methods: {
@@ -202,15 +151,17 @@ export default {
       },
       
       async loadStudentsMaterials(pagination) {
-
         const params = {
           ...pagination,
           tags: this.tags,
-          lessons: this.lessons
+          lessons: this.lessons,
+          type: this.type
         }
-  
-        const res = await this.$emit('load', params)
-  
+
+        console.log('called', params)
+        
+        const res = await LessonRepository.studentsMaterialList(params)
+          
         return res
       },
   

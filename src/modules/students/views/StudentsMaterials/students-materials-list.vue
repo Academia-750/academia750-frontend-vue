@@ -1,6 +1,8 @@
 <template>
-  <StudentsMaterialsList
+  <StudentsMaterialsBase
+    ref="materialsList"
     store-name="studentsMaterialsStore"
+    type="material"
   >
     <template v-slot:actions="item">
       <div class="d-flex justify-space-between align-center">
@@ -25,7 +27,7 @@
         </div>
       </div>
     </template>
-  </StudentsMaterialsList>
+  </StudentsMaterialsBase>
 </template>
 <script>
   import LessonRepository from '@/services/LessonRepository'
@@ -33,29 +35,28 @@
 export default {
   name: 'StudentsMaterialsList',
   components: {
-    StudentsMaterialsList: () =>
-      import(/* webpackChunkName: "StudentsMaterialsList" */ './students-materials-base.vue')
+    StudentsMaterialsBase: () =>
+      import(/* webpackChunkName: "StudentsMaterialsBase" */ '../../components/MaterialsRecordingsTable/students-materials-base.vue')
   },
   data() {
     return {
       reloadDatatableUsers: false
     }
   },
+  beforeCreate() {
+      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) && this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+    },
   methods : {
     async download(material) {
       // const [_name, type] = this.fileNameAndType(material.url)
       const res = await LessonRepository.downloadStudentMaterial(material.material_id)
 
+      console.log({ res })
       if (!res) {
         return
       }
 
       // DownloadFile(material.url, material.name, type)
-    },
-    async loadStudentsMaterials(params) {
-      const res = await LessonRepository.studentsMaterialList({ ...params, type: 'material' })
-
-      return res
     }
   }
 }

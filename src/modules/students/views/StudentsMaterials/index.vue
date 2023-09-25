@@ -15,10 +15,10 @@ import notifications from '@/mixins/notifications'
 import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'StudentsMaterialsList',
+  name: 'StudentsMaterials',
   components: {
     StudentsMaterialsList: () =>
-      import(/* webpackChunkName: "StudentsMaterialsList" */ './components/students-materials-list.vue')
+      import(/* webpackChunkName: "StudentsMaterialsList" */ './students-materials-list.vue')
   },
   mixins: [notifications],
   data() {

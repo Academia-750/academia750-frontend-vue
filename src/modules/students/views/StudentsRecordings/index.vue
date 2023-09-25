@@ -3,7 +3,7 @@
     <div>
       <v-card flat>
         <v-card-text>
-          <StudentsMaterialsList />
+          <StudentsRecordingsList />
         </v-card-text>
       </v-card>
     </div>
@@ -15,10 +15,10 @@ import notifications from '@/mixins/notifications'
 import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'StudentsMaterialsList',
+  name: 'StudentsRecordings',
   components: {
-    StudentsMaterialsList: () =>
-      import(/* webpackChunkName: "StudentsMaterialsList" */ './components/students-materials-list.vue')
+    StudentsRecordingsList: () =>
+      import(/* webpackChunkName: "StudentsRecordingsList" */ './students-recordings-list.vue')
   },
   mixins: [notifications],
   data() {

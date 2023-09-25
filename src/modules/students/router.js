@@ -2,7 +2,8 @@ import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageStudentsModule from '@/modules/students/views/Students'
 import ManageStudentsLessonsModule from '@/modules/students/views/StudentsLessons'
-import ManageStudentsMaterialsRecordingsModule from '@/modules/students/views/StudentsMaterial'
+import ManageStudentsMaterialsModule from '@/modules/students/views/StudentsMaterials/index.vue'
+import ManageStudentsRecordingsModule from '@/modules/students/views/StudentsRecordings/index.vue'
 
 const shortcutRoutes = [
   {
@@ -44,7 +45,7 @@ const moduleRoute = [
           {
             path: 'materials',
             name: 'manage-students-materials',
-            component: ManageStudentsMaterialsRecordingsModule,
+            component: ManageStudentsMaterialsModule,
             meta: {
               middleware: [authMiddleware]
             }
@@ -52,7 +53,7 @@ const moduleRoute = [
           {
             path: 'recordings',
             name: 'manage-students-recordings',
-            component: ManageStudentsMaterialsRecordingsModule,
+            component: ManageStudentsRecordingsModule,
             meta: {
               middleware: [authMiddleware]
             }
