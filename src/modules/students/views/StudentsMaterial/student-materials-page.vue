@@ -15,7 +15,7 @@ import notifications from '@/mixins/notifications'
 import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'GroupsView',
+  name: 'StudentsMaterialsList',
   components: {
     StudentsMaterialsList: () =>
       import(/* webpackChunkName: "StudentsMaterialsList" */ './components/students-materials-list.vue')

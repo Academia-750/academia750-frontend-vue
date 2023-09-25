@@ -89,6 +89,7 @@ export default {
       this.$emit('change', value)
     },
     remove(item) {
+      console.log({ item })
       this.$emit(
         'change',
         this.tags.filter((tag) => tag !== item)
