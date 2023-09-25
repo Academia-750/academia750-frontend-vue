@@ -35,7 +35,7 @@
 
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.updated_at`]="{ item }">
-        {{ parseDate(item.updated_at) }}
+        {{ $formatDate(item.updated_at) }}
       </template>
       <template v-slot:[`item.default_role`]="{ item }">
         <div>
@@ -144,9 +144,7 @@ export default {
   methods: {
     ...mapActions('profilesStore', ['resetTableOptions']),
     ...mapMutations('profilesStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
+
     addProfile() {
       this.SET_EDIT_ITEM('')
       this.$router.push({

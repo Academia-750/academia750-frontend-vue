@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
     <!-- ------------ ADD STUDENT TAGS ------------ -->
-    <AddTagModal ref="addTag" :name="name" @create="createTag" />
+    <AddTagModal ref="addTag" @create="createTag" />
     <ServerDataTable
       ref="table"
       :headers="headers"

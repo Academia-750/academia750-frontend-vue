@@ -45,6 +45,9 @@
           />
         </div>
       </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
+      </template>
     </v-data-table>
   </v-card-text>
 </template>

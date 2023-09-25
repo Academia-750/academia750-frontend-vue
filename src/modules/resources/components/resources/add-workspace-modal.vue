@@ -9,6 +9,7 @@
               <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
             </v-card-title>
             <FieldInput
+              id="name"
               ref="nameInput"
               v-model="name"
               label="Nombre"
@@ -74,7 +75,7 @@ export default {
       }
     },
     async reset() {
-      this.$refs['nameInput'].resetErrors()
+      this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.name = ''
     },
     onClose() {

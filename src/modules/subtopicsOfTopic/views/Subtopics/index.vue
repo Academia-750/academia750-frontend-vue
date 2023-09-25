@@ -22,7 +22,6 @@
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
-
       no-data-text="Este tema no tiene subtemas disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"
@@ -54,7 +53,9 @@
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router :path-route-go-back="{ name: 'manage-topics' }"/>
+          <resource-button-go-back-router
+            :path-route-go-back="{ name: 'manage-topics' }"
+          />
           <resource-title-toolbar-datatable
             title-text="Gestión de Subtemas de un Tema"
           />
@@ -62,7 +63,11 @@
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
             <resource-button-add
-              v-if="topicData !== null && metaData !== null && metaData.topic.attributes.is_available === 'yes'"
+              v-if="
+                topicData !== null &&
+                metaData !== null &&
+                metaData.topic.attributes.is_available === 'yes'
+              "
               :config-route="{
                 name: 'create-subtopic',
                 params: { id: topicData.id }
@@ -94,7 +99,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="Este tema no tiene subtemas disponibles"/>
+        <resource-banner-no-data-datatable
+          message-text="Este tema no tiene subtemas disponibles"
+        />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -103,11 +110,17 @@
             icon-button="mdi-eye"
             color-button="success"
             :is-disabled="item.is_available === 'no'"
-            :config-route="{ name: 'fetch-subtopic', params: { id: $route.params.id, subtopic_id: item.id } }"
+            :config-route="{
+              name: 'fetch-subtopic',
+              params: { id: $route.params.id, subtopic_id: item.id }
+            }"
           />
           <resource-button-edit
             v-if="topicData !== null && metaData !== null"
-            :is-disabled="item.is_available === 'no' || metaData.topic.attributes.is_available === 'no'"
+            :is-disabled="
+              item.is_available === 'no' ||
+              metaData.topic.attributes.is_available === 'no'
+            "
             :config-route="{
               name: 'update-subtopic',
               params: { id: topicData.id, subtopic_id: item.id }
@@ -115,7 +128,10 @@
           />
           <resource-button-delete
             v-if="metaData !== null"
-            :is-disabled="item.is_available === 'no' || metaData.topic.attributes.is_available === 'no'"
+            :is-disabled="
+              item.is_available === 'no' ||
+              metaData.topic.attributes.is_available === 'no'
+            "
             @actionConfirmShowDialogDelete="deleteSubtopicConfirm(item)"
           />
         </div>
@@ -130,6 +146,9 @@
             params: { id: topicData.id, subtopic_id: item.id }
           }"
         />
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete

@@ -41,6 +41,7 @@
               ></v-select>
             </ValidationProvider>
             <FieldInput
+              id="name"
               ref="nameInput"
               v-model="name"
               label="Nombre del Material"
@@ -48,6 +49,7 @@
             />
             <FieldInput
               v-if="type === 'recording'"
+              id="url"
               ref="vimeoUrlInput"
               v-model="url"
               label="Video URL (Vimeo)"
