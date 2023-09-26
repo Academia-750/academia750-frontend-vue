@@ -176,13 +176,6 @@ export default {
           text: 'Gestión de Materiales',
           to: { name: 'manage-workspaces' },
           roles: 'admin'
-        },
-        {
-          icon: 'mdi-file-document',
-          key: '',
-          text: 'Handle Lessons',
-          to: { name: 'manage-lesson-attendees' },
-          roles: 'admin'
         }
       ]
     },

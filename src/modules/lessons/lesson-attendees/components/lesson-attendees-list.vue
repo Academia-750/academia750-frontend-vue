@@ -9,7 +9,18 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Alumnos" icon="mdi-account-multiple" />
+        <Toolbar title="Alumnos" icon="mdi-account-multiple" >
+          <template slot="actions">
+            <SwitchInput
+              id="assits"
+              label="Asistir"
+              value=""
+              class="mt-3 mr-3"
+              @click=""
+            />
+            <span class="font-weight-bold text-h6">Total Students: {{ total }}</span>
+          </template>
+        </toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
           label-text-field="Buscar por nombre o DNI o nombre dela estudiante"
@@ -44,7 +55,7 @@ import LessonRepository from '@/services/LessonRepository'
 import headers from './lessons-attendees-table-columns'
 
 export default {
-  name: 'DatatableStudents',
+  name: 'DatatableLessonsAttendees',
   components: {
     ResourceButtonDelete: () =>
       import(
@@ -65,11 +76,16 @@ export default {
     ResourceTextFieldSearch: () =>
       import(
         /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       )
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
+      total: 0,
       searchWordText: '',
       loading: false,
       groupName: ''
@@ -114,6 +130,8 @@ export default {
       }
 
       const res = await LessonRepository.lessonStudentList(lessonId, params)
+
+      this.total = res.total
 
       return res
     },

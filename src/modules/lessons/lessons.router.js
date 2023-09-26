@@ -52,7 +52,7 @@ const adminRoute = [
             }
           },
           {
-            path: 'attendees',
+            path: ':id/attendees',
             name: 'manage-lesson-attendees',
             component: LessonAttendeesModule,
             meta: {

@@ -62,10 +62,9 @@
                 icon-button="mdi-account"
                 color="success"
                 :config-route="{
-                  name: 'add-students',
+                  name: 'manage-lesson-attendees',
                   params: { id: lesson.id }
                 }"
-                :disabled="true"
               />
             </div>
           </template>

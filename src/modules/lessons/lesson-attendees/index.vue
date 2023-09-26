@@ -12,6 +12,7 @@
 
 <script>
 import notifications from '@/mixins/notifications'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   name: 'LessonsAttendeesView',
@@ -28,7 +29,7 @@ export default {
     }
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
+    this?.$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)
   },
   mounted() {
     this.loadNotifications()
