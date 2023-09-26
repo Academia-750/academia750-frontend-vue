@@ -368,5 +368,42 @@ export default {
     }
 
     return true
+  },
+/**
+   * @param {string} id
+   * @param {string} orderBy
+   * @param {string} willJoin
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+async lessonAttendees(
+  id,
+  { orderBy, willJoin, order, limit, offset, content } = {}
+) {
+  const params = {
+    willJoin,
+    orderBy,
+    order,
+    limit,
+    offset,
+    content: content || undefined
   }
+
+  deleteUndefined(params)
+  const response = await ResourceService.get(`lesson/${id}/students`, {
+    params
+  })
+
+  if (response.status !== 200) {
+    ResourceService.warning({
+      response
+    })
+
+    return { results: [], total: 0 }
+  }
+
+  return { results: response.data.results }
+}
 }
