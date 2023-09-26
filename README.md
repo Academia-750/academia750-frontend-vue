@@ -43,6 +43,10 @@ In the phase 2 we have simplify the folder structure, you may see this change in
     - components: Folder for sub components used only in this page
     
 
+### Production
+
+Make sure you add the `robots.txt` in production with the Allow option.
+
 
 ## Default User
 ### Default Super Admin

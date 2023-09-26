@@ -5,18 +5,33 @@ import CreateLessonsModule from './create-lesson'
 import AddStudentToLessonsModule from './lesson-students'
 import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
+import StudentLessons from './student-lessons'
 
-const shortcutRoutes = [
+/**
+ * STUDENT ROUTES
+ */
+
+const studentRoute = [
   {
-    path: 'lecciones',
+    path: '/',
+    component: Module,
     redirect: { name: 'manage-lessons' },
-    meta: {
-      middleware: [authMiddleware]
-    }
+    children: [
+      {
+        path: 'lessons',
+        name: 'my-lessons',
+        component: StudentLessons,
+        meta: {
+          middleware: [authMiddleware]
+        }
+      }
+    ]
   }
 ]
-
-const moduleRoute = [
+/**
+ * ADMIN ROUTES
+ */
+const adminRoute = [
   {
     path: '/',
     component: Module,
@@ -68,12 +83,12 @@ const moduleRoute = [
             }
           }
         ]
-      },
-      ...shortcutRoutes
+      }
     ]
   }
 ]
 
 export default (router) => {
-  router.addRoutes(moduleRoute)
+  router.addRoutes(adminRoute)
+  router.addRoutes(studentRoute)
 }

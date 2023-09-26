@@ -117,6 +117,20 @@ export default {
       ]
     },
     {
+      text: 'Clases y Matriales',
+      key: '',
+      permissions: [PermissionEnum.SEE_LESSONS],
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Mis Clases',
+          to: { name: 'my-lessons' },
+          permissions: [PermissionEnum.SEE_LESSONS]
+        }
+      ]
+    },
+    {
       text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',

@@ -75,6 +75,42 @@ const createStudent = async (_, options) => {
   }
 }
 
+const setLesson = async ({ dispatch, commit }, payload) => {
+  try {
+    commit('SET_LESSON', payload)
+
+      // We also clear the tables related to the selected lesson
+      dispatch('lessonMaterialsStore/resetTableOptions', null, { root: true })
+      dispatch(
+        'lessonMaterialsStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+
+      dispatch('lessonStudentStore/resetTableOptions', null, { root: true })
+      dispatch(
+        'lessonStudentStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+
+      dispatch('materialsForLessonStore/resetTableOptions', null, {
+        root: true
+      })
+      dispatch(
+        'materialsForLessonStore/setTableItems',
+        { results: [], total: 0 },
+        { root: true }
+      )
+
+    return 
+  } catch (error) {
+    //console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
 const fetchStudent = async ({ commit }, options) => {
   try {
     commit('SET_USERS_SELECTED_DATATABLE', [])
@@ -153,5 +189,6 @@ export default {
   updateStudent,
   deleteStudent,
   fetchStudentGroups,
-  actionsForMultipleRecords
+  actionsForMultipleRecords,
+  setLesson
 }
