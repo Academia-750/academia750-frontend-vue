@@ -1,41 +1,41 @@
 <template>
   <v-card-text>
     <div v-if="importProcessData !== null">
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Nombre del archivo: <span class="font-weight-bold">{{ importProcessData.attributes.name_file }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Nombre del archivo:
+        <span class="font-weight-bold">{{
+          importProcessData.attributes.name_file
+        }}</span>
       </v-banner>
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Motivo: <span class="font-weight-bold">{{ importProcessData.attributes.category }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Motivo:
+        <span class="font-weight-bold">{{
+          importProcessData.attributes.category
+        }}</span>
       </v-banner>
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Total de registros: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_of_records }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Total de registros:
+        <span class="font-weight-bold">{{
+          importProcessData.attributes.total_number_of_records
+        }}</span>
       </v-banner>
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Total de registros fallidos: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_failed_records }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Total de registros fallidos:
+        <span class="font-weight-bold">{{
+          importProcessData.attributes.total_number_failed_records
+        }}</span>
       </v-banner>
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Total de registros satisfactorios: <span class="font-weight-bold">{{ importProcessData.attributes.total_number_successful_records }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Total de registros satisfactorios:
+        <span class="font-weight-bold">{{
+          importProcessData.attributes.total_number_successful_records
+        }}</span>
       </v-banner>
-      <v-banner
-        single-line
-        transition="slide-y-transition"
-      >
-        Fecha de inicio de importación: <span class="font-weight-bold">{{ importProcessData.attributes.created_at }}</span>
+      <v-banner single-line transition="slide-y-transition">
+        Fecha de inicio de importación:
+        <span class="font-weight-bold">{{
+          $formatDate(importProcessData.attributes.created_at)
+        }}</span>
       </v-banner>
     </div>
     <v-data-table
@@ -74,17 +74,28 @@
         <td colspan="4">
           <v-expansion-panels v-if="item['has-errors']">
             <v-expansion-panel>
-              <v-expansion-panel-header class="title">Errores de validación</v-expansion-panel-header>
+              <v-expansion-panel-header class="title">
+                Errores de validación
+              </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-data-table
                   :key="item.id"
                   :headers="headersDescriptionRecord"
-                  :items="getFieldsRowsValuesErrorRecord(Object.keys(item.errors_validation), item.errors_validation)"
+                  :items="
+                    getFieldsRowsValuesErrorRecord(
+                      Object.keys(item.errors_validation),
+                      item.errors_validation
+                    )
+                  "
                   :items-per-page="10"
                   class="elevation-1"
                 >
-                  <template v-slot:[`item.description-errors`]="{ item: errorItem }">
-                    <errors-record-import-list :items-errors="errorItem['description-errors']" />
+                  <template
+                    v-slot:[`item.description-errors`]="{ item: errorItem }"
+                  >
+                    <errors-record-import-list
+                      :items-errors="errorItem['description-errors']"
+                    />
                   </template>
                 </v-data-table>
                 <!-- <pre class="body-2">{{ item.errors_validation }}</pre>
@@ -115,13 +126,7 @@
           <v-icon small dark class="mr-1"> mdi-cancel </v-icon>
           Error
         </v-chip>
-        <v-chip
-          v-else
-          small
-          dark
-          class="ma-2"
-          color="green"
-        >
+        <v-chip v-else small dark class="ma-2" color="green">
           <v-icon small dark class="mr-1"> mdi-check </v-icon>
           Completado
         </v-chip>
@@ -138,6 +143,9 @@
             }"
           />
         </div>
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
   </v-card-text>

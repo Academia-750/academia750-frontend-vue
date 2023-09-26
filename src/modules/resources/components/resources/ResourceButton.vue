@@ -48,6 +48,9 @@ export default {
   },
   methods: {
     onClick() {
+      if (this.disabled) {
+        return
+      }
       if (this.configRoute && Object.keys(this.configRoute).length) {
         this.$router.push(this.configRoute)
       }

@@ -75,7 +75,7 @@
       <!-- <template v-slot:abel> ABEL </template> -->
       <!-- ------------ SLOTS ------------ -->
       <template v-slot:[`item.created_at`]="{ item }">
-        {{ parseDate(item.created_at) }}
+        {{ $formatDate(item.created_at) }}
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -178,9 +178,6 @@ export default {
   },
 
   methods: {
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
     changeTab(tabValue) {
       this.$store.commit('groupStudentStore/SET_TAB', tabValue)
       this.$refs.table.reload()

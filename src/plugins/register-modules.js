@@ -16,6 +16,7 @@ import tests from '@/modules/tests'
 import home from '@/modules/home'
 import statistics from '@/modules/statistics'
 import groups from '@/modules/groups'
+import tags from '@/modules/tags'
 import workspaces from '@/modules/workspaces'
 import lessons from '@/modules/lessons'
 import permissions from '@/modules/permissions'
@@ -40,5 +41,6 @@ registerModules({
   groups,
   workspaces,
   lessons,
-  permissions
+  permissions,
+  tags
 })

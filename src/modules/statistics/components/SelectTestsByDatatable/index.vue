@@ -9,7 +9,6 @@
       :single-select="singleSelectDatatable"
       show-select
       item-key="id"
-
       no-data-text="No hay datos disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"
@@ -24,11 +23,7 @@
           :text-header="titleTopDatatable"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
-        <v-toolbar
-          flat
-          class="blue lighten-4 my-2"
-          outlined
-        >
+        <v-toolbar flat class="blue lighten-4 my-2" outlined>
           <resource-title-toolbar-datatable :title-text="titleTopDatatable" />
           <!-- <resource-divider-title-datatable /> -->
           <!-- <v-spacer></v-spacer>
@@ -60,7 +55,12 @@
         /> -->
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="No hay tests disponibles" />
+        <resource-banner-no-data-datatable
+          message-text="No hay tests disponibles"
+        />
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
   </v-card-text>

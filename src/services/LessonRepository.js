@@ -111,12 +111,12 @@ export default {
 
     return { results: response.data.results }
   },
-   /**
+  /**
    * @param {string} from
    * @param {string} to
    * @param {number} content
    */
-   async studentCalendar({ from, to, content } = {}) {
+  async studentCalendar({ from, to, content } = {}) {
     const params = {
       from,
       to,
@@ -124,7 +124,36 @@ export default {
     }
 
     deleteUndefined(params)
-    const response = await ResourceService.get('student-lessons/calendar', { params })
+    const response = await ResourceService.get('student-lessons/calendar', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results }
+  },
+  /**
+   * @param {string} from
+   * @param {string} to
+   * @param {number} content
+   */
+  async studentCalendar({ from, to, content } = {}) {
+    const params = {
+      from,
+      to,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('student-lessons/calendar', {
+      params
+    })
 
     if (response.status !== 200) {
       ResourceService.warning({
@@ -398,7 +427,7 @@ export default {
    * @param {string} id
    *  @param {string} join
    */
-  async StudentJoinLesson(id, join) {
+  async joinLesson(id, join) {
     const response = await ResourceService.put(`student-lessons/${id}/join`, {
       join
     })
@@ -423,8 +452,16 @@ export default {
    * @param {string} offset
    * @param {string} content
    */
-  async studentsMaterialList({ type, tags, lessons, orderBy, order, limit, offset, content } = {}) 
-  {
+  async studentsMaterialList({
+    type,
+    tags,
+    lessons,
+    orderBy,
+    order,
+    limit,
+    offset,
+    content
+  } = {}) {
     const params = {
       type: type || undefined,
       tags,
@@ -435,7 +472,7 @@ export default {
       offset,
       content: content || undefined
     }
-    
+
     deleteUndefined(params)
     const response = await ResourceService.get('student-lessons/materials', {
       params
@@ -451,10 +488,10 @@ export default {
 
     return { results: response.data.results }
   },
-   /**
+  /**
    * @param {string} id
    */
-   async downloadStudentMaterial(id) {
+  async downloadStudentMaterial(id) {
     const response = await ResourceService.get(`student-lessons/${id}/download`)
 
     if (response.status !== 200) {

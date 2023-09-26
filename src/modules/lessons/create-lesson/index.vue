@@ -100,7 +100,7 @@
                 :loading="loading"
                 :text-button="lesson ? 'Editar' : 'Crear'"
                 color="primary"
-                icon-button="mdi-account-group"
+                icon-button="mdi-pencil"
                 @click="createLesson"
               />
             </div>

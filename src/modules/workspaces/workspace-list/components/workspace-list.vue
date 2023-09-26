@@ -178,9 +178,7 @@ export default {
     ...mapActions('workspaceStore', ['deleteGroup', 'resetTableOptions']),
     ...mapMutations('workspaceStore', ['SET_TABLE_OPTIONS']),
     ...mapMutations('workspaceMaterialStore', ['SET_WORKSPACE']),
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
+
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },

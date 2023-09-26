@@ -38,7 +38,7 @@ export default {
     flex: 2;
     gap: 12px;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-right: 20px;
   }
