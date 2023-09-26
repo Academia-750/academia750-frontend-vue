@@ -139,33 +139,6 @@ export default {
     return { results: response.data.results }
   },
   /**
-   * @param {string} from
-   * @param {string} to
-   * @param {number} content
-   */
-  async studentCalendar({ from, to, content } = {}) {
-    const params = {
-      from,
-      to,
-      content: content || undefined
-    }
-
-    deleteUndefined(params)
-    const response = await ResourceService.get('student-lessons/calendar', {
-      params
-    })
-
-    if (response.status !== 200) {
-      ResourceService.warning({
-        response
-      })
-
-      return { results: [], total: 0 }
-    }
-
-    return { results: response.data.results }
-  },
-  /**
    * @param {string} id
    */
   async info(id) {
@@ -499,10 +472,10 @@ export default {
         response
       })
 
-      return { status: response.status, url: response.url }
+      return false
     }
 
-    return false
+    return response.data.url
   },
   /**
    * @param {string} content

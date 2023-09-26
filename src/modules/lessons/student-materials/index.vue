@@ -18,7 +18,9 @@ export default {
   name: 'StudentsMaterials',
   components: {
     StudentsMaterialsList: () =>
-      import(/* webpackChunkName: "StudentsMaterialsList" */ './students-materials-list.vue')
+      import(
+        /* webpackChunkName: "StudentsMaterialsList" */ './students-materials-list.vue'
+      )
   },
   mixins: [notifications],
   data() {
@@ -29,9 +31,14 @@ export default {
   mounted() {
     this.loadNotifications()
   },
+
+  beforeCreate() {
+    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) &&
+      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+  },
   head: {
     title: {
-      inner: 'Estudiante Materiales'
+      inner: 'Materiales de clase'
     }
   }
 }

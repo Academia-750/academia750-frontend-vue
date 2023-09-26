@@ -5,7 +5,7 @@
     <resource-text-field-search
       :search-word="state.tableOptions.content"
       :classes-wrapper="{}"
-      label-text-field="Buscar por nombre"
+      label-text-field="Buscar por nombre del fichero"
       @emitSearchTextBinding="searchFieldWithDebounce"
       @emitSearchWord="searchFieldExecuted"
     />

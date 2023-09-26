@@ -41,20 +41,22 @@
                 icon-button="mdi-folder-open"
                 color="success"
                 :config-route="{
-                  name: 'list-of-materials',
+                  name: 'manage-students-materials',
                   params: { id: lesson.id }
                 }"
-                :disabled="$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
+                :disabled="!$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
               />
               <resource-button
                 text-button="Grabaciones"
                 icon-button="mdi-camera"
                 color="success"
                 :config-route="{
-                  name: 'add-students',
+                  name: 'manage-students-recordings',
                   params: { id: lesson.id }
                 }"
-                :disabled="$hasPermission(PermissionEnum.SEE_LESSON_RECORDINGS)"
+                :disabled="
+                  !$hasPermission(PermissionEnum.SEE_LESSON_RECORDINGS)
+                "
               />
               <resource-button
                 v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"

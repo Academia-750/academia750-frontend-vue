@@ -117,7 +117,7 @@ export default {
       ]
     },
     {
-      text: 'Clases y Matriales',
+      text: 'Clases y Materiales',
       key: '',
       permissions: [PermissionEnum.SEE_LESSONS],
       items: [
@@ -125,7 +125,7 @@ export default {
           icon: 'mdi-book-open-page-variant',
           key: '',
           text: 'Mis Clases',
-          to: { name: 'manage-students-lessons' },
+          to: { name: 'my-lessons' },
           permissions: [PermissionEnum.SEE_LESSONS]
         },
         {
@@ -138,7 +138,7 @@ export default {
         {
           icon: 'mdi-camera',
           key: '',
-          text: 'Recordings',
+          text: 'Grabaciones',
           to: { name: 'manage-students-recordings' },
           permissions: [PermissionEnum.SEE_LESSON_RECORDINGS]
         }

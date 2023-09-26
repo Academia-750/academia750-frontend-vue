@@ -18,7 +18,9 @@ export default {
   name: 'StudentsRecordings',
   components: {
     StudentsRecordingsList: () =>
-      import(/* webpackChunkName: "StudentsRecordingsList" */ './students-recordings-list.vue')
+      import(
+        /* webpackChunkName: "StudentsRecordingsList" */ './students-recordings-list.vue'
+      )
   },
   mixins: [notifications],
   data() {
@@ -29,9 +31,13 @@ export default {
   mounted() {
     this.loadNotifications()
   },
+  beforeCreate() {
+    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) &&
+      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+  },
   head: {
     title: {
-      inner: 'Estudiante Materiales'
+      inner: 'Grabaciones de clase'
     }
   }
 }

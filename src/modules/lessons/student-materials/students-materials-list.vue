@@ -5,7 +5,10 @@
     type="material"
   >
     <template v-slot:actions="item">
-      <div class="d-flex justify-space-between align-center">
+      <div
+        v-if="item.has_url"
+        class="d-flex justify-space-between align-center"
+      >
         <div>
           <v-icon
             class="cursor-pointer"
@@ -16,40 +19,34 @@
           </v-icon>
         </div>
         <div>
-          <v-icon
-            class="cursor-pointer"
-            color="primary"
-          >
-            mdi-eye
-          </v-icon>
+          <v-icon class="cursor-pointer" color="primary"> mdi-eye </v-icon>
         </div>
-        <div>
-        </div>
+        <div></div>
       </div>
     </template>
   </StudentsMaterialsBase>
 </template>
 <script>
-  import LessonRepository from '@/services/LessonRepository'
+import LessonRepository from '@/services/LessonRepository'
 
 export default {
   name: 'StudentsMaterialsList',
   components: {
     StudentsMaterialsBase: () =>
-      import(/* webpackChunkName: "StudentsMaterialsBase" */ '../../components/MaterialsRecordingsTable/students-materials-base.vue')
+      import(
+        /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
+      )
   },
   data() {
-    return {
-      reloadDatatableUsers: false
-    }
+    return {}
   },
-  beforeCreate() {
-      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) && this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
-    },
-  methods : {
+
+  methods: {
     async download(material) {
       // const [_name, type] = this.fileNameAndType(material.url)
-      const res = await LessonRepository.downloadStudentMaterial(material.material_id)
+      const res = await LessonRepository.downloadStudentMaterial(
+        material.material_id
+      )
 
       console.log({ res })
       if (!res) {

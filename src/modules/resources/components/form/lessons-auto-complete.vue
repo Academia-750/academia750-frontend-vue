@@ -4,7 +4,7 @@
     v-slot="{ errors }"
     mode="aggressive"
     :rules="rules"
-    name="etiquetas"
+    name="lessons"
   >
     <v-autocomplete
       :value="lessons"
@@ -13,7 +13,7 @@
       :error-messages="errors"
       lessons-list
       clearable
-      label="Lessiones"
+      label="Nombre de la clase"
       multiple
       solo
       outlined
@@ -82,8 +82,8 @@ export default {
 
       this.lessonsList = lessons.map((item) => {
         return {
-        name: item.name,
-        id: item.id
+          name: item.name,
+          id: item.id
         }
       })
       this.loading = false

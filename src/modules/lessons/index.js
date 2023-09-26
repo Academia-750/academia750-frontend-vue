@@ -3,7 +3,8 @@ import lessonStudentStore from './lesson-students/lesson-students.store'
 import lessonMaterialsStore from './lesson-material-list/lesson.material.store'
 import materialsForLessonStore from './materials-for-lesson-list/materials-for-lesson.store'
 import studentLessonStore from './student-lessons/student-lessons.store'
-
+import studentsMaterialsStore from './student-materials/students-materials.store'
+import studentsRecordingsStore from './student-recordings/students-recordings.store'
 import router from './lessons.router'
 
 export default {
@@ -12,7 +13,9 @@ export default {
     lessonStore,
     lessonMaterialsStore,
     materialsForLessonStore,
-    studentLessonStore
+    studentLessonStore,
+    studentsMaterialsStore,
+    studentsRecordingsStore
   ],
   router
 }
