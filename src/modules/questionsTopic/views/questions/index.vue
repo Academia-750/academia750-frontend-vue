@@ -138,6 +138,9 @@
           <span class="font-weight-bold">Esta pregunta está siendo usada en un Test y no se puede modificar</span>
         </div> -->
       </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
+      </template>
     </v-data-table>
     <resource-dialog-confirm-delete
       ref="dialogConfirmDeleteAction"

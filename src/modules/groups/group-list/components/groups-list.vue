@@ -52,7 +52,7 @@
         </div>
       </template>
       <template v-slot:[`item.updated_at`]="{ item }">
-        {{ parseDate(item.updated_at) }}
+        {{ $formatDate(item.updated_at) }}
       </template>
       <template v-slot:[`item.alumnos`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -145,9 +145,7 @@ export default {
   methods: {
     ...mapActions('groupStore', ['deleteGroup', 'resetTableOptions']),
     ...mapMutations('groupStore', ['SET_EDIT_ITEM', 'SET_TABLE_OPTIONS']),
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
+
     async loadGroups(pagination) {
       const params = {
         ...pagination

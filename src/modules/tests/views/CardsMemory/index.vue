@@ -6,7 +6,6 @@
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
-
       no-data-text="No hay temas disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"
@@ -28,7 +27,13 @@
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add text-button="Crear tarjeta" :config-route="{ name: 'generate-questionnaire', query: { 'select-type-test': 'card-memory' } }" />
+            <resource-button-add
+              text-button="Crear tarjeta"
+              :config-route="{
+                name: 'generate-questionnaire',
+                query: { 'select-type-test': 'card-memory' }
+              }"
+            />
           </div>
         </v-toolbar>
         <!-- <resource-text-field-search
@@ -37,7 +42,9 @@
         /> -->
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="No hay tarjetas de memoria disponibles" />
+        <resource-banner-no-data-datatable
+          message-text="No hay tarjetas de memoria disponibles"
+        />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -45,9 +52,15 @@
             text-button="Ver"
             icon-button="mdi-eye"
             color-button="success"
-            :config-route="{ name: 'fetch-card-memory', params: { id: item.id } }"
+            :config-route="{
+              name: 'fetch-card-memory',
+              params: { id: item.id }
+            }"
           />
         </div>
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
   </v-card-text>

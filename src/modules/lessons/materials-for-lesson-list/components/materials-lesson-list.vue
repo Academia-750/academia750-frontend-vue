@@ -178,9 +178,7 @@ export default {
       'SET_TAGS',
       'SET_TABLE_OPTIONS'
     ]),
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
+
     async create(material) {
       if (!material) {
         return

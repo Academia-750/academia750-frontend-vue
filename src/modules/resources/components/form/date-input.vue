@@ -35,6 +35,7 @@
     </template>
     <v-date-picker
       :value="validDate"
+      :first-day-of-week="1"
       no-title
       @change="onCalendarChange"
     ></v-date-picker>

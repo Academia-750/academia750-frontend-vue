@@ -21,17 +21,17 @@
           text-header="Gestion de Oposiciones"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
-        <v-toolbar
-          flat
-          class="indigo lighten-5 my-2"
-          outlined
-        >
+        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
           <!-- <resource-button-go-back-router/> -->
-          <resource-title-toolbar-datatable title-text="Gestion de Oposiciones" />
+          <resource-title-toolbar-datatable
+            title-text="Gestion de Oposiciones"
+          />
           <resource-divider-title-datatable />
           <v-spacer></v-spacer>
           <div class="d-flex justify-center">
-            <resource-button-add :config-route="{ name: 'create-opposition' }"/>
+            <resource-button-add
+              :config-route="{ name: 'create-opposition' }"
+            />
           </div>
         </v-toolbar>
         <resource-text-field-search
@@ -41,7 +41,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="No hay oposiciones disponibles"/>
+        <resource-banner-no-data-datatable
+          message-text="No hay oposiciones disponibles"
+        />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -49,21 +51,34 @@
             text-button="Ver"
             icon-button="mdi-eye"
             color-button="success"
-            :config-route="{ name: 'fetch-opposition', params: { id: item.id } }"
+            :config-route="{
+              name: 'fetch-opposition',
+              params: { id: item.id }
+            }"
           />
           <resource-button-edit
             :is-disabled="item.is_available === 'no'"
-            :config-route="{ name: 'update-opposition', params: { id: item.id } }"
+            :config-route="{
+              name: 'update-opposition',
+              params: { id: item.id }
+            }"
           />
           <resource-button-delete
             :is-disabled="item.is_available === 'no'"
             @actionConfirmShowDialogDelete="deleteOppositionConfirm(item)"
           />
-
         </div>
       </template>
       <template v-slot:[`item.syllabus`]="{ item }">
-        <button-datatable-syllabus :config-route="{ name: 'syllabus-opposition', params: { id: item.id } }"/>
+        <button-datatable-syllabus
+          :config-route="{
+            name: 'syllabus-opposition',
+            params: { id: item.id }
+          }"
+        />
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
@@ -72,8 +87,14 @@
       @actionDelete="deleteOppositionAction"
     >
       <template #identifier-record>
-        <div v-if="currentItemsSelectedForDelete" class="d-flex justify-center align-center">
-          <span class="mr-1 font-italic subtitle-1">Oposicion:</span> <span class="font-weight-bold subtitle-1">{{ currentItemsSelectedForDelete.name }}</span>
+        <div
+          v-if="currentItemsSelectedForDelete"
+          class="d-flex justify-center align-center"
+        >
+          <span class="mr-1 font-italic subtitle-1">Oposicion:</span>
+          <span class="font-weight-bold subtitle-1">{{
+            currentItemsSelectedForDelete.name
+          }}</span>
         </div>
       </template>
     </resource-dialog-confirm-delete>
