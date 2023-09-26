@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import Vue from 'vue'
 import App from './App.vue'
 
@@ -21,12 +23,9 @@ import {
   hasPermissions,
   hasPermissionsMiddleware
 } from '@/helpers/managePermissions'
-import {
-  hasRoles,
-  hasPermission,
-  hasRoleMiddleware
-} from '@/helpers/manageRoles'
+import { hasRoles, hasRoleMiddleware } from '@/helpers/manageRoles'
 import { $KeepOneTabOpenInTheBrowserLocalStorage } from '@/helpers/KeepOneTabOpenInTheBrowser'
+import { DATE_FORMAT } from '@/helpers/constants'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
@@ -103,6 +102,8 @@ Vue.prototype.$rolesUserAuth = getRolesUserAuth
 
 Vue.$permissionsUserAuth = getPermissionsUserAuth
 Vue.prototype.$permissionsUserAuth = getPermissionsUserAuth
+
+Vue.prototype.$formatDate = (date) => moment(date).format(DATE_FORMAT)
 
 $KeepOneTabOpenInTheBrowserLocalStorage()
 

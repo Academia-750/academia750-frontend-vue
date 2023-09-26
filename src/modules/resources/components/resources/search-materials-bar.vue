@@ -1,5 +1,4 @@
 <template>
-  <!-- ------------ TOP ------------ -->
   <div>
     <!-- ------------ SEARCH ------------ -->
     <resource-text-field-search
@@ -9,46 +8,8 @@
       @emitSearchTextBinding="searchFieldWithDebounce"
       @emitSearchWord="searchFieldExecuted"
     />
-    <!-- ------------ TYPE SECTION ------------ -->
-    <v-row class="ml-1">
-      <v-col cols="12" md="3">
-        <v-select
-          :items="types"
-          item-text="label"
-          item-value="key"
-          persistent-hint
-          label="Tipos"
-          :value="state.type"
-          dense
-          outlined
-          clearable
-          @change="onChangeType"
-        ></v-select>
-      </v-col>
-      <v-col v-if="displayWorkspace" cols="12" md="3">
-        <v-select
-          :value="state.workspace"
-          :items="workspaces"
-          item-text="label"
-          item-value="key"
-          persistent-hint
-          label="Categoría"
-          dense
-          outlined
-          clearable
-          @change="onChangeWorkspace"
-        ></v-select>
-      </v-col>
-      <v-col cols="12" md="4">
-        <TagsAutoComplete
-          tag-type="material"
-          :tags="tags"
-          :dense="true"
-          @change="onChangeTags"
-        />
-      </v-col>
-    </v-row>
     <div class="d-flex align-center mx-3 type-section">
+      <!-- ------------ TYPE ------------ -->
       <v-select
         :items="types"
         item-text="label"
@@ -62,6 +23,7 @@
         clearable
         @change="onChangeType"
       ></v-select>
+      <!-- ------------WORKSPACE ------------ -->
       <v-select
         :value="state.workspace"
         :items="workspaces"
@@ -75,6 +37,7 @@
         clearable
         @change="onChangeWorkspace"
       ></v-select>
+      <!-- ------------ TAGS ------------ -->
       <TagsAutoComplete
         :tags="state.tags"
         tag-type="material"

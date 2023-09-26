@@ -144,9 +144,7 @@ export default {
       'SET_TAGS',
       'SET_TABLE_OPTIONS'
     ]),
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD hh:mm')
-    },
+
     onChangeType(value) {
       this.SET_TYPE(value)
       this.$refs.table.reload()

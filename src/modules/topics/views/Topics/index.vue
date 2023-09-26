@@ -50,7 +50,6 @@
       :items="itemsDatatable"
       :options.sync="optionsDatatable"
       item-key="id"
-
       no-data-text="No hay temas disponibles"
       :items-per-page="10"
       :mobile-breakpoint="600"
@@ -99,7 +98,9 @@
         />
       </template>
       <template v-slot:no-data>
-        <resource-banner-no-data-datatable message-text="No hay temas disponibles" />
+        <resource-banner-no-data-datatable
+          message-text="No hay temas disponibles"
+        />
       </template>
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-around">
@@ -203,6 +204,9 @@
             mdi-eye
           </v-icon>
         </v-btn>
+      </template>
+      <template v-slot:[`item.created-at`]="{ item }">
+        {{ $formatDate(item.created_at) }}
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
