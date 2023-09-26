@@ -146,8 +146,6 @@ export default {
 
       const res = await LessonRepository.studentsMaterialList(params)
 
-      console.log({ params, res })
-
       return res
     },
 

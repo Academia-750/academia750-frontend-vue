@@ -49,7 +49,6 @@ export default {
         material.material_id
       )
 
-      console.log({ res })
       if (!res) {
         return
       }
