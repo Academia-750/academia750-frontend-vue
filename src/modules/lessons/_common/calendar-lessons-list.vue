@@ -3,7 +3,8 @@
     <v-row>
       <v-col>
         <v-sheet>
-          <div flat class="d-none justify-end d-md-flex">
+          <!--- TYPE VIEW --->
+          <div flat class="d-flex justify-end">
             <div class="w-200">
               <v-select
                 :value="type"
@@ -19,8 +20,8 @@
               ></v-select>
             </div>
           </div>
-
-          <div v-if="$refs.calendar" flat class="d-flex justify-center mb-4">
+          <!--- MONTH SELECT --->
+          <div flat class="d-flex justify-center mb-4">
             <div class="d-flex justify-center align-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
@@ -37,11 +38,11 @@
                     text
                     v-on="on"
                   >
-                    {{ title }}
+                    {{ title() }}
                   </v-btn>
                 </template>
                 <v-date-picker
-                  v-model="focus"
+                  :value="focus"
                   position="left"
                   elevation="4"
                   no-title
@@ -54,9 +55,8 @@
               </v-btn>
             </div>
           </div>
-        </v-sheet>
 
-        <v-sheet :height="$vuetify.breakpoint.mdAndUp ? 600 : undefined">
+          <!--- CALENDAR --->
           <v-calendar
             ref="calendar"
             :value="focus"
@@ -72,7 +72,7 @@
             @click:event="showEvent"
             @click:more="setWeekMode"
             @click:date="onDateClick"
-            @change="getCalendarLessons"
+            @change="onLoad"
             @input="onInputChange"
           >
             <template v-slot:event="{ event }">
@@ -88,7 +88,6 @@
 <script>
 import _ from 'lodash'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 
 export default {
@@ -103,14 +102,14 @@ export default {
     type: {
       type: String,
       default: 'month'
+    },
+    events: {
+      type: Array,
+      required: true
     }
   },
   data: () => ({
     calendarMenu: false,
-    from: '',
-    to: '',
-    lessons: [], // Full lesson object
-    events: [], // Formatted for the calendar
     types: [
       { key: 'month', label: 'Mensual' },
       { key: 'week', label: 'Semanal' }
@@ -118,11 +117,6 @@ export default {
   }),
 
   computed: {
-    title() {
-      const { title } = this.$refs.calendar
-
-      return title.charAt(0).toUpperCase() + title.slice(1)
-    },
     calendarDay() {
       return [1, 2, 3, 4, 5, 6, 0]
     },
@@ -135,18 +129,12 @@ export default {
       }
 
       return this.type
-    },
-    headers() {
-      return headers
     }
   },
-
-  mounted() {
-    this.$refs.calendar.checkChange()
-  },
+  mounted() {},
   methods: {
-    onDateClick() {
-      this.$emit('lesson', false)
+    onDateClick(date) {
+      this.$emit('date', date)
     },
     onMiniCalendar(value) {
       this.calendarMenu = false
@@ -172,38 +160,18 @@ export default {
       return `${moment(event.start).format('HH:mm')}   ${event.name}`
     },
     async showEvent({ event }) {
-      const lesson = this.lessons.find((item) => item.id === event.id)
-
-      this.$emit('lesson', lesson || false)
+      this.$emit('event', event)
     },
-    async getCalendarLessons({ start, end }) {
-      const params = {
-        from: start.date,
-        to: end.date
+    onLoad({ start, end }) {
+      this.$emit('load', { start: start.date, end: end.date })
+    },
+    title() {
+      if (!this.$refs.calendar) {
+        return ''
       }
-      const lessons = await LessonRepository.calendar(params)
+      const { title } = this.$refs.calendar
 
-      if (!lessons) {
-        return
-      }
-      this.lessons = lessons.results
-      this.events = lessons.results.map((item) => {
-        return {
-          id: item.id,
-          name: item.name,
-          start: item.date + ' ' + item.start_time,
-          end: item.date + ' ' + item.end_time,
-          color: item.color || '#cccccc',
-          timed: false
-        }
-      })
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        this.lessons
-          .filter((lesson) => lesson.date > moment().format('YYYY-MM-DD'))
-          .pop() || [...this.lessons].pop()
-
-      nextLesson && this.$emit('load', nextLesson)
+      return title.charAt(0).toUpperCase() + title.slice(1)
     }
   }
 }
