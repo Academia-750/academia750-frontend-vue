@@ -20,7 +20,6 @@
       :dense="dense"
       item-text="name"
       item-value="id"
-      return-object
       @change="onChangelessons"
       @update:search-input="loadLessons"
     >
@@ -31,7 +30,7 @@
           close
           small
           @click="select"
-          @click:close="remove(item)"
+          @click:close="remove(item.id)"
         >
           <strong>{{ item.name }}</strong>
           &nbsp;
@@ -89,15 +88,12 @@ export default {
       this.loading = false
     },
     onChangelessons(value) {
-      const lessonsIds = value.map((lesson) => lesson.id.toString())
-
-      console.log({ lessonsIds })
-      this.$emit('change', lessonsIds)
+      this.$emit('change', value)
     },
-    remove(item) {
+    remove(id) {
       this.$emit(
         'change',
-        this.lessons.filter((lesson) => lesson !== item)
+        this.lessons.filter((lessonId) => lessonId !== id)
       )
     },
     resetErrors() {

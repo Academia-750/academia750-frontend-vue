@@ -1,6 +1,7 @@
 <template>
   <StudentsMaterialsBase
     ref="recordingsList"
+    title="Grabaciones de Clase"
     store-name="studentsRecordingsStore"
     type="recording"
   >
@@ -10,7 +11,7 @@
         class="d-flex justify-space-between align-center"
       >
         <div>
-          <!-- Modal here on next taske -->
+          <!-- Modal here on next task -->
         </div>
       </div>
     </template>

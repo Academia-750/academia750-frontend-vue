@@ -459,7 +459,7 @@ export default {
       return { results: [], total: 0 }
     }
 
-    return { results: response.data.results }
+    return { results: response.data.results, total: response.data.total }
   },
   /**
    * @param {string} id

@@ -7,16 +7,9 @@
       :load="loadStudentsMaterials"
     >
       <template v-slot:top>
-        <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Students Materials"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
-
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Materiales de Clase" />
+          <resource-title-toolbar-datatable :title-text="title" />
 
           <v-spacer />
 
@@ -28,11 +21,12 @@
 
         <!-- ------------ SEARCH ------------ -->
         <LessonMaterialsSearchBar
-          store-name="studentsMaterialsStore"
+          :content="content"
+          :tags="tags"
+          :lessons="lessons"
           @onChangeTags="onChangeTags"
           @onChangeLessons="onChangeLessons"
-          @searchFieldExecuted="searchFieldExecuted"
-          @searchFieldWithDebounce="searchFieldWithDebounce"
+          @onChangeContent="onChangeContent"
         />
       </template>
 
@@ -64,7 +58,6 @@
 
 <script>
 import _ from 'lodash'
-import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headers from './students-materials-columns'
 import LessonRepository from '@/services/LessonRepository'
@@ -81,13 +74,10 @@ export default {
       import(
         /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
       ),
-    ResourceHeaderCrudTitle: () =>
-      import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-      ),
+
     LessonMaterialsSearchBar: () =>
       import(
-        /* webpackChunkName: "LessonMaterialsSearchBar" */ '../search-materials-bar.vue'
+        /* webpackChunkName: "LessonMaterialsSearchBar" */ '../search-lessons-materials-bar.vue'
       ),
     ResourceButton: () =>
       import(
@@ -97,6 +87,10 @@ export default {
   },
   mixins: [componentButtonsCrud],
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     storeName: {
       type: String,
       required: true
@@ -110,36 +104,35 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('studentsMaterialsStore', ['tags', 'lessons']),
+    tags() {
+      return this.$store.state[this.storeName].tags
+    },
+    lessons() {
+      return this.$store.state[this.storeName].lessons
+    },
+    content() {
+      return this.$store.state[this.storeName].tableOptions.content
+    },
     headers() {
       return headers
-    },
-    store() {
-      return this.$store.state.storeName
     }
   },
-  created() {
-    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
-  },
+
   mounted() {
     this.loadStudentsMaterials()
     this.$refs.table.reload()
   },
   methods: {
-    ...mapActions('studentsMaterialsStore', ['resetTableOptions']),
-    ...mapMutations('studentsMaterialsStore', [
-      'SET_LESSONS',
-      'SET_TAGS',
-      'SET_TABLE_OPTIONS'
-    ]),
     onChangeTags(value) {
-      this.SET_TAGS(value)
-      this.SET_TABLE_OPTIONS({ offset: 0 })
+      this.$store.commit(`${this.storeName}/SET_TAGS`, value)
+      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
+
       this.$refs.table.reload()
     },
     onChangeLessons(value) {
-      this.SET_LESSONS(value)
-      this.SET_TABLE_OPTIONS({ offset: 0 })
+      this.$store.commit(`${this.storeName}/SET_LESSONS`, value)
+      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
+
       this.$refs.table.reload()
     },
 
@@ -153,15 +146,22 @@ export default {
 
       const res = await LessonRepository.studentsMaterialList(params)
 
+      console.log({ params, res })
+
       return res
     },
 
-    searchFieldExecuted($event) {
-      this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
+    onChangeContent(content) {
+      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, {
+        content,
+        offset: 0
+      })
+
       this.$refs.table.reload()
     },
-    searchFieldWithDebounce(value) {
-      this.searchFieldExecuted(value)
+    resetTableOptions() {
+      this.$store.dispatch(`${this.storeName}/resetTableOptions`)
+      this.$refs.table.reload()
     }
   }
 }

@@ -19,7 +19,7 @@ export default [
     position: 3,
     text: 'Tags',
     align: 'center',
-    sortable: true,
+    sortable: false,
     value: 'tags',
     show: true
   },

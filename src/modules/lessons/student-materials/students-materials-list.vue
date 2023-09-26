@@ -1,6 +1,7 @@
 <template>
   <StudentsMaterialsBase
     ref="materialsList"
+    title="Materiales de Clase"
     store-name="studentsMaterialsStore"
     type="material"
   >

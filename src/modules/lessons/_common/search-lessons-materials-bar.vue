@@ -3,7 +3,7 @@
   <div>
     <!-- ------------ SEARCH ------------ -->
     <resource-text-field-search
-      :search-word="state.tableOptions.content"
+      :search-word="content"
       :classes-wrapper="{}"
       label-text-field="Buscar por nombre del fichero"
       @emitSearchTextBinding="searchFieldWithDebounce"
@@ -51,13 +51,9 @@ export default {
       )
   },
   props: {
-    storeName: {
+    content: {
       type: String,
-      required: true
-    },
-    displayWorkspace: {
-      type: Boolean,
-      default: false
+      default: ''
     },
     tags: {
       type: Array,
@@ -68,28 +64,21 @@ export default {
       default: () => []
     }
   },
-  data() {
-    return {}
+  created() {
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
-  computed: {
-    state() {
-      return this.$store.state[this.storeName]
-    }
-  },
-  mounted() {},
   methods: {
     onChangeTags(value) {
       this.$emit('onChangeTags', value)
     },
     onChangeLessons(value) {
-      console.log({ value })
       this.$emit('onChangeLessons', value)
     },
     searchFieldExecuted($event) {
-      this.$emit('searchFieldExecuted', $event)
+      this.$emit('onChangeContent', $event)
     },
     searchFieldWithDebounce(value) {
-      this.$emit('searchFieldExecuted', value)
+      this.searchFieldExecuted(value)
     }
   }
 }
