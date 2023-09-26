@@ -11,14 +11,8 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Alumnos" icon="mdi-account-multiple" >
           <template slot="actions">
-            <SwitchInput
-              id="assits"
-              label="Asistir"
-              value=""
-              class="mt-3 mr-3"
-              @click=""
-            />
             <span class="font-weight-bold text-h6">Total Students: {{ total }}</span>
+            <span class="font-weight-bold text-h6 ml-3">Will join: {{ willJoin }}</span>
           </template>
         </toolbar>
         <resource-text-field-search
@@ -27,6 +21,10 @@
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
+        <div class="d-flex align-center mx-3 mb-2 type-section">
+          <span class="font-weight-bold text-h6 mr-1">Filter by assits</span>
+          <v-checkbox :value="willAssist" class="mt-3" @click="filterByWillAssist"></v-checkbox>
+        </div>
       </template>
 
       <!-- ------------ NO DATA ------------ -->
@@ -34,15 +32,19 @@
         <resource-banner-no-data-datatable />
       </template>
       <!-- <template v-slot:abel> ABEL </template> -->
-      <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.actions`]="{ item }">
-        <div class="d-flex justify-space-around">
-          <resource-button-delete
-            text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteStudentFromLesson(item)"
-          />
+      <!-- ------------ SLOTS ------------ -->'<template v-slot:[`item.will_join`]="{ item }">
+        <div>
+          <v-chip
+            class="ma-1"
+            label
+            small
+            :color="item.will_join ? 'primary' : ''"
+          >
+            {{ item.will_join ? 'SI' : 'NO' }}
+          </v-chip>
         </div>
-      </template>
+      </template>'
+      
     </ServerDataTable>
   </v-card-text>
 </template>
@@ -57,10 +59,6 @@ import headers from './lessons-attendees-table-columns'
 export default {
   name: 'DatatableLessonsAttendees',
   components: {
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
-      ),
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
@@ -76,18 +74,16 @@ export default {
     ResourceTextFieldSearch: () =>
       import(
         /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
-      ),
-    SwitchInput: () =>
-      import(
-        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       )
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
       total: 0,
+      willAssist: undefined,
       searchWordText: '',
       loading: false,
+      willJoin: 0,
       groupName: ''
     }
   },
@@ -117,6 +113,11 @@ export default {
     addStudents() {
       this.$refs.addStudents.open()
     },
+    async filterByWillAssist() {
+      this.willAssist = !this.willAssist
+      this.loadLessonStudents()
+      console.log(this.willAssist)
+    },
     deleteGroupFromLesson() {
       this.$refs.deleteGroupModal.open()
     },
@@ -126,12 +127,14 @@ export default {
     async loadLessonStudents(pagination) {
       const lessonId = this.$route.params.id
       const params = {
-        ...pagination
+        ...pagination,
+        willJoin: this.willAssist === true ? 1 : undefined
       }
 
-      const res = await LessonRepository.lessonStudentList(lessonId, params)
+      const res = await LessonRepository.lessonAttendees(lessonId, params)
 
       this.total = res.total
+      this.willJoin = res.will_join_count
 
       return res
     },

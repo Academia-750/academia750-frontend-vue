@@ -447,9 +447,11 @@ async lessonAttendees(
       response
     })
 
-    return { results: [], total: 0 }
+    console.log()
+
+    return { results: [], total: 0, will_join_count: 0 }
   }
 
-  return { results: response.data.results }
+  return { results: response.data.results, total: response.data.total, will_join_count: response.data.will_join_count }
 }
 }

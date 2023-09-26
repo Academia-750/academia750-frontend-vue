@@ -26,9 +26,9 @@ export default [
     {
       position: 4,
       sortable: false,
-      text: 'Acciones',
+      text: 'Assits',
       align: 'center',
-      value: 'actions',
+      value: 'will_join',
       show: true
     }
   ]
