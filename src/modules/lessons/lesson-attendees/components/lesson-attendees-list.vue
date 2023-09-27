@@ -118,9 +118,6 @@ export default {
       this.loadLessonStudents()
       this.tableReload()
     },
-    deleteGroupFromLesson() {
-      this.$refs.deleteGroupModal.open()
-    },
     tableReload() {
       this.$refs.table.reload()
     },
@@ -137,37 +134,6 @@ export default {
       this.willJoin = res.will_join_count
 
       return res
-    },
-    async deleteStudentFromLesson(student) {
-      const lessonId = this.$route.params.id
-      const student_id = student.uuid
-
-      if (!student) {
-        return
-      }
-      const result = await this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: 'Eliminar Alumno',
-        html: '¿Seguro que deseas eliminar este alumno? El alumno no tendra acceso a la clase y sus materiales',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      })
-
-      if (!result.isConfirmed) {
-        return
-      }
-      const res = await LessonRepository.deleteStudentFromLesson(lessonId, {
-        student_id
-      })
-
-      if (res) {
-        this.tableReload()
-      }
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })
