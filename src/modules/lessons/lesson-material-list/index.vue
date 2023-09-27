@@ -35,7 +35,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Gestión de Materiales'
+      inner: 'Gestión de materiales'
     }
   }
 }

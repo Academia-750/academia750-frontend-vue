@@ -10,13 +10,13 @@
         <!-- ------------ TOP ------------ -->
 
         <ResourceHeaderCrudTitle
-          text-header="Gestión de Grupos"
+          text-header="Gestión de grupos"
           :can-rendering-header="$vuetify.breakpoint.width < 700"
         />
 
         <!-- ------------ ACTIONS ------------ -->
         <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Gestión de Grupos" />
+          <resource-title-toolbar-datatable title-text="Gestión de grupos" />
 
           <v-spacer />
 

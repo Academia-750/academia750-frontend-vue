@@ -20,8 +20,8 @@
           <template v-if="lesson" slot="actions">
             <!-- Column for Time -->
             <div class="d-flex align-center">
+              <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
-                v-if="isActiveLesson(lesson)"
                 id="joinLesson"
                 :label="lesson.will_join ? 'Asistiré' : 'No asistiré'"
                 class="px-2 pt-2"
@@ -64,8 +64,8 @@
             <v-icon class="px-2" color="success" @click.stop="onLesson(event)">
               mdi-information
             </v-icon>
+            <!-- There are two different switch for desktop and mobile in this same page -->
             <SwitchInput
-              v-if="isActiveEvent(event)"
               id="joinLesson"
               :value="event.will_join === 1"
               @click="(value) => joinLesson(event.id, value)"
@@ -148,21 +148,7 @@ export default {
   methods: {
     ...mapMutations('studentLessonsStore', ['SET_DATE', 'SET_TYPE']),
     ...mapActions('studentLessonsStore', ['setLesson']),
-    isActiveEvent(event) {
-      const lesson = this.lessons.find((item) => item.id === event.id)
 
-      if (!lesson) {
-        return false
-      }
-
-      return this.isActiveLesson(lesson)
-    },
-    isActiveLesson(lesson) {
-      return (
-        lesson.is_active === 1 ||
-        this?.$hasPermissionMiddleware(PermissionEnum.JOIN_LESSONS)
-      )
-    },
     onDate() {
       this.setLesson(false)
     },
