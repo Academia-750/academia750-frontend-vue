@@ -10,7 +10,7 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <!-- ------------ TYPE SECTION ------------ -->
-    <v-row class="ml-1">
+    <v-row class="ml-1 mr-1">
       <v-col cols="12" md="5">
         <TagsAutoComplete
           tag-type="material"

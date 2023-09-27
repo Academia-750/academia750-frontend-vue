@@ -7,6 +7,7 @@ const download = async (url, name, type) => {
     const link = document.createElement('a')
 
     link.href = URL.createObjectURL(blob)
+
     link.download = `${name}.${type}`
     link.click()
     URL.revokeObjectURL(link.href)

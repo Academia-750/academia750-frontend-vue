@@ -20,7 +20,13 @@
           </v-icon>
         </div>
         <div>
-          <v-icon class="cursor-pointer" color="primary"> mdi-eye </v-icon>
+          <v-icon
+            class="cursor-pointer"
+            color="primary"
+            @click="openOtherTab(item)"
+          >
+            mdi-eye
+          </v-icon>
         </div>
         <div></div>
       </div>
@@ -29,6 +35,7 @@
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
+import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
   name: 'StudentsMaterialsList',
@@ -43,16 +50,32 @@ export default {
   },
 
   methods: {
-    async download(material) {
-      const res = await LessonRepository.downloadStudentMaterial(
+    async getUrl(material) {
+      const url = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
 
-      if (!res) {
+      return url
+    },
+    async download(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
         return
       }
+      const type = url.slice(
+        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
+      )
 
-      // DownloadFile(material.url, material.name, type)
+      downloadFile(url, material.name, type)
+    },
+    async openOtherTab(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
+        return
+      }
+      window.open(url, '_blank')
     }
   }
 }
