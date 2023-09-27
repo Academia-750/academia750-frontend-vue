@@ -116,7 +116,7 @@ export default {
     async filterByWillAssist() {
       this.willAssist = !this.willAssist
       this.loadLessonStudents()
-      console.log(this.willAssist)
+      this.tableReload()
     },
     deleteGroupFromLesson() {
       this.$refs.deleteGroupModal.open()
