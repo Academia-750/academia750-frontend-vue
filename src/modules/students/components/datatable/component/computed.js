@@ -3,16 +3,24 @@ import footerProps from '../data/footerProps'
 
 export default {
   computed: {
-    ...mapState('studentsService', ['itemsDatatable', 'stateLoadingItems', 'informationMeta', 'usersSelected', 'matchesResetOptionsDatatable']),
+    ...mapState('studentsService', [
+      'itemsDatatable',
+      'stateLoadingItems',
+      'informationMeta',
+      'usersSelected',
+      'matchesResetOptionsDatatable'
+    ]),
     ...footerProps,
-    getTitleByStateAccount () {
-      return `Gestión de Alumnos ${this.stateAccount === 'enable' ? 'activos' : 'inactivos'}`
+    getTitleByStateAccount() {
+      return `Gestión de alumnos ${
+        this.stateAccount === 'enable' ? 'activos' : 'inactivos'
+      }`
     },
     getSelectedItems: {
-      get () {
+      get() {
         return this.usersSelected
       },
-      set (value)  {
+      set(value) {
         this.SET_USERS_SELECTED_DATATABLE(value)
       }
     }

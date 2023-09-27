@@ -1,6 +1,8 @@
 <template>
   <div>
-    <progress-circular-loading-app v-if="displayProgressCircularLoading || !user"/>
+    <progress-circular-loading-app
+      v-if="displayProgressCircularLoading || !user"
+    />
     <section
       v-else
       v-shortkey="['ctrl', '/']"
@@ -20,10 +22,12 @@
         <!-- Navigation menu info -->
         <template v-slot:prepend>
           <div class="pa-2">
-            <div class="d-flex justify-start" style="cursor: pointer;" @click="redirectToHomePage">
-              <span
-                style="cursor: pointer;"
-              >
+            <div
+              class="d-flex justify-start"
+              style="cursor: pointer"
+              @click="redirectToHomePage"
+            >
+              <span style="cursor: pointer">
                 <v-img
                   class="align-self-center"
                   :src="require('@/assets/images/logo.png')"
@@ -34,7 +38,8 @@
               <span
                 class="text-uppercase white--text font-weight-bold text-xs-caption text-sm-h6 align-self-center"
                 to="/"
-              >{{ product.name }}</span>
+                >{{ product.name }}</span
+              >
             </div>
             <!-- <div class="overline grey--text">{{ product.version }}</div> -->
           </div>
@@ -59,15 +64,8 @@
           </div>
           <!-- REMOVE ME - Shop Demo purposes -->
           <div class="pa-2 pt-1 text-center">
-            <v-btn
-              dark
-              block
-              color="#FF0000"
-              @click="logoutAccount"
-            >
-              <v-icon left>
-                mdi-logout
-              </v-icon>
+            <v-btn dark block color="#FF0000" @click="logoutAccount">
+              <v-icon left> mdi-logout </v-icon>
               {{ $t('menu.logout') }}
             </v-btn>
           </div>
@@ -81,7 +79,11 @@
         :light="toolbarTheme === 'light'"
         :dark="toolbarTheme === 'dark'"
       >
-        <v-card class="flex-grow-1 d-flex" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']" :flat="!isToolbarDetached">
+        <v-card
+          class="flex-grow-1 d-flex"
+          :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']"
+          :flat="!isToolbarDetached"
+        >
           <div class="d-flex flex-grow-1 align-center">
             <!-- search input mobile -->
             <v-text-field
@@ -96,30 +98,38 @@
               @click:append="showSearch = false"
             ></v-text-field>
             <div v-else class="d-flex flex-grow-1 align-center">
-              <v-app-bar-nav-icon style="z-index: 100 !important;" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-              <v-spacer style="z-index: 100 !important;"></v-spacer>
+              <v-app-bar-nav-icon
+                style="z-index: 100 !important"
+                @click.stop="drawer = !drawer"
+              ></v-app-bar-nav-icon>
+              <v-spacer style="z-index: 100 !important"></v-spacer>
               <progress-linear-state-test
                 v-if="$router.currentRoute.name === 'fetch-questionnaire'"
-                :number-questions-resolved="fetchTestModuleNumberQuestionsResolved"
-                :total-number-questions-test="fetchTestModuleTotalNumberQuestionsTest"
+                :number-questions-resolved="
+                  fetchTestModuleNumberQuestionsResolved
+                "
+                :total-number-questions-test="
+                  fetchTestModuleTotalNumberQuestionsTest
+                "
               />
-              <v-spacer style="z-index: 100 !important;"></v-spacer>
-              <!-- <toolbar-language /> -->
-              <!-- <div class="hidden-xs-only mx-1">
-                <toolbar-currency />
-              </div> -->
-              <!-- <toolbar-apps /> -->
-              <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']" style="z-index: 100 !important;">
-                <toolbar-notifications style="z-index: 100 !important;" />
+              <v-spacer style="z-index: 100 !important"></v-spacer>
+              <div
+                :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']"
+                style="z-index: 100 !important"
+              >
+                <toolbar-notifications style="z-index: 100 !important" />
               </div>
-              <toolbar-user style="z-index: 100 !important;"/>
+              <toolbar-user style="z-index: 100 !important" />
             </div>
           </div>
         </v-card>
       </v-app-bar>
       <v-main>
         <progress-linear-loading-app v-if="displayProgressLinearLoading" />
-        <v-container class="fill-height" :fluid="!isContentBoxed">
+        <v-container
+          :class="'fill-height ' + (isMobile ? 'pa-0' : '')"
+          :fluid="!isContentBoxed"
+        >
           <v-layout>
             <slot></slot>
           </v-layout>
@@ -131,10 +141,9 @@
               👨‍🚒👩‍🚒Academia de oposiciones a Bomber@s
             </span>
             .<!-- <v-icon small color="pink">mdi-heart</v-icon> -->
-            <span
-              style="cursor: pointer;"
-              class="text-decoration-none"
-            >@{{ product.name }}</span>
+            <span style="cursor: pointer" class="text-decoration-none">
+              @{{ product.name }}
+            </span>
           </div>
         </v-footer>
       </v-main>
@@ -182,19 +191,33 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
-    ...mapState('loadingService', ['displayProgressCircularLoading', 'displayProgressLinearLoading']),
+    ...mapState('app', [
+      'product',
+      'isContentBoxed',
+      'menuTheme',
+      'toolbarTheme',
+      'isToolbarDetached'
+    ]),
+    ...mapState('loadingService', [
+      'displayProgressCircularLoading',
+      'displayProgressLinearLoading'
+    ]),
     ...mapState('profileService', ['user']),
-    ...mapState('testsService', ['fetchTestModuleNumberQuestionsResolved', 'fetchTestModuleTotalNumberQuestionsTest']),
-    classTextByTheme () {
-
+    ...mapState('testsService', [
+      'fetchTestModuleNumberQuestionsResolved',
+      'fetchTestModuleTotalNumberQuestionsTest'
+    ]),
+    classTextByTheme() {
       return {
         'white--text': this.$vuetify.theme.isDark,
         'black--text': !this.$vuetify.theme.isDark
       }
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     }
   },
-  mounted () {
+  mounted() {
     this.$loadUserAuth()
     localize(this.$i18n.locale)
   },
@@ -202,7 +225,7 @@ export default {
     onKeyup(e) {
       this.$refs.search.focus()
     },
-    redirectToHomePage () {
+    redirectToHomePage() {
       this.$router.push({
         name: 'home-website'
       })

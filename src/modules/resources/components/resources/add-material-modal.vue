@@ -44,7 +44,7 @@
               id="name"
               ref="nameInput"
               v-model="name"
-              label="Nombre del Material"
+              :label="`Nombre`"
               :rules="`required|min:3|max:50|regex:${validRegex}`"
             />
             <FieldInput
@@ -222,7 +222,8 @@ export default {
       const fileName = matches && matches[1]
 
       return fileName
-    }
+    },
+    typeLabel: () => (this.type === 'material' ? 'Material' : 'Grabación')
   },
   mounted() {
     this.loadWorkspaces()
@@ -345,10 +346,13 @@ export default {
           return
         }
         this.loading = false
+
         await this.$swal.fire({
           icon: 'success',
           toast: true,
-          title: this.material ? 'Material Actualizado!' : 'Material Creado!',
+          title: this.material
+            ? `${typeLabel} Actualizado!`
+            : `${typeLabel} Creado!`,
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500

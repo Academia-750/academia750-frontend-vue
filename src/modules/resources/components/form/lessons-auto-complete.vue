@@ -4,22 +4,24 @@
     v-slot="{ errors }"
     mode="aggressive"
     :rules="rules"
-    name="etiquetas"
+    name="lessons"
   >
     <v-autocomplete
-      :value="tags"
-      :items="tagsList"
+      :value="lessons"
+      :items="lessonsList"
       :loading="loading"
       :error-messages="errors"
-      tags-list
+      lessons-list
       clearable
-      label="Etiquetas"
+      label="Nombre de la clase"
       multiple
       solo
       outlined
       :dense="dense"
-      @change="onChangeTags"
-      @update:search-input="loadTags"
+      item-text="name"
+      item-value="id"
+      @change="onChangelessons"
+      @update:search-input="loadLessons"
     >
       <template v-slot:selection="{ attrs, item, select, selected }">
         <v-chip
@@ -28,9 +30,9 @@
           close
           small
           @click="select"
-          @click:close="remove(item)"
+          @click:close="remove(item.id)"
         >
-          <strong>{{ item }}</strong>
+          <strong>{{ item.name }}</strong>
           &nbsp;
         </v-chip>
       </template>
@@ -39,9 +41,9 @@
 </template>
 
 <script>
-import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
+import LessonRepository from '@/services/LessonRepository'
 export default {
-  name: 'TagsAutoComplete',
+  name: 'LessonsAutoComplete',
   props: {
     limit: {
       type: Number,
@@ -51,11 +53,7 @@ export default {
       type: Boolean,
       default: false
     },
-    tagType: {
-      type: String,
-      required: true
-    },
-    tags: {
+    lessons: {
       type: Array,
       default: () => []
     },
@@ -66,33 +64,36 @@ export default {
   },
   data() {
     return {
-      tagsList: [],
+      lessonsList: [],
       loading: false
     }
   },
   mounted() {
-    this.loadTags()
+    this.loadLessons()
   },
   methods: {
-    async loadTags(value) {
+    async loadLessons(value) {
       this.loading = true
-      const tags = await WorkspaceMaterialRepository.searchTags({
+      const lessons = await LessonRepository.searchLessons({
         content: value,
-        limit: this.limit,
-        type: this.tagType
+        limit: this.limit
       })
 
-      this.tagsList = tags.map((item) => item.name)
+      this.lessonsList = lessons.map((item) => {
+        return {
+          name: item.name,
+          id: item.id
+        }
+      })
       this.loading = false
     },
-    onChangeTags(value) {
+    onChangelessons(value) {
       this.$emit('change', value)
     },
-    remove(item) {
-      console.log({ item })
+    remove(id) {
       this.$emit(
         'change',
-        this.tags.filter((tag) => tag !== item)
+        this.lessons.filter((lessonId) => lessonId !== id)
       )
     },
     resetErrors() {

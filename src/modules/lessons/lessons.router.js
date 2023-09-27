@@ -7,6 +7,8 @@ import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessons from './student-lessons'
+import ManageStudentsMaterialsModule from './student-materials'
+import ManageStudentsRecordingsModule from './student-recordings'
 
 /**
  * STUDENT ROUTES
@@ -16,15 +18,38 @@ const studentRoute = [
   {
     path: '/',
     component: Module,
-    redirect: { name: 'manage-lessons' },
+    redirect: { name: 'my-lessons' },
     children: [
       {
         path: 'lessons',
-        name: 'my-lessons',
-        component: StudentLessons,
-        meta: {
-          middleware: [authMiddleware]
-        }
+        component: Module,
+        redirect: { name: 'my-lessons' },
+        children: [
+          {
+            path: 'list',
+            name: 'my-lessons',
+            component: StudentLessons,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'materials',
+            name: 'manage-students-materials',
+            component: ManageStudentsMaterialsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'recordings',
+            name: 'manage-students-recordings',
+            component: ManageStudentsRecordingsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+        ]
       }
     ]
   }

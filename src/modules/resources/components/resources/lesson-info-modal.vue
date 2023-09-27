@@ -34,48 +34,42 @@
               </p>
             </div>
           </div>
-          <template v-if="isActiveLesson(lesson)">
-            <div class="d-flex justify-end">
+          <div class="d-flex justify-between">
+            <template v-if="isActiveLesson(lesson)">
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
-                :config-route="{
-                  name: 'list-of-materials',
-                  params: { id: lesson.id }
-                }"
-                :disabled="$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
+                :disabled="!$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
+                @click="setLessonMaterial(lesson)"
               />
               <resource-button
                 text-button="Grabaciones"
                 icon-button="mdi-camera"
                 color="success"
-                :config-route="{
-                  name: 'add-students',
-                  params: { id: lesson.id }
-                }"
-                :disabled="$hasPermission(PermissionEnum.SEE_LESSON_RECORDINGS)"
+                :disabled="
+                  !$hasPermission(PermissionEnum.SEE_LESSON_RECORDINGS)
+                "
+                @click="setLessonRecordings(lesson)"
               />
-              <resource-button
-                v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
-                text-button="Asistentes"
-                icon-button="mdi-account"
-                color="success"
-                :config-route="{
-                  name: 'manage-lesson-attendees',
-                  params: { id: lesson.id }
-                }"
-              />
-            </div>
-          </template>
-          <template v-else>
-            <div class="flex">
+            </template>
+            <template v-else>
               <p class="">
                 La clase no está activa. Una vez que se active podrás acceder a
                 los materiales.
               </p>
-            </div>
-          </template>
+            </template>
+            <resource-button
+              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
+              text-button="Asistentes"
+              icon-button="mdi-account"
+              color="success"
+              :config-route="{
+                name: 'manage-lesson-attendees',
+                params: { id: lesson.id }
+              }"
+            />
+          </div>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -83,6 +77,7 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'LessonInfoModal',
@@ -99,6 +94,30 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
+    ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
+    setLessonMaterial(lesson) {
+      this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
+
+      this.$router.push({
+        name: 'manage-students-materials',
+        params: { id: lesson.id }
+      })
+    },
+    setLessonRecordings(lesson) {
+      this.$store.commit('studentsRecordingsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
+
+      this.$router.push({
+        name: 'manage-students-recordings',
+        params: { id: lesson.id }
+      })
+    },
     open(lesson) {
       this.lesson = lesson
       this.isOpen = true

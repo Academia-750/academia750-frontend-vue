@@ -1,9 +1,9 @@
 <template>
   <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <div>
       <v-card flat>
         <v-card-text>
-          <LessonMaterialsList />
+          <StudentsMaterialsList />
         </v-card-text>
       </v-card>
     </div>
@@ -12,13 +12,14 @@
 
 <script>
 import notifications from '@/mixins/notifications'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'LessonMaterialsView',
+  name: 'StudentsMaterials',
   components: {
-    LessonMaterialsList: () =>
+    StudentsMaterialsList: () =>
       import(
-        /* webpackChunkName: "LessonMaterialsList" */ './components/search-materials-list.vue'
+        /* webpackChunkName: "StudentsMaterialsList" */ './students-materials-list.vue'
       )
   },
   mixins: [notifications],
@@ -27,15 +28,17 @@ export default {
       reloadDatatableUsers: false
     }
   },
-  beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
-  },
   mounted() {
     this.loadNotifications()
   },
+
+  beforeCreate() {
+    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) &&
+      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+  },
   head: {
     title: {
-      inner: 'Gestión de materiales'
+      inner: 'Materiales de clase'
     }
   }
 }
