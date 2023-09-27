@@ -467,6 +467,18 @@ export default {
   async downloadStudentMaterial(id) {
     const response = await ResourceService.get(`student-lessons/${id}/download`)
 
+    console.log({ response })
+
+    if (response.status === 424) {
+      ResourceService.warning({
+        title: 'Error al descargar el fichero',
+        message: `Contacte con el administrador.\nError Original: ${response.data.error}`,
+        response
+      })
+
+      return false
+    }
+
     if (response.status !== 200) {
       ResourceService.warning({
         response

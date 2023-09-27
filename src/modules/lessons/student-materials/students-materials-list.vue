@@ -44,7 +44,6 @@ export default {
 
   methods: {
     async download(material) {
-      // const [_name, type] = this.fileNameAndType(material.url)
       const res = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
