@@ -1,5 +1,18 @@
 <template>
   <v-card-text>
+    <v-dialog
+      v-model="loading"
+      width="auto"
+    >
+      <v-card class="d-flex flex-column">
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -98,6 +111,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

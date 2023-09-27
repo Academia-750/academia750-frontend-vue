@@ -4,6 +4,7 @@
     title="Materiales de Clase"
     store-name="studentsMaterialsStore"
     type="material"
+    :loading="loading"
   >
     <template v-slot:actions="item">
       <div
@@ -46,7 +47,9 @@ export default {
       )
   },
   data() {
-    return {}
+    return {
+      loading: false
+    }
   },
 
   methods: {
@@ -58,6 +61,7 @@ export default {
       return url
     },
     async download(material) {
+      this.loading = true
       const url = await this.getUrl(material)
 
       if (!url) {
@@ -68,6 +72,7 @@ export default {
       )
 
       downloadFile(url, material.name, type)
+      this.loading = false
     },
     async openOtherTab(material) {
       const url = await this.getUrl(material)
