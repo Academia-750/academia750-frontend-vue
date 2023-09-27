@@ -8,6 +8,13 @@ import studentLessonStore from './student-lessons/student-lessons.store'
 import router from './lessons.router'
 
 export default {
-  stores: [lessonStudentStore, lessonStore, lessonMaterialsStore, materialsForLessonStore, studentLessonStore, lessonAttendeesStore],
+  stores: [
+    lessonStudentStore,
+    lessonStore,
+    lessonMaterialsStore,
+    materialsForLessonStore,
+    studentLessonStore,
+    lessonAttendeesStore
+  ],
   router
 }

@@ -424,34 +424,38 @@ export default {
    * @param {string} offset
    * @param {string} content
    */
-async lessonAttendees(
-  id,
-  { orderBy, willJoin, order, limit, offset, content } = {}
-) {
-  const params = {
-    willJoin,
-    orderBy,
-    order,
-    limit,
-    offset,
-    content: content || undefined
-  }
+  async lessonAttendees(
+    id,
+    { orderBy, willJoin, order, limit, offset, content } = {}
+  ) {
+    const params = {
+      willJoin,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
 
-  deleteUndefined(params)
-  const response = await ResourceService.get(`lesson/${id}/students`, {
-    params
-  })
-
-  if (response.status !== 200) {
-    ResourceService.warning({
-      response
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${id}/students`, {
+      params
     })
 
-    console.log()
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
 
-    return { results: [], total: 0, will_join_count: 0 }
+      console.log()
+
+      return { results: [], total: 0, will_join_count: 0 }
+    }
+
+    return {
+      results: response.data.results,
+      total: response.data.total,
+      will_join_count: response.data.will_join_count
+    }
   }
-
-  return { results: response.data.results, total: response.data.total, will_join_count: response.data.will_join_count }
-}
 }
