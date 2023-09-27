@@ -446,9 +446,7 @@ export default {
       ResourceService.warning({
         response
       })
-
-      console.log()
-
+      
       return { results: [], total: 0, will_join_count: 0 }
     }
 
