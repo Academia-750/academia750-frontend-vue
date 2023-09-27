@@ -9,21 +9,26 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Alumnos" icon="mdi-account-multiple" >
+        <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
-            <span class="font-weight-bold text-h6">Total Students: {{ total }}</span>
-            <span class="font-weight-bold text-h6 ml-3">Will join: {{ willJoin }}</span>
+            <span class="font-weight-bold text-h6">
+              Asistentes: {{ willJoin }} / {{ total }}
+            </span>
           </template>
-        </toolbar>
+        </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI o nombre dela estudiante"
+          label-text-field="Buscar por nombre o DNI del estudiante"
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
         <div class="d-flex align-center mx-3 mb-2 type-section">
-          <span class="font-weight-bold text-h6 mr-1">Filter by assits</span>
-          <v-checkbox :value="willAssist" class="mt-3" @click="filterByWillAssist"></v-checkbox>
+          <span class="font-weight-bold text-h6 mr-1">Solo asistentes</span>
+          <v-checkbox
+            :value="willAssist"
+            class="mt-3"
+            @click="filterByWillAssist"
+          ></v-checkbox>
         </div>
       </template>
 
@@ -32,7 +37,9 @@
         <resource-banner-no-data-datatable />
       </template>
       <!-- <template v-slot:abel> ABEL </template> -->
-      <!-- ------------ SLOTS ------------ -->'<template v-slot:[`item.will_join`]="{ item }">
+      <!-- ------------ SLOTS ------------ -->'<template
+        v-slot:[`item.will_join`]="{ item }"
+      >
         <div>
           <v-chip
             class="ma-1"
@@ -42,9 +49,8 @@
           >
             {{ item.will_join ? 'SI' : 'NO' }}
           </v-chip>
-        </div>
-      </template>'
-      
+        </div> </template
+      >'
     </ServerDataTable>
   </v-card-text>
 </template>
