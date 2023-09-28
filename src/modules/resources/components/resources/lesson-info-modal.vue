@@ -68,6 +68,7 @@
                 name: 'manage-lesson-attendees',
                 params: { id: lesson.id }
               }"
+              @click="goAttendeesList(lesson)"
             />
           </div>
         </v-card-text>
@@ -127,6 +128,13 @@ export default {
     },
     isActiveLesson(lesson) {
       return lesson.is_active === 1
+    },
+    goAttendeesList(lesson) {
+      this.$store.dispatch('lessonAttendeesStore/resetTableOptions')
+      this.$router.push({
+        name: 'manage-lesson-attendees',
+        params: { id: lesson.id }
+      })
     }
   }
 }
