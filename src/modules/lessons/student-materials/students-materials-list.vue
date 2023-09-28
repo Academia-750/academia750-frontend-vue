@@ -1,38 +1,50 @@
 <template>
-  <StudentsMaterialsBase
-    ref="materialsList"
-    title="Materiales de Clase"
-    store-name="studentsMaterialsStore"
-    type="material"
-    :loading="loading"
-  >
-    <template v-slot:actions="item">
-      <div
-        v-if="item.has_url"
-        class="d-flex justify-space-between align-center"
-      >
-        <div>
-          <v-icon
-            class="cursor-pointer"
-            color="primary"
-            @click="download(item)"
-          >
-            mdi-cloud-download
-          </v-icon>
+  <div>
+    <StudentsMaterialsBase
+      ref="materialsList"
+      title="Materiales de Clase"
+      store-name="studentsMaterialsStore"
+      type="material"
+    >
+      <template v-slot:actions="item">
+        <div
+          v-if="item.has_url"
+          class="d-flex justify-space-between align-center"
+        >
+          <div>
+            <v-icon
+              class="cursor-pointer"
+              color="primary"
+              @click="download(item)"
+            >
+              mdi-cloud-download
+            </v-icon>
+          </div>
+          <div>
+            <v-icon
+              class="cursor-pointer"
+              color="primary"
+              @click="openOtherTab(item)"
+            >
+              mdi-eye
+            </v-icon>
+          </div>
+          <div></div>
         </div>
-        <div>
-          <v-icon
-            class="cursor-pointer"
-            color="primary"
-            @click="openOtherTab(item)"
-          >
-            mdi-eye
-          </v-icon>
-        </div>
-        <div></div>
-      </div>
-    </template>
-  </StudentsMaterialsBase>
+      </template>
+    </StudentsMaterialsBase>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
@@ -54,14 +66,17 @@ export default {
 
   methods: {
     async getUrl(material) {
+      this.loading = true
+
       const url = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
 
+      this.loading = false
+
       return url
     },
     async download(material) {
-      this.loading = true
       const url = await this.getUrl(material)
 
       if (!url) {
@@ -72,7 +87,6 @@ export default {
       )
 
       downloadFile(url, material.name, type)
-      this.loading = false
     },
     async openOtherTab(material) {
       const url = await this.getUrl(material)
