@@ -9,11 +9,15 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Alumnos" icon="mdi-account-multiple">
+        <Toolbar :title="lesson.name" icon="mdi-account-multiple">
           <template slot="actions">
-            <span class="font-weight-bold text-h6">
+            <span class="font-weight-bold text-h6 mr-1">
               Asistentes: {{ willJoin }} / {{ total }}
             </span>
+            <resource-button
+              icon-button="mdi-autorenew"
+              @click="reset()"
+            />
           </template>
         </Toolbar>
         <resource-text-field-search
@@ -22,8 +26,8 @@
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
-        <div class="d-flex align-center mx-3 mb-2 type-section">
-          <span class="font-weight-bold text-h6 mr-1">Solo asistentes</span>
+        <div class="d-flex align-center mx-3">
+          <span class="text-subtitle-1 mr-1">Solo asistentes</span>
           <v-checkbox
             :value="willAssist"
             class="mt-3"
@@ -36,7 +40,6 @@
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
-      <!-- <template v-slot:abel> ABEL </template> -->
       <!-- ------------ SLOTS ------------ -->'<template
         v-slot:[`item.will_join`]="{ item }"
       >
@@ -49,8 +52,8 @@
           >
             {{ item.will_join ? 'SI' : 'NO' }}
           </v-chip>
-        </div> </template
-      >'
+        </div> 
+      </template>
     </ServerDataTable>
   </v-card-text>
 </template>
@@ -80,6 +83,10 @@ export default {
     ResourceTextFieldSearch: () =>
       import(
         /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       )
   },
   mixins: [componentButtonsCrud],
@@ -90,7 +97,8 @@ export default {
       searchWordText: '',
       loading: false,
       willJoin: 0,
-      groupName: ''
+      groupName: '',
+      lesson: {}
     }
   },
   computed: {
@@ -98,7 +106,7 @@ export default {
       return headers
     },
     store() {
-      return this.$store.state.lessonStudentStore
+      return this.$store.state.lessonAttendeesStore
     }
   },
   watch: {
@@ -111,13 +119,20 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
 
-  mounted() {},
+  mounted() {
+    this.getLessonInfo()
+  },
 
   methods: {
     ...mapActions('lessonAttendeesStore', ['resetTableOptions']),
     ...mapMutations('lessonAttendeesStore', ['SET_TABLE_OPTIONS']),
     addStudents() {
       this.$refs.addStudents.open()
+    },
+    async getLessonInfo() {
+      const lessonId = this.$route.params.id
+      
+      this.lesson = await LessonRepository.info(lessonId)
     },
     async filterByWillAssist() {
       this.willAssist = !this.willAssist
@@ -140,6 +155,10 @@ export default {
       this.willJoin = res.will_join_count
 
       return res
+    },
+    reset() {
+      this.resetTableOptions()
+      // this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })

@@ -306,7 +306,6 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      console.log({ refs: this.$refs })
       this.$refs.addWorkspaceMaterial.open()
     },
 
