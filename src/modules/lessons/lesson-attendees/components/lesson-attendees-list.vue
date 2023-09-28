@@ -20,19 +20,21 @@
             />
           </template>
         </Toolbar>
-        <resource-text-field-search
-          :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI del estudiante"
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
-        />
-        <div class="d-flex align-center mx-3">
-          <span class="text-subtitle-1 mr-1">Solo asistentes</span>
-          <v-checkbox
-            :value="willAssist"
-            class="mt-3"
-            @click="filterByWillAssist"
-          ></v-checkbox>
+        <div style="position: relative;">
+          <resource-text-field-search
+            :search-word="store.tableOptions.content"
+            label-text-field="Buscar por nombre o DNI del estudiante"
+            @emitSearchTextBinding="searchFieldWithDebounce"
+            @emitSearchWord="searchFieldExecuted"
+          />
+          <div class="d-flex align-center mx-3 top-4" style="position: absolute; z-index: 1; top: 3rem">
+            <span class="text-subtitle-1 mr-1">Solo asistentes</span>
+            <v-checkbox
+              :value="willAssist"
+              class="mt-3"
+              @click="filterByWillAssist"
+            ></v-checkbox>
+          </div>
         </div>
       </template>
 
