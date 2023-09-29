@@ -223,7 +223,9 @@ export default {
 
       return fileName
     },
-    typeLabel: () => (this.type === 'material' ? 'Material' : 'Grabación')
+    typeLabel() {
+      return this.type === 'material' ? 'Material' : 'Grabación'
+    }
   },
   mounted() {
     this.loadWorkspaces()
@@ -351,8 +353,8 @@ export default {
           icon: 'success',
           toast: true,
           title: this.material
-            ? `${typeLabel} Actualizado!`
-            : `${typeLabel} Creado!`,
+            ? `${this.typeLabel} Actualizado!`
+            : `${this.typeLabel} Creado!`,
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           timer: 7500
