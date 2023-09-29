@@ -1,25 +1,51 @@
 <template>
-  <StudentsMaterialsBase
-    ref="recordingsList"
-    title="Grabaciones de Clase"
-    store-name="studentsRecordingsStore"
-    type="recording"
-    :loading="loading"
-  >
-    <template v-slot:actions="item">
-      <div
-        v-if="item.has_url"
-        class="d-flex justify-space-between align-center"
-      >
-        <div>
-          <!-- Modal here on next task -->
+  <div>
+    <StudentsMaterialsBase
+      ref="recordingsList"
+      title="Grabaciones de Clase"
+      store-name="studentsRecordingsStore"
+      type="recording"
+      :loading="loading"
+    >
+      <template v-slot:actions="item">
+        <div
+          v-if="item.has_url"
+          class="d-flex justify-space-between align-center"
+        >
+          <div>
+            <v-icon
+              class="cursor-pointer"
+              color="primary"
+              @click="openOtherTab(item)"
+            >
+              mdi-eye
+            </v-icon>
+          </div>
+          <div></div>
         </div>
-      </div>
-    </template>
-  </StudentsMaterialsBase>
+      </template>
+    </StudentsMaterialsBase>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="showVideo" max-width="750px" @close="">
+      <v-card class="d-flex flex-column justify-center align-center pa-2">
+        <vimeo-player ref="player" :video-id="videoID" @ready="onReady" :player-height="height"></vimeo-player>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
+import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
   name: 'StudentsRecordingsList',
@@ -31,22 +57,54 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      showVideo: true,
+      videoUrl: 'https://vimeo.com/845354256/b21addfd58?share=copy',
+      player: null,
+      videoID: '863336181',
+			height: 500,
+			options: {
+				muted: true,
+	      			autoplay: true
+			},
+			playerReady: false
     }
   },
-
+  mounted() {
+    
+  },
   methods: {
-    async download(material) {
+    onReady () {
+			this.playerReady = true
+		},
+		play () {
+			this.$refs.player.play()
+		},
+		pause () {
+			this.$refs.player.pause()
+		},
+    async getUrl(material) {
       this.loading = true
-      const res = await LessonRepository.downloadStudentMaterial(
+
+      const url = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
 
-      if (!res) {
+      this.loading = false
+
+      return url
+    },
+    async download(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
         return
       }
-      this.loading = false
-      // DownloadFile(material.url, material.name, type)
+      const type = url.slice(
+        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
+      )
+
+      downloadFile(url, material.name, type)
     }
   }
 }
