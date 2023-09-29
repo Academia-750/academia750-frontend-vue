@@ -4,6 +4,7 @@
     title="Grabaciones de Clase"
     store-name="studentsRecordingsStore"
     type="recording"
+    :loading="loading"
   >
     <template v-slot:actions="item">
       <div
@@ -29,11 +30,14 @@ export default {
       )
   },
   data() {
-    return {}
+    return {
+      loading: false
+    }
   },
 
   methods: {
     async download(material) {
+      this.loading = true
       const res = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
@@ -41,7 +45,7 @@ export default {
       if (!res) {
         return
       }
-
+      this.loading = false
       // DownloadFile(material.url, material.name, type)
     }
   }

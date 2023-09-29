@@ -98,6 +98,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
