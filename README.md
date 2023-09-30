@@ -48,6 +48,10 @@ In the phase 2 we have simplify the folder structure, you may see this change in
 Make sure you add the `robots.txt` in production with the Allow option.
 
 
+## Video player
+
+We are using the vue-vimeo-player package to play videos from vimeo
+
 ## Default User
 ### Default Super Admin
 
