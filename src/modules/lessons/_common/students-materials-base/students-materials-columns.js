@@ -1,7 +1,7 @@
 export default [
   {
     position: 1,
-    text: 'Lesson Name',
+    text: 'Clase',
     align: 'start',
     sortable: true,
     value: 'lesson_name',
@@ -9,7 +9,7 @@ export default [
   },
   {
     position: 2,
-    text: 'File Name',
+    text: 'Fichero',
     align: 'start',
     sortable: true,
     value: 'name',
