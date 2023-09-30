@@ -414,5 +414,99 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} type
+   * @param {string} tags[0]
+   * @param {string} lessons[0]
+   * @param {string} orderBy
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async studentsMaterialList({
+    type,
+    tags,
+    lessons,
+    orderBy,
+    order,
+    limit,
+    offset,
+    content
+  } = {}) {
+    const params = {
+      type: type || undefined,
+      tags,
+      lessons,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('student-lessons/materials', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results, total: response.data.total }
+  },
+  /**
+   * @param {string} id
+   */
+  async downloadStudentMaterial(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/download`)
+
+    if (response.status === 424) {
+      ResourceService.warning({
+        title: 'Error al descargar el fichero',
+        message: `Contacte con el administrador.\nError Original: ${response.data.error}`,
+        response
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.url
+  },
+  /**
+   * @param {string} content
+   * @param {number} limit
+   */
+  async searchLessons({ content, limit }) {
+    const response = await ResourceService.get('student-lessons/search', {
+      params: {
+        content: content || undefined,
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }

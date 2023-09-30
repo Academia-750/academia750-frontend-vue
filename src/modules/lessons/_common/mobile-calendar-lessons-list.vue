@@ -26,8 +26,8 @@
               {{ event.name }}
             </span>
             <span class="font-weight-medium text-xs-caption text-sm-h7">
-              {{ date(event.start, 'HH:MM A') }} a
-              {{ date(event.end, 'HH:MM A') }}
+              {{ date(event.start, 'HH:MM') }} a
+              {{ date(event.end, 'HH:MM') }}
             </span>
           </div>
           <slot name="actions" v-bind="event"> </slot>

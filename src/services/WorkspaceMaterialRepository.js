@@ -156,6 +156,11 @@ export default {
 
     return response.data.result
   },
+  /**
+   * @param {string} content
+   * @param {string} type
+   * @param {number} limit
+   */
   async searchTags({ content, limit, type }) {
     const response = await ResourceService.get('material/tag', {
       params: {
