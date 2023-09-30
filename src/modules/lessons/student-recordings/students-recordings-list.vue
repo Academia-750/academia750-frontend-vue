@@ -16,7 +16,7 @@
             <v-icon
               class="cursor-pointer"
               color="primary"
-              @click="openOtherTab(item)"
+              @click="openVideo(item)"
             >
               mdi-eye
             </v-icon>
@@ -27,7 +27,7 @@
     </StudentsMaterialsBase>
     <v-dialog v-model="loading" width="auto">
       <v-card class="d-flex flex-column justify-center align-center pa-8">
-        <p class="pa-1">Preparando tu material...</p>
+        <p class="pa-1">Preparando tu video...</p>
         <v-progress-circular
           :size="70"
           :width="7"
@@ -36,9 +36,9 @@
         ></v-progress-circular>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="showVideo" max-width="750px" @close="">
+    <v-dialog v-model="showVideo" max-width="700px" @close="">
       <v-card class="d-flex flex-column justify-center align-center pa-2">
-        <vimeo-player ref="player" :video-id="videoID" @ready="onReady" :player-height="height"></vimeo-player>
+        <vimeo-player ref="player" :video-id="videoID" :player-height="height" @ready="onReady"></vimeo-player>
       </v-card>
     </v-dialog>
   </div>
@@ -58,11 +58,10 @@ export default {
   data() {
     return {
       loading: false,
-      showVideo: true,
-      videoUrl: 'https://vimeo.com/845354256/b21addfd58?share=copy',
+      showVideo: false,
       player: null,
-      videoID: '863336181',
-			height: 500,
+      videoID: '',
+			height: 400,
 			options: {
 				muted: true,
 	      			autoplay: true
@@ -83,6 +82,15 @@ export default {
 		pause () {
 			this.$refs.player.pause()
 		},
+    getVimeoVideoId(url) {
+      const match = url.match(/\/(\d+)$/)
+
+      if (match) {
+        return match[1]
+      }
+
+      return null
+    },
     async getUrl(material) {
       this.loading = true
 
@@ -94,17 +102,15 @@ export default {
 
       return url
     },
-    async download(material) {
+    async openVideo(material) {
       const url = await this.getUrl(material)
 
       if (!url) {
         return
       }
-      const type = url.slice(
-        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
-      )
 
-      downloadFile(url, material.name, type)
+      this.videoID = this.getVimeoVideoId(url)
+      this.showVideo = true
     }
   }
 }
