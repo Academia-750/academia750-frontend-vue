@@ -12,7 +12,7 @@
               id="tag"
               ref="nameInput"
               v-model="name"
-              label="Etiqueta"
+              label="Tema"
               :rules="`required|min:3|max:25|regex:${validRegex}`"
             />
             <v-card-actions class="d-flex justify-space-between pa-0">
@@ -115,7 +115,7 @@ export default {
       await this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'Etiqueta creada!',
+        title: 'Tema creado!',
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
         timer: 7500

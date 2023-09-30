@@ -17,7 +17,7 @@ export default [
   },
   {
     position: 3,
-    text: 'Tags',
+    text: 'Temas',
     align: 'center',
     sortable: false,
     value: 'tags',
