@@ -106,7 +106,8 @@ export default {
     return {
       reloadDatatableUsers: false,
       lessons: [],
-      PermissionEnum
+      PermissionEnum,
+      event:{}
     }
   },
   computed: {
