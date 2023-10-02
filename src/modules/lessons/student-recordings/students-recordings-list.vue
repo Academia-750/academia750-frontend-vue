@@ -37,15 +37,12 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="showVideo" max-width="700px" @close="">
-      <v-card class="d-flex flex-column justify-center align-center pa-2">
-        <vimeo-player ref="player" :video-id="videoID" :player-height="height" @ready="onReady"></vimeo-player>
-      </v-card>
+      <VimeoVideoPlayer :video-i-d="videoID"/>
     </v-dialog>
   </div>
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
-import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
   name: 'StudentsRecordingsList',
@@ -53,7 +50,11 @@ export default {
     StudentsMaterialsBase: () =>
       import(
         /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
-      )
+    ),
+    VimeoVideoPlayer: () =>
+      import(
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/video-card.vue'
+    )
   },
   data() {
     return {
@@ -62,16 +63,10 @@ export default {
       player: null,
       videoID: '',
 			height: 400,
-			options: {
-				muted: true,
-	      			autoplay: true
-			},
 			playerReady: false
     }
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     onReady () {
 			this.playerReady = true
