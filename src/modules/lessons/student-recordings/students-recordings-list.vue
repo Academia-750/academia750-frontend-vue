@@ -60,23 +60,11 @@ export default {
     return {
       loading: false,
       showVideo: false,
-      player: null,
-      videoID: '',
-			height: 400,
-			playerReady: false
+      videoID: ''
     }
   },
   mounted() {},
   methods: {
-    onReady () {
-			this.playerReady = true
-		},
-		play () {
-			this.$refs.player.play()
-		},
-		pause () {
-			this.$refs.player.pause()
-		},
     getVimeoVideoId(url) {
       const match = url.match(/\/(\d+)$/)
 
