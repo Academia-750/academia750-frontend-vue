@@ -87,7 +87,6 @@ export default {
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/mobile-calendar-lessons-list.vue'
       ),
-
     LessonToolBar: () =>
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/lesson-tool-bar.vue'
