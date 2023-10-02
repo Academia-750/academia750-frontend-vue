@@ -43,7 +43,6 @@
           />
         </v-card-text>
       </v-card>
-
       <div v-else class="d-flex justify-center pt-2 pb-2 d-md-none">
         <MobileCalendar
           :focus="date"
