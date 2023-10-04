@@ -1,80 +1,71 @@
 <template>
-  <div>
-    <LessonInfoModal ref="lessonInfoModal" />
-    <v-card v-if="!isMobile" flat>
-      <v-card-text>
-        <LessonToolBar>
-          <template v-if="lesson" slot="info">
-            <div class="d-flex align-center">
-              <div class="text-bold mr-2">Clase:</div>
-              <span class="font-weight-bold subtitle-2">
-                {{ lesson.name }}
-              </span>
-            </div>
-          </template>
-          <template v-else slot="info">
-            <div class="d-flex w-full justify-between">
-              Selecciona una clase
-            </div>
-          </template>
-          <template v-if="lesson" slot="actions">
-            <!-- Column for Time -->
-            <div class="d-flex align-center">
+  <v-card-text>
+    <div>
+      <LessonInfoModal ref="lessonInfoModal" />
+      <v-card v-if="!isMobile" flat>
+        <v-card-text>
+          <LessonToolBar>
+            <template v-if="lesson" slot="info">
+              <div class="d-flex align-center">
+                <div class="text-bold mr-2">Clase:</div>
+                <span class="font-weight-bold subtitle-2">
+                  {{ lesson.name }}
+                </span>
+              </div>
+            </template>
+            <template v-else slot="info">
+              <div class="d-flex w-full justify-between">
+                Selecciona una clase
+              </div>
+            </template>
+            <template v-if="lesson" slot="actions">
+              <!-- Column for Time -->
+              <div class="d-flex align-center">
+                <!-- There are two different switch for desktop and mobile in this same page -->
+                <SwitchInput
+                  id="joinLesson"
+                  :value="event.will_join === 1"
+                  @click="(value) => joinLesson(event.id, value)"
+                />
+              </div>
+            </template>
+          </LessonToolBar>
+          <CalendarLessonsList
+            ref="calendar"
+            :focus="date"
+            :type="type"
+            :events="events"
+            @type="SET_TYPE"
+            @date="onDate"
+            @event="onLesson"
+            @load="onLoad"
+            @focus="SET_DATE"
+          />
+        </v-card-text>
+      </v-card>
+      <div v-else class="d-flex justify-center pt-2 pb-2 d-md-none">
+        <MobileCalendar
+          :focus="date"
+          :events="events"
+          @load="onLoad"
+          @focus="SET_DATE"
+        >
+          <template #actions="event">
+            <div class="d-flex justify-end flex-fill">
+              <v-icon class="px-2" color="success" @click.stop="onLesson(event)">
+                mdi-information
+              </v-icon>
               <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
                 id="joinLesson"
-                :label="lesson.will_join ? 'Asistiré' : 'No asistiré'"
-                class="px-2 pt-2"
-                :value="lesson.will_join === 1"
-                @click="(value) => joinLesson(lesson.id, value)"
-              />
-
-              <resource-button
-                text-button="Información"
-                icon-button="mdi-information-variant"
-                color="success"
-                @click="openInfoModal(lesson)"
+                :value="event.will_join === 1"
+                @click="(value) => joinLesson(event.id, value)"
               />
             </div>
           </template>
-        </LessonToolBar>
-        <CalendarLessonsList
-          ref="calendar"
-          :focus="date"
-          :type="type"
-          :events="events"
-          @type="SET_TYPE"
-          @date="onDate"
-          @event="onLesson"
-          @load="onLoad"
-          @focus="SET_DATE"
-        />
-      </v-card-text>
-    </v-card>
-
-    <div v-else class="d-flex justify-center pt-2 pb-2 d-md-none">
-      <MobileCalendar
-        :focus="date"
-        :events="events"
-        @load="onLoad"
-        @focus="SET_DATE"
-      >
-        <template #actions="event">
-          <div class="d-flex justify-end flex-fill">
-            <v-icon class="px-2" color="success" @click.stop="onLesson(event)">
-              mdi-information
-            </v-icon>
-            <!-- There are two different switch for desktop and mobile in this same page -->
-            <SwitchInput
-              id="joinLesson"
-              :value="event.will_join === 1"
-              @click="(value) => joinLesson(event.id, value)"
-            />
-          </div>
-        </template>
-      </MobileCalendar>
-    </div>
-  </div>
+        </MobileCalendar>
+      </div>
+    </div></v-card-text>
 </template>
 
 <script>
@@ -96,15 +87,9 @@ export default {
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/mobile-calendar-lessons-list.vue'
       ),
-
     LessonToolBar: () =>
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/lesson-tool-bar.vue'
-      ),
-
-    ResourceButton: () =>
-      import(
-        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
     SwitchInput: () =>
       import(
@@ -119,7 +104,9 @@ export default {
   data() {
     return {
       reloadDatatableUsers: false,
-      lessons: []
+      lessons: [],
+      PermissionEnum,
+      event:{}
     }
   },
   computed: {

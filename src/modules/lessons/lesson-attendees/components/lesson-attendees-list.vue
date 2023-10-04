@@ -1,45 +1,60 @@
 <template>
   <v-card-text>
-    <!-- ------------ ADD STUDENT TAGS ------------ -->
-    <AddTagModal ref="addTag" @create="createTag" />
+    <!-- ------------ ADD STUDENT TO LESSON ------------ -->
     <ServerDataTable
       ref="table"
       :headers="headers"
-      store-name="TagStore"
-      :load="loadTags"
+      store-name="lessonAttendeesStore"
+      :load="loadLessonStudents"
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Temas" icon="mdi-tag">
+        <Toolbar :title="lesson.name" icon="mdi-account-multiple">
           <template slot="actions">
-            <ResourceButtonAdd text-button="Agregar" @click="addTag()" />
+            <span class="font-weight-bold text-h6 mr-1">
+              Asistentes: {{ willJoin }} / {{ total }}
+            </span>
             <resource-button
               icon-button="mdi-autorenew"
-              @click="resetTableOptions"
+              @click="reset()"
             />
           </template>
         </Toolbar>
-        <resource-text-field-search
-          :search-word="store.tableOptions.content"
-          label-text-field="Buscar por tema."
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
-        />
+        <div style="position: relative;">
+          <resource-text-field-search
+            :search-word="store.tableOptions.content"
+            label-text-field="Buscar por nombre o DNI del estudiante"
+            @emitSearchTextBinding="searchFieldWithDebounce"
+            @emitSearchWord="searchFieldExecuted"
+          />
+          <div class="d-flex align-center mx-3 top-4" style="position: absolute; z-index: 1; top: 3rem">
+            <span class="text-subtitle-1 mr-1">Solo asistentes</span>
+            <v-checkbox
+              :value="willAssist"
+              class="mt-3"
+              @click="filterByWillAssist"
+            ></v-checkbox>
+          </div>
+        </div>
       </template>
 
       <!-- ------------ NO DATA ------------ -->
       <template v-slot:no-data>
         <resource-banner-no-data-datatable />
       </template>
-
-      <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.actions`]="{ item }">
-        <div class="d-flex justify-center">
-          <resource-button-delete
-            text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteTag(item)"
-          />
-        </div>
+      <!-- ------------ SLOTS ------------ -->'<template
+        v-slot:[`item.will_join`]="{ item }"
+      >
+        <div>
+          <v-chip
+            class="ma-1"
+            label
+            small
+            :color="item.will_join ? 'primary' : ''"
+          >
+            {{ item.will_join ? 'SI' : 'NO' }}
+          </v-chip>
+        </div> 
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -49,16 +64,12 @@
 import _ from 'lodash'
 import { mapActions, mapMutations } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import TagRepository from '@/services/TagRepository'
-import headers from './tags-table-columns'
+import LessonRepository from '@/services/LessonRepository'
+import headers from './lessons-attendees-table-columns'
 
 export default {
-  name: 'DatatableTags',
+  name: 'DatatableLessonsAttendees',
   components: {
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      ),
     ResourceBannerNoDataDatatable: () =>
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
@@ -78,21 +89,18 @@ export default {
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-      ),
-    AddTagModal: () =>
-      import(
-        /* webpackChunkName: "AddTagModal" */ '@/modules/resources/components/resources/add-tag-modal'
-      ),
-    ResourceButtonDelete: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
       )
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
+      total: 0,
+      willAssist: undefined,
       searchWordText: '',
-      loading: false
+      loading: false,
+      willJoin: 0,
+      groupName: '',
+      lesson: {}
     }
   },
   computed: {
@@ -100,7 +108,7 @@ export default {
       return headers
     },
     store() {
-      return this.$store.state.TagStore
+      return this.$store.state.lessonAttendeesStore
     }
   },
   watch: {
@@ -113,64 +121,46 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
 
-  mounted() {},
+  mounted() {
+    this.getLessonInfo()
+  },
 
   methods: {
-    ...mapActions('TagStore', ['resetTableOptions']),
-    ...mapMutations('TagStore', ['SET_TABLE_OPTIONS']),
-    addTag() {
-      this.$refs.addTag.open()
+    ...mapActions('lessonAttendeesStore', ['resetTableOptions']),
+    ...mapMutations('lessonAttendeesStore', ['SET_TABLE_OPTIONS']),
+    addStudents() {
+      this.$refs.addStudents.open()
+    },
+    async getLessonInfo() {
+      const lessonId = this.$route.params.id
+      
+      this.lesson = await LessonRepository.info(lessonId)
+    },
+    async filterByWillAssist() {
+      this.willAssist = !this.willAssist
+      this.loadLessonStudents()
+      this.tableReload()
     },
     tableReload() {
       this.$refs.table.reload()
     },
-    async loadTags(pagination) {
+    async loadLessonStudents(pagination) {
+      const lessonId = this.$route.params.id
       const params = {
-        ...pagination
+        ...pagination,
+        willJoin: this.willAssist === true ? 1 : undefined
       }
 
-      const res = await TagRepository.list(params)
+      const res = await LessonRepository.lessonAttendees(lessonId, params)
+
+      this.total = res.total
+      this.willJoin = res.will_join_count
 
       return res
     },
-    async createTag() {
+    reset() {
       this.resetTableOptions()
-      this.$refs.table.reload()
-    },
-    async deleteTag(tag) {
-      if (!tag) {
-        return
-      }
-      const result = await this.$swal.fire({
-        toast: true,
-        width: '400px',
-        icon: 'question',
-        title: '¿Seguro que deseas eliminar este tema? ',
-        html: 'No podrá etiquetar nuevos materiales ni filtrar por este tema. Los materiales ya etiquetados seguiran teniendo el tema, será necesario eliminarla manualmente.',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      })
-
-      if (!result.isConfirmed) {
-        return
-      }
-
-      const res = await TagRepository.delete(tag.id)
-
-      if (!res) {
-        return
-      }
-      this.$swal.fire({
-        icon: 'success',
-        toast: true,
-        title: 'El tema ha sido eliminada correctamente.',
-        timer: 3000
-      })
-
-      this.$refs.table.reload()
+      // this.$refs.table.reload()
     },
     searchFieldExecuted($event) {
       this.SET_TABLE_OPTIONS({ content: $event, offset: 0 })

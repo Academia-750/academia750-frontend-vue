@@ -1,34 +1,34 @@
 export default [
   {
     position: 1,
-    text: 'Clase',
+    text: 'Nombre',
     align: 'start',
     sortable: true,
-    value: 'lesson_name',
+    value: 'full_name',
     show: true
   },
   {
     position: 2,
-    text: 'Fichero',
+    text: 'DNI/NIE',
     align: 'start',
     sortable: true,
-    value: 'name',
+    value: 'dni',
     show: true
   },
   {
     position: 3,
-    text: 'Temas',
-    align: 'center',
-    sortable: false,
-    value: 'tags',
+    sortable: true,
+    text: 'Grupo',
+    align: 'start',
+    value: 'group_name',
     show: true
   },
   {
     position: 4,
     sortable: false,
-    text: 'Acciones',
-    align: 'start',
-    value: 'actions-resource',
+    text: 'Asistencia',
+    align: 'center',
+    value: 'will_join',
     show: true
   }
 ]

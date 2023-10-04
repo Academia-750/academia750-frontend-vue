@@ -5,6 +5,7 @@ import CreateLessonsModule from './create-lesson'
 import AddStudentToLessonsModule from './lesson-students'
 import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
+import LessonAttendeesModule from './lesson-attendees'
 import StudentLessons from './student-lessons'
 import ManageStudentsMaterialsModule from './student-materials'
 import ManageStudentsRecordingsModule from './student-recordings'
@@ -71,6 +72,14 @@ const adminRoute = [
             path: 'list',
             name: 'manage-lessons',
             component: ManageLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/attendees',
+            name: 'manage-lesson-attendees',
+            component: LessonAttendeesModule,
             meta: {
               middleware: [authMiddleware]
             }

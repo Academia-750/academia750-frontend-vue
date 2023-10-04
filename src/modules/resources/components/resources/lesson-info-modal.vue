@@ -34,8 +34,8 @@
               </p>
             </div>
           </div>
-          <template v-if="isActiveLesson(lesson)">
-            <div class="d-flex justify-end">
+          <div class="d-flex justify-between">
+            <template v-if="isActiveLesson(lesson)">
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
@@ -52,27 +52,25 @@
                 "
                 @click="setLessonRecordings(lesson)"
               />
-              <resource-button
-                v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
-                text-button="Asistentes"
-                icon-button="mdi-account"
-                color="success"
-                :config-route="{
-                  name: 'add-students',
-                  params: { id: lesson.id }
-                }"
-                :disabled="true"
-              />
-            </div>
-          </template>
-          <template v-else>
-            <div class="flex">
+            </template>
+            <template v-else>
               <p class="">
                 La clase no está activa. Una vez que se active podrás acceder a
                 los materiales.
               </p>
-            </div>
-          </template>
+            </template>
+            <resource-button
+              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
+              text-button="Asistentes"
+              icon-button="mdi-account"
+              color="success"
+              :config-route="{
+                name: 'manage-lesson-attendees',
+                params: { id: lesson.id }
+              }"
+              @click="goAttendeesList(lesson)"
+            />
+          </div>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -101,15 +99,25 @@ export default {
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
     setLessonMaterial(lesson) {
       this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
-      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', { offset: 0 })
+      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
 
-      this.$router.push({ name: 'manage-students-materials', params: { id: lesson.id } })
+      this.$router.push({
+        name: 'manage-students-materials',
+        params: { id: lesson.id }
+      })
     },
     setLessonRecordings(lesson) {
       this.$store.commit('studentsRecordingsStore/SET_LESSONS', [lesson.id])
-      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', { offset: 0 })
+      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
 
-      this.$router.push({ name: 'manage-students-recordings', params: { id: lesson.id } })
+      this.$router.push({
+        name: 'manage-students-recordings',
+        params: { id: lesson.id }
+      })
     },
     open(lesson) {
       this.lesson = lesson
@@ -120,6 +128,13 @@ export default {
     },
     isActiveLesson(lesson) {
       return lesson.is_active === 1
+    },
+    goAttendeesList(lesson) {
+      this.$store.dispatch('lessonAttendeesStore/resetTableOptions')
+      this.$router.push({
+        name: 'manage-lesson-attendees',
+        params: { id: lesson.id }
+      })
     }
   }
 }

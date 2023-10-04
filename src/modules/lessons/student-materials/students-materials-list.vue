@@ -13,7 +13,7 @@
         >
           <div>
             <v-icon
-              class="cursor-pointer"
+              class="cursor-pointer pr-3 pr-md-1"
               color="primary"
               @click="download(item)"
             >
@@ -22,7 +22,7 @@
           </div>
           <div>
             <v-icon
-              class="cursor-pointer"
+              class="cursor-pointer pa-1"
               color="primary"
               @click="openOtherTab(item)"
             >
