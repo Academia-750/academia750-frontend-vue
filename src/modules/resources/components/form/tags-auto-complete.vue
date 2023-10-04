@@ -4,7 +4,7 @@
     v-slot="{ errors }"
     mode="aggressive"
     :rules="rules"
-    name="etiquetas"
+    name="temas"
   >
     <v-autocomplete
       :value="tags"
@@ -13,7 +13,7 @@
       :error-messages="errors"
       tags-list
       clearable
-      label="Etiquetas"
+      label="Temas"
       multiple
       solo
       outlined
@@ -89,6 +89,7 @@ export default {
       this.$emit('change', value)
     },
     remove(item) {
+      console.log({ item })
       this.$emit(
         'change',
         this.tags.filter((tag) => tag !== item)

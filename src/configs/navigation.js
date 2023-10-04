@@ -117,6 +117,34 @@ export default {
       ]
     },
     {
+      text: 'Clases y Materiales',
+      key: '',
+      permissions: [PermissionEnum.SEE_LESSONS],
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Mis Clases',
+          to: { name: 'my-lessons' },
+          permissions: [PermissionEnum.SEE_LESSONS]
+        },
+        {
+          icon: 'mdi-file-pdf',
+          key: '',
+          text: 'Materiales',
+          to: { name: 'manage-students-materials' },
+          permissions: [PermissionEnum.SEE_LESSON_MATERIALS]
+        },
+        {
+          icon: 'mdi-camera',
+          key: '',
+          text: 'Grabaciones',
+          to: { name: 'manage-students-recordings' },
+          permissions: [PermissionEnum.SEE_LESSON_RECORDINGS]
+        }
+      ]
+    },
+    {
       text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',

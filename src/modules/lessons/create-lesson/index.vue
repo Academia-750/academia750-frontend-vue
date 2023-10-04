@@ -59,7 +59,7 @@
                 <FieldInput
                   id="url"
                   v-model="lessonMeetingUrl"
-                  rules="required|url"
+                  rules="required|url|max:550"
                   :filled="true"
                   :outlined="false"
                   :disabled="!canEdit"
@@ -100,7 +100,7 @@
                 :loading="loading"
                 :text-button="lesson ? 'Editar' : 'Crear'"
                 color="primary"
-                icon-button="mdi-account-group"
+                icon-button="mdi-pencil"
                 @click="createLesson"
               />
             </div>

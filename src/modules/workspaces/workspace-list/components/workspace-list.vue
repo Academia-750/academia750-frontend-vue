@@ -28,7 +28,7 @@
 
           <v-spacer />
           <ResourceButtonMaterials
-            text-button="Gestionar Etiquetas"
+            text-button="Gestionar Temas"
             icon-button="mdi-tag"
             :config-route="{ name: 'manage-tags' }"
             :only-dispatch-click-event="true"

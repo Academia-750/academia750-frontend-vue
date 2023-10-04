@@ -5,17 +5,19 @@ export default {
     ...mapState('studentsService', ['tabViewStudents'])
   },
   methods: {
-    ...mapMutations('studentsService', ['SET_USERS_SELECTED_DATATABLE', 'SET_MATCHES_RESET_OPTIONS_DATATABLE']),
+    ...mapMutations('studentsService', [
+      'SET_USERS_SELECTED_DATATABLE',
+      'SET_MATCHES_RESET_OPTIONS_DATATABLE'
+    ]),
     ...mapActions('studentsService', ['getStudents']),
-    async loadStudentsFromCurrentTab (valueTab = null) {
-
+    async loadStudentsFromCurrentTab(valueTab = null) {
       const currentTab = valueTab ?? this.tabViewStudents
 
       if (currentTab === 'students-account-enable') {
         await this.getStudents({
           params: {
             'filter[state-account]': 'enable',
-            'sort': '-created-at',
+            sort: '-created-at',
             'page[size]': 10,
             'page[number]': 1
           }
@@ -30,7 +32,7 @@ export default {
         await this.getStudents({
           params: {
             'filter[state-account]': 'disable',
-            'sort': '-created-at',
+            sort: '-created-at',
             'page[size]': 10,
             'page[number]': 1
           }

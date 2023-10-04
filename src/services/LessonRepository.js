@@ -112,6 +112,33 @@ export default {
     return { results: response.data.results }
   },
   /**
+   * @param {string} from
+   * @param {string} to
+   * @param {number} content
+   */
+  async studentCalendar({ from, to, content } = {}) {
+    const params = {
+      from,
+      to,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('student-lessons/calendar', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results }
+  },
+  /**
    * @param {string} id
    */
   async info(id) {
@@ -368,5 +395,160 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} id
+   *  @param {string} join
+   */
+  async joinLesson(id, join) {
+    const response = await ResourceService.put(`student-lessons/${id}/join`, {
+      join
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * @param {string} id
+   * @param {string} orderBy
+   * @param {string} willJoin
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async lessonAttendees(
+    id,
+    { orderBy, willJoin, order, limit, offset, content } = {}
+  ) {
+    const params = {
+      willJoin,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get(`lesson/${id}/students`, {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0, will_join_count: 0 }
+    }
+
+    return {
+      results: response.data.results,
+      total: response.data.total,
+      will_join_count: response.data.will_join_count
+    }
+  },
+
+  /**
+   * @param {string} type
+   * @param {string} tags[0]
+   * @param {string} lessons[0]
+   * @param {string} orderBy
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async studentsMaterialList({
+    type,
+    tags,
+    lessons,
+    orderBy,
+    order,
+    limit,
+    offset,
+    content
+  } = {}) {
+    const params = {
+      type: type || undefined,
+      tags,
+      lessons,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('student-lessons/materials', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results, total: response.data.total }
+  },
+  /**
+   * @param {string} id
+   */
+  async downloadStudentMaterial(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/download`)
+
+    if (response.status === 424) {
+      ResourceService.warning({
+        title: 'Error al descargar el fichero',
+        message: `Contacte con el administrador.\nError Original: ${response.data.error}`,
+        response
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.url
+  },
+  /**
+   * @param {string} content
+   * @param {number} limit
+   */
+  async searchLessons({ content, limit }) {
+    const response = await ResourceService.get('student-lessons/search', {
+      params: {
+        content: content || undefined,
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }

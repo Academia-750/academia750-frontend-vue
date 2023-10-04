@@ -11,7 +11,7 @@ const mapItemsDatatableFromApi = (itemsApi) => {
       email: record.attributes.email,
       'created-at': record.attributes.created_at,
       groups: record.relationships.groups,
-      role: record.relationships.roles.data[0].attributes.roleAliasName
+      role: record.relationships.roles.data[0]?.attributes.roleAliasName
     }
   })
 }
@@ -68,6 +68,42 @@ const createStudent = async (_, options) => {
     const response = await StudentRepository.create(options.data)
 
     return Promise.resolve(response)
+  } catch (error) {
+    //console.log(error)
+
+    return Promise.reject(error)
+  }
+}
+
+const setLesson = async ({ dispatch, commit }, payload) => {
+  try {
+    commit('SET_LESSON', payload)
+
+    // We also clear the tables related to the selected lesson
+    dispatch('lessonMaterialsStore/resetTableOptions', null, { root: true })
+    dispatch(
+      'lessonMaterialsStore/setTableItems',
+      { results: [], total: 0 },
+      { root: true }
+    )
+
+    dispatch('lessonStudentStore/resetTableOptions', null, { root: true })
+    dispatch(
+      'lessonStudentStore/setTableItems',
+      { results: [], total: 0 },
+      { root: true }
+    )
+
+    dispatch('materialsForLessonStore/resetTableOptions', null, {
+      root: true
+    })
+    dispatch(
+      'materialsForLessonStore/setTableItems',
+      { results: [], total: 0 },
+      { root: true }
+    )
+
+    return
   } catch (error) {
     //console.log(error)
 
@@ -153,5 +189,6 @@ export default {
   updateStudent,
   deleteStudent,
   fetchStudentGroups,
-  actionsForMultipleRecords
+  actionsForMultipleRecords,
+  setLesson
 }
