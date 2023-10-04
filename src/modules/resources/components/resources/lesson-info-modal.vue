@@ -36,6 +36,13 @@
           </div>
           <div class="d-flex justify-between">
             <template v-if="isActiveLesson(lesson)">
+              <SwitchInput
+                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+                id="joinLesson"
+                :value="lesson.will_join === 1"
+                label="Assistar"
+                @click="(value) => joinLesson(lesson.id, value)"
+              />
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
@@ -78,25 +85,33 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
+import LessonRepository from '@/services/LessonRepository'
+import Toast from '@/utils/toast'
 
 export default {
   name: 'LessonInfoModal',
   components: {
     ResourceButton: () =>
-      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue')
+      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue'),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      )
   },
   props: {},
   data() {
     return {
       PermissionEnum,
       isOpen: false,
+      lessons: [],
       lesson: {}
     }
   },
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
+    ...mapActions('studentLessonsStore', ['setLesson']),
     setLessonMaterial(lesson) {
       this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
       this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
@@ -119,8 +134,9 @@ export default {
         params: { id: lesson.id }
       })
     },
-    open(lesson) {
+    open(lesson, lessons) {
       this.lesson = lesson
+      this.lessons = lessons
       this.isOpen = true
     },
     onClose() {
@@ -135,6 +151,36 @@ export default {
         name: 'manage-lesson-attendees',
         params: { id: lesson.id }
       })
+    },
+    async joinLesson(lessonId, value) {
+      const res = await LessonRepository.joinLesson(lessonId, value)
+
+      if (!res) {
+        return
+      }
+
+      if (value) {
+        Toast.success('Has confirmado tu asistencia a la clase.')
+      }
+
+      // Update the lesson on the array
+      const index = this.lessons.findIndex((lesson) => lesson.id === lessonId)
+
+      if (index < 0) {
+        return
+      }
+
+      this.$set(this.lessons, index, {
+        ...this.lessons[index],
+        will_join: value ? 1 : 0 // But the object expects 1 or 0. Update current selected and on the array
+      })
+
+      this.lesson = {
+        ...this.lesson,
+        will_join: value ? 1 : 0
+      }
+      // Refresh selected object
+      this.setLesson(this.lessons[index])
     }
   }
 }

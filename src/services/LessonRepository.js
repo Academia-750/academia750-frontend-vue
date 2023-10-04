@@ -536,7 +536,7 @@ export default {
   async searchLessons({ content, limit }) {
     const response = await ResourceService.get('student-lessons/search', {
       params: {
-        content: content || undefined,
+        content: content || 'undefined',
         limit
       }
     })

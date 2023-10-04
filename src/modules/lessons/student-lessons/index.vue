@@ -25,6 +25,7 @@
                 <SwitchInput
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
+                  label="Assistar"
                   :value="lesson.will_join === 1"
                   @click="(value) => joinLesson(lesson.id, value)"
                 />
@@ -64,6 +65,7 @@
               <SwitchInput
                 v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                 id="joinLesson"
+                label="Assistar"
                 :value="event.will_join === 1"
                 @click="(value) => joinLesson(event.id, value)"
               />
@@ -155,7 +157,7 @@ export default {
       this.setLesson(lesson || false)
     },
     openInfoModal(lesson) {
-      this.$refs.lessonInfoModal.open(lesson)
+      this.$refs.lessonInfoModal.open(lesson, this.lessons)
     },
 
     async onLoad({ start, end }) {
