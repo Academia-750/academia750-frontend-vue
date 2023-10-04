@@ -14,20 +14,20 @@
             <span class="font-weight-bold text-h6 mr-1">
               Asistentes: {{ willJoin }} / {{ total }}
             </span>
-            <resource-button
-              icon-button="mdi-autorenew"
-              @click="reset()"
-            />
+            <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
         </Toolbar>
-        <div style="position: relative;">
+        <div style="position: relative">
           <resource-text-field-search
             :search-word="store.tableOptions.content"
             label-text-field="Buscar por nombre o DNI del estudiante"
             @emitSearchTextBinding="searchFieldWithDebounce"
             @emitSearchWord="searchFieldExecuted"
           />
-          <div class="d-flex align-center mx-3 top-4" style="position: absolute; z-index: 1; top: 3rem">
+          <div
+            class="d-flex align-center mx-3 top-4"
+            style="position: absolute; z-index: 1; top: 3rem"
+          >
             <span class="text-subtitle-1 mr-1">Solo asistentes</span>
             <v-checkbox
               :value="willAssist"
@@ -54,7 +54,7 @@
           >
             {{ item.will_join ? 'SI' : 'NO' }}
           </v-chip>
-        </div> 
+        </div>
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -133,7 +133,7 @@ export default {
     },
     async getLessonInfo() {
       const lessonId = this.$route.params.id
-      
+
       this.lesson = await LessonRepository.info(lessonId)
     },
     async filterByWillAssist() {

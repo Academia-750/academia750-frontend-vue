@@ -20,12 +20,13 @@
             </template>
             <template v-if="lesson" slot="actions">
               <!-- Column for Time -->
-              <div class="d-flex align-center">
+              <div class="d-flex align-center mt-3">
                 <!-- There are two different switch for desktop and mobile in this same page -->
                 <SwitchInput
+                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
-                  :value="event.will_join === 1"
-                  @click="(value) => joinLesson(event.id, value)"
+                  :value="lesson.will_join === 1"
+                  @click="(value) => joinLesson(lesson.id, value)"
                 />
               </div>
             </template>
@@ -52,11 +53,16 @@
         >
           <template #actions="event">
             <div class="d-flex justify-end flex-fill">
-              <v-icon class="px-2" color="success" @click.stop="onLesson(event)">
+              <v-icon
+                class="px-2"
+                color="success"
+                @click.stop="onLesson(event)"
+              >
                 mdi-information
               </v-icon>
               <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
+                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                 id="joinLesson"
                 :value="event.will_join === 1"
                 @click="(value) => joinLesson(event.id, value)"
@@ -64,8 +70,8 @@
             </div>
           </template>
         </MobileCalendar>
-      </div>
-    </div></v-card-text>
+      </div></div
+  ></v-card-text>
 </template>
 
 <script>
@@ -106,7 +112,7 @@ export default {
       reloadDatatableUsers: false,
       lessons: [],
       PermissionEnum,
-      event:{}
+      event: {}
     }
   },
   computed: {
