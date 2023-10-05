@@ -85,7 +85,7 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import Toast from '@/utils/toast'
 
@@ -104,9 +104,11 @@ export default {
     return {
       PermissionEnum,
       isOpen: false,
-      lessons: [],
       lesson: {}
     }
+  },
+  computed: {
+    ...mapState('studentLessonsStore', ['lessons'])
   },
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
@@ -134,9 +136,8 @@ export default {
         params: { id: lesson.id }
       })
     },
-    open(lesson, lessons) {
+    open(lesson) {
       this.lesson = lesson
-      this.lessons = lessons
       this.isOpen = true
     },
     onClose() {

@@ -1,7 +1,7 @@
 <template>
   <StudentsMaterialsBase
     ref="recordingsList"
-    title="Grabaciones de Clase"
+    :title="`Grabaciones de Clase ${lesson ? lesson.name : ''}`"
     store-name="studentsRecordingsStore"
     type="recording"
     :loading="loading"
@@ -20,6 +20,7 @@
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
+import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsRecordingsList',
@@ -34,7 +35,9 @@ export default {
       loading: false
     }
   },
-
+  computed: {
+    ...mapState('studentLessonsStore', ['lesson'])
+  },
   methods: {
     async download(material) {
       this.loading = true

@@ -5,12 +5,16 @@ export default {
   namespaced: true,
   state: {
     lesson: false,
+    lessons: [],
     date: moment().format('YYYY-MM-DD'),
     type: 'month'
   },
   mutations: {
     SET_LESSON(state, payload) {
       state.lesson = payload
+    },
+    SET_LESSONS(state, payload) {
+      state.lessons = payload
     },
     SET_DATE(state, payload) {
       state.date = payload

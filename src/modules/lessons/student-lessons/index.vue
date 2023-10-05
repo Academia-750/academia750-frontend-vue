@@ -25,7 +25,7 @@
                 <SwitchInput
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
-                  label="Assistar"
+                  label="Asistir"
                   :value="lesson.will_join === 1"
                   @click="(value) => joinLesson(lesson.id, value)"
                 />
@@ -72,8 +72,9 @@
             </div>
           </template>
         </MobileCalendar>
-      </div></div
-  ></v-card-text>
+      </div>
+    </div>
+  </v-card-text>
 </template>
 
 <script>
@@ -141,7 +142,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('studentLessonsStore', ['SET_DATE', 'SET_TYPE']),
+    ...mapMutations('studentLessonsStore', ['SET_DATE', 'SET_TYPE', 'SET_LESSONS']),
     ...mapActions('studentLessonsStore', ['setLesson']),
 
     onDate() {
@@ -157,7 +158,7 @@ export default {
       this.setLesson(lesson || false)
     },
     openInfoModal(lesson) {
-      this.$refs.lessonInfoModal.open(lesson, this.lessons)
+      this.$refs.lessonInfoModal.open(lesson)
     },
 
     async onLoad({ start, end }) {
@@ -169,6 +170,7 @@ export default {
       const { results } = await LessonRepository.studentCalendar(params)
 
       this.lessons = results
+      this.SET_LESSONS(results)
       // Auto select the first next lesson or the last lesson if all is in the past
       const nextLesson =
         this.lessons.filter(
