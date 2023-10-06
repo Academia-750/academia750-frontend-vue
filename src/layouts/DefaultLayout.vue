@@ -38,8 +38,7 @@
               <span
                 class="text-uppercase white--text font-weight-bold text-xs-caption text-sm-h6 align-self-center"
                 to="/"
-                >{{ product.name }}</span
-              >
+              >{{ product.name }}</span>
             </div>
             <!-- <div class="overline grey--text">{{ product.version }}</div> -->
           </div>

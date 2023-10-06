@@ -20,9 +20,23 @@
             </template>
             <template v-if="lesson" slot="actions">
               <!-- Column for Time -->
-              <div class="d-flex align-center mt-3">
+              <div class="d-flex align-center  ">
                 <!-- There are two different switch for desktop and mobile in this same page -->
+                <div v-if="lesson.is_online">
+                  <resource-button
+                  text-button="Join lesson"
+                  icon-button="mdi-eye"
+                  color="success"
+                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
+                  :config-route="{
+                    name: 'join-online-class',
+                    params: { id: lesson.id }
+                  }"
+                />
+                </div>
+                
                 <SwitchInput
+                  class="mt-3"
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
                   :value="lesson.will_join === 1"
@@ -104,7 +118,9 @@ export default {
     LessonInfoModal: () =>
       import(
         /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
-      )
+      ),
+    ResourceButton: () =>
+      import(/* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton.vue')
   },
   mixins: [notifications],
   data() {

@@ -9,6 +9,7 @@ import LessonAttendeesModule from './lesson-attendees'
 import StudentLessons from './student-lessons'
 import ManageStudentsMaterialsModule from './student-materials'
 import ManageStudentsRecordingsModule from './student-recordings'
+import StudentLessonOnlineModule from './student-join-online-clase'
 
 /**
  * STUDENT ROUTES
@@ -45,6 +46,14 @@ const studentRoute = [
             path: 'recordings',
             name: 'manage-students-recordings',
             component: ManageStudentsRecordingsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'online/:id',
+            name: 'join-online-class',
+            component: StudentLessonOnlineModule,
             meta: {
               middleware: [authMiddleware]
             }
