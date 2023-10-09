@@ -75,21 +75,27 @@
         <div class="d-flex justify-space-between align-center">
           <div>
             <div v-if="item.type === 'material'" class="d-flex mr-1">
-              <v-icon
-                :class="item.url ? 'cursor-pointer mr-2' : 'mr-2'"
-                color="primary"
-                :disabled="item.url ? false : true"
-                @click="download(item)"
-              >
-                mdi-cloud-download
-              </v-icon>
-              
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    :class="item.url ? 'cursor-pointer mr-2' : 'mr-2'"
+                    color="default"
+                    :disabled="item.url ? false : true"
+                    v-on="on"
+                    @click="download(item)"
+                  >
+                    mdi-cloud-download
+                  </v-icon>
+                </template>
+                <span>Original</span>
+              </v-tooltip>
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
                     v-bind="attrs"
                     :class="item.url ? 'cursor-pointer' : ''"
-                    color="success"
+                    color="primary"
                     :disabled="item.url ? false : true"
                     v-on="on"
                     @click="downloadWithWaterMark(item)"
@@ -97,9 +103,8 @@
                     mdi-cloud-download
                   </v-icon>
                 </template>
-                <span>Download with watermark</span>
+                <span>Con marca de agua</span>
               </v-tooltip>
-
             </div>
             <v-icon
               v-else
@@ -127,6 +132,17 @@
         {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
       </template>
     </ServerDataTable>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
   </v-card-text>
 </template>
 
@@ -207,6 +223,7 @@ export default {
         }
       ],
       workspaces: [],
+      loading: false,
       editItem: false,
       editItemId: null
     }
@@ -345,25 +362,17 @@ export default {
 
       return fileName.split('.')
     },
-    async getUrl(material) {
-      this.loading = true
 
-      const url = await LessonRepository.downloadStudentMaterial(
-        material.id
-      )
-
-      this.loading = false
-
-      return url
-    },
     async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
 
       DownloadFile(material.url, material.name, type)
     },
     async downloadWithWaterMark(material) {
-      const url = await this.getUrl(material)
+      this.loading = true
+      const url = await LessonRepository.downloadStudentMaterial(material.id)
 
+      this.loading = false
       if (!url) {
         return
       }

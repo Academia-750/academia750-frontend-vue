@@ -1,13 +1,7 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <LessonsAttendeesDatatable />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <LessonsAttendeesDatatable />
+  </div>
 </template>
 
 <script>

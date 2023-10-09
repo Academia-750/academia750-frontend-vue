@@ -34,15 +34,28 @@
               </p>
             </div>
           </div>
-          <div class="d-flex justify-between">
+          <div class="d-flex justify-space-between">
+            <SwitchInput
+              v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+              id="joinLesson"
+              :value="lesson.will_join === 1"
+              :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
+              @click="(value) => joinLesson(lesson.id, value)"
+            />
+            <resource-button
+              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
+              text-button="Asistentes"
+              icon-button="mdi-account"
+              color="success"
+              :config-route="{
+                name: 'manage-lesson-attendees',
+                params: { id: lesson.id }
+              }"
+              @click="goAttendeesList(lesson)"
+            />
+          </div>
+          <div class="d-flex justify-end">
             <template v-if="isActiveLesson(lesson)">
-              <SwitchInput
-                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                id="joinLesson"
-                :value="lesson.will_join === 1"
-                label="Assistar"
-                @click="(value) => joinLesson(lesson.id, value)"
-              />
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
@@ -66,17 +79,6 @@
                 los materiales.
               </p>
             </template>
-            <resource-button
-              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
-              text-button="Asistentes"
-              icon-button="mdi-account"
-              color="success"
-              :config-route="{
-                name: 'manage-lesson-attendees',
-                params: { id: lesson.id }
-              }"
-              @click="goAttendeesList(lesson)"
-            />
           </div>
         </v-card-text>
       </v-card>
@@ -107,13 +109,10 @@ export default {
       lesson: {}
     }
   },
-  computed: {
-    ...mapState('studentLessonsStore', ['lessons'])
-  },
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
-    ...mapActions('studentLessonsStore', ['setLesson']),
+    ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
       this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
       this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
@@ -164,24 +163,8 @@ export default {
         Toast.success('Has confirmado tu asistencia a la clase.')
       }
 
-      // Update the lesson on the array
-      const index = this.lessons.findIndex((lesson) => lesson.id === lessonId)
-
-      if (index < 0) {
-        return
-      }
-
-      this.$set(this.lessons, index, {
-        ...this.lessons[index],
-        will_join: value ? 1 : 0 // But the object expects 1 or 0. Update current selected and on the array
-      })
-
-      this.lesson = {
-        ...this.lesson,
-        will_join: value ? 1 : 0
-      }
-      // Refresh selected object
-      this.setLesson(this.lessons[index])
+      this.updateJoinLesson({ lessonId, value })
+      this.lesson.will_join = value ? 1 : 0
     }
   }
 }
