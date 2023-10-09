@@ -18,7 +18,7 @@
               color="primary"
               @click="openVideo(item)"
             >
-              mdi-eye
+              mdi-camera
             </v-icon>
           </div>
           <div></div>
@@ -36,9 +36,7 @@
         ></v-progress-circular>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="showVideo" max-width="700px" @close="">
-      <VimeoVideoPlayer :video-i-d="videoID"/>
-    </v-dialog>
+    <VimeoVideoPlayer ref="video" />
   </div>
 </template>
 <script>
@@ -50,30 +48,19 @@ export default {
     StudentsMaterialsBase: () =>
       import(
         /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
-    ),
+      ),
     VimeoVideoPlayer: () =>
       import(
         /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/video-card.vue'
-    )
+      )
   },
   data() {
     return {
-      loading: false,
-      showVideo: false,
-      videoID: ''
+      loading: false
     }
   },
   mounted() {},
   methods: {
-    getVimeoVideoId(url) {
-      const match = url.match(/\/(\d+)$/)
-
-      if (match) {
-        return match[1]
-      }
-
-      return null
-    },
     async getUrl(material) {
       this.loading = true
 
@@ -91,9 +78,7 @@ export default {
       if (!url) {
         return
       }
-
-      this.videoID = this.getVimeoVideoId(url)
-      this.showVideo = true
+      this.$refs.video.open(url)
     }
   }
 }

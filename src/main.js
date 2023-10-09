@@ -34,6 +34,7 @@ import './plugins/vue-google-maps'
 import './plugins/vue-shortkey'
 import './plugins/vue-head'
 import './plugins/videoplayer'
+
 import './plugins/vue-gtag'
 import './plugins/apexcharts'
 import './plugins/echarts'
