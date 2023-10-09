@@ -34,7 +34,27 @@
               </p>
             </div>
           </div>
-          <div class="d-flex justify-between">
+          <div class="d-flex justify-space-between">
+            <SwitchInput
+              v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+              id="joinLesson"
+              :value="lesson.will_join === 1"
+              :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
+              @click="(value) => joinLesson(lesson.id, value)"
+            />
+            <resource-button
+              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
+              text-button="Asistentes"
+              icon-button="mdi-account"
+              color="success"
+              :config-route="{
+                name: 'manage-lesson-attendees',
+                params: { id: lesson.id }
+              }"
+              @click="goAttendeesList(lesson)"
+            />
+          </div>
+          <div class="d-flex justify-end">
             <template v-if="isActiveLesson(lesson)">
               <resource-button
                 text-button="Materiales"
@@ -59,17 +79,6 @@
                 los materiales.
               </p>
             </template>
-            <resource-button
-              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
-              text-button="Asistentes"
-              icon-button="mdi-account"
-              color="success"
-              :config-route="{
-                name: 'manage-lesson-attendees',
-                params: { id: lesson.id }
-              }"
-              @click="goAttendeesList(lesson)"
-            />
           </div>
         </v-card-text>
       </v-card>
@@ -78,13 +87,19 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
+import LessonRepository from '@/services/LessonRepository'
+import Toast from '@/utils/toast'
 
 export default {
   name: 'LessonInfoModal',
   components: {
     ResourceButton: () =>
-      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue')
+      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue'),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      )
   },
   props: {},
   data() {
@@ -97,8 +112,9 @@ export default {
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
+    ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
-      this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsMaterialsStore/SET_LESSON', lesson)
       this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
@@ -109,7 +125,7 @@ export default {
       })
     },
     setLessonRecordings(lesson) {
-      this.$store.commit('studentsRecordingsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsRecordingsStore/SET_LESSON', lesson)
       this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
@@ -135,6 +151,20 @@ export default {
         name: 'manage-lesson-attendees',
         params: { id: lesson.id }
       })
+    },
+    async joinLesson(lessonId, value) {
+      const res = await LessonRepository.joinLesson(lessonId, value)
+
+      if (!res) {
+        return
+      }
+
+      if (value) {
+        Toast.success('Has confirmado tu asistencia a la clase.')
+      }
+
+      this.updateJoinLesson({ lessonId, value })
+      this.lesson.will_join = value ? 1 : 0
     }
   }
 }

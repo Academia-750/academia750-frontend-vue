@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div>
-      <v-card flat>
-        <v-card-text>
-          <StudentsMaterialsList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <StudentsMaterialsList />
 </template>
 
 <script>

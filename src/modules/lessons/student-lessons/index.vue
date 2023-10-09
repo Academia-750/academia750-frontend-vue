@@ -20,27 +20,35 @@
             </template>
             <template v-if="lesson" slot="actions">
               <!-- Column for Time -->
-              <div class="d-flex align-center  ">
+              <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
                 <div v-if="lesson.is_online">
                   <resource-button
-                  text-button="Join lesson"
-                  icon-button="mdi-eye"
-                  color="success"
-                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
-                  :config-route="{
-                    name: 'join-online-class',
-                    params: { id: lesson.id }
-                  }"
-                />
+                    text-button="Entrar Clase"
+                    icon-button="mdi-eye"
+                    color="success"
+                    :disabled="
+                      !$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)
+                    "
+                    :config-route="{
+                      name: 'join-online-class',
+                      params: { id: lesson.id }
+                    }"
+                  />
                 </div>
-                
+
                 <SwitchInput
                   class="mt-3"
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
                   :value="lesson.will_join === 1"
                   @click="(value) => joinLesson(lesson.id, value)"
+                />
+                <ResourceButton
+                  color="success"
+                  icon-button="mdi-information"
+                  text-button="Información"
+                  @click="openInfoModal(lesson)"
                 />
               </div>
             </template>
@@ -84,8 +92,9 @@
             </div>
           </template>
         </MobileCalendar>
-      </div></div
-  ></v-card-text>
+      </div>
+    </div>
+  </v-card-text>
 </template>
 
 <script>
@@ -120,19 +129,20 @@ export default {
         /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       ),
     ResourceButton: () =>
-      import(/* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton.vue')
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton.vue'
+      )
   },
   mixins: [notifications],
   data() {
     return {
       reloadDatatableUsers: false,
-      lessons: [],
       PermissionEnum,
       event: {}
     }
   },
   computed: {
-    ...mapState('studentLessonsStore', ['lesson', 'date', 'type']),
+    ...mapState('studentLessonsStore', ['lesson', 'lessons', 'date', 'type']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     },
@@ -155,8 +165,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations('studentLessonsStore', ['SET_DATE', 'SET_TYPE']),
-    ...mapActions('studentLessonsStore', ['setLesson']),
+    ...mapMutations('studentLessonsStore', [
+      'SET_DATE',
+      'SET_TYPE',
+      'SET_LESSONS'
+    ]),
+    ...mapActions('studentLessonsStore', ['setLesson', 'updateJoinLesson']),
 
     onDate() {
       this.setLesson(false)
@@ -182,10 +196,12 @@ export default {
 
       const { results } = await LessonRepository.studentCalendar(params)
 
-      this.lessons = results
+      const lessons = results
+
+      this.SET_LESSONS(lessons)
       // Auto select the first next lesson or the last lesson if all is in the past
       const nextLesson =
-        this.lessons.filter(
+        lessons.filter(
           (lesson) => lesson.date > moment().format('YYYY-MM-DD')
         )[0] || [...this.lessons].pop()
 
@@ -205,20 +221,8 @@ export default {
         Toast.success('Has confirmado tu asistencia a la clase.')
       }
 
-      // Update the lesson on the array
-      const index = this.lessons.findIndex((lesson) => lesson.id === lessonId)
-
-      if (index < 0) {
-        return
-      }
-
-      this.$set(this.lessons, index, {
-        ...this.lessons[index],
-        will_join: value ? 1 : 0 // But the object expects 1 or 0. Update current selected and on the array
-      })
-
       // Refresh selected object
-      this.setLesson(this.lessons[index])
+      this.updateJoinLesson({ lessonId, value })
     }
   },
   head: {
