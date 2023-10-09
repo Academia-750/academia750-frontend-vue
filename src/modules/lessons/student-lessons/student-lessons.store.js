@@ -29,7 +29,6 @@ export default {
   },
   actions: {
     updateJoinLesson({ commit, state }, { lessonId, value }) {
-      console.log({ lessonId, value })
       // Update the lesson on the array
       const index = state.lessons.findIndex((lesson) => lesson.id === lessonId)
 

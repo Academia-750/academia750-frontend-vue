@@ -36,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('studentLessonsStore', ['lesson'])
+    ...mapState('studentsRecordingsStore', ['lesson'])
   },
   methods: {
     async download(material) {
@@ -45,11 +45,11 @@ export default {
         material.material_id
       )
 
+      this.loading = false
+
       if (!res) {
         return
       }
-      this.loading = false
-      // DownloadFile(material.url, material.name, type)
     }
   }
 }

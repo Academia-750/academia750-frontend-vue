@@ -65,7 +65,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('studentLessonsStore', ['lesson'])
+    ...mapState('studentsMaterialsStore', ['lesson'])
   },
   methods: {
     async getUrl(material) {

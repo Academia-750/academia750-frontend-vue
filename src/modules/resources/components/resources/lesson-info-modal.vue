@@ -114,7 +114,7 @@ export default {
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
     ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
-      this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsMaterialsStore/SET_LESSON', lesson)
       this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
@@ -125,7 +125,7 @@ export default {
       })
     },
     setLessonRecordings(lesson) {
-      this.$store.commit('studentsRecordingsStore/SET_LESSONS', [lesson.id])
+      this.$store.commit('studentsRecordingsStore/SET_LESSON', lesson)
       this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
