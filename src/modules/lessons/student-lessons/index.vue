@@ -210,6 +210,16 @@ export default {
       const lessons = results
 
       this.SET_LESSONS(lessons)
+
+      // We already have a current selected lesson in this month
+      const alreadySelected = this.lessons.find(
+        (lesson) => lesson.id === this.lesson.id
+      )
+
+      if (alreadySelected) {
+        return
+      }
+
       // Auto select the first next lesson or the last lesson if all is in the past
       const nextLesson =
         lessons.filter(
