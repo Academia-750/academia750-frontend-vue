@@ -4,29 +4,25 @@
       class="d-flex flex-column justify-center align-center pa-1"
       min-height="450px"
     >
-      <div v-if="videoID">
+      <div v-if="videoID && !error">
         <vimeo-player
           ref="player"
           :video-id="videoID"
           :player-height="height"
-          :controls="false"
-          :autoplay="true"
-          :loop="true"
           :responsive="true"
           class="vimeo"
-          @click="onClick"
           @ready="onReady"
+          @error="onError"
         ></vimeo-player>
-        <div class="d-flex justify-center">
-          <ResourceButtonAdd
-            icon-button="mdi-fullscreen"
-            text-button="Pantalla Completa"
-            @click="onFullScreen"
-          />
-        </div>
       </div>
       <div v-else>
-        No se pudo cargar este video, contacte con el administrador
+        <div v-if="videoID && !playerReady">Cargando el video...</div>
+        <div v-else>
+          {{
+            error ||
+            'No se pudo cargar este video, contacte con el administrador'
+          }}
+        </div>
       </div>
     </v-card>
   </v-dialog>
@@ -34,12 +30,7 @@
 <script>
 export default {
   name: 'VimeoVideoPlayer',
-  components: {
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      )
-  },
+  components: {},
   props: {
     height: {
       type: Number,
@@ -50,7 +41,8 @@ export default {
     return {
       url: '',
       showVideo: false,
-      playerReady: false
+      playerReady: false,
+      error: ''
     }
   },
   computed: {
@@ -69,21 +61,9 @@ export default {
     onReady() {
       this.playerReady = true
     },
-    onFullScreen() {
-      const { element } = this.$refs.player.player
-
-      const requestMethod =
-        element.requestFullScreen ||
-        element.webkitRequestFullScreen ||
-        element.mozRequestFullScreen ||
-        element.msRequestFullScreen
-
-      if (!requestMethod) {
-        console.warn('requestMethod: element is undefined')
-
-        return
-      }
-      requestMethod.call(element)
+    onError(error) {
+      this.error = error
+      this.playerReady = true
     }
   }
 }

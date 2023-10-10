@@ -8,6 +8,8 @@ import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
 import StudentLessons from './student-lessons'
 import ManageStudentsMaterialsModule from './student-materials'
 import ManageStudentsRecordingsModule from './student-recordings'
+import LessonAttendeesModule from './lesson-attendees'
+import StudentLessonOnlineModule from './student-join-online-clase'
 
 /**
  * STUDENT ROUTES
@@ -47,6 +49,14 @@ const studentRoute = [
             meta: {
               middleware: [authMiddleware]
             }
+          },
+          {
+            path: 'online/:id',
+            name: 'join-online-class',
+            component: StudentLessonOnlineModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
           }
         ]
       }
@@ -71,6 +81,14 @@ const adminRoute = [
             path: 'list',
             name: 'manage-lessons',
             component: ManageLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/attendees',
+            name: 'manage-lesson-attendees',
+            component: LessonAttendeesModule,
             meta: {
               middleware: [authMiddleware]
             }

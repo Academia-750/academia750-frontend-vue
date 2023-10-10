@@ -1,5 +1,7 @@
 <template>
-  <StudentsRecordingsList />
+  <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <LessonsAttendeesDatatable />
+  </div>
 </template>
 
 <script>
@@ -7,11 +9,11 @@ import notifications from '@/mixins/notifications'
 import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'StudentsRecordings',
+  name: 'LessonsAttendeesView',
   components: {
-    StudentsRecordingsList: () =>
+    LessonsAttendeesDatatable: () =>
       import(
-        /* webpackChunkName: "StudentsRecordingsList" */ './students-recordings-list.vue'
+        /* webpackChunkName: "DatatableStudents" */ './components/lesson-attendees-list.vue'
       )
   },
   mixins: [notifications],
@@ -20,16 +22,15 @@ export default {
       reloadDatatableUsers: false
     }
   },
+  beforeCreate() {
+    this?.$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)
+  },
   mounted() {
     this.loadNotifications()
   },
-  beforeCreate() {
-    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
-    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
-  },
   head: {
     title: {
-      inner: 'Grabaciones de clase'
+      inner: 'Gestión de alumnos'
     }
   }
 }

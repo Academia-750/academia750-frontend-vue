@@ -34,8 +34,28 @@
               </p>
             </div>
           </div>
-          <template v-if="isActiveLesson(lesson)">
-            <div class="d-flex justify-end">
+          <div class="d-flex justify-space-between">
+            <SwitchInput
+              v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+              id="joinLesson"
+              :value="lesson.will_join === 1"
+              :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
+              @click="(value) => joinLesson(lesson.id, value)"
+            />
+            <resource-button
+              v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
+              text-button="Asistentes"
+              icon-button="mdi-account"
+              color="success"
+              :config-route="{
+                name: 'manage-lesson-attendees',
+                params: { id: lesson.id }
+              }"
+              @click="goAttendeesList(lesson)"
+            />
+          </div>
+          <div class="d-flex justify-end">
+            <template v-if="isActiveLesson(lesson)">
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
@@ -53,26 +73,23 @@
                 @click="setLessonRecordings(lesson)"
               />
               <resource-button
-                v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
-                text-button="Asistentes"
-                icon-button="mdi-account"
+                text-button="Entrar Clase"
+                icon-button="mdi-eye"
                 color="success"
+                :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
                 :config-route="{
-                  name: 'add-students',
+                  name: 'join-online-class',
                   params: { id: lesson.id }
                 }"
-                :disabled="true"
               />
-            </div>
-          </template>
-          <template v-else>
-            <div class="flex">
+            </template>
+            <template v-else>
               <p class="">
                 La clase no está activa. Una vez que se active podrás acceder a
                 los materiales.
               </p>
-            </div>
-          </template>
+            </template>
+          </div>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -80,13 +97,17 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'LessonInfoModal',
   components: {
     ResourceButton: () =>
-      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue')
+      import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue'),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      )
   },
   props: {},
   data() {
@@ -99,17 +120,28 @@ export default {
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
+    ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
-      this.$store.commit('studentsMaterialsStore/SET_LESSONS', [lesson.id])
-      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', { offset: 0 })
+      this.$store.commit('studentsMaterialsStore/SET_LESSON', lesson)
+      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
 
-      this.$router.push({ name: 'manage-students-materials', params: { id: lesson.id } })
+      this.$router.push({
+        name: 'manage-students-materials',
+        params: { id: lesson.id }
+      })
     },
     setLessonRecordings(lesson) {
-      this.$store.commit('studentsRecordingsStore/SET_LESSONS', [lesson.id])
-      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', { offset: 0 })
+      this.$store.commit('studentsRecordingsStore/SET_LESSON', lesson)
+      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
 
-      this.$router.push({ name: 'manage-students-recordings', params: { id: lesson.id } })
+      this.$router.push({
+        name: 'manage-students-recordings',
+        params: { id: lesson.id }
+      })
     },
     open(lesson) {
       this.lesson = lesson
@@ -120,6 +152,27 @@ export default {
     },
     isActiveLesson(lesson) {
       return lesson.is_active === 1
+    },
+    goAttendeesList(lesson) {
+      this.$store.dispatch('lessonAttendeesStore/resetTableOptions')
+      this.$router.push({
+        name: 'manage-lesson-attendees',
+        params: { id: lesson.id }
+      })
+    },
+    async joinLesson(lessonId, value) {
+      const res = await LessonRepository.joinLesson(lessonId, value)
+
+      if (!res) {
+        return
+      }
+
+      if (value) {
+        Toast.success('Has confirmado tu asistencia a la clase.')
+      }
+
+      this.updateJoinLesson({ lessonId, value })
+      this.lesson.will_join = value ? 1 : 0
     }
   }
 }

@@ -10,7 +10,7 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Etiquetas" icon="mdi-tag">
+        <Toolbar title="Temas" icon="mdi-tag">
           <template slot="actions">
             <ResourceButtonAdd text-button="Agregar" @click="addTag()" />
             <resource-button
@@ -21,7 +21,7 @@
         </Toolbar>
         <resource-text-field-search
           :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre de la etiqueta."
+          label-text-field="Buscar por tema."
           @emitSearchTextBinding="searchFieldWithDebounce"
           @emitSearchWord="searchFieldExecuted"
         />
@@ -145,8 +145,8 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: '¿Seguro que deseas eliminar este Etiqueta? ',
-        html: 'No podrá etiquetar nuevos materiales ni filtrar por ella. Los materiales ya etiquetados seguiran teniendo la etiqueta, será necesario eliminarla manualmente.',
+        title: '¿Seguro que deseas eliminar este tema? ',
+        html: 'No podrá etiquetar nuevos materiales ni filtrar por este tema. Los materiales ya etiquetados seguiran teniendo el tema, será necesario eliminarla manualmente.',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -166,7 +166,7 @@ export default {
       this.$swal.fire({
         icon: 'success',
         toast: true,
-        title: 'La etiqueta ha sido eliminada correctamente.',
+        title: 'El tema ha sido eliminada correctamente.',
         timer: 3000
       })
 

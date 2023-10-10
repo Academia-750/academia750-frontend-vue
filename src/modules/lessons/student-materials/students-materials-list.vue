@@ -2,7 +2,7 @@
   <div>
     <StudentsMaterialsBase
       ref="materialsList"
-      title="Materiales de Clase"
+      :title="`Materiales de la clase ${lesson ? lesson.name : ''}`"
       store-name="studentsMaterialsStore"
       type="material"
     >
@@ -13,7 +13,7 @@
         >
           <div>
             <v-icon
-              class="cursor-pointer"
+              class="cursor-pointer pr-3 pr-md-1"
               color="primary"
               @click="download(item)"
             >
@@ -22,7 +22,7 @@
           </div>
           <div>
             <v-icon
-              class="cursor-pointer"
+              class="cursor-pointer pa-1"
               color="primary"
               @click="openOtherTab(item)"
             >
@@ -49,6 +49,7 @@
 <script>
 import LessonRepository from '@/services/LessonRepository'
 import downloadFile from '@/utils/DownloadMaterial'
+import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsMaterialsList',
@@ -63,7 +64,9 @@ export default {
       loading: false
     }
   },
-
+  computed: {
+    ...mapState('studentsMaterialsStore', ['lesson'])
+  },
   methods: {
     async getUrl(material) {
       this.loading = true

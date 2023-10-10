@@ -4,7 +4,7 @@
     v-slot="{ errors }"
     mode="aggressive"
     :rules="rules"
-    name="etiquetas"
+    name="temas"
   >
     <v-autocomplete
       :value="tags"
@@ -13,7 +13,7 @@
       :error-messages="errors"
       tags-list
       clearable
-      label="Etiquetas"
+      label="Temas"
       multiple
       solo
       outlined
