@@ -22,21 +22,6 @@
               <!-- Column for Time -->
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-                <div v-if="lesson.is_online && lesson.is_active">
-                  <resource-button
-                    text-button="Entrar Clase"
-                    icon-button="mdi-eye"
-                    color="success"
-                    :disabled="
-                      !$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)
-                    "
-                    :config-route="{
-                      name: 'join-online-class',
-                      params: { id: lesson.id }
-                    }"
-                  />
-                </div>
-
                 <SwitchInput
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
