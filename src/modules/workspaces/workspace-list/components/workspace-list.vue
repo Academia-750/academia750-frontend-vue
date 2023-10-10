@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <div>
     <AddWorkspaceModal
       ref="addWorkSpace"
       :workspace="workspace"
@@ -23,7 +23,7 @@
         />
 
         <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+        <v-toolbar flat class="indigo lighten-5 my-2 mx-2" outlined>
           <resource-title-toolbar-datatable title-text="Categorias" />
 
           <v-spacer />
@@ -89,7 +89,7 @@
         </div>
       </template>
     </ServerDataTable>
-  </v-card-text>
+  </div>
 </template>
 
 <script>
