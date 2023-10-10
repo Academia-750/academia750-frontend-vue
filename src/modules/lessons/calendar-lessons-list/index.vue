@@ -1,6 +1,5 @@
 <template>
   <v-card-text>
-    <LessonInfoModal ref="lessonInfoModal" />
     <div>
       <template v-if="!isMobile">
         <v-card flat>
