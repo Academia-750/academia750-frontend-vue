@@ -2,7 +2,7 @@
   <v-dialog v-model="showVideo" max-width="700px">
     <v-card
       class="d-flex flex-column justify-center align-center pa-1"
-      min-height="450px"
+      :min-height="isMobile ? '220px' : '450px'"
     >
       <div v-if="videoID && !error">
         <vimeo-player
@@ -50,6 +50,9 @@ export default {
       const match = this.url.match(/\/(\d+)$/)
 
       return match?.[1]
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     }
   },
   methods: {
@@ -68,19 +71,16 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .vimeo {
-  .embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-  }
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
 
-  .embed-container iframe,
-  .embed-container object,
-  .embed-container embed {
+  iframe,
+  object,
+  embed {
     position: absolute;
     top: 0;
     left: 0;
