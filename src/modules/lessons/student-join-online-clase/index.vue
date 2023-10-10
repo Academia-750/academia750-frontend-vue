@@ -1,13 +1,7 @@
 <template>
-  <v-card-text>
-    <div>
-      <v-card flat>
-        <v-card-text>
-          <StudentsOnlineLesson />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <div>
+    <StudentsOnlineLesson />
+  </div>
 </template>
 
 <script>
@@ -25,6 +19,7 @@ export default {
   mixins: [notifications],
   data() {
     return {
+      PermissionEnum
     }
   },
   mounted() {

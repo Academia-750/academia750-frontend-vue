@@ -1,20 +1,15 @@
-import DataTableStore from '@/modules/resources/store/data-table.store'
-
 export default {
   name: 'studentOnlineLessonStore',
   namespaced: true,
   state: {
-    ...DataTableStore.state,
     currentUserForUpdate: null,
     tags: [],
     lessons: []
   },
   getters: {
-    ...DataTableStore.getters
   },
 
   mutations: {
-    ...DataTableStore.mutations,
     SET_TAGS(state, payload) {
       state.tags = payload
     },
@@ -23,7 +18,6 @@ export default {
     }
   },
   actions: {
-    ...DataTableStore.actions,
     resetTableOptions({ commit }) {
       DataTableStore.actions.resetTableOptions({ commit })
       commit('SET_TAGS', [])

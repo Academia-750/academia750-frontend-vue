@@ -14,8 +14,8 @@
     </div>
 
     <v-spacer></v-spacer>
-    <v-card style="height: 75vh;">
-      <section class="px-2 d-flex align-center">
+    <v-card style="height: 75vh; padding-top: 20px;">
+      <section class="d-flex align-center">
         <iframe
           ref="zoomIframe"
           allow="microphone; camera"
@@ -30,9 +30,11 @@
 
 <script>
 import _ from 'lodash'
+import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
 import { PermissionEnum } from '@/utils/enums'
 import LessonToolBar from '@/modules/lessons/_common/lesson-tool-bar.vue'
+import router from '@/modules/profile/router'
 export default {
   name: 'StudentsOnlineLesson',
   components: {
@@ -51,6 +53,15 @@ export default {
     async lessonInfo() {
       const LessonInfo = this.$route.params.id
       const res = await LessonRepository.info(LessonInfo)
+      
+      if (!res.is_active) {
+        Toast.error(
+          'Por favor, Lession pas actival.'
+        )
+        this.$router.push({
+        name: 'my-lessons'
+      })
+      }
 
       if (res.is_online) {
       const regexPattern = /\/j\/(\d+)/
@@ -58,14 +69,6 @@ export default {
       const [, meetingId] = regexPattern.exec(res.url) || []
 
       this.meetingId = meetingId
-
-      if (meetingId) {
-        // Extracted meeting ID
-
-        console.log('Meeting ID:', meetingId)
-      } else {
-        console.log('Meeting ID not found in the URL.')
-      }
       }
 
       return this.lesson = res
@@ -73,28 +76,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.v-data-table > .v-data-table__wrapper .v-data-table__mobile-table-row {
-  margin-top: 10px;
-  border: 2px solid #ededed;
-  display: block;
-  box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.32);
-  -webkit-box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.32);
-  -moz-box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.32);
-}
-
-/* each cell border in mobile */
-.v-data-table > .v-data-table__wrapper .v-data-table__mobile-row {
-  border-bottom: 2px solid #ededed;
-}
-
-.theme--light.v-divider {
-  border-color: rgba(0, 0, 0, 0.6);
-}
-
-.circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-</style>

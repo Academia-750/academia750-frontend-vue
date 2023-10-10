@@ -22,7 +22,7 @@
               <!-- Column for Time -->
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-                <div v-if="lesson.is_online">
+                <div v-if="lesson.is_online && lesson.is_active">
                   <resource-button
                     text-button="Entrar Clase"
                     icon-button="mdi-eye"
@@ -38,9 +38,9 @@
                 </div>
 
                 <SwitchInput
-                  class="mt-3"
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
+                  class="mt-3"
                   :value="lesson.will_join === 1"
                   @click="(value) => joinLesson(lesson.id, value)"
                 />
