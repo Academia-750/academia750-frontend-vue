@@ -72,16 +72,11 @@
                 "
                 @click="setLessonRecordings(lesson)"
               />
-              
-            </template>
-            <template v-if="isActiveLesson(lesson) && lesson.is_online">
               <resource-button
                 text-button="Entrar Clase"
                 icon-button="mdi-eye"
                 color="success"
-                :disabled="
-                  !$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)
-                "
+                :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
                 :config-route="{
                   name: 'join-online-class',
                   params: { id: lesson.id }

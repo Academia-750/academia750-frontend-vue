@@ -14,15 +14,21 @@
     </div>
 
     <v-spacer></v-spacer>
-    <v-card style="height: 75vh; padding-top: 20px;">
-      <section class="d-flex align-center">
+
+    <v-card style="height: 75vh; padding-top: 20px">
+      <section v-if="meetingId" class="d-flex align-center">
         <iframe
           ref="zoomIframe"
           allow="microphone; camera"
-          style="border: 0; height: 60vh; width: 100%;"
-          :src="'https://app.zoom.us/wc/' + meetingId + '/join'"
+          style="border: 0; height: 60vh; width: 100%"
+          :src="zoomUrl"
           frameborder="0"
+          allowfullscreen
         />
+      </section>
+      <section v-else class="d-flex align-center justify-center pa-3">
+        En enlace a la clase online no es correcto. Por favor contacte con el
+        administrador.
       </section>
     </v-card>
   </div>
@@ -32,9 +38,7 @@
 import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
-import { PermissionEnum } from '@/utils/enums'
 import LessonToolBar from '@/modules/lessons/_common/lesson-tool-bar.vue'
-import router from '@/modules/profile/router'
 export default {
   name: 'StudentsOnlineLesson',
   components: {
@@ -42,36 +46,44 @@ export default {
   },
   data() {
     return {
-      lesson : {},
+      lesson: {},
       meetingId: ''
+    }
+  },
+  computed: {
+    zoomUrl() {
+      if (!this.meetingId) {
+        return ''
+      }
+
+      return `https://app.zoom.us/wc/${this.meetingId}/join`
     }
   },
   mounted() {
     this.lessonInfo()
   },
+
   methods: {
     async lessonInfo() {
       const LessonInfo = this.$route.params.id
       const res = await LessonRepository.info(LessonInfo)
-      
+
       if (!res.is_active) {
-        Toast.error(
-          'Por favor, Lession pas actival.'
-        )
-        this.$router.push({
-        name: 'my-lessons'
-      })
+        Toast.error('Esta clase aún no está activa')
+        this.$router.replace({
+          name: 'my-lessons'
+        })
       }
 
       if (res.is_online) {
-      const regexPattern = /\/j\/(\d+)/
-      // Use RegExp.exec() to find the match
-      const [, meetingId] = regexPattern.exec(res.url) || []
+        const regexPattern = /\/j\/(\d+)/
+        // Use RegExp.exec() to find the match
+        const [, meetingId] = regexPattern.exec(res.url) || []
 
-      this.meetingId = meetingId
+        this.meetingId = meetingId
       }
 
-      return this.lesson = res
+      this.lesson = res
     }
   }
 }

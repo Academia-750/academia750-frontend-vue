@@ -27,12 +27,12 @@ export default {
   },
 
   beforeCreate() {
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_ONLINE_LESSON)
+    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
+    this.$hasPermissionMiddleware(PermissionEnum.SEE_ONLINE_LESSON)
   },
   head: {
     title: {
-      inner: 'Online clase'
+      inner: 'Clase Virtual'
     }
   }
 }

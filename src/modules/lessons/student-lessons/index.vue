@@ -50,6 +50,17 @@
                   text-button="Información"
                   @click="openInfoModal(lesson)"
                 />
+                <resource-button
+                  v-if="lesson.is_active === 1"
+                  text-button="Entrar Clase"
+                  icon-button="mdi-eye"
+                  color="success"
+                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
+                  :config-route="{
+                    name: 'join-online-class',
+                    params: { id: lesson.id }
+                  }"
+                />
               </div>
             </template>
           </LessonToolBar>
