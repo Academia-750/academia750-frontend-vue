@@ -21,21 +21,45 @@
             <template v-if="lesson" slot="actions">
               <!-- Column for Time -->
               <div class="d-flex align-center">
-                <div class="mt-3 mr-1">
-                  <!-- There are two different switch for desktop and mobile in this same page -->
-                  <SwitchInput
-                    v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                    id="joinLesson"
-                    :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
-                    :value="lesson.will_join === 1"
-                    @click="(value) => joinLesson(lesson.id, value)"
+                <!-- There are two different switch for desktop and mobile in this same page -->
+                <div v-if="lesson.is_online && lesson.is_active">
+                  <resource-button
+                    text-button="Entrar Clase"
+                    icon-button="mdi-eye"
+                    color="success"
+                    :disabled="
+                      !$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)
+                    "
+                    :config-route="{
+                      name: 'join-online-class',
+                      params: { id: lesson.id }
+                    }"
                   />
                 </div>
+
+                <SwitchInput
+                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+                  id="joinLesson"
+                  class="mt-3"
+                  :value="lesson.will_join === 1"
+                  @click="(value) => joinLesson(lesson.id, value)"
+                />
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
                   text-button="Información"
                   @click="openInfoModal(lesson)"
+                />
+                <resource-button
+                  v-if="lesson.is_active === 1"
+                  text-button="Entrar Clase"
+                  icon-button="mdi-eye"
+                  color="success"
+                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
+                  :config-route="{
+                    name: 'join-online-class',
+                    params: { id: lesson.id }
+                  }"
                 />
               </div>
             </template>
@@ -117,7 +141,7 @@ export default {
       ),
     ResourceButton: () =>
       import(
-        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton.vue'
       )
   },
   mixins: [notifications],
@@ -186,6 +210,16 @@ export default {
       const lessons = results
 
       this.SET_LESSONS(lessons)
+
+      // We already have a current selected lesson in this month
+      const alreadySelected = this.lessons.find(
+        (lesson) => lesson.id === this.lesson.id
+      )
+
+      if (alreadySelected) {
+        return
+      }
+
       // Auto select the first next lesson or the last lesson if all is in the past
       const nextLesson =
         lessons.filter(
