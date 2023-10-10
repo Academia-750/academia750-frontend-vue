@@ -8,7 +8,7 @@
       @emitSearchTextBinding="searchFieldWithDebounce"
       @emitSearchWord="searchFieldExecuted"
     />
-    <div class="d-flex align-center mx-3 type-section">
+    <div class="d-flex align-center mx-3 type-section flex-wrap">
       <!-- ------------ TYPE ------------ -->
       <v-select
         :items="types"
