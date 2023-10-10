@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <div>
     <AddMaterialModal
       ref="addWorkspaceMaterial"
       :default-workspace="workspace"
@@ -21,7 +21,7 @@
         />
 
         <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+        <v-toolbar flat class="indigo lighten-5 my-2 mx-2" outlined>
           <resource-button-go-back-router />
           <resource-title-toolbar-datatable title-text="Materiales" />
 
@@ -110,7 +110,7 @@
         {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
       </template>
     </ServerDataTable>
-  </v-card-text>
+  </div>
 </template>
 
 <script>
