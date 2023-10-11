@@ -1,5 +1,5 @@
 <template>
-  <div ref="sectionTabsItemsGroupsByStatusAccount">
+  <div>
     <LessonsAttendeesDatatable />
   </div>
 </template>
