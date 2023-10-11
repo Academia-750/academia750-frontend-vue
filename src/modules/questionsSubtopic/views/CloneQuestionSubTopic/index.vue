@@ -24,7 +24,7 @@
           small
           color="light-blue darken-3"
           class="white--text mx-1 align-self-center"
-          @click="fetchDataQuestionForUpdate"
+          @click="fetchDataQuestionForClone"
         >
           <v-icon
             right
@@ -37,7 +37,7 @@
       </div>
     </v-toolbar>
     <v-card-text>
-      <validation-observer ref="FormUpdateQuestion" v-slot="{ invalid }">
+      <validation-observer ref="FormCloneQuestion" v-slot="{ invalid }">
         <v-row dense>
           <v-col
             cols="12"
@@ -256,10 +256,10 @@
                   name-field-validate="Explicación"
                   :has-reason-image="imageReason !== null"
                   :is-card-memory="isCardMemoryQuestion"
-                  :is-there-image-question-update="isThereImageQuestionUpdate"
+                  :is-there-image-question-clone="isThereImageQuestionClone"
                   @ReasonQuestionBinding="reasonText = $event"
                 />
-                <div v-if="imageReason || isThereImageQuestionUpdate" class="d-flex justify-space-around mt-4">
+                <div v-if="imageReason || isThereImageQuestionClone" class="d-flex justify-space-around mt-4">
                   <v-checkbox
                     v-model="show_reason_image_in_test"
                     label="Mostrar en Test"
@@ -282,14 +282,14 @@
             class="d-flex justify-center flex-column flex-sm-row"
           >
             <v-btn
-              :loading="loadingButtonUpdateQuestion"
-              :disabled="disabledButtonUpdateQuestion || invalid"
+              :loading="loadingButtonCloneQuestion"
+              :disabled="disabledButtonCloneQuestion || invalid"
               color="light-blue darken-3"
               class="mt-3 white--text"
-              @click="UpdateQuestion"
+              @click="CreateQuestionApi"
             >
               <v-icon right dark class="mr-1"> mdi-database-refresh </v-icon>
-              Actualizar
+              Crear
             </v-btn>
           </v-col>
         </v-row>
@@ -328,15 +328,15 @@ export default {
       //namesRelationshipsIncludeRequest: 'topics'
       subtopicData: null,
       questionData: null,
-      loadingButtonUpdateQuestion: false,
-      disabledButtonUpdateQuestion: false,
+      loadingButtonCloneQuestion: false,
+      disabledButtonCloneQuestion: false,
       isCardMemoryQuestion: false,
       removeImagenOfQuestion: false,
       show_reason_text_in_test: true,
       show_reason_text_in_card_memory: false,
       show_reason_image_in_test: true,
       show_reason_image_in_card_memory: false,
-      isThereImageQuestionUpdate: false,
+      isThereImageQuestionClone: false,
       imageReason: null,
       answerGrouperSelected: '',
       isQuestionBinary: false,
@@ -369,17 +369,17 @@ export default {
   },
   watch: {
     questionData (value) {
-      this.setEditModeQuestionApi(value.data.id, 'yes')
+      this.setCloneModeQuestionApi(value.data.id, 'yes')
     }
   },
   mounted() {
-    this.fetchDataQuestionForUpdate()
+    this.fetchDataQuestionForClone()
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   beforeDestroy () {
-    this.setEditModeQuestionApi(this.questionData.data.id, 'no')
+    this.setCloneModeQuestionApi(this.questionData.data.id, 'no')
   },
   created () {
     this.dataAnswersUuid = [
@@ -391,11 +391,12 @@ export default {
   },
   methods: {
     ...mapActions('questionsSubtopicService', ['fetchQuestion','updateQuestion', 'setEditModeQuestion']),
-    async UpdateQuestionApi() {
+    ...mapActions('questionsSubtopicService', ['createQuestion']),
+    async CloneQuestionApi() {
       try {
         const FormDataQuestion = this.getFormDataForSaveQuestion()
 
-        await this.updateQuestion({
+        await this.CloneQuestion({
           subtopic_id: this.$route.params.subtopic_id,
           question_id: this.$route.params.question_id,
           data: FormDataQuestion,
@@ -410,8 +411,8 @@ export default {
         })
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonUpdateQuestion = false
-        this.disabledButtonUpdateQuestion = false
+        this.loadingButtonCloneQuestion = false
+        this.disabledButtonCloneQuestion = false
 
         this.$router.push({
           name: 'manage-questions-of-subtopic'
@@ -420,8 +421,8 @@ export default {
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.loadingButtonUpdateQuestion = false
-        this.disabledButtonUpdateQuestion = false
+        this.loadingButtonCloneQuestion = false
+        this.disabledButtonCloneQuestion = false
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
@@ -435,10 +436,10 @@ export default {
         }
       }
     },
-    async fetchDataQuestionForUpdate() {
+    async fetchDataQuestionForClone() {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
-        this.disabledButtonUpdateQuestion = true
+        this.disabledButtonCloneQuestion = true
 
         const response = await this.fetchQuestion({
           subtopic_id: this.$route.params.subtopic_id,
@@ -453,15 +454,15 @@ export default {
         this.syncValuesForm(response)
 
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.disabledButtonUpdateQuestion = false
+        this.disabledButtonCloneQuestion = false
 
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
-        this.disabledButtonUpdateQuestion = false
+        this.disabledButtonCloneQuestion = false
       }
     },
-    async setEditModeQuestionApi (question_id, isModeEdition) {
+    async setCloneModeQuestionApi (question_id, isModeEdition) {
       try {
         const response = await this.setEditModeQuestion({
           question_id: question_id,
@@ -475,12 +476,12 @@ export default {
       }
     },
     async handlingErrorValidation(errorResponse = {}) {
-      await this.$refs['FormUpdateQuestion']['setErrors'](errorResponse)
+      await this.$refs['FormCloneQuestion']['setErrors'](errorResponse)
     },
     async ResetForm() {
 
-      this.loadingButtonUpdateQuestion = false
-      this.disabledButtonUpdateQuestion = false
+      this.loadingButtonCloneQuestion = false
+      this.disabledButtonCloneQuestion = false
 
       this.$refs['FormQuestionTextField'].question_text = ''
       this.$refs['FormQuestionTypeTestCheckbox'].is_test = ''
@@ -499,14 +500,107 @@ export default {
       this.$refs['FormAddQuestionImage'].image = null
 
       this.$nextTick(() => {
-        this.$refs['FormUpdateQuestion']['reset']()
+        this.$refs['FormCloneQuestion']['reset']()
       })
 
       return true
     },
-    async UpdateQuestion() {
+    async CreateQuestionApi() {
+      try {
+        const FormDataQuestion = this.getFormDataForSaveQuestion()
 
-      const statusValidate = await this.$refs['FormUpdateQuestion'].validate()
+        await this.createQuestion({
+          subtopic_id: this.$route.params.subtopic_id,
+          data: FormDataQuestion,
+          config: {}
+        })
+
+        this.$swal.fire({
+          icon: 'success',
+          toast: true,
+          title: 'La pregunta ha sido creada con éxito.',
+          timer: 3000
+        })
+
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateQuestion = false
+        this.disabledButtonCreateQuestion = false
+
+        this.ResetForm()
+      } catch (error) {
+        //console.log(error)
+        this.$loadingApp.disabledLoadingProgressLinear()
+        this.loadingButtonCreateQuestion = false
+        this.disabledButtonCreateQuestion = false
+        if (error.response === undefined) {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            showConfirmButton: true,
+            confirmButtonText: '¡Entendido!',
+            timer: 7500
+          })
+        } else if (error.response?.status === 422) {
+          this.handlingErrorValidation(error.response.data.errors)
+        }
+      }
+    },
+    async CreateQuestion() {
+
+      const statusValidate = await this.$refs['FormCreateQuestion'].validate()
+
+      if (!statusValidate) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Por favor, complete correctamente los campos del formulario.',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 7500
+        })
+
+        return
+      }
+
+      const isTest = this.$refs['FormQuestionTypeTestCheckbox'].is_test
+      const isCardMemory = this.$refs['FormQuestionTypeCardMemoryCheckbox'].is_card_memory
+      const valueReasonText = this.$refs['FormReasonTextArea'].reason_value
+      const valueReasonImage = this.$refs['FormAddQuestionImage'].image
+
+      if (isCardMemory && !(valueReasonText || valueReasonImage)) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Las preguntas para Tarjetas de memoria, deben contener al menos una explicación en Texto o Imagen',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      if (!isTest && !isCardMemory) {
+        this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'La pregunta debe ser para un Test o tarjeta de memoria',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          timer: 10000
+        })
+
+        return
+      }
+
+      this.$loadingApp.enableLoadingProgressLinear()
+      this.loadingButtonCreateQuestion = true
+      this.disabledButtonCreateQuestion = true
+      this.CreateQuestionApi()
+    },
+    async CloneQuestion() {
+
+      const statusValidate = await this.$refs['FormCloneQuestion'].validate()
 
       if (!statusValidate) {
         this.$swal.fire({
@@ -540,9 +634,9 @@ export default {
       }
 
       this.$loadingApp.enableLoadingProgressLinear()
-      this.loadingButtonUpdateQuestion = true
-      this.disabledButtonUpdateQuestion = true
-      this.UpdateQuestionApi()
+      this.loadingButtonCloneQuestion = true
+      this.disabledButtonCloneQuestion = true
+      this.CloneQuestionApi()
     },
     bindingCheckGroupAnswer({ value, uuid }) {
       if (!value) {
@@ -602,7 +696,7 @@ export default {
         FormDataQuestion.append('show_reason_text_in_card_memory', 'no')
       }
 
-      if (this.imageReason || this.isThereImageQuestionUpdate) {
+      if (this.imageReason || this.isThereImageQuestionClone) {
         FormDataQuestion.append('show_reason_image_in_test', this.show_reason_image_in_test ? 'yes' : 'no')
         FormDataQuestion.append('show_reason_image_in_card_memory', this.show_reason_image_in_card_memory ? 'yes' : 'no')
       } else {
@@ -648,14 +742,14 @@ export default {
 
         if (relationships.image.attributes.type_path === 'url') {
           this.$refs['FormAddQuestionImage'].urlImage = relationships.image.attributes.path
-          this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
-          this.isThereImageQuestionUpdate = true
+          this.$refs['FormAddQuestionImage'].previewImageForClone = true
+          this.isThereImageQuestionClone = true
         }
 
         if (relationships.image.attributes.type_path === 'local') {
           this.$refs['FormAddQuestionImage'].urlImage = `${IsDevelopmentEnviroment ? serverApiDevelopment : serverApiProduction}${relationships.image.attributes.path}`
-          this.$refs['FormAddQuestionImage'].previewImageForUpdate = true
-          this.isThereImageQuestionUpdate = true
+          this.$refs['FormAddQuestionImage'].previewImageForClone = true
+          this.isThereImageQuestionClone = true
         }
 
       }
@@ -784,7 +878,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Actualizar pregunta para subtema'
+      inner: 'Copiar pregunta subtema'
     }
   }
 }
