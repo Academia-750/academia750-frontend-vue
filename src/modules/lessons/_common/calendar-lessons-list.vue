@@ -20,65 +20,79 @@
               ></v-select>
             </div>
           </div>
-          <!--- MONTH SELECT --->
-          <div flat class="d-flex justify-center mb-4">
-            <div class="d-flex justify-center align-center">
-              <v-btn fab x-small color="primary" @click="prev">
-                <v-icon small> mdi-chevron-left </v-icon>
-              </v-btn>
-              <v-menu
-                v-model="calendarMenu"
-                :close-on-content-click="false"
-                transition="scale-transition"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    v-bind="attrs"
-                    class="mx-3 font-weight-medium text-h5 text-center"
-                    text
-                    v-on="on"
-                  >
-                    {{ title() }}
-                  </v-btn>
-                </template>
-                <v-date-picker
-                  :value="focus"
-                  position="left"
-                  elevation="4"
-                  no-title
-                  :first-day-of-week="1"
-                  @input="onMiniCalendar"
-                ></v-date-picker>
-              </v-menu>
-              <v-btn fab x-small color="primary" @click="next">
-                <v-icon small> mdi-chevron-right </v-icon>
-              </v-btn>
-            </div>
+          <!-- Loader section -->
+          <div v-if="loading" class="d-flex flex-column justify-center align-center pa-8">
+            <p class="pa-1">Preparando tu lessiones...</p>
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="primary"
+              indeterminate
+            >
+            </v-progress-circular>
           </div>
-
-          <!--- CALENDAR --->
-          <v-calendar
-            ref="calendar"
-            :value="focus"
-            color="primary"
-            :events="events"
-            :event-color="getEventColor"
-            :type="computedType"
-            :first-interval="8"
-            :interval-minutes="60"
-            :interval-count="13"
-            locale="es-MX"
-            :weekdays="calendarDay"
-            @click:event="showEvent"
-            @click:more="setWeekMode"
-            @click:date="onDateClick"
-            @change="onLoad"
-            @input="onInputChange"
-          >
-            <template v-slot:event="{ event }">
-              <span class="pl-1"> {{ format(event) }} </span>
-            </template>
-          </v-calendar>
+          
+          <!-- Calendar section -->
+          <div v-show="!loading">
+            <!--- MONTH SELECT --->
+            <div flat class="d-flex justify-center mb-4">
+              <div class="d-flex justify-center align-center">
+                <v-btn fab x-small color="primary" @click="prev">
+                  <v-icon small> mdi-chevron-left </v-icon>
+                </v-btn>
+                <v-menu
+                  v-model="calendarMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      v-bind="attrs"
+                      class="mx-3 font-weight-medium text-h5 text-center"
+                      text
+                      v-on="on"
+                    >
+                      {{ title() }}
+                    </v-btn>
+                  </template>
+                  <v-date-picker
+                    :value="focus"
+                    position="left"
+                    elevation="4"
+                    no-title
+                    :first-day-of-week="1"
+                    @input="onMiniCalendar"
+                  ></v-date-picker>
+                </v-menu>
+                <v-btn fab x-small color="primary" @click="next">
+                  <v-icon small> mdi-chevron-right </v-icon>
+                </v-btn>
+              </div>
+            </div>
+            <!--- CALENDAR --->
+            <v-calendar
+              ref="calendar"
+              :value="focus"
+              color="primary"
+              :events="events"
+              :event-color="getEventColor"
+              :type="computedType"
+              :first-interval="8"
+              :interval-minutes="60"
+              :interval-count="13"
+              locale="es-MX"
+              :weekdays="calendarDay"
+              @click:event="showEvent"
+              @click:more="setWeekMode"
+              @click:date="onDateClick"
+              @change="onLoad"
+              @input="onInputChange"
+            >
+              <template v-slot:event="{ event }">
+                <span class="pl-1"> {{ format(event) }} </span>
+              </template>
+            </v-calendar>
+          </div>
         </v-sheet>
       </v-col>
     </v-row>
@@ -106,6 +120,10 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({

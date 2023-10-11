@@ -78,6 +78,7 @@
               :focus="date"
               :type="type"
               :events="events"
+              :loading="isLoading"
               @type="SET_TYPE"
               @date="onDate"
               @event="onLesson"
@@ -90,7 +91,8 @@
       </template>
       <template v-else>
         <div class="d-flex justify-center mt-2 mb-2">
-          <MiniCalendarLessonList
+          <MobileCalendar
+            :loading="isLoading"
             :focus="date"
             :events="events"
             @load="onLoad"
@@ -103,7 +105,7 @@
                 </v-icon>
               </div>
             </template>
-          </MiniCalendarLessonList>
+          </MobileCalendar>
         </div>
       </template>
       <div class="d-flex justify-end my-2">
@@ -143,16 +145,21 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
-    MiniCalendarLessonList: () =>
+    MobileCalendar: () =>
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '../_common/mobile-calendar-lessons-list.vue'
+      ),
+    LessonInfoModal: () =>
+      import(
+        /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       )
   },
   mixins: [notifications],
   data() {
     return {
       reloadDatatableUsers: false,
-      lessons: []
+      lessons: [],
+      isLoading: false
     }
   },
   computed: {
@@ -214,24 +221,34 @@ export default {
     },
 
     async onLoad({ start, end }) {
+      this.isLoading = true // Show the loader while fetching lessons
       const params = {
         from: start,
         to: end
       }
 
-      const { results } = await LessonRepository.calendar(params)
+      try {
+        const { results } = await LessonRepository.calendar(params)
 
-      this.lessons = results
+        this.lessons = results
 
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        this.lessons.filter(
-          (lesson) => lesson.date > moment().format('YYYY-MM-DD')
-        )[0] || [...this.lessons].pop()
+        // Auto select the first next lesson or the last lesson if all is in the past
+        const nextLesson =
+          this.lessons.filter(
+            (lesson) => lesson.date > moment().format('YYYY-MM-DD')
+          )[0] || [...this.lessons].pop()
 
-      if (nextLesson) {
-        this.setLesson(nextLesson)
-        this.SET_DATE(nextLesson.date)
+        if (nextLesson) {
+          this.setLesson(nextLesson)
+          this.SET_DATE(nextLesson.date)
+          this.loading = false
+        }
+      } catch (error) {
+        // Handle any error that occurred during the request
+        console.error('Error fetching lessons:', error)
+      } finally {
+        // Ensure that isLoading is set to false regardless of success or failure
+        this.isLoading = false
       }
     }
   },
