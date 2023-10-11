@@ -4,25 +4,20 @@
       class="d-flex flex-column justify-center align-center pa-1"
       :min-height="isMobile ? '220px' : '450px'"
     >
-      <div v-if="videoID && !error">
+      <div v-show="url && !playerLoaded">Cargando el video...</div>
+      <div v-if="url && !error">
         <vimeo-player
           ref="player"
-          :video-id="videoID"
+          :video-url="url"
           :player-height="height"
           :responsive="true"
           class="vimeo"
-          @ready="onReady"
+          @loaded="onLoaded"
           @error="onError"
         ></vimeo-player>
       </div>
       <div v-else>
-        <div v-if="videoID && !playerReady">Cargando el video...</div>
-        <div v-else>
-          {{
-            error ||
-            'No se pudo cargar este video, contacte con el administrador'
-          }}
-        </div>
+        {{ error }}
       </div>
     </v-card>
   </v-dialog>
@@ -41,32 +36,47 @@ export default {
     return {
       url: '',
       showVideo: false,
-      playerReady: false,
+      playerLoaded: false,
       error: ''
     }
   },
   computed: {
-    videoID() {
-      const match = this.url.match(/\/(\d+)$/)
-
-      return match?.[1]
-    },
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     }
   },
+  watch: {
+    showVideo(show) {
+      // Clean the modal when is closed
+      if (!show) {
+        this.reset()
+      }
+    }
+  },
   methods: {
     open(url) {
+      this.reset()
       this.url = url
-      this.playerReady = false
       this.showVideo = true
     },
-    onReady() {
-      this.playerReady = true
+    reset() {
+      this.url = ''
+      this.playerLoaded = false
+      this.showVideo = false
+      this.error = ''
+    },
+    onLoaded() {
+      this.playerLoaded = true
     },
     onError(error) {
-      this.error = error
-      this.playerReady = true
+      const defaultError =
+        'No se pudo cargar este video, contacte con el administrador'
+
+      this.error = error.message
+        ? `Error del video: ${error.message}`
+        : defaultError
+
+      this.playerLoaded = true
     }
   }
 }

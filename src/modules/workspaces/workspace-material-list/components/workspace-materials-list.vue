@@ -206,7 +206,7 @@ export default {
       ),
     VimeoVideoPlayer: () =>
       import(
-        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/video-card.vue'
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
       ),
     ServerDataTable
   },
