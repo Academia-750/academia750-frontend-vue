@@ -110,7 +110,8 @@
               v-else
               :class="item.url ? 'cursor-pointer' : ''"
               color="primary"
-              :disabled="true"
+              :disabled="!item.url"
+              @click="openVideo(item.url)"
             >
               mdi-camera
             </v-icon>
@@ -129,9 +130,10 @@
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || '' }}
       </template>
     </ServerDataTable>
+    <VimeoVideoPlayer ref="video" />
     <v-dialog v-model="loading" width="auto">
       <v-card class="d-flex flex-column justify-center align-center pa-8">
         <p class="pa-1">Preparando tu material...</p>
@@ -151,7 +153,6 @@ import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headers from './workspace-materials-list-columns'
-import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
@@ -203,7 +204,10 @@ export default {
       import(
         /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
       ),
-
+    VimeoVideoPlayer: () =>
+      import(
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
+      ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
@@ -385,6 +389,9 @@ export default {
     reset() {
       this.resetTableOptions()
       this.$refs.table.reload()
+    },
+    openVideo(url) {
+      this.$refs.video.open(url)
     }
   }
 }

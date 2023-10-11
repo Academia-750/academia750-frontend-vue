@@ -5,10 +5,10 @@ import CreateLessonsModule from './create-lesson'
 import AddStudentToLessonsModule from './lesson-students'
 import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
-import LessonAttendeesModule from './lesson-attendees'
 import StudentLessons from './student-lessons'
 import ManageStudentsMaterialsModule from './student-materials'
 import ManageStudentsRecordingsModule from './student-recordings'
+import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
 /**
