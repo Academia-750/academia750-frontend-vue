@@ -46,6 +46,7 @@
           />
           <ResourceButtonAdd
             text-button="Crear Material"
+            icon-button="mdi-book"
             @click="openAddMaterial"
           />
           <resource-button

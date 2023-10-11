@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <profiles-datatable />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <profiles-datatable />
 </template>
 
 <script>
