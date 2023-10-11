@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div>
-      <v-card flat>
-        <v-card-text>
-          <StudentsMaterialsList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <StudentsMaterialsList />
 </template>
 
 <script>
@@ -33,8 +25,8 @@ export default {
   },
 
   beforeCreate() {
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS) &&
-      this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
+    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
   },
   head: {
     title: {

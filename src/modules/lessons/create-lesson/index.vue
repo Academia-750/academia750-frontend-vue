@@ -143,6 +143,7 @@ import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 
 export default {
   components: {
@@ -265,6 +266,15 @@ export default {
             start_time: this.start_time,
             end_time: this.end_time
           })
+        }
+
+        if (lesson.is_active) {
+          Toast.warning(
+            'No se puede editar',
+            'Las lecciones activas no se pueden editar. Por favor, desactive la lección primero.'
+          )
+
+          return
         }
 
         lesson = await LessonRepository.update(lesson.id, {

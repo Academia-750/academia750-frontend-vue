@@ -74,15 +74,38 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <v-icon
-              v-if="item.type === 'material'"
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="item.url ? false : true"
-              @click="download(item)"
-            >
-              mdi-cloud-download
-            </v-icon>
+            <div v-if="item.type === 'material'" class="d-flex mr-1">
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    :class="item.url ? 'cursor-pointer mr-2' : 'mr-2'"
+                    color="default"
+                    :disabled="item.url ? false : true"
+                    v-on="on"
+                    @click="download(item)"
+                  >
+                    mdi-cloud-download
+                  </v-icon>
+                </template>
+                <span>Original</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    :class="item.url ? 'cursor-pointer' : ''"
+                    color="primary"
+                    :disabled="item.url ? false : true"
+                    v-on="on"
+                    @click="downloadWithWaterMark(item)"
+                  >
+                    mdi-cloud-download
+                  </v-icon>
+                </template>
+                <span>Con marca de agua</span>
+              </v-tooltip>
+            </div>
             <v-icon
               v-else
               :class="item.url ? 'cursor-pointer' : ''"
@@ -92,7 +115,6 @@
               mdi-camera
             </v-icon>
           </div>
-          <div></div>
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -110,6 +132,17 @@
         {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
       </template>
     </ServerDataTable>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -124,6 +157,7 @@ import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 import DownloadFile from '@/utils/DownloadMaterial'
+import LessonRepository from '@/services/LessonRepository'
 
 export default {
   name: 'WorkspaceList',
@@ -175,6 +209,7 @@ export default {
   mixins: [componentButtonsCrud],
   data() {
     return {
+      show: true,
       MATERIAL_TYPES_LABELS,
       name: '',
       types: [
@@ -188,6 +223,7 @@ export default {
         }
       ],
       workspaces: [],
+      loading: false,
       editItem: false,
       editItemId: null
     }
@@ -326,10 +362,25 @@ export default {
 
       return fileName.split('.')
     },
+
     async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
 
       DownloadFile(material.url, material.name, type)
+    },
+    async downloadWithWaterMark(material) {
+      this.loading = true
+      const url = await LessonRepository.downloadStudentMaterial(material.id)
+
+      this.loading = false
+      if (!url) {
+        return
+      }
+      const type = url.slice(
+        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
+      )
+
+      DownloadFile(url, material.name, type)
     },
     reset() {
       this.resetTableOptions()
