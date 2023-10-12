@@ -147,10 +147,6 @@ export default {
     MobileCalendar: () =>
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '../_common/mobile-calendar-lessons-list.vue'
-      ),
-    LessonInfoModal: () =>
-      import(
-        /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
       )
   },
   mixins: [notifications],
@@ -231,13 +227,6 @@ export default {
 
         this.lessons = results
 
-<<<<<<< HEAD
-        // Auto select the first next lesson or the last lesson if all is in the past
-        const nextLesson =
-          this.lessons.filter(
-            (lesson) => lesson.date > moment().format('YYYY-MM-DD')
-          )[0] || [...this.lessons].pop()
-=======
       // We already have a current selected lesson in this month
       const alreadySelected = this.lessons.find(
         (lesson) => lesson.id === this.lesson.id
@@ -251,7 +240,6 @@ export default {
         this.lessons.filter(
           (lesson) => lesson.date > moment().format('YYYY-MM-DD')
         )[0] || [...this.lessons].pop()
->>>>>>> 04509b2764d06a63c8e1a5e17df94dc135ee8c99
 
         if (nextLesson) {
           this.setLesson(nextLesson)

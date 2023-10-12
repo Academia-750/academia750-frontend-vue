@@ -91,13 +91,7 @@
             </div>
           </template>
         </MobileCalendar>
-<<<<<<< HEAD
       </div></div></v-card-text>
-=======
-      </div>
-    </div>
-  </v-card-text>
->>>>>>> 04509b2764d06a63c8e1a5e17df94dc135ee8c99
 </template>
 
 <script>
@@ -202,10 +196,7 @@ export default {
       try {
         const { results } = await LessonRepository.studentCalendar(params)
 
-<<<<<<< HEAD
         this.lessons = results
-=======
-      const lessons = results
 
       this.SET_LESSONS(lessons)
 
@@ -217,14 +208,6 @@ export default {
       if (alreadySelected) {
         return
       }
-
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        lessons.filter(
-          (lesson) => lesson.date > moment().format('YYYY-MM-DD')
-        )[0] || [...this.lessons].pop()
->>>>>>> 04509b2764d06a63c8e1a5e17df94dc135ee8c99
-
         // Auto select the first next lesson or the last lesson if all are in the past
         const nextLesson =
           this.lessons.find((lesson) => lesson.date > moment().format('YYYY-MM-DD')) ||
