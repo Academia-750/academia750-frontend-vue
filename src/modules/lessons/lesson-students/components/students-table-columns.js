@@ -23,8 +23,16 @@ export default [
       value: 'group_name',
       show: true
     },
-    {
+  {
       position: 4,
+      sortable: false,
+      text: 'Asistencia',
+      align: 'center',
+      value: 'will_join',
+      show: true
+    },
+    {
+      position: 5,
       sortable: false,
       text: 'Acciones',
       align: 'center',

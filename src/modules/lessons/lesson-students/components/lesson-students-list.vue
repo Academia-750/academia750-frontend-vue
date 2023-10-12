@@ -18,6 +18,9 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
+            <span class="font-weight-bold text-h6 mr-1">
+              Asistentes: {{ willJoin }} / {{ total }}
+            </span>
             <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
             <resource-button
               text-button="Gestionar un Grupos"
@@ -31,12 +34,25 @@
             />
           </template>
         </Toolbar>
-        <resource-text-field-search
-          :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o DNI o nombre del grupo"
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
-        />
+        <div style="position: relative">
+          <resource-text-field-search
+            :search-word="store.tableOptions.content"
+            label-text-field="Buscar por nombre o DNI del estudiante"
+            @emitSearchTextBinding="searchFieldWithDebounce"
+            @emitSearchWord="searchFieldExecuted"
+          />
+          <div
+            class="d-flex align-center mx-3 top-4"
+            style="position: absolute; z-index: 1; top: 3rem"
+          >
+            <span class="text-subtitle-1 mr-1">Solo asistentes</span>
+            <v-checkbox
+              :value="willAssist"
+              class="mt-3"
+              @click="filterByWillAssist"
+            ></v-checkbox>
+          </div>
+        </div>
       </template>
 
       <!-- ------------ NO DATA ------------ -->
@@ -51,6 +67,20 @@
             text-button="Eliminar"
             @actionConfirmShowDialogDelete="deleteStudentFromLesson(item)"
           />
+        </div>
+      </template>
+      <template
+        v-slot:[`item.will_join`]="{ item }"
+      >
+        <div>
+          <v-chip
+            class="ma-1"
+            label
+            small
+            :color="item.will_join ? 'primary' : ''"
+          >
+            {{ item.will_join ? 'SI' : 'NO' }}
+          </v-chip>
         </div>
       </template>
     </ServerDataTable>
@@ -109,7 +139,10 @@ export default {
     return {
       searchWordText: '',
       loading: false,
-      groupName: ''
+      groupName: '',
+      willJoin: 0,
+      total: 0,
+      willAssist: undefined
     }
   },
   computed: {
@@ -138,6 +171,11 @@ export default {
     addStudents() {
       this.$refs.addStudents.open()
     },
+    async filterByWillAssist() {
+      this.willAssist = !this.willAssist
+      this.loadLessonStudents()
+      this.tableReload()
+    },
     deleteGroupFromLesson() {
       this.$refs.deleteGroupModal.open()
     },
@@ -147,10 +185,14 @@ export default {
     async loadLessonStudents(pagination) {
       const lessonId = this.$route.params.id
       const params = {
-        ...pagination
+        ...pagination,
+        willJoin: this.willAssist === true ? 1 : undefined
       }
 
       const res = await LessonRepository.lessonStudentList(lessonId, params)
+
+      this.total = res.total
+      this.willJoin = res.will_join_count
 
       return res
     },
