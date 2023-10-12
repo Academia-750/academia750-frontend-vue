@@ -14,21 +14,11 @@
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de espacio de trabajo"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
-
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2 mx-2" outlined>
-          <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Materiales" />
-
-          <v-spacer />
-
-          <resource-button icon-button="mdi-autorenew" @click="reset()" />
-        </v-toolbar>
+        <Toolbar title="Materiales">
+          <template slot="actions">
+            <resource-button icon-button="mdi-autorenew" @click="reset()" />
+          </template>
+        </Toolbar>
         <!-- ------------ TYPE SECTION ------------ -->
 
         <SearchBar
@@ -179,14 +169,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
-      import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-      ),
-    ResourceHeaderCrudTitle: () =>
-      import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-      ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
@@ -195,10 +177,9 @@ export default {
       import(
         /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
-
-    ResourceButtonGoBackRouter: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     SearchBar: () =>
       import(

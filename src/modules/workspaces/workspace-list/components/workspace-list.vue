@@ -15,45 +15,38 @@
       :load="loadWorkspaces"
     >
       <template v-slot:top>
-        <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de espacio de trabajo"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
 
         <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2 mx-2" outlined>
-          <resource-title-toolbar-datatable title-text="Categorias" />
-
-          <v-spacer />
-          <ResourceButtonMaterials
-            text-button="Gestionar Temas"
-            icon-button="mdi-tag"
-            :config-route="{ name: 'manage-tags' }"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="goToTags()"
-          />
-          <ResourceButtonMaterials
-            text-button="Ver todos"
-            :config-route="{ name: 'manage-materials' }"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="goToMaterials()"
-          />
-          <ResourceButtonAdd
-            text-button="Crear Categoría"
-            @click="openAddCategory"
-          />
-          <ResourceButtonAdd
-            text-button="Crear Material"
-            icon-button="mdi-book"
-            @click="openAddMaterial"
-          />
-          <resource-button
-            icon-button="mdi-autorenew"
-            @click="resetTableOptions"
-          />
-        </v-toolbar>
+        <Toolbar title="Categorias">
+          <template slot="actions">
+            <ResourceButtonMaterials
+              text-button="Gestionar Temas"
+              icon-button="mdi-tag"
+              :config-route="{ name: 'manage-tags' }"
+              :only-dispatch-click-event="true"
+              @DispatchClickEvent="goToTags()"
+            />
+            <ResourceButtonMaterials
+              text-button="Ver todos"
+              :config-route="{ name: 'manage-materials' }"
+              :only-dispatch-click-event="true"
+              @DispatchClickEvent="goToMaterials()"
+            />
+            <ResourceButtonAdd
+              text-button="Crear Categoría"
+              @click="openAddCategory"
+            />
+            <ResourceButtonAdd
+              text-button="Crear Material"
+              icon-button="mdi-book"
+              @click="openAddMaterial"
+            />
+            <resource-button
+              icon-button="mdi-autorenew"
+              @click="resetTableOptions"
+            />
+          </template>
+        </Toolbar>
 
         <!-- ------------ SEARCH ------------ -->
         <resource-text-field-search
@@ -125,13 +118,9 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-      ),
-    ResourceHeaderCrudTitle: () =>
-      import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     ResourceButton: () =>
       import(
