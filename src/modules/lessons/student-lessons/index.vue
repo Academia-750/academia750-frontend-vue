@@ -20,13 +20,32 @@
             </template>
             <template v-if="lesson" slot="actions">
               <!-- Column for Time -->
-              <div class="d-flex align-center mt-3">
+              <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
                 <SwitchInput
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                   id="joinLesson"
+                  class="mt-3"
+                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
                   :value="lesson.will_join === 1"
                   @click="(value) => joinLesson(lesson.id, value)"
+                />
+                <ResourceButton
+                  color="success"
+                  icon-button="mdi-information"
+                  text-button="Información"
+                  @click="openInfoModal(lesson)"
+                />
+                <resource-button
+                  v-if="lesson.is_active === 1"
+                  text-button="Entrar Clase"
+                  icon-button="mdi-eye"
+                  color="success"
+                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
+                  :config-route="{
+                    name: 'join-online-class',
+                    params: { id: lesson.id }
+                  }"
                 />
               </div>
             </template>
@@ -64,15 +83,21 @@
               </v-icon>
               <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
-                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
                 id="joinLesson"
-                :value="event.will_join === 1"
-                @click="(value) => joinLesson(event.id, value)"
+                class="px-2"
+                :value="lesson.will_join === 1"
+                @click="(value) => joinLesson(lesson.id, value)"
               />
             </div>
           </template>
         </MobileCalendar>
+<<<<<<< HEAD
       </div></div></v-card-text>
+=======
+      </div>
+    </div>
+  </v-card-text>
+>>>>>>> 04509b2764d06a63c8e1a5e17df94dc135ee8c99
 </template>
 
 <script>
@@ -105,20 +130,23 @@ export default {
     LessonInfoModal: () =>
       import(
         /* webpackChunkName: "LessonInfoModal" */ '@/modules/resources/components/resources/lesson-info-modal.vue'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton.vue'
       )
   },
   mixins: [notifications],
   data() {
     return {
       reloadDatatableUsers: false,
-      lessons: [],
       PermissionEnum,
       event: {},
       isLoading: false
     }
   },
   computed: {
-    ...mapState('studentLessonsStore', ['lesson', 'date', 'type']),
+    ...mapState('studentLessonsStore', ['lesson', 'lessons', 'date', 'type']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     },
@@ -141,8 +169,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations('studentLessonsStore', ['SET_DATE', 'SET_TYPE']),
-    ...mapActions('studentLessonsStore', ['setLesson']),
+    ...mapMutations('studentLessonsStore', [
+      'SET_DATE',
+      'SET_TYPE',
+      'SET_LESSONS'
+    ]),
+    ...mapActions('studentLessonsStore', ['setLesson', 'updateJoinLesson']),
 
     onDate() {
       this.setLesson(false)
@@ -170,7 +202,28 @@ export default {
       try {
         const { results } = await LessonRepository.studentCalendar(params)
 
+<<<<<<< HEAD
         this.lessons = results
+=======
+      const lessons = results
+
+      this.SET_LESSONS(lessons)
+
+      // We already have a current selected lesson in this month
+      const alreadySelected = this.lessons.find(
+        (lesson) => lesson.id === this.lesson.id
+      )
+
+      if (alreadySelected) {
+        return
+      }
+
+      // Auto select the first next lesson or the last lesson if all is in the past
+      const nextLesson =
+        lessons.filter(
+          (lesson) => lesson.date > moment().format('YYYY-MM-DD')
+        )[0] || [...this.lessons].pop()
+>>>>>>> 04509b2764d06a63c8e1a5e17df94dc135ee8c99
 
         // Auto select the first next lesson or the last lesson if all are in the past
         const nextLesson =
@@ -200,20 +253,8 @@ export default {
         Toast.success('Has confirmado tu asistencia a la clase.')
       }
 
-      // Update the lesson on the array
-      const index = this.lessons.findIndex((lesson) => lesson.id === lessonId)
-
-      if (index < 0) {
-        return
-      }
-
-      this.$set(this.lessons, index, {
-        ...this.lessons[index],
-        will_join: value ? 1 : 0 // But the object expects 1 or 0. Update current selected and on the array
-      })
-
       // Refresh selected object
-      this.setLesson(this.lessons[index])
+      this.updateJoinLesson({ lessonId, value })
     }
   },
   head: {

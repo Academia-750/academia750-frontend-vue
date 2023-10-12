@@ -2,7 +2,7 @@
   <v-toolbar
     class="indigo lighten-5"
     outlined
-    :height="$vuetify.breakpoint.xs ? '180px' : '56px'"
+    :height="$vuetify.breakpoint.xs ? '56px' : '70px'"
   >
     <div
       class="d-flex justify-space-between flex-wrap"
