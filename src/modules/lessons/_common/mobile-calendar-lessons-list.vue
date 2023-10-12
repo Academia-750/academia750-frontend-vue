@@ -1,7 +1,53 @@
 <template>
   <div>
+    
+    <v-date-picker
+      :value="focus"
+      position="left"
+      elevation="4"
+      no-title
+      :first-day-of-week="1"
+      :event-color="getEventColor"
+      :events="daysWithValue"
+      :reactive="true"
+      @change="onInputChange"
+      @update:picker-date="onLoad"
+    >
+    </v-date-picker>
+    <div class="mb-2"></div>
+    <div
+      v-for="(event, index) in selectedDateEvents"
+      :key="index"
+      @click="onEvent(event)"
+    >
+      <v-sheet class="relative d-flex elevation-2 mt-1 mb-2">
+        <div class="event-item">
+          <div class="d-flex flex-column justify-center">
+            <span class="font-weight-medium text-xs-caption text-sm-h7">
+              {{ event.name }}
+            </span>
+            <span class="font-weight-medium text-xs-caption text-sm-h7">
+              {{ date(event.start, 'HH:mm') }} a
+              {{ date(event.end, 'HH:mm') }}
+            </span>
+          </div>
+          <slot name="actions" v-bind="event"> </slot>
+        </div>
+
+        <div
+          class="event-date d-flex flex-column items-center primary p-2 white--text"
+        >
+          <span class="font-weight-medium">
+            {{ date(event.start, 'DD') }}
+          </span>
+          <span class="font-weight-medium">
+            {{ date(event.start, 'MMM') }}
+          </span>
+        </div>
+      </v-sheet>
+    </div>
     <div v-if="loading" class="d-flex flex-column justify-center align-center pa-8">
-      <p class="pa-1">Preparando tu lessiones...</p>
+      <p class="pa-1">Preparando tus clases...</p>
       <v-progress-circular
         :size="70"
         :width="7"
@@ -9,53 +55,6 @@
         indeterminate
       >
       </v-progress-circular>
-    </div>
-    <div v-show="!loading">
-      <v-date-picker
-        :value="focus"
-        position="left"
-        elevation="4"
-        no-title
-        :first-day-of-week="1"
-        :event-color="getEventColor"
-        :events="daysWithValue"
-        :reactive="true"
-        @change="onInputChange"
-        @update:picker-date="onLoad"
-      >
-      </v-date-picker>
-      <div class="mb-2"></div>
-      <div
-        v-for="(event, index) in selectedDateEvents"
-        :key="index"
-        @click="onEvent(event)"
-      >
-        <v-sheet class="relative d-flex elevation-2 mt-1 mb-2">
-          <div class="event-item">
-            <div class="d-flex flex-column justify-center">
-              <span class="font-weight-medium text-xs-caption text-sm-h7">
-                {{ event.name }}
-              </span>
-              <span class="font-weight-medium text-xs-caption text-sm-h7">
-                {{ date(event.start, 'HH:mm') }} a
-                {{ date(event.end, 'HH:mm') }}
-              </span>
-            </div>
-            <slot name="actions" v-bind="event"> </slot>
-          </div>
-
-          <div
-            class="event-date d-flex flex-column items-center primary p-2 white--text"
-          >
-            <span class="font-weight-medium">
-              {{ date(event.start, 'DD') }}
-            </span>
-            <span class="font-weight-medium">
-              {{ date(event.start, 'MMM') }}
-            </span>
-          </div>
-        </v-sheet>
-      </div>
     </div>
   </div>
 </template>

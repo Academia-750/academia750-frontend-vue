@@ -20,26 +20,24 @@
               ></v-select>
             </div>
           </div>
-          <!-- Loader section -->
-          <div v-if="loading" class="d-flex flex-column justify-center align-center pa-8">
-            <p class="pa-1">Preparando tu lessiones...</p>
-            <v-progress-circular
-              :size="70"
-              :width="7"
-              color="primary"
-              indeterminate
-            >
-            </v-progress-circular>
-          </div>
-          
           <!-- Calendar section -->
-          <div v-show="!loading">
-            <!--- MONTH SELECT --->
-            <div flat class="d-flex justify-center mb-4">
-              <div class="d-flex justify-center align-center">
-                <v-btn fab x-small color="primary" @click="prev">
-                  <v-icon small> mdi-chevron-left </v-icon>
-                </v-btn>
+          <!--- MONTH SELECT --->
+          <div flat class="d-flex justify-center mb-4">
+            <div class="d-flex justify-center align-center">
+              <v-btn fab x-small color="primary" @click="prev">
+                <v-icon small> mdi-chevron-left </v-icon>
+              </v-btn>
+              <div v-if="loading" class="d-flex flex-column justify-center align-center pa-8">
+                <v-progress-circular
+                  :size="30"
+                  :width="4"
+                  color="primary"
+                  indeterminate
+                >
+                </v-progress-circular>
+                <p class="pa-1">Preparando tus clases...</p>
+              </div>
+              <div v-show="!loading">
                 <v-menu
                   v-model="calendarMenu"
                   :close-on-content-click="false"
@@ -64,35 +62,35 @@
                     @input="onMiniCalendar"
                   ></v-date-picker>
                 </v-menu>
-                <v-btn fab x-small color="primary" @click="next">
-                  <v-icon small> mdi-chevron-right </v-icon>
-                </v-btn>
               </div>
+              <v-btn fab x-small color="primary" @click="next">
+                <v-icon small> mdi-chevron-right </v-icon>
+              </v-btn>
             </div>
-            <!--- CALENDAR --->
-            <v-calendar
-              ref="calendar"
-              :value="focus"
-              color="primary"
-              :events="events"
-              :event-color="getEventColor"
-              :type="computedType"
-              :first-interval="8"
-              :interval-minutes="60"
-              :interval-count="13"
-              locale="es-MX"
-              :weekdays="calendarDay"
-              @click:event="showEvent"
-              @click:more="setWeekMode"
-              @click:date="onDateClick"
-              @change="onLoad"
-              @input="onInputChange"
-            >
-              <template v-slot:event="{ event }">
-                <span class="pl-1"> {{ format(event) }} </span>
-              </template>
-            </v-calendar>
           </div>
+          <!--- CALENDAR --->
+          <v-calendar
+            ref="calendar"
+            :value="focus"
+            color="primary"
+            :events="events"
+            :event-color="getEventColor"
+            :type="computedType"
+            :first-interval="8"
+            :interval-minutes="60"
+            :interval-count="13"
+            locale="es-MX"
+            :weekdays="calendarDay"
+            @click:event="showEvent"
+            @click:more="setWeekMode"
+            @click:date="onDateClick"
+            @change="onLoad"
+            @input="onInputChange"
+          >
+            <template v-slot:event="{ event }">
+              <span class="pl-1"> {{ format(event) }} </span>
+            </template>
+          </v-calendar>
         </v-sheet>
       </v-col>
     </v-row>
