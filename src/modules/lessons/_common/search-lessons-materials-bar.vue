@@ -11,7 +11,7 @@
     />
     <!-- ------------ TYPE SECTION ------------ -->
     <v-row class="ml-1 mr-1">
-      <v-col cols="12" md="5">
+      <v-col cols="6" md="4">
         <TagsAutoComplete
           tag-type="material"
           :tags="tags"
@@ -19,7 +19,7 @@
           @change="onChangeTags"
         />
       </v-col>
-      <v-col cols="12" md="5">
+      <v-col cols="6" md="4">
         <LessonsAutoComplete
           tag-type="material"
           :lessons="lessons"
@@ -27,7 +27,7 @@
           @change="onChangeLessons"
         />
       </v-col>
-      <v-col cols="12" md="5">
+      <v-col cols="6" md="4">
         <WorkSpacesAutoComplete
           tag-type="material"
           :workspaces="workspaces"
