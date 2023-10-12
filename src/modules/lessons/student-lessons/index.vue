@@ -82,7 +82,7 @@
               <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
                 id="joinLesson"
-                class="px-2 pt-2"
+                class="px-2"
                 :value="lesson.will_join === 1"
                 @click="(value) => joinLesson(lesson.id, value)"
               />

@@ -67,3 +67,7 @@ Make sure you add the `robots.txt` in production with the Allow option.
 
 DNI:  00000000T
 Password: academia750
+
+## Notes
+
+- In order to link a user to an opposition you need to manually update the database `opposition_user` table. 

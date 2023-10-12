@@ -98,6 +98,8 @@
 <script>
 import { PermissionEnum } from '@/utils/enums'
 import { mapMutations, mapActions } from 'vuex'
+import LessonRepository from '@/services/LessonRepository'
+import Toast from '@/utils/toast'
 
 export default {
   name: 'LessonInfoModal',
