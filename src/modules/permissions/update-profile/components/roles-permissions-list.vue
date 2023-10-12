@@ -2,7 +2,7 @@
   <ServerDataTable
     ref="table"
     :headers="headers"
-    store-name="profilesStore"
+    store-name="permissionsStore"
     :load="loadPermissions"
   >
     <!-- ------------ NO DATA ------------ -->
@@ -88,8 +88,6 @@ export default {
       this.permissions = this.permissions.includes(id)
         ? this.permissions.filter((permissionId) => permissionId !== id)
         : [...this.permissions, id]
-
-      return
     },
     async info() {
       const { id } = this.$route.params

@@ -97,7 +97,7 @@
 </template>
 <script>
 import { PermissionEnum } from '@/utils/enums'
-import { mapMutations, mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import Toast from '@/utils/toast'
 

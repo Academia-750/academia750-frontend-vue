@@ -24,8 +24,8 @@ export default {
     this.loadNotifications()
   },
   beforeCreate() {
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
-    this?.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
+    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
   },
   head: {
     title: {
