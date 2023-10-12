@@ -1,22 +1,43 @@
 <template>
-  <StudentsMaterialsBase
-    ref="recordingsList"
-    title="Grabaciones de Clase"
-    store-name="studentsRecordingsStore"
-    type="recording"
-    :loading="loading"
-  >
-    <template v-slot:actions="item">
-      <div
-        v-if="item.has_url"
-        class="d-flex justify-space-between align-center"
-      >
-        <div>
-          <!-- Modal here on next task -->
+  <div>
+    <StudentsMaterialsBase
+      ref="recordingsList"
+      title="Grabaciones de Clase"
+      store-name="studentsRecordingsStore"
+      type="recording"
+      :loading="loading"
+    >
+      <template v-slot:actions="item">
+        <div
+          v-if="item.has_url"
+          class="d-flex justify-space-between align-center"
+        >
+          <div>
+            <v-icon
+              class="cursor-pointer"
+              color="primary"
+              @click="openVideo(item)"
+            >
+              mdi-camera
+            </v-icon>
+          </div>
+          <div></div>
         </div>
-      </div>
-    </template>
-  </StudentsMaterialsBase>
+      </template>
+    </StudentsMaterialsBase>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu video...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
+    <VimeoVideoPlayer ref="video" />
+  </div>
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
@@ -27,6 +48,10 @@ export default {
     StudentsMaterialsBase: () =>
       import(
         /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
+      ),
+    VimeoVideoPlayer: () =>
+      import(
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
       )
   },
   data() {
@@ -34,19 +59,26 @@ export default {
       loading: false
     }
   },
-
+  mounted() {},
   methods: {
-    async download(material) {
+    async getUrl(material) {
       this.loading = true
-      const res = await LessonRepository.downloadStudentMaterial(
+
+      const url = await LessonRepository.downloadStudentMaterial(
         material.material_id
       )
 
-      if (!res) {
+      this.loading = false
+
+      return url
+    },
+    async openVideo(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
         return
       }
-      this.loading = false
-      // DownloadFile(material.url, material.name, type)
+      this.$refs.video.open(url)
     }
   }
 }

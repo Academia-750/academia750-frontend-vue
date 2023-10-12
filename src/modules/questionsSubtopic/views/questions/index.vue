@@ -107,7 +107,19 @@
           <resource-button-edit
             v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'yes'"
             color-button="blue darken-1"
-            :config-route="{ name: 'update-question-subtopic', params: { question_id: item.id } }"
+            :config-route="{ 
+              name: 'update-question-subtopic', 
+              params: { question_id: item.id } 
+            }"
+          />
+          <resource-button-copy
+            v-if="item !== null"
+            text-button="Copiar"
+            color-button="blue darken-1"
+            :config-route="{
+              name: 'clone-question-subtopic',
+              params: { question_id: item.id }
+            }"
           />
           <resource-button-delete
             v-if="item.can_this_question_be_affected && metaData !== null && subtopicData.attributes.is_available === 'yes'"

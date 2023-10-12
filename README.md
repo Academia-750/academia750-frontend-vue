@@ -7,6 +7,19 @@ Temporal branch for fixes of v1.0.0 while v2.0.0 is already on development
 - Integrated with Vue CLI + Vuex + Vue-Router
 
 <br/>
+
+
+## Stack
+
+- [Vue 2](https://v2.vuejs.org/)
+- Components [Veutify](https://v2.vuetifyjs.com/en/)
+- CSS Heslpers [Veutify](https://vuetifyjs.com/en/styles/display/)
+- Stores [Vuex](https://vuex.vuejs.org/)
+- Router [Vue Router](https://router.vuejs.org/) But is wrapped in the helper `@utils/Toast` 
+- From Validation [Vee Validate](https://vee-validate.logaretm.com/v2/guide/)
+- For Videos: [Vimeo Video Player](https://www.npmjs.com/package/vue-vimeo-player)
+- Zoom: We use iframe integration. We dont use the SDK because requires pay mememberhip.
+
 ## Commands
 #### `npm install`
 > Install package dependencies
@@ -48,8 +61,13 @@ In the phase 2 we have simplify the folder structure, you may see this change in
 Make sure you add the `robots.txt` in production with the Allow option.
 
 
+
 ## Default User
 ### Default Super Admin
 
 DNI:  00000000T
 Password: academia750
+
+## Notes
+
+- In order to link a user to an opposition you need to manually update the database `opposition_user` table. 
