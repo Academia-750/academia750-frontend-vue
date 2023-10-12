@@ -27,6 +27,14 @@
           @change="onChangeLessons"
         />
       </v-col>
+      <v-col cols="12" md="5">
+        <WorkSpacesAutoComplete
+          tag-type="material"
+          :workspaces="workspaces"
+          :dense="true"
+          @change="onChangeWorkspaces"
+        />
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -45,6 +53,10 @@ export default {
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/lessons-auto-complete'
       ),
+      WorkSpacesAutoComplete: () =>
+      import(
+        /* webpackChunkName: "WorkSpacesAutoComplete" */ '@/modules/resources/components/form/work-spaces-auto-complete'
+      ),
     ResourceTextFieldSearch: () =>
       import(
         /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
@@ -62,6 +74,10 @@ export default {
     lessons: {
       type: Array,
       default: () => []
+    },
+    workspaces: {
+      type: Array,
+      default: () => []
     }
   },
   created() {
@@ -73,6 +89,9 @@ export default {
     },
     onChangeLessons(value) {
       this.$emit('onChangeLessons', value)
+    },
+    onChangeWorkspaces(value) {
+      this.$emit('onChangeWorkspaces', value)
     },
     searchFieldExecuted($event) {
       this.$emit('onChangeContent', $event)

@@ -24,9 +24,11 @@
           :content="content"
           :tags="tags"
           :lessons="lessons"
+          :workspaces="workspaces"
           @onChangeTags="onChangeTags"
           @onChangeLessons="onChangeLessons"
           @onChangeContent="onChangeContent"
+          @onChangeWorkspaces="onChangeWorkspaces"
         />
       </template>
 
@@ -114,6 +116,9 @@ export default {
     lessons() {
       return this.$store.state[this.storeName].lessons
     },
+    workspaces() {
+      return this.$store.state[this.storeName].workspaces
+    },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
     },
@@ -140,11 +145,19 @@ export default {
       this.$refs.table.reload()
     },
 
+    onChangeWorkspaces(value) {
+      this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
+      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
+
+      this.$refs.table.reload()
+    },
+
     async loadStudentsMaterials(pagination) {
       const params = {
         ...pagination,
         tags: this.tags,
         lessons: this.lessons,
+        workspaces: this.workspaces,
         type: this.type
       }
 
