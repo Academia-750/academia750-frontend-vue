@@ -19,14 +19,6 @@
           @change="onChangeTags"
         />
       </v-col>
-      <v-col cols="12" md="5">
-        <LessonsAutoComplete
-          tag-type="material"
-          :lessons="lessons"
-          :dense="true"
-          @change="onChangeLessons"
-        />
-      </v-col>
     </v-row>
   </div>
 </template>
@@ -40,10 +32,6 @@ export default {
     TagsAutoComplete: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
-      ),
-    LessonsAutoComplete: () =>
-      import(
-        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/lessons-auto-complete'
       ),
     ResourceTextFieldSearch: () =>
       import(

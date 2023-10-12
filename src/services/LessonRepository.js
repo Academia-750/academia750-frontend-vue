@@ -1,6 +1,6 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
-import Swal from 'sweetalert2/dist/sweetalert2'
+import Toast from '@/utils/toast'
 
 export default {
   /**
@@ -225,13 +225,16 @@ export default {
     })
 
     if (response.status === 409) {
-      Swal.fire({
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000,
-        icon: 'warning',
-        text: 'Este estudiante ya existe en esta clase'
-      })
+      Toast.warning('Este estudiante ya existe en esta clase')
+
+      return false
+    }
+
+    if (response.status === 403) {
+      Toast.warning(
+        'Estudiante sin acceso a clases.',
+        'El perfil de este estudiante no le permite acceder a las clases. Actualize su perfil por uno con los permisos adecuados'
+      )
 
       return false
     }

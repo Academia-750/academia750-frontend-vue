@@ -4,6 +4,7 @@ import ManageQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/que
 import CreateQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/CreateQuestion'
 import UpdateQuestionsSubtopicModule from '@/modules/questionsSubtopic/views/UpdateQuestion'
 import FetchQuestionSubtopicModule from '@/modules/questionsSubtopic/views/FetchQuestion'
+import CloneQuestionsSubTopicModule from '@/modules/questionsSubtopic/views/CloneQuestionSubTopic'
 
 const shortcutRoutes = [
   /* {
@@ -67,6 +68,14 @@ const moduleRoute = [
             path: ':id/subtopics/:subtopic_id/questions/update/:question_id',
             name: 'update-question-subtopic',
             component: UpdateQuestionsSubtopicModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/subtopics/:subtopic_id/questions/clone/:question_id',
+            name: 'clone-question-subtopic',
+            component: CloneQuestionsSubTopicModule,
             meta: {
               middleware: [authMiddleware]
             }

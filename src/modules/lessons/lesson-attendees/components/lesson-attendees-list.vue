@@ -9,9 +9,12 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar :title="lesson.name" icon="mdi-account-multiple">
+        <Toolbar
+          :title="isMobile ? '' : lesson.name"
+          icon="mdi-account-multiple"
+        >
           <template slot="actions">
-            <span class="font-weight-bold text-h6 mr-1">
+            <span class="font-weight-bold text-md-h6 text-subtitle-2 mr-1">
               Asistentes: {{ willJoin }} / {{ total }}
             </span>
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
@@ -109,6 +112,9 @@ export default {
     },
     store() {
       return this.$store.state.lessonAttendeesStore
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     }
   },
   watch: {
