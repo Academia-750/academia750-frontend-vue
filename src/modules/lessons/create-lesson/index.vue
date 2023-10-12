@@ -30,7 +30,7 @@
                   :disabled="!canEdit"
                   :value="start_time"
                   label="Hora de inicio"
-                  rules="required|after:07:00, 7:00"
+                  rules="required"
                   @change="selectedStartTime"
                 />
               </v-col>
@@ -40,7 +40,7 @@
                   :value="end_time"
                   :disabled="!canEdit"
                   label="Hora de finalización"
-                  rules="required|after:@start_time,la hora de inicio|before:21:00, 21:00"
+                  rules="required|after:@start_time,la hora de inicio"
                   @change="selectedEndTime"
                 />
               </v-col>
