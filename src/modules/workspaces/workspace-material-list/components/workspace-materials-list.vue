@@ -74,25 +74,48 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <v-icon
-              v-if="item.type === 'material'"
-              :class="item.url ? 'cursor-pointer' : ''"
-              color="primary"
-              :disabled="item.url ? false : true"
-              @click="download(item)"
-            >
-              mdi-cloud-download
-            </v-icon>
+            <div v-if="item.type === 'material'" class="d-flex mr-1">
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    :class="item.url ? 'cursor-pointer mr-2' : 'mr-2'"
+                    color="default"
+                    :disabled="item.url ? false : true"
+                    v-on="on"
+                    @click="download(item)"
+                  >
+                    mdi-cloud-download
+                  </v-icon>
+                </template>
+                <span>Original</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    :class="item.url ? 'cursor-pointer' : ''"
+                    color="primary"
+                    :disabled="item.url ? false : true"
+                    v-on="on"
+                    @click="downloadWithWaterMark(item)"
+                  >
+                    mdi-cloud-download
+                  </v-icon>
+                </template>
+                <span>Con marca de agua</span>
+              </v-tooltip>
+            </div>
             <v-icon
               v-else
               :class="item.url ? 'cursor-pointer' : ''"
               color="primary"
-              :disabled="true"
+              :disabled="!item.url"
+              @click="openVideo(item.url)"
             >
               mdi-camera
             </v-icon>
           </div>
-          <div></div>
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
@@ -107,9 +130,21 @@
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || '' }}
       </template>
     </ServerDataTable>
+    <VimeoVideoPlayer ref="video" />
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
   </v-card-text>
 </template>
 
@@ -118,12 +153,12 @@ import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headers from './workspace-materials-list-columns'
-import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 import DownloadFile from '@/utils/DownloadMaterial'
+import LessonRepository from '@/services/LessonRepository'
 
 export default {
   name: 'WorkspaceList',
@@ -169,12 +204,16 @@ export default {
       import(
         /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
       ),
-
+    VimeoVideoPlayer: () =>
+      import(
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
+      ),
     ServerDataTable
   },
   mixins: [componentButtonsCrud],
   data() {
     return {
+      show: true,
       MATERIAL_TYPES_LABELS,
       name: '',
       types: [
@@ -188,6 +227,7 @@ export default {
         }
       ],
       workspaces: [],
+      loading: false,
       editItem: false,
       editItemId: null
     }
@@ -326,14 +366,32 @@ export default {
 
       return fileName.split('.')
     },
+
     async download(material) {
       const [_name, type] = this.fileNameAndType(material.url)
 
       DownloadFile(material.url, material.name, type)
     },
+    async downloadWithWaterMark(material) {
+      this.loading = true
+      const url = await LessonRepository.downloadStudentMaterial(material.id)
+
+      this.loading = false
+      if (!url) {
+        return
+      }
+      const type = url.slice(
+        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
+      )
+
+      DownloadFile(url, material.name, type)
+    },
     reset() {
       this.resetTableOptions()
       this.$refs.table.reload()
+    },
+    openVideo(url) {
+      this.$refs.video.open(url)
     }
   }
 }

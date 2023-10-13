@@ -30,7 +30,7 @@
                   :disabled="!canEdit"
                   :value="start_time"
                   label="Hora de inicio"
-                  rules="required|after:07:00, 7:00"
+                  rules="required"
                   @change="selectedStartTime"
                 />
               </v-col>
@@ -40,7 +40,7 @@
                   :value="end_time"
                   :disabled="!canEdit"
                   label="Hora de finalización"
-                  rules="required|after:@start_time,la hora de inicio|before:21:00, 21:00"
+                  rules="required|after:@start_time,la hora de inicio"
                   @change="selectedEndTime"
                 />
               </v-col>
@@ -143,6 +143,7 @@ import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
 import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 
 export default {
   components: {
@@ -265,6 +266,15 @@ export default {
             start_time: this.start_time,
             end_time: this.end_time
           })
+        }
+
+        if (lesson.is_active) {
+          Toast.warning(
+            'No se puede editar',
+            'Las lecciones activas no se pueden editar. Por favor, desactive la lección primero.'
+          )
+
+          return
         }
 
         lesson = await LessonRepository.update(lesson.id, {

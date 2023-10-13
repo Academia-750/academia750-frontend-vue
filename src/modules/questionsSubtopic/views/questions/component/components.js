@@ -2,6 +2,7 @@ import ChangeStateVisibilityQuestionSwitch from '@/components/questions/form/Cha
 
 const components = {
   ResourceButtonEdit: () => import(/* webpackChunkName: "ResourceButtonEdit" */ '@/modules/resources/components/resources/ResourceButtonEdit'),
+  ResourceButtonCopy: () => import(/* webpackChunkName: "ResourceButtonCopy" */ '@/modules/resources/components/resources/ResourceButtonCopy'),
   ResourceButtonDelete: () => import(/* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'),
   ResourceButtonAdd: () => import(/* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'),
   ResourceTextFieldSearch: () => import(/* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'),

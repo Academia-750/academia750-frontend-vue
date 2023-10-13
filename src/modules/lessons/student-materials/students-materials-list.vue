@@ -2,7 +2,7 @@
   <div>
     <StudentsMaterialsBase
       ref="materialsList"
-      title="Materiales de Clase"
+      :title="`Materiales de la clase ${lesson ? lesson.name : ''}`"
       store-name="studentsMaterialsStore"
       type="material"
     >
@@ -49,6 +49,7 @@
 <script>
 import LessonRepository from '@/services/LessonRepository'
 import downloadFile from '@/utils/DownloadMaterial'
+import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsMaterialsList',
@@ -63,7 +64,9 @@ export default {
       loading: false
     }
   },
-
+  computed: {
+    ...mapState('studentsMaterialsStore', ['lesson'])
+  },
   methods: {
     async getUrl(material) {
       this.loading = true

@@ -1,5 +1,7 @@
 <template>
-  <StudentsRecordingsList />
+  <div>
+    <StudentsOnlineLesson />
+  </div>
 </template>
 
 <script>
@@ -7,29 +9,30 @@ import notifications from '@/mixins/notifications'
 import { PermissionEnum } from '@/utils/enums'
 
 export default {
-  name: 'StudentsRecordings',
+  name: 'StudentsOnlineLessonView',
   components: {
-    StudentsRecordingsList: () =>
+    StudentsOnlineLesson: () =>
       import(
-        /* webpackChunkName: "StudentsRecordingsList" */ './students-recordings-list.vue'
+        /* webpackChunkName: "StudentsOnlineLesson" */ './students-online-lesson.vue'
       )
   },
   mixins: [notifications],
   data() {
     return {
-      reloadDatatableUsers: false
+      PermissionEnum
     }
   },
   mounted() {
     this.loadNotifications()
   },
+
   beforeCreate() {
     this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSONS)
-    this.$hasPermissionMiddleware(PermissionEnum.SEE_LESSON_MATERIALS)
+    this.$hasPermissionMiddleware(PermissionEnum.SEE_ONLINE_LESSON)
   },
   head: {
     title: {
-      inner: 'Grabaciones de clase'
+      inner: 'Clase Virtual'
     }
   }
 }

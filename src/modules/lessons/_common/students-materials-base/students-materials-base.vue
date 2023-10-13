@@ -114,7 +114,9 @@ export default {
       return this.$store.state[this.storeName].tags
     },
     lessons() {
-      return this.$store.state[this.storeName].lessons
+      const { lesson } = this.$store.state[this.storeName]
+
+      return lesson ? [lesson.id] : undefined
     },
     workspaces() {
       return this.$store.state[this.storeName].workspaces
