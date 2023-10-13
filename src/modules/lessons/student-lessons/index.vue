@@ -52,6 +52,7 @@
           </LessonToolBar>
           <CalendarLessonsList
             ref="calendar"
+            :loading="isLoading"
             :focus="date"
             :type="type"
             :events="events"
@@ -65,6 +66,7 @@
       </v-card>
       <div v-else class="d-flex justify-center pt-2 pb-2 d-md-none">
         <MobileCalendar
+          :loading="isLoading"
           :focus="date"
           :events="events"
           @load="onLoad"
@@ -89,9 +91,7 @@
             </div>
           </template>
         </MobileCalendar>
-      </div>
-    </div>
-  </v-card-text>
+      </div></div></v-card-text>
 </template>
 
 <script>
@@ -135,7 +135,8 @@ export default {
     return {
       reloadDatatableUsers: false,
       PermissionEnum,
-      event: {}
+      event: {},
+      isLoading: false
     }
   },
   computed: {
@@ -186,14 +187,16 @@ export default {
     },
 
     async onLoad({ start, end }) {
+      this.isLoading = true // Show the loader while fetching lessons
       const params = {
         from: start,
         to: end
       }
 
-      const { results } = await LessonRepository.studentCalendar(params)
+      try {
+        const { results } = await LessonRepository.studentCalendar(params)
 
-      const lessons = results
+        this.lessons = results
 
       this.SET_LESSONS(lessons)
 
@@ -205,16 +208,21 @@ export default {
       if (alreadySelected) {
         return
       }
+        // Auto select the first next lesson or the last lesson if all are in the past
+        const nextLesson =
+          this.lessons.find((lesson) => lesson.date > moment().format('YYYY-MM-DD')) ||
+          this.lessons[this.lessons.length - 1]
 
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        lessons.filter(
-          (lesson) => lesson.date > moment().format('YYYY-MM-DD')
-        )[0] || [...this.lessons].pop()
-
-      if (nextLesson) {
-        this.setLesson(nextLesson)
-        this.SET_DATE(nextLesson.date)
+        if (nextLesson) {
+          this.setLesson(nextLesson)
+          this.SET_DATE(nextLesson.date)
+        }
+      } catch (error) {
+        // Handle any error that occurred during the request
+        console.error('Error fetching lessons:', error)
+      } finally {
+        // Ensure that isLoading is set to false regardless of success or failure
+        this.isLoading = false
       }
     },
     async joinLesson(lessonId, value) {
