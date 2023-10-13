@@ -35,16 +35,18 @@
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
         </Toolbar>
-        <SearchBar
-          :search-word="content"
-          :type="type"
-          :tags="tags"
-          store-name="materialsForLessonStore"
-          @onChangeType="onChangeType"
-          @onChangeTags="onChangeTags"
-          @searchFieldExecuted="searchFieldExecuted"
-          @searchFieldWithDebounce="searchFieldWithDebounce"
-        />
+        <div class="pt-2 pt-md-1">
+          <SearchBar
+            :search-word="content"
+            :type="type"
+            :tags="tags"
+            store-name="materialsForLessonStore"
+            @onChangeType="onChangeType"
+            @onChangeTags="onChangeTags"
+            @searchFieldExecuted="searchFieldExecuted"
+            @searchFieldWithDebounce="searchFieldWithDebounce"
+          />
+        </div>
       </template>
 
       <!-- ------------ NO DATA ------------ -->

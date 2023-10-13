@@ -1,13 +1,11 @@
 <template>
-  <v-card-text>
+  <div>
     <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <WorkspaceList />
-        </v-card-text>
-      </v-card>
+      <div flat>
+        <WorkspaceList />
+      </div>
     </div>
-  </v-card-text>
+  </div>
 </template>
 
 <script>

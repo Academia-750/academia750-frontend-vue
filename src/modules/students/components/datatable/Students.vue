@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <div>
     <SearchRoleModal
       ref="searchStudent"
       :loading="isAddingRole"
@@ -105,7 +105,7 @@
         </div>
       </template>
     </resource-dialog-confirm-delete>
-  </v-card-text>
+  </div>
 </template>
 
 <script src="./StudentsComponent.js"></script>

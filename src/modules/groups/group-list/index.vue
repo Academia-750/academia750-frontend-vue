@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <GroupList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <GroupList />
 </template>
 
 <script>
@@ -21,9 +13,7 @@ export default {
   },
   mixins: [notifications],
   data() {
-    return {
-      reloadDatatableUsers: false
-    }
+    return {}
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
