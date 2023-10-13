@@ -27,31 +27,32 @@
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
-              <div v-if="loading" class="d-flex flex-column justify-center align-center pa-8">
-                <v-progress-circular
-                  :size="30"
-                  :width="4"
-                  color="primary"
-                  indeterminate
-                >
-                </v-progress-circular>
-                <p class="pa-1">Preparando tus clases...</p>
-              </div>
-              <div v-show="!loading">
+              <div>
                 <v-menu
                   v-model="calendarMenu"
                   :close-on-content-click="false"
                   transition="scale-transition"
                 >
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      v-bind="attrs"
-                      class="mx-3 font-weight-medium text-h5 text-center"
-                      text
-                      v-on="on"
-                    >
-                      {{ title() }}
-                    </v-btn>
+                    <div>
+                      <v-btn
+                        v-bind="attrs"
+                        class="mx-3 font-weight-medium text-h5 text-center"
+                        text
+                        v-on="on"
+                      >
+                        <v-progress-circular
+                          v-show="loading"
+                          :size="20"
+                          :width="4"
+                          color="primary"
+                          indeterminate
+                          class="pr-6"
+                        >
+                        </v-progress-circular>
+                        <span> {{ title() }} </span>
+                      </v-btn>
+                    </div>
                   </template>
                   <v-date-picker
                     :value="focus"

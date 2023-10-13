@@ -222,10 +222,10 @@ export default {
         to: end
       }
 
-      try {
-        const { results } = await LessonRepository.calendar(params)
+      const { results } = await LessonRepository.calendar(params)
 
-        this.lessons = results
+      this.lessons = results
+      this.isLoading = false
 
       // We already have a current selected lesson in this month
       const alreadySelected = this.lessons.find(
@@ -241,17 +241,10 @@ export default {
           (lesson) => lesson.date > moment().format('YYYY-MM-DD')
         )[0] || [...this.lessons].pop()
 
-        if (nextLesson) {
-          this.setLesson(nextLesson)
-          this.SET_DATE(nextLesson.date)
-          this.loading = false
-        }
-      } catch (error) {
-        // Handle any error that occurred during the request
-        console.error('Error fetching lessons:', error)
-      } finally {
-        // Ensure that isLoading is set to false regardless of success or failure
-        this.isLoading = false
+      if (nextLesson) {
+        this.setLesson(nextLesson)
+        this.SET_DATE(nextLesson.date)
+        this.loading = false
       }
     }
   },
