@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: {
     ...DataTableStore.state,
-    willJoin: undefined,
+    willJoin: false,
     total: 0,
     willAssist: 0
   },

@@ -47,7 +47,7 @@
           >
             <span class="text-subtitle-1 mr-1">Solo asistentes</span>
             <v-checkbox
-              :value="willAssist"
+              v-model="willAssist"
               class="mt-3"
               @click="filterByWillAssist"
             ></v-checkbox>
@@ -160,7 +160,9 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
 
-  mounted() {},
+  mounted() {
+    console.log('======willAssist', this.willAssist)
+  },
 
   methods: {
     ...mapActions('lessonStudentStore', ['resetTableOptions']),
