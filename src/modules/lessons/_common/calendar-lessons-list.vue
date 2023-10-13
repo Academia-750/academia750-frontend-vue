@@ -20,42 +20,55 @@
               ></v-select>
             </div>
           </div>
+          <!-- Calendar section -->
           <!--- MONTH SELECT --->
           <div flat class="d-flex justify-center mb-4">
             <div class="d-flex justify-center align-center">
               <v-btn fab x-small color="primary" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
-              <v-menu
-                v-model="calendarMenu"
-                :close-on-content-click="false"
-                transition="scale-transition"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    v-bind="attrs"
-                    class="mx-3 font-weight-medium text-h5 text-center"
-                    text
-                    v-on="on"
-                  >
-                    {{ title() }}
-                  </v-btn>
-                </template>
-                <v-date-picker
-                  :value="focus"
-                  position="left"
-                  elevation="4"
-                  no-title
-                  :first-day-of-week="1"
-                  @input="onMiniCalendar"
-                ></v-date-picker>
-              </v-menu>
+              <div>
+                <v-menu
+                  v-model="calendarMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <div>
+                      <v-btn
+                        v-bind="attrs"
+                        class="mx-3 font-weight-medium text-h5 text-center"
+                        text
+                        v-on="on"
+                      >
+                        <v-progress-circular
+                          v-show="loading"
+                          :size="20"
+                          :width="4"
+                          color="primary"
+                          indeterminate
+                          class="pr-6"
+                        >
+                        </v-progress-circular>
+                        <span> {{ title() }} </span>
+                      </v-btn>
+                    </div>
+                  </template>
+                  <v-date-picker
+                    :value="focus"
+                    position="left"
+                    elevation="4"
+                    no-title
+                    :first-day-of-week="1"
+                    @input="onMiniCalendar"
+                  ></v-date-picker>
+                </v-menu>
+              </div>
               <v-btn fab x-small color="primary" @click="next">
                 <v-icon small> mdi-chevron-right </v-icon>
               </v-btn>
             </div>
           </div>
-
           <!--- CALENDAR --->
           <v-calendar
             ref="calendar"
@@ -106,6 +119,10 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
