@@ -194,7 +194,7 @@ export default {
       willJoin,
       content: content || undefined
     }
-
+    
     deleteUndefined(params)
     const response = await ResourceService.get(`lesson/${lessonId}/students`, {
       params

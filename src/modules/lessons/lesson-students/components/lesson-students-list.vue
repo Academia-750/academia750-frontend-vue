@@ -19,7 +19,7 @@
         <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
             <span class="font-weight-bold text-h6 mr-1">
-              Asistentes: {{ willJoin }} / {{ total }}
+              {{ `Asistentes: ${willJoin} / ${total}` }}
             </span>
             <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
             <resource-button
@@ -89,7 +89,7 @@
 
 <script>
 import _ from 'lodash'
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import LessonRepository from '@/services/LessonRepository'
 import headers from './students-table-columns'
@@ -138,14 +138,11 @@ export default {
   data() {
     return {
       searchWordText: '',
-      loading: false,
-      groupName: '',
-      willJoin: 0,
-      total: 0,
-      willAssist: undefined
+      loading: false
     }
   },
   computed: {
+    ...mapState('lessonStudentStore', ['willJoin', 'total', 'willAssist']),
     headers() {
       return headers
     },
@@ -167,12 +164,12 @@ export default {
 
   methods: {
     ...mapActions('lessonStudentStore', ['resetTableOptions']),
-    ...mapMutations('lessonStudentStore', ['SET_TABLE_OPTIONS']),
+    ...mapMutations('lessonStudentStore', ['SET_TABLE_OPTIONS', 'SET_WILL_JOIN', 'SET_TOTAL', 'SET_WILL_ASSIST']),
     addStudents() {
       this.$refs.addStudents.open()
     },
     async filterByWillAssist() {
-      this.willAssist = !this.willAssist
+      this.SET_WILL_ASSIST(!this.willAssist)
       this.loadLessonStudents()
       this.tableReload()
     },
@@ -191,8 +188,8 @@ export default {
 
       const res = await LessonRepository.lessonStudentList(lessonId, params)
 
-      this.total = res.total
-      this.willJoin = res.will_join_count
+      this.SET_TOTAL(res.total)
+      this.SET_WILL_JOIN(res.will_join_count)
 
       return res
     },
@@ -233,6 +230,10 @@ export default {
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
+    },
+    resetTableOptions() {
+      this.$store.dispatch('lessonStudentStore/resetTableOptions')
+      this.$refs.table.reload()
     }
   }
 }
