@@ -160,9 +160,7 @@ export default {
     this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
 
-  mounted() {
-    console.log('======willAssist', this.willAssist)
-  },
+  mounted() {},
 
   methods: {
     ...mapActions('lessonStudentStore', ['resetTableOptions']),
