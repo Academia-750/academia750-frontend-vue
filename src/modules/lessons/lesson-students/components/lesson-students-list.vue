@@ -4,7 +4,7 @@
     <AddStudentsModal
       ref="addStudents"
       :loading="loading"
-      @created="tableReload"
+      @created="reset"
     />
     <DeleteGroupModal ref="deleteGroupModal" @deleted="tableReload" />
 
@@ -172,6 +172,10 @@ export default {
       this.SET_WILL_ASSIST(!this.willAssist)
       this.loadLessonStudents()
       this.tableReload()
+    },
+    reset() {
+      this.tableReload()
+      this.resetTableOptions()
     },
     deleteGroupFromLesson() {
       this.$refs.deleteGroupModal.open()

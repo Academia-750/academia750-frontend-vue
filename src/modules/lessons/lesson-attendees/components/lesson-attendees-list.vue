@@ -131,9 +131,6 @@ export default {
   methods: {
     ...mapActions('lessonAttendeesStore', ['resetTableOptions']),
     ...mapMutations('lessonAttendeesStore', ['SET_TABLE_OPTIONS', 'SET_WILL_JOIN', 'SET_TOTAL', 'SET_WILL_ASSIST']),
-    addStudents() {
-      this.$refs.addStudents.open()
-    },
     async getLessonInfo() {
       const lessonId = this.$route.params.id
 
