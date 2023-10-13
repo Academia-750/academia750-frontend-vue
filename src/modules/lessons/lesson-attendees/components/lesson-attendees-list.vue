@@ -173,7 +173,7 @@ export default {
       this.searchFieldExecuted(value)
     },
     resetTableOptions() {
-      this.$store.dispatch('lessonStudentStore/resetTableOptions')
+      this.$store.dispatch('lessonAttendeesStore/resetTableOptions')
       this.$refs.table.reload()
     }
   }
