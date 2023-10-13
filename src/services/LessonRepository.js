@@ -459,9 +459,9 @@ export default {
 
   /**
    * @param {string} type
-   * @param {string} tags[0]
-   * @param {string} lessons[0]
-   * @param {string} workspaces[0]
+   * @param {string} tags
+   * @param {string} lessons
+   * @param {string} workspaces
    * @param {string} orderBy
    * @param {string} order
    * @param {string} limit
