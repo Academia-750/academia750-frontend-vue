@@ -9,131 +9,144 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <div class="d-flex align-center mx-3 type-section">
-      <!-- ------------ TYPE ------------ -->
-      <v-select
-        :items="types"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Tipos"
-        :value="state.type"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeType"
-      ></v-select>
-      <!-- ------------WORKSPACE ------------ -->
-      <v-select
-        :value="state.workspace"
-        :items="workspaces"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Categoría"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeWorkspace"
-      ></v-select>
-      <!-- ------------ TAGS ------------ -->
-      <TagsAutoComplete
-        :tags="state.tags"
-        tag-type="material"
-        :dense="true"
-        @change="onChangeTags"
-      />
+      <v-row>
+        <!-- ------------ TAGS ------------ -->
+        <v-col cols="4">
+          <TagsAutoComplete
+            :tags="state.tags"
+            tag-type="material"
+            :dense="true"
+            @change="onChangeTags"
+          />
+        </v-col>
+        <!-- ------------ TYPE ------------ -->
+        <v-col cols="4">
+          <v-select
+            :items="types"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Tipos"
+            :value="state.type"
+            dense
+            outlined
+            class="ml-2"
+            clearable
+            @change="onChangeType"
+          ></v-select>
+        </v-col>
+        <!-- -----------WORKSPACE ------------ -->
+        <v-col cols="4">
+          <v-select
+            v-show="hideWorkspace"
+            :value="state.workspace"
+            :items="workspaces"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Categoría"
+            dense
+            outlined
+            class="ml-2"
+            clearable
+            @change="onChangeWorkspace"
+          ></v-select>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
-import WorkspaceRepository from '@/services/WorkspaceRepository'
+import _ from "lodash";
+import WorkspaceRepository from "@/services/WorkspaceRepository";
 
 export default {
-  name: 'SearchBar',
+  name: "SearchBar",
   components: {
     TagsAutoComplete: () =>
       import(
-        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
+        /* webpackChunkName: "TagsAutoComplete" */ "@/modules/resources/components/form/tags-auto-complete"
       ),
     ResourceTextFieldSearch: () =>
       import(
-        /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
-      )
+        /* webpackChunkName: "ResourceTextFieldSearch" */ "@/modules/resources/components/resources/ResourceTextFieldSearch"
+      ),
   },
   props: {
     storeName: {
       type: String,
-      required: true
+      required: true,
     },
     displayWorkspace: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tags: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
+    hideWorkspace: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       types: [
         {
-          key: 'material',
-          label: 'Materiales'
+          key: "material",
+          label: "Materiales",
         },
         {
-          key: 'recording',
-          label: 'Grabaciones'
-        }
+          key: "recording",
+          label: "Grabaciones",
+        },
       ],
-      workspaces: []
-    }
+      workspaces: [],
+    };
   },
   computed: {
     state() {
-      return this.$store.state[this.storeName]
-    }
+      return this.$store.state[this.storeName];
+    },
   },
   mounted() {
-    this.loadWorkspaces()
+    this.loadWorkspaces();
   },
   methods: {
     onChangeType(value) {
-      this.$emit('onChangeType', value)
+      this.$emit("onChangeType", value);
     },
     onChangeWorkspace(value) {
-      this.$emit('onChangeWorkspace', value)
+      this.$emit("onChangeWorkspace", value);
     },
     onChangeTags(value) {
-      this.$emit('onChangeTags', value)
+      this.$emit("onChangeTags", value);
     },
     searchFieldExecuted($event) {
-      this.$emit('searchFieldExecuted', $event)
+      this.$emit("searchFieldExecuted", $event);
     },
     searchFieldWithDebounce(value) {
-      this.$emit('searchFieldExecuted', value)
+      this.$emit("searchFieldExecuted", value);
     },
     async create() {
-      this.$refs.table.reload()
+      this.$refs.table.reload();
     },
     async loadWorkspaces(pagination) {
       const params = {
-        ...pagination
-      }
+        ...pagination,
+      };
 
-      const res = await WorkspaceRepository.list(params)
+      const res = await WorkspaceRepository.list(params);
 
       this.workspaces = res.results.map((item) => ({
         key: item.id.toString(),
-        label: item.name
-      }))
-    }
-  }
-}
+        label: item.name,
+      }));
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .lessons-info {
