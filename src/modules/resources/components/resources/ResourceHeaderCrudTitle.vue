@@ -36,8 +36,7 @@ export default {
       type: Object,
       default: function () {
         return {
-          'mb-3': true,
-          'mx-2': true,
+          'ma-2': true,
           'cursor-pointer': true
         }
       }

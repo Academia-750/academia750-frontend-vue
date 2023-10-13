@@ -20,20 +20,21 @@
           </template>
         </Toolbar>
         <!-- ------------ TYPE SECTION ------------ -->
-
-        <SearchBar
-          :search-word="content"
-          :workspace="workspace"
-          :type="type"
-          :tags="tags"
-          store-name="workspaceMaterialStore"
-          :display-workspace="true"
-          @onChangeType="onChangeType"
-          @onChangeWorkspace="onChangeWorkspace"
-          @onChangeTags="onChangeTags"
-          @searchFieldExecuted="searchFieldExecuted"
-          @searchFieldWithDebounce="searchFieldWithDebounce"
-        />
+        <div class="mt-4">
+          <SearchBar
+            :search-word="content"
+            :workspace="workspace"
+            :type="type"
+            :tags="tags"
+            store-name="workspaceMaterialStore"
+            :display-workspace="true"
+            @onChangeType="onChangeType"
+            @onChangeWorkspace="onChangeWorkspace"
+            @onChangeTags="onChangeTags"
+            @searchFieldExecuted="searchFieldExecuted"
+            @searchFieldWithDebounce="searchFieldWithDebounce"
+          />
+        </div>
 
         <ResourceButtonAdd
           text-button="Nuevo Material"

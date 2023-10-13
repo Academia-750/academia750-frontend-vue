@@ -5,7 +5,7 @@
       :can-rendering-header="$vuetify.breakpoint.width < 700"
     />
     <v-toolbar flat class="indigo lighten-5 my-md-2" outlined elevation="2">
-      <resource-button-go-back-router :width-number-limit="300" />
+      <resource-button-go-back-router v-if="back" :width-number-limit="300" />
       <v-toolbar-title class="align-center d-none d-md-flex">
         <v-icon right class="">{{ icon }}</v-icon>
         <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
@@ -38,6 +38,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    back: {
+      type: Boolean,
+      default: true
     }
   }
 }

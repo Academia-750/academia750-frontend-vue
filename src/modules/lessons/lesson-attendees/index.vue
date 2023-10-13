@@ -1,7 +1,5 @@
 <template>
-  <div ref="sectionTabsItemsGroupsByStatusAccount">
-    <LessonsAttendeesDatatable />
-  </div>
+  <LessonsAttendeesDatatable />
 </template>
 
 <script>

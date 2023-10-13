@@ -15,9 +15,8 @@
       :load="loadWorkspaces"
     >
       <template v-slot:top>
-
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Categorias">
+        <Toolbar title="Categorias" :back="false">
           <template slot="actions">
             <ResourceButtonMaterials
               text-button="Gestionar Temas"
