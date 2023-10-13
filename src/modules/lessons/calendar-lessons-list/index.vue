@@ -89,6 +89,13 @@
         </v-card>
       </template>
       <template v-else>
+        <div class="d-flex justify-end my-2">
+          <ResourceButtonAdd
+            class="ml-16"
+            text-button="Crear Clase"
+            @click="addLesson"
+          />
+        </div>
         <div class="d-flex justify-center mt-2 mb-2">
           <MobileCalendar
             :loading="isLoading"
@@ -107,13 +114,6 @@
           </MobileCalendar>
         </div>
       </template>
-      <div class="d-flex justify-end my-2">
-        <ResourceButtonAdd
-          class="ml-16"
-          text-button="Crear Clase"
-          @click="addLesson"
-        />
-      </div>
     </div>
   </v-card-text>
 </template>
