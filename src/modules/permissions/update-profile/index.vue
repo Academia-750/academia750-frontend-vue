@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import ProfileRepository from '@/services/ProfileRepository'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
@@ -66,7 +66,7 @@ export default {
       ),
     PermissionsList: () =>
       import(
-        /* webpackChunkName: "ServerDataTable" */ './components/rolesPermissionsList.vue'
+        /* webpackChunkName: "ServerDataTable" */ './components/roles-permissions-list.vue'
       )
   },
   data() {

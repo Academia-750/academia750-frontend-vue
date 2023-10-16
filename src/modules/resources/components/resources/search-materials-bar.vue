@@ -10,15 +10,6 @@
     />
     <div class="d-flex align-center mx-3 type-section">
       <v-row>
-        <!-- ------------ TAGS ------------ -->
-        <v-col cols="4">
-          <TagsAutoComplete
-            :tags="state.tags"
-            tag-type="material"
-            :dense="true"
-            @change="onChangeTags"
-          />
-        </v-col>
         <!-- ------------ TYPE ------------ -->
         <v-col cols="4">
           <v-select
@@ -35,6 +26,17 @@
             @change="onChangeType"
           ></v-select>
         </v-col>
+
+        <!-- ------------ TAGS ------------ -->
+        <v-col cols="4">
+          <TagsAutoComplete
+            :tags="state.tags"
+            tag-type="material"
+            :dense="true"
+            @change="onChangeTags"
+          />
+        </v-col>
+
         <!-- -----------WORKSPACE ------------ -->
         <v-col cols="4">
           <v-select

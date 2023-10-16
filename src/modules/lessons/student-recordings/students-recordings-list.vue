@@ -41,6 +41,7 @@
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
+import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsRecordingsList',

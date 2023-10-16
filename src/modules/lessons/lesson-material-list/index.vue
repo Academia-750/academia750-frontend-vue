@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <LessonMaterialsList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <LessonMaterialsList />
 </template>
 
 <script>

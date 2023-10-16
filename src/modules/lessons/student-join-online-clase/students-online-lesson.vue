@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div>
-      <LessonToolBar>
-        <template slot="info">
-          <div class="d-flex align-center">
-            <div class="text-bold mr-2">Clase:</div>
-            <span class="font-weight-bold subtitle-2">
-              {{ lesson.name }}
-            </span>
-          </div>
-        </template>
-      </LessonToolBar>
-    </div>
+    <Toolbar :title="`Clase ${lesson.name}`"> </Toolbar>
 
     <v-spacer></v-spacer>
 
@@ -38,11 +27,13 @@
 import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
-import LessonToolBar from '@/modules/lessons/_common/lesson-tool-bar.vue'
 export default {
   name: 'StudentsOnlineLesson',
   components: {
-    LessonToolBar
+    Toolbar: () =>
+      import(
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
+      )
   },
   data() {
     return {
