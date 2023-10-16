@@ -2,7 +2,7 @@
   <div>
     <StudentsMaterialsBase
       ref="recordingsList"
-      title="Grabaciones de Clase"
+      :title="`Grabaciones de clase ${lesson ? lesson.name : ''}`"
       store-name="studentsRecordingsStore"
       type="recording"
       :loading="loading"
@@ -59,6 +59,9 @@ export default {
     return {
       loading: false
     }
+  },
+  computed: {
+    ...mapState('studentsRecordingsStore', ['lesson'])
   },
   mounted() {},
   methods: {

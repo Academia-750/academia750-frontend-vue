@@ -4,7 +4,7 @@
     :loading="loading"
     :headers="headers"
     :items="state.items"
-    :item-key="itemIdKey"
+    :item-key="itemKey"
     show-select
     no-data-text="No hay datos disponibles"
     :mobile-breakpoint="700"
@@ -42,7 +42,7 @@ export default {
       type: Function,
       required: true
     },
-    itemIdKey: {
+    itemKey: {
       type: String,
       default: 'id'
     }
@@ -73,6 +73,8 @@ export default {
   methods: {
     setSelected(value) {
       this.$store.commit(`${this.storeName}/SET_ITEMS_SELECTED`, value)
+
+      console.log({ selected: this.state.selected })
     },
     onOptionsUpdate(options) {
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, {

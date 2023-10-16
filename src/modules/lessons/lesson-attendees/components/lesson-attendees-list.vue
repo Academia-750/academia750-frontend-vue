@@ -4,6 +4,7 @@
     ref="table"
     :headers="headers"
     store-name="lessonAttendeesStore"
+    item-key="user_id"
     :load="loadLessonStudents"
   >
     <template v-slot:top>
