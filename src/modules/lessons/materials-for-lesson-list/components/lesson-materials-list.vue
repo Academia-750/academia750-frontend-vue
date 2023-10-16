@@ -24,7 +24,7 @@
               @click="
                 $router.push({
                   name: 'add-materials',
-                  params: { id: $route.params.id },
+                  params: { id: $route.params.id }
                 })
               "
             />
@@ -39,7 +39,7 @@
           :search-word="content"
           :type="type"
           :tags="tags"
-          :hide-workspace="false"
+          :hide-workspace="true"
           store-name="materialsForLessonStore"
           @onChangeType="onChangeType"
           @onChangeTags="onChangeTags"
@@ -76,7 +76,7 @@
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || "aa" }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || 'aa' }}
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -157,10 +157,7 @@ export default {
     }
   },
   created() {
-    this.searchFieldWithDebounce = _.debounce(
-      this.searchFieldWithDebounce,
-      600
-    )
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
   mounted() {
     this.$refs.table.reload()

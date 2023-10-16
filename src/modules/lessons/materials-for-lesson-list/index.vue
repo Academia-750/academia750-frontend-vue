@@ -18,7 +18,7 @@ export default {
   components: {
     LessonMaterialsList: () =>
       import(
-        /* webpackChunkName: "LessonMaterialsList" */ './components/materials-lesson-list.vue'
+        /* webpackChunkName: "LessonMaterialsList" */ './components/lesson-materials-list.vue'
       )
   },
   mixins: [notifications],

@@ -38,7 +38,7 @@
         <!-- -----------WORKSPACE ------------ -->
         <v-col cols="4">
           <v-select
-            v-show="hideWorkspace"
+            v-show="!hideWorkspace"
             :value="state.workspace"
             :items="workspaces"
             item-text="label"
@@ -77,10 +77,6 @@ export default {
     storeName: {
       type: String,
       required: true
-    },
-    displayWorkspace: {
-      type: Boolean,
-      default: false
     },
     tags: {
       type: Array,

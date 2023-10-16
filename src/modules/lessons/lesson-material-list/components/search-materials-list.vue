@@ -14,8 +14,6 @@
         </Toolbar>
         <SearchBar
           store-name="lessonMaterialsStore"
-          :display-workspace="true"
-          :hide-workspace="true"
           @onChangeType="onChangeType"
           @onChangeWorkspace="onChangeWorkspace"
           @onChangeTags="onChangeTags"
@@ -55,7 +53,7 @@
         </div>
       </template>
       <template v-slot:[`item.type`]="{ item }">
-        {{ MATERIAL_TYPES_LABELS[item.type] || "Tipo Desconocido" }}
+        {{ MATERIAL_TYPES_LABELS[item.type] || 'Tipo Desconocido' }}
       </template>
     </ServerDataTable>
   </v-card-text>
@@ -130,10 +128,7 @@ export default {
     }
   },
   created() {
-    this.searchFieldWithDebounce = _.debounce(
-      this.searchFieldWithDebounce,
-      600
-    )
+    this.searchFieldWithDebounce = _.debounce(this.searchFieldWithDebounce, 600)
   },
   mounted() {
     this.$refs.table.reload()
