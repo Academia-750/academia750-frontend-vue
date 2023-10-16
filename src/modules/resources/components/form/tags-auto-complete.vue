@@ -1,55 +1,27 @@
 <template>
-  <ValidationProvider
+  <BaseAutocomplete
     ref="autocomplete"
-    v-slot="{ errors }"
-    mode="aggressive"
-    :rules="rules"
     name="temas"
-  >
-    <v-autocomplete
-      :value="tags"
-      :items="tagsList"
-      :loading="loading"
-      :error-messages="errors"
-      tags-list
-      clearable
-      label="Temas"
-      multiple
-      solo
-      outlined
-      :dense="dense"
-      @change="onChangeTags"
-      @update:search-input="loadTags"
-    >
-      <template v-slot:selection="{ attrs, item, select, selected }">
-        <v-chip
-          v-bind="attrs"
-          :input-value="selected"
-          close
-          small
-          @click="select"
-          @click:close="remove(item)"
-        >
-          <strong>{{ item }}</strong>
-          &nbsp;
-        </v-chip>
-      </template>
-    </v-autocomplete>
-  </ValidationProvider>
+    label="Temas"
+    :limit="limit"
+    :values="tags"
+    :rules="rules"
+    :load-data="loadTags"
+    @change="onChange"
+  />
 </template>
 
 <script>
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
+import BaseAutocomplete from './base-multiple-autocomplete.vue'
+
 export default {
   name: 'TagsAutoComplete',
+  components: { BaseAutocomplete },
   props: {
     limit: {
       type: Number,
       default: 5
-    },
-    dense: {
-      type: Boolean,
-      default: false
     },
     tagType: {
       type: String,
@@ -64,39 +36,22 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      tagsList: [],
-      loading: false
-    }
-  },
-  mounted() {
-    this.loadTags()
-  },
+
   methods: {
     async loadTags(value) {
-      this.loading = true
-      const tags = await WorkspaceMaterialRepository.searchTags({
+      const items = await WorkspaceMaterialRepository.searchTags({
         content: value,
         limit: this.limit,
         type: this.tagType
       })
 
-      this.tagsList = tags.map((item) => item.name)
-      this.loading = false
+      return items.map((item) => item.name)
     },
-    onChangeTags(value) {
-      this.$emit('change', value)
-    },
-    remove(item) {
-      console.log({ item })
-      this.$emit(
-        'change',
-        this.tags.filter((tag) => tag !== item)
-      )
+    onChange(values) {
+      this.$emit('change', values)
     },
     resetErrors() {
-      this.$refs['autocomplete'] && this.$refs['autocomplete'].reset()
+      this.$refs['autocomplete'] && this.$refs['autocomplete'].resetErrors()
     }
   }
 }

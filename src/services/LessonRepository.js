@@ -465,8 +465,9 @@ export default {
 
   /**
    * @param {string} type
-   * @param {string} tags[0]
-   * @param {string} lessons[0]
+   * @param {string} tags
+   * @param {string} lessons
+   * @param {string} workspaces
    * @param {string} orderBy
    * @param {string} order
    * @param {string} limit
@@ -477,6 +478,7 @@ export default {
     type,
     tags,
     lessons,
+    workspaces,
     orderBy,
     order,
     limit,
@@ -487,6 +489,7 @@ export default {
       type: type || undefined,
       tags,
       lessons,
+      workspaces,
       orderBy,
       order,
       limit,

@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <div>
     <!-- ------------ ADD STUDENT TO LESSON ------------ -->
     <AddStudentsModal
       ref="addStudents"
@@ -84,7 +84,7 @@
         </div>
       </template>
     </ServerDataTable>
-  </v-card-text>
+  </div>
 </template>
 
 <script>

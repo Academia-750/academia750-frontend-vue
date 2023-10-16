@@ -6,6 +6,7 @@ export default {
   state: {
     ...DataTableStore.state,
     currentUserForUpdate: null,
+    workspaces: [],
     tags: [],
     lesson: false
   },
@@ -20,6 +21,9 @@ export default {
     },
     SET_LESSON(state, payload) {
       state.lesson = payload
+    },
+    SET_WORKSPACES(state, payload) {
+      state.workspaces = payload
     }
   },
   actions: {
@@ -27,6 +31,7 @@ export default {
     resetTableOptions({ commit }) {
       DataTableStore.actions.resetTableOptions({ commit })
       commit('SET_TAGS', [])
+      commit('SET_WORKSPACES', [])
       commit('SET_LESSON', false)
     }
   }

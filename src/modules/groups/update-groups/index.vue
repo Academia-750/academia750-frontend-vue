@@ -1,19 +1,7 @@
 <template>
   <div>
-    <v-toolbar
-      flat
-      class="indigo lighten-5 my-md-2 mx-md-2"
-      outlined
-      elevation="2"
-    >
-      <resource-button-go-back-router :width-number-limit="300" />
-      <v-toolbar-title class="d-flex align-end">
-        <v-icon large right class="mx-1"> mdi-account-group </v-icon>
-        <span class="ml-2 font-weight-medium text-xs-caption text-sm-h7">
-          Crear Grupo
-        </span>
-      </v-toolbar-title>
-    </v-toolbar>
+    <Toolbar title="Crear Grupo" icon="mdi-account-group"> </Toolbar>
+
     <validation-observer ref="FormCreateGroup">
       <section class="px-2 py-2 d-flex flex-sm-column align-center">
         <v-row dense :style="{ width: '-webkit-fill-available' }">
@@ -61,9 +49,9 @@ import { inputValidRegex } from '@/utils/inputValidRegex'
 
 export default {
   components: {
-    ResourceButtonGoBackRouter: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     NameFieldInput: () =>
       import(

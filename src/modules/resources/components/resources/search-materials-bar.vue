@@ -9,41 +9,52 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <div class="d-flex align-center mx-3 type-section">
-      <!-- ------------ TYPE ------------ -->
-      <v-select
-        :items="types"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Tipos"
-        :value="state.type"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeType"
-      ></v-select>
-      <!-- ------------WORKSPACE ------------ -->
-      <v-select
-        :value="state.workspace"
-        :items="workspaces"
-        item-text="label"
-        item-value="key"
-        persistent-hint
-        label="Categoría"
-        dense
-        outlined
-        class="mr-2"
-        clearable
-        @change="onChangeWorkspace"
-      ></v-select>
-      <!-- ------------ TAGS ------------ -->
-      <TagsAutoComplete
-        :tags="state.tags"
-        tag-type="material"
-        :dense="true"
-        @change="onChangeTags"
-      />
+      <v-row>
+        <!-- ------------ TYPE ------------ -->
+        <v-col cols="4">
+          <v-select
+            :items="types"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Tipos"
+            :value="state.type"
+            dense
+            outlined
+            class="ml-2"
+            clearable
+            @change="onChangeType"
+          ></v-select>
+        </v-col>
+
+        <!-- ------------ TAGS ------------ -->
+        <v-col cols="4">
+          <TagsAutoComplete
+            :tags="state.tags"
+            tag-type="material"
+            :dense="true"
+            @change="onChangeTags"
+          />
+        </v-col>
+
+        <!-- -----------WORKSPACE ------------ -->
+        <v-col cols="4">
+          <v-select
+            v-show="!hideWorkspace"
+            :value="state.workspace"
+            :items="workspaces"
+            item-text="label"
+            item-value="key"
+            persistent-hint
+            label="Categoría"
+            dense
+            outlined
+            class="ml-2"
+            clearable
+            @change="onChangeWorkspace"
+          ></v-select>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -69,13 +80,13 @@ export default {
       type: String,
       required: true
     },
-    displayWorkspace: {
-      type: Boolean,
-      default: false
-    },
     tags: {
       type: Array,
       default: () => []
+    },
+    hideWorkspace: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

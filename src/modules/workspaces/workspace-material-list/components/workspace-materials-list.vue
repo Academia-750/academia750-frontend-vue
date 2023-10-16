@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <div>
     <AddMaterialModal
       ref="addWorkspaceMaterial"
       :default-workspace="workspace"
@@ -14,36 +14,27 @@
     >
       <template v-slot:top>
         <!-- ------------ TOP ------------ -->
-
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de espacio de trabajo"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
-        />
-
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-button-go-back-router />
-          <resource-title-toolbar-datatable title-text="Materiales" />
-
-          <v-spacer />
-
-          <resource-button icon-button="mdi-autorenew" @click="reset()" />
-        </v-toolbar>
+        <Toolbar title="Materiales">
+          <template slot="actions">
+            <resource-button icon-button="mdi-autorenew" @click="reset()" />
+          </template>
+        </Toolbar>
         <!-- ------------ TYPE SECTION ------------ -->
-
-        <SearchBar
-          :search-word="content"
-          :workspace="workspace"
-          :type="type"
-          :tags="tags"
-          store-name="workspaceMaterialStore"
-          :display-workspace="true"
-          @onChangeType="onChangeType"
-          @onChangeWorkspace="onChangeWorkspace"
-          @onChangeTags="onChangeTags"
-          @searchFieldExecuted="searchFieldExecuted"
-          @searchFieldWithDebounce="searchFieldWithDebounce"
-        />
+        <div class="mt-4">
+          <SearchBar
+            :search-word="content"
+            :workspace="workspace"
+            :type="type"
+            :tags="tags"
+            store-name="workspaceMaterialStore"
+            :display-workspace="true"
+            @onChangeType="onChangeType"
+            @onChangeWorkspace="onChangeWorkspace"
+            @onChangeTags="onChangeTags"
+            @searchFieldExecuted="searchFieldExecuted"
+            @searchFieldWithDebounce="searchFieldWithDebounce"
+          />
+        </div>
 
         <ResourceButtonAdd
           text-button="Nuevo Material"
@@ -145,7 +136,7 @@
         ></v-progress-circular>
       </v-card>
     </v-dialog>
-  </v-card-text>
+  </div>
 </template>
 
 <script>
@@ -179,14 +170,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
-      import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
-      ),
-    ResourceHeaderCrudTitle: () =>
-      import(
-        /* webpackChunkName: "ResourceHeaderCrudTitle" */ '@/modules/resources/components/resources/ResourceHeaderCrudTitle'
-      ),
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
@@ -195,10 +178,9 @@ export default {
       import(
         /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
-
-    ResourceButtonGoBackRouter: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceButtonGoBackRouter" */ '@/modules/resources/components/resources/ResourceButtonGoBackRouter'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
     SearchBar: () =>
       import(

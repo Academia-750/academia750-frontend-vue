@@ -1,34 +1,36 @@
 <template>
   <BaseAutocomplete
     ref="autocomplete"
-    name="lessons"
-    label="Nombre de la clase"
+    class="workspace-autocomplete"
+    name="workspace"
+    label="Categoría"
     :limit="limit"
-    :values="lessons"
+    :values="workspaces"
     :rules="rules"
-    :load-data="loadLessons"
+    :load-data="loadWorkspaces"
     item-text="name"
     item-value="id"
-    @change="onChange"
+    @change="onChangeWorkspaces"
   />
 </template>
 
 <script>
-/**
- * We edited this field but is not in use, maybe next time we use is a little issue on it.
- */
-import LessonRepository from '@/services/LessonRepository'
+import WorkspaceRepository from '@/services/WorkspaceRepository'
 import BaseAutocomplete from './base-multiple-autocomplete.vue'
 
 export default {
-  name: 'LessonsAutoComplete',
+  name: 'WorkSpacesAutoComplete',
   components: { BaseAutocomplete },
   props: {
     limit: {
       type: Number,
       default: 5
     },
-    lessons: {
+    dense: {
+      type: Boolean,
+      default: false
+    },
+    workspaces: {
       type: Array,
       default: () => []
     },
@@ -37,26 +39,35 @@ export default {
       default: ''
     }
   },
+
   methods: {
-    async loadLessons(value) {
-      const lessons = await LessonRepository.searchLessons({
+    async loadWorkspaces(value) {
+      const workspaces = await WorkspaceRepository.searchWorkspaces({
         content: value,
         limit: this.limit
       })
 
-      return lessons.map((item) => {
+      return workspaces.map((item) => {
         return {
           name: item.name,
           id: item.id
         }
       })
     },
-    onChange(value) {
+    onChangeWorkspaces(value) {
       this.$emit('change', value)
     },
+
     resetErrors() {
       this.$refs['autocomplete'] && this.$refs['autocomplete'].resetErrors()
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.workspace-autocomplete::v-deep {
+  .v-input__slot {
+    padding: 8px !important;
+  }
+}
+</style>

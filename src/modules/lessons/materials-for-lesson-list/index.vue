@@ -1,13 +1,5 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <LessonMaterialsList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <LessonMaterialsList />
 </template>
 
 <script>
@@ -18,7 +10,7 @@ export default {
   components: {
     LessonMaterialsList: () =>
       import(
-        /* webpackChunkName: "LessonMaterialsList" */ './components/materials-lesson-list.vue'
+        /* webpackChunkName: "LessonMaterialsList" */ './components/lesson-materials-list.vue'
       )
   },
   mixins: [notifications],
