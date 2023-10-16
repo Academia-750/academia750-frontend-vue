@@ -15,7 +15,6 @@
         <div class="pt-2 pt-md-1">
           <SearchBar
             store-name="lessonMaterialsStore"
-            :display-workspace="true"
             @onChangeType="onChangeType"
             @onChangeWorkspace="onChangeWorkspace"
             @onChangeTags="onChangeTags"

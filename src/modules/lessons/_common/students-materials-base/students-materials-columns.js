@@ -1,10 +1,10 @@
 export default [
   {
     position: 1,
-    text: 'Clase',
+    text: 'Workspace',
     align: 'start',
     sortable: true,
-    value: 'lesson_name',
+    value: 'workspace',
     show: true
   },
   {

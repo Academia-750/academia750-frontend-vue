@@ -7,11 +7,13 @@
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag">
-        <resource-button
-          icon-button="mdi-autorenew"
-          @click="resetTableOptions"
-        />
+      <Toolbar :title="title" icon="mdi-tag" :back="false">
+        <template #actions>
+          <resource-button
+            icon-button="mdi-autorenew"
+            @click="resetTableOptions"
+          />
+        </template>
       </Toolbar>
 
       <div class="mt-3">
@@ -20,9 +22,11 @@
           :content="content"
           :tags="tags"
           :lessons="lessons"
+          :workspaces="workspaces"
           @onChangeTags="onChangeTags"
           @onChangeLessons="onChangeLessons"
           @onChangeContent="onChangeContent"
+          @onChangeWorkspaces="onChangeWorkspaces"
         />
       </div>
     </template>
@@ -112,6 +116,9 @@ export default {
 
       return lesson ? [lesson.id] : undefined
     },
+    workspaces() {
+      return this.$store.state[this.storeName].workspaces
+    },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
     },
@@ -138,11 +145,19 @@ export default {
       this.$refs.table.reload()
     },
 
+    onChangeWorkspaces(value) {
+      this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
+      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
+
+      this.$refs.table.reload()
+    },
+
     async loadStudentsMaterials(pagination) {
       const params = {
         ...pagination,
         tags: this.tags,
         lessons: this.lessons,
+        workspaces: this.workspaces,
         type: this.type
       }
 

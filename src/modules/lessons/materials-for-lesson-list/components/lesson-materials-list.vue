@@ -40,6 +40,7 @@
             :search-word="content"
             :type="type"
             :tags="tags"
+            :hide-workspace="true"
             store-name="materialsForLessonStore"
             @onChangeType="onChangeType"
             @onChangeTags="onChangeTags"

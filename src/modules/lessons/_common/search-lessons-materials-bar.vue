@@ -11,12 +11,21 @@
     />
     <!-- ------------ TYPE SECTION ------------ -->
     <v-row class="ml-1 mr-1">
-      <v-col cols="12" md="5">
+      <v-col cols="6" md="4">
         <TagsAutoComplete
           tag-type="material"
           :tags="tags"
           :dense="true"
           @change="onChangeTags"
+        />
+      </v-col>
+
+      <v-col cols="6" md="4">
+        <WorkSpacesAutoComplete
+          tag-type="material"
+          :workspaces="workspaces"
+          :dense="true"
+          @change="onChangeWorkspaces"
         />
       </v-col>
     </v-row>
@@ -32,6 +41,10 @@ export default {
     TagsAutoComplete: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
+      ),
+    WorkSpacesAutoComplete: () =>
+      import(
+        /* webpackChunkName: "WorkSpacesAutoComplete" */ '@/modules/resources/components/form/work-spaces-auto-complete'
       ),
     ResourceTextFieldSearch: () =>
       import(
@@ -50,6 +63,10 @@ export default {
     lessons: {
       type: Array,
       default: () => []
+    },
+    workspaces: {
+      type: Array,
+      default: () => []
     }
   },
   created() {
@@ -61,6 +78,9 @@ export default {
     },
     onChangeLessons(value) {
       this.$emit('onChangeLessons', value)
+    },
+    onChangeWorkspaces(value) {
+      this.$emit('onChangeWorkspaces', value)
     },
     searchFieldExecuted($event) {
       this.$emit('onChangeContent', $event)
