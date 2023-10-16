@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- ------------ ADD STUDENT TO LESSON ------------ -->
-    <AddStudentsModal
-      ref="addStudents"
-      :loading="loading"
-      @created="reset"
-    />
+    <AddStudentsModal ref="addStudents" :loading="loading" @created="reset" />
     <DeleteGroupModal ref="deleteGroupModal" @deleted="tableReload" />
 
     <ServerDataTable
@@ -18,7 +14,10 @@
         <!-- ------------ ACTIONS ------------ -->
         <Toolbar title="Alumnos" icon="mdi-account-multiple">
           <template slot="actions">
-            <span class="font-weight-bold text-h6 mr-1">
+            <span
+              v-show="willJoin"
+              class="font-weight-bold text-md-h6 text-subtitle-2 mr-1"
+            >
               {{ `Asistentes: ${willJoin} / ${total}` }}
             </span>
             <ResourceButtonAdd text-button="Agregar" @click="addStudents()" />
@@ -69,9 +68,7 @@
           />
         </div>
       </template>
-      <template
-        v-slot:[`item.will_join`]="{ item }"
-      >
+      <template v-slot:[`item.will_join`]="{ item }">
         <div>
           <v-chip
             class="ma-1"
@@ -164,7 +161,12 @@ export default {
 
   methods: {
     ...mapActions('lessonStudentStore', ['resetTableOptions']),
-    ...mapMutations('lessonStudentStore', ['SET_TABLE_OPTIONS', 'SET_WILL_JOIN', 'SET_TOTAL', 'SET_WILL_ASSIST']),
+    ...mapMutations('lessonStudentStore', [
+      'SET_TABLE_OPTIONS',
+      'SET_WILL_JOIN',
+      'SET_TOTAL',
+      'SET_WILL_ASSIST'
+    ]),
     addStudents() {
       this.$refs.addStudents.open()
     },

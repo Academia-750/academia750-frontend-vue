@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag" :back="false">
+      <Toolbar :title="title" icon="mdi-tag" :back="!!lesson">
         <template #actions>
           <resource-button
             icon-button="mdi-autorenew"
