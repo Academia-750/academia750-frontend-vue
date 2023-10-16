@@ -4,7 +4,7 @@
     :loading="loading"
     :headers="headers"
     :items="state.items"
-    :item-key="itemIdKey"
+    :item-key="itemKey"
     show-select
     no-data-text="No hay datos disponibles"
     :mobile-breakpoint="700"
@@ -42,7 +42,7 @@ export default {
       type: Function,
       required: true
     },
-    itemIdKey: {
+    itemKey: {
       type: String,
       default: 'id'
     }

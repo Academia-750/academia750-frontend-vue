@@ -180,19 +180,21 @@ export default {
    * @param {number} offset
    * @param {number} limit
    * @param {string} lessonId
+   * @param {string} willJoin
    */
   async lessonStudentList(
     lessonId,
-    { orderBy, order, limit, offset, content } = {}
+    { orderBy, willJoin, order, limit, offset, content } = {}
   ) {
     const params = {
       orderBy,
       order,
       limit,
       offset,
+      willJoin,
       content: content || undefined
     }
-
+    
     deleteUndefined(params)
     const response = await ResourceService.get(`lesson/${lessonId}/students`, {
       params
@@ -209,7 +211,8 @@ export default {
     return {
       results: response.data.results,
       groups: response.data.groups,
-      total: response.data.total
+      total: response.data.total,
+      will_join_count: response.data.will_join_count
     }
   },
   /**

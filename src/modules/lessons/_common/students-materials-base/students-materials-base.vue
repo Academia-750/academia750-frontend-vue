@@ -3,11 +3,12 @@
     ref="table"
     :headers="headers"
     :store-name="storeName"
+    item-key="material_id"
     :load="loadStudentsMaterials"
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag" :back="false">
+      <Toolbar :title="title" icon="mdi-tag" :back="!!lesson">
         <template #actions>
           <resource-button
             icon-button="mdi-autorenew"
@@ -21,10 +22,8 @@
         <LessonMaterialsSearchBar
           :content="content"
           :tags="tags"
-          :lessons="lessons"
           :workspaces="workspaces"
           @onChangeTags="onChangeTags"
-          @onChangeLessons="onChangeLessons"
           @onChangeContent="onChangeContent"
           @onChangeWorkspaces="onChangeWorkspaces"
         />
@@ -111,13 +110,11 @@ export default {
     tags() {
       return this.$store.state[this.storeName].tags
     },
-    lessons() {
-      const { lesson } = this.$store.state[this.storeName]
-
-      return lesson ? [lesson.id] : undefined
-    },
     workspaces() {
       return this.$store.state[this.storeName].workspaces
+    },
+    lesson() {
+      return this.$store.state[this.storeName].lesson
     },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
@@ -138,13 +135,6 @@ export default {
 
       this.$refs.table.reload()
     },
-    onChangeLessons(value) {
-      this.$store.commit(`${this.storeName}/SET_LESSONS`, value)
-      this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
-
-      this.$refs.table.reload()
-    },
-
     onChangeWorkspaces(value) {
       this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
@@ -156,7 +146,7 @@ export default {
       const params = {
         ...pagination,
         tags: this.tags,
-        lessons: this.lessons,
+        lessons: this.lesson ? [this.lesson.id] : undefined,
         workspaces: this.workspaces,
         type: this.type
       }
