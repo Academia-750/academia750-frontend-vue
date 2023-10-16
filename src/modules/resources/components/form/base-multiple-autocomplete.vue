@@ -19,7 +19,7 @@
       outlined
       :dense="dense"
       :item-text="itemText"
-      :item-value="itemName"
+      :item-value="itemValue"
       @change="change"
       @update:search-input="load"
       @focus="cleanSearch"
@@ -33,7 +33,7 @@
           @click="select"
           @click:close="remove(item)"
         >
-          <strong>{{ item }}</strong>
+          <strong>{{ itemText ? item[itemText] : item }}</strong>
           &nbsp;
         </v-chip>
       </template>
@@ -77,7 +77,7 @@ export default {
       type: String,
       default: ''
     },
-    itemName: {
+    itemValue: {
       type: String,
       default: ''
     }
@@ -111,9 +111,11 @@ export default {
       this.load('')
     },
     remove(item) {
+      const id = this.itemValue ? item[this.itemValue] : item
+
       this.$emit(
         'change',
-        this.values.filter((value) => value !== item)
+        this.values.filter((value) => value !== id)
       )
     },
     resetErrors() {

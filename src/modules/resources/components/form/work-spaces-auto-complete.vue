@@ -1,49 +1,26 @@
 <template>
-  <ValidationProvider
+  <BaseAutocomplete
     ref="autocomplete"
-    v-slot="{ errors }"
-    mode="aggressive"
+    class="workspace-autocomplete"
+    name="workspace"
+    label="Categoría"
+    :limit="limit"
+    :values="workspaces"
     :rules="rules"
-    name="workspaces"
-  >
-    <v-autocomplete
-      :value="workspaces"
-      :items="workspacesList"
-      :loading="loading"
-      :error-messages="errors"
-      workspaces-list
-      clearable
-      label="Nombre de la categorial"
-      multiple
-      solo
-      outlined
-      :dense="dense"
-      item-text="name"
-      item-value="id"
-      @change="onChangeworkspaces"
-      @update:search-input="loadWorkspaces"
-    >
-      <template v-slot:selection="{ attrs, item, select, selected }">
-        <v-chip
-          v-bind="attrs"
-          :input-value="selected"
-          close
-          small
-          @click="select"
-          @click:close="remove(item.id)"
-        >
-          <strong>{{ item.name }}</strong>
-          &nbsp;
-        </v-chip>
-      </template>
-    </v-autocomplete>
-  </ValidationProvider>
+    :load-data="loadWorkspaces"
+    item-text="name"
+    item-value="id"
+    @change="onChangeWorkspaces"
+  />
 </template>
 
 <script>
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import BaseAutocomplete from './base-multiple-autocomplete.vue'
+
 export default {
   name: 'WorkSpacesAutoComplete',
+  components: { BaseAutocomplete },
   props: {
     limit: {
       type: Number,
@@ -62,43 +39,35 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      workspacesList: [],
-      loading: false
-    }
-  },
-  mounted() {
-    this.loadWorkspaces()
-  },
+
   methods: {
     async loadWorkspaces(value) {
-      this.loading = true
       const workspaces = await WorkspaceRepository.searchWorkspaces({
         content: value,
         limit: this.limit
       })
 
-      this.workspacesList = workspaces.map((item) => {
+      return workspaces.map((item) => {
         return {
           name: item.name,
           id: item.id
         }
       })
-      this.loading = false
     },
-    onChangeworkspaces(value) {
+    onChangeWorkspaces(value) {
       this.$emit('change', value)
     },
-    remove(id) {
-      this.$emit(
-        'change',
-        this.workspaces.filter((workspaceId) => workspaceId !== id)
-      )
-    },
+
     resetErrors() {
-      this.$refs['autocomplete'] && this.$refs['autocomplete'].reset()
+      this.$refs['autocomplete'] && this.$refs['autocomplete'].resetErrors()
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.workspace-autocomplete::v-deep {
+  .v-input__slot {
+    padding: 8px !important;
+  }
+}
+</style>

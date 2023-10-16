@@ -7,11 +7,13 @@
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag">
-        <resource-button
-          icon-button="mdi-autorenew"
-          @click="resetTableOptions"
-        />
+      <Toolbar :title="title" icon="mdi-tag" :back="false">
+        <template #actions>
+          <resource-button
+            icon-button="mdi-autorenew"
+            @click="resetTableOptions"
+          />
+        </template>
       </Toolbar>
 
       <div class="mt-3">
