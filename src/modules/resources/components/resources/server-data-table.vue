@@ -73,8 +73,6 @@ export default {
   methods: {
     setSelected(value) {
       this.$store.commit(`${this.storeName}/SET_ITEMS_SELECTED`, value)
-
-      console.log({ selected: this.state.selected })
     },
     onOptionsUpdate(options) {
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, {

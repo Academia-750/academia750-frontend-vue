@@ -33,9 +33,9 @@
         >
           <span class="text-subtitle-1 mr-1">Solo asistentes</span>
           <v-checkbox
-            :value="willAssist"
+            :input-value="willAssist"
             class="mt-3"
-            @click="filterByWillAssist"
+            @change="filterByWillAssist"
           ></v-checkbox>
         </div>
       </div>
@@ -137,8 +137,8 @@ export default {
 
       this.lesson = await LessonRepository.info(lessonId)
     },
-    async filterByWillAssist() {
-      this.SET_WILL_ASSIST(!this.willAssist)
+    async filterByWillAssist(value) {
+      this.SET_WILL_ASSIST(value)
       this.loadLessonStudents()
       this.tableReload()
     },

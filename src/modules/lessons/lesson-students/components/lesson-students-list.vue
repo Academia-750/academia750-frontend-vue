@@ -8,6 +8,7 @@
       ref="table"
       :headers="headers"
       store-name="lessonStudentStore"
+      item-key="user_id"
       :load="loadLessonStudents"
     >
       <template v-slot:top>
@@ -46,9 +47,9 @@
           >
             <span class="text-subtitle-1 mr-1">Solo asistentes</span>
             <v-checkbox
-              v-model="willAssist"
+              :input-value="willAssist"
               class="mt-3"
-              @click="filterByWillAssist"
+              @change="filterByWillAssist"
             ></v-checkbox>
           </div>
         </div>
@@ -170,8 +171,8 @@ export default {
     addStudents() {
       this.$refs.addStudents.open()
     },
-    async filterByWillAssist() {
-      this.SET_WILL_ASSIST(!this.willAssist)
+    async filterByWillAssist(value) {
+      this.SET_WILL_ASSIST(value)
       this.loadLessonStudents()
       this.tableReload()
     },
