@@ -16,11 +16,11 @@
         item-value="key"
         persistent-hint
         label="Tipos"
-        class="v-select ml-2"
-        style="padding: 4px 0"
+        class="v-select"
         :value="state.type"
         outlined
         clearable
+        :dense="$vuetify.breakpoint.width < 700"
         @change="onChangeType"
       ></v-select>
 
@@ -42,9 +42,9 @@
         persistent-hint
         label="Categoría"
         outlined
-        class="ml-2 v-select "
-        style="padding: 4px 0"
+        class="v-select "
         clearable
+        :dense="$vuetify.breakpoint.width < 700"
         @change="onChangeWorkspace"
       ></v-select>
     </div>
@@ -169,15 +169,11 @@ v-text-field.v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__cont
     justify-content: space-between;
     align-items: center;
   }
-  .v-select::v-deep {
-  .v-input__slot {
-    padding: 8px !important;
-  }
-}
 }
 @media screen and (max-width: 600px) {
   .tabs {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0px;
 }
   .lessons-info {
     .lessons-attributes {
