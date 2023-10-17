@@ -177,10 +177,7 @@ v-text-field.v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__cont
 }
 @media screen and (max-width: 600px) {
   .tabs {
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 11px;
-  margin-top: 15px;
 }
   .lessons-info {
     .lessons-attributes {
