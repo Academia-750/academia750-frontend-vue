@@ -50,7 +50,54 @@
       </div>
     </template>
     <template v-slot:[`item.actions-resource`]="{ item }">
-      <slot name="actions" v-bind="item"></slot>
+      <div
+        v-show="storeName === 'studentsMaterialsStore'"
+        class="d-flex justify-space-between align-center"
+      >
+        <div>
+          <v-icon
+            class="cursor-pointer pr-3 pr-md-1"
+            color="primary"
+            @click="download(item)"
+          >
+            mdi-cloud-download
+          </v-icon>
+        </div>
+        <div>
+          <v-icon
+            class="cursor-pointer pa-1"
+            color="primary"
+            @click="openOtherTab(item)"
+          >
+            mdi-eye
+          </v-icon>
+        </div>
+        <div></div>
+      </div>
+      <div
+        v-show="storeName === 'studentsRecordingsStore'"
+        class="d-flex justify-space-between align-center"
+      >
+        <div>
+          <v-icon
+            class="cursor-pointer pr-3 pr-md-1"
+            color="primary"
+            @click="download(item)"
+          >
+            mdi-cloud-download
+          </v-icon>
+        </div>
+        <div>
+          <v-icon
+            class="cursor-pointer pa-1"
+            color="primary"
+            @click="openOtherTab(item)"
+          >
+            mdi-eye
+          </v-icon>
+        </div>
+        <div></div>
+      </div>
     </template>
   </ServerDataTable>
 </template>
@@ -90,21 +137,16 @@ export default {
       type: String,
       required: true
     },
-    storeName: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      required: true
-    },
     loading: {
       type: Boolean,
       default: false
     }
   },
   data() {
-    return {}
+    return {
+      storeName: '',
+      type: ''
+    }
   },
   computed: {
     tags() {
@@ -126,15 +168,33 @@ export default {
 
   mounted() {
     this.loadStudentsMaterials()
+    this.getStoreName()
     this.$refs.table.reload()
+    if (!this.$route.params.id || this.$route.params.id === '') {
+      this.$router.push(this.pathRouteGoBack)
+
+        return
+    }
   },
   methods: {
+    getStoreName() {
+      const currentPath = this.$route.path
+      const pathSegments = currentPath.split('/')
+      const lastSegment = pathSegments[pathSegments.length - 1]
+
+      if (lastSegment === 'materials') {
+        this.storeName = 'studentsMaterialsStore'
+      }
+      if (lastSegment === 'recordings') {
+        this.storeName = 'studentsRecordingsStore'
+      }
+    },
     onChangeTags(value) {
       this.$store.commit(`${this.storeName}/SET_TAGS`, value)
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
-
       this.$refs.table.reload()
     },
+
     onChangeWorkspaces(value) {
       this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
@@ -146,7 +206,7 @@ export default {
       const params = {
         ...pagination,
         tags: this.tags,
-        lessons: this.lesson ? [this.lesson.id] : undefined,
+        lessons: [this.$route.params.id],
         workspaces: this.workspaces,
         type: this.type
       }

@@ -3,7 +3,6 @@
     <StudentsMaterialsBase
       ref="materialsList"
       :title="`Materiales de la clase ${lesson ? lesson.name : ''}`"
-      store-name="studentsMaterialsStore"
       type="material"
     >
       <template v-slot:actions="item">

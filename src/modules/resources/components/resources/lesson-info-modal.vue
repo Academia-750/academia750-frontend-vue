@@ -61,7 +61,7 @@
                 icon-button="mdi-folder-open"
                 color="success"
                 :disabled="!$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
-                @click="setLessonMaterial(lesson)"
+                @click="goToLessonMaterials(lesson.id)"
               />
               <resource-button
                 text-button="Grabaciones"
@@ -70,7 +70,7 @@
                 :disabled="
                   !$hasPermission(PermissionEnum.SEE_LESSON_RECORDINGS)
                 "
-                @click="setLessonRecordings(lesson)"
+                @click="goToLessonRecordings(lesson.id)"
               />
               <resource-button
                 text-button="Entrar Clase"
@@ -123,26 +123,16 @@ export default {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
     ...mapActions('studentLessonsStore', ['updateJoinLesson']),
-    setLessonMaterial(lesson) {
-      this.$store.commit('studentsMaterialsStore/SET_LESSON', lesson)
-      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
-        offset: 0
-      })
-
+    goToLessonMaterials(lessonId) {
       this.$router.push({
-        name: 'manage-students-materials',
-        params: { id: lesson.id }
+        name: 'manage-lesson-students-materials',
+        params: { id: lessonId }
       })
     },
-    setLessonRecordings(lesson) {
-      this.$store.commit('studentsRecordingsStore/SET_LESSON', lesson)
-      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
-        offset: 0
-      })
-
+    goToLessonRecordings(lessonId) {
       this.$router.push({
-        name: 'manage-students-recordings',
-        params: { id: lesson.id }
+        name: 'manage-lesson-students-recordings',
+        params: { id: lessonId }
       })
     },
     open(lesson) {

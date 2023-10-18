@@ -35,7 +35,23 @@ const studentRoute = [
             }
           },
           {
-            path: 'materials',
+            path: ':id/materials',
+            name: 'manage-lesson-students-materials',
+            component: ManageStudentsMaterialsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/recordings',
+            name: 'manage-lesson-students-recordings',
+            component: ManageStudentsRecordingsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: '/materials',
             name: 'manage-students-materials',
             component: ManageStudentsMaterialsModule,
             meta: {
@@ -43,7 +59,7 @@ const studentRoute = [
             }
           },
           {
-            path: 'recordings',
+            path: '/recordings',
             name: 'manage-students-recordings',
             component: ManageStudentsRecordingsModule,
             meta: {
