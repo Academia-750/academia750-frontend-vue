@@ -139,7 +139,7 @@
         </div> -->
       </template>
       <template v-slot:[`item.created-at`]="{ item }">
-        {{ $formatDate(item['created_at']) }}
+        {{ $formatDate(item['created-at']) }}
       </template>
     </v-data-table>
     <resource-dialog-confirm-delete
