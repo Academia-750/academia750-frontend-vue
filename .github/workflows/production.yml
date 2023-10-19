@@ -50,4 +50,4 @@ jobs:
           SOURCE: './dist'
           TARGET: ${{ env.FOLDER_NAME }}
           ARGS: '-rltgoDzvO --delete'
-          EXCLUDE: '.env public/robots.txt'
+          EXCLUDE: 'dist/robots.txt'

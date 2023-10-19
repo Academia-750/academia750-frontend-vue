@@ -10,25 +10,26 @@
       @emitSearchWord="searchFieldExecuted"
     />
     <!-- ------------ TYPE SECTION ------------ -->
-    <v-row class="ml-1 mr-1">
-      <v-col cols="6" md="4">
+    <div class="tabs mx-3">
+      <div>
         <TagsAutoComplete
           tag-type="material"
           :tags="tags"
           :dense="true"
           @change="onChangeTags"
         />
-      </v-col>
-
-      <v-col cols="6" md="4">
+      </div>
+      
+      <div>
         <WorkSpacesAutoComplete
           tag-type="material"
           :workspaces="workspaces"
           :dense="true"
           @change="onChangeWorkspaces"
         />
-      </v-col>
-    </v-row>
+      </div>
+      
+    </div>
   </div>
 </template>
 
@@ -92,6 +93,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.tabs {
+  display: grid;
+  width: 70%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+  margin-top: 15px;
+}
 .lessons-info {
   display: flex;
   width: 100%;
@@ -115,6 +123,11 @@ export default {
   }
 }
 @media screen and (max-width: 600px) {
+  .tabs {
+    width: auto;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0px;
+  }
   .lessons-info {
     .lessons-attributes {
       display: flex;

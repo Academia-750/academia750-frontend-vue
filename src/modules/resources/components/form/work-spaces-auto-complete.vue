@@ -1,7 +1,6 @@
 <template>
   <BaseAutocomplete
     ref="autocomplete"
-    class="workspace-autocomplete"
     name="workspace"
     label="Categoría"
     :limit="limit"
