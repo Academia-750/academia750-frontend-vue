@@ -8,7 +8,8 @@
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag" :back="!!lesson">
+      <Toolbar :title="`${type === 'materials' ? `Materiales de la clase ${lesson ? lesson.name : ''}` : `Grabaciones de clase ${lesson ? lesson.name : ''}`}`" icon="mdi-tag" :back="!!lesson">
+
         <template #actions>
           <resource-button
             icon-button="mdi-autorenew"
@@ -140,7 +141,8 @@ export default {
       storeName: '',
       type: '',
       loading: false,
-      title: ''
+      title: '',
+      lesson: false
     }
   },
   computed: {
@@ -149,9 +151,6 @@ export default {
     },
     workspaces() {
       return this.$store.state[this.storeName].workspaces
-    },
-    lesson() {
-      return this.$store.state[this.storeName].lesson
     },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
@@ -176,6 +175,11 @@ export default {
       const currentPath = this.$route.path
       const pathSegments = currentPath.split('/')
       const lastSegment = pathSegments[pathSegments.length - 1]
+      const lessonId = this.$route.params.id || undefined
+
+      if (lessonId !== undefined) {
+        this.getLessonInfo(lessonId)
+      }
 
       if (lastSegment === 'materials') {
         this.storeName = 'studentsMaterialsStore'
@@ -197,6 +201,9 @@ export default {
       )
 
       downloadFile(url, material.name, type)
+    },
+    async getLessonInfo(lessonId) {
+      this.lesson = await LessonRepository.info(lessonId)
     },
     async openOtherTab(material) {
       const url = await this.getUrl(material)
