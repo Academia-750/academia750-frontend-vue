@@ -6,8 +6,7 @@ import AddStudentToLessonsModule from './lesson-students'
 import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
 import StudentLessons from './student-lessons'
-import ManageStudentsMaterialsModule from './student-materials'
-import ManageStudentsRecordingsModule from './student-recordings'
+import ManageStudentsMaterialRecordingsModule from './student-materials-recordings'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
@@ -37,7 +36,7 @@ const studentRoute = [
           {
             path: ':id/materials',
             name: 'manage-lesson-students-materials',
-            component: ManageStudentsMaterialsModule,
+            component: ManageStudentsMaterialRecordingsModule,
             meta: {
               middleware: [authMiddleware]
             }
@@ -45,7 +44,7 @@ const studentRoute = [
           {
             path: ':id/recordings',
             name: 'manage-lesson-students-recordings',
-            component: ManageStudentsRecordingsModule,
+            component: ManageStudentsMaterialRecordingsModule,
             meta: {
               middleware: [authMiddleware]
             }
@@ -53,7 +52,7 @@ const studentRoute = [
           {
             path: '/materials',
             name: 'manage-students-materials',
-            component: ManageStudentsMaterialsModule,
+            component: ManageStudentsMaterialRecordingsModule,
             meta: {
               middleware: [authMiddleware]
             }
@@ -61,7 +60,7 @@ const studentRoute = [
           {
             path: '/recordings',
             name: 'manage-students-recordings',
-            component: ManageStudentsRecordingsModule,
+            component: ManageStudentsMaterialRecordingsModule,
             meta: {
               middleware: [authMiddleware]
             }

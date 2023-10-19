@@ -4,8 +4,8 @@ import lessonMaterialsStore from './lesson-material-list/lesson.material.store'
 import materialsForLessonStore from './materials-for-lesson-list/materials-for-lesson.store'
 import lessonAttendeesStore from './lesson-attendees/lesson-attendees.store'
 import studentLessonStore from './student-lessons/student-lessons.store'
-import studentsMaterialsStore from './student-materials/students-materials.store'
-import studentsRecordingsStore from './student-recordings/students-recordings.store'
+import studentsMaterialsStore from './student-materials-recordings/students-materials.store'
+import studentsRecordingsStore from './student-materials-recordings/students-recordings.store'
 import router from './lessons.router'
 
 export default {
