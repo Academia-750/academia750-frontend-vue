@@ -17,7 +17,7 @@
       multiple
       solo
       outlined
-      :dense="dense"
+      :dense="dense || $vuetify.breakpoint.width < 700"
       :item-text="itemText"
       :item-value="itemValue"
       @change="change"

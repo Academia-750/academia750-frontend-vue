@@ -8,53 +8,45 @@
       @emitSearchTextBinding="searchFieldWithDebounce"
       @emitSearchWord="searchFieldExecuted"
     />
-    <div class="d-flex align-center mx-3 type-section">
-      <v-row>
-        <!-- ------------ TYPE ------------ -->
-        <v-col cols="4">
-          <v-select
-            :items="types"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Tipos"
-            :value="state.type"
-            dense
-            outlined
-            class="ml-2"
-            clearable
-            @change="onChangeType"
-          ></v-select>
-        </v-col>
+    <div class="tabs align-center mx-3 type-section">
+      <!-- ------------ TYPE ------------ -->
+      <v-select
+        :items="types"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Tipos"
+        class="v-select"
+        :value="state.type"
+        outlined
+        clearable
+        :dense="$vuetify.breakpoint.width < 700"
+        @change="onChangeType"
+      ></v-select>
 
-        <!-- ------------ TAGS ------------ -->
-        <v-col cols="4">
-          <TagsAutoComplete
-            :tags="state.tags"
-            tag-type="material"
-            :dense="true"
-            @change="onChangeTags"
-          />
-        </v-col>
+      <!-- ------------ TAGS ------------ -->
+      <TagsAutoComplete
+        :tags="state.tags"
+        tag-type="material"
+        :dense="true"
+        @change="onChangeTags"
+      />
 
-        <!-- -----------WORKSPACE ------------ -->
-        <v-col cols="4">
-          <v-select
-            v-show="!hideWorkspace"
-            :value="state.workspace"
-            :items="workspaces"
-            item-text="label"
-            item-value="key"
-            persistent-hint
-            label="Categoría"
-            dense
-            outlined
-            class="ml-2"
-            clearable
-            @change="onChangeWorkspace"
-          ></v-select>
-        </v-col>
-      </v-row>
+      <!-- -----------WORKSPACE ------------ -->
+      <v-select
+        v-show="!hideWorkspace"
+        :value="state.workspace"
+        :items="workspaces"
+        item-text="label"
+        item-value="key"
+        persistent-hint
+        label="Categoría"
+        outlined
+        class="v-select "
+        clearable
+        :dense="$vuetify.breakpoint.width < 700"
+        @change="onChangeWorkspace"
+      ></v-select>
     </div>
   </div>
 </template>
@@ -147,6 +139,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+v-text-field.v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__control > .v-input__slot, .v-text-field.v-text-field--enclosed .v-text-field__details {
+    padding: 7px 12px;
+}
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+  margin-top: 15px;
+}
 .lessons-info {
   display: flex;
   width: 100%;
@@ -170,6 +171,10 @@ export default {
   }
 }
 @media screen and (max-width: 600px) {
+  .tabs {
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0px;
+}
   .lessons-info {
     .lessons-attributes {
       display: flex;
