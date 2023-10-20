@@ -57,13 +57,15 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      lesson: false
     }
   },
   computed: {
-    ...mapState('studentsRecordingsStore', ['lesson'])
   },
-  mounted() {},
+  mounted() {
+    this.getLessonInfo()
+  },
   methods: {
     async getUrl(material) {
       this.loading = true
@@ -83,6 +85,14 @@ export default {
         return
       }
       this.$refs.video.open(url)
+    },
+    async getLessonInfo() {
+      const lessonId = this.$route.params.id || undefined
+
+      if (lessonId === undefined) {
+        return
+      }
+      this.lesson = await LessonRepository.info(lessonId)
     }
   }
 }

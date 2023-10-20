@@ -130,7 +130,7 @@ export default {
       })
 
       this.$router.push({
-        name: 'manage-students-materials',
+        name: 'manage-lessons-students-materials',
         params: { id: lesson.id }
       })
     },
@@ -141,7 +141,7 @@ export default {
       })
 
       this.$router.push({
-        name: 'manage-students-recordings',
+        name: 'manage-lessons-students-recordings',
         params: { id: lesson.id }
       })
     },

@@ -51,6 +51,22 @@ const studentRoute = [
             }
           },
           {
+            path: ':id/materials',
+            name: 'manage-lessons-students-materials',
+            component: ManageStudentsMaterialsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/recordings',
+            name: 'manage-lessons-students-recordings',
+            component: ManageStudentsRecordingsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
             path: 'online/:id',
             name: 'join-online-class',
             component: StudentLessonOnlineModule,

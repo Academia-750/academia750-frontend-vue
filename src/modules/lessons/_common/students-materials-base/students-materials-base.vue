@@ -104,7 +104,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      lesson: false
+    }
   },
   computed: {
     tags() {
@@ -112,9 +114,6 @@ export default {
     },
     workspaces() {
       return this.$store.state[this.storeName].workspaces
-    },
-    lesson() {
-      return this.$store.state[this.storeName].lesson
     },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
@@ -141,8 +140,21 @@ export default {
 
       this.$refs.table.reload()
     },
+    
+    async getLessonInfo() {
+      const lessonId = this.$route.params.id || undefined
+
+      if (lessonId === undefined) {
+        return
+      }
+
+      this.lesson = await LessonRepository.info(lessonId)
+
+    },
 
     async loadStudentsMaterials(pagination) {
+      await this.getLessonInfo()
+      console.log('=========lesson', this.lesson.id)
       const params = {
         ...pagination,
         tags: this.tags,

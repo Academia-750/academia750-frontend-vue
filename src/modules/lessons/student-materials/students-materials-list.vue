@@ -61,11 +61,14 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      lesson: false
     }
   },
   computed: {
-    ...mapState('studentsMaterialsStore', ['lesson'])
+  },
+  mounted() {
+    this.getLessonInfo()
   },
   methods: {
     async getUrl(material) {
@@ -91,6 +94,16 @@ export default {
 
       downloadFile(url, material.name, type)
     },
+
+    async getLessonInfo() {
+      const lessonId = this.$route.params.id || undefined
+
+      if (lessonId === undefined) {
+        return
+      }
+      this.lesson = await LessonRepository.info(lessonId)
+    },
+
     async openOtherTab(material) {
       const url = await this.getUrl(material)
 
