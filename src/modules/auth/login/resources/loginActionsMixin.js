@@ -1,5 +1,6 @@
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   computed: {},
@@ -27,7 +28,7 @@ export default {
           ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
           ProfileAuthService.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
           await this.getProfileAfterLogin()
-
+          
           this.$swal.fire({
             icon: 'success',
             toast: true,
@@ -39,9 +40,19 @@ export default {
           this.isDisabled = false
           this.$loadingApp.disabledLoadingProgressLinear()
 
-          this.$router.push({
-            name: 'manage-students'
-          })
+          if (this.$hasRoles(['admin']) ) {
+            return this.$router.push({
+              name: 'manage-students'
+            })
+          }
+
+          if (
+            PermissionEnum.SEE_LESSONS 
+          ) {
+            this.$router.push({
+              name: 'my-lessons'
+            })
+          }
         }
       } catch (error) {
         this.$loadingApp.disabledLoadingProgressLinear()
