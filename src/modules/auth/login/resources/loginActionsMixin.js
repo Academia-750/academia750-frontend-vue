@@ -40,7 +40,7 @@ export default {
           this.$loadingApp.disabledLoadingProgressLinear()
 
           this.$router.push({
-            name: 'update-my-profile'
+            name: 'manage-students'
           })
         }
       } catch (error) {
