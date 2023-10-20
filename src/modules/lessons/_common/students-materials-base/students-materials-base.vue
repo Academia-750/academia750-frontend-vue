@@ -147,14 +147,12 @@ export default {
       if (lessonId === undefined) {
         return
       }
-
       this.lesson = await LessonRepository.info(lessonId)
 
     },
 
     async loadStudentsMaterials(pagination) {
       await this.getLessonInfo()
-      console.log('=========lesson', this.lesson.id)
       const params = {
         ...pagination,
         tags: this.tags,
