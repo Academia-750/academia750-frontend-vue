@@ -71,3 +71,10 @@ Password: academia750
 ## Notes
 
 - In order to link a user to an opposition you need to manually update the database `opposition_user` table. 
+
+## According to permission here are pages you see when you login
+
+- If user is Admin we check for role if is admin we open students page
+- If user has permission see-lessons we open with calendar
+- If user has permission generate-test we open questionaire page
+- If user has default role we open profile page

@@ -53,6 +53,14 @@ export default {
               name: 'my-lessons'
             })
           }
+
+          if (
+            PermissionEnum.GENERATE_TESTS
+          ) {
+            this.$router.push({
+              name: 'generate-questionnaire'
+            })
+          }
         }
       } catch (error) {
         this.$loadingApp.disabledLoadingProgressLinear()

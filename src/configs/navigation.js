@@ -7,18 +7,6 @@ export default {
       key: '',
       items: [
         {
-          icon: 'mdi-account-circle',
-          key: '',
-          text: 'Perfil de usuario',
-          to: { name: 'update-my-profile' }
-        },
-        {
-          icon: 'mdi-camera',
-          key: '',
-          text: 'Cambiar mi foto',
-          to: { name: 'update-image-account' }
-        },
-        {
           icon: 'mdi-lock',
           key: '',
           text: 'Cambiar contraseña',

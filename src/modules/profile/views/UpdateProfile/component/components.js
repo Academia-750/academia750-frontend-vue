@@ -4,7 +4,6 @@ import NamePersonInput from '@/modules/profile/components/updateProfile/NameFiel
 import LastNamePersonInput from '@/modules/profile/components/updateProfile/LastNameFieldInput.vue'
 import PhoneFieldInput from '@/modules/profile/components/updateProfile/PhoneFieldInput.vue'
 import EmailFieldInput from '@/modules/profile/components/updateProfile/EmailFieldInput.vue'
-
 const components = {
   DniFieldInput,
   NamePersonInput,
