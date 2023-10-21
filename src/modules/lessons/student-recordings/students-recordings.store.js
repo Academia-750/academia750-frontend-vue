@@ -32,7 +32,6 @@ export default {
       DataTableStore.actions.resetTableOptions({ commit })
       commit('SET_TAGS', [])
       commit('SET_WORKSPACES', [])
-      commit('SET_LESSON', false)
     }
   }
 }
