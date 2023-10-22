@@ -7,6 +7,7 @@
       :exact="menuItem.exact"
       :disabled="menuItem.disabled"
       active-class="white--text"
+      :href="menuItem.href"
       link
     >
       <v-list-item-icon>

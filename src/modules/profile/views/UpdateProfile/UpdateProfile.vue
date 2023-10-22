@@ -70,8 +70,8 @@
               :loading="loadingButtonUpdateProfile"
               :disabled="
                 disabledButtonUpdateProfile ||
-                  invalid ||
-                  !checkIfThereIsAtLeast_1ModifiedData
+                invalid ||
+                !checkIfThereIsAtLeast_1ModifiedData
               "
               color="light-blue darken-3"
               class="mt-3 white--text"
@@ -83,9 +83,16 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
-              :loading="loadingButtonUnsubscribeSystem"
               color="primary darken-1"
-              class="mt-3 white--text"
+              class="mt-3 mr-2 white--text"
+              @click="$router.push({ name: 'change-password' })"
+            >
+              <v-icon right dark class="mr-1"> mdi-lock</v-icon>
+              Cambiar contraseña
+            </v-btn>
+            <v-btn
+              color="primary darken-1"
+              class="mt-3 mr-2 white--text"
               @click="$router.push({ name: 'update-image-account' })"
             >
               <v-icon right dark class="mr-1"> mdi-camera</v-icon>
@@ -97,7 +104,7 @@
                 disabledButtonUnsubscribeSystem || !canUnsubscribeSystem
               "
               color="red darken-1"
-              class="mt-3  white--text  ml-lg-3 ml-md-3"
+              class="mt-3 white--text"
               :block="activeStyleBlockButton"
               @click="unsubscribeSystem"
             >
