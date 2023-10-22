@@ -1,5 +1,6 @@
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   computed: {},
@@ -24,8 +25,12 @@ export default {
           this.ResetForm()
 
           this.$manageTokenAuth.$set_token_auth(response.data.token)
-          ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-          ProfileAuthService.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+          ProfileServiceAfterLogin.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${response.data.token}`
+          ProfileAuthService.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${response.data.token}`
           await this.getProfileAfterLogin()
 
           this.$swal.fire({
@@ -39,11 +44,12 @@ export default {
           this.isDisabled = false
           this.$loadingApp.disabledLoadingProgressLinear()
 
-          this.$router.push({
-            name: 'update-my-profile'
+          return this.$router.push({
+            name: this.$initialPage()
           })
         }
       } catch (error) {
+        console.error({ error })
         this.$loadingApp.disabledLoadingProgressLinear()
         this.isLoading = false
         this.isDisabled = false
@@ -51,7 +57,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500
@@ -79,7 +86,6 @@ export default {
             }
           }
         })
-
       } catch (error) {
         //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
@@ -88,7 +94,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500
@@ -96,7 +103,8 @@ export default {
         } else if (error.response.status === 401) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Autenticación rechazada. No se ha podido iniciar sesión correctamente.',
+            title:
+              'Autenticación rechazada. No se ha podido iniciar sesión correctamente.',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 4000
@@ -104,7 +112,7 @@ export default {
         }
       }
     },
-    async checkPreviousSession () {
+    async checkPreviousSession() {
       try {
         this.$loadingApp.enableLoadingProgressLinear()
         this.isLoading = true
@@ -117,34 +125,36 @@ export default {
         const response = await this.checkPreviousSessionAction(credentials)
 
         if (response.data.thereIsAlreadyAPreviousSession) {
-          this.$swal.fire({
-            title: 'Existe una sesión ya abierta para este usuario. ¿Desea cerrarla para continuar?',
-            showDenyButton: true,
-            showCancelButton: false,
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            allowEnterKey: false,
-            confirmButtonText: 'Si deseo continuar',
-            denyButtonText: 'No deseo continuar'
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              this.signIn()
-            } else {
-              this.hasErrorServiceApp = false
-              this.messageErrorServiceApp = ''
-              this.$refs['access-key-field']['resetAccessKey']()
-              this.$refs['password-field']['resetPassword']()
-              this.ResetForm()
-              this.isLoading = false
-              this.isDisabled = false
-              this.$loadingApp.disabledLoadingProgressLinear()
-            }
-          })
+          this.$swal
+            .fire({
+              title:
+                'Existe una sesión ya abierta para este usuario. ¿Desea cerrarla para continuar?',
+              showDenyButton: true,
+              showCancelButton: false,
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              allowEnterKey: false,
+              confirmButtonText: 'Si deseo continuar',
+              denyButtonText: 'No deseo continuar'
+            })
+            .then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.signIn()
+              } else {
+                this.hasErrorServiceApp = false
+                this.messageErrorServiceApp = ''
+                this.$refs['access-key-field']['resetAccessKey']()
+                this.$refs['password-field']['resetPassword']()
+                this.ResetForm()
+                this.isLoading = false
+                this.isDisabled = false
+                this.$loadingApp.disabledLoadingProgressLinear()
+              }
+            })
         } else {
           this.signIn()
         }
-
       } catch (error) {
         //console.log(error)
         this.isLoading = false
@@ -153,7 +163,8 @@ export default {
         if (error.response === undefined) {
           this.$swal.fire({
             icon: 'error',
-            title: 'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
+            title:
+              'Ha ocurrido un problema en la aplicación. Reportelo e intente más tarde',
             showConfirmButton: true,
             confirmButtonText: '¡Entendido!',
             timer: 7500

@@ -3,30 +3,6 @@ import { PermissionEnum } from '@/utils/enums'
 export default {
   menu: [
     {
-      text: 'Mi cuenta',
-      key: '',
-      items: [
-        {
-          icon: 'mdi-account-circle',
-          key: '',
-          text: 'Perfil de usuario',
-          to: { name: 'update-my-profile' }
-        },
-        {
-          icon: 'mdi-camera',
-          key: '',
-          text: 'Cambiar mi foto',
-          to: { name: 'update-image-account' }
-        },
-        {
-          icon: 'mdi-lock',
-          key: '',
-          text: 'Cambiar contraseña',
-          to: { name: 'change-password' }
-        }
-      ]
-    },
-    {
       text: 'Clases y Materiales',
       key: '',
       permissions: [PermissionEnum.SEE_LESSONS],
@@ -43,14 +19,20 @@ export default {
           key: '',
           text: 'Materiales',
           to: { name: 'manage-students-materials' },
-          permissions: [PermissionEnum.SEE_LESSON_MATERIALS]
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_MATERIALS
+          ]
         },
         {
           icon: 'mdi-camera',
           key: '',
           text: 'Grabaciones',
           to: { name: 'manage-students-recordings' },
-          permissions: [PermissionEnum.SEE_LESSON_RECORDINGS]
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_RECORDINGS
+          ]
         }
       ]
     },
@@ -235,6 +217,18 @@ export default {
               roles: 'admin'
             }
           ]
+        }
+      ]
+    },
+    {
+      text: 'Otras Secciones',
+      key: '',
+      items: [
+        {
+          icon: 'mdi-forum',
+          key: '',
+          text: 'Foro',
+          href: 'https://foro.academia750.es/'
         }
       ]
     },

@@ -25,6 +25,8 @@ import {
 } from '@/helpers/managePermissions'
 import { hasRoles, hasRoleMiddleware } from '@/helpers/manageRoles'
 import { $KeepOneTabOpenInTheBrowserLocalStorage } from '@/helpers/KeepOneTabOpenInTheBrowser'
+import { getInitialPage } from '@/helpers/manageInitialPage'
+
 import { DATE_FORMAT } from '@/helpers/constants'
 
 // PLUGINS
@@ -82,6 +84,9 @@ Vue.$loadUserAuth = loadUserAuth
 Vue.prototype.$loadUserAuth = loadUserAuth
 
 loadUserAuth()
+
+Vue.$initialPage = getInitialPage
+Vue.prototype.$initialPage = getInitialPage
 
 Vue.$hasRoles = hasRoles
 Vue.prototype.$hasRoles = hasRoles

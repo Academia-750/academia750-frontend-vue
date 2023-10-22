@@ -21,16 +21,20 @@ Temporal branch for fixes of v1.0.0 while v2.0.0 is already on development
 - Zoom: We use iframe integration. We dont use the SDK because requires pay mememberhip.
 
 ## Commands
-#### `npm install`
+
+- `npm install`
 > Install package dependencies
 
-#### `npm run dev` or `npm run serve`
+
+- `npm run dev` or `npm run serve`
 > Compile and maintain in real time, present each change to update the web automatically for development
 
-#### `npm run build`
+
+- `npm run build`
 > Compile and minify for production - Deliver a dist folder in the root of the project, and the content inside it, contains the HTML, CSS and Javascript that you will later have to upload to the server. Remember that it is a SPA, therefore depending on the server, you will need an .htaccess or a __redirects
 
-#### `npm run lint`
+
+- `npm run lint`
 > Lints and fixes files - Works for development environment, and uses Eslint to code with Vue JS version 2 standard good practices and rules.
 
 ## Folder Structure
@@ -54,12 +58,18 @@ In the phase 2 we have simplify the folder structure, you may see this change in
     - index / [component-name] : view page
     - store: Component specific store
     - components: Folder for sub components used only in this page
-    
+
+## Navigation
+
+The navigation is common but displayed according to the permissions `navigation.js`.
+
+The logic about Roles and Permissions is in the `helpers` folder with functions like `manageRoles` `managePermission` and `manageInitialPage`
+This functions are injected into vue in `main.js` where you can use the global functions `this.$hasRole` `this.$hasPermission` and `$this.initialPage` among others.
+
 
 ### Production
 
 Make sure you add the `robots.txt` in production with the Allow option.
-
 
 
 ## Default User
@@ -71,3 +81,5 @@ Password: academia750
 ## Notes
 
 - In order to link a user to an opposition you need to manually update the database `opposition_user` table. 
+
+

@@ -1,7 +1,12 @@
 <template>
   <div v-if="user">
     <v-divider></v-divider>
-    <v-list-item class="py-1 px-3" two-line>
+    <v-list-item
+      class="py-1 px-3"
+      two-line
+      :to="{ name: 'update-my-profile' }"
+      active-class="white--text"
+    >
       <v-list-item-avatar class="ml-n1" min-width="40" height="40" width="40">
         <v-img
           v-if="pathImageAccount"

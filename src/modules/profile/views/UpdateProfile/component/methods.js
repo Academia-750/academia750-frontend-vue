@@ -72,6 +72,5 @@ export default {
       this.cache.data.profile.phone = phone
       this.cache.data.profile.email = email
     }
-
   }
 }

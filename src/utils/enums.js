@@ -7,6 +7,7 @@ export const PermissionEnum = {
   /**
    * Lessons
    */
+  SEE_TEST: 'see-tests', // Only allow to see your tests
   SEE_LESSONS: 'see-lessons', // Only allow to see your lessons but nothing else
   JOIN_LESSONS: 'join-lessons', // Allows confirm your participation to a lesson
   SEE_ONLINE_LESSON: 'online-lessons', // Allows you to access the online lessons page
