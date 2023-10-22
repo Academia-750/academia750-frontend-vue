@@ -124,24 +124,28 @@ export default {
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
     ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
-      this.$store.commit('studentsMaterialsStore/SET_LESSON', lesson)
-      this.$store.commit('studentsMaterialsStore/SET_TABLE_OPTIONS', {
+      this.$store.dispatch('studentsLessonMaterialsStore/resetTableOptions')
+
+      this.$store.commit('studentsLessonMaterialsStore/SET_LESSON', lesson)
+      this.$store.commit('studentsLessonMaterialsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
 
       this.$router.push({
-        name: 'manage-students-materials',
+        name: 'student-lesson-materials',
         params: { id: lesson.id }
       })
     },
     setLessonRecordings(lesson) {
-      this.$store.commit('studentsRecordingsStore/SET_LESSON', lesson)
-      this.$store.commit('studentsRecordingsStore/SET_TABLE_OPTIONS', {
+      this.$store.dispatch('studentsLessonRecordingsStore/resetTableOptions')
+
+      this.$store.commit('studentsLessonRecordingsStore/SET_LESSON', lesson)
+      this.$store.commit('studentsLessonRecordingsStore/SET_TABLE_OPTIONS', {
         offset: 0
       })
 
       this.$router.push({
-        name: 'manage-students-recordings',
+        name: 'student-lesson-recordings',
         params: { id: lesson.id }
       })
     },

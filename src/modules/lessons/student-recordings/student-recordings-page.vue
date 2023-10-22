@@ -1,5 +1,5 @@
 <template>
-  <StudentsRecordingsList />
+  <StudentsRecordingsList store-name="studentsRecordingsStore" />
 </template>
 
 <script>

@@ -194,7 +194,7 @@ export default {
       willJoin,
       content: content || undefined
     }
-    
+
     deleteUndefined(params)
     const response = await ResourceService.get(`lesson/${lessonId}/students`, {
       params
@@ -421,6 +421,32 @@ export default {
 
     return true
   },
+
+  /**
+   * @param {string} id
+   */
+  async getStudentLesson(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/info`)
+
+    if (response.status === 404) {
+      activateError({
+        status: 404,
+        message: 'Lección no encontrada'
+      })
+
+      return false
+    }
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.result
+  },
+
   /**
    * @param {string} id
    * @param {string} orderBy

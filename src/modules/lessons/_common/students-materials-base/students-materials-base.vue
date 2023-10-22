@@ -8,7 +8,7 @@
   >
     <template v-slot:top>
       <!-- ------------ ACTIONS ------------ -->
-      <Toolbar :title="title" icon="mdi-tag" :back="!!lesson">
+      <Toolbar :title="title" :icon="icon" :back="!!lesson">
         <template #actions>
           <resource-button
             icon-button="mdi-autorenew"
@@ -101,7 +101,8 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    }
+    },
+    icon: { type: String, required: true }
   },
   data() {
     return {}
@@ -124,10 +125,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.loadStudentsMaterials()
-    this.$refs.table.reload()
-  },
   methods: {
     onChangeTags(value) {
       this.$store.commit(`${this.storeName}/SET_TAGS`, value)
@@ -138,7 +135,6 @@ export default {
     onChangeWorkspaces(value) {
       this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
-
       this.$refs.table.reload()
     },
 
@@ -166,6 +162,7 @@ export default {
     },
     resetTableOptions() {
       this.$store.dispatch(`${this.storeName}/resetTableOptions`)
+
       this.$refs.table.reload()
     }
   }
