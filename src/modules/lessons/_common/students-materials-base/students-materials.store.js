@@ -1,7 +1,7 @@
 import DataTableStore from '@/modules/resources/store/data-table.store'
 
-export default {
-  name: 'studentsMaterialsStore',
+export const makeMaterialStore = (name) => ({
+  name,
   namespaced: true,
   state: {
     ...DataTableStore.state,
@@ -34,4 +34,4 @@ export default {
       commit('SET_WORKSPACES', [])
     }
   }
-}
+})

@@ -6,8 +6,10 @@ import AddStudentToLessonsModule from './lesson-students'
 import AddMaterialsToLessonsModule from './lesson-material-list'
 import ListOfMaterialsForLessonsModule from './materials-for-lesson-list'
 import StudentLessons from './student-lessons'
-import ManageStudentsMaterialsModule from './student-materials'
-import ManageStudentsRecordingsModule from './student-recordings'
+import StudentMaterialsPage from './student-materials/student-materials-page'
+import StudentLessonMaterialsPage from './student-materials/student-lesson-material-page'
+import StudentRecordingPage from './student-recordings/student-recordings-page'
+import StudentLessonRecordingPage from './student-recordings/student-lesson-recording-page'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
@@ -35,17 +37,17 @@ const studentRoute = [
             }
           },
           {
-            path: 'materials',
-            name: 'manage-students-materials',
-            component: ManageStudentsMaterialsModule,
+            path: ':id/materials',
+            name: 'student-lesson-materials',
+            component: StudentLessonMaterialsPage,
             meta: {
               middleware: [authMiddleware]
             }
           },
           {
-            path: 'recordings',
-            name: 'manage-students-recordings',
-            component: ManageStudentsRecordingsModule,
+            path: ':id/recordings',
+            name: 'student-lesson-recordings',
+            component: StudentLessonRecordingPage,
             meta: {
               middleware: [authMiddleware]
             }
@@ -59,6 +61,22 @@ const studentRoute = [
             }
           }
         ]
+      },
+      {
+        path: 'student-materials',
+        name: 'manage-students-materials',
+        component: StudentMaterialsPage,
+        meta: {
+          middleware: [authMiddleware]
+        }
+      },
+      {
+        path: 'student-recordings',
+        name: 'manage-students-recordings',
+        component: StudentRecordingPage,
+        meta: {
+          middleware: [authMiddleware]
+        }
       }
     ]
   }

@@ -3,14 +3,21 @@ import store from '@/store'
 import { $get_token_auth } from '@/helpers/auth'
 import ProfileServiceAfterLogin from '@/services/ProfileServiceAfterLogin'
 import ProfileAuthService from '@/services/ProfileAuthService'
-import { enableLoadingProgressCircular, disabledLoadingProgressCircular } from '@/helpers/manageLoading'
+import {
+  enableLoadingProgressCircular,
+  disabledLoadingProgressCircular
+} from '@/helpers/manageLoading'
 
 export const loadUserAuth = async () => {
   if (Cookies.get('authorization')) {
     try {
       enableLoadingProgressCircular()
-      ProfileServiceAfterLogin.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`
-      ProfileAuthService.defaults.headers.common['Authorization'] = `Bearer ${$get_token_auth()}`
+      ProfileServiceAfterLogin.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${$get_token_auth()}`
+      ProfileAuthService.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${$get_token_auth()}`
       await store.dispatch('profileService/getDataMyProfileAction', {
         actionAfterLogin: false,
         configResponse: {

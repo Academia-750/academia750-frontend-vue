@@ -1,5 +1,5 @@
 <template>
-  <StudentsMaterialsList />
+  <StudentsMaterialsList store-name="studentsMaterialsStore" />
 </template>
 
 <script>
@@ -15,11 +15,6 @@ export default {
       )
   },
   mixins: [notifications],
-  data() {
-    return {
-      reloadDatatableUsers: false
-    }
-  },
   mounted() {
     this.loadNotifications()
   },

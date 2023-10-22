@@ -3,8 +3,9 @@
     <StudentsMaterialsBase
       ref="recordingsList"
       :title="`Grabaciones de clase ${lesson ? lesson.name : ''}`"
-      store-name="studentsRecordingsStore"
+      :store-name="storeName"
       type="recording"
+      icon="mdi-camera"
       :loading="loading"
     >
       <template v-slot:actions="item">
@@ -41,7 +42,6 @@
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
-import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsRecordingsList',
@@ -55,15 +55,23 @@ export default {
         /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
       )
   },
+  props: {
+    storeName: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       loading: false
     }
   },
   computed: {
-    ...mapState('studentsRecordingsStore', ['lesson'])
+    lesson() {
+      return this.$store.state[this.storeName].lesson
+    }
   },
-  mounted() {},
+
   methods: {
     async getUrl(material) {
       this.loading = true
