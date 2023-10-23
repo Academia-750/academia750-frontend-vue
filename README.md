@@ -1,13 +1,10 @@
-Temporal branch for fixes of v1.0.0 while v2.0.0 is already on development
-
 # Academia750
 
-- Vue js Admin with dark mode + RTL + Demo Apps
-- Vuetify - Number #1 UI Vue Component Library
-- Integrated with Vue CLI + Vuex + Vue-Router
+This is the frontend of Academia750 is a Vue JS managment portal where the admin and the student got access to different
+features as generating opposition test, lessons calendar / material or online meetings.
 
-<br/>
 
+- [Current Version](https://github.com/Academia-750/academia750-frontend-vue/tags)
 
 ## Stack
 
