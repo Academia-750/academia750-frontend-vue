@@ -143,7 +143,7 @@ export default {
         ...pagination,
         tags: this.tags,
         lessons: this.lesson ? [this.lesson.id] : undefined,
-        workspaces: this.workspaces,
+        workspaces: this.workspaces.map((workspace) => workspace.id),
         type: this.type
       }
 

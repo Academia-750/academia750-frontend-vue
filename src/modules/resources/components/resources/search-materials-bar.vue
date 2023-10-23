@@ -42,7 +42,7 @@
         persistent-hint
         label="Categoría"
         outlined
-        class="v-select "
+        class="v-select"
         clearable
         :dense="$vuetify.breakpoint.width < 700"
         @change="onChangeWorkspace"
@@ -139,8 +139,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-v-text-field.v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__control > .v-input__slot, .v-text-field.v-text-field--enclosed .v-text-field__details {
-    padding: 7px 12px;
+v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  padding: 7px 12px;
 }
 .tabs {
   display: grid;
@@ -172,9 +175,9 @@ v-text-field.v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__cont
 }
 @media screen and (max-width: 600px) {
   .tabs {
-  grid-template-columns: repeat(1, 1fr);
-  gap: 0px;
-}
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0px;
+  }
   .lessons-info {
     .lessons-attributes {
       display: flex;

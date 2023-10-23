@@ -20,6 +20,7 @@
       :dense="dense || $vuetify.breakpoint.width < 700"
       :item-text="itemText"
       :item-value="itemValue"
+      :return-object="!!itemValue"
       @change="change"
       @update:search-input="load"
       @focus="cleanSearch"
@@ -111,11 +112,22 @@ export default {
       this.load('')
     },
     remove(item) {
-      const id = this.itemValue ? item[this.itemValue] : item
+      // With objects
+      if (this.itemValue) {
+        this.$emit(
+          'change',
+          this.values.filter(
+            (value) => value[this.itemValue] !== item[[this.itemValue]]
+          )
+        )
 
+        return
+      }
+
+      // With simple values
       this.$emit(
         'change',
-        this.values.filter((value) => value !== id)
+        this.values.filter((value) => value !== item)
       )
     },
     resetErrors() {
