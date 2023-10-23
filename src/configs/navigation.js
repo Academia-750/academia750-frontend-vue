@@ -228,7 +228,8 @@ export default {
           icon: 'mdi-forum',
           key: '',
           text: 'Foro',
-          href: 'https://foro.academia750.es/'
+          href: 'https://foro.academia750.es/',
+          target: '_blank'
         }
       ]
     },
