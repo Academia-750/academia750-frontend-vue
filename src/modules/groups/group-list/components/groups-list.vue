@@ -1,83 +1,81 @@
 <template>
-  <v-card-text>
-    <ServerDataTable
-      ref="table"
-      :headers="headers"
-      store-name="groupStore"
-      :load="loadGroups"
-    >
-      <template v-slot:top>
-        <!-- ------------ TOP ------------ -->
+  <ServerDataTable
+    ref="table"
+    :headers="headers"
+    store-name="groupStore"
+    :load="loadGroups"
+  >
+    <template v-slot:top>
+      <!-- ------------ TOP ------------ -->
 
-        <ResourceHeaderCrudTitle
-          text-header="Gestión de grupos"
-          :can-rendering-header="$vuetify.breakpoint.width < 700"
+      <ResourceHeaderCrudTitle
+        text-header="Gestión de grupos"
+        :can-rendering-header="$vuetify.breakpoint.width < 700"
+      />
+
+      <!-- ------------ ACTIONS ------------ -->
+      <v-toolbar flat class="indigo lighten-5 my-2" outlined>
+        <resource-title-toolbar-datatable title-text="Gestión de grupos" />
+
+        <v-spacer />
+
+        <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
+        <resource-button
+          icon-button="mdi-autorenew"
+          @click="resetTableOptions"
         />
+      </v-toolbar>
 
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable title-text="Gestión de grupos" />
+      <!-- ------------ SEARCH ------------ -->
+      <resource-text-field-search
+        :search-word="store.tableOptions.content"
+        label-text-field="Buscar por nombre o código"
+        @emitSearchTextBinding="searchFieldWithDebounce"
+        @emitSearchWord="searchFieldExecuted"
+      />
+    </template>
 
-          <v-spacer />
+    <!-- ------------ NO DATA ------------ -->
+    <template v-slot:no-data>
+      <resource-banner-no-data-datatable />
+    </template>
 
-          <ResourceButtonAdd text-button="Crear grupo" @click="onCreate" />
-          <resource-button
-            icon-button="mdi-autorenew"
-            @click="resetTableOptions"
-          />
-        </v-toolbar>
-
-        <!-- ------------ SEARCH ------------ -->
-        <resource-text-field-search
-          :search-word="store.tableOptions.content"
-          label-text-field="Buscar por nombre o código"
-          @emitSearchTextBinding="searchFieldWithDebounce"
-          @emitSearchWord="searchFieldExecuted"
+    <!-- ------------ SLOTS ------------ -->
+    <template v-slot:[`item.name`]="{ item }">
+      <div class="d-flex align-center">
+        <span
+          :style="{ backgroundColor: item.color }"
+          class="circle mr-1"
+        ></span>
+        {{ item.name }}
+      </div>
+    </template>
+    <template v-slot:[`item.updated_at`]="{ item }">
+      {{ $formatDate(item.updated_at) }}
+    </template>
+    <template v-slot:[`item.alumnos`]="{ item }">
+      <div class="d-flex justify-space-around">
+        <ResourceButtonAdd
+          text-button="Alumnos"
+          :config-route="{ name: 'group-students', params: { id: item.id } }"
+          :only-dispatch-click-event="true"
         />
-      </template>
-
-      <!-- ------------ NO DATA ------------ -->
-      <template v-slot:no-data>
-        <resource-banner-no-data-datatable />
-      </template>
-
-      <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.name`]="{ item }">
-        <div class="d-flex align-center">
-          <span
-            :style="{ backgroundColor: item.color }"
-            class="circle mr-1"
-          ></span>
-          {{ item.name }}
-        </div>
-      </template>
-      <template v-slot:[`item.updated_at`]="{ item }">
-        {{ $formatDate(item.updated_at) }}
-      </template>
-      <template v-slot:[`item.alumnos`]="{ item }">
-        <div class="d-flex justify-space-around">
-          <ResourceButtonAdd
-            text-button="Alumnos"
-            :config-route="{ name: 'group-students', params: { id: item.id } }"
-            :only-dispatch-click-event="true"
-          />
-        </div>
-      </template>
-      <template v-slot:[`item.actions-resource`]="{ item }">
-        <div class="d-flex justify-space-around">
-          <resource-button-edit
-            :config-route="{}"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateItem(item)"
-          />
-          <resource-button-delete
-            text-button="Eliminar"
-            @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
-          />
-        </div>
-      </template>
-    </ServerDataTable>
-  </v-card-text>
+      </div>
+    </template>
+    <template v-slot:[`item.actions-resource`]="{ item }">
+      <div class="d-flex justify-space-around">
+        <resource-button-edit
+          :config-route="{}"
+          :only-dispatch-click-event="true"
+          @DispatchClickEvent="updateItem(item)"
+        />
+        <resource-button-delete
+          text-button="Eliminar"
+          @actionConfirmShowDialogDelete="deleteWorkspaceConfirm(item)"
+        />
+      </div>
+    </template>
+  </ServerDataTable>
 </template>
 
 <script>

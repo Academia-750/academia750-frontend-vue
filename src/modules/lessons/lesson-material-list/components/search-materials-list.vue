@@ -12,15 +12,16 @@
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
         </Toolbar>
-        <SearchBar
-          store-name="lessonMaterialsStore"
-          :display-workspace="true"
-          @onChangeType="onChangeType"
-          @onChangeWorkspace="onChangeWorkspace"
-          @onChangeTags="onChangeTags"
-          @searchFieldExecuted="searchFieldExecuted"
-          @searchFieldWithDebounce="searchFieldWithDebounce"
-        />
+        <div class="pt-2 pt-md-1">
+          <SearchBar
+            store-name="lessonMaterialsStore"
+            @onChangeType="onChangeType"
+            @onChangeWorkspace="onChangeWorkspace"
+            @onChangeTags="onChangeTags"
+            @searchFieldExecuted="searchFieldExecuted"
+            @searchFieldWithDebounce="searchFieldWithDebounce"
+          />
+        </div>
       </template>
 
       <!-- ------------ NO DATA ------------ -->

@@ -8,7 +8,7 @@
     >
       <template v-slot:top>
         <!-- ------------ ACTIONS ------------ -->
-        <Toolbar title="Perfil" icon="mdi-clipboard-account">
+        <Toolbar title="Perfil" icon="mdi-clipboard-account" :back="false">
           <template slot="actions">
             <ResourceButtonAdd
               text-button="Crear un perfil"

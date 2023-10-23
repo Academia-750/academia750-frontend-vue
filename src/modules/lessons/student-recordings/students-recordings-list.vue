@@ -2,9 +2,10 @@
   <div>
     <StudentsMaterialsBase
       ref="recordingsList"
-      title="Grabaciones de Clase"
-      store-name="studentsRecordingsStore"
+      :title="`Grabaciones de clase ${lesson ? lesson.name : ''}`"
+      :store-name="storeName"
       type="recording"
+      icon="mdi-camera"
       :loading="loading"
     >
       <template v-slot:actions="item">
@@ -54,12 +55,23 @@ export default {
         /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
       )
   },
+  props: {
+    storeName: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       loading: false
     }
   },
-  mounted() {},
+  computed: {
+    lesson() {
+      return this.$store.state[this.storeName].lesson
+    }
+  },
+
   methods: {
     async getUrl(material) {
       this.loading = true

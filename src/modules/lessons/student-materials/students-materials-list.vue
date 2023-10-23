@@ -3,8 +3,9 @@
     <StudentsMaterialsBase
       ref="materialsList"
       :title="`Materiales de la clase ${lesson ? lesson.name : ''}`"
-      store-name="studentsMaterialsStore"
+      :store-name="storeName"
       type="material"
+      icon="mdi-file-pdf"
     >
       <template v-slot:actions="item">
         <div
@@ -49,7 +50,6 @@
 <script>
 import LessonRepository from '@/services/LessonRepository'
 import downloadFile from '@/utils/DownloadMaterial'
-import { mapState } from 'vuex'
 
 export default {
   name: 'StudentsMaterialsList',
@@ -59,14 +59,23 @@ export default {
         /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
       )
   },
+  props: {
+    storeName: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       loading: false
     }
   },
   computed: {
-    ...mapState('studentsMaterialsStore', ['lesson'])
+    lesson() {
+      return this.$store.state[this.storeName].lesson
+    }
   },
+
   methods: {
     async getUrl(material) {
       this.loading = true

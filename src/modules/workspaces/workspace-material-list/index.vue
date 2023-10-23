@@ -1,13 +1,7 @@
 <template>
-  <v-card-text>
-    <div ref="sectionTabsItemsGroupsByStatusAccount">
-      <v-card flat>
-        <v-card-text>
-          <WorkspaceMaterialsList />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-card-text>
+  <div ref="sectionTabsItemsGroupsByStatusAccount">
+    <WorkspaceMaterialsList />
+  </div>
 </template>
 
 <script>

@@ -92,5 +92,27 @@ export default {
     }
 
     return response.data.result
+  },
+  /**
+   * @param {string} content
+   * @param {number} limit
+   */
+  async searchWorkspaces({ content, limit }) {
+    const response = await ResourceService.get('workspace/search', {
+      params: {
+        content: content || undefined,
+        limit
+      }
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return []
+    }
+
+    return response.data.results
   }
 }

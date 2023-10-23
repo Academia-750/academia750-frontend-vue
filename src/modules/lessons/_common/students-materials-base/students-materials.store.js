@@ -1,13 +1,14 @@
 import DataTableStore from '@/modules/resources/store/data-table.store'
 
-export default {
-  name: 'lessonStudentStore',
+export const makeMaterialStore = (name) => ({
+  name,
   namespaced: true,
   state: {
     ...DataTableStore.state,
-    willJoin: false,
-    total: 0,
-    willAssist: 0
+    currentUserForUpdate: null,
+    workspaces: [],
+    tags: [],
+    lesson: false
   },
   getters: {
     ...DataTableStore.getters
@@ -15,23 +16,22 @@ export default {
 
   mutations: {
     ...DataTableStore.mutations,
-    SET_WILL_JOIN(state, payload) {
-      state.willJoin = payload
+    SET_TAGS(state, payload) {
+      state.tags = payload
     },
-    SET_TOTAL(state, payload) {
-      state.total = payload
+    SET_LESSON(state, payload) {
+      state.lesson = payload
     },
-    SET_WILL_ASSIST(state, payload) {
-      state.willAssist = payload
+    SET_WORKSPACES(state, payload) {
+      state.workspaces = payload
     }
   },
   actions: {
     ...DataTableStore.actions,
     resetTableOptions({ commit }) {
       DataTableStore.actions.resetTableOptions({ commit })
-      commit('SET_WILL_JOIN', undefined)
-      commit('SET_TOTAL', 0)
-      commit('SET_WILL_ASSIST', 0)
+      commit('SET_TAGS', [])
+      commit('SET_WORKSPACES', [])
     }
   }
-}
+})

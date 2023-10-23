@@ -11,14 +11,18 @@
               <div class="menu_footer_title">Academia 750</div>
               <div class="linea_footer"></div>
               <div>
-                <FooterDos @emitScrollToSectionHomePage="$emit('emitScrollToSectionHomePage', $event)"/>
+                <FooterDos
+                  @emitScrollToSectionHomePage="
+                    $emit('emitScrollToSectionHomePage', $event)
+                  "
+                />
               </div>
             </v-col>
             <v-col lg="4" md="6" cols="12">
               <div class="menu_footer_title">Contáctanos</div>
               <div class="linea_footer"></div>
               <div>
-                <ul class="lista_footer mt-2" style="list-style: none;">
+                <ul class="lista_footer mt-2" style="list-style: none">
                   <FooterTres
                     ico-contacto="mdi-map-marker"
                     items-contacto="Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante"
@@ -49,22 +53,24 @@
               </div>
               <div class="mt-1">
                 <v-btn small text dark @click="executeLoginAccountAction">
-                  <v-icon>mdi-account-circle</v-icon> <span class="ml-1">Área privada</span>
+                  <v-icon>mdi-account-circle</v-icon>
+                  <span class="ml-1">Área privada</span>
                 </v-btn>
               </div>
-              <!-- <div class="mt-1">
-                <v-btn small text dark>
-                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Términos y condiciones</span>
-                </v-btn>
-              </div> -->
+
               <div class="mt-1">
                 <v-btn small text dark @click="openAgreementLegalDialog">
-                  <v-icon>mdi-book-lock-open</v-icon> <span class="ml-1">Aviso legal</span>
+                  <v-icon>mdi-book-lock-open</v-icon>
+                  <span class="ml-1">Aviso legal</span>
                 </v-btn>
               </div>
             </v-col>
           </v-row>
-          <agreement-legal-dialog ref="AgreementLegalDialog" title="Aviso legal" src-file-legal="/legal/agreement_legal.pdf"/>
+          <agreement-legal-dialog
+            ref="AgreementLegalDialog"
+            title="Aviso legal"
+            src-file-legal="/legal/agreement_legal.pdf"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -98,10 +104,10 @@ export default {
     }
   },
   methods: {
-    executeLoginAccountAction () {
+    executeLoginAccountAction() {
       if (Cookies.get('authorization')) {
         this.$router.push({
-          name: 'update-my-profile'
+          name: this.$initialPage()
         })
 
         return
@@ -112,54 +118,53 @@ export default {
       })
       //this.$emit('emitShowLoginDialog')
     },
-    openAgreementLegalDialog () {
+    openAgreementLegalDialog() {
       this.$refs['AgreementLegalDialog'].isOpenDialog = true
     }
   }
 }
 </script>
 <style scoped>
-
 .estilo_footer {
   background-color: #202020;
   color: #fff;
 }
-.lista_footer{
-    list-style: none!important;;
-    padding-left: 0px!important;
+.lista_footer {
+  list-style: none !important;
+  padding-left: 0px !important;
 }
 
-.estilo_footer div.menu_footer_title{
-    font-size: 16px;
-    font-family: var(--fuente_cuatro);
-
+.estilo_footer div.menu_footer_title {
+  font-size: 16px;
+  font-family: var(--fuente_cuatro);
 }
 .linea_footer {
-    height: 1px;
-    width: 150px;
-    background-color: #fff;
+  height: 1px;
+  width: 150px;
+  background-color: #fff;
 }
-.acceso_estilo{
-    display: flex;
-    align-items: center;
-    font-family: var(--fuente_uno) !important;
-    color: #fff!important;
-    text-decoration: none!important;
+.acceso_estilo {
+  display: flex;
+  align-items: center;
+  font-family: var(--fuente_uno) !important;
+  color: #fff !important;
+  text-decoration: none !important;
 }
-.acceso_estilo .v-image__image , .acceso_estilo  .v-responsive__sizer{
-    background-size: contain;
-    width: 50px;
-    height: 50px;
+.acceso_estilo .v-image__image,
+.acceso_estilo .v-responsive__sizer {
+  background-size: contain;
+  width: 50px;
+  height: 50px;
 }
-.acceso_estilo  .v-responsive__sizer{
-    padding-bottom: 0px!important;
+.acceso_estilo .v-responsive__sizer {
+  padding-bottom: 0px !important;
 }
-@media(max-width:768px){
-  .estilo_footer h2{
+@media (max-width: 768px) {
+  .estilo_footer h2 {
     font-size: 25px;
     text-align: center;
   }
-  .linea_footer{
+  .linea_footer {
     margin: 0 auto;
   }
 }

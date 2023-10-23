@@ -70,6 +70,12 @@ ResourceService.interceptors.response.use(
 )
 
 ResourceService.warning = ({ response, title, message }) => {
+  // Default handling
+  if (!title && !message) {
+    // 401 are already handled by the general wrapper
+    if (response.status === 401) return
+  }
+
   Swal.fire({
     toast: true,
     showConfirmButton: false,

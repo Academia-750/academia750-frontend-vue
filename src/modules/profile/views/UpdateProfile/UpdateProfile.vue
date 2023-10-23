@@ -83,6 +83,22 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
+              color="primary darken-1"
+              class="mt-3 mr-2 white--text"
+              @click="$router.push({ name: 'change-password' })"
+            >
+              <v-icon right dark class="mr-1"> mdi-lock</v-icon>
+              Cambiar contraseña
+            </v-btn>
+            <v-btn
+              color="primary darken-1"
+              class="mt-3 mr-2 white--text"
+              @click="$router.push({ name: 'update-image-account' })"
+            >
+              <v-icon right dark class="mr-1"> mdi-camera</v-icon>
+              Cambiar mi foto
+            </v-btn>
+            <v-btn
               :loading="loadingButtonUnsubscribeSystem"
               :disabled="
                 disabledButtonUnsubscribeSystem || !canUnsubscribeSystem

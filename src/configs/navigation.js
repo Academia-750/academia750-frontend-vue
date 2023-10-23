@@ -3,26 +3,36 @@ import { PermissionEnum } from '@/utils/enums'
 export default {
   menu: [
     {
-      text: 'Mi cuenta',
+      text: 'Clases y Materiales',
       key: '',
+      permissions: [PermissionEnum.SEE_LESSONS],
       items: [
         {
-          icon: 'mdi-account-circle',
+          icon: 'mdi-book-open-page-variant',
           key: '',
-          text: 'Perfil de usuario',
-          to: { name: 'update-my-profile' }
+          text: 'Mis Clases',
+          to: { name: 'my-lessons' },
+          permissions: [PermissionEnum.SEE_LESSONS]
+        },
+        {
+          icon: 'mdi-file-pdf',
+          key: '',
+          text: 'Materiales',
+          to: { name: 'manage-students-materials' },
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_MATERIALS
+          ]
         },
         {
           icon: 'mdi-camera',
           key: '',
-          text: 'Cambiar mi foto',
-          to: { name: 'update-image-account' }
-        },
-        {
-          icon: 'mdi-lock',
-          key: '',
-          text: 'Cambiar contraseña',
-          to: { name: 'change-password' }
+          text: 'Grabaciones',
+          to: { name: 'manage-students-recordings' },
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_RECORDINGS
+          ]
         }
       ]
     },
@@ -58,16 +68,16 @@ export default {
               text: 'Tarjetas de memoria',
               to: { name: 'list-cards-memory' },
               permissions: [PermissionEnum.GENERATE_TESTS]
+            },
+            {
+              icon: 'mdi-notebook-check',
+              key: '',
+              text: 'Tests completados',
+              to: { name: 'fetch-history-tests-completed' },
+              permissions: [PermissionEnum.GENERATE_TESTS]
             }
           ]
-        }
-      ]
-    },
-    {
-      text: 'Mi evolución',
-      key: '',
-      permissions: [PermissionEnum.GENERATE_TESTS],
-      items: [
+        },
         {
           icon: 'mdi-chart-areaspline',
           key: '',
@@ -95,55 +105,21 @@ export default {
               text: 'Errores por tema',
               to: { name: 'fetch-resume-student-questions-wrong-per-topic' },
               permissions: [PermissionEnum.GENERATE_TESTS]
+            },
+            {
+              icon: 'mdi-chart-timeline',
+              key: '',
+              text: 'Históricos de preguntas',
+              to: {
+                name: 'fetch-history-questions-student-by-tests-period-type-question'
+              },
+              permissions: [PermissionEnum.GENERATE_TESTS]
             }
           ]
-        },
-        {
-          icon: 'mdi-chart-timeline',
-          key: '',
-          text: 'Históricos de preguntas',
-          to: {
-            name: 'fetch-history-questions-student-by-tests-period-type-question'
-          },
-          permissions: [PermissionEnum.GENERATE_TESTS]
-        },
-        {
-          icon: 'mdi-notebook-check',
-          key: '',
-          text: 'Tests completados',
-          to: { name: 'fetch-history-tests-completed' },
-          permissions: [PermissionEnum.GENERATE_TESTS]
         }
       ]
     },
-    {
-      text: 'Clases y Materiales',
-      key: '',
-      permissions: [PermissionEnum.SEE_LESSONS],
-      items: [
-        {
-          icon: 'mdi-book-open-page-variant',
-          key: '',
-          text: 'Mis Clases',
-          to: { name: 'my-lessons' },
-          permissions: [PermissionEnum.SEE_LESSONS]
-        },
-        {
-          icon: 'mdi-file-pdf',
-          key: '',
-          text: 'Materiales',
-          to: { name: 'manage-students-materials' },
-          permissions: [PermissionEnum.SEE_LESSON_MATERIALS]
-        },
-        {
-          icon: 'mdi-camera',
-          key: '',
-          text: 'Grabaciones',
-          to: { name: 'manage-students-recordings' },
-          permissions: [PermissionEnum.SEE_LESSON_RECORDINGS]
-        }
-      ]
-    },
+
     {
       text: 'Gestión de Usuarios',
       key: '',
@@ -241,6 +217,19 @@ export default {
               roles: 'admin'
             }
           ]
+        }
+      ]
+    },
+    {
+      text: 'Otras Secciones',
+      key: '',
+      items: [
+        {
+          icon: 'mdi-forum',
+          key: '',
+          text: 'Foro',
+          href: 'https://foro.academia750.es/',
+          target: '_blank'
         }
       ]
     },

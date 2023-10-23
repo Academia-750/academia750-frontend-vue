@@ -77,6 +77,7 @@
               :focus="date"
               :type="type"
               :events="events"
+              :loading="isLoading"
               @type="SET_TYPE"
               @date="onDate"
               @event="onLesson"
@@ -88,8 +89,16 @@
         </v-card>
       </template>
       <template v-else>
+        <div class="d-flex justify-end my-2">
+          <ResourceButtonAdd
+            class="ml-16"
+            text-button="Crear Clase"
+            @click="addLesson"
+          />
+        </div>
         <div class="d-flex justify-center mt-2 mb-2">
-          <MiniCalendarLessonList
+          <MobileCalendar
+            :loading="isLoading"
             :focus="date"
             :events="events"
             @load="onLoad"
@@ -102,16 +111,9 @@
                 </v-icon>
               </div>
             </template>
-          </MiniCalendarLessonList>
+          </MobileCalendar>
         </div>
       </template>
-      <div class="d-flex justify-end my-2">
-        <ResourceButtonAdd
-          class="ml-16"
-          text-button="Crear Clase"
-          @click="addLesson"
-        />
-      </div>
     </div>
   </v-card-text>
 </template>
@@ -142,7 +144,7 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
-    MiniCalendarLessonList: () =>
+    MobileCalendar: () =>
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '../_common/mobile-calendar-lessons-list.vue'
       )
@@ -151,7 +153,8 @@ export default {
   data() {
     return {
       reloadDatatableUsers: false,
-      lessons: []
+      lessons: [],
+      isLoading: false
     }
   },
   computed: {
@@ -213,6 +216,7 @@ export default {
     },
 
     async onLoad({ start, end }) {
+      this.isLoading = true // Show the loader while fetching lessons
       const params = {
         from: start,
         to: end
@@ -221,6 +225,7 @@ export default {
       const { results } = await LessonRepository.calendar(params)
 
       this.lessons = results
+      this.isLoading = false
 
       // We already have a current selected lesson in this month
       const alreadySelected = this.lessons.find(
@@ -239,6 +244,7 @@ export default {
       if (nextLesson) {
         this.setLesson(nextLesson)
         this.SET_DATE(nextLesson.date)
+        this.loading = false
       }
     }
   },

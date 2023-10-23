@@ -1,59 +1,58 @@
 <template>
-  <v-card-text>
-    <ServerDataTable
-      ref="table"
-      :headers="headers"
-      :store-name="storeName"
-      :load="loadStudentsMaterials"
-    >
-      <template v-slot:top>
-        <!-- ------------ ACTIONS ------------ -->
-        <v-toolbar flat class="indigo lighten-5 my-2" outlined>
-          <resource-title-toolbar-datatable :title-text="title" />
-
-          <v-spacer />
-
+  <ServerDataTable
+    ref="table"
+    :headers="headers"
+    :store-name="storeName"
+    item-key="material_id"
+    :load="loadStudentsMaterials"
+  >
+    <template v-slot:top>
+      <!-- ------------ ACTIONS ------------ -->
+      <Toolbar :title="title" :icon="icon" :back="!!lesson">
+        <template #actions>
           <resource-button
             icon-button="mdi-autorenew"
             @click="resetTableOptions"
           />
-        </v-toolbar>
+        </template>
+      </Toolbar>
 
+      <div class="mt-3">
         <!-- ------------ SEARCH ------------ -->
         <LessonMaterialsSearchBar
           :content="content"
           :tags="tags"
-          :lessons="lessons"
+          :workspaces="workspaces"
           @onChangeTags="onChangeTags"
-          @onChangeLessons="onChangeLessons"
           @onChangeContent="onChangeContent"
+          @onChangeWorkspaces="onChangeWorkspaces"
         />
-      </template>
+      </div>
+    </template>
 
-      <!-- ------------ NO DATA ------------ -->
-      <template v-slot:no-data>
-        <resource-banner-no-data-datatable />
-      </template>
+    <!-- ------------ NO DATA ------------ -->
+    <template v-slot:no-data>
+      <resource-banner-no-data-datatable />
+    </template>
 
-      <!-- ------------ SLOTS ------------ -->
-      <template v-slot:[`item.tags`]="{ item }">
-        <div v-if="item.tags">
-          <v-chip
-            v-for="(tag, index) in item.tags.split(',')"
-            :key="index"
-            class="ma-1"
-            label
-            small
-          >
-            {{ tag }}
-          </v-chip>
-        </div>
-      </template>
-      <template v-slot:[`item.actions-resource`]="{ item }">
-        <slot name="actions" v-bind="item"></slot>
-      </template>
-    </ServerDataTable>
-  </v-card-text>
+    <!-- ------------ SLOTS ------------ -->
+    <template v-slot:[`item.tags`]="{ item }">
+      <div v-if="item.tags">
+        <v-chip
+          v-for="(tag, index) in item.tags.split(',')"
+          :key="index"
+          class="ma-1"
+          label
+          small
+        >
+          {{ tag }}
+        </v-chip>
+      </div>
+    </template>
+    <template v-slot:[`item.actions-resource`]="{ item }">
+      <slot name="actions" v-bind="item"></slot>
+    </template>
+  </ServerDataTable>
 </template>
 
 <script>
@@ -70,9 +69,9 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-    ResourceTitleToolbarDatatable: () =>
+    Toolbar: () =>
       import(
-        /* webpackChunkName: "ResourceTitleToolbarDatatable" */ '@/modules/resources/components/resources/ResourceTitleToolbarDatatable'
+        /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
       ),
 
     LessonMaterialsSearchBar: () =>
@@ -102,7 +101,8 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    }
+    },
+    icon: { type: String, required: true }
   },
   data() {
     return {}
@@ -111,10 +111,11 @@ export default {
     tags() {
       return this.$store.state[this.storeName].tags
     },
-    lessons() {
-      const { lesson } = this.$store.state[this.storeName]
-
-      return lesson ? [lesson.id] : undefined
+    workspaces() {
+      return this.$store.state[this.storeName].workspaces
+    },
+    lesson() {
+      return this.$store.state[this.storeName].lesson
     },
     content() {
       return this.$store.state[this.storeName].tableOptions.content
@@ -124,10 +125,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.loadStudentsMaterials()
-    this.$refs.table.reload()
-  },
   methods: {
     onChangeTags(value) {
       this.$store.commit(`${this.storeName}/SET_TAGS`, value)
@@ -135,10 +132,9 @@ export default {
 
       this.$refs.table.reload()
     },
-    onChangeLessons(value) {
-      this.$store.commit(`${this.storeName}/SET_LESSONS`, value)
+    onChangeWorkspaces(value) {
+      this.$store.commit(`${this.storeName}/SET_WORKSPACES`, value)
       this.$store.commit(`${this.storeName}/SET_TABLE_OPTIONS`, { offset: 0 })
-
       this.$refs.table.reload()
     },
 
@@ -146,7 +142,8 @@ export default {
       const params = {
         ...pagination,
         tags: this.tags,
-        lessons: this.lessons,
+        lessons: this.lesson ? [this.lesson.id] : undefined,
+        workspaces: this.workspaces.map((workspace) => workspace.id),
         type: this.type
       }
 
@@ -165,6 +162,7 @@ export default {
     },
     resetTableOptions() {
       this.$store.dispatch(`${this.storeName}/resetTableOptions`)
+
       this.$refs.table.reload()
     }
   }

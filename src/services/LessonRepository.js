@@ -180,16 +180,18 @@ export default {
    * @param {number} offset
    * @param {number} limit
    * @param {string} lessonId
+   * @param {string} willJoin
    */
   async lessonStudentList(
     lessonId,
-    { orderBy, order, limit, offset, content } = {}
+    { orderBy, willJoin, order, limit, offset, content } = {}
   ) {
     const params = {
       orderBy,
       order,
       limit,
       offset,
+      willJoin,
       content: content || undefined
     }
 
@@ -209,7 +211,8 @@ export default {
     return {
       results: response.data.results,
       groups: response.data.groups,
-      total: response.data.total
+      total: response.data.total,
+      will_join_count: response.data.will_join_count
     }
   },
   /**
@@ -418,6 +421,32 @@ export default {
 
     return true
   },
+
+  /**
+   * @param {string} id
+   */
+  async getStudentLesson(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/info`)
+
+    if (response.status === 404) {
+      activateError({
+        status: 404,
+        message: 'Lección no encontrada'
+      })
+
+      return false
+    }
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.result
+  },
+
   /**
    * @param {string} id
    * @param {string} orderBy
@@ -462,8 +491,9 @@ export default {
 
   /**
    * @param {string} type
-   * @param {string} tags[0]
-   * @param {string} lessons[0]
+   * @param {string} tags
+   * @param {string} lessons
+   * @param {string} workspaces
    * @param {string} orderBy
    * @param {string} order
    * @param {string} limit
@@ -474,6 +504,7 @@ export default {
     type,
     tags,
     lessons,
+    workspaces,
     orderBy,
     order,
     limit,
@@ -484,6 +515,7 @@ export default {
       type: type || undefined,
       tags,
       lessons,
+      workspaces,
       orderBy,
       order,
       limit,

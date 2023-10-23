@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex flex-column">
     <v-date-picker
       :value="focus"
       position="left"
@@ -45,6 +45,14 @@
         </div>
       </v-sheet>
     </div>
+    <div
+      v-if="loading"
+      class="d-flex flex-column justify-center align-center pa-8"
+    >
+      <p class="pa-1">Preparando tus clases...</p>
+      <v-progress-circular :size="70" :width="7" color="primary" indeterminate>
+      </v-progress-circular>
+    </div>
   </div>
 </template>
 
@@ -69,6 +77,10 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({}),
