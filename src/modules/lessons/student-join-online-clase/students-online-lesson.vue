@@ -5,20 +5,52 @@
     <v-spacer></v-spacer>
 
     <v-card style="height: 75vh; padding-top: 20px">
-      <section v-if="meetingId" class="d-flex align-center">
-        <iframe
-          ref="zoomIframe"
-          allow="microphone; camera"
-          style="border: 0; height: 60vh; width: 100%"
-          :src="zoomUrl"
-          frameborder="0"
-          allowfullscreen
-        />
+
+      <!-- Count down -->
+      <section v-if="classNotStarted" class="d-flex flex-column justify-center align-center h-full">
+        <h3 class="ma-6">La clase online empezará </h3>
+        <div class="counter d-flex justify-between rounded-sm font-weight-bold">
+          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
+            <span> {{ countdown.days }} </span>
+            <span> days </span>
+          </div>
+          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
+            <span> {{ countdown.hours }} </span>
+            <span> hours </span>
+          </div>
+          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
+            <span> {{ countdown.minutes }} </span>
+            <span> minutes </span>
+          </div>
+          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center">
+            <span> {{ countdown.seconds }} </span>
+            <span> seconds </span>
+          </div>
+        </div>
       </section>
-      <section v-else class="d-flex align-center justify-center pa-3">
-        En enlace a la clase online no es correcto. Por favor contacte con el
-        administrador.
+
+      <!-- class ended message -->
+      <section v-if="classEnded" class="d-flex flex-column justify-center align-center h-full">
+        <h3 class="ma-6">La clase online ya a  temrinado.</h3>
       </section>
+
+      <!-- Zoom component -->
+      <div v-if="classOngoing">
+        <section v-if="meetingId" class="d-flex align-center">
+          <iframe
+            ref="zoomIframe"
+            allow="microphone; camera"
+            style="border: 0; height: 60vh; width: 100%"
+            :src="zoomUrl"
+            frameborder="0"
+            allowfullscreen
+          />
+        </section>
+        <section v-else class="d-flex align-center justify-center pa-3">
+          En enlace a la clase online no es correcto. Por favor contacte con el
+          administrador.
+        </section>
+      </div>
     </v-card>
   </div>
 </template>
@@ -38,7 +70,18 @@ export default {
   data() {
     return {
       lesson: {},
-      meetingId: ''
+      meetingId: '',
+      countdown: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      },
+      startDate: '',
+      endDate: '',
+      classEnded: false,
+      classOngoing: false,
+      classNotStarted: false
     }
   },
   computed: {
@@ -50,11 +93,69 @@ export default {
       return `https://app.zoom.us/wc/${this.meetingId}/join`
     }
   },
+  watch: {
+    
+  },
   mounted() {
     this.lessonInfo()
+    this.startCountdown()
+    // Call updateCountdown every second
+    this.setTimeInterval()
   },
 
   methods: {
+    setTimeInterval() {
+      if (!this.classOngoing || !this.classEnded ) {
+        setInterval(this.updateCountdown, 1000)
+      }
+    },
+    startCountdown() {
+      const now = new Date()
+      const timeDifference = this.startDate - now
+
+      if (timeDifference > 0) {
+        this.updateCountdown(timeDifference)
+      }
+    },
+    isCountdownValid(countdown) {
+      return countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0
+    },
+    updateCountdown() {
+      const now = new Date()
+      const timeDifference = this.startDate - now
+      const endTimeDifference = this.endDate - now
+
+      // if class has not started yet
+      if ( timeDifference > 0) {
+        this.classNotStarted = true
+        let secondsRemaining = Math.floor(timeDifference / 1000)
+
+        this.countdown.days = Math.floor(secondsRemaining / 86400)
+        secondsRemaining %= 86400
+        this.countdown.hours = Math.floor(secondsRemaining / 3600)
+        secondsRemaining %= 3600
+        this.countdown.minutes = Math.floor(secondsRemaining / 60)
+        this.countdown.seconds = secondsRemaining % 60
+
+        return
+      }
+
+      // if class ongoing
+      if ( timeDifference <= 0 && endTimeDifference >= 0) {
+        this.classOngoing = true
+        this.classEnded = false
+
+        return
+      }
+      // if class is ended
+      if (endTimeDifference <= 0) {
+        this.classEnded = true
+        this.classOngoing = false
+
+        return
+      } 
+
+    },
     async lessonInfo() {
       const LessonInfo = this.$route.params.id
       const res = await LessonRepository.info(LessonInfo)
@@ -73,9 +174,19 @@ export default {
 
         this.meetingId = meetingId
       }
-
+      
       this.lesson = res
+      this.startDate = new Date(`${this.lesson.date} ${this.lesson.start_time}`)
+      this.endDate = new Date(`${this.lesson.date} ${this.lesson.end_time}`)
     }
   }
 }
 </script>
+<style scoped>
+.counter {
+  border: 2px solid black;
+}
+.counterTag {
+  border-right: 2px solid black;
+}
+</style>
