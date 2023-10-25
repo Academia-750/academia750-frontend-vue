@@ -8,23 +8,23 @@
 
       <!-- Count down -->
       <section v-if="classNotStarted" class="d-flex flex-column justify-center align-center h-full">
-        <h3 class="ma-6">La clase online empezará </h3>
+        <h1 class="ma-6">Tu siguiente clase online será {{ lesson.name }}</h1>
         <div class="counter d-flex justify-between rounded-sm font-weight-bold">
           <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <span> {{ countdown.days }} </span>
-            <span> days </span>
+            <h3> {{ countdown.days }} </h3>
+            <h3> days </h3>
           </div>
           <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <span> {{ countdown.hours }} </span>
-            <span> hours </span>
+            <h3> {{ countdown.hours }} </h3>
+            <h3> hours </h3>
           </div>
           <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <span> {{ countdown.minutes }} </span>
-            <span> minutes </span>
+            <h3> {{ countdown.minutes }} </h3>
+            <h3> minutes </h3>
           </div>
           <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center">
-            <span> {{ countdown.seconds }} </span>
-            <span> seconds </span>
+            <h3> {{ countdown.seconds }} </h3>
+            <h3> seconds </h3>
           </div>
         </div>
       </section>
@@ -182,11 +182,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.counter {
-  border: 2px solid black;
-}
-.counterTag {
-  border-right: 2px solid black;
-}
-</style>
