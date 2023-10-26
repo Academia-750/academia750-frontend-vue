@@ -11,8 +11,9 @@
         class="d-flex flex-column justify-center align-center h-full"
       >
         <h1 class="ma-6">
-          Tu online clase <b>{{ lesson.name }}</b> será en la fecha
-          {{ $formatDate(startDate) }}
+          Tu siguiente clase online será <b>{{ lesson.name }}</b>
+          el día
+          {{ $formatDate(lesson.date) }}. Faltan...
         </h1>
         <div class="counter d-flex justify-between rounded-sm font-weight-bold">
           <CounterLabel :value="countdown.days" label="Días" />
