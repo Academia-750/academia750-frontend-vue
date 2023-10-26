@@ -1,37 +1,33 @@
 <template>
-  <div>
+  <div v-if="lesson">
     <Toolbar :title="`Clase ${lesson.name}`"> </Toolbar>
 
     <v-spacer></v-spacer>
 
     <v-card style="height: 75vh; padding-top: 20px">
-
       <!-- Count down -->
-      <section v-if="classNotStarted" class="d-flex flex-column justify-center align-center h-full">
-        <h1 class="ma-6">Tu siguiente clase online será {{ lesson.name }}</h1>
+      <section
+        v-if="classNotStarted"
+        class="d-flex flex-column justify-center align-center h-full"
+      >
+        <h1 class="ma-6">
+          Tu online clase <b>{{ lesson.name }}</b> será en la fecha
+          {{ $formatDate(startDate) }}
+        </h1>
         <div class="counter d-flex justify-between rounded-sm font-weight-bold">
-          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <h3> {{ countdown.days }} </h3>
-            <h3> days </h3>
-          </div>
-          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <h3> {{ countdown.hours }} </h3>
-            <h3> hours </h3>
-          </div>
-          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center counterTag">
-            <h3> {{ countdown.minutes }} </h3>
-            <h3> minutes </h3>
-          </div>
-          <div class="d-flex flex-column px-md-3 py-2 px-2 justify-center align-center">
-            <h3> {{ countdown.seconds }} </h3>
-            <h3> seconds </h3>
-          </div>
+          <CounterLabel :value="countdown.days" label="Días" />
+          <CounterLabel :value="countdown.hours" label="Horas" />
+          <CounterLabel :value="countdown.minutes" label="Minutos" />
+          <CounterLabel :value="countdown.seconds" label="Segundos" />
         </div>
       </section>
 
       <!-- class ended message -->
-      <section v-if="classEnded" class="d-flex flex-column justify-center align-center h-full">
-        <h3 class="ma-6">La clase online ya a  temrinado.</h3>
+      <section
+        v-if="classEnded"
+        class="d-flex flex-column justify-center align-center h-full"
+      >
+        <h3 class="ma-6">La clase online ya ha temrinado.</h3>
       </section>
 
       <!-- Zoom component -->
@@ -59,9 +55,12 @@
 import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
+import CounterLabel from './components/counter-label.vue'
+
 export default {
   name: 'StudentsOnlineLesson',
   components: {
+    CounterLabel,
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
@@ -69,7 +68,7 @@ export default {
   },
   data() {
     return {
-      lesson: {},
+      lesson: undefined,
       meetingId: '',
       countdown: {
         days: 0,
@@ -93,9 +92,7 @@ export default {
       return `https://app.zoom.us/wc/${this.meetingId}/join`
     }
   },
-  watch: {
-    
-  },
+  watch: {},
   mounted() {
     this.lessonInfo()
     this.startCountdown()
@@ -105,7 +102,7 @@ export default {
 
   methods: {
     setTimeInterval() {
-      if (!this.classOngoing || !this.classEnded ) {
+      if (!this.classOngoing || !this.classEnded) {
         setInterval(this.updateCountdown, 1000)
       }
     },
@@ -118,7 +115,12 @@ export default {
       }
     },
     isCountdownValid(countdown) {
-      return countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0
+      return (
+        countdown.days > 0 ||
+        countdown.hours > 0 ||
+        countdown.minutes > 0 ||
+        countdown.seconds > 0
+      )
     },
     updateCountdown() {
       const now = new Date()
@@ -126,7 +128,7 @@ export default {
       const endTimeDifference = this.endDate - now
 
       // if class has not started yet
-      if ( timeDifference > 0) {
+      if (timeDifference > 0) {
         this.classNotStarted = true
         let secondsRemaining = Math.floor(timeDifference / 1000)
 
@@ -141,7 +143,7 @@ export default {
       }
 
       // if class ongoing
-      if ( timeDifference <= 0 && endTimeDifference >= 0) {
+      if (timeDifference <= 0 && endTimeDifference >= 0) {
         this.classOngoing = true
         this.classEnded = false
 
@@ -153,8 +155,7 @@ export default {
         this.classOngoing = false
 
         return
-      } 
-
+      }
     },
     async lessonInfo() {
       const LessonInfo = this.$route.params.id
@@ -174,7 +175,7 @@ export default {
 
         this.meetingId = meetingId
       }
-      
+
       this.lesson = res
       this.startDate = new Date(`${this.lesson.date} ${this.lesson.start_time}`)
       this.endDate = new Date(`${this.lesson.date} ${this.lesson.end_time}`)
