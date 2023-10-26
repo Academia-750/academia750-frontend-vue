@@ -94,8 +94,8 @@ export default {
     }
   },
   watch: {},
-  mounted() {
-    this.lessonInfo()
+  async mounted() {
+    await this.lessonInfo()
     this.startCountdown()
     // Call updateCountdown every second
     this.setTimeInterval()
