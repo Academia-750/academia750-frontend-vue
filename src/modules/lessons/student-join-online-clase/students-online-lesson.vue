@@ -28,7 +28,7 @@
         v-if="classEnded"
         class="d-flex flex-column justify-center align-center h-full"
       >
-        <h3 class="ma-6">La clase online ya ha temrinado.</h3>
+        <h3 class="ma-6">La clase online ya ha terminado.</h3>
       </section>
 
       <!-- Zoom component -->
@@ -57,6 +57,9 @@ import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
 import CounterLabel from './components/counter-label.vue'
+
+const MINUTE = 1000 * 60
+let interval
 
 export default {
   name: 'StudentsOnlineLesson',
@@ -100,12 +103,16 @@ export default {
     // Call updateCountdown every second
     this.setTimeInterval()
   },
+  unmount() {
+    this.stopInterval()
+  },
 
   methods: {
+    stopInterval() {
+      interval && deleteInterval(interval)
+    },
     setTimeInterval() {
-      if (!this.classOngoing || !this.classEnded) {
-        setInterval(this.updateCountdown, 1000)
-      }
+      setInterval(this.updateCountdown, 1000)
     },
     startCountdown() {
       const now = new Date()
@@ -128,35 +135,36 @@ export default {
       const timeDifference = this.startDate - now
       const endTimeDifference = this.endDate - now
 
-      // if class has not started yet
-      if (timeDifference > 0) {
-        this.classNotStarted = true
-        let secondsRemaining = Math.floor(timeDifference / 1000)
-
-        this.countdown.days = Math.floor(secondsRemaining / 86400)
-        secondsRemaining %= 86400
-        this.countdown.hours = Math.floor(secondsRemaining / 3600)
-        secondsRemaining %= 3600
-        this.countdown.minutes = Math.floor(secondsRemaining / 60)
-        this.countdown.seconds = secondsRemaining % 60
-
-        return
-      }
-
-      // if class ongoing
-      if (timeDifference <= 0 && endTimeDifference >= 0) {
+      // We open the class 30 minutes before the starting time
+      // Until 15 minutes after the ending time
+      if (
+        timeDifference <= 30 * MINUTE &&
+        endTimeDifference + 15 * MINUTE >= 0
+      ) {
         this.classOngoing = true
         this.classEnded = false
 
         return
       }
-      // if class is ended
-      if (endTimeDifference <= 0) {
+
+      // We consider the class over 15 minutes after the ending time
+      if (endTimeDifference + 15 * MINUTE <= 0) {
         this.classEnded = true
         this.classOngoing = false
 
         return
       }
+
+      // Last scenario is the class is not started yet: we run the countdown
+      this.classNotStarted = true
+      let secondsRemaining = Math.floor(timeDifference / 1000)
+
+      this.countdown.days = Math.floor(secondsRemaining / 86400)
+      secondsRemaining %= 86400
+      this.countdown.hours = Math.floor(secondsRemaining / 3600)
+      secondsRemaining %= 3600
+      this.countdown.minutes = Math.floor(secondsRemaining / 60)
+      this.countdown.seconds = secondsRemaining % 60
     },
     async lessonInfo() {
       const LessonInfo = this.$route.params.id
