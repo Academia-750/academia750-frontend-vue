@@ -71,6 +71,9 @@
                   </h5>
                   desde tu ordenador.
                 </h5>
+                <h5 class="font-weight-regular d-flex align-center">
+                  El tamaño máximo es 10 MB
+                </h5>
                 <input
                   id=""
                   ref="fileInput"
@@ -117,6 +120,7 @@
                   @change="handleFileUpload"
                 />
               </li>
+              <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
             </ul>
             <TagsAutoComplete
               ref="tagsInput"
@@ -160,6 +164,7 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
 import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 
 export default {
   name: 'AddMaterialModal',
@@ -285,7 +290,17 @@ export default {
       // Handle the file upload event and store the uploaded files in the array
       const { files } = event.target
 
+      // We get a files array, but the there is only 1 file
       if (!files.length) {
+        return
+      }
+
+      const MEGA_BYTE = 1024 * 1024
+
+      // 10 MB is also the max of cloudinary free plan
+      if (Array.from(files).some((file) => file.size > 10 * MEGA_BYTE)) {
+        Toast.warning('El tamaño del fichero no puede superar los 10 MB')
+
         return
       }
 
