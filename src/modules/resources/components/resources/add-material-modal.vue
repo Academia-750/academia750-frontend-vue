@@ -1,6 +1,11 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="isOpen" max-width="450px" @close="onClose">
+    <v-dialog
+      v-model="isOpen"
+      max-width="450px"
+      :fullscreen="isMobile"
+      @close="onClose"
+    >
       <validation-observer ref="formCreateWorkspaceMaterial">
         <v-card class="d-flex flex-column">
           <v-container class="pa-3">
@@ -54,6 +59,14 @@
               v-model="url"
               label="Video URL (Vimeo)"
               rules="required"
+            />
+            <TagsAutoComplete
+              ref="tagsInput"
+              :dense="false"
+              tag-type="material"
+              :tags="tags"
+              rules="required"
+              @change="onChangeTags"
             />
             <v-progress-linear
               v-if="uploading"
@@ -122,14 +135,7 @@
               </li>
               <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
             </ul>
-            <TagsAutoComplete
-              ref="tagsInput"
-              :dense="false"
-              tag-type="material"
-              :tags="tags"
-              rules="required"
-              @change="onChangeTags"
-            />
+
             <v-card-actions class="d-flex justify-space-between pa-0">
               <v-btn
                 color="blue-darken-1"
@@ -230,6 +236,9 @@ export default {
     },
     typeLabel() {
       return this.type === 'material' ? 'Material' : 'Grabación'
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     }
   },
   mounted() {
