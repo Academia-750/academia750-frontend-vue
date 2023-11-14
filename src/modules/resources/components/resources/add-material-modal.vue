@@ -171,6 +171,7 @@ import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
+import { FILE_NAME_REGEX } from '@/helpers/constants'
 
 export default {
   name: 'AddMaterialModal',
@@ -229,7 +230,7 @@ export default {
         return ''
       }
       // Extract the name using a regular expression
-      const matches = this.url.match(/\/([^/]+)\.\w+$/)
+      const matches = this.url.match(FILE_NAME_REGEX)
       const fileName = matches && matches[1]
 
       return fileName
