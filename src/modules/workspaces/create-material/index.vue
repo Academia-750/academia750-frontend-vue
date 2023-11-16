@@ -214,9 +214,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson']),
+    ...mapState('workspaceMaterialStore', ['editItem']),
     title() {
-      return !this.lesson ? 'Nueva Material' : `Editar "${this.lesson.name}":`
+      return !this.editItem ? 'Nueva Material' : `Editar "${this.editItem.name}"`
     },
     isMaterial() {
       return this.type === 'material'
@@ -236,21 +236,28 @@ export default {
     }
   },
   mounted() {
+    if (this.editItem) {
+      this.material = this.editItem
+      this.name = this.editItem.name
+      this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
+      this.type = this.editItem.type
+      this.url = this.editItem.url || undefined
+      this.workspace = this.editItem.workspace_id.toString()
+
+      return
+    }
     this.loadWorkspaces()
   },
   beforeCreate() {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    ...mapActions('lessonsStore', ['setLesson']),
+    ...mapActions('workspaceMaterialStore', ['SET_EDIT_ITEM']),
     onChangeType(type) {
       this.type = type
     },
     onChangeTags(tags) {
       this.tags = tags
-    },
-    async createMaterial() {
-      console.log('create')
     },
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()

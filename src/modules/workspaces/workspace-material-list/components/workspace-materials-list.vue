@@ -108,7 +108,9 @@
             </v-icon>
           </div>
           <resource-button-edit
-            :config-route="{ name: 'edit-material', params: { id: item.id } }"
+            :config-route="{}"
+            :only-dispatch-click-event="true"
+            @DispatchClickEvent="updateItem(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
@@ -239,9 +241,9 @@ export default {
       'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
-      'SET_TABLE_OPTIONS'
+      'SET_TABLE_OPTIONS',
+      'SET_EDIT_ITEM'
     ]),
-
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
@@ -259,7 +261,10 @@ export default {
       this.SET_TAGS(value)
       this.$refs.table.reload()
     },
-
+    updateItem(item) {
+      this.SET_EDIT_ITEM(item)
+      this.$router.push({ name: 'edit-material', params: { id: item.id } })
+    },
     async loadMaterials(pagination) {
       const params = {
         ...pagination,
@@ -326,6 +331,7 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
+      this.SET_EDIT_ITEM(false)
       this.$router.push({
         name: 'create-materials'
       })
