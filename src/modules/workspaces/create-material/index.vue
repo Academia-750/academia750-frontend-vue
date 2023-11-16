@@ -135,19 +135,19 @@
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
               <ResourceButton
-                :loading="loading"
-                :text-button="'Crear'"
+                :loading="true"
+                :text-button="editItem ? 'Editar' : 'Crear'"
                 color="primary"
                 icon-button="mdi-pencil"
                 @click="onCreateWorkspaceMaterial"
               />
             </div>
-            <div class="d-flex">
+            <div v-if="editItem" class="d-flex">
               <resource-button
                 text-button="Eliminar"
                 icon-button="mdi-delete"
                 color="red"
-                @click="deleteMaterial"
+                @click="deleteWorkspaceMaterialConfirm(editItem)"
               />
             </div>
           </v-row>
@@ -377,12 +377,55 @@ export default {
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.$emit('create', material)
         this.reset()
+        this.$router.replace({
+          name: 'create-materials'
+        })
       } catch (err) {
         console.error(err)
         this.loading = false
       }
+    },
+    async deleteWorkspaceMaterialConfirm(material) {
+      if (!material) {
+        return
+      }
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'ELIMINAR Material',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Material? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        return
+      }
+
+      const res = await WorkspaceMaterialRepository.delete(material.id)
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title:
+          material.type === 'material'
+            ? 'El material ha sido eliminado con éxito.'
+            : 'La grabación ha sido eliminada con éxito',
+        timer: 3000
+      })
+      this.SET_EDIT_ITEM(false)
+      this.reset()
+      this.$router.push({
+        name: 'manage-materials'
+      })
     }
   },
   head: {

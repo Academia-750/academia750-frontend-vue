@@ -248,7 +248,6 @@ export default {
         this.tags = material.tags ? material.tags.split(',') : []
       }
     },
-
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
