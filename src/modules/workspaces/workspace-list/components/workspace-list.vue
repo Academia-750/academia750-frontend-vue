@@ -184,7 +184,9 @@ export default {
       this.$refs.addWorkSpace.open()
     },
     openAddMaterial() {
-      this.$refs.addMaterial.open()
+      this.$router.push({
+        name: 'create-materials'
+      })
     },
     updateWorkspace(workspace) {
       this.$refs.addWorkSpace.open(workspace)

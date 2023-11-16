@@ -1,13 +1,10 @@
 <template>
-  <v-row justify="center">
-    <v-dialog v-model="isOpen" max-width="450px" @close="onClose">
-      <validation-observer ref="formCreateWorkspaceMaterial">
-        <v-card class="d-flex flex-column">
-          <v-container class="pa-3">
-            <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold">Subir Fichero</span>
-              <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
-            </v-card-title>
+  <div>
+    <Vtoolbar :title="title" icon="mdi-book-open-variant" />
+    <validation-observer ref="formCreateWorkspaceMaterial">
+      <section class="px-2 py-2 d-flex flex-sm-column align-center">
+        <v-row dense :style="{ width: '-webkit-fill-available' }">
+          <v-col cols="12" md="6">
             <v-select
               v-model="type"
               :items="types"
@@ -41,12 +38,24 @@
               ></v-select>
             </ValidationProvider>
             <FieldInput
-              id="name"
-              ref="nameInput"
+              id="lessonName"
+              ref="lessonInput"
               v-model="name"
-              :label="`Nombre`"
+              label="Nombre"
+              :filled="true"
+              :outlined="false"
               :rules="`required|min:3|max:50|regex:${validRegex}`"
             />
+            <TagsAutoComplete
+              ref="tagsInput"
+              :dense="false"
+              tag-type="material"
+              :tags="tags"
+              rules="required"
+              @change="onChangeTags"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
             <FieldInput
               v-if="type === 'recording'"
               id="url"
@@ -84,6 +93,7 @@
                 />
               </div>
             </div>
+
             <div v-if="uploadedFiles.length > 0">
               <ul class="file-container mb-2">
                 <li
@@ -121,71 +131,61 @@
               </li>
               <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
             </ul>
-            <TagsAutoComplete
-              ref="tagsInput"
-              :dense="false"
-              tag-type="material"
-              :tags="tags"
-              rules="required"
-              @change="onChangeTags"
-            />
-            <v-card-actions class="d-flex justify-space-between pa-0">
-              <v-btn
-                color="blue-darken-1"
-                class="button flex-grow-1"
-                variant="text"
-                large
-                outlined
-                @click="onClose"
-              >
-                Cancelar
-              </v-btn>
-              <v-btn
-                dark
-                color="blue darken-1"
-                class="button flex-grow-1"
-                large
+          </v-col>
+          <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
+            <div>
+              <ResourceButton
                 :loading="loading"
+                :text-button="'Crear'"
+                color="primary"
+                icon-button="mdi-pencil"
                 @click="onCreateWorkspaceMaterial"
-              >
-                {{ material ? 'Editar' : 'Crear' }}
-              </v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </validation-observer>
-    </v-dialog>
-  </v-row>
+              />
+            </div>
+            <div class="d-flex">
+              <resource-button
+                text-button="Eliminar"
+                icon-button="mdi-delete"
+                color="red"
+                @click="deleteMaterial"
+              />
+            </div>
+          </v-row>
+        </v-row>
+      </section>
+    </validation-observer>
+  </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
-import { inputValidRegex } from '@/utils/inputValidRegex'
-import Toast from '@/utils/toast'
 
 export default {
-  name: 'AddMaterialModal',
   components: {
+    Vtoolbar: () =>
+      import(
+        /* webpackChunkName: "Vtoolbar" */ '@/modules/resources/components/resources/toolbar'
+      ),
     FieldInput: () =>
       import(
         /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
     TagsAutoComplete: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
       )
   },
-  props: {
-    defaultWorkspace: {
-      type: String,
-      default: null
-    }
-  },
   data() {
     return {
-      isOpen: false,
       validRegex: inputValidRegex,
       selectedWorkspace: null,
       uploadedFiles: [],
@@ -214,6 +214,10 @@ export default {
     }
   },
   computed: {
+    ...mapState('lessonsStore', ['lesson']),
+    title() {
+      return !this.lesson ? 'Nueva Material' : `Editar "${this.lesson.name}":`
+    },
     isMaterial() {
       return this.type === 'material'
     },
@@ -234,21 +238,20 @@ export default {
   mounted() {
     this.loadWorkspaces()
   },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
   methods: {
-    open(material) {
-      this.isOpen = true
-      this.reset()
-
-      if (material) {
-        this.material = material
-        this.name = material.name
-        this.type = material.type
-        this.workspace = material.workspace_id.toString()
-        this.url = material.url
-        this.tags = material.tags ? material.tags.split(',') : []
-      }
+    ...mapActions('lessonsStore', ['setLesson']),
+    onChangeType(type) {
+      this.type = type
     },
-
+    onChangeTags(tags) {
+      this.tags = tags
+    },
+    async createMaterial() {
+      console.log('create')
+    },
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
@@ -262,14 +265,9 @@ export default {
       this.material = false
       this.uploadedFiles = []
     },
-    onClose() {
-      this.isOpen = false
-    },
-    onChangeType(type) {
-      this.type = type
-    },
-    onChangeTags(tags) {
-      this.tags = tags
+
+    async deleteMaterial() {
+      console.log('create')
     },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
@@ -279,9 +277,11 @@ export default {
         label: item.name
       }))
     },
+
     async uploadFileClicked() {
       this.$refs.fileInput.click()
     },
+
     async handleFileUpload(event) {
       // Handle the file upload event and store the uploaded files in the array
       const { files } = event.target
@@ -371,11 +371,16 @@ export default {
           timer: 7500
         })
         this.$emit('create', material)
-        this.onClose()
+        this.reset()
       } catch (err) {
         console.error(err)
         this.loading = false
       }
+    }
+  },
+  head: {
+    title: {
+      inner: 'Crear Materiales'
     }
   }
 }

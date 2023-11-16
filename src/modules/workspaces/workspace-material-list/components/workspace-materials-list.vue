@@ -108,9 +108,7 @@
             </v-icon>
           </div>
           <resource-button-edit
-            :config-route="{}"
-            :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateWorkspaceMaterial(item)"
+            :config-route="{ name: 'edit-material', params: { id: item.id } }"
           />
           <resource-button-delete
             text-button="Eliminar"
@@ -328,7 +326,9 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      this.$refs.addWorkspaceMaterial.open()
+      this.$router.push({
+        name: 'create-materials'
+      })
     },
 
     updateWorkspaceMaterial(material) {
