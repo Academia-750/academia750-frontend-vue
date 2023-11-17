@@ -38,8 +38,8 @@
               ></v-select>
             </ValidationProvider>
             <FieldInput
-              id="lessonName"
-              ref="lessonInput"
+              id="materialName"
+              ref="materialInput"
               v-model="name"
               label="Nombre"
               :filled="true"
