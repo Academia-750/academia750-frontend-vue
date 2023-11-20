@@ -33,7 +33,7 @@
 
       <!-- Zoom component -->
       <div v-if="classOngoing">
-        <section v-if="meetingId" class="d-flex align-center">
+        <section v-if="meetingId" class="d-flex flex-column align-start">
           <iframe
             ref="zoomIframe"
             allow="microphone; camera"
@@ -42,6 +42,30 @@
             frameborder="0"
             allowfullscreen
           />
+          <div class="pa-4 d-flex ">
+            <span class="bold">Materials :</span>
+            <div>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <v-list-item-title>Material Name</v-list-item-title>
+                  <div class="d-flex material_item">
+                    <v-list-item-subtitle>
+                      Material category
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      <v-icon
+                        class="cursor-pointer pr-3 pr-md-1"
+                        color="primary"
+                      >
+                        mdi-cloud-download
+                      </v-icon>
+                    </v-list-item-subtitle>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
+            
+          </div>
         </section>
         <section v-else class="d-flex align-center justify-center pa-3">
           En enlace a la clase online no es correcto. Por favor contacte con el
@@ -170,6 +194,19 @@ export default {
       const LessonInfo = this.$route.params.id
       const res = await LessonRepository.info(LessonInfo)
 
+      // if (!res) {
+      //   return
+      // }
+      // console.log('========res', res)
+      // const params = {
+      //   lessons: res.id
+      // }
+      // const materials = await LessonRepository.studentsMaterialList(
+      //   params
+      // )
+      
+      // console.log('========lesson', materials)
+
       if (!res.is_active) {
         Toast.error('Esta clase aún no está activa')
         this.$router.replace({
@@ -192,3 +229,16 @@ export default {
   }
 }
 </script>
+<style scoped>
+.v-list-item__content{
+  padding: 4px 0;
+}
+.v-list-item {
+  display: block;
+}
+.material_item {
+  padding-top: 4px;
+  justify-content: center;
+  align-items: center;
+}
+</style>
