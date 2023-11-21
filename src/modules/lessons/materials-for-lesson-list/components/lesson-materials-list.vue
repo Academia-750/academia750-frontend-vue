@@ -216,7 +216,7 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      this.$refs.addWorkspaceMaterial.open()
+      this.$router.push({ name: 'create-materials' })
     },
     async loadMaterials(pagination) {
       const params = {

@@ -237,7 +237,6 @@ export default {
   },
   mounted() {
     if (this.editItem) {
-      this.material = this.editItem
       this.name = this.editItem.name
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
@@ -271,10 +270,6 @@ export default {
       this.tags = []
       this.material = false
       this.uploadedFiles = []
-    },
-
-    async deleteMaterial() {
-      console.log('create')
     },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
