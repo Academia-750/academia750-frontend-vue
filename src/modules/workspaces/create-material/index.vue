@@ -64,6 +64,14 @@
               label="Video URL (Vimeo)"
               rules="required"
             />
+            <TagsAutoComplete
+              ref="tagsInput"
+              :dense="false"
+              tag-type="material"
+              :tags="tags"
+              rules="required"
+              @change="onChangeTags"
+            />
             <v-progress-linear
               v-if="uploading"
               :value="uploadProgress"
@@ -152,14 +160,6 @@
                 :disabled="isDeleting"
                 @click="deleteWorkspaceMaterialConfirm(editItem)"
               />
-              <!-- <resource-button
-                :loading="loading"
-                text-button="Eliminar"
-                icon-button="mdi-delete"
-                color="red"
-                :disabled="loading"
-                @click="deleteWorkspaceMaterialConfirm(editItem)"
-              /> -->
             </div>
           </v-row>
         </v-row>
@@ -240,13 +240,16 @@ export default {
         return ''
       }
       // Extract the name using a regular expression
-      const matches = this.url.match(/\/([^/]+)\.\w+$/)
+      const matches = this.url.match(FILE_NAME_REGEX)
       const fileName = matches && matches[1]
 
       return fileName
     },
     typeLabel() {
       return this.type === 'material' ? 'Material' : 'Grabación'
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     }
   },
   async mounted() {

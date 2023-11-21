@@ -87,7 +87,8 @@ import moment from 'moment'
 import LessonRepository from '@/services/LessonRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import axios from 'axios'
-import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import { FILE_NAME_REGEX, MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+
 export default {
   name: 'LessonMaterialsList',
   components: {
@@ -274,29 +275,6 @@ export default {
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
-    },
-    fileNameAndType(url) {
-      // Extract the name using a regular expression
-      const matches = url.match(/\/([^/]+)\.\w+$/)
-      const fileName = matches && matches[1]
-
-      return fileName.split('.')
-    },
-    download(material) {
-      const [_name, type] = this.fileNameAndType(material.url)
-
-      axios
-        .get(material.url, { responseType: 'blob' })
-        .then((response) => {
-          const blob = new Blob([response.data], {})
-          const link = document.createElement('a')
-
-          link.href = URL.createObjectURL(blob)
-          link.download = `${material.name}.${type}`
-          link.click()
-          URL.revokeObjectURL(link.href)
-        })
-        .catch(console.error)
     },
     reset() {
       this.resetTableOptions()

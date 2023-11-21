@@ -141,6 +141,7 @@ export default {
         timeDifference <= 30 * MINUTE &&
         endTimeDifference + 15 * MINUTE >= 0
       ) {
+        this.classNotStarted = false
         this.classOngoing = true
         this.classEnded = false
 

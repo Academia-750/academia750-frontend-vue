@@ -141,7 +141,7 @@ import headers from './workspace-materials-list-columns'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import { FILE_NAME_REGEX, MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 import DownloadFile from '@/utils/DownloadMaterial'
 import LessonRepository from '@/services/LessonRepository'
 
@@ -340,10 +340,9 @@ export default {
     },
     fileNameAndType(url) {
       // Extract the name using a regular expression
-      const matches = url.match(/\/([^/]+)\.\w+$/)
-      const fileName = matches && matches[1]
+      const matches = url.match(FILE_NAME_REGEX)
 
-      return fileName.split('.')
+      return matches[0] ? matches[0].split('.') : ['unknown', '']
     },
 
     async download(material) {
