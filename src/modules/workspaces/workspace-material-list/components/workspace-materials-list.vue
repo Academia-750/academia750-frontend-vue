@@ -1,11 +1,5 @@
 <template>
   <div>
-    <AddMaterialModal
-      ref="addWorkspaceMaterial"
-      :default-workspace="workspace"
-      :workspaces="workspaces"
-      @create="create"
-    />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -174,10 +168,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
@@ -333,7 +323,8 @@ export default {
     onAddMaterial() {
       this.SET_EDIT_ITEM(false)
       this.$router.push({
-        name: 'create-materials'
+        name: 'create-materials',
+        params: { workspace: this.workspace, type: this.type }
       })
     },
 

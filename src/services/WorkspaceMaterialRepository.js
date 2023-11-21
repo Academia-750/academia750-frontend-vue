@@ -1,5 +1,6 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
+import { activateError } from '@/helpers/manageErrors'
 
 // This will be replaced by the real groups data from the API
 export default {
@@ -28,6 +29,15 @@ export default {
    */
   async info(id) {
     const response = await ResourceService.get(`material/${id}/info`)
+
+    if (response.status === 404) {
+      activateError({
+        status: 404,
+        message: 'Material no encontrado'
+      })
+
+      return false
+    }
 
     if (response.status !== 200) {
       ResourceService.warning({

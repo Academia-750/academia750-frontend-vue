@@ -39,7 +39,7 @@
             </ValidationProvider>
             <FieldInput
               id="materialName"
-              ref="materialInput"
+              ref="nameInput"
               v-model="name"
               label="Nombre"
               :filled="true"
@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
@@ -228,7 +228,9 @@ export default {
   computed: {
     ...mapState('workspaceMaterialStore', ['editItem']),
     title() {
-      return !this.editItem ? 'Nueva Material' : `Editar "${this.editItem.name}"`
+      return !this.editItem
+        ? 'Nueva Material'
+        : `Editar "${this.editItem.name}"`
     },
     isMaterial() {
       return this.type === 'material'
@@ -247,24 +249,48 @@ export default {
       return this.type === 'material' ? 'Material' : 'Grabación'
     }
   },
-  mounted() {
-    if (this.editItem) {
+  async mounted() {
+    await this.loadWorkspaces()
+
+    this.workspace = this.$route.params.workspace || ''
+    this.type = this.$route.params.type || 'material'
+
+    // Only when is Edit
+    this.loadItem()
+  },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
+  },
+  methods: {
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM']),
+    async loadItem() {
+      const { id } = this.$route.params
+
+      // No ID, then is create item
+      if (!id) {
+        return
+      }
+
+      // The item is not in the reducer, load it from the server
+      if (!this.editItem) {
+        const item = await WorkspaceMaterialRepository.info(
+          this.$route.params.id
+        )
+
+        if (!item) {
+          return
+        }
+
+        this.SET_EDIT_ITEM(item)
+      }
+
       this.material = this.editItem
       this.name = this.editItem.name
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
       this.url = this.editItem.url || undefined
       this.workspace = this.editItem.workspace_id.toString()
-
-      return
-    }
-    this.loadWorkspaces()
-  },
-  beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
-  },
-  methods: {
-    ...mapActions('workspaceMaterialStore', ['SET_EDIT_ITEM']),
+    },
     onChangeType(type) {
       this.type = type
     },
@@ -278,7 +304,6 @@ export default {
       this.$refs['tagsInput'] && this.$refs['tagsInput'].resetErrors()
 
       this.name = ''
-      this.workspace = this.defaultWorkspace || ''
       this.url = ''
       this.tags = []
       this.material = false
@@ -388,9 +413,6 @@ export default {
 
         if (!this.editItem) {
           this.reset()
-          this.$router.replace({
-            name: 'create-materials'
-          })
         }
       } catch (err) {
         console.error(err)

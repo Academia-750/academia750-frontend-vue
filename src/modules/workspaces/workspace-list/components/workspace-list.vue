@@ -6,8 +6,6 @@
       :name="name"
       @create="createWorkspace"
     />
-    <AddMaterialModal ref="addMaterial" @create="onAddMaterial" />
-
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -90,7 +88,6 @@ import _ from 'lodash'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
 import headers from './workspace-list-columns'
-import moment from 'moment'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 
@@ -129,10 +126,7 @@ export default {
       import(
         /* webpackChunkName: "AddWorkspaceModal" */ '@/modules/resources/components/resources/add-workspace-modal'
       ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
+
     ResourceButtonMaterials: () =>
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonMaterials'
