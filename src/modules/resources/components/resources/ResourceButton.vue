@@ -7,6 +7,15 @@
     :disabled="disabled"
     @click="onClick"
   >
+    <v-progress-circular
+      v-show="loading"
+      :size="20"
+      :width="4"
+      color="primary"
+      indeterminate
+      class="pr-4"
+    >
+    </v-progress-circular>
     <span
       v-if="textButton && $vuetify.breakpoint.width >= widthLimit"
       class="font-weight-bold mr-1"
@@ -44,6 +53,10 @@ export default {
     configRoute: {
       type: Object,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

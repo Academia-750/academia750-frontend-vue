@@ -34,7 +34,7 @@
                 outlined
                 clearable
                 :error-messages="errors"
-                :disabled="material ? true : false"
+                :disabled="editItem ? true : false"
               ></v-select>
             </ValidationProvider>
             <FieldInput
@@ -135,20 +135,31 @@
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
               <ResourceButton
-                :loading="true"
+                :loading="loading"
                 :text-button="editItem ? 'Editar' : 'Crear'"
                 color="primary"
                 icon-button="mdi-pencil"
+                :disabled="loading"
                 @click="onCreateWorkspaceMaterial"
               />
             </div>
             <div v-if="editItem" class="d-flex">
-              <resource-button
+              <ResourceButton
+                :loading="isDeleting"
+                text-button="Eliminar"
+                color="red"
+                icon-button="mdi-delete"
+                :disabled="isDeleting"
+                @click="deleteWorkspaceMaterialConfirm(editItem)"
+              />
+              <!-- <resource-button
+                :loading="loading"
                 text-button="Eliminar"
                 icon-button="mdi-delete"
                 color="red"
+                :disabled="loading"
                 @click="deleteWorkspaceMaterialConfirm(editItem)"
-              />
+              /> -->
             </div>
           </v-row>
         </v-row>
@@ -210,7 +221,8 @@ export default {
       type: 'material',
       tags: [],
       url: '',
-      workspace: ''
+      workspace: '',
+      isDeleting: false
     }
   },
   computed: {
@@ -237,6 +249,7 @@ export default {
   },
   mounted() {
     if (this.editItem) {
+      this.material = this.editItem
       this.name = this.editItem.name
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
@@ -372,17 +385,23 @@ export default {
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.reset()
-        this.$router.replace({
-          name: 'create-materials'
-        })
+
+        if (!this.editItem) {
+          this.reset()
+          this.$router.replace({
+            name: 'create-materials'
+          })
+        }
       } catch (err) {
         console.error(err)
         this.loading = false
       }
     },
     async deleteWorkspaceMaterialConfirm(material) {
+      this.isDeleting = true
       if (!material) {
+        this.isDeleting = false
+
         return
       }
       const result = await this.$swal.fire({
@@ -399,12 +418,16 @@ export default {
       })
 
       if (!result.isConfirmed) {
+        this.isDeleting = false
+
         return
       }
 
       const res = await WorkspaceMaterialRepository.delete(material.id)
 
       if (!res) {
+        this.isDeleting = false
+
         return
       }
       this.$swal.fire({
@@ -416,6 +439,7 @@ export default {
             : 'La grabación ha sido eliminada con éxito',
         timer: 3000
       })
+      this.isDeleting = false
       this.SET_EDIT_ITEM(false)
       this.reset()
       this.$router.push({
