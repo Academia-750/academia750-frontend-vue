@@ -1,11 +1,5 @@
 <template>
   <v-card-text>
-    <AddMaterialModal
-      ref="addWorkspaceMaterial"
-      :default-workspace="workspace"
-      :workspaces="workspaces"
-      @create="create"
-    />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -122,10 +116,6 @@ export default {
       import(
         /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
       ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
-      ),
 
     ServerDataTable
   },
@@ -217,7 +207,10 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      this.$refs.addWorkspaceMaterial.open()
+      this.$router.push({
+        name: 'create-materials',
+        params: { type: this.type }
+      })
     },
     async loadMaterials(pagination) {
       const params = {
