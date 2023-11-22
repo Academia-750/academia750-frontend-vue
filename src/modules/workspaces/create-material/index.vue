@@ -108,23 +108,23 @@
                   @change="handleFileUpload"
                 />
               </div>
-            </div>
-            <div v-if="uploadedFiles.length > 0">
-              <ul class="file-container mb-2">
-                <li
-                  v-for="(file, index) in uploadedFiles"
-                  :key="index"
-                  class="d-flex flex-row justify-space-between cursor-pointer"
-                >
-                  <div>
-                    {{ file.name }}
-                  </div>
-                  <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
-                </li>
-              </ul>
+              <div v-if="uploadedFiles.length > 0">
+                <ul class="file-container mb-2">
+                  <li
+                    v-for="(file, index) in uploadedFiles"
+                    :key="index"
+                    class="d-flex flex-row justify-space-between cursor-pointer"
+                  >
+                    <div>
+                      {{ file.name }}
+                    </div>
+                    <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
+                  </li>
+                </ul>
+              </div>
             </div>
             <ul
-              v-if="!uploadedFiles.length && isMaterial && getFileName"
+              v-if="!uploadedFiles.length && isMaterial && getFileName && materialType === 'file'"
               class="file-container mb-2"
             >
               <li
@@ -182,7 +182,6 @@ import Toast from '@/utils/toast'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
-import { FILE_NAME_REGEX } from '@/helpers/constants'
 
 export default {
   components: {
@@ -249,9 +248,14 @@ export default {
       if (!this.material) {
         return ''
       }
+      if (this.url === undefined) {
+        return ''
+      }
       // Extract the name using a regular expression
-      const matches = this.url.match(FILE_NAME_REGEX)
+      const matches = this.url.match(/\/([^/]+)\.\w+$/)
       const fileName = matches && matches[1]
+
+      this.checkLink(fileName)
 
       return fileName
     },
@@ -324,6 +328,18 @@ export default {
       this.tags = []
       this.material = false
       this.uploadedFiles = []
+      this.materialUrl = ''
+      this.materialType = 'file'
+    },
+    async checkLink (url) {
+      if (url === null) {
+        this.materialType = 'materialUrl'
+        this.materialUrl = this.url
+
+        return
+      }
+
+      return url
     },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
@@ -390,7 +406,7 @@ export default {
             type: this.type
           })
         }
-        if (this.uploadedFiles.length && this.type !== 'recording') {
+        if (this.uploadedFiles.length && this.type !== 'recording' && this.materialType === 'file') {
           const res = await Cloudinary.upload(
             this.uploadedFiles[0],
             `workspace_${this.workspace}`
@@ -401,17 +417,11 @@ export default {
 
             return
           }
-          if (materialType === 'file') {
-            this.url = res.secure_url
+          this.url = res.secure_url
+        }
 
-            return
-          }
-          if (materialType === 'materialUrl') {
-            this.url = this.materialUrl
-
-            return
-          }
-          
+        if (this.type !== 'recording' && this.materialType === 'materialUrl') {
+          this.url = this.materialUrl
         }
 
         material = await WorkspaceMaterialRepository.update(material.id, {
@@ -506,11 +516,12 @@ export default {
 .file-upload {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 }
 .file-upload .file-upload__area {
-  width: 600px;
+  width: 100%;
   min-height: 200px;
   display: flex;
   flex-direction: column;
