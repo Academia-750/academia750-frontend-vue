@@ -58,11 +58,11 @@
           <v-col cols="12" md="6">
             <v-radio-group
               v-if="type === 'material'"
-              v-model="materialType"
+              v-model="urlInputType"
               row
             >
-              <v-radio label="Upload file" value="file"></v-radio>
-              <v-radio label="Set url" value="materialUrl"></v-radio>
+              <v-radio label="Sube un fichero" value="file"></v-radio>
+              <v-radio label="URL Externa" value="materialUrl"></v-radio>
             </v-radio-group>
             <FieldInput
               v-if="type === 'recording'"
@@ -70,14 +70,14 @@
               ref="vimeoUrlInput"
               v-model="url"
               label="Video URL (Vimeo)"
-              rules="required"
+              rules="required|url"
             />
             <FieldInput
-              v-if="materialType === 'materialUrl'"
+              v-if="type === 'material' && urlInputType === 'materialUrl'"
               id="materialUrl"
               ref="materialUrlInput"
               v-model="materialUrl"
-              label="Material URL"
+              label="URL del material"
               rules="required|url"
             />
             <v-progress-linear
@@ -86,7 +86,12 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div v-if="!getFileName && type === 'material' && materialType === 'file'" class="file-upload">
+            <div
+              v-if="
+                !getFileName && type === 'material' && urlInputType === 'file'
+              "
+              class="file-upload"
+            >
               <div class="file-upload__area" @click="uploadFileClicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Sube tu fichero aqui.</h4>
@@ -124,7 +129,12 @@
               </div>
             </div>
             <ul
-              v-if="!uploadedFiles.length && isMaterial && getFileName && materialType === 'file'"
+              v-if="
+                !uploadedFiles.length &&
+                isMaterial &&
+                getFileName &&
+                urlInputType === 'file'
+              "
               class="file-container mb-2"
             >
               <li
@@ -213,7 +223,7 @@ export default {
       selectedTags: [],
       workspaces: [],
       fileName: '',
-      materialType:'file',
+      urlInputType: 'file',
       materialUrl: '',
       types: [
         {
@@ -307,7 +317,6 @@ export default {
       this.type = this.editItem.type
       this.url = this.editItem.url || undefined
       this.workspace = this.editItem.workspace_id.toString()
-
     },
 
     onChangeType(type) {
@@ -329,11 +338,11 @@ export default {
       this.material = false
       this.uploadedFiles = []
       this.materialUrl = ''
-      this.materialType = 'file'
+      this.urlInputType = 'file'
     },
-    async checkLink (url) {
+    async checkLink(url) {
       if (url === null) {
-        this.materialType = 'materialUrl'
+        this.urlInputType = 'materialUrl'
         this.materialUrl = this.url
 
         return
@@ -406,7 +415,11 @@ export default {
             type: this.type
           })
         }
-        if (this.uploadedFiles.length && this.type !== 'recording' && this.materialType === 'file') {
+        if (
+          this.uploadedFiles.length &&
+          this.type !== 'recording' &&
+          this.urlInputType === 'file'
+        ) {
           const res = await Cloudinary.upload(
             this.uploadedFiles[0],
             `workspace_${this.workspace}`
@@ -420,7 +433,7 @@ export default {
           this.url = res.secure_url
         }
 
-        if (this.type !== 'recording' && this.materialType === 'materialUrl') {
+        if (this.type !== 'recording' && this.urlInputType === 'materialUrl') {
           this.url = this.materialUrl
         }
 
