@@ -78,7 +78,7 @@
               ref="materialUrlInput"
               v-model="materialUrl"
               label="Material URL"
-              rules="required"
+              rules="required|url"
             />
             <v-progress-linear
               v-if="uploading"
