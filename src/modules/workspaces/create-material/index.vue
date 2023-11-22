@@ -56,6 +56,14 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-radio-group
+              v-if="type === 'material'"
+              v-model="materialType"
+              row
+            >
+              <v-radio label="Upload file" value="file"></v-radio>
+              <v-radio label="Set url" value="materialUrl"></v-radio>
+            </v-radio-group>
             <FieldInput
               v-if="type === 'recording'"
               id="url"
@@ -64,13 +72,13 @@
               label="Video URL (Vimeo)"
               rules="required"
             />
-            <TagsAutoComplete
-              ref="tagsInput"
-              :dense="false"
-              tag-type="material"
-              :tags="tags"
+            <FieldInput
+              v-if="materialType === 'materialUrl'"
+              id="materialUrl"
+              ref="materialUrlInput"
+              v-model="materialUrl"
+              label="Material URL"
               rules="required"
-              @change="onChangeTags"
             />
             <v-progress-linear
               v-if="uploading"
@@ -78,7 +86,7 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div v-if="!getFileName && type === 'material'" class="file-upload">
+            <div v-if="!getFileName && type === 'material' && materialType === 'file'" class="file-upload">
               <div class="file-upload__area" @click="uploadFileClicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Sube tu fichero aqui.</h4>
@@ -101,7 +109,6 @@
                 />
               </div>
             </div>
-
             <div v-if="uploadedFiles.length > 0">
               <ul class="file-container mb-2">
                 <li
@@ -175,6 +182,7 @@ import Toast from '@/utils/toast'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
+import { FILE_NAME_REGEX } from '@/helpers/constants'
 
 export default {
   components: {
@@ -206,6 +214,8 @@ export default {
       selectedTags: [],
       workspaces: [],
       fileName: '',
+      materialType:'file',
+      materialUrl: '',
       types: [
         {
           key: 'material',
@@ -293,13 +303,16 @@ export default {
       this.type = this.editItem.type
       this.url = this.editItem.url || undefined
       this.workspace = this.editItem.workspace_id.toString()
+
     },
+
     onChangeType(type) {
       this.type = type
     },
     onChangeTags(tags) {
       this.tags = tags
     },
+
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
@@ -388,7 +401,17 @@ export default {
 
             return
           }
-          this.url = res.secure_url
+          if (materialType === 'file') {
+            this.url = res.secure_url
+
+            return
+          }
+          if (materialType === 'materialUrl') {
+            this.url = this.materialUrl
+
+            return
+          }
+          
         }
 
         material = await WorkspaceMaterialRepository.update(material.id, {
@@ -518,5 +541,8 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+}
+.v-input--selection-controls {
+  margin-top: 0;
 }
 </style>
