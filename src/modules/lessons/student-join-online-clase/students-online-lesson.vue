@@ -42,29 +42,48 @@
             frameborder="0"
             allowfullscreen
           />
-          <div class="pa-4 d-flex ">
+          <div v-if="materials.length > 0" class="pa-4 d-flex">
             <span class="bold">Materials :</span>
-            <div>
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <v-list-item-title>Material Name</v-list-item-title>
-                  <div class="d-flex material_item">
-                    <v-list-item-subtitle>
-                      Material category
-                    </v-list-item-subtitle>
-                    <v-list-item-subtitle>
-                      <v-icon
-                        class="cursor-pointer pr-3 pr-md-1"
-                        color="primary"
-                      >
-                        mdi-cloud-download
-                      </v-icon>
-                    </v-list-item-subtitle>
-                  </div>
-                </v-list-item-content>
-              </v-list-item>
+            <div v-for="(item, index) in materials" :key="index" class="d-flex materials_list" >
+              <div>
+                <v-list-item three-line>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <div class="d-flex material_item">
+                      <v-list-item-subtitle>
+                        {{ item.type }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        <div
+                          v-if="item.has_url"
+                          class="d-flex justify-space-between align-center"
+                        >
+                          <div v-if="item.type === 'material'">
+                            <v-icon
+                              class="cursor-pointer pr-3 pr-md-1"
+                              color="primary"
+                              @click="download(item)"
+                            >
+                              mdi-cloud-download
+                            </v-icon>
+                          </div>
+                          <div v-if="item.type === 'recording'">
+                            <v-icon
+                              class="cursor-pointer"
+                              color="primary"
+                              @click="openVideo(item)"
+                            >
+                              mdi-camera
+                            </v-icon>
+                          </div>
+                          <div></div>
+                        </div>
+                      </v-list-item-subtitle>
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+              </div>
             </div>
-            
           </div>
         </section>
         <section v-else class="d-flex align-center justify-center pa-3">
@@ -73,14 +92,26 @@
         </section>
       </div>
     </v-card>
+    <v-dialog v-model="loading" width="auto">
+      <v-card class="d-flex flex-column justify-center align-center pa-8">
+        <p class="pa-1">Preparando tu material...</p>
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-card>
+    </v-dialog>
+    <VimeoVideoPlayer ref="video" />
   </div>
 </template>
-
 <script>
 import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
 import CounterLabel from './components/counter-label.vue'
+import downloadFile from '@/utils/DownloadMaterial'
 
 const MINUTE = 1000 * 60
 let interval
@@ -92,6 +123,10 @@ export default {
     Toolbar: () =>
       import(
         /* webpackChunkName: "Toolbar" */ '@/modules/resources/components/resources/toolbar'
+      ),
+    VimeoVideoPlayer: () =>
+      import(
+        /* webpackChunkName: "VimeoVideoPlayer" */ '@/modules/resources/components/resources/vimeo-video-player.vue'
       )
   },
   data() {
@@ -108,7 +143,9 @@ export default {
       endDate: '',
       classEnded: false,
       classOngoing: false,
-      classNotStarted: false
+      classNotStarted: false,
+      materials: [],
+      loading: false
     }
   },
   computed: {
@@ -194,19 +231,24 @@ export default {
       const LessonInfo = this.$route.params.id
       const res = await LessonRepository.info(LessonInfo)
 
-      // if (!res) {
-      //   return
-      // }
-      // console.log('========res', res)
-      // const params = {
-      //   lessons: res.id
-      // }
-      // const materials = await LessonRepository.studentsMaterialList(
-      //   params
-      // )
-      
-      // console.log('========lesson', materials)
+      if (!res) {
+        return
+      }
+      const paramsForMaterial = {
+        lessons: [res.id],
+        type: 'material'
+      }
 
+      const paramsForRecordings = {
+        lessons: [res.id],
+        type: 'recording'
+      }
+
+      const lessonMaterials = await LessonRepository.studentsMaterialList(paramsForMaterial)
+      const lessonRecordings = await LessonRepository.studentsMaterialList(paramsForRecordings)
+
+      // Assuming lessonMaterials.results and lessonRecordings.results are arrays
+      this.materials = [...lessonMaterials.results, ...lessonRecordings.results]
       if (!res.is_active) {
         Toast.error('Esta clase aún no está activa')
         this.$router.replace({
@@ -225,6 +267,45 @@ export default {
       this.lesson = res
       this.startDate = new Date(`${this.lesson.date} ${this.lesson.start_time}`)
       this.endDate = new Date(`${this.lesson.date} ${this.lesson.end_time}`)
+    },
+    async download(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
+        return
+      }
+      const type = url.slice(
+        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
+      )
+
+      downloadFile(url, material.name, type)
+    },
+    async openOtherTab(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
+        return
+      }
+      window.open(url, '_blank')
+    },
+    async getUrl(material) {
+      this.loading = true
+
+      const url = await LessonRepository.downloadStudentMaterial(
+        material.material_id
+      )
+
+      this.loading = false
+
+      return url
+    },
+    async openVideo(material) {
+      const url = await this.getUrl(material)
+
+      if (!url) {
+        return
+      }
+      this.$refs.video.open(url)
     }
   }
 }
@@ -240,5 +321,10 @@ export default {
   padding-top: 4px;
   justify-content: center;
   align-items: center;
+}
+.materials_list {
+  overflow: auto;
+  width: 70%;
+  flex-wrap: wrap;
 }
 </style>
