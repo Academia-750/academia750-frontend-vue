@@ -3,12 +3,21 @@
     <Toolbar :title="`Clase ${lesson.name}`"> </Toolbar>
 
     <v-spacer></v-spacer>
-
-    <v-card style="height: 75vh; padding-top: 20px">
+    <v-card v-if="!meetingId" style="height: 75vh; padding-top: 20px">
+      <section
+        style="height: 75vh; padding-top: 20px"
+        class="d-flex align-center justify-center pa-3"
+      >
+        En enlace a la clase online no es correcto. Por favor contacte con el
+        administrador.
+      </section>
+    </v-card>
+    <v-card v-else style="min-height: 50vh; padding-top: 20px">
       <!-- Count down -->
       <section
         v-if="classNotStarted"
-        class="d-flex flex-column justify-center align-center h-full"
+        class="d-flex flex-column justify-center align-center"
+        style="height: 50vh"
       >
         <h1 class="ma-6">
           Tu siguiente clase online será <b>{{ lesson.name }}</b>
@@ -26,73 +35,79 @@
       <!-- class ended message -->
       <section
         v-if="classEnded"
-        class="d-flex flex-column justify-center align-center h-full"
+        class="d-flex flex-column justify-center align-center"
+        style="height: 50vh"
       >
         <h3 class="ma-6">La clase online ya ha terminado.</h3>
       </section>
 
       <!-- Zoom component -->
-      <div v-if="classOngoing">
-        <section v-if="meetingId" class="d-flex flex-column align-start">
-          <iframe
-            ref="zoomIframe"
-            allow="microphone; camera"
-            style="border: 0; height: 60vh; width: 100%"
-            :src="zoomUrl"
-            frameborder="0"
-            allowfullscreen
-          />
-          <div v-if="materials.length > 0" class="pa-4 d-flex w-full">
-            <span class="bold mr-4">Materials:</span>
-            <div class="d-flex materials_list w-auto">
-              <div v-for="(item, index) in materials" :key="index" class="d-flex" >
-                <div>
-                  <v-list-item three-line>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ item.name }}</v-list-item-title>
-                      <div class="d-flex material_item">
-                        <v-list-item-subtitle>
-                          {{ item.type }}
-                        </v-list-item-subtitle>
-                        <v-list-item-subtitle>
-                          <div
-                            v-if="item.has_url"
-                            class="d-flex justify-space-between align-center"
-                          >
-                            <div v-if="item.type === 'material'">
-                              <v-icon
-                                class="cursor-pointer pr-3 pr-md-1"
-                                color="primary"
-                                @click="download(item)"
-                              >
-                                mdi-cloud-download
-                              </v-icon>
-                            </div>
-                            <div v-if="item.type === 'recording'">
-                              <v-icon
-                                class="cursor-pointer"
-                                color="primary"
-                                @click="openVideo(item)"
-                              >
-                                mdi-camera
-                              </v-icon>
-                            </div>
-                            <div></div>
+      <section v-if="classOngoing" class="d-flex flex-column align-start">
+        <iframe
+          ref="zoomIframe"
+          allow="microphone; camera"
+          style="border: 0; height: 60vh; width: 100%"
+          :src="zoomUrl"
+          frameborder="0"
+          allowfullscreen
+        />
+      </section>
+
+      <section class="pa-4">
+        <span v-if="materials.length"> Materiales: </span>
+        <div class="d-flex w-full">
+          <div class="d-flex materials_list w-auto">
+            <div
+              v-for="(item, index) in [
+                ...materials,
+                ...materials,
+                ...materials
+              ]"
+              :key="index"
+              class="d-flex"
+            >
+              <v-card>
+                <v-list-item three-line>
+                  <v-list-item-content class="pt-2">
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <div class="d-flex material_item">
+                      <v-list-item-subtitle>
+                        {{ materialType[item.type] }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        <div
+                          v-if="item.has_url"
+                          class="d-flex justify-end align-center"
+                        >
+                          <div v-if="item.type === 'material'">
+                            <v-icon
+                              class="cursor-pointer pr-3 pr-md-1"
+                              color="primary"
+                              @click="openOtherTab(item)"
+                            >
+                              mdi-eye
+                            </v-icon>
                           </div>
-                        </v-list-item-subtitle>
-                      </div>
-                    </v-list-item-content>
-                  </v-list-item>
-                </div>
-              </div>
+                          <div v-if="item.type === 'recording'">
+                            <v-icon
+                              class="cursor-pointer"
+                              color="primary"
+                              @click="openVideo(item)"
+                            >
+                              mdi-camera
+                            </v-icon>
+                          </div>
+                          <div></div>
+                        </div>
+                      </v-list-item-subtitle>
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
             </div>
           </div>
-        </section>
-        <section v-else class="d-flex align-center justify-center pa-3">
-          En enlace a la clase online no es correcto. Por favor contacte con el
-          administrador.
-        </section>
-      </div>
+        </div>
+      </section>
     </v-card>
     <v-dialog v-model="loading" width="auto">
       <v-card class="d-flex flex-column justify-center align-center pa-8">
@@ -147,7 +162,11 @@ export default {
       classOngoing: false,
       classNotStarted: false,
       materials: [],
-      loading: false
+      loading: false,
+      materialType: {
+        recording: 'Grabación',
+        material: 'Material'
+      }
     }
   },
   computed: {
@@ -246,8 +265,12 @@ export default {
         type: 'recording'
       }
 
-      const lessonMaterials = await LessonRepository.studentsMaterialList(paramsForMaterial)
-      const lessonRecordings = await LessonRepository.studentsMaterialList(paramsForRecordings)
+      const lessonMaterials = await LessonRepository.studentsMaterialList(
+        paramsForMaterial
+      )
+      const lessonRecordings = await LessonRepository.studentsMaterialList(
+        paramsForRecordings
+      )
 
       // Assuming lessonMaterials.results and lessonRecordings.results are arrays
       this.materials = [...lessonMaterials.results, ...lessonRecordings.results]
@@ -313,7 +336,7 @@ export default {
 }
 </script>
 <style scoped>
-.v-list-item__content{
+.v-list-item__content {
   padding: 4px 0;
 }
 .v-list-item {
@@ -329,13 +352,10 @@ export default {
   overflow-x: auto;
   white-space: nowrap;
   gap: 10px;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
 }
 
 .materials_list > div {
   flex: 0 0 auto;
   min-width: 120px; /* Adjust this as needed for your design */
 }
-
 </style>
