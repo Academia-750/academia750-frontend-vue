@@ -34,7 +34,7 @@
 
       <!-- class ended message -->
       <section
-        v-if="classEnded"
+        v-else-if="classEnded"
         class="d-flex flex-column justify-center align-center"
         style="height: 50vh"
       >
@@ -42,7 +42,7 @@
       </section>
 
       <!-- Zoom component -->
-      <section v-if="classOngoing" class="d-flex flex-column align-start">
+      <section v-else-if="classOngoing" class="d-flex flex-column align-start">
         <iframe
           ref="zoomIframe"
           allow="microphone; camera"
@@ -52,16 +52,16 @@
           allowfullscreen
         />
       </section>
-
+      <section
+        v-else
+        class="d-flex flex-column align-start"
+        style="height: 50vh"
+      ></section>
       <section class="pa-4">
         <span v-if="materials.length"> Materiales: </span>
         <div class="d-flex w-full">
           <div class="d-flex materials_list w-auto">
-            <div
-              v-for="(item, index) in [materials]"
-              :key="index"
-              class="d-flex"
-            >
+            <div v-for="(item, index) in materials" :key="index" class="d-flex">
               <v-card>
                 <v-list-item three-line>
                   <v-list-item-content class="pt-2">
@@ -253,12 +253,14 @@ export default {
       }
       const paramsForMaterial = {
         lessons: [res.id],
-        type: 'material'
+        type: 'material',
+        limit: 50
       }
 
       const paramsForRecordings = {
         lessons: [res.id],
-        type: 'recording'
+        type: 'recording',
+        limit: 50
       }
 
       const lessonMaterials = await LessonRepository.studentsMaterialList(
@@ -269,7 +271,10 @@ export default {
       )
 
       // Assuming lessonMaterials.results and lessonRecordings.results are arrays
-      this.materials = [...lessonMaterials.results, ...lessonRecordings.results]
+      this.materials = [
+        ...lessonMaterials.results,
+        ...lessonRecordings.results
+      ].sort((a, b) => a.name - b.name)
       if (!res.is_active) {
         Toast.error('Esta clase aún no está activa')
         this.$router.replace({
