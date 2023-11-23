@@ -1,18 +1,10 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="isOpen"
-      max-width="450px"
-      :fullscreen="isMobile"
-      @close="onClose"
-    >
-      <validation-observer ref="formCreateWorkspaceMaterial">
-        <v-card class="d-flex flex-column">
-          <v-container class="pa-3">
-            <v-card-title class="d-flex justify-space-between pt-0 px-0">
-              <span class="text-h6 font-weight-bold">Subir Fichero</span>
-              <v-icon class="d-md-block" @click="onClose"> mdi-close </v-icon>
-            </v-card-title>
+  <div>
+    <Vtoolbar :title="title" icon="mdi-book-open-variant" />
+    <validation-observer ref="formCreateWorkspaceMaterial">
+      <section class="px-2 py-2 d-flex flex-sm-column align-center">
+        <v-row dense :style="{ width: '-webkit-fill-available' }">
+          <v-col cols="12" md="6">
             <v-select
               v-model="type"
               :items="types"
@@ -42,23 +34,17 @@
                 outlined
                 clearable
                 :error-messages="errors"
-                :disabled="material ? true : false"
+                :disabled="editItem ? true : false"
               ></v-select>
             </ValidationProvider>
             <FieldInput
-              id="name"
+              id="materialName"
               ref="nameInput"
               v-model="name"
-              :label="`Nombre`"
+              label="Nombre"
+              :filled="true"
+              :outlined="false"
               :rules="`required|min:3|max:50|regex:${validRegex}`"
-            />
-            <FieldInput
-              v-if="type === 'recording'"
-              id="url"
-              ref="vimeoUrlInput"
-              v-model="url"
-              label="Video URL (Vimeo)"
-              rules="required"
             />
             <TagsAutoComplete
               ref="tagsInput"
@@ -68,13 +54,44 @@
               rules="required"
               @change="onChangeTags"
             />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-radio-group
+              v-if="type === 'material'"
+              v-model="urlInputType"
+              row
+            >
+              <v-radio label="Sube un fichero" value="file"></v-radio>
+              <v-radio label="URL Externa" value="materialUrl"></v-radio>
+            </v-radio-group>
+            <FieldInput
+              v-if="type === 'recording'"
+              id="url"
+              ref="vimeoUrlInput"
+              v-model="url"
+              label="Video URL (Vimeo)"
+              rules="required|url"
+            />
+            <FieldInput
+              v-if="type === 'material' && urlInputType === 'materialUrl'"
+              id="materialUrl"
+              ref="materialUrlInput"
+              v-model="materialUrl"
+              label="URL del material"
+              rules="required|url"
+            />
             <v-progress-linear
               v-if="uploading"
               :value="uploadProgress"
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div v-if="!getFileName && type === 'material'" class="file-upload">
+            <div
+              v-if="
+                !getFileName && type === 'material' && urlInputType === 'file'
+              "
+              class="file-upload"
+            >
               <div class="file-upload__area" @click="uploadFileClicked">
                 <v-icon>mdi-plus-circle</v-icon>
                 <h4 class="my-1">Sube tu fichero aqui.</h4>
@@ -96,24 +113,28 @@
                   @change="handleFileUpload"
                 />
               </div>
-            </div>
-
-            <div v-if="uploadedFiles.length > 0">
-              <ul class="file-container mb-2">
-                <li
-                  v-for="(file, index) in uploadedFiles"
-                  :key="index"
-                  class="d-flex flex-row justify-space-between cursor-pointer"
-                >
-                  <div>
-                    {{ file.name }}
-                  </div>
-                  <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
-                </li>
-              </ul>
+              <div v-if="uploadedFiles.length > 0">
+                <ul class="file-container mb-2">
+                  <li
+                    v-for="(file, index) in uploadedFiles"
+                    :key="index"
+                    class="d-flex flex-row justify-space-between cursor-pointer"
+                  >
+                    <div>
+                      {{ file.name }}
+                    </div>
+                    <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
+                  </li>
+                </ul>
+              </div>
             </div>
             <ul
-              v-if="!uploadedFiles.length && isMaterial && getFileName"
+              v-if="
+                !uploadedFiles.length &&
+                isMaterial &&
+                getFileName &&
+                urlInputType === 'file'
+              "
               class="file-container mb-2"
             >
               <li
@@ -135,65 +156,64 @@
               </li>
               <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
             </ul>
-
-            <v-card-actions class="d-flex justify-space-between pa-0">
-              <v-btn
-                color="blue-darken-1"
-                class="button flex-grow-1"
-                variant="text"
-                large
-                outlined
-                @click="onClose"
-              >
-                Cancelar
-              </v-btn>
-              <v-btn
-                dark
-                color="blue darken-1"
-                class="button flex-grow-1"
-                large
+          </v-col>
+          <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
+            <div>
+              <ResourceButton
                 :loading="loading"
+                :text-button="editItem ? 'Editar' : 'Crear'"
+                color="primary"
+                icon-button="mdi-pencil"
+                :disabled="loading"
                 @click="onCreateWorkspaceMaterial"
-              >
-                {{ material ? 'Editar' : 'Crear' }}
-              </v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </validation-observer>
-    </v-dialog>
-  </v-row>
+              />
+            </div>
+            <div v-if="editItem" class="d-flex">
+              <ResourceButton
+                :loading="isDeleting"
+                text-button="Eliminar"
+                color="red"
+                icon-button="mdi-delete"
+                :disabled="isDeleting"
+                @click="deleteWorkspaceMaterialConfirm(editItem)"
+              />
+            </div>
+          </v-row>
+        </v-row>
+      </section>
+    </validation-observer>
+  </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+import { inputValidRegex } from '@/utils/inputValidRegex'
+import Toast from '@/utils/toast'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
-import { inputValidRegex } from '@/utils/inputValidRegex'
-import Toast from '@/utils/toast'
-import { FILE_NAME_REGEX } from '@/helpers/constants'
 
 export default {
-  name: 'AddMaterialModal',
   components: {
+    Vtoolbar: () =>
+      import(
+        /* webpackChunkName: "Vtoolbar" */ '@/modules/resources/components/resources/toolbar'
+      ),
     FieldInput: () =>
       import(
         /* webpackChunkName: "FieldInput" */ '@/modules/resources/components/form/input.vue'
+      ),
+    ResourceButton: () =>
+      import(
+        /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
     TagsAutoComplete: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
       )
   },
-  props: {
-    defaultWorkspace: {
-      type: String,
-      default: null
-    }
-  },
   data() {
     return {
-      isOpen: false,
       validRegex: inputValidRegex,
       selectedWorkspace: null,
       uploadedFiles: [],
@@ -203,6 +223,8 @@ export default {
       selectedTags: [],
       workspaces: [],
       fileName: '',
+      urlInputType: 'file',
+      materialUrl: '',
       types: [
         {
           key: 'material',
@@ -218,10 +240,17 @@ export default {
       type: 'material',
       tags: [],
       url: '',
-      workspace: ''
+      workspace: '',
+      isDeleting: false
     }
   },
   computed: {
+    ...mapState('workspaceMaterialStore', ['editItem']),
+    title() {
+      return !this.editItem
+        ? 'Nueva Material'
+        : `Editar "${this.editItem.name}"`
+    },
     isMaterial() {
       return this.type === 'material'
     },
@@ -229,9 +258,14 @@ export default {
       if (!this.material) {
         return ''
       }
+      if (this.url === undefined) {
+        return ''
+      }
       // Extract the name using a regular expression
-      const matches = this.url.match(FILE_NAME_REGEX)
+      const matches = this.url.match(/\/([^/]+)\.\w+$/)
       const fileName = matches && matches[1]
+
+      this.checkLink(fileName)
 
       return fileName
     },
@@ -242,22 +276,54 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
     }
   },
-  mounted() {
-    this.loadWorkspaces()
+  async mounted() {
+    await this.loadWorkspaces()
+
+    this.workspace = this.$route.params.workspace || ''
+    this.type = this.$route.params.type || 'material'
+
+    // Only when is Edit
+    this.loadItem()
+  },
+  beforeCreate() {
+    this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    open(material) {
-      this.isOpen = true
-      this.reset()
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM']),
+    async loadItem() {
+      const { id } = this.$route.params
 
-      if (material) {
-        this.material = material
-        this.name = material.name
-        this.type = material.type
-        this.workspace = material.workspace_id.toString()
-        this.url = material.url
-        this.tags = material.tags ? material.tags.split(',') : []
+      // No ID, then is create item
+      if (!id) {
+        return
       }
+
+      // The item is not in the reducer, load it from the server
+      if (!this.editItem) {
+        const item = await WorkspaceMaterialRepository.info(
+          this.$route.params.id
+        )
+
+        if (!item) {
+          return
+        }
+
+        this.SET_EDIT_ITEM(item)
+      }
+
+      this.material = this.editItem
+      this.name = this.editItem.name
+      this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
+      this.type = this.editItem.type
+      this.url = this.editItem.url || undefined
+      this.workspace = this.editItem.workspace_id.toString()
+    },
+
+    onChangeType(type) {
+      this.type = type
+    },
+    onChangeTags(tags) {
+      this.tags = tags
     },
 
     reset() {
@@ -267,22 +333,23 @@ export default {
       this.$refs['tagsInput'] && this.$refs['tagsInput'].resetErrors()
 
       this.name = ''
-      this.workspace = this.defaultWorkspace || ''
       this.url = ''
       this.tags = []
       this.material = false
       this.uploadedFiles = []
+      this.materialUrl = ''
+      this.urlInputType = 'file'
     },
-    onClose() {
-      this.isOpen = false
-    },
-    onChangeType(type) {
-      this.type = type
-    },
-    onChangeTags(tags) {
-      this.tags = tags
-    },
+    async checkLink(url) {
+      if (url === null) {
+        this.urlInputType = 'materialUrl'
+        this.materialUrl = this.url
 
+        return
+      }
+
+      return url
+    },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
 
@@ -348,7 +415,11 @@ export default {
             type: this.type
           })
         }
-        if (this.uploadedFiles.length && this.type !== 'recording') {
+        if (
+          this.uploadedFiles.length &&
+          this.type !== 'recording' &&
+          this.urlInputType === 'file'
+        ) {
           const res = await Cloudinary.upload(
             this.uploadedFiles[0],
             `workspace_${this.workspace}`
@@ -360,6 +431,10 @@ export default {
             return
           }
           this.url = res.secure_url
+        }
+
+        if (this.type !== 'recording' && this.urlInputType === 'materialUrl') {
+          this.url = this.materialUrl
         }
 
         material = await WorkspaceMaterialRepository.update(material.id, {
@@ -384,12 +459,68 @@ export default {
           confirmButtonText: 'Entendido',
           timer: 7500
         })
-        this.$emit('create', material)
-        this.onClose()
+
+        if (!this.editItem) {
+          this.reset()
+        }
       } catch (err) {
         console.error(err)
         this.loading = false
       }
+    },
+    async deleteWorkspaceMaterialConfirm(material) {
+      this.isDeleting = true
+      if (!material) {
+        this.isDeleting = false
+
+        return
+      }
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'ELIMINAR Material',
+        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Material? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        this.isDeleting = false
+
+        return
+      }
+
+      const res = await WorkspaceMaterialRepository.delete(material.id)
+
+      if (!res) {
+        this.isDeleting = false
+
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title:
+          material.type === 'material'
+            ? 'El material ha sido eliminado con éxito.'
+            : 'La grabación ha sido eliminada con éxito',
+        timer: 3000
+      })
+      this.isDeleting = false
+      this.SET_EDIT_ITEM(false)
+      this.reset()
+      this.$router.push({
+        name: 'manage-materials'
+      })
+    }
+  },
+  head: {
+    title: {
+      inner: 'Crear Materiales'
     }
   }
 }
@@ -398,11 +529,12 @@ export default {
 .file-upload {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 }
 .file-upload .file-upload__area {
-  width: 600px;
+  width: 100%;
   min-height: 200px;
   display: flex;
   flex-direction: column;
@@ -433,5 +565,8 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+}
+.v-input--selection-controls {
+  margin-top: 0;
 }
 </style>
