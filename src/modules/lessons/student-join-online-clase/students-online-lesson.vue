@@ -58,11 +58,7 @@
         <div class="d-flex w-full">
           <div class="d-flex materials_list w-auto">
             <div
-              v-for="(item, index) in [
-                ...materials,
-                ...materials,
-                ...materials
-              ]"
+              v-for="(item, index) in [materials]"
               :key="index"
               class="d-flex"
             >
@@ -83,9 +79,9 @@
                             <v-icon
                               class="cursor-pointer pr-3 pr-md-1"
                               color="primary"
-                              @click="openOtherTab(item)"
+                              @click="download(item)"
                             >
-                              mdi-eye
+                              mdi-cloud-download
                             </v-icon>
                           </div>
                           <div v-if="item.type === 'recording'">
@@ -352,6 +348,8 @@ export default {
   overflow-x: auto;
   white-space: nowrap;
   gap: 10px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 .materials_list > div {
