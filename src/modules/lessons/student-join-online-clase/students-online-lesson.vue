@@ -42,7 +42,7 @@
             frameborder="0"
             allowfullscreen
           />
-          <div v-if="materials.length > 0" class="pa-4 d-flex">
+          <div v-if="materials.length > 0" class="pa-4 d-flex w-full">
             <span class="bold mr-4">Materials:</span>
             <div class="d-flex materials_list w-auto">
               <div v-for="(item, index) in materials" :key="index" class="d-flex" >
@@ -328,12 +328,14 @@ export default {
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
-  gap: 10px; /* Adjust the gap between items as needed */
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
-/* Optional: Ensure that each item within the materials_list does not wrap */
 .materials_list > div {
   flex: 0 0 auto;
+  min-width: 120px; /* Adjust this as needed for your design */
 }
 
 </style>
