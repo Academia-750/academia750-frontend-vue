@@ -43,45 +43,47 @@
             allowfullscreen
           />
           <div v-if="materials.length > 0" class="pa-4 d-flex">
-            <span class="bold">Materials :</span>
-            <div v-for="(item, index) in materials" :key="index" class="d-flex materials_list" >
-              <div>
-                <v-list-item three-line>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.name }}</v-list-item-title>
-                    <div class="d-flex material_item">
-                      <v-list-item-subtitle>
-                        {{ item.type }}
-                      </v-list-item-subtitle>
-                      <v-list-item-subtitle>
-                        <div
-                          v-if="item.has_url"
-                          class="d-flex justify-space-between align-center"
-                        >
-                          <div v-if="item.type === 'material'">
-                            <v-icon
-                              class="cursor-pointer pr-3 pr-md-1"
-                              color="primary"
-                              @click="download(item)"
-                            >
-                              mdi-cloud-download
-                            </v-icon>
+            <span class="bold mr-4">Materials:</span>
+            <div class="d-flex materials_list w-auto">
+              <div v-for="(item, index) in materials" :key="index" class="d-flex" >
+                <div>
+                  <v-list-item three-line>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.name }}</v-list-item-title>
+                      <div class="d-flex material_item">
+                        <v-list-item-subtitle>
+                          {{ item.type }}
+                        </v-list-item-subtitle>
+                        <v-list-item-subtitle>
+                          <div
+                            v-if="item.has_url"
+                            class="d-flex justify-space-between align-center"
+                          >
+                            <div v-if="item.type === 'material'">
+                              <v-icon
+                                class="cursor-pointer pr-3 pr-md-1"
+                                color="primary"
+                                @click="download(item)"
+                              >
+                                mdi-cloud-download
+                              </v-icon>
+                            </div>
+                            <div v-if="item.type === 'recording'">
+                              <v-icon
+                                class="cursor-pointer"
+                                color="primary"
+                                @click="openVideo(item)"
+                              >
+                                mdi-camera
+                              </v-icon>
+                            </div>
+                            <div></div>
                           </div>
-                          <div v-if="item.type === 'recording'">
-                            <v-icon
-                              class="cursor-pointer"
-                              color="primary"
-                              @click="openVideo(item)"
-                            >
-                              mdi-camera
-                            </v-icon>
-                          </div>
-                          <div></div>
-                        </div>
-                      </v-list-item-subtitle>
-                    </div>
-                  </v-list-item-content>
-                </v-list-item>
+                        </v-list-item-subtitle>
+                      </div>
+                    </v-list-item-content>
+                  </v-list-item>
+                </div>
               </div>
             </div>
           </div>
@@ -323,8 +325,15 @@ export default {
   align-items: center;
 }
 .materials_list {
-  overflow: auto;
-  width: 70%;
-  flex-wrap: wrap;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 10px; /* Adjust the gap between items as needed */
 }
+
+/* Optional: Ensure that each item within the materials_list does not wrap */
+.materials_list > div {
+  flex: 0 0 auto;
+}
+
 </style>
