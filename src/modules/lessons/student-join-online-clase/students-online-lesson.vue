@@ -125,6 +125,7 @@ import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
 import CounterLabel from './components/counter-label.vue'
 import downloadFile from '@/utils/DownloadMaterial'
+import moment from 'moment'
 
 const MINUTE = 1000 * 60
 let interval
@@ -292,8 +293,15 @@ export default {
       }
 
       this.lesson = res
-      this.startDate = new Date(`${this.lesson.date} ${this.lesson.start_time}`)
-      this.endDate = new Date(`${this.lesson.date} ${this.lesson.end_time}`)
+
+      this.startDate = moment(
+        `${this.lesson.date} ${this.lesson.start_time}`,
+        'YYYY-MM-DD hh:mm'
+      ).toDate()
+      this.endDate = moment(
+        `${this.lesson.date} ${this.lesson.end_time}`,
+        'YYYY-MM-DD hh:mm'
+      ).toDate()
     },
     async download(material) {
       const url = await this.getUrl(material)
