@@ -69,7 +69,7 @@ import headers from './lesson-materials-list-columns'
 import LessonRepository from '@/services/LessonRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import { MATERIAL_TYPES_LABELS, FILE_NAME_REGEX } from '@/helpers/constants'
 import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
@@ -239,18 +239,6 @@ export default {
     },
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
-    },
-    fileNameAndType(url) {
-      // Extract the name using a regular expression
-      const matches = url.match(/\/([^/]+)\.\w+$/)
-      const fileName = matches && matches[1]
-
-      return fileName.split('.')
-    },
-    async download(material) {
-      const [_name, type] = this.fileNameAndType(material.url)
-
-      await downloadFile(material.url, material.name, type)
     },
     reset() {
       this.resetTableOptions()

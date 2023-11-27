@@ -2,7 +2,7 @@ export default {
   methods: {
     async createStudentApi() {
       try {
-        await this.createStudent({
+        const response = await this.createStudent({
           data: {
             dni: this.form.dni,
             'first-name': this.form.firstName,
@@ -12,6 +12,12 @@ export default {
           },
           config: {}
         })
+
+        if (response?.status === 422) {
+          this.handlingErrorValidation(response.data.errors)
+
+          return
+        }
 
         this.$swal.fire({
           icon: 'success',

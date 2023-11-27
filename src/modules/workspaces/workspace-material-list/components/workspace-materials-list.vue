@@ -1,11 +1,5 @@
 <template>
   <div>
-    <AddMaterialModal
-      ref="addWorkspaceMaterial"
-      :default-workspace="workspace"
-      :workspaces="workspaces"
-      @create="create"
-    />
     <ServerDataTable
       ref="table"
       :headers="headers"
@@ -110,7 +104,7 @@
           <resource-button-edit
             :config-route="{}"
             :only-dispatch-click-event="true"
-            @DispatchClickEvent="updateWorkspaceMaterial(item)"
+            @DispatchClickEvent="updateItem(item)"
           />
           <resource-button-delete
             text-button="Eliminar"
@@ -147,7 +141,7 @@ import headers from './workspace-materials-list-columns'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import { FILE_NAME_REGEX, MATERIAL_TYPES_LABELS } from '@/helpers/constants'
 import DownloadFile from '@/utils/DownloadMaterial'
 import LessonRepository from '@/services/LessonRepository'
 
@@ -173,10 +167,6 @@ export default {
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
-      ),
-    AddMaterialModal: () =>
-      import(
-        /* webpackChunkName: "AddMaterialModal" */ '@/modules/resources/components/resources/add-material-modal'
       ),
     Toolbar: () =>
       import(
@@ -241,9 +231,9 @@ export default {
       'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
-      'SET_TABLE_OPTIONS'
+      'SET_TABLE_OPTIONS',
+      'SET_EDIT_ITEM'
     ]),
-
     async handlingErrorValidation(errorResponse = {}) {
       await this.$refs['FormcreateWorkspace']['setErrors'](errorResponse)
     },
@@ -261,7 +251,10 @@ export default {
       this.SET_TAGS(value)
       this.$refs.table.reload()
     },
-
+    updateItem(item) {
+      this.SET_EDIT_ITEM(item)
+      this.$router.push({ name: 'edit-material', params: { id: item.id } })
+    },
     async loadMaterials(pagination) {
       const params = {
         ...pagination,
@@ -328,7 +321,11 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
-      this.$refs.addWorkspaceMaterial.open()
+      this.SET_EDIT_ITEM(false)
+      this.$router.push({
+        name: 'create-materials',
+        params: { workspace: this.workspace, type: this.type }
+      })
     },
 
     updateWorkspaceMaterial(material) {
@@ -343,10 +340,9 @@ export default {
     },
     fileNameAndType(url) {
       // Extract the name using a regular expression
-      const matches = url.match(/\/([^/]+)\.\w+$/)
-      const fileName = matches && matches[1]
+      const matches = url.match(FILE_NAME_REGEX)
 
-      return fileName.split('.')
+      return matches[0] ? matches[0].split('.') : ['unknown', '']
     },
 
     async download(material) {

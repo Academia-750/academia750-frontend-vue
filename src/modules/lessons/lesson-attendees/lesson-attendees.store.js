@@ -12,7 +12,6 @@ export default {
   getters: {
     ...DataTableStore.getters
   },
-
   mutations: {
     ...DataTableStore.mutations,
     SET_WILL_JOIN(state, payload) {
