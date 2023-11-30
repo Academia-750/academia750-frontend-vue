@@ -541,8 +541,10 @@ export default {
   /**
    * @param {string} id
    */
-  async downloadStudentMaterial(id) {
-    const response = await ResourceService.get(`student-lessons/${id}/download`)
+  async getStudentMaterialURL(id) {
+    const response = await ResourceService.get(`student-lessons/${id}/url`, {
+      withCredentials: true
+    })
 
     if (response.status === 424) {
       ResourceService.warning({
@@ -564,6 +566,7 @@ export default {
 
     return response.data.url
   },
+
   /**
    * @param {string} content
    * @param {number} limit

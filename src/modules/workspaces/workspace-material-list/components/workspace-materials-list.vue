@@ -141,8 +141,8 @@ import headers from './workspace-materials-list-columns'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
-import { FILE_NAME_REGEX, MATERIAL_TYPES_LABELS } from '@/helpers/constants'
-import DownloadFile from '@/utils/DownloadMaterial'
+import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
+import { downloadFile, downloadOriginalFile } from '@/utils/DownloadMaterial'
 import LessonRepository from '@/services/LessonRepository'
 
 export default {
@@ -338,31 +338,19 @@ export default {
     searchFieldWithDebounce(value) {
       this.searchFieldExecuted(value)
     },
-    fileNameAndType(url) {
-      // Extract the name using a regular expression
-      const matches = url.match(FILE_NAME_REGEX)
-
-      return matches[0] ? matches[0].split('.') : ['unknown', '']
-    },
-
     async download(material) {
-      const [_name, type] = this.fileNameAndType(material.url)
-
-      DownloadFile(material.url, material.name, type)
+      downloadOriginalFile(material.url, material.name)
     },
     async downloadWithWaterMark(material) {
       this.loading = true
-      const url = await LessonRepository.downloadStudentMaterial(material.id)
+      const url = await LessonRepository.getStudentMaterialURL(material.id)
 
       this.loading = false
       if (!url) {
         return
       }
-      const type = url.slice(
-        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
-      )
 
-      DownloadFile(url, material.name, type)
+      downloadFile(url, material.name)
     },
     reset() {
       this.resetTableOptions()

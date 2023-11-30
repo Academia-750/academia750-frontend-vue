@@ -76,7 +76,7 @@ export default {
     async getUrl(material) {
       this.loading = true
 
-      const url = await LessonRepository.downloadStudentMaterial(
+      const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
       )
 
