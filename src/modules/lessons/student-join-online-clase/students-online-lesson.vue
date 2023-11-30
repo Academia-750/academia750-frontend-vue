@@ -218,7 +218,7 @@ export default {
       // Until 15 minutes after the ending time
       if (
         timeDifference <= 30 * MINUTE &&
-        endTimeDifference + 15 * MINUTE >= 0
+        endTimeDifference + 30 * MINUTE >= 0
       ) {
         this.classNotStarted = false
         this.classOngoing = true
