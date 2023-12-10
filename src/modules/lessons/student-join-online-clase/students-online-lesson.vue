@@ -304,27 +304,31 @@ export default {
       ).toDate()
     },
     async download(material) {
+      this.loading = true
+
       const url = await this.getUrl(material)
 
       if (!url) {
+        this.loading = false
+
         return
       }
 
-      downloadFile(url, material.name)
+      await downloadFile(url, material.name)
+      this.loading = false
     },
     async openOtherTab(material) {
-      const url = await this.getUrl(material)
-
-      openInTab(url)
-    },
-    async getUrl(material) {
       this.loading = true
 
+      const url = await this.getUrl(material)
+
+      await openInTab(url)
+      this.loading = false
+    },
+    async getUrl(material) {
       const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
       )
-
-      this.loading = false
 
       return url
     },
