@@ -21,9 +21,6 @@ export const $set_token_auth = function (token) {
     process.env.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN
   ).toString()
 
-  /* //console.log('Colocando la Cookie')
-  //console.log({ options }) */
-
   Cookies.set('authorization', tokenPlainEncrypt, optionsCookieAuth)
 }
 

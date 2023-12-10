@@ -49,7 +49,7 @@
 </template>
 <script>
 import LessonRepository from '@/services/LessonRepository'
-import downloadFile from '@/utils/DownloadMaterial'
+import { downloadFile, openInTab } from '@/utils/DownloadMaterial'
 
 export default {
   name: 'StudentsMaterialsList',
@@ -80,7 +80,7 @@ export default {
     async getUrl(material) {
       this.loading = true
 
-      const url = await LessonRepository.downloadStudentMaterial(
+      const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
       )
 
@@ -98,7 +98,7 @@ export default {
         (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
       )
 
-      downloadFile(url, material.name, type)
+      downloadFile(url, material.name)
     },
     async openOtherTab(material) {
       const url = await this.getUrl(material)
@@ -106,7 +106,8 @@ export default {
       if (!url) {
         return
       }
-      window.open(url, '_blank')
+
+      openInTab(url)
     }
   }
 }

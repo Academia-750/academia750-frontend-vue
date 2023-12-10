@@ -124,7 +124,7 @@ import _ from 'lodash'
 import Toast from '@/utils/toast'
 import LessonRepository from '@/services/LessonRepository'
 import CounterLabel from './components/counter-label.vue'
-import downloadFile from '@/utils/DownloadMaterial'
+import { downloadFile, openInTab } from '@/utils/DownloadMaterial'
 import moment from 'moment'
 
 const MINUTE = 1000 * 60
@@ -218,7 +218,7 @@ export default {
       // Until 15 minutes after the ending time
       if (
         timeDifference <= 30 * MINUTE &&
-        endTimeDifference + 15 * MINUTE >= 0
+        endTimeDifference + 30 * MINUTE >= 0
       ) {
         this.classNotStarted = false
         this.classOngoing = true
@@ -309,24 +309,18 @@ export default {
       if (!url) {
         return
       }
-      const type = url.slice(
-        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
-      )
 
-      downloadFile(url, material.name, type)
+      downloadFile(url, material.name)
     },
     async openOtherTab(material) {
       const url = await this.getUrl(material)
 
-      if (!url) {
-        return
-      }
-      window.open(url, '_blank')
+      openInTab(url)
     },
     async getUrl(material) {
       this.loading = true
 
-      const url = await LessonRepository.downloadStudentMaterial(
+      const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
       )
 

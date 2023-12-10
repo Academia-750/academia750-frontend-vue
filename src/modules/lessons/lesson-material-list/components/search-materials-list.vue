@@ -70,7 +70,6 @@ import LessonRepository from '@/services/LessonRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS, FILE_NAME_REGEX } from '@/helpers/constants'
-import downloadFile from '@/utils/DownloadMaterial'
 
 export default {
   name: 'LessonMaterialsList',
