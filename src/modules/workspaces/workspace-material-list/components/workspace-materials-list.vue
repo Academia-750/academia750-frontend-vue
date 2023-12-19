@@ -78,6 +78,7 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
+                    v-if="item.watermark"
                     v-bind="attrs"
                     :class="item.url ? 'cursor-pointer' : ''"
                     color="primary"
