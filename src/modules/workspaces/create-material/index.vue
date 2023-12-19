@@ -444,6 +444,7 @@ export default {
 
             return
           }
+          this.uploadedFiles = []
           this.url = res.secure_url
         }
 
