@@ -78,36 +78,39 @@ export default {
 
   methods: {
     async getUrl(material) {
-      this.loading = true
-
       const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
       )
 
-      this.loading = false
-
       return url
     },
     async download(material) {
+      this.loading = true
+
       const url = await this.getUrl(material)
 
       if (!url) {
+        this.loading = false
+
         return
       }
-      const type = url.slice(
-        (Math.max(0, url.lastIndexOf('.')) || Infinity) + 1
-      )
 
-      downloadFile(url, material.name)
+      await downloadFile(url, material.name)
+      this.loading = false
     },
     async openOtherTab(material) {
+      this.loading = true
+
       const url = await this.getUrl(material)
 
       if (!url) {
+        this.loading = false
+
         return
       }
 
-      openInTab(url)
+      await openInTab(url)
+      this.loading = false
     }
   }
 }
