@@ -14,7 +14,6 @@
               label="Tipo"
               :value="type"
               outlined
-              clearable
               :disabled="material ? true : false"
               @change="onChangeType"
             ></v-select>
@@ -80,6 +79,7 @@
               label="URL del material"
               rules="required|url"
             />
+
             <v-progress-linear
               v-if="uploading"
               :value="uploadProgress"
@@ -123,7 +123,7 @@
                     <div>
                       {{ file.name }}
                     </div>
-                    <v-icon @click="onRemovefile(index)">mdi-close</v-icon>
+                    <v-icon @click="onRemoveFile(index)">mdi-close</v-icon>
                   </li>
                 </ul>
               </div>
@@ -156,6 +156,15 @@
               </li>
               <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
             </ul>
+            <SwitchInput
+              v-if="type === 'material'"
+              id="watermark"
+              ref="watermark"
+              :value="watermark"
+              label="Aplicar Marca de Agua"
+              rules=""
+              @click="(value) => (watermark = value)"
+            />
           </v-col>
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
@@ -210,6 +219,10 @@ export default {
     TagsAutoComplete: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/tags-auto-complete'
+      ),
+    SwitchInput: () =>
+      import(
+        /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/switch-input'
       )
   },
   data() {
@@ -241,7 +254,8 @@ export default {
       tags: [],
       url: '',
       workspace: '',
-      isDeleting: false
+      isDeleting: false,
+      watermark: false
     }
   },
   computed: {
@@ -265,8 +279,6 @@ export default {
       const matches = this.url.match(/\/([^/]+)\.\w+$/)
       const fileName = matches && matches[1]
 
-      this.checkLink(fileName)
-
       return fileName
     },
     typeLabel() {
@@ -276,11 +288,22 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
     }
   },
+  watch: {
+    type() {
+      if (this.isMaterial) {
+        this.watermark = true // By default is true for materials
+
+        return
+      }
+      this.watermark = false
+    }
+  },
   async mounted() {
     await this.loadWorkspaces()
 
     this.workspace = this.$route.params.workspace || ''
     this.type = this.$route.params.type || 'material'
+    this.watermark = this.isMaterial
 
     // Only when is Edit
     this.loadItem()
@@ -316,6 +339,7 @@ export default {
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
       this.url = this.editItem.url || undefined
+      this.watermark = this.editItem.watermark === 1
       this.workspace = this.editItem.workspace_id.toString()
     },
 
@@ -339,16 +363,6 @@ export default {
       this.uploadedFiles = []
       this.materialUrl = ''
       this.urlInputType = 'file'
-    },
-    async checkLink(url) {
-      if (url === null) {
-        this.urlInputType = 'materialUrl'
-        this.materialUrl = this.url
-
-        return
-      }
-
-      return url
     },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
@@ -395,7 +409,7 @@ export default {
         }
       }, 200)
     },
-    async onRemovefile(index) {
+    async onRemoveFile(index) {
       this.uploadedFiles.splice(index, 1)
     },
     async onCreateWorkspaceMaterial() {
@@ -430,6 +444,7 @@ export default {
 
             return
           }
+          this.uploadedFiles = []
           this.url = res.secure_url
         }
 
@@ -440,6 +455,7 @@ export default {
         material = await WorkspaceMaterialRepository.update(material.id, {
           name: this.name,
           tags: this.tags,
+          watermark: this.watermark,
           url: this.url || undefined
         })
         if (!material) {

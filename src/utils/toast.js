@@ -1,11 +1,12 @@
 import Swal from 'sweetalert2/dist/sweetalert2'
 
 export default {
-  async error(title) {
+  async error(title, message = '') {
     const result = await Swal.fire({
       icon: 'error',
       toast: true,
       title,
+      html: message ? `${message}` : undefined,
       showConfirmButton: true,
       confirmButtonText: 'Entendido',
       timer: 7500
@@ -13,11 +14,12 @@ export default {
 
     return result.isConfirmed
   },
-  async success(title) {
+  async success(title, message = '') {
     Swal.fire({
       icon: 'success',
       toast: true,
       title,
+      html: message ? `${message}` : undefined,
       timer: 3000
     })
 

@@ -138,12 +138,13 @@ export default {
    * @param {string} tags
    * @param {string} url
    */
-  async update(id, { name, type, tags, url }) {
+  async update(id, { name, type, tags, url, watermark }) {
     const response = await ResourceService.put(`material/${id}`, {
       name,
       type,
       tags,
-      url
+      url,
+      watermark
     })
 
     if (response.status === 409) {

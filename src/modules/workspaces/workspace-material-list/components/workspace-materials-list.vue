@@ -78,6 +78,7 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
+                    v-if="item.watermark"
                     v-bind="attrs"
                     :class="item.url ? 'cursor-pointer' : ''"
                     color="primary"
@@ -345,12 +346,14 @@ export default {
       this.loading = true
       const url = await LessonRepository.getStudentMaterialURL(material.id)
 
-      this.loading = false
       if (!url) {
+        this.loading = false
+
         return
       }
 
-      downloadFile(url, material.name)
+      await downloadFile(url, material.name)
+      this.loading = false
     },
     reset() {
       this.resetTableOptions()

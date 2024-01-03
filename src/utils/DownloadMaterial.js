@@ -1,4 +1,10 @@
 import axios from 'axios'
+import toast from './toast'
+
+const BASE_API =
+  process.env.NODE_ENV === 'development'
+    ? process.env.VUE_APP_BASE_URL_API_DEVELOPMENT
+    : process.env.VUE_APP_BASE_URL_API_PRODUCTION
 
 export const blobToFileType = (blob) => {
   return new Promise((resolve, reject) => {
@@ -76,7 +82,7 @@ export const downloadFile = async (url, name) => {
   try {
     const response = await axios.get(url, {
       responseType: 'blob',
-      withCredentials: true
+      withCredentials: url.includes(BASE_API) // Use this only for Internal URLs
     })
 
     const blob = new Blob([response.data], {})
@@ -91,6 +97,7 @@ export const downloadFile = async (url, name) => {
     link.click()
     URL.revokeObjectURL(link.href)
   } catch (error) {
+    toast.error('No se pudo descargar este material', error.message)
     console.error(error)
   }
 }
@@ -99,7 +106,7 @@ export const openInTab = async (url) => {
   try {
     const response = await axios.get(url, {
       responseType: 'blob',
-      withCredentials: true
+      withCredentials: url.includes(BASE_API) // Use this only for Internal URLs
     })
 
     // Generate blob first to deduce the type
@@ -115,6 +122,7 @@ export const openInTab = async (url) => {
 
     URL.revokeObjectURL(objectURL)
   } catch (error) {
+    toast.error('No se pudo abrir este material', error.message)
     console.error(error)
   }
 }

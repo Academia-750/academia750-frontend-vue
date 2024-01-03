@@ -21,6 +21,7 @@
       :item-text="itemText"
       :item-value="itemValue"
       :return-object="!!itemValue"
+      :menu-props="{ closeOnContentClick: true }"
       @change="change"
       @update:search-input="load"
       @focus="cleanSearch"
@@ -105,6 +106,7 @@ export default {
       this.loading = false
     },
     change(values) {
+      console.log({ values })
       this.$emit('change', values)
       this.search = ''
     },
@@ -127,7 +129,9 @@ export default {
       // With simple values
       this.$emit(
         'change',
-        this.values.filter((value) => value !== item)
+        this.values
+          .filter((value) => value !== item)
+          .map((value) => value.trim())
       )
     },
     resetErrors() {
