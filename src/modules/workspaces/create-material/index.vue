@@ -86,76 +86,63 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div
-              v-if="
-                !getFileName && type === 'material' && urlInputType === 'file'
-              "
-              class="file-upload"
-            >
-              <div class="file-upload__area" @click="uploadFileClicked">
-                <v-icon>mdi-plus-circle</v-icon>
-                <h4 class="my-1">Sube tu fichero aqui.</h4>
-                <h5 class="font-weight-regular d-flex align-center">
-                  <h5 class="mr-1 primary--text" color="primary">
-                    Sube ficheros
+            <div v-if="isMaterial && urlInputType === 'file'">
+              <div v-if="!getFileName" class="file-upload">
+                <div class="file-upload__area" @click="uploadFileClicked">
+                  <v-icon>mdi-plus-circle</v-icon>
+                  <h4 class="my-1">Sube tu fichero aqui.</h4>
+                  <h5 class="font-weight-regular d-flex align-center">
+                    <h5 class="mr-1 primary--text" color="primary">
+                      Sube ficheros
+                    </h5>
+                    desde tu ordenador.
                   </h5>
-                  desde tu ordenador.
-                </h5>
-                <h5 class="font-weight-regular d-flex align-center">
-                  El tamaño máximo es 10 MB
-                </h5>
-                <input
-                  id=""
-                  ref="fileInput"
-                  type="file"
-                  name=""
-                  hidden
-                  @change="handleFileUpload"
-                />
-              </div>
-              <div v-if="uploadedFiles.length > 0">
-                <ul class="file-container mb-2">
-                  <li
-                    v-for="(file, index) in uploadedFiles"
-                    :key="index"
-                    class="d-flex flex-row justify-space-between cursor-pointer"
-                  >
-                    <div>
-                      {{ file.name }}
-                    </div>
-                    <v-icon @click="onRemoveFile(index)">mdi-close</v-icon>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <ul
-              v-if="
-                !uploadedFiles.length &&
-                isMaterial &&
-                getFileName &&
-                urlInputType === 'file'
-              "
-              class="file-container mb-2"
-            >
-              <li
-                class="d-flex flex-row justify-space-between"
-                @click="uploadFileClicked"
-              >
-                <div>
-                  {{ getFileName }}
+                  <h5 class="font-weight-regular d-flex align-center mt-1">
+                    El tamaño máximo es 10 MB
+                  </h5>
+                  <input
+                    id=""
+                    ref="fileInput"
+                    type="file"
+                    name=""
+                    hidden
+                    @change="handleFileUpload"
+                  />
                 </div>
-                <v-icon>mdi-pencil</v-icon>
-                <input
-                  id=""
-                  ref="fileInput"
-                  type="file"
-                  name=""
-                  hidden
-                  @change="handleFileUpload"
-                />
-              </li>
-              <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
-            </ul>
+                <div v-if="uploadedFiles.length > 0">
+                  <ul class="file-container mb-2">
+                    <li
+                      v-for="(file, index) in uploadedFiles"
+                      :key="index"
+                      class="d-flex flex-row justify-space-between cursor-pointer"
+                    >
+                      <div>
+                        {{ file.name }}
+                      </div>
+                      <v-icon @click="onRemoveFile(index)">mdi-close</v-icon>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <ul v-else class="file-container mb-2">
+                <li
+                  class="d-flex flex-row justify-space-between"
+                  @click="uploadFileClicked"
+                >
+                  <div>{{ getFileName }}</div>
+                  <v-icon>mdi-pencil</v-icon>
+                  <input
+                    id=""
+                    ref="fileInput"
+                    type="file"
+                    name=""
+                    hidden
+                    @change="handleFileUpload"
+                  />
+                </li>
+                <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
+              </ul>
+            </div>
             <SwitchInput
               v-if="type === 'material'"
               id="watermark"
@@ -269,9 +256,14 @@ export default {
       return this.type === 'material'
     },
     getFileName() {
-      if (!this.material) {
+      if (!this.isMaterial) {
         return ''
       }
+
+      if (this.uploadedFiles.length) {
+        return this.uploadedFiles[0].name
+      }
+
       if (this.url === undefined) {
         return ''
       }
@@ -334,13 +326,20 @@ export default {
         this.SET_EDIT_ITEM(item)
       }
 
+      const isInternalFile = this.editItem.url.includes('cloudinary')
+
       this.material = this.editItem
       this.name = this.editItem.name
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
-      this.url = this.editItem.url || undefined
+      this.url =
+        isInternalFile || this.editItem.type !== 'material'
+          ? this.editItem.url
+          : undefined
+      this.materialUrl = isInternalFile ? '' : this.editItem.url
       this.watermark = this.editItem.watermark === 1
       this.workspace = this.editItem.workspace_id.toString()
+      this.urlInputType = isInternalFile ? 'file' : 'materialUrl'
     },
 
     onChangeType(type) {
@@ -355,6 +354,8 @@ export default {
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
       this.$refs['workspaceInput'] && this.$refs['workspaceInput'].reset()
       this.$refs['tagsInput'] && this.$refs['tagsInput'].resetErrors()
+      this.$refs['materialUrlInput'] &&
+        this.$refs['materialUrlInput'].resetErrors()
 
       this.name = ''
       this.url = ''
@@ -362,7 +363,6 @@ export default {
       this.material = false
       this.uploadedFiles = []
       this.materialUrl = ''
-      this.urlInputType = 'file'
     },
     async loadWorkspaces() {
       const res = await WorkspaceRepository.list()
@@ -431,7 +431,7 @@ export default {
         }
         if (
           this.uploadedFiles.length &&
-          this.type !== 'recording' &&
+          this.isMaterial &&
           this.urlInputType === 'file'
         ) {
           const res = await Cloudinary.upload(
