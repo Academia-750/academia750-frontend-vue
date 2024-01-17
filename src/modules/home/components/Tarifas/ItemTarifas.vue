@@ -2,13 +2,20 @@
   <div>
     <div
       class="todo_tarifa"
-      :style="{ background: backgroundColor || 'linear-gradient(180deg, rgba(70, 161, 187, 0.1127) 0%, rgba(125, 183, 200, 0.2303) 100%)' }"
+      :style="{
+        background: backgroundColor || 'linear-gradient(180deg, rgba(70, 161, 187, 0.1127) 0%, rgba(125, 183, 200, 0.2303) 100%)'
+      }"
     >
       <div class="cabeza_tarifa">
         <h3>{{ tituloTarifa }}</h3>
         <div class="tarifa">{{ precioTarifa }} € {{ perMonth ? '/mes' : '' }}</div>
       </div>
-      <div class="cuerpo_tarifa">
+      <div 
+        class="cuerpo_tarifa" 
+        :style="{
+          color: backgroundColor ? 'white' : 'black'
+        }"
+      >
         <p>{{ contenidoTarifa }}</p>
         <ul class="lista_tarifa mt-2">
           <li v-for="(item, index) in itemsTarifa" :key="index">{{ item }}</li>
