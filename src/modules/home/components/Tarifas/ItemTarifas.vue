@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="todo_tarifa">
+    <div
+      class="todo_tarifa"
+      :style="{ background: backgroundColor || 'linear-gradient(180deg, rgba(70, 161, 187, 0.1127) 0%, rgba(125, 183, 200, 0.2303) 100%)' }"
+    >
       <div class="cabeza_tarifa">
         <h3>{{ tituloTarifa }}</h3>
         <div class="tarifa">{{ precioTarifa }} €/mes</div>
@@ -20,7 +23,9 @@
           color="#2a99ba"
           :disabled="isDisabledButton"
           @click="$emit('emitClickInscriptionContactUs')"
-        >Únete</v-btn>
+        >
+          {{ buttonText !== '' ? buttonText: "Únete" }}
+        </v-btn>
       </div>
     </div>
   </div>
@@ -52,6 +57,14 @@ export default {
     isDarkButton: {
       type: Boolean,
       default: false
+    },
+    buttonText: {
+      type: String,
+      default: ''
+    },
+    backgroundColor: {
+      type: String,
+      default: ''
     }
   },
   data() {
