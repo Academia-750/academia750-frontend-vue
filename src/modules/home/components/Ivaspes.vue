@@ -12,9 +12,10 @@
             contenido-tarifa="M1 Operaciones de extinción de incendios en interiores. Paquete con cientos de preguntas con sus respuestas del primero bloque del manual IVASPE."
             :items-tarifa="packet1"
             is-dark-button
-            button-text="Solicitalo"
-            background-color="red"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Paquete 1')"
+            button-text="Solicítalo"
+            background-color="#E00106"
+            :per-month="false"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 1: IVASPE')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -22,10 +23,11 @@
             titulo-tarifa="Paquete 2"
             precio-tarifa="100"
             is-dark-button
+            :per-month="false"
             contenido-tarifa="M2 Riesgos naturales: Principales riesgos naturales. Meteoalerta. Paquete con cientos de preguntas con sus respuestas del segundo bloque del manual IVASPE."
             :items-tarifa="packet2"
-            background-color="orange"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Paquete 2')"
+            background-color="#DDA426"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 2: IVASPE')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -33,10 +35,11 @@
             titulo-tarifa="Paquete 3"
             precio-tarifa="100"
             is-dark-button
+            :per-month="false"
             contenido-tarifa="M3 Uso de recursos operativos. Paquete con cientos de preguntas con sus respuestas del tercer bloque del manual IVASPE."
             :items-tarifa="packet3"
-            background-color="blue"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Paquete 3')"
+            background-color="#013882"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 3: IVASPE')"
           />
         </v-col>
       </v-row>

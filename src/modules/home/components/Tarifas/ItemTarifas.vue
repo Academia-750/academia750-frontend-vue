@@ -6,7 +6,7 @@
     >
       <div class="cabeza_tarifa">
         <h3>{{ tituloTarifa }}</h3>
-        <div class="tarifa">{{ precioTarifa }} €/mes</div>
+        <div class="tarifa">{{ precioTarifa }} € {{ perMonth ? '/mes' : '' }}</div>
       </div>
       <div class="cuerpo_tarifa">
         <p>{{ contenidoTarifa }}</p>
@@ -24,7 +24,7 @@
           :disabled="isDisabledButton"
           @click="$emit('emitClickInscriptionContactUs')"
         >
-          {{ buttonText !== '' ? buttonText: "Únete" }}
+          {{ buttonText || "Únete" }}
         </v-btn>
       </div>
     </div>
@@ -65,6 +65,10 @@ export default {
     backgroundColor: {
       type: String,
       default: ''
+    },
+    perMonth: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -107,7 +111,7 @@ export default {
 }
 .cuerpo_tarifa {
   padding: 40px 45px 0px 45px;
-  min-height: 360px;
+  min-height: 380px;
 }
 .lista_tarifa {
   list-style: none;
