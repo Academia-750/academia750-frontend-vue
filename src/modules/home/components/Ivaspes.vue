@@ -15,7 +15,7 @@
             button-text="Solicítalo"
             background-color="#E00106"
             :per-month="false"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 1: IVASPE')"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 1 IVASPE')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -24,10 +24,11 @@
             precio-tarifa="100"
             is-dark-button
             :per-month="false"
+            button-text="Solicítalo"
             contenido-tarifa="M2 Riesgos naturales: Principales riesgos naturales. Meteoalerta. Paquete con cientos de preguntas con sus respuestas del segundo bloque del manual IVASPE."
             :items-tarifa="packet2"
             background-color="#DDA426"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 2: IVASPE')"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 2 IVASPE')"
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -36,10 +37,11 @@
             precio-tarifa="100"
             is-dark-button
             :per-month="false"
+            button-text="Solicítalo"
             contenido-tarifa="M3 Uso de recursos operativos. Paquete con cientos de preguntas con sus respuestas del tercer bloque del manual IVASPE."
             :items-tarifa="packet3"
             background-color="#013882"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 3: IVASPE')"
+            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'PAQUETE 3 IVASPE')"
           />
         </v-col>
       </v-row>
