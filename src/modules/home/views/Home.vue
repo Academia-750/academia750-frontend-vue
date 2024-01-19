@@ -40,6 +40,13 @@
         "
       />
     </div>
+    <div id="ivaspesSection" ref="ivaspesSection" style="padding-top: 100px">
+      <Ivaspes
+        @emitClickInscriptionContactUs="
+          scrollToContactUsFormForRegisterWithReasonInscription
+        "
+      />
+    </div>
     <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <div id="ContactUsForm" ref="ContactUsForm">
       <Formulario ref="ContactUsFormComponent" />
@@ -63,6 +70,7 @@ import Tarifas from '../components/Tarifas'
 import Nosotros from '../components/Nosotros'
 import Formulario from '../components/Formulario'
 import Footer from '../components/Footer'
+import Ivaspes from '../components/Ivaspes.vue'
 export default {
   name: 'HomeView',
   components: {
@@ -76,7 +84,8 @@ export default {
     DialogLogin,
     OurServices,
     GroupsByLevel,
-    Testimonials
+    Testimonials,
+    Ivaspes
   },
   mounted () {
     //const API_PUBLIC_KEY_RECAPTCHA_SITE = process.env.VUE_APP_API_PUBLIC_KEY_RECAPTCHA

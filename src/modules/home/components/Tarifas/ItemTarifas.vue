@@ -1,11 +1,21 @@
 <template>
   <div>
-    <div class="todo_tarifa">
+    <div
+      class="todo_tarifa"
+      :style="{
+        background: backgroundColor || 'linear-gradient(180deg, rgba(70, 161, 187, 0.1127) 0%, rgba(125, 183, 200, 0.2303) 100%)'
+      }"
+    >
       <div class="cabeza_tarifa">
         <h3>{{ tituloTarifa }}</h3>
-        <div class="tarifa">{{ precioTarifa }} €/mes</div>
+        <div class="tarifa">{{ precioTarifa }} € {{ perMonth ? '/mes' : '' }}</div>
       </div>
-      <div class="cuerpo_tarifa">
+      <div 
+        class="cuerpo_tarifa" 
+        :style="{
+          color: backgroundColor ? 'white' : 'black'
+        }"
+      >
         <p>{{ contenidoTarifa }}</p>
         <ul class="lista_tarifa mt-2">
           <li v-for="(item, index) in itemsTarifa" :key="index">{{ item }}</li>
@@ -20,7 +30,9 @@
           color="#2a99ba"
           :disabled="isDisabledButton"
           @click="$emit('emitClickInscriptionContactUs')"
-        >Únete</v-btn>
+        >
+          {{ buttonText || "Únete" }}
+        </v-btn>
       </div>
     </div>
   </div>
@@ -52,6 +64,18 @@ export default {
     isDarkButton: {
       type: Boolean,
       default: false
+    },
+    buttonText: {
+      type: String,
+      default: ''
+    },
+    backgroundColor: {
+      type: String,
+      default: ''
+    },
+    perMonth: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -94,7 +118,7 @@ export default {
 }
 .cuerpo_tarifa {
   padding: 40px 45px 0px 45px;
-  min-height: 360px;
+  min-height: 380px;
 }
 .lista_tarifa {
   list-style: none;
