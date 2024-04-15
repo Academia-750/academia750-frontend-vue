@@ -25,8 +25,8 @@
             <item-card-testimonial
               path-image="/images/academia750/testimonio_1.png"
               alt-image="Testimonio 1 - Academia 750"
-              name-person="Carlos Meseguer"
-              testimonial-person="La mejor academia para preparar oposiciones a bomberos. Personal dedicado e implicado al 100% en mejorar y aprende a través de un método que engancha. ¡Totalmente recomendable!"
+              name-person="Alvaro Esteban"
+              testimonial-person="Sin duda la mejor academia para bomberos de Alicante, la dedicación es máxima, no se puede pedir mas. El trato de 10 y el nivel tanto del material como de las clases es inmejorable."
             />
           </v-container>
         </v-col>
@@ -40,10 +40,10 @@
 
           <v-container class="d-flex justify-center">
             <item-card-testimonial
-              path-image="/images/academia750/testimonio_2.png"
+              path-image="/images/academia750/testimonio_1.png"
               alt-image="Testimonio 2 - Academia 750"
-              name-person="Nadia Serrano"
-              testimonial-person="Academia en la que no solo los materiales y la dedicación del profesorado en el aprendizaje del alumno son inmejorables, sino donde también es fundamental el apoyo que se recibe por su parte, tan importante en este duro camino que es la oposición a bombero."
+              name-person="José Lledo"
+              testimonial-person="He estado en diferentes academias tanto online como presencial y con diferencia es la que más nivel le ha exigido a los alumnos. Además del trato cercano y de calidad, es el primero en ponerse al dia con cualquier modificación que haya en cuanto al temario, legislación...Ojalá hubiera empezado antes en una academia como esta."
             />
           </v-container>
         </v-col>
@@ -59,8 +59,8 @@
             <item-card-testimonial
               path-image="/images/academia750/testimonio_1.png"
               alt-image="Testimonio 3 - Academia 750"
-              name-person="José Niñerola"
-              testimonial-person="Sin duda, academia de referencia para preparar la oposición a bombero, el equipo docente está comprometidísimo, el material docente espectacular, y el ambiente en las clases, presenciales y on-line claro y directo, sin rodeos ni pregutas extrañas. Una apuesta segura para prepara la oposición a bombero."
+              name-person="Alvaro Cardona"
+              testimonial-person="Academia de bomberos con un nivel muy alto tanto en calidad humana como en lo académico. Grandes compañeros y siempre muy buen ambiente. Manu se involucra mucho desde el principio y eleva tu nivel como opositor dándote las maximas facilidades."
             />
           </v-container>
         </v-col>
