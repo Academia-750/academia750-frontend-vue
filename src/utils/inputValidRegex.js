@@ -1,1 +1,3 @@
-export const inputValidRegex = (/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ _-]+$/).toString().slice(1, -1)
+export const inputValidRegex = /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúÁÉÍÓÚñÑ _-]+$/
+  .toString()
+  .slice(1, -1)
