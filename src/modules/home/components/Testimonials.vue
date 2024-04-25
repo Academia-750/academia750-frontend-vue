@@ -23,7 +23,7 @@
 
           <v-container class="d-flex justify-center">
             <item-card-testimonial
-              path-image="/images/academia750/testimonio_1.png"
+              path-image="/images/academia750/testimonio_3.png"
               alt-image="Testimonio 1 - Academia 750"
               name-person="Alvaro Esteban"
               testimonial-person="Sin duda la mejor academia para bomberos de Alicante, la dedicación es máxima, no se puede pedir mas. El trato de 10 y el nivel tanto del material como de las clases es inmejorable."
