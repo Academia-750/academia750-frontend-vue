@@ -40,7 +40,7 @@
 
           <v-container class="d-flex justify-center">
             <item-card-testimonial
-              path-image="/images/academia750/testimonio_1.png"
+              path-image="/images/academia750/testimonio_4.png"
               alt-image="Testimonio 2 - Academia 750"
               name-person="José Lledo"
               testimonial-person="He estado en diferentes academias tanto online como presencial y con diferencia es la que más nivel le ha exigido a los alumnos. Además del trato cercano y de calidad, es el primero en ponerse al dia con cualquier modificación que haya en cuanto al temario, legislación...Ojalá hubiera empezado antes en una academia como esta."
@@ -57,7 +57,7 @@
 
           <v-container class="d-flex justify-center">
             <item-card-testimonial
-              path-image="/images/academia750/testimonio_1.png"
+              path-image="/images/academia750/testimonio_5.png"
               alt-image="Testimonio 3 - Academia 750"
               name-person="Alvaro Cardona"
               testimonial-person="Academia de bomberos con un nivel muy alto tanto en calidad humana como en lo académico. Grandes compañeros y siempre muy buen ambiente. Manu se involucra mucho desde el principio y eleva tu nivel como opositor dándote las maximas facilidades."
