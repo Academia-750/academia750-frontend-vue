@@ -69,6 +69,13 @@ export default {
       this.playerLoaded = true
     },
     onError(error) {
+      /**
+       * Issue from @vimeo/player v2.20.1 that happen 14 Jun of 2024
+       * Follow up: https://github.com/vimeo/player.js/issues/1034
+       */
+      if (error?.message.includes('Cannot read properties of undefined')) {
+        return
+      }
       const defaultError =
         'No se pudo cargar este video, contacte con el administrador'
 
