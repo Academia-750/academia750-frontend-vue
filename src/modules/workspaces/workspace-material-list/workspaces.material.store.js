@@ -7,7 +7,7 @@ export default {
     ...DataTableStore.state,
     currentUserForUpdate: null,
     editItem: false,
-    workspace: '',
+    workspace: null,
     type: '',
     tags: [],
     uploadFile: {}
@@ -22,8 +22,7 @@ export default {
       state.editItem = payload
     },
     SET_WORKSPACE(state, payload) {
-      // Workspace ID is a number, but for the select we need to cast to string
-      state.workspace = payload ? payload.toString() : undefined
+      state.workspace = payload
     },
     SET_TYPE(state, payload) {
       state.type = payload
@@ -38,7 +37,7 @@ export default {
       DataTableStore.actions.resetTableOptions({ commit })
       commit('SET_TYPE', '')
       commit('SET_TAGS', [])
-      commit('SET_WORKSPACE', '')
+      commit('SET_WORKSPACE', null)
     }
   }
 }

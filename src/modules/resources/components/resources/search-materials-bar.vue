@@ -33,7 +33,13 @@
       />
 
       <!-- -----------WORKSPACE ------------ -->
-      <v-select
+      <WorkSpacesAutoComplete
+        v-show="!hideWorkspace"
+        :workspace="state.workspace"
+        :multiple="false"
+        @change="onChangeWorkspace"
+      />
+      <!-- <v-select
         v-show="!hideWorkspace"
         :value="state.workspace"
         :items="workspaces"
@@ -46,14 +52,13 @@
         clearable
         :dense="$vuetify.breakpoint.width < 700"
         @change="onChangeWorkspace"
-      ></v-select>
+      ></v-select> -->
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
-import WorkspaceRepository from '@/services/WorkspaceRepository'
 
 export default {
   name: 'SearchBar',
@@ -65,6 +70,10 @@ export default {
     ResourceTextFieldSearch: () =>
       import(
         /* webpackChunkName: "ResourceTextFieldSearch" */ '@/modules/resources/components/resources/ResourceTextFieldSearch'
+      ),
+    WorkSpacesAutoComplete: () =>
+      import(
+        /* webpackChunkName: "WorkSpacesAutoComplete" */ '@/modules/resources/components/form/work-spaces-auto-complete'
       )
   },
   props: {
@@ -92,8 +101,7 @@ export default {
           key: 'recording',
           label: 'Grabaciones'
         }
-      ],
-      workspaces: []
+      ]
     }
   },
   computed: {
@@ -122,18 +130,6 @@ export default {
     },
     async create() {
       this.$refs.table.reload()
-    },
-    async loadWorkspaces(pagination) {
-      const params = {
-        ...pagination
-      }
-
-      const res = await WorkspaceRepository.list(params)
-
-      this.workspaces = res.results.map((item) => ({
-        key: item.id.toString(),
-        label: item.name
-      }))
     }
   }
 }

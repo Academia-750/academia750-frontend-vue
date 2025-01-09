@@ -8,13 +8,14 @@
   >
     <v-autocomplete
       :search-input="search"
-      :value="values"
+      :value="multiple ? values : value"
       :items="items"
       :loading="loading"
       :error-messages="errors"
       clearable
       :label="label || name"
-      multiple
+      :multiple="multiple"
+      :disabled="disabled"
       solo
       outlined
       :dense="dense || $vuetify.breakpoint.width < 700"
@@ -28,6 +29,7 @@
     >
       <template v-slot:selection="{ attrs, item, select, selected }">
         <v-chip
+          v-if="multiple"
           v-bind="attrs"
           :input-value="selected"
           close
@@ -38,6 +40,9 @@
           <strong>{{ itemText ? item[itemText] : item }}</strong>
           &nbsp;
         </v-chip>
+        <span v-else class="v-select__selection">
+          {{ itemText ? item[itemText] : item }}
+        </span>
       </template>
     </v-autocomplete>
   </ValidationProvider>
@@ -63,6 +68,16 @@ export default {
       type: Boolean,
       default: false
     },
+    multiple: {
+      type: Boolean,
+      default: true
+    },
+    // Used for single selection
+    value: {
+      type: Object,
+      default: () => {}
+    },
+    // Used for multiple selection
     values: {
       type: Array,
       default: () => []
@@ -82,8 +97,13 @@ export default {
     itemValue: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
+
   data() {
     return {
       search: '',
@@ -101,7 +121,11 @@ export default {
 
       this.items = await this.loadData(search)
 
-      this.items = [...this.items, ...this.values]
+      if (this.multiple) {
+        this.items = [...this.items, ...this.values]
+      } else {
+        this.value && this.items.push(this.value)
+      }
 
       this.loading = false
     },

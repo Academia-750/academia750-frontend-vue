@@ -260,10 +260,9 @@ export default {
       const params = {
         ...pagination,
         type: this.type,
-        workspace: this.workspace,
+        workspace: this.workspace?.id,
         tags: this.tags
       }
-
       const res = await WorkspaceMaterialRepository.list(params)
 
       return res

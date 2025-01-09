@@ -4,7 +4,6 @@ import ManageWorkspacesModule from './workspace-list'
 import ManageMaterialsModule from './workspace-material-list'
 import EditMaterialsModule from './create-material'
 import createMaterialsModule from './create-material'
-
 const shortcutRoutes = [
   {
     path: 'materiales',

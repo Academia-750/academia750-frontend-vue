@@ -17,25 +17,18 @@
               :disabled="material ? true : false"
               @change="onChangeType"
             ></v-select>
-            <ValidationProvider
+
+            <WorkSpacesAutoComplete
               ref="workspaceInput"
-              v-slot="{ errors }"
-              mode="aggressive"
+              :workspace="workspace"
+              :dense="true"
+              :multiple="false"
               rules="required"
-              name="Categoría"
-            >
-              <v-select
-                v-model="workspace"
-                :items="workspaces"
-                item-text="label"
-                item-value="key"
-                label="Selecciona una categoría"
-                outlined
-                clearable
-                :error-messages="errors"
-                :disabled="editItem ? true : false"
-              ></v-select>
-            </ValidationProvider>
+              :disabled="editItem ? true : false"
+              label="Selecciona una categoría"
+              @change="(value) => (workspace = value)"
+            />
+
             <FieldInput
               id="materialName"
               ref="nameInput"
@@ -185,7 +178,6 @@
 import { mapState, mapMutations } from 'vuex'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
-import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
 
@@ -210,18 +202,20 @@ export default {
     SwitchInput: () =>
       import(
         /* webpackChunkName: "TagsAutoComplete" */ '@/modules/resources/components/form/switch-input'
+      ),
+    WorkSpacesAutoComplete: () =>
+      import(
+        /* webpackChunkName: "WorkSpacesAutoComplete" */ '@/modules/resources/components/form/work-spaces-auto-complete'
       )
   },
   data() {
     return {
       validRegex: inputValidRegex,
-      selectedWorkspace: null,
       uploadedFiles: [],
       loading: false,
       uploading: false,
       uploadProgress: 0,
       selectedTags: [],
-      workspaces: [],
       fileName: '',
       urlInputType: 'file',
       materialUrl: '',
@@ -240,7 +234,7 @@ export default {
       type: 'material',
       tags: [],
       url: '',
-      workspace: '',
+      workspace: null,
       isDeleting: false,
       watermark: false
     }
@@ -291,9 +285,6 @@ export default {
     }
   },
   async mounted() {
-    await this.loadWorkspaces()
-
-    this.workspace = this.$route.params.workspace || ''
     this.type = this.$route.params.type || 'material'
     this.watermark = this.isMaterial
 
@@ -338,7 +329,7 @@ export default {
           : undefined
       this.materialUrl = isInternalFile ? '' : this.editItem.url
       this.watermark = this.editItem.watermark === 1
-      this.workspace = this.editItem.workspace_id.toString()
+      this.workspace = this.editItem.workspace
       this.urlInputType = isInternalFile ? 'file' : 'materialUrl'
     },
 
@@ -352,7 +343,7 @@ export default {
     reset() {
       this.$refs['nameInput'] && this.$refs['nameInput'].resetErrors()
       this.$refs['vimeoUrlInput'] && this.$refs['vimeoUrlInput'].resetErrors()
-      this.$refs['workspaceInput'] && this.$refs['workspaceInput'].reset()
+      this.$refs['workspaceInput'] && this.$refs['workspaceInput'].resetErrors()
       this.$refs['tagsInput'] && this.$refs['tagsInput'].resetErrors()
       this.$refs['materialUrlInput'] &&
         this.$refs['materialUrlInput'].resetErrors()
@@ -363,14 +354,6 @@ export default {
       this.material = false
       this.uploadedFiles = []
       this.materialUrl = ''
-    },
-    async loadWorkspaces() {
-      const res = await WorkspaceRepository.list()
-
-      this.workspaces = res.results.map((item) => ({
-        key: item.id.toString(),
-        label: item.name
-      }))
     },
 
     async uploadFileClicked() {
@@ -424,10 +407,13 @@ export default {
 
       try {
         if (!this.material) {
-          material = await WorkspaceMaterialRepository.create(this.workspace, {
-            name: this.name,
-            type: this.type
-          })
+          material = await WorkspaceMaterialRepository.create(
+            this.workspace.id,
+            {
+              name: this.name,
+              type: this.type
+            }
+          )
         }
         if (
           this.uploadedFiles.length &&

@@ -1,14 +1,17 @@
 <template>
   <BaseAutocomplete
     ref="autocomplete"
-    name="workspace"
+    name="categoría"
     label="Categoría"
     :limit="limit"
     :values="workspaces"
+    :value="workspace"
     :rules="rules"
     :load-data="loadWorkspaces"
     item-text="name"
     item-value="id"
+    :multiple="multiple"
+    :disabled="disabled"
     @change="onChangeWorkspaces"
   />
 </template>
@@ -21,14 +24,24 @@ export default {
   name: 'WorkSpacesAutoComplete',
   components: { BaseAutocomplete },
   props: {
+    multiple: {
+      type: Boolean,
+      default: true
+    },
     limit: {
       type: Number,
-      default: 5
+      default: 10
     },
     dense: {
       type: Boolean,
       default: false
     },
+    // Used for single selection
+    workspace: {
+      type: Object,
+      default: () => {}
+    },
+    // Used for multiple selection
     workspaces: {
       type: Array,
       default: () => []
@@ -36,6 +49,10 @@ export default {
     rules: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
