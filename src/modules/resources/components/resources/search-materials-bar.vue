@@ -109,9 +109,6 @@ export default {
       return this.$store.state[this.storeName]
     }
   },
-  mounted() {
-    this.loadWorkspaces()
-  },
   methods: {
     onChangeType(value) {
       this.$emit('onChangeType', value)
