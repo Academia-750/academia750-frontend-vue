@@ -187,7 +187,7 @@ export default {
     },
     setWorkspace(workspace) {
       this.$store.dispatch('workspaceMaterialStore/resetTableOptions')
-      this.SET_WORKSPACE(workspace.id)
+      this.SET_WORKSPACE(workspace)
 
       this.$router.push({ name: 'manage-materials' })
     },
