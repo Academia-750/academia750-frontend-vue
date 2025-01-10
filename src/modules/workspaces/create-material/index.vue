@@ -180,6 +180,7 @@ import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
+import WorkspaceRepository from '@/services/WorkspaceRepository'
 
 export default {
   components: {
@@ -316,7 +317,11 @@ export default {
 
         this.SET_EDIT_ITEM(item)
       }
-
+      if (!this.editItem.workspace) {
+        this.editItem.workspace = await WorkspaceRepository.workspaceInfo(
+          this.editItem.workspace_id
+        )
+      }
       const isInternalFile = this.editItem.url.includes('cloudinary')
 
       this.material = this.editItem
