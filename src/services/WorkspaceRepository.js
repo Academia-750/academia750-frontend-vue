@@ -114,5 +114,22 @@ export default {
     }
 
     return response.data.results
+  },
+
+  /**
+   * @param {string} id
+   */
+  async workspaceInfo(id) {
+    const response = await ResourceService.get(`workspace/${id}/info`)
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return null
+    }
+
+    return response.data.result
   }
 }
