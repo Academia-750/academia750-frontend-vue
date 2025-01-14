@@ -130,7 +130,6 @@ export default {
       this.loading = false
     },
     change(values) {
-      console.log({ values })
       this.$emit('change', values)
       this.search = ''
     },

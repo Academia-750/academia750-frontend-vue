@@ -1,31 +1,50 @@
 <template>
-  <ServerDataTable
-    ref="table"
-    :headers="headers"
-    store-name="permissionsStore"
-    :load="loadPermissions"
-  >
-    <!-- ------------ NO DATA ------------ -->
-    <template v-slot:no-data>
-      <resource-banner-no-data-datatable />
-    </template>
+  <div>
+    <ServerDataTable
+      ref="table"
+      :headers="headers"
+      store-name="permissionsStore"
+      :load="loadPermissions"
+    >
+      <!-- ------------ NO DATA ------------ -->
+      <template v-slot:no-data>
+        <resource-banner-no-data-datatable />
+      </template>
 
-    <!-- ------------ SLOTS ------------ -->
-    <template v-slot:[`item.name`]="{ item }">
-      <SwitchInput
-        id="permissions"
-        :value="hasPermission(item)"
-        :label="hasPermission(item) ? 'Si' : 'No'"
-        @click="permissionsAction(item.id)"
-      />
-    </template>
-  </ServerDataTable>
+      <!-- ------------ SLOTS ------------ -->
+      <template v-slot:[`item.name`]="{ item }">
+        <SwitchInput
+          id="permissions"
+          :value="hasPermission(item)"
+          :label="hasPermission(item) ? 'Si' : 'No'"
+          @click="permissionsAction(item.id)"
+        />
+      </template>
+      <template v-slot:[`item.config`]="{ item }">
+        <v-btn
+          v-if="permissionCanBeConfigured(item)"
+          small
+          icon
+          color="primary"
+          @click="openConfigModal(item)"
+        >
+          <v-icon>mdi-cog</v-icon>
+        </v-btn>
+      </template>
+    </ServerDataTable>
+
+    <!-- Move the modal outside ServerDataTable -->
+    <ConfigRoleModal
+      ref="configModal"
+      :role-id="roleId"
+      @submitted="handleConfigSubmitted"
+    />
+  </div>
 </template>
 
 <script>
 import ProfileRepository from '@/services/ProfileRepository'
-import headers from './permissions-table-columns'
-
+import { PermissionsWithConfig } from '@/utils/enums'
 export default {
   name: 'RolesPermissionsList',
   components: {
@@ -40,17 +59,45 @@ export default {
     SwitchInput: () =>
       import(
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+      ),
+    ConfigRoleModal: () =>
+      import(
+        /* webpackChunkName: "ConfigRoleModal" */ './config-role-modal.vue'
       )
   },
   data() {
     return {
-      permissions: [],
-      roleId: ''
+      permissions: [], // Permissions attached to the role
+      roleId: '',
+      permissionsWithConfig: [] // All permissions with config
     }
   },
   computed: {
     headers() {
-      return headers
+      return [
+        {
+          position: 1,
+          text: 'Nombre',
+          align: 'start',
+          sortable: true,
+          value: 'alias_name',
+          show: true
+        },
+        {
+          position: 2,
+          text: 'Permiso',
+          align: 'start',
+          value: 'name',
+          show: true
+        },
+        {
+          position: 3,
+          text: 'Configuración',
+          align: 'start',
+          value: 'config',
+          show: true
+        }
+      ]
     },
     store() {
       return this.$store.state.profilesStore
@@ -62,6 +109,9 @@ export default {
   methods: {
     hasPermission(item) {
       return this.permissions.includes(item.id)
+    },
+    permissionCanBeConfigured(item) {
+      return PermissionsWithConfig[item.name]
     },
     async loadPermissions(pagination) {
       const params = {
@@ -98,9 +148,40 @@ export default {
         return
       }
 
-      const role = await ProfileRepository.info(id)
+      const [role, configs] = await Promise.all([
+        ProfileRepository.info(id),
+        ProfileRepository.getRoleConfigurations(id)
+      ])
 
       this.permissions = role.permissions.map((obj) => obj.id)
+      this.permissionsWithConfig = configs
+    },
+    openConfigModal(item) {
+      this.$refs.configModal.open({
+        permission: item,
+        config: this.permissionsWithConfig.find(
+          (permission) => permission.permission_id === item.id
+        )?.config
+      })
+    },
+    handleConfigSubmitted({ permissionId, config }) {
+      const permission = this.permissionsWithConfig.find(
+        (permission) => permission.permission_id === permissionId
+      )
+
+      // Update local
+      if (permission) {
+        permission.config = config
+
+        return
+      }
+
+      // Append new
+      this.permissionsWithConfig.push({
+        role_id: this.roleId,
+        permission_id: permissionId,
+        config
+      })
     }
   }
 }
