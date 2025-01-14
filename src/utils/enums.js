@@ -13,5 +13,15 @@ export const PermissionEnum = {
   SEE_ONLINE_LESSON: 'online-lessons', // Allows you to access the online lessons page
   SEE_LESSON_MATERIALS: 'material-lessons', // Allows you to access lessons materials type material
   SEE_LESSON_RECORDINGS: 'recording-lessons', // Allows you to access lessons materials type recordings
-  SEE_LESSON_PARTICIPANTS: 'participants-lessons' // Allows you to see the list of participants
+  SEE_LESSON_PARTICIPANTS: 'participants-lessons', // Allows you to see the list of participants
+
+  /**
+   * Management
+   */
+  UPDATE_GROUP_LESSONS: 'update-group-lessons',
+  UPDATE_GROUP_MATERIALS: 'update-group-materials'
+}
+
+export const PermissionsWithConfig = {
+  [PermissionEnum.UPDATE_GROUP_MATERIALS]: true
 }

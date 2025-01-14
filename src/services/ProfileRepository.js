@@ -1,6 +1,5 @@
 import { deleteUndefined } from '@/helpers/utils'
 import ResourceService from '@/services/ResourceService'
-import Swal from 'sweetalert2/dist/sweetalert2'
 
 export default {
   /**
@@ -238,5 +237,37 @@ export default {
     }
 
     return true
+  },
+  /**
+   * @param {string} roleId
+   * @param {string} permissionId
+   * @param {object} config
+   */
+  async configPermission({ roleId, permissionId, config }) {
+    const response = await ResourceService.put(
+      `role/${roleId}/permission/${permissionId}`,
+      {
+        config
+      }
+    )
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return true
+  },
+  /**
+   * Get all the permissions configuration whatever are enabled or not
+   * @param {string} roleId
+   */
+  async getRoleConfigurations(roleId) {
+    const response = await ResourceService.get(`role/${roleId}/configurations`)
+
+    return response.data.results
   }
 }
