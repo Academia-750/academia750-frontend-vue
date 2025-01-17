@@ -34,6 +34,20 @@ features as generating opposition test, lessons calendar / material or online me
 - `npm run lint`
 > Lints and fixes files - Works for development environment, and uses Eslint to code with Vue JS version 2 standard good practices and rules.
 
+### Deployment
+
+We are using github pipe lines.
+
+Preview releases happens automatically when we open a pull request and are linked to Netlify.
+Netlify is not always enable, you may need to enable or configure again at the time you read this.
+
+Production releases only when we push a tag to the main branch
+Be sure you are in `main` and run
+
+`yarn release`
+
+It will bump the version and push to github, firing the pipeline
+
 ## Folder Structure
 
 In the phase 2 we have simplify the folder structure, you may see this change in some folders and you can adapt old folders to the new structure
