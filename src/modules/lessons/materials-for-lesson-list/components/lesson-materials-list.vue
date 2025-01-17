@@ -209,7 +209,7 @@ export default {
     onAddMaterial() {
       this.$router.push({
         name: 'create-materials',
-        params: { type: this.type }
+        params: { type: this.type, lesson_id: this.$route.params.id }
       })
     },
     async loadMaterials(pagination) {

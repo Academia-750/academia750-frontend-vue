@@ -183,7 +183,7 @@ import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import { PermissionEnum } from '@/utils/enums'
-
+import LessonRepository from '@/services/LessonRepository'
 export default {
   components: {
     Vtoolbar: () =>
@@ -239,15 +239,22 @@ export default {
       url: '',
       workspace: null,
       isDeleting: false,
-      watermark: false
+      watermark: false,
+      // When adding from a lesson menu
+      lesson: null
     }
   },
   computed: {
     ...mapState('workspaceMaterialStore', ['editItem']),
     title() {
-      return !this.editItem
-        ? 'Nueva Material'
-        : `Editar "${this.editItem.name}"`
+      if (this.editItem) {
+        return `Editar "${this.editItem.name}"`
+      }
+      if (this.lesson) {
+        return `Añadir Material a "${this.lesson.name}"`
+      }
+
+      return 'Nuevo Material'
     },
     isMaterial() {
       return this.type === 'material'
@@ -293,6 +300,9 @@ export default {
 
     // Only when is Edit
     this.loadItem()
+
+    // If adding a material in a lesson, after create it we directly associate it to the lesson
+    this.loadLesson(this.$route.params.lesson_id)
   },
   beforeCreate() {
     this?.$hasRolesOrPermissions(
@@ -348,6 +358,13 @@ export default {
     },
     onChangeTags(tags) {
       this.tags = tags
+    },
+    async loadLesson(lessonId) {
+      if (!lessonId) {
+        return
+      }
+      // This is just to load the title on the header
+      this.lesson = await LessonRepository.info(lessonId)
     },
 
     reset() {
@@ -459,6 +476,13 @@ export default {
 
           return
         }
+
+        if (this.lesson) {
+          await LessonRepository.addMaterialsToLesson(this.lesson.id, {
+            material_id: material.id
+          })
+        }
+
         this.loading = false
 
         await this.$swal.fire({
@@ -466,6 +490,8 @@ export default {
           toast: true,
           title: this.material
             ? `${this.typeLabel} Actualizado!`
+            : this.lesson
+            ? `${this.typeLabel} añadido a la lección`
             : `${this.typeLabel} Creado!`,
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
