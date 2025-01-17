@@ -37,6 +37,7 @@
         v-show="!hideWorkspace"
         :workspace="state.workspace"
         :multiple="false"
+        :as-admin="true"
         @change="onChangeWorkspace"
       />
       <!-- <v-select

@@ -170,7 +170,21 @@ export default {
       ]
     },
     {
-      text: 'Gestión de Opisiciones',
+      text: 'Gestión de Grupos',
+      key: '',
+      permissions: [PermissionEnum.SEE_LESSONS_AS_MANAGER],
+      items: [
+        {
+          icon: 'mdi-book-open-page-variant',
+          key: '',
+          text: 'Gestión Clases',
+          to: { name: 'manage-group-lessons' },
+          permissions: [PermissionEnum.SEE_LESSONS_AS_MANAGER]
+        }
+      ]
+    },
+    {
+      text: 'Gestión de Oposiciones',
       key: '',
       roles: 'admin',
       items: [

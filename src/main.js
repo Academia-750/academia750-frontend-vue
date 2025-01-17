@@ -23,7 +23,12 @@ import {
   hasPermissions,
   hasPermissionsMiddleware
 } from '@/helpers/managePermissions'
-import { hasRoles, hasRoleMiddleware } from '@/helpers/manageRoles'
+import {
+  hasRoles,
+  hasRoleMiddleware,
+  hasRoleOrPermissionsMiddleware,
+  hasRolesOrPermissions
+} from '@/helpers/manageRoles'
 import { $KeepOneTabOpenInTheBrowserLocalStorage } from '@/helpers/KeepOneTabOpenInTheBrowser'
 import { getInitialPage } from '@/helpers/manageInitialPage'
 
@@ -91,6 +96,9 @@ Vue.prototype.$initialPage = getInitialPage
 Vue.$hasRoles = hasRoles
 Vue.prototype.$hasRoles = hasRoles
 
+Vue.$hasRolesOrPermissions = hasRolesOrPermissions
+Vue.prototype.$hasRolesOrPermissions = hasRolesOrPermissions
+
 Vue.$hasPermission = hasPermissions
 Vue.prototype.$hasPermission = hasPermissions
 
@@ -99,6 +107,9 @@ Vue.prototype.$hasPermissionMiddleware = hasPermissionsMiddleware
 
 Vue.$hasRoleMiddleware = hasRoleMiddleware
 Vue.prototype.$hasRoleMiddleware = hasRoleMiddleware
+
+Vue.$hasRoleOrPermissionsMiddleware = hasRoleOrPermissionsMiddleware
+Vue.prototype.$hasRoleOrPermissionsMiddleware = hasRoleOrPermissionsMiddleware
 
 Vue.$userAuth = getUserAuth
 Vue.prototype.$userAuth = getUserAuth

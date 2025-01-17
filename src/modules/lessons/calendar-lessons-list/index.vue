@@ -41,6 +41,7 @@
                   Selecciona o crea una clase
                 </div>
                 <ResourceButtonAdd
+                  v-if="$hasRoles('admin')"
                   class="ml-16"
                   text-button="Crear Clase"
                   @click="addLesson(date)"
@@ -48,12 +49,19 @@
               </template>
               <template v-if="lesson" slot="actions">
                 <resource-button
+                  v-if="$hasRoles('admin')"
                   text-button="Editar"
                   icon-button="mdi-pencil"
                   color="primary"
                   @click="$router.push({ name: 'create-lessons' })"
                 />
                 <resource-button
+                  v-if="
+                    $hasRolesOrPermissions(
+                      ['admin'],
+                      [PermissionEnum.UPDATE_LESSON_MATERIALS]
+                    )
+                  "
                   text-button="Materiales"
                   icon-button="mdi-folder-open"
                   color="success"
@@ -63,6 +71,12 @@
                   }"
                 />
                 <resource-button
+                  v-if="
+                    $hasRolesOrPermissions(
+                      ['admin'],
+                      [PermissionEnum.UPDATE_LESSON_STUDENTS]
+                    )
+                  "
                   text-button="Alumnos"
                   icon-button="mdi-account-group"
                   color="success"
@@ -123,7 +137,7 @@ import notifications from '@/mixins/notifications'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import moment from 'moment'
 import LessonRepository from '@/services/LessonRepository'
-
+import { PermissionEnum } from '@/utils/enums'
 export default {
   name: 'CalendarLesson',
   components: {
@@ -152,6 +166,7 @@ export default {
   mixins: [notifications],
   data() {
     return {
+      PermissionEnum,
       reloadDatatableUsers: false,
       lessons: [],
       isLoading: false
@@ -176,7 +191,10 @@ export default {
     }
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
+    this?.$hasRoleOrPermissionsMiddleware(
+      'admin',
+      PermissionEnum.SEE_LESSONS_AS_MANAGER
+    )
   },
 
   methods: {

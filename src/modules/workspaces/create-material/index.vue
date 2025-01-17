@@ -21,6 +21,7 @@
             <WorkSpacesAutoComplete
               ref="workspaceInput"
               :workspace="workspace"
+              :as-admin="true"
               :dense="true"
               :multiple="false"
               rules="required"
@@ -181,6 +182,7 @@ import Toast from '@/utils/toast'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
+import { PermissionEnum } from '@/utils/enums'
 
 export default {
   components: {
@@ -293,7 +295,10 @@ export default {
     this.loadItem()
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
+    this?.$hasRolesOrPermissions(
+      ['admin'],
+      [PermissionEnum.UPDATE_LESSON_MATERIALS]
+    )
   },
   methods: {
     ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM']),
