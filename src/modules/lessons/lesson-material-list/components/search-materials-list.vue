@@ -9,6 +9,10 @@
       <template v-slot:top>
         <Toolbar title="Buscar Materiales" icon="mdi-folder-open">
           <template slot="actions">
+            <ResourceButtonAdd
+              text-button="Nuevo Material"
+              @click="openCreateMaterial()"
+            />
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
         </Toolbar>
@@ -242,6 +246,12 @@ export default {
     reset() {
       this.resetTableOptions()
       this.$refs.table.reload()
+    },
+    openCreateMaterial() {
+      this.$router.push({
+        name: 'create-materials',
+        params: { type: this.type, lesson_id: this.$route.params.id }
+      })
     }
   }
 }
