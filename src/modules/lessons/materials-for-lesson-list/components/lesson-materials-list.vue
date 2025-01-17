@@ -66,7 +66,7 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <resource-button-delete
-            text-button="Eliminar"
+            text-button="Desvincular"
             @actionConfirmShowDialogDelete="deleteMaterialsFromLesson(item)"
           />
         </div>
@@ -236,12 +236,12 @@ export default {
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'ELIMINAR Material',
-        html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Material? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
+        title: 'Desvincular Material',
+        html: 'Este material no estará asociado a esta clase y los estudiantes no tendrán acceso a él',
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonColor: '#007bff',
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: 'Sí, desvincula',
         cancelButtonText: 'Cancelar'
       })
 

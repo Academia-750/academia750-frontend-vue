@@ -18,10 +18,12 @@ export const PermissionEnum = {
   /**
    * Management
    */
-  UPDATE_GROUP_LESSONS: 'update-group-lessons',
-  UPDATE_GROUP_MATERIALS: 'update-group-materials'
+  SEE_LESSONS_AS_MANAGER: 'see-lessons-as-manager',
+  UPDATE_GROUP_LESSONS: 'update-lessons', // Update lessons you belong of (NOT IMPLEMENTED)
+  UPDATE_LESSON_MATERIALS: 'update-lesson-materials', // Update materials of lessons you belong of
+  UPDATE_LESSON_STUDENTS: 'update-lesson-students' // Update students of lessons you belong of (NOT IMPLEMENTED)
 }
 
 export const PermissionsWithConfig = {
-  [PermissionEnum.UPDATE_GROUP_MATERIALS]: true
+  [PermissionEnum.UPDATE_LESSON_MATERIALS]: true
 }

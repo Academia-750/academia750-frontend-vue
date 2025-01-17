@@ -12,7 +12,7 @@
           <div class="mt-4">
             <!-- Dynamic form based on role.id -->
             <div
-              v-if="permission?.name === PermissionEnum.UPDATE_GROUP_MATERIALS"
+              v-if="permission?.name === PermissionEnum.UPDATE_LESSON_MATERIALS"
             >
               <v-form ref="form">
                 <WorkSpacesAutoComplete
