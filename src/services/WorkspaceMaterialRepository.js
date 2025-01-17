@@ -83,7 +83,8 @@ export default {
     type,
     tags,
     workspace,
-    content
+    content,
+    linked_to_lesson
   }) {
     const params = {
       order,
@@ -93,7 +94,8 @@ export default {
       type: type || undefined,
       tags: tags.length ? tags : undefined,
       workspace: workspace || undefined,
-      content: content || undefined
+      content: content || undefined,
+      linked_to_lesson: linked_to_lesson || undefined
     }
 
     deleteUndefined(params)
