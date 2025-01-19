@@ -27,7 +27,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Prepare env
         run: |
@@ -36,7 +36,7 @@ jobs:
       - name: Build Vue project
         env:
           VUE_APP_CLOUDINARY_ID: ${{ env.CLOUDINARY }}
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to Production
         uses: easingthemes/ssh-deploy@v2.2.4
