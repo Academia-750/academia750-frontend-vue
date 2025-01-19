@@ -4,7 +4,7 @@
 
 <script>
 import notifications from '@/mixins/notifications'
-
+import { PermissionEnum } from '@/utils/enums'
 export default {
   name: 'LessonMaterialsView',
   components: {
@@ -20,7 +20,10 @@ export default {
     }
   },
   beforeCreate() {
-    this?.$hasRoleMiddleware('admin')
+    this?.$hasRolesOrPermissions(
+      ['admin'],
+      [PermissionEnum.UPDATE_LESSON_MATERIALS]
+    )
   },
   mounted() {
     this.loadNotifications()

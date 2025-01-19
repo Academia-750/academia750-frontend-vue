@@ -48,7 +48,6 @@ import { mapState, mapMutations } from 'vuex'
 import ProfileRepository from '@/services/ProfileRepository'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
-import headers from './components/permissions-table-columns'
 
 export default {
   components: {
@@ -79,9 +78,6 @@ export default {
   },
   computed: {
     ...mapState('profilesStore', ['editItem']),
-    headers() {
-      return headers
-    },
     store() {
       return this.$store.state.profilesStore
     },

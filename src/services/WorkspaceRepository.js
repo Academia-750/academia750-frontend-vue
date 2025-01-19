@@ -97,11 +97,12 @@ export default {
    * @param {string} content
    * @param {number} limit
    */
-  async searchWorkspaces({ content, limit }) {
+  async searchWorkspaces({ content, limit, asAdmin }) {
     const response = await ResourceService.get('workspace/search', {
       params: {
         content: content || undefined,
-        limit
+        limit,
+        asAdmin
       }
     })
 

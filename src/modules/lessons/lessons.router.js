@@ -59,6 +59,30 @@ const studentRoute = [
             meta: {
               middleware: [authMiddleware]
             }
+          },
+          {
+            path: 'manage',
+            name: 'manage-group-lessons',
+            component: ManageLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/materials',
+            name: 'list-of-materials',
+            component: ListOfMaterialsForLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/list/materials',
+            name: 'add-materials',
+            component: AddMaterialsToLessonsModule,
+            meta: {
+              middleware: [authMiddleware]
+            }
           }
         ]
       },

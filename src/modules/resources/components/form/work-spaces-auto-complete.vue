@@ -53,6 +53,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    asAdmin: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -60,7 +64,8 @@ export default {
     async loadWorkspaces(value) {
       const workspaces = await WorkspaceRepository.searchWorkspaces({
         content: value,
-        limit: this.limit
+        limit: this.limit,
+        asAdmin: this.asAdmin
       })
 
       return workspaces.map((item) => {

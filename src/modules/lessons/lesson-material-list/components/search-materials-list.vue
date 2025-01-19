@@ -9,6 +9,10 @@
       <template v-slot:top>
         <Toolbar title="Buscar Materiales" icon="mdi-folder-open">
           <template slot="actions">
+            <ResourceButtonAdd
+              text-button="Nuevo Material"
+              @click="openCreateMaterial()"
+            />
             <resource-button icon-button="mdi-autorenew" @click="reset()" />
           </template>
         </Toolbar>
@@ -47,10 +51,16 @@
         <div class="d-flex justify-space-between align-center">
           <div></div>
           <ResourceButtonAdd
+            v-if="!item.linked_to_lesson"
             ref="tagsInput"
             text-button="Agregar"
             class="mb-2 mx-3"
             @click="onAddMaterial(item)"
+          />
+          <resource-button-delete
+            v-else
+            text-button="Desvincular"
+            @actionConfirmShowDialogDelete="deleteMaterialsFromLesson(item)"
           />
         </div>
       </template>
@@ -82,7 +92,10 @@ export default {
       import(
         /* webpackChunkName: "ResourceBannerNoDataDatatable" */ '@/modules/resources/components/resources/ResourceBannerNoDataDatatable'
       ),
-
+    ResourceButtonDelete: () =>
+      import(
+        /* webpackChunkName: "ResourceButtonDelete" */ '@/modules/resources/components/resources/ResourceButtonDelete'
+      ),
     SearchBar: () =>
       import(
         /* webpackChunkName: "SearchBar" */ '@/modules/resources/components/resources/search-materials-bar.vue'
@@ -164,7 +177,8 @@ export default {
         ...pagination,
         type: this.type,
         workspace: this.workspace?.id,
-        tags: this.tags
+        tags: this.tags,
+        linked_to_lesson: this.$route.params.id
       }
 
       const res = await WorkspaceMaterialRepository.list(params)
@@ -241,6 +255,50 @@ export default {
     },
     reset() {
       this.resetTableOptions()
+      this.$refs.table.reload()
+    },
+    openCreateMaterial() {
+      this.$router.push({
+        name: 'create-materials',
+        params: { type: this.type, lesson_id: this.$route.params.id }
+      })
+    },
+    async deleteMaterialsFromLesson(material) {
+      const result = await this.$swal.fire({
+        toast: true,
+        width: '400px',
+        icon: 'question',
+        title: 'Desvincular Material',
+        html: 'Este material no estará asociado a esta clase y los estudiantes no tendrán acceso a él',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        confirmButtonText: 'Sí, desvincula',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (!result.isConfirmed) {
+        return
+      }
+
+      const res = await LessonRepository.deleteMaterialsFromLesson(
+        this.$route.params.id,
+        { material_id: material.id }
+      )
+
+      if (!res) {
+        return
+      }
+      this.$swal.fire({
+        icon: 'success',
+        toast: true,
+        title:
+          material.type === 'material'
+            ? 'El material ha sido eliminado con éxito.'
+            : 'La grabación ha sido eliminada con éxito',
+        timer: 3000
+      })
+
       this.$refs.table.reload()
     }
   }
