@@ -181,6 +181,7 @@ import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import Cloudinary from '@/services/CloudinaryService'
+import DigitalOcean from '@/services/DigitalOceanService'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import { PermissionEnum } from '@/utils/enums'
 import LessonRepository from '@/services/LessonRepository'
@@ -447,7 +448,12 @@ export default {
           this.isMaterial &&
           this.urlInputType === 'file'
         ) {
-          const res = await Cloudinary.upload(
+          // const res = await Cloudinary.upload(
+          //   this.uploadedFiles[0],
+          //   `workspace_${this.workspace}`
+          // )
+
+          const res = await DigitalOcean.upload(
             this.uploadedFiles[0],
             `workspace_${this.workspace}`
           )
