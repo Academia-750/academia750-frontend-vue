@@ -21,14 +21,14 @@ export default {
       formData
     )
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       ResourceService.warning({
         response
       })
 
-      return false
+      return ''
     }
 
-    return response.data.result
+    return response.data.url
   }
 }
