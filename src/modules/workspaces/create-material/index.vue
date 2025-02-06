@@ -180,10 +180,10 @@ import { mapState, mapMutations } from 'vuex'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
-import Cloudinary from '@/services/CloudinaryService'
 import WorkspaceRepository from '@/services/WorkspaceRepository'
 import { PermissionEnum } from '@/utils/enums'
 import LessonRepository from '@/services/LessonRepository'
+import UploadRepository from '@/services/UploadRepository'
 export default {
   components: {
     Vtoolbar: () =>
@@ -447,10 +447,7 @@ export default {
           this.isMaterial &&
           this.urlInputType === 'file'
         ) {
-          const res = await Cloudinary.upload(
-            this.uploadedFiles[0],
-            `workspace_${this.workspace}`
-          )
+          const res = await UploadRepository.uploadToDigitalOcean(this.uploadedFiles[0])
 
           if (!res) {
             this.loading = false
