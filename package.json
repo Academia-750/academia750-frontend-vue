@@ -1,6 +1,6 @@
 {
   "name": "@lux/vue",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,6 +10,7 @@
     "release": "npx standard-version && git push --follow-tags"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.667.0",
     "@grafikri/vue-middleware": "^1.0.0",
     "@indielayer/vue-live-demo": "^1.0.0",
     "animate.css": "^4.1.0",
@@ -47,11 +48,14 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "@indielayer/eslint-config-vue": "^1.0.0",
     "@vue/cli-plugin-babel": "^4.5.11",
     "@vue/cli-plugin-eslint": "^4.5.11",
     "@vue/cli-service": "^4.5.11",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^9.2.1",
     "core-js": "^3.6.4",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
@@ -70,6 +74,8 @@
     "not dead"
   ],
   "resolutions": {
-    "prosemirror-model": "1.9.1"
+    "prosemirror-model": "1.9.1",
+    "@aws-sdk/types": "3.667.0",
+    "@aws-sdk/util-locate-window": "3.679.0"
   }
 }
