@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.6.0...v2.6.1) (2025-02-07)
+
+
+### Bug Fixes
+
+* uploading wrong url on edit material ([8c0165e](https://github.com/Academia-750/academia750-frontend-vue/commit/8c0165eb79fb8955c05f64179617940f8bae53ca))
+
 ## [2.6.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.4.0...v2.6.0) (2025-02-06)
 
 
