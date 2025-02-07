@@ -447,15 +447,17 @@ export default {
           this.isMaterial &&
           this.urlInputType === 'file'
         ) {
-          const res = await UploadRepository.uploadToDigitalOcean(this.uploadedFiles[0])
+          const url = await UploadRepository.uploadToDigitalOcean(
+            this.uploadedFiles[0]
+          )
 
-          if (!res) {
+          if (!url) {
             this.loading = false
 
             return
           }
           this.uploadedFiles = []
-          this.url = res.secure_url
+          this.url = url
         }
 
         if (this.type !== 'recording' && this.urlInputType === 'materialUrl') {
