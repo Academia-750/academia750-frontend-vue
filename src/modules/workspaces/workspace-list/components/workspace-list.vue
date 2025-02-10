@@ -238,8 +238,7 @@ export default {
       this.resetTableOptions()
       this.$refs.table.reload()
     },
-    async onAddMaterial(material) {
-      this.SET_WORKSPACE(material.workspace_id)
+    async onAddMaterial() {
       this.$router.push({ name: 'manage-materials' })
     },
     searchFieldExecuted($event) {

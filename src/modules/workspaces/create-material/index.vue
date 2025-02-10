@@ -297,6 +297,7 @@ export default {
   async mounted() {
     this.type = this.$route.params.type || 'material'
     this.watermark = this.isMaterial
+    this.workspace = this.$route.params.workspace
 
     // Only when is Edit
     this.loadItem()

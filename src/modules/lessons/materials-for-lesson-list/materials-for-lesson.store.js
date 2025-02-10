@@ -9,7 +9,8 @@ export default {
     editItem: false,
     type: '',
     tags: [],
-    uploadFile: {}
+    uploadFile: {},
+    workspace: null
   },
   getters: {
     ...DataTableStore.getters

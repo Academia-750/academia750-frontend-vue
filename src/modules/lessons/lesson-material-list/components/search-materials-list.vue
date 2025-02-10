@@ -260,7 +260,11 @@ export default {
     openCreateMaterial() {
       this.$router.push({
         name: 'create-materials',
-        params: { type: this.type, lesson_id: this.$route.params.id }
+        params: {
+          type: this.type,
+          lesson_id: this.$route.params.id,
+          workspace: this.workspace
+        }
       })
     },
     async deleteMaterialsFromLesson(material) {

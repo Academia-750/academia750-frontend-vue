@@ -167,7 +167,6 @@ export default {
       'resetTableOptions'
     ]),
     ...mapMutations('materialsForLessonStore', [
-      'SET_WORKSPACE',
       'SET_TYPE',
       'SET_TAGS',
       'SET_TABLE_OPTIONS'
@@ -209,7 +208,10 @@ export default {
     onAddMaterial() {
       this.$router.push({
         name: 'create-materials',
-        params: { type: this.type, lesson_id: this.$route.params.id }
+        params: {
+          type: this.type,
+          lesson_id: this.$route.params.id
+        }
       })
     },
     async loadMaterials(pagination) {
