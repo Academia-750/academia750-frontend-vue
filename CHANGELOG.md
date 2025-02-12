@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.6.1...v2.7.0) (2025-02-12)
+
+
+### Features
+
+* select or update storage from the edit material screen, fixed missing workspace folder ([a7658a0](https://github.com/Academia-750/academia750-frontend-vue/commit/a7658a013baa016e8c99b1139549832024c54944))
+
+
+### Bug Fixes
+
+* create material with workspace pre-selected ([4426084](https://github.com/Academia-750/academia750-frontend-vue/commit/44260845d3cb459dcfef12f36501d53e56a2af20))
+
 ### [2.6.1](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.6.0...v2.6.1) (2025-02-07)
 
 
