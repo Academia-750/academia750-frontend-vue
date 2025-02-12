@@ -80,7 +80,7 @@
               color="primary"
               height="6"
             ></v-progress-linear>
-            <div v-if="isMaterial && urlInputType === 'file'">
+            <div v-if="isStorageRequired">
               <div v-if="!getFileName" class="file-upload">
                 <div class="file-upload__area" @click="uploadFileClicked">
                   <v-icon>mdi-plus-circle</v-icon>
@@ -137,6 +137,17 @@
                 <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
               </ul>
             </div>
+            <RadioGroupInput
+              v-if="isStorageRequired"
+              id="storage"
+              ref="storage"
+              :value="storage"
+              :options="StorageOptions"
+              label="Almacenar en"
+              rules=""
+              @input="(value) => (storage = value)"
+            />
+
             <SwitchInput
               v-if="type === 'material'"
               id="watermark"
@@ -184,6 +195,21 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import { PermissionEnum } from '@/utils/enums'
 import LessonRepository from '@/services/LessonRepository'
 import UploadRepository from '@/services/UploadRepository'
+import axios from 'axios'
+
+const StorageOptions = [
+  {
+    label: 'Digital Ocean',
+    value: 'digitalocean'
+  },
+  {
+    label: 'Cloudinary',
+    value: 'cloudinary'
+  }
+]
+
+const FILE_NAME_REGEX = /\/([^/]+)(\.\w+)?$/
+
 export default {
   components: {
     Vtoolbar: () =>
@@ -209,6 +235,10 @@ export default {
     WorkSpacesAutoComplete: () =>
       import(
         /* webpackChunkName: "WorkSpacesAutoComplete" */ '@/modules/resources/components/form/work-spaces-auto-complete'
+      ),
+    RadioGroupInput: () =>
+      import(
+        /* webpackChunkName: "RadioGroupInput" */ '@/modules/resources/components/form/radio-group-input'
       )
   },
   data() {
@@ -222,6 +252,7 @@ export default {
       fileName: '',
       urlInputType: 'file',
       materialUrl: '',
+      storage: 'digitalocean',
       types: [
         {
           key: 'material',
@@ -240,6 +271,7 @@ export default {
       workspace: null,
       isDeleting: false,
       watermark: false,
+      StorageOptions,
       // When adding from a lesson menu
       lesson: null
     }
@@ -259,6 +291,9 @@ export default {
     isMaterial() {
       return this.type === 'material'
     },
+    isStorageRequired() {
+      return this.type === 'material' && this.urlInputType === 'file'
+    },
     getFileName() {
       if (!this.isMaterial) {
         return ''
@@ -267,12 +302,13 @@ export default {
       if (this.uploadedFiles.length) {
         return this.uploadedFiles[0].name
       }
+      console.log({ url: this.url })
 
       if (this.url === undefined) {
         return ''
       }
       // Extract the name using a regular expression
-      const matches = this.url.match(/\/([^/]+)\.\w+$/)
+      const matches = this.url.match(FILE_NAME_REGEX)
       const fileName = matches && matches[1]
 
       return fileName
@@ -330,7 +366,6 @@ export default {
         if (!item) {
           return
         }
-
         this.SET_EDIT_ITEM(item)
       }
       if (!this.editItem.workspace) {
@@ -338,7 +373,7 @@ export default {
           this.editItem.workspace_id
         )
       }
-      const isInternalFile = this.editItem.url.includes('cloudinary')
+      const isInternalFile = !!this.editItem.storage
 
       this.material = this.editItem
       this.name = this.editItem.name
@@ -348,6 +383,7 @@ export default {
         isInternalFile || this.editItem.type !== 'material'
           ? this.editItem.url
           : undefined
+      this.storage = this.editItem.storage || 'digitalocean'
       this.materialUrl = isInternalFile ? '' : this.editItem.url
       this.watermark = this.editItem.watermark === 1
       this.workspace = this.editItem.workspace
@@ -423,6 +459,70 @@ export default {
     async onRemoveFile(index) {
       this.uploadedFiles.splice(index, 1)
     },
+
+    async getMaterialUrl() {
+      const FOLDER = `workspace_${this.workspace.id}`
+
+      // Recording
+      if (this.type === 'recording') {
+        return { url: this.url }
+      }
+      /** External hosted URL */
+      if (this.urlInputType === 'materialUrl') {
+        return { url: this.materialUrl }
+      }
+
+      if (!this.isStorageRequired) {
+        return { url: '' }
+      }
+
+      /**
+       * New file upload
+       */
+      if (this.uploadedFiles.length) {
+        const url = await UploadRepository.uploadFile({
+          storage: this.storage,
+          file: this.uploadedFiles[0],
+          folder: FOLDER
+        })
+
+        if (!url) {
+          return { error: true }
+        }
+        this.uploadedFiles = []
+
+        return { url }
+      }
+      /** change of storage */
+      if (this.editItem && this.storage !== this.editItem.storage) {
+        // If didn't had a url , we do nothing
+        if (!this.editItem.url) {
+          return { url: '' }
+        }
+
+        const response = await axios.get(this.editItem.url, {
+          responseType: 'blob'
+        })
+
+        const blob = new Blob([response.data], {})
+
+        blob.name = this.editItem.name
+
+        const newUrl = await UploadRepository.uploadFile({
+          storage: this.storage,
+          file: blob,
+          folder: FOLDER
+        })
+
+        if (!newUrl) {
+          return { error: true }
+        }
+
+        return { url: newUrl }
+      }
+
+      return { url: this.url }
+    },
     async onCreateWorkspaceMaterial() {
       const status = await this.$refs['formCreateWorkspaceMaterial'].validate()
 
@@ -443,31 +543,20 @@ export default {
             }
           )
         }
-        if (
-          this.uploadedFiles.length &&
-          this.isMaterial &&
-          this.urlInputType === 'file'
-        ) {
-          const url = await UploadRepository.uploadToDigitalOcean(
-            this.uploadedFiles[0]
-          )
 
-          if (!url) {
-            this.loading = false
+        const urlResult = await this.getMaterialUrl()
 
-            return
-          }
-          this.uploadedFiles = []
-          this.url = url
+        if (urlResult.error) {
+          this.loading = false
+
+          return
         }
-
-        if (this.type !== 'recording' && this.urlInputType === 'materialUrl') {
-          this.url = this.materialUrl
-        }
+        this.url = urlResult.url
 
         material = await WorkspaceMaterialRepository.update(material.id, {
           name: this.name,
           tags: this.tags,
+          storage: this.isStorageRequired ? this.storage : 'remove',
           watermark: this.watermark,
           url: this.url || undefined
         })
@@ -477,7 +566,7 @@ export default {
           return
         }
 
-        if (this.lesson) {
+        if (this.lesson && !this.editItem) {
           await LessonRepository.addMaterialsToLesson(this.lesson.id, {
             material_id: material.id
           })
@@ -498,11 +587,18 @@ export default {
           timer: 7500
         })
 
-        if (!this.editItem) {
-          this.reset()
-        }
+        // If we are adding material, we reset to create new materials.
+        // If we are editing the item, we update as some checks and logic compares with the previous value
+        !this.editItem ? this.reset() : this.SET_EDIT_ITEM(material)
       } catch (err) {
         console.error(err)
+
+        await this.$swal.fire({
+          icon: 'error',
+          toast: true,
+          title: 'Error',
+          html: err
+        })
         this.loading = false
       }
     },

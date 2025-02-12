@@ -202,11 +202,12 @@ export default {
       if (!workspace) {
         return
       }
+
       const result = await this.$swal.fire({
         toast: true,
         width: '400px',
         icon: 'question',
-        title: 'Eliminar Workspace',
+        title: 'Eliminar Categoría',
         html: '<b>Esta acción es irreversible</b><br>¿Seguro que deseas eliminar este Workspace? Todos los materiales seran borrados del servidor y los alumnos no podrán acceder a ellos',
         showConfirmButton: true,
         showCancelButton: true,

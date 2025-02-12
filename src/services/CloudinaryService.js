@@ -5,12 +5,12 @@ const cloudinary_preset = process.env.VUE_APP_CLOUDINARY_PRESET || 'academy750'
 const cloudinary_id = process.env.VUE_APP_CLOUDINARY_ID || ''
 
 export default {
-  async upload(files, folderName) {
+  async upload({ file, folder }) {
     const form = new FormData()
 
-    form.append('file', files)
+    form.append('file', file)
     form.append('upload_preset', cloudinary_preset)
-    form.append('public_id', `${folderName}/${files.name}`)
+    form.append('public_id', `${folder}/${file.name}`)
 
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${cloudinary_id}/upload`,
