@@ -92,7 +92,8 @@
                     desde tu ordenador.
                   </h5>
                   <h5 class="font-weight-regular d-flex align-center mt-1">
-                    El tamaño máximo es 10 MB
+                    El tamaño máximo es
+                    {{ MAX_FILE_SIZE_MB[storage] }} MB
                   </h5>
                   <input
                     id=""
@@ -100,13 +101,13 @@
                     type="file"
                     name=""
                     hidden
-                    @change="handleFileUpload"
+                    @change="onFileSelected"
                   />
                 </div>
-                <div v-if="uploadedFiles.length > 0">
+                <div v-if="filesToUpload.length > 0">
                   <ul class="file-container mb-2">
                     <li
-                      v-for="(file, index) in uploadedFiles"
+                      v-for="(file, index) in filesToUpload"
                       :key="index"
                       class="d-flex flex-row justify-space-between cursor-pointer"
                     >
@@ -131,10 +132,13 @@
                     type="file"
                     name=""
                     hidden
-                    @change="handleFileUpload"
+                    @change="onFileSelected"
                   />
                 </li>
-                <h5 class="font-weight-regular">El tamaño máximo es 10 MB</h5>
+                <h5 class="font-weight-regular">
+                  El tamaño máximo es
+                  {{ MAX_FILE_SIZE_MB[storage] }} MB
+                </h5>
               </ul>
             </div>
             <RadioGroupInput
@@ -210,6 +214,13 @@ const StorageOptions = [
 
 const FILE_NAME_REGEX = /\/([^/]+)(\.\w+)?$/
 
+const MEGA_BYTE = 1024 * 1024
+
+const MAX_FILE_SIZE_MB = {
+  cloudinary: 10, // 10 MB
+  digitalocean: 100 // 100 MB
+}
+
 export default {
   components: {
     Vtoolbar: () =>
@@ -244,7 +255,7 @@ export default {
   data() {
     return {
       validRegex: inputValidRegex,
-      uploadedFiles: [],
+      filesToUpload: [],
       loading: false,
       uploading: false,
       uploadProgress: 0,
@@ -273,7 +284,8 @@ export default {
       watermark: false,
       StorageOptions,
       // When adding from a lesson menu
-      lesson: null
+      lesson: null,
+      MAX_FILE_SIZE_MB
     }
   },
   computed: {
@@ -299,10 +311,9 @@ export default {
         return ''
       }
 
-      if (this.uploadedFiles.length) {
-        return this.uploadedFiles[0].name
+      if (this.filesToUpload.length) {
+        return this.filesToUpload[0].name
       }
-      console.log({ url: this.url })
 
       if (this.url === undefined) {
         return ''
@@ -416,7 +427,7 @@ export default {
       this.url = ''
       this.tags = []
       this.material = false
-      this.uploadedFiles = []
+      this.filesToUpload = []
       this.materialUrl = ''
     },
 
@@ -424,40 +435,43 @@ export default {
       this.$refs.fileInput.click()
     },
 
-    async handleFileUpload(event) {
-      // Handle the file upload event and store the uploaded files in the array
+    async onFileSelected(event) {
       const { files } = event.target
 
-      // We get a files array, but the there is only 1 file
       if (!files.length) {
         return
       }
+      const filesArray = Array.from(files)
 
-      const MEGA_BYTE = 1024 * 1024
-
-      // 10 MB is also the max of cloudinary free plan
-      if (Array.from(files).some((file) => file.size > 10 * MEGA_BYTE)) {
-        Toast.warning('El tamaño del fichero no puede superar los 10 MB')
-
+      if (!this.checkFiles(filesArray)) {
         return
       }
 
-      this.uploading = true
-      const totalFiles = files.length
-      let filesUploaded = 0
-      const interval = setInterval(() => {
-        filesUploaded++
-        this.uploadProgress = (filesUploaded / totalFiles) * 100
-        if (filesUploaded === totalFiles) {
-          clearInterval(interval)
-          this.uploading = false // Set uploading flag to false after file upload is completed
-          this.uploadProgress = 0 // Reset progress
-          this.uploadedFiles = Array.from(files)
-        }
-      }, 200)
+      this.filesToUpload = filesArray
+    },
+
+    async checkFiles(files) {
+      if (!files.length) {
+        return true
+      }
+      if (
+        files.some(
+          (file) => file.size > this.MAX_FILE_SIZE_MB[this.storage] * MEGA_BYTE
+        )
+      ) {
+        Toast.warning(
+          `El tamaño del fichero no puede superar los ${
+            this.MAX_FILE_SIZE_MB[this.storage]
+          } MB`
+        )
+
+        return false
+      }
+
+      return true
     },
     async onRemoveFile(index) {
-      this.uploadedFiles.splice(index, 1)
+      this.filesToUpload.splice(index, 1)
     },
 
     async getMaterialUrl() {
@@ -479,17 +493,23 @@ export default {
       /**
        * New file upload
        */
-      if (this.uploadedFiles.length) {
+      if (this.filesToUpload.length) {
+        if (!this.checkFiles(this.filesToUpload)) {
+          this.filesToUpload = []
+
+          return { error: true }
+        }
+
         const url = await UploadRepository.uploadFile({
           storage: this.storage,
-          file: this.uploadedFiles[0],
+          file: this.filesToUpload[0],
           folder: FOLDER
         })
 
         if (!url) {
           return { error: true }
         }
-        this.uploadedFiles = []
+        this.filesToUpload = []
 
         return { url }
       }
