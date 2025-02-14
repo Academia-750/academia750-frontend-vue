@@ -52,7 +52,7 @@ export const blobToFileType = (blob) => {
   })
 }
 
-export const downloadOriginalFile = async (url, name) => {
+export const getOriginalFile = async (url) => {
   try {
     const response = await axios.get(url, {
       responseType: 'blob',
@@ -64,26 +64,24 @@ export const downloadOriginalFile = async (url, name) => {
       }
     })
 
-    const blob = new Blob([response.data], {})
-
-    const info = await blobToFileType(blob)
-
-    const link = document.createElement('a')
-
-    link.href = URL.createObjectURL(blob)
-
-    link.download = `${name}${info.type}`
-    link.click()
-    URL.revokeObjectURL(link.href)
+    return response.data
   } catch (error) {
-    if (error.name === 'AxiosError') {
-      toast.error('No se pudo descargar este material', error.message)
-
-      return
-    }
-
-    console.error(error)
+    toast.error('No se pudo descargar este material', error.message)
   }
+}
+
+export const downloadBlob = async (data, name) => {
+  const blob = new Blob([data], {})
+
+  const info = await blobToFileType(blob)
+
+  const link = document.createElement('a')
+
+  link.href = URL.createObjectURL(blob)
+
+  link.download = `${name}${info.type}`
+  link.click()
+  URL.revokeObjectURL(link.href)
 }
 
 /**

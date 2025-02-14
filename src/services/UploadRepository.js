@@ -2,12 +2,12 @@ import ResourceService from '@/services/ResourceService'
 import CloudinaryService from './CloudinaryService'
 
 export default {
-  async uploadFile({ storage, file, folder }) {
+  async uploadFile({ storage, file, folder, name }) {
     if (storage === 'digitalocean') {
-      return await this.uploadToDigitalOcean({ file, folder })
+      return await this.uploadToDigitalOcean({ file, folder, name })
     }
     if (storage === 'cloudinary') {
-      const result = await CloudinaryService.upload({ file, folder })
+      const result = await CloudinaryService.upload({ file, folder, name })
 
       return result.secure_url
     }
@@ -15,11 +15,12 @@ export default {
     throw Error('Storage not supported')
   },
 
-  async uploadToDigitalOcean({ file, folder }) {
+  async uploadToDigitalOcean({ file, folder, name }) {
     const formData = new FormData()
 
     formData.append('file', file)
     formData.append('folder', folder)
+    formData.append('name', name)
 
     const response = await ResourceService.post(
       'images/digital-ocean',

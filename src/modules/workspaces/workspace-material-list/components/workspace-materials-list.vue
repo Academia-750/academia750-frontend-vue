@@ -143,7 +143,7 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
-import { downloadFile, downloadOriginalFile } from '@/utils/DownloadMaterial'
+import { downloadFile, downloadBlob } from '@/utils/DownloadMaterial'
 import LessonRepository from '@/services/LessonRepository'
 
 export default {
@@ -339,7 +339,13 @@ export default {
       this.searchFieldExecuted(value)
     },
     async download(material) {
-      downloadOriginalFile(material.url, material.name)
+      const data = await getOriginalFile(material.url)
+
+      if (!data) {
+        return
+      }
+
+      downloadBlob(data, material.name)
     },
     async downloadWithWaterMark(material) {
       this.loading = true

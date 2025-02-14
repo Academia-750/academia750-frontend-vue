@@ -199,8 +199,7 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import { PermissionEnum } from '@/utils/enums'
 import LessonRepository from '@/services/LessonRepository'
 import UploadRepository from '@/services/UploadRepository'
-import axios from 'axios'
-
+import { getOriginalFile } from '@/utils/DownloadMaterial'
 const StorageOptions = [
   {
     label: 'Digital Ocean',
@@ -504,7 +503,10 @@ export default {
         const url = await UploadRepository.uploadFile({
           storage: this.storage,
           file: this.filesToUpload[0],
-          folder: FOLDER
+          folder: FOLDER,
+          name: `${this.name}${
+            this.filesToUpload[0].name.match(/\.[^.]+$/)?.[0] || ''
+          }`
         })
 
         if (!url) {
@@ -520,19 +522,19 @@ export default {
         if (!this.editItem.url) {
           return { url: '' }
         }
+        const data = await getOriginalFile(this.editItem.url)
 
-        const response = await axios.get(this.editItem.url, {
-          responseType: 'blob'
-        })
+        if (!data) {
+          return { error: true }
+        }
 
-        const blob = new Blob([response.data], {})
-
-        blob.name = this.editItem.name
+        const blob = new Blob([data], {})
 
         const newUrl = await UploadRepository.uploadFile({
           storage: this.storage,
           file: blob,
-          folder: FOLDER
+          folder: FOLDER,
+          name: `${this.name}${this.editItem.url.match(/\.[^.]+$/)?.[0] || ''}`
         })
 
         if (!newUrl) {
