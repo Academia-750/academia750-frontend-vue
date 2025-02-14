@@ -22,7 +22,7 @@ export default {
     formData.append('folder', folder)
 
     const response = await ResourceService.post(
-      'upload-image/digital-ocean',
+      'images/digital-ocean',
       formData
     )
 

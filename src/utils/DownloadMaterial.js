@@ -1,5 +1,6 @@
 import axios from 'axios'
 import toast from './toast'
+import ResourceService from '@/services/ResourceService'
 
 const BASE_API =
   process.env.NODE_ENV === 'development'
@@ -54,7 +55,13 @@ export const blobToFileType = (blob) => {
 export const downloadOriginalFile = async (url, name) => {
   try {
     const response = await axios.get(url, {
-      responseType: 'blob'
+      responseType: 'blob',
+      // For internal files we still use the toke
+      headers: {
+        Authorization: url.includes(BASE_API)
+          ? `Bearer ${ResourceService.defaults.headers.common['Authorization']} `
+          : null
+      }
     })
 
     const blob = new Blob([response.data], {})
@@ -69,6 +76,12 @@ export const downloadOriginalFile = async (url, name) => {
     link.click()
     URL.revokeObjectURL(link.href)
   } catch (error) {
+    if (error.name === 'AxiosError') {
+      toast.error('No se pudo descargar este material', error.message)
+
+      return
+    }
+
     console.error(error)
   }
 }

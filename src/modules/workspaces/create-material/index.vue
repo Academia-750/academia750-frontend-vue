@@ -398,7 +398,8 @@ export default {
       this.materialUrl = isInternalFile ? '' : this.editItem.url
       this.watermark = this.editItem.watermark === 1
       this.workspace = this.editItem.workspace
-      this.urlInputType = isInternalFile ? 'file' : 'materialUrl'
+      this.urlInputType =
+        isInternalFile || !this.editItem.url ? 'file' : 'materialUrl'
     },
 
     onChangeType(type) {
