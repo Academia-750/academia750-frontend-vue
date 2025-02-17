@@ -526,7 +526,7 @@ export default {
             this.name !== this.editItem.name
           )
         ) {
-          return { url: '' }
+          return { url: this.editItem.url }
         }
         // If didn't had a url , we do nothing
         if (!this.editItem.url) {

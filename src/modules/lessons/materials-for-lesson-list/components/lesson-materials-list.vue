@@ -171,6 +171,7 @@ export default {
       'SET_TAGS',
       'SET_TABLE_OPTIONS'
     ]),
+    ...mapMutations('workspaceMaterialStore', ['SET_EDIT_ITEM']),
 
     async create(material) {
       if (!material) {
@@ -206,6 +207,7 @@ export default {
       this.$refs.table.reload()
     },
     onAddMaterial() {
+      this.SET_EDIT_ITEM(false)
       this.$router.push({
         name: 'create-materials',
         params: {
