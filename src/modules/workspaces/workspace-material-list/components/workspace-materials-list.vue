@@ -143,7 +143,11 @@ import WorkspaceRepository from '@/services/WorkspaceRepository'
 import WorkspaceMaterialRepository from '@/services/WorkspaceMaterialRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 import { MATERIAL_TYPES_LABELS } from '@/helpers/constants'
-import { downloadFile, downloadBlob } from '@/utils/DownloadMaterial'
+import {
+  downloadFile,
+  downloadBlob,
+  getOriginalFile
+} from '@/utils/DownloadMaterial'
 import LessonRepository from '@/services/LessonRepository'
 
 export default {

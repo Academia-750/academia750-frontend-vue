@@ -476,6 +476,7 @@ export default {
 
     async getMaterialUrl() {
       const FOLDER = `workspace_${this.workspace.id}`
+      const fileName = this.name.replace(/\s+/g, '_')
 
       // Recording
       if (this.type === 'recording') {
@@ -504,7 +505,7 @@ export default {
           storage: this.storage,
           file: this.filesToUpload[0],
           folder: FOLDER,
-          name: `${this.name}${
+          name: `${fileName}${
             this.filesToUpload[0].name.match(/\.[^.]+$/)?.[0] || ''
           }`
         })
@@ -516,8 +517,17 @@ export default {
 
         return { url }
       }
-      /** change of storage */
-      if (this.editItem && this.storage !== this.editItem.storage) {
+      /** change of other properties */
+      if (this.editItem) {
+        // If the storage or the name changes, we need to remap the file
+        if (
+          !(
+            this.storage !== this.editItem.storage ||
+            this.name !== this.editItem.name
+          )
+        ) {
+          return { url: '' }
+        }
         // If didn't had a url , we do nothing
         if (!this.editItem.url) {
           return { url: '' }
@@ -534,7 +544,7 @@ export default {
           storage: this.storage,
           file: blob,
           folder: FOLDER,
-          name: `${this.name}${this.editItem.url.match(/\.[^.]+$/)?.[0] || ''}`
+          name: `${fileName}${this.editItem.url.match(/\.[^.]+$/)?.[0] || ''}`
         })
 
         if (!newUrl) {

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.1](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.7.0...v2.7.1) (2025-02-17)
+
+
+### Bug Fixes
+
+* check file max size per storage ([9d8000f](https://github.com/Academia-750/academia750-frontend-vue/commit/9d8000f586489dec1048c99d4f9c09ae2236276d))
+* file names keep material name ([c677f01](https://github.com/Academia-750/academia750-frontend-vue/commit/c677f01f960c4a500fec5a84929e78a02e0d7e20))
+* secure digital ocean urls ([a85ea13](https://github.com/Academia-750/academia750-frontend-vue/commit/a85ea13df0890bfa375678e240d3d98bb2a4767d))
+
 ## [2.7.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.6.1...v2.7.0) (2025-02-12)
 
 
