@@ -2,9 +2,10 @@
   <div>
     <v-container class="seccion_tarifa">
       <h2 class="titulo_1 text-center">
-        Nuestras tarifas se adaptan a tus <br> necesidades
+        Nuestras tarifas se adaptan a tus <br />
+        necesidades
       </h2>
-      <v-row>
+      <v-row justify="center">
         <v-col lg="4" md="6" cols="12">
           <item-tarifas
             titulo-tarifa="Iniciación"
@@ -12,7 +13,9 @@
             contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
             :items-tarifa="iniciacion"
             is-dark-button
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Iniciación')"
+            @emitClickInscriptionContactUs="
+              $emit('emitClickInscriptionContactUs', 'Iniciación')
+            "
           />
         </v-col>
         <v-col lg="4" md="6" cols="12">
@@ -22,10 +25,12 @@
             is-dark-button
             contenido-tarifa="Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:"
             :items-tarifa="iniciacion"
-            @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Avanzado')"
+            @emitClickInscriptionContactUs="
+              $emit('emitClickInscriptionContactUs', 'Avanzado')
+            "
           />
         </v-col>
-        <v-col lg="4" md="6" cols="12">
+        <!-- <v-col lg="4" md="6" cols="12">
           <item-tarifas
             titulo-tarifa="Online"
             precio-tarifa="50"
@@ -34,7 +39,7 @@
             :items-tarifa="Autoevealuable"
             @emitClickInscriptionContactUs="$emit('emitClickInscriptionContactUs', 'Online')"
           />
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
   </div>
@@ -69,8 +74,7 @@ export default {
 }
 </script>
 <style scoped>
-  /* .seccion_tarifa {
+/* .seccion_tarifa {
     padding-top: 70px;
   } */
-
 </style>
