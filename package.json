@@ -10,7 +10,6 @@
     "release": "npx standard-version && git push --follow-tags"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.741.0",
     "@grafikri/vue-middleware": "^1.0.0",
     "@indielayer/vue-live-demo": "^1.0.0",
     "animate.css": "^4.1.0",
@@ -72,6 +71,5 @@
   ],
   "resolutions": {
     "prosemirror-model": "1.9.1"
-  },
-  "packageManager": "yarn@4.6.0"
+  }
 }
