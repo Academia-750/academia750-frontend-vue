@@ -25,7 +25,7 @@
                 <ul class="lista_footer mt-2" style="list-style: none">
                   <FooterTres
                     ico-contacto="mdi-map-marker"
-                    items-contacto="Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante"
+                    items-contacto="Av. Mare Nostrum 6 (entrada por C/Estrella fugaz), 03007, Alicante"
                   />
                   <FooterTres
                     ico-contacto="mdi-phone"
@@ -97,7 +97,7 @@ export default {
     return {
       FooterMenu: ['Inicio', 'Qué ofrecemos', 'Tarifas', 'Contáctanos'],
       Contactanos: [
-        'Av. Pintor Pastor Calpena 4, local izquierdo, 03680 Aspe, Alicante',
+        'Av. Mare Nostrum 6 (entrada por C/Estrella fugaz), 03007, Alicante',
         '+34633261014',
         'hola@academia750.es'
       ]
