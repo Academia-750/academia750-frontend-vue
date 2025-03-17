@@ -167,7 +167,7 @@ export default {
       }
     ],
     title: {
-      inner: 'Academia de bomberos de Aspe, Alicante, con plataforma online'
+      inner: 'Academia de bomberos, Alicante, con plataforma online'
     }
   }
 }
