@@ -11,13 +11,20 @@
       ref="DialogLoginForm"
       @scrollToResetPasswordSection="scrollToResetPasswordSection"
     />
+    <div id="BenefitsSection" ref="BenefitsSection" style="padding-top: 100px">
+      <BenefitsSection />
+    </div>
+    <div id="HowItWorksSection" ref="HowItWorksSection" style="padding-top: 100px">
+      <HowItWorks />
+    </div>
+    <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
+    <Testimonials />
     <div id="OurServiceSection" ref="OurServiceSection" style="padding-top: 100px">
       <OurServices />
     </div>
     <GroupsByLevel
       @executeRegisterContactUs="scrollToContactUsFormForRegister"
     />
-    <Testimonials />
     <v-fab-transition>
       <v-btn
         class="my-5 mx-2"
@@ -47,7 +54,6 @@
         "
       />
     </div>
-    <Nosotros @emitScrollToSectionHomePage="scrollToSectionOfHomePage" />
     <div id="ContactUsForm" ref="ContactUsForm">
       <Formulario ref="ContactUsFormComponent" />
     </div>
@@ -71,6 +77,8 @@ import Nosotros from '../components/Nosotros'
 import Formulario from '../components/Formulario'
 import Footer from '../components/Footer'
 import Ivaspes from '../components/Ivaspes.vue'
+import BenefitsSection from '../components/Benefits/BenefitsSection'
+import HowItWorks from '../components/HowItWorks/HowItWorks'
 export default {
   name: 'HomeView',
   components: {
@@ -85,7 +93,9 @@ export default {
     OurServices,
     GroupsByLevel,
     Testimonials,
-    Ivaspes
+    Ivaspes,
+    BenefitsSection,
+    HowItWorks
   },
   mounted () {
     //const API_PUBLIC_KEY_RECAPTCHA_SITE = process.env.VUE_APP_API_PUBLIC_KEY_RECAPTCHA

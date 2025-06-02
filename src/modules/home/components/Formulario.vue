@@ -1,162 +1,206 @@
 <template>
   <div class="estilo_formulario">
     <v-container>
-      <v-row align="center">
-        <v-col lg="6" cols="12">
-          <h3 class="titulo_1 white--text-contact-us">Contacta con nosotros</h3>
-          <p>Estaremos encantados de resolverte cualquier duda.</p>
-        </v-col>
-        <v-col lg="6" cols="12" class="text-center">
-          <div>
-            <v-btn
-              dark
-              text
-              class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
-              @click="redirectToCallPhoneNumber"
-            >
-              +34633261014
-            </v-btn>
+      <!-- Header Section -->
+      <v-row justify="center" class="header-section">
+        <v-col cols="12" md="8" class="text-center">
+          <div class="header-content">
+            <v-icon size="60" color="white" class="mb-4">mdi-email-heart-outline</v-icon>
+            <h1 class="main-title">Contacta con nosotros</h1>
+            <p class="subtitle">Estaremos encantados de resolverte cualquier duda</p>
+            
+            <!-- Contact Info -->
+            <v-row justify="center" class="contact-info-row">
+              <v-col cols="12" sm="6" md="5">
+                <div class="contact-card" @click="redirectToCallPhoneNumber">
+                  <v-icon color="white" class="contact-icon">mdi-phone</v-icon>
+                  <span class="contact-text">+34 633 261 014</span>
+                </div>
+              </v-col>
+              <v-col cols="12" sm="6" md="5">
+                <div class="contact-card" @click="redirectToSendMailAcademia">
+                  <v-icon color="white" class="contact-icon">mdi-email</v-icon>
+                  <span class="contact-text">hola@academia750.es</span>
+                </div>
+              </v-col>
+            </v-row>
           </div>
-          <div>
-            <v-btn
-              dark
-              text
-              class="font-weight-bold align-self-center ma-0 pa-0 ml-1 subtitle-2"
-              @click="redirectToSendMailAcademia"
-            >
-              hola@academia750.es
-            </v-btn>
-            <!-- <a href="#">hola@academia750.es</a> -->
+        </v-col>
+      </v-row>
+
+      <!-- Form Section -->
+      <v-row justify="center">
+        <v-col cols="12" md="10" lg="8">
+          <div class="form-container">
+            <form id="contact-form-home" name="contact-form__home" autocomplete="off">
+              <validation-observer ref="FormSubmitContactUs">
+                
+                <!-- reCAPTCHA Error -->
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  vid="g-recaptcha-response"
+                  mode="aggressive"
+                  name="g-recaptcha-response"
+                >
+                  <v-alert
+                    v-if="errors.length > 0"
+                    prominent
+                    type="error"
+                    class="mb-6"
+                  >
+                    <v-row align="center">
+                      <v-col class="grow">
+                        {{ errors[0] }}
+                      </v-col>
+                      <v-col class="shrink">
+                        <v-btn 
+                          color="error" 
+                          outlined
+                          @click="reloadWindowByRecaptcha"
+                        >
+                          Recargar página
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-alert>
+                </ValidationProvider>
+
+                <!-- Form Fields -->
+                <div class="form-content">
+                  
+                  <!-- Reason Selection -->
+                  <div class="form-section">
+                    <h3 class="section-title">¿En qué podemos ayudarte?</h3>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      vid="reason"
+                      mode="aggressive"
+                      name="Motivo"
+                      rules="required"
+                    >
+                      <v-select
+                        v-model="form.reason"
+                        :items="itemsReasonSelect"
+                        :error-messages="errors"
+                        label="Selecciona el motivo de tu consulta"
+                        item-text="label"
+                        item-value="key"
+                        solo
+                        class="custom-select"
+                        prepend-inner-icon="mdi-help-circle-outline"
+                      ></v-select>
+                    </ValidationProvider>
+                  </div>
+
+                  <!-- Personal Information -->
+                  <div class="form-section">
+                    <h3 class="section-title">Información Personal</h3>
+                    <v-row>
+                      <v-col cols="12" md="6">
+                        <name-person-input
+                          ref="namePersonInputComponent"
+                          rules="requiredFirstName|min:3|max:255|mustContainLettersAndOptionalTilde"
+                          is-solo
+                          :is-filled="false"
+                          :has-prepend-icon="false"
+                          class="custom-input"
+                          @NamePersonBinding="form.firstName = $event"
+                        />
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <last-name-person-input
+                          ref="LastNamePersonInputComponent"
+                          rules="requiredLastName|min:3|max:255|mustContainLettersAndOptionalTilde"
+                          is-solo
+                          :is-filled="false"
+                          :has-prepend-icon="false"
+                          class="custom-input"
+                          @LastNamePersonBinding="form.lastName = $event"
+                        />
+                      </v-col>
+                    </v-row>
+                  </div>
+
+                  <!-- Contact Information -->
+                  <div class="form-section">
+                    <h3 class="section-title">Información de Contacto</h3>
+                    <v-row>
+                      <v-col cols="12" md="6">
+                        <phone-field-input
+                          ref="PhoneInputComponent"
+                          rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
+                          is-solo
+                          :is-filled="false"
+                          :has-prepend-icon="false"
+                          class="custom-input"
+                          @PhoneBinding="form.phone = $event"
+                        />
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <email-field-input
+                          ref="EmailInputComponent"
+                          rules="requiredEmail|email"
+                          is-solo
+                          :is-filled="false"
+                          :has-prepend-icon="false"
+                          class="custom-input"
+                          @EmailBinding="form.email = $event"
+                        />
+                      </v-col>
+                    </v-row>
+                  </div>
+
+                  <!-- Message -->
+                  <div class="form-section">
+                    <h3 class="section-title">Tu Mensaje</h3>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      tag="div"
+                      vid="vid"
+                      mode="aggressive"
+                      name="Mensaje"
+                      rules="required|max:400"
+                    >
+                      <v-textarea
+                        ref="MessageTextarea"
+                        v-model="form.message"
+                        label="Cuéntanos más detalles sobre tu consulta"
+                        placeholder="Escribe tu mensaje aquí..."
+                        solo
+                        rows="5"
+                        :error-messages="errors"
+                        name="input-7-4"
+                        class="custom-textarea"
+                        counter="400"
+                      ></v-textarea>
+                    </ValidationProvider>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <div class="form-section text-center">
+                    <v-btn
+                      id="boton_enviar_form"
+                      class="submit-button"
+                      x-large
+                      :loading="loadingButtonSubmit"
+                      :disabled="disabledButtonSubmit"
+                      @click="prepareFormContactUsSubmit"
+                    >
+                      <v-icon left>mdi-send-outline</v-icon>
+                      Enviar Mensaje
+                    </v-btn>
+                  </div>
+
+                </div>
+              </validation-observer>
+            </form>
           </div>
         </v-col>
       </v-row>
     </v-container>
-    <form id="contact-form-home" name="contact-form__home" autocomplete="off">
-      <validation-observer ref="FormSubmitContactUs">
-        <v-container>
-          <v-row>
-            <v-col cols="12" lg="12">
-              <ValidationProvider
-                v-slot="{ errors }"
-                vid="g-recaptcha-response"
-                mode="aggressive"
-                name="g-recaptcha-response"
-              >
-                <v-alert
-                  v-if="errors.length > 0"
-                  prominent
-                  type="error"
-                >
-                  <v-row align="center">
-                    <v-col class="grow">
-                      {{ errors[0] }}
-                    </v-col>
-                    <v-col class="shrink">
-                      <v-btn @click="reloadWindowByRecaptcha">Recargar página web</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-alert>
-              </ValidationProvider>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" lg="3">
-              <ValidationProvider
-                v-slot="{ errors }"
-                vid="reason"
-                mode="aggressive"
-                name="Motivo"
-                rules="required"
-              >
-                <v-select
-                  v-model="form.reason"
-                  solo
-                  :items="itemsReasonSelect"
-                  :error-messages="errors"
-                  placeholder="Motivo"
-                  item-text="label"
-                  item-value="key"
-                ></v-select>
-              </ValidationProvider>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" lg="6">
-              <name-person-input
-                ref="namePersonInputComponent"
-                rules="requiredFirstName|min:3|max:255|mustContainLettersAndOptionalTilde"
-                is-solo
-                :is-filled="false"
-                :has-prepend-icon="false"
-                @NamePersonBinding="form.firstName = $event"
-              />
-            </v-col>
-            <v-col cols="12" lg="6">
-              <last-name-person-input
-                ref="LastNamePersonInputComponent"
-                rules="requiredLastName|min:3|max:255|mustContainLettersAndOptionalTilde"
-                is-solo
-                :is-filled="false"
-                :has-prepend-icon="false"
-                @LastNamePersonBinding="form.lastName = $event"
-              />
-            </v-col>
-            <v-col cols="12" lg="6">
-              <phone-field-input
-                ref="PhoneInputComponent"
-                rules="requiredPhone|numeric|ItMustBeAPhoneNumberFromSpain"
-                is-solo
-                :is-filled="false"
-                :has-prepend-icon="false"
-                @PhoneBinding="form.phone = $event"
-              />
-            </v-col>
-            <v-col cols="12" lg="6">
-              <email-field-input
-                ref="EmailInputComponent"
-                rules="requiredEmail|email"
-                is-solo
-                :is-filled="false"
-                :has-prepend-icon="false"
-                @EmailBinding="form.email = $event"
-              />
-            </v-col>
-            <v-col class="mensaje_estilo">
-              <ValidationProvider
-                v-slot="{ errors }"
-                tag="div"
-                vid="vid"
-                mode="aggressive"
-                name="Mensaje"
-                rules="required|max:400"
-              >
-                <v-textarea
-                  ref="MessageTextarea"
-                  v-model="form.message"
-                  label="Mensaje"
-                  placeholder="Escribe tu mensaje"
-                  solo
-                  :error-messages="errors"
-                  name="input-7-4"
-                ></v-textarea>
-              </ValidationProvider>
-            </v-col>
-            <v-col cols="12" class="d-flex justify-end">
-              <v-btn
-                id="boton_enviar_form"
-                class="btn-3"
-                :loading="loadingButtonSubmit"
-                @click="prepareFormContactUsSubmit"
-              >
-                Enviar
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </validation-observer>
-    </form>
   </div>
 </template>
+
 <script>
 import { mapActions } from 'vuex'
 import NamePersonInput from '@/modules/profile/components/updateProfile/NameFieldInput.vue'
@@ -185,9 +229,10 @@ export default {
       },
       itemsMotivo: ['General', 'Recuperar Contraseña', 'Unete'],
       itemsReasonSelect: [
-        { label: 'General', key: 'general' },
-        /* { label: 'Recuperar Contraseña', key: 'reset-password' }, */
-        { label: 'Únete', key: 'inscription' }
+        { label: '💬 Consulta General', key: 'general' },
+        { label: '🎓 Quiero Unirme a la Academia', key: 'inscription' },
+        { label: '📞 Solicitar Información', key: 'info' },
+        { label: '🔧 Soporte Técnico', key: 'support' }
       ],
       disabledButtonSubmit: false,
       loadingButtonSubmit: false
@@ -238,10 +283,6 @@ export default {
             action: 'submit'
           })
           .then((token) => {
-            /* //console.log({
-              token
-            }) */
-
             this.validateFormOrSubmit(token)
           })
           .catch((error) => {
@@ -260,13 +301,11 @@ export default {
       })
     },
     async validateFormOrSubmit(tokenRecaptcha) {
-      //console.log('Se ejecuta validateFormOrSubmit')
       const responseValidation = await this.$refs[
         'FormSubmitContactUs'
       ].validate()
 
       if (!responseValidation) {
-        //console.log('Hay error de validación')
         this.$swal.fire({
           icon: 'error',
           toast: true,
@@ -281,7 +320,6 @@ export default {
 
         return
       } else {
-        //console.log('No hay error de validación')
         this.$loadingApp.enableLoadingProgressLinear()
         this.loadingButtonSubmit = false
         this.disabledButtonSubmit = false
@@ -293,7 +331,6 @@ export default {
       location.reload()
     },
     async submitActionContactUs(tokenRecaptcha) {
-
       try {
         const response = await this.sendInformationContactUSForm({
           data: {
@@ -335,7 +372,6 @@ export default {
           return
         }
       } catch (error) {
-        //console.log(error)
         this.$loadingApp.disabledLoadingProgressLinear()
         this.loadingButtonSubmit = false
         this.disabledButtonSubmit = false
@@ -360,92 +396,224 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .estilo_formulario {
   background: linear-gradient(180deg, #47a2bc 34.9%, #81b3c1 100%);
-  padding: 100px 0px;
+  padding: 80px 0;
   color: #fff;
-}
-.estilo_formulario a {
-  color: #fff !important;
-  font-size: 16px;
-  font-family: var(--fuente_uno) !important;
-  text-decoration: none !important;
-}
-.estilo_formulario h2 {
-  font-family: var(--fuente_cuatro);
-  font-size: 48px;
-  line-height: 48px;
-}
-.estilo_formulario input {
-  background-color: #fff !important;
-  padding-top: 0px !important;
-  margin-top: 0px !important;
-  height: 51px !important;
-  max-height: 51px !important;
-}
-.estilo_formulario .col-12,
-.mensaje_estilo {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-.estilo_formulario .v-input {
-  padding-top: 0px !important;
-  margin-top: 0px !important;
-  border: none !important;
-  caret-color: none !important;
+  min-height: 100vh;
 }
 
+/* Header Section */
+.header-section {
+  margin-bottom: 60px;
+}
+
+.header-content {
+  padding: 0 20px;
+}
+
+.main-title {
+  font-family: var(--fuente_cuatro);
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+/* Contact Info */
+.contact-info-row {
+  margin-top: 30px;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.contact-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.contact-icon {
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.contact-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Form Container */
+.form-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form-content {
+  color: #333;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  color: #47a2bc;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  font-family: var(--fuente_cuatro);
+}
+
+/* Form Fields */
+.custom-select >>> .v-input__control,
+.custom-input >>> .v-input__control,
+.custom-textarea >>> .v-input__control {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select >>> .v-input__slot,
+.custom-input >>> .v-input__slot,
+.custom-textarea >>> .v-input__slot {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  padding-left: 20px !important;
+  min-height: 56px;
+}
+
+.custom-select >>> .v-select__slot {
+  padding-left: 20px !important;
+}
+
+.custom-textarea >>> .v-input__slot {
+  padding: 20px !important;
+}
+
+/* Input styling */
 .estilo_formulario input,
-.estilo_formulario textarea,
-.mensaje_estilo .v-input__slot {
-  border-radius: 0px !important;
-  padding-left: 10px;
+.estilo_formulario textarea {
+  background-color: #fff !important;
+  border-radius: 12px !important;
+  padding-left: 20px !important;
+  font-size: 16px !important;
+  color: #333 !important;
 }
 
 .estilo_formulario input::placeholder,
 .estilo_formulario textarea::placeholder,
-.estilo_formulario label,
-.estilo_formulario .v-select__slot,
-.estilo_formulario .v-select__selection {
+.estilo_formulario label {
+  color: #666 !important;
   font-size: 16px !important;
-  font-family: var(--fuente_uno) !important;
-  color: #b5b5b5 !important;
-}
-.estilo_formulario
-  .theme--light.v-text-field
-  > .v-input__control
-  > .v-input__slot:before {
-  display: none;
-}
-.btn-3,
-#boton_enviar_form.btn-3 {
-  width: 150px;
-  background-color: #bf1215;
-  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%);
-  border: none !important;
-  border-radius: 20px;
-  font-family: var(--fuente_cuatro);
-  font-size: 18px !important;
-  height: 53px !important;
-  display: flex;
-  margin-left: auto;
-  color: #fff !important;
-}
-.estilo_formulario .white--text-contact-us {
-  color: #fff !important;
 }
 
-.estilo_formulario .v-select__slot {
-  background: #fff;
-  padding-left: 10px;
+/* Submit Button */
+.submit-button {
+  background: linear-gradient(101.58deg, #bf1215 42.62%, #df5457 118.43%) !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 0 40px !important;
+  height: 60px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(191, 18, 21, 0.3) !important;
+  border: none !important;
 }
-@media (max-width: 991px) {
-  .estilo_formulario h2 {
-    text-align: center;
+
+.submit-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(191, 18, 21, 0.4) !important;
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  transform: none;
+}
+
+/* Remove Vuetify defaults */
+.estilo_formulario .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+  display: none;
+}
+
+.v-input {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .form-container {
+    padding: 30px;
+    margin: 0 20px;
   }
-  .btn-3 {
-    margin: 0 auto;
+  
+  .main-title {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .estilo_formulario {
+    padding: 40px 0;
+  }
+  
+  .form-container {
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+  }
+  
+  .form-section {
+    margin-bottom: 30px;
+  }
+  
+  .contact-card {
+    padding: 15px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    margin-top: 20px;
   }
 }
 </style>
