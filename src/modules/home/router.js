@@ -1,10 +1,19 @@
 import HomeView from './views/Home.vue'
+import NewLandingPageView from './views/NewLandingPage.vue'
 
 const moduleRoute = [
   {
     path: '/',
     name: 'home-website',
     component: HomeView,
+    meta: {
+      layout: 'simple'
+    }
+  },
+  {
+    path: '/nueva-landing-page',
+    name: 'nueva-landing-page',
+    component: NewLandingPageView,
     meta: {
       layout: 'simple'
     }

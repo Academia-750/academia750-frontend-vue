@@ -61,6 +61,13 @@
             <icon-arrow-link-list-menu />
             <v-list-item-subtitle>Contáctanos</v-list-item-subtitle>
           </v-list-item>
+          <v-list-item
+            style="z-index: 12 !important"
+            @click="scrollToSecondLandingPage"
+          >
+            <icon-arrow-link-list-menu />
+            <v-list-item-subtitle>Nueva Landing Page</v-list-item-subtitle>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -90,7 +97,8 @@ export default {
         { text: 'Inicio', key: '' },
         { text: 'Qué ofrecemos', key: 'OurServiceSection' },
         { text: 'Tarifas', key: 'tarifasSection' },
-        { text: 'Contáctanos', key: 'ContactUsForm' }
+        { text: 'Contáctanos', key: 'ContactUsForm' },
+        { text: 'Nueva Landing Page', key: 'SecondLandingPage' }
       ],
       isFixedMenu: false,
       allowedFixedMenu: true
@@ -130,6 +138,10 @@ export default {
     },
     scrollToTop() {
       this.$vuetify.goTo(0)
+      this.drawer = false
+    },
+    scrollToSecondLandingPage() {
+      this.$router.push({ name: 'nueva-landing-page' })
       this.drawer = false
     }
   }
