@@ -2,9 +2,9 @@
   <SectionWrapper padding-y="large" background-color="#ffffff">
     <div class="testimonials-content">
       <div class="testimonials-header">
-        <h2 class="section-title">Customer testimonials</h2>
+        <h2 class="section-title">Testimonios de nuestros alumnos</h2>
         <p class="section-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Descubre las experiencias de quienes ya han conseguido su plaza como bombero con Academia 750.
         </p>
       </div>
       
@@ -98,79 +98,79 @@ export default {
       cardsPerSlide: 3,
       testimonials: [
         {
-          quote: 'Academia 750 provided excellent preparation for my firefighter exam. The instructors were knowledgeable and the study materials were comprehensive. I couldn\'t have passed without their support.',
+          quote: 'Academia 750 proporcionó una excelente preparación para mi examen de bombero. Los instructores fueron expertos y los materiales de estudio fueron exhaustivos. No lo hubiera conseguido sin su apoyo.',
           name: 'Laura Martínez',
-          position: 'Firefighter, Alicante'
+          position: 'Bombero, Alicante'
         },
         {
-          quote: 'Thanks to Academia 750, I passed my exam on the first try. The personalized coaching and practice tests were invaluable. The hybrid learning approach worked perfectly for my schedule.',
+          quote: 'Gracias a Academia 750, aprobé mi examen en la primera oportunidad. La asesoría personalizada y las pruebas de práctica fueron invaluables. El enfoque híbrido de aprendizaje funcionó perfectamente para mi horario.',
           name: 'Carlos Rodriguez',
-          position: 'Firefighter, Valencia'
+          position: 'Bombero, Valencia'
         },
         {
-          quote: 'I highly recommend Academia 750 to anyone preparing for public safety exams. Their success rate speaks for itself and the quality of instruction is exceptional.',
+          quote: 'Lo recomiendo ampliamente Academia 750 a cualquier persona que se prepare para exámenes de seguridad pública. Su tasa de éxito habla por sí misma y la calidad de la instrucción es excepcional.',
           name: 'Ana González',
-          position: 'Police Officer, Alicante'
+          position: 'Policía, Alicante'
         },
         {
-          quote: 'The online platform was user-friendly and the content was exactly what I needed to succeed in my firefighter career. Great support throughout the process.',
+          quote: 'La plataforma en línea fue fácil de usar y el contenido fue exactamente lo que necesitaba para tener éxito en mi carrera como bombero. Gran apoyo a lo largo del proceso.',
           name: 'Miguel Torres',
-          position: 'Firefighter, Murcia'
+          position: 'Bombero, Murcia'
         },
         {
-          quote: 'Excellent academy with professional instructors. The hybrid learning approach worked perfectly for my schedule and I achieved my goal.',
+          quote: 'Excelente academia con instructores profesionales. El enfoque híbrido de aprendizaje funcionó perfectamente para mi horario y logré alcanzar mi objetivo.',
           name: 'Elena López',
-          position: 'Emergency Responder, Alicante'
+          position: 'Respuesta de Emergencia, Alicante'
         },
         {
-          quote: 'Outstanding preparation program that helped me achieve my dream of becoming a firefighter. The practical training was especially valuable.',
+          quote: 'Programa de preparación excepcional que me ayudó a lograr mi sueño de convertirse en bombero. La capacitación práctica fue especialmente valiosa.',
           name: 'David Sánchez',
-          position: 'Firefighter Captain, Valencia'
+          position: 'Capitán de Bombero, Valencia'
         },
         {
-          quote: 'Professional training with excellent results. The academy provides everything you need to succeed in public safety exams.',
+          quote: 'Entrenamiento profesional con excelentes resultados. La academia proporciona todo lo que necesitas para tener éxito en exámenes de seguridad pública.',
           name: 'Carmen Ruiz',
-          position: 'Police Officer, Valencia'
+          position: 'Policía, Valencia'
         },
         {
-          quote: 'Top-quality preparation that made all the difference in my exam success. I recommend Academia 750 to everyone.',
+          quote: 'Preparación de alta calidad que hizo toda la diferencia en mi éxito en el examen. Lo recomiendo Academia 750 a todos.',
           name: 'Antonio García',
-          position: 'Firefighter, Alicante'
+          position: 'Bombero, Alicante'
         },
         {
-          quote: 'Comprehensive training program with dedicated instructors. The academy helped me achieve my professional goals efficiently.',
+          quote: 'Programa de preparación integral con instructores dedicados. La academia me ayudó a lograr mis metas profesionales de manera eficiente.',
           name: 'María Fernández',
-          position: 'Emergency Responder, Murcia'
+          position: 'Respuesta de Emergencia, Murcia'
         },
         {
-          quote: 'Exceptional academy with proven results. The support and guidance I received were instrumental in my success.',
-          name: 'José Luis Pérez',
-          position: 'Firefighter, Valencia'
-        },
-        {
-          quote: 'Academia 750 exceeded my expectations. The quality of training and personal attention made my preparation journey successful.',
+          quote: 'Academia 750 superó mis expectativas. La calidad del entrenamiento y la atención personalizada hicieron que mi viaje de preparación fuera exitoso.',
           name: 'Isabel Moreno',
-          position: 'Police Officer, Alicante'
+          position: 'Policía, Alicante'
         },
         {
-          quote: 'Professional excellence and outstanding results. This academy is the best choice for anyone serious about public safety careers.',
+          quote: 'Excelencia profesional y resultados excepcionales. Esta academia es la mejor opción para cualquier persona seria sobre carreras de seguridad pública.',
           name: 'Francisco Jiménez',
-          position: 'Firefighter Captain, Murcia'
+          position: 'Capitán de Bombero, Murcia'
         },
         {
-          quote: 'Highly effective preparation program. The instructors\' expertise and the comprehensive materials ensured my exam success.',
+          quote: 'Preparación de alta efectividad. La experiencia y la guía de los instructores y los materiales integrales aseguraron mi éxito en el examen.',
           name: 'Pilar Romero',
-          position: 'Emergency Responder, Valencia'
+          position: 'Respuesta de Emergencia, Valencia'
         },
         {
-          quote: 'Outstanding academy that delivers real results. I achieved my goal of becoming a firefighter thanks to their excellent preparation.',
+          quote: 'Academia excepcional que entrega resultados reales. Logré alcanzar mi objetivo de convertirse en bombero gracias a su excelente preparación.',
           name: 'Manuel Herrera',
-          position: 'Firefighter, Alicante'
+          position: 'Bombero, Alicante'
         },
         {
-          quote: 'Exceptional training quality and professional support throughout the entire preparation process. Highly recommended for everyone.',
+          quote: 'Entrenamiento de alta calidad y apoyo profesional a lo largo de todo el proceso de preparación. Altamente recomendado para todos.',
           name: 'Rosa Castro',
-          position: 'Police Officer, Murcia'
+          position: 'Policía, Murcia'
+        },
+        {
+          quote: 'Academia excepcional con resultados comprobados. El apoyo y la orientación que recibí fueron fundamentales para mi éxito.',
+          name: 'José Luis Pérez',
+          position: 'Bombero, Valencia'
         }
       ]
     }

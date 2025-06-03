@@ -3,9 +3,9 @@
     <div class="faqs-content">
       <!-- FAQs Header -->
       <div class="faqs-header">
-        <h2 class="section-title">FAQs</h2>
+        <h2 class="section-title">Preguntas Frecuentes</h2>
         <p class="section-description">
-          Find answers to your questions about the firefighter exam and our preparation courses.
+          Encuentra respuestas a tus dudas sobre las oposiciones de bombero y nuestros cursos de preparación.
         </p>
       </div>
       
@@ -48,9 +48,9 @@
       
       <!-- Contact Section -->
       <div class="contact-section">
-        <h3 class="contact-title">Still have questions?</h3>
-        <p class="contact-description">We're here to help!</p>
-        <button class="contact-button">Contact</button>
+        <h3 class="contact-title">¿Todavía tienes preguntas?</h3>
+        <p class="contact-description">¡Estamos aquí para ayudarte!</p>
+        <button class="contact-button">Contactar</button>
       </div>
     </div>
   </SectionWrapper>
@@ -69,24 +69,24 @@ export default {
       activeIndex: -1,
       faqs: [
         {
-          question: 'What is the exam?',
-          answer: 'The firefighter exam assesses candidates on various skills and knowledge areas. It includes written tests, physical assessments, and interviews. Preparation is key to success.'
+          question: '¿Qué es el examen de bombero?',
+          answer: 'El examen de bombero evalúa a los candidatos en varias habilidades y áreas de conocimiento. Incluye pruebas escritas, evaluaciones físicas y entrevistas. La preparación es clave para el éxito.'
         },
         {
-          question: 'How to enroll?',
-          answer: 'Enrolling in our course is simple. Visit our website and fill out the enrollment form. Our team will guide you through the process.'
+          question: '¿Cómo me puedo inscribir?',
+          answer: 'Inscribirse en nuestro curso es sencillo. Visita nuestro sitio web y completa el formulario de inscripción. Nuestro equipo te guiará a través del proceso.'
         },
         {
-          question: 'What is included?',
-          answer: 'Our preparation course includes comprehensive study materials, practice exams, and expert coaching. You\'ll also receive personalized feedback to enhance your performance. We ensure you are fully equipped for the exam.'
+          question: '¿Qué está incluido en el curso?',
+          answer: 'Nuestro curso de preparación incluye materiales de estudio completos, exámenes de práctica y coaching experto. También recibirás retroalimentación personalizada para mejorar tu rendimiento. Nos aseguramos de que estés completamente equipado para el examen.'
         },
         {
-          question: 'When do classes start?',
-          answer: 'Classes typically start every quarter. Check our website for the latest schedule and availability. Early registration is recommended to secure your spot.'
+          question: '¿Cuándo empiezan las clases?',
+          answer: 'Las clases típicamente comienzan cada trimestre. Consulta nuestro sitio web para el horario más reciente y disponibilidad. Se recomienda la inscripción temprana para asegurar tu lugar.'
         },
         {
-          question: 'Is there a refund?',
-          answer: 'Yes, we offer a refund policy under certain conditions. If you withdraw before the course begins, you can receive a full refund. Please refer to our terms and conditions for details.'
+          question: '¿Hay política de reembolso?',
+          answer: 'Sí, ofrecemos una política de reembolso bajo ciertas condiciones. Si te retiras antes de que comience el curso, puedes recibir un reembolso completo. Por favor consulta nuestros términos y condiciones para más detalles.'
         }
       ]
     }

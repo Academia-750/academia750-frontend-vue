@@ -14,10 +14,10 @@
             </div>
             <h3 class="card-title">Presencial</h3>
             <p class="card-description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Clases semanales en nuestras instalaciones con atención directa de profesores y compañeros de estudio.
             </p>
             <a href="#" class="card-link">
-              Sign Up >
+              Más información >
             </a>
           </div>
         </v-col>
@@ -30,10 +30,10 @@
             </div>
             <h3 class="card-title">Online</h3>
             <p class="card-description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Sigue las clases en directo desde casa con interacción en tiempo real a través de nuestra plataforma.
             </p>
             <a href="#" class="card-link">
-              Sign Up >
+              Más información >
             </a>
           </div>
         </v-col>
@@ -46,10 +46,10 @@
             </div>
             <h3 class="card-title">Híbrido</h3>
             <p class="card-description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Combina clases presenciales y online. Accede a grabaciones ilimitadas para repasar cuando quieras.
             </p>
             <a href="#" class="card-link">
-              Sign Up >
+              Más información >
             </a>
           </div>
         </v-col>

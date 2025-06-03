@@ -26,12 +26,12 @@
                 <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
               </div>
               <div class="feature-text">
-                <h3 class="feature-title">Why Choose Us?</h3>
+                <h3 class="feature-title">Grupos por Nivel</h3>
                 <p class="feature-description">
-                  Expert instructors with proven success in preparing candidates for the firefighter exams in Alicante.
+                  Estructuramos nuestra formación en dos grupos: Iniciación para nuevos opositores y Avanzado para consolidar conocimientos.
                 </p>
                 <a href="#" class="feature-link">
-                  Learn More >
+                  Más información >
                 </a>
               </div>
             </div>
@@ -42,12 +42,12 @@
                 <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
               </div>
               <div class="feature-text">
-                <h3 class="feature-title">Tailored Training</h3>
+                <h3 class="feature-title">Iniciación</h3>
                 <p class="feature-description">
-                  Customized study plans that fit your schedule and learning style for optimal exam preparation.
+                  Aclimatación al temario, técnicas de estudio y disciplina. Aprende a distinguir lo importante y organízate para el proceso opositor.
                 </p>
                 <a href="#" class="feature-link">
-                  Button >
+                  Más información >
                 </a>
               </div>
             </div>
@@ -58,12 +58,12 @@
                 <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
               </div>
               <div class="feature-text">
-                <h3 class="feature-title">Short heading here</h3>
+                <h3 class="feature-title">Avanzado</h3>
                 <p class="feature-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+                  Trabajo detallado del temario con test, tarjetas de memoria y ejercicios. Preparación específica para que domines todas las preguntas.
                 </p>
                 <a href="#" class="feature-link">
-                  Button >
+                  Más información >
                 </a>
               </div>
             </div>

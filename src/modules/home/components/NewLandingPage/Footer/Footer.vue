@@ -5,57 +5,63 @@
       <div class="footer-grid">
         <!-- Newsletter Section -->
         <div class="newsletter-section">
-          <div class="logo">Logo</div>
+          <div class="logo">
+            <img 
+              src="/images/academia750/logo.png" 
+              alt="Academia 750 Logo"
+              class="logo-image"
+            />
+          </div>
           <p class="newsletter-description">
-            Join our newsletter for updates and exclusive offers.
+            Únete a nuestro boletín para recibir actualizaciones y ofertas exclusivas.
           </p>
           
           <div class="newsletter-form">
             <div class="email-input-container">
               <input 
                 type="email" 
-                placeholder="Enter your email"
+                placeholder="Ingresa tu email"
                 class="email-input"
                 v-model="email"
               >
-              <button class="subscribe-button">Subscribe</button>
+              <button class="subscribe-button">Suscribirse</button>
             </div>
           </div>
           
           <p class="privacy-text">
-            By subscribing you agree to with our 
-            <a href="#" class="privacy-link">Privacy Policy</a> 
-            and provide consent to receive updates from our company.
+            Al suscribirte aceptas nuestra 
+            <a href="#" class="privacy-link">Política de Privacidad</a> 
+            y das tu consentimiento para recibir actualizaciones de nuestra empresa.
           </p>
         </div>
         
         <!-- Column One -->
         <div class="footer-column">
-          <h4 class="column-title">Column One</h4>
+          <h4 class="column-title">Información</h4>
           <ul class="footer-links">
-            <li><a href="#">Course Details</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Blog Posts</a></li>
-            <li><a href="#">Success Stories</a></li>
+            <li><a href="#">Detalles del Curso</a></li>
+            <li><a href="#">Contáctanos</a></li>
+            <li><a href="#">Preguntas Frecuentes</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Historias de Éxito</a></li>
           </ul>
         </div>
         
         <!-- Column Two -->
         <div class="footer-column">
-          <h4 class="column-title">Column Two</h4>
+          <h4 class="column-title">Academia</h4>
           <ul class="footer-links">
-            <li><a href="#">Our Team</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Testimonials</a></li>
-            <li><a href="#">Events</a></li>
-            <li><a href="#">Resources</a></li>
+            <li><a href="#">Nuestro Equipo</a></li>
+            <li><a href="#">Carreras</a></li>
+            <li><a href="#">Testimonios</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Recursos</a></li>
           </ul>
         </div>
         
         <!-- Follow Us -->
         <div class="footer-column">
-          <h4 class="column-title">Follow Us</h4>
+          <h4 class="column-title">Síguenos</h4>
           <ul class="social-links">
             <li>
               <a href="#" class="social-link">
@@ -106,12 +112,12 @@
     <div class="footer-bottom">
       <div class="footer-bottom-content">
         <div class="copyright">
-          © 2025 Academia 750. All rights reserved.
+          © 2025 Academia 750. Todos los derechos reservados.
         </div>
         <div class="footer-legal">
-          <a href="#" class="legal-link">Privacy Policy</a>
-          <a href="#" class="legal-link">Terms of Use</a>
-          <a href="#" class="legal-link">Cookie Policy</a>
+          <a href="#" class="legal-link">Política de Privacidad</a>
+          <a href="#" class="legal-link">Términos de Uso</a>
+          <a href="#" class="legal-link">Política de Cookies</a>
         </div>
       </div>
     </div>
@@ -171,6 +177,14 @@ export default {
   font-weight: 700;
   color: #000000;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
 
 .newsletter-description {

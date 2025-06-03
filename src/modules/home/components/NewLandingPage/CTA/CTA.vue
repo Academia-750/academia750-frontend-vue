@@ -1,14 +1,14 @@
 <template>
   <SectionWrapper padding-y="large" background-color="#666666">
     <div class="cta-content">
-      <h2 class="cta-title">Start Your Journey Today!</h2>
+      <h2 class="cta-title">¡Comienza tu Preparación Hoy!</h2>
       <p class="cta-description">
-        Sign up for a free consultation and discover how we can help you succeed.
+        Contacta con nosotros para una consulta gratuita y descubre cómo podemos ayudarte a conseguir tu plaza de bombero.
       </p>
       
       <div class="cta-buttons">
-        <button class="cta-button primary">Enroll</button>
-        <button class="cta-button secondary">Learn More</button>
+        <button class="cta-button primary">Apuntarse</button>
+        <button class="cta-button secondary">Más Información</button>
       </div>
     </div>
   </SectionWrapper>
