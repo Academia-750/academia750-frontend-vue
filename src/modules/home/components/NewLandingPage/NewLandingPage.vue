@@ -28,6 +28,18 @@
 
     <!-- Testimonials Section -->
     <Testimonials />
+
+    <!-- FAQs Section -->
+    <FAQs />
+
+    <!-- Contact Section -->
+    <Contact />
+
+    <!-- CTA Section -->
+    <CTA />
+
+    <!-- Footer Section -->
+    <Footer />
   </div>
 </template>
 
@@ -40,6 +52,10 @@ import StudyModalities from './StudyModalities/StudyModalities'
 import Features from './Features/Features'
 import Pricing from './Pricing/Pricing'
 import Testimonials from './Testimonials/Testimonials'
+import FAQs from './FAQs/FAQs'
+import Contact from './Contact/Contact'
+import CTA from './CTA/CTA'
+import Footer from './Footer/Footer'
 import Cookies from 'js-cookie'
 
 export default {
@@ -52,7 +68,11 @@ export default {
     StudyModalities,
     Features,
     Pricing,
-    Testimonials
+    Testimonials,
+    FAQs,
+    Contact,
+    CTA,
+    Footer
   },
   data() {
     return {
