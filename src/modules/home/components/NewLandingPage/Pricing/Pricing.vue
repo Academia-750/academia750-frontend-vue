@@ -2,10 +2,10 @@
   <SectionWrapper padding-y="large" background-color="#ffffff">
     <div class="pricing-content">
       <div class="pricing-header">
-        <p class="pricing-subtitle">Affordable</p>
-        <h2 class="section-title">Pricing Options</h2>
+        <p class="pricing-subtitle">Asequible</p>
+        <h2 class="section-title">Opciones de Precios</h2>
         <p class="section-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Elige el plan que mejor se adapte a tus necesidades y presupuesto para tu preparación como bombero.
         </p>
       </div>
       
@@ -22,66 +22,66 @@
                   <span class="price">$19<span class="price-period">/mo</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Basic Package</h3>
-              <p class="package-subtitle">Only $19 per month</p>
+              <h3 class="package-title">Paquete Básico</h3>
+              <p class="package-subtitle">Solo €19 al mes</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Includes:</p>
+              <p class="includes-text">Incluye:</p>
               
               <div class="features-grid">
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Online study materials</span>
+                    <span class="feature-text">Material de estudio online</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Practice exams included</span>
+                    <span class="feature-text">Exámenes de práctica incluidos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Access to community forum</span>
+                    <span class="feature-text">Acceso al foro de la comunidad</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Soporte básico por email</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Actualizaciones de contenido</span>
                   </div>
                 </div>
                 
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Weekly live sessions</span>
+                    <span class="feature-text">Sesiones en vivo semanales</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Personalized coaching support</span>
+                    <span class="feature-text">Apoyo de coaching personalizado</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Progress tracking tools</span>
+                    <span class="feature-text">Herramientas de seguimiento</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Ejercicios prácticos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Recursos descargables</span>
                   </div>
                 </div>
               </div>
             </div>
             
             <div class="card-footer">
-              <button class="cta-button">Get started</button>
+              <button class="cta-button">Comenzar</button>
             </div>
           </div>
         </v-col>
@@ -98,90 +98,90 @@
                   <span class="price">$29<span class="price-period">/mo</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Business plan</h3>
-              <p class="package-subtitle">Lorem ipsum dolor sit amet</p>
+              <h3 class="package-title">Plan Empresarial</h3>
+              <p class="package-subtitle">Para grupos y academias</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Includes:</p>
+              <p class="includes-text">Incluye:</p>
               
               <div class="features-grid">
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Flexible study schedule</span>
+                    <span class="feature-text">Horario de estudio flexible</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Monthly feedback sessions</span>
+                    <span class="feature-text">Sesiones de feedback mensuales</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Acceso a todos los cursos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Soporte prioritario 24/7</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Tutorías personalizadas</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Simulacros de examen ilimitados</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Análisis de progreso detallado</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Material actualizado semanal</span>
                   </div>
                 </div>
                 
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Expert-led workshops</span>
+                    <span class="feature-text">Talleres dirigidos por expertos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Course completion certificate</span>
+                    <span class="feature-text">Certificado de finalización</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Preparación física incluida</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Test psicotécnicos avanzados</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Casos prácticos reales</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Mentoría individual</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Garantía de resultados</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Feature text goes here</span>
+                    <span class="feature-text">Red de networking exclusiva</span>
                   </div>
                 </div>
               </div>
             </div>
             
             <div class="card-footer">
-              <button class="cta-button">Get started</button>
+              <button class="cta-button">Comenzar</button>
             </div>
           </div>
         </v-col>

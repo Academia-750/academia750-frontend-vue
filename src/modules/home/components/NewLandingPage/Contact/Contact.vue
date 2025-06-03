@@ -3,10 +3,10 @@
     <div class="contact-content">
       <!-- Left Side - Contact Info -->
       <div class="contact-info">
-        <div class="welcome-text">Welcome</div>
-        <h2 class="section-title">Get in Touch</h2>
+        <div class="welcome-text">Bienvenido</div>
+        <h2 class="section-title">Ponte en Contacto</h2>
         <p class="section-description">
-          Visit us in Alicante for personalized training and support in your firefighting career journey.
+          Visítanos en Alicante para formación personalizada y apoyo en tu carrera profesional como bombero.
         </p>
         
         <div class="contact-details">
@@ -32,7 +32,7 @@
               </svg>
             </div>
             <div class="contact-info-text">
-              <div class="contact-label">Phone</div>
+              <div class="contact-label">Teléfono</div>
               <div class="contact-value">+34 965 000 000</div>
             </div>
           </div>
@@ -46,8 +46,8 @@
               </svg>
             </div>
             <div class="contact-info-text">
-              <div class="contact-label">Office</div>
-              <div class="contact-value">Calle de Ejemplo 123, Alicante, España</div>
+              <div class="contact-label">Oficina</div>
+              <div class="contact-value">Av. Mare Nostrum 6 (Entrada por C/Estrella fugaz), 03007 Alicante</div>
             </div>
           </div>
         </div>
