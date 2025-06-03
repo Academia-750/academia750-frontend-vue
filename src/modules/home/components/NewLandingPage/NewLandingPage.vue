@@ -35,6 +35,9 @@
     <!-- Contact Section -->
     <Contact />
 
+    <!-- Contact Form Section -->
+    <Formulario ref="ContactUsFormComponent" />
+
     <!-- CTA Section -->
     <CTA />
 
@@ -54,6 +57,7 @@ import Pricing from './Pricing/Pricing'
 import Testimonials from './Testimonials/Testimonials'
 import FAQs from './FAQs/FAQs'
 import Contact from './Contact/Contact'
+import Formulario from '../Formulario'
 import CTA from './CTA/CTA'
 import Footer from './Footer/Footer'
 import Cookies from 'js-cookie'
@@ -71,6 +75,7 @@ export default {
     Testimonials,
     FAQs,
     Contact,
+    Formulario,
     CTA,
     Footer
   },
@@ -100,8 +105,17 @@ export default {
     },
     handleReservarPlaza() {
       console.log('Reservar plaza clicked')
-      // Will implement contact form scroll or modal
-      // this.$vuetify.goTo('#contacta', { duration: 800, offset: 100 })
+      // Scroll to the contact form section
+      this.$vuetify.goTo(this.$refs.ContactUsFormComponent.$el, { 
+        duration: 800, 
+        offset: 100 
+      })
+      
+      // Pre-fill the form with inscription reason
+      if (this.$refs.ContactUsFormComponent) {
+        this.$refs.ContactUsFormComponent.form.message = null
+        this.$refs.ContactUsFormComponent.form.reason = 'inscription'
+      }
     }
   }
 }
