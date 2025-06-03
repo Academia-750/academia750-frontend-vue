@@ -13,6 +13,9 @@
       <li style="cursor: pointer;" @click="$emit('emitScrollToSectionHomePage', 'ContactUsForm')">
         <v-icon dark> mdi-chevron-right </v-icon> Contáctanos
       </li>
+      <li style="cursor: pointer;" @click="navigateToNewLandingPage">
+        <v-icon dark> mdi-chevron-right </v-icon> Nueva Landing Page
+      </li>
     </ul>
   </div>
 </template>
@@ -23,6 +26,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    navigateToNewLandingPage() {
+      this.$router.push({ name: 'nueva-landing-page' })
+    }
   }
 }
 </script>
