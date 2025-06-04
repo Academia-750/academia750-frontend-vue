@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.7.9...v2.8.0) (2025-06-04)
+
+
+### Features
+
+* added contact form ([aba1b3f](https://github.com/Academia-750/academia750-frontend-vue/commit/aba1b3f0aea7e22b4185c2a15a77c7209bc32fc0))
+* added contct us and footer ([f816f42](https://github.com/Academia-750/academia750-frontend-vue/commit/f816f425794d5af3ff5b9778adc2e57a338d3ffa))
+* added new landing page section ([faf3ad3](https://github.com/Academia-750/academia750-frontend-vue/commit/faf3ad3635c69fa78446023f29df086032a441b5))
+
 ### [2.7.5](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.7.3...v2.7.5) (2025-03-31)
 
 ### [2.7.4](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.7.2...v2.7.4) (2025-03-17)
