@@ -5,14 +5,8 @@
         <!-- Left Column - Image -->
         <v-col cols="12" md="6" class="image-col">
           <div class="image-container">
-            <div class="placeholder-image">
-              <div class="image-icon">
-                <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-                  <rect width="120" height="120" fill="#E0E0E0"/>
-                  <path d="M30 45L60 75L90 45" stroke="#9E9E9E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="45" cy="35" r="8" fill="#9E9E9E"/>
-                </svg>
-              </div>
+            <div class="background-image">
+              <div class="overlay"></div>
             </div>
           </div>
         </v-col>
@@ -26,7 +20,7 @@
                 <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
               </div>
               <div class="feature-text">
-                <h3 class="feature-title">Grupos por Nivel</h3>
+                <h3 class="feature-title main-title">Grupos por Nivel</h3>
                 <p class="feature-description">
                   Estructuramos nuestra formación en dos grupos: Iniciación para nuevos opositores y Avanzado para consolidar conocimientos.
                 </p>
@@ -108,22 +102,31 @@ export default {
 
 .image-container {
   width: 100%;
-  max-width: 500px;
-}
-
-.placeholder-image {
-  width: 100%;
-  height: 400px;
-  background-color: #f5f5f5;
+  max-width: 600px;
+  height: 600px;
+  position: relative;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #e0e0e0;
+  overflow: hidden;
 }
 
-.image-icon svg {
-  opacity: 0.6;
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/academia750/bgImage.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .content-col {
@@ -169,6 +172,13 @@ export default {
   line-height: 1.3;
 }
 
+.feature-title.main-title {
+  font-size: 2rem;
+  color: #AD0000;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
 .feature-description {
   font-family: 'Roboto', sans-serif !important;
   font-size: 1rem;
@@ -212,8 +222,13 @@ export default {
     font-size: 1.125rem;
   }
   
-  .placeholder-image {
-    height: 500px;
+  .image-container {
+    height: 700px;
+    max-width: 700px;
+  }
+  
+  .feature-title.main-title {
+    font-size: 2.5rem;
   }
 }
 
@@ -234,8 +249,13 @@ export default {
     font-size: 1rem;
   }
   
-  .placeholder-image {
-    height: 450px;
+  .image-container {
+    height: 600px;
+    max-width: 600px;
+  }
+  
+  .feature-title.main-title {
+    font-size: 2.25rem;
   }
 }
 
@@ -252,8 +272,13 @@ export default {
     margin-bottom: 36px;
   }
   
-  .placeholder-image {
-    height: 350px;
+  .image-container {
+    height: 500px;
+    max-width: 500px;
+  }
+  
+  .feature-title.main-title {
+    font-size: 2rem;
   }
 }
 
@@ -291,8 +316,13 @@ export default {
     font-size: 0.95rem;
   }
   
-  .placeholder-image {
-    height: 250px;
+  .image-container {
+    height: 400px;
+    max-width: 100%;
+  }
+  
+  .feature-title.main-title {
+    font-size: 1.75rem;
   }
 }
 </style> 

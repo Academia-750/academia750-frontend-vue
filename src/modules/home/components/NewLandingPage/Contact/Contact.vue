@@ -20,7 +20,7 @@
             </div>
             <div class="contact-info-text">
               <div class="contact-label">Email</div>
-              <div class="contact-value">info@academia750.com</div>
+              <div class="contact-value">hola@academia750.es</div>
             </div>
           </div>
           
@@ -33,7 +33,7 @@
             </div>
             <div class="contact-info-text">
               <div class="contact-label">Teléfono</div>
-              <div class="contact-value">+34 965 000 000</div>
+              <div class="contact-value">+34633261014</div>
             </div>
           </div>
           
@@ -47,7 +47,7 @@
             </div>
             <div class="contact-info-text">
               <div class="contact-label">Oficina</div>
-              <div class="contact-value">Av. Mare Nostrum 6 (Entrada por C/Estrella fugaz), 03007 Alicante</div>
+              <div class="contact-value">Av. Mare Nostrum 6 (entrada por C/Estrella fugaz), 03007, Alicante</div>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
       <!-- Right Side - Google Map -->
       <div class="map-container">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3133.5947!2d-0.4906!3d38.3460!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDIwJzQ1LjYiTiAwwrAyOSczOS43Ilc!5e0!3m2!1sen!2ses!4v1234567890!5m2!1sen!2ses"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.0407436621846!2d-0.5183612235537454!3d38.35993667181431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6237a5b7b63a01%3A0x2a2d01c6c5641e9!2sAv.%20Mare%20Nostrum%2C%206%2C%2003007%20Alicante!5e0!3m2!1sen!2ses!4v1709577646975!5m2!1sen!2ses"
           width="100%"
           height="100%"
           style="border:0;"

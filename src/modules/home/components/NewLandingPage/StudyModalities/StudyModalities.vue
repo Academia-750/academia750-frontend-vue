@@ -1,57 +1,20 @@
 <template>
   <SectionWrapper padding-y="large" background-color="#ffffff">
     <div class="study-modalities-content">
-      <h2 class="section-title">
-        Modalidades de estudio
-      </h2>
-      
       <v-row class="modalities-row">
-        <!-- Presencial Card -->
-        <v-col cols="12" sm="6" md="4" class="modality-col">
-          <div class="modality-card">
-            <div class="card-icon">
-              <img src="/images/academia750/boxIcon.png" alt="Box Icon" class="icon-image" />
-            </div>
-            <h3 class="card-title">Presencial</h3>
-            <p class="card-description">
-              Clases semanales en nuestras instalaciones con atención directa de profesores y compañeros de estudio.
-            </p>
-            <a href="#" class="card-link">
-              Más información >
-            </a>
-          </div>
+        <v-col cols="12" md="5" class="title-col">
+          <h2 class="section-title">
+            Modalidad de estudio: Híbrida
+          </h2>
         </v-col>
         
-        <!-- Online Card -->
-        <v-col cols="12" sm="6" md="4" class="modality-col">
-          <div class="modality-card">
-            <div class="card-icon">
-              <img src="/images/academia750/boxIcon.png" alt="Box Icon" class="icon-image" />
-            </div>
-            <h3 class="card-title">Online</h3>
-            <p class="card-description">
-              Sigue las clases en directo desde casa con interacción en tiempo real a través de nuestra plataforma.
-            </p>
-            <a href="#" class="card-link">
-              Más información >
-            </a>
-          </div>
-        </v-col>
-        
-        <!-- Híbrido Card -->
-        <v-col cols="12" sm="12" md="4" class="modality-col">
-          <div class="modality-card">
-            <div class="card-icon">
-              <img src="/images/academia750/boxIcon.png" alt="Box Icon" class="icon-image" />
-            </div>
-            <h3 class="card-title">Híbrido</h3>
-            <p class="card-description">
-              Combina clases presenciales y online. Accede a grabaciones ilimitadas para repasar cuando quieras.
-            </p>
-            <a href="#" class="card-link">
-              Más información >
-            </a>
-          </div>
+        <v-col cols="12" md="7" class="description-col">
+          <p class="description-text">
+            Toda nuestra preparación tiene como base las clases presenciales. En cualquiera de los grupos tendrás una clase por semana para tratar los temas planificados.
+          </p>
+          <p class="description-text">
+            Esta clase, además de poder acudir de forma presencial, podrás seguirla a través de nuestra plataforma en directo y también podrás verla en diferido porque las clases se quedan grabadas de forma indefinida.
+          </p>
         </v-col>
       </v-row>
     </div>
@@ -71,8 +34,7 @@ export default {
 
 <style scoped>
 .study-modalities-content {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 0;
   font-family: 'Roboto', sans-serif !important;
 }
 
@@ -83,205 +45,44 @@ export default {
 }
 
 .section-title {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #AD0000;
-  margin-bottom: 60px;
-  text-align: center;
-}
-
-.modalities-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-}
-
-.modality-col {
-  display: flex;
-  justify-content: center;
-  padding: 0 8px;
-}
-
-.modality-card {
-  border: 2px solid #000000;
-  padding: 24px 20px;
-  background-color: #ffffff;
-  width: 100%;
-  max-width: 300px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  color: #000000;
+  margin-bottom: 0;
   text-align: left;
 }
 
-.card-icon {
+.description-text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #666666;
   margin-bottom: 24px;
 }
 
-.icon-image {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
-
-.card-title {
-  font-family: 'Roboto', sans-serif !important;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000000;
-  margin-bottom: 16px;
-  line-height: 1.3;
-}
-
-.card-description {
-  font-family: 'Roboto', sans-serif !important;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #000000;
-  font-weight: 400;
-  margin-bottom: 32px;
-  flex-grow: 1;
-}
-
-.card-link {
-  font-family: 'Roboto', sans-serif !important;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #000000;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease;
-}
-
-.card-link:hover {
-  color: #AD0000;
-  text-decoration: none;
+.description-text:last-child {
+  margin-bottom: 0;
 }
 
 /* Responsive Design */
-@media (min-width: 1200px) {
-  .study-modalities-content {
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
-  
+@media (max-width: 959px) {
   .section-title {
-    font-size: 3rem;
-    margin-bottom: 80px;
+    font-size: 2rem;
+    margin-bottom: 24px;
   }
-  
-  .modalities-row {
-    justify-content: space-between;
-  }
-  
-  .modality-col {
-    flex: 0 0 33.333%;
-    max-width: 33.333%;
-    padding: 0 12px;
-  }
-  
-  .modality-card {
-    max-width: 320px;
-  }
-  
-  .card-title {
-    font-size: 1.75rem;
-  }
-  
-  .card-description {
-    font-size: 1.125rem;
-  }
-}
 
-@media (min-width: 960px) and (max-width: 1199px) {
-  .study-modalities-content {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
-  
-  .section-title {
-    font-size: 2.75rem;
-    margin-bottom: 70px;
-  }
-  
-  .modalities-row {
-    justify-content: space-between;
-  }
-  
-  .modality-col {
-    flex: 0 0 33.333%;
-    max-width: 33.333%;
-    padding: 0 8px;
-  }
-  
-  .modality-card {
-    max-width: 280px;
-  }
-  
-  .card-title {
-    font-size: 1.6rem;
-  }
-  
-  .card-description {
+  .description-text {
     font-size: 1rem;
   }
 }
 
-@media (min-width: 768px) and (max-width: 959px) {
-  .modalities-row {
-    justify-content: center;
-  }
-  
-  .modality-col {
-    padding: 0 8px;
-    margin-bottom: 20px;
-  }
-  
-  .modality-card {
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 767px) {
+@media (max-width: 599px) {
   .study-modalities-content {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 32px 0;
   }
-  
+
   .section-title {
-    font-size: 2rem;
-    margin-bottom: 40px;
-  }
-  
-  .modalities-row {
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .modality-col {
-    padding: 0 20px;
-    margin-bottom: 20px;
-    flex: none;
-    max-width: 100%;
-  }
-  
-  .modality-card {
-    padding: 30px 24px;
-    min-height: 250px;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  
-  .card-title {
-    font-size: 1.375rem;
-  }
-  
-  .card-description {
-    font-size: 0.95rem;
+    font-size: 1.75rem;
   }
 }
 </style> 
