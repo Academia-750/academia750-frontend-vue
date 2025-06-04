@@ -10,7 +10,7 @@
       </div>
       
       <v-row class="pricing-cards-row" justify="center">
-        <!-- Basic Package Card -->
+        <!-- Iniciación Card -->
         <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col">
           <div class="pricing-card">
             <div class="card-header">
@@ -19,62 +19,43 @@
                   <img src="/images/academia750/boxIcon.png" alt="Package Icon" class="icon-image" />
                 </div>
                 <div class="price-section">
-                  <span class="price">$19<span class="price-period">/mo</span></span>
+                  <span class="price">80€<span class="price-period">/mes</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Paquete Básico</h3>
-              <p class="package-subtitle">Solo €19 al mes</p>
+              <h3 class="package-title">Iniciación</h3>
+              <p class="package-subtitle">Si lo que buscas es comenzar a preparar la oposición</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Incluye:</p>
+              <p class="includes-text">Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:</p>
               
               <div class="features-grid">
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Material de estudio online</span>
+                    <span class="feature-text">Preparación teórica</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Exámenes de práctica incluidos</span>
+                    <span class="feature-text">Preparación física</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Acceso al foro de la comunidad</span>
+                    <span class="feature-text">Supuestos prácticos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Soporte básico por email</span>
+                    <span class="feature-text">Psicotécnicos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Actualizaciones de contenido</span>
-                  </div>
-                </div>
-                
-                <div class="feature-column">
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Sesiones en vivo semanales</span>
+                    <span class="feature-text">Generador de test</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Apoyo de coaching personalizado</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Herramientas de seguimiento</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Ejercicios prácticos</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Recursos descargables</span>
+                    <span class="feature-text">Clases de forma presencial u online</span>
                   </div>
                 </div>
               </div>
@@ -86,7 +67,7 @@
           </div>
         </v-col>
         
-        <!-- Business Plan Card -->
+        <!-- Avanzado Card -->
         <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col">
           <div class="pricing-card">
             <div class="card-header">
@@ -95,86 +76,43 @@
                   <img src="/images/academia750/boxIcon.png" alt="Package Icon" class="icon-image" />
                 </div>
                 <div class="price-section">
-                  <span class="price">$29<span class="price-period">/mo</span></span>
+                  <span class="price">80€<span class="price-period">/mes</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Plan Empresarial</h3>
-              <p class="package-subtitle">Para grupos y academias</p>
+              <h3 class="package-title">Avanzado</h3>
+              <p class="package-subtitle">Si lo que necesitas es exprimirte al máximo</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Incluye:</p>
+              <p class="includes-text">Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:</p>
               
               <div class="features-grid">
                 <div class="feature-column">
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Horario de estudio flexible</span>
+                    <span class="feature-text">Preparación teórica</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Sesiones de feedback mensuales</span>
+                    <span class="feature-text">Preparación física</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Acceso a todos los cursos</span>
+                    <span class="feature-text">Supuestos prácticos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Soporte prioritario 24/7</span>
+                    <span class="feature-text">Psicotécnicos</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Tutorías personalizadas</span>
+                    <span class="feature-text">Generador de test</span>
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Simulacros de examen ilimitados</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Análisis de progreso detallado</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Material actualizado semanal</span>
-                  </div>
-                </div>
-                
-                <div class="feature-column">
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Talleres dirigidos por expertos</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Certificado de finalización</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Preparación física incluida</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Test psicotécnicos avanzados</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Casos prácticos reales</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Mentoría individual</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Garantía de resultados</span>
-                  </div>
-                  <div class="feature-item">
-                    <span class="checkmark">✓</span>
-                    <span class="feature-text">Red de networking exclusiva</span>
+                    <span class="feature-text">Clases de forma presencial u online</span>
                   </div>
                 </div>
               </div>
