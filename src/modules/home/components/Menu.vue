@@ -141,7 +141,7 @@ export default {
       this.drawer = false
     },
     scrollToSecondLandingPage() {
-      this.$router.push({ name: 'nueva-landing-page' })
+      this.$router.push({ name: 'opsiciones-bomberos-alicante' })
       this.drawer = false
     }
   }

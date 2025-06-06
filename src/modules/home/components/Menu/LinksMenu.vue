@@ -24,7 +24,7 @@ export default {
   name: 'LinksMenu',
   methods: {
     navigateToNewLandingPage() {
-      this.$router.push({ name: 'nueva-landing-page' })
+      this.$router.push({ name: 'opsiciones-bomberos-alicante' })
     }
   }
   //.scrollIntoView({ behavior: 'smooth', block: 'start' })
