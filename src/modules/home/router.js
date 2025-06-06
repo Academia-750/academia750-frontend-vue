@@ -1,5 +1,5 @@
 import HomeView from './views/Home.vue'
-import NewLandingPageView from './views/bomberos-alicante-landing.vue'
+import BomberosAlicanteLanding from './views/bomberos-alicante-landing.vue'
 
 const moduleRoute = [
   {
@@ -11,9 +11,9 @@ const moduleRoute = [
     }
   },
   {
-    path: '/nueva-landing-page',
-    name: 'nueva-landing-page',
-    component: NewLandingPageView,
+    path: '/opsiciones-bomberos-alicante',
+    name: 'opsiciones-bomberos-alicante',
+    component: BomberosAlicanteLanding,
     meta: {
       layout: 'simple'
     }
