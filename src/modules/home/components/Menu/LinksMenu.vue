@@ -1,23 +1,21 @@
 <template>
   <div class="d-none d-sm-none d-md-flex justify-center">
-    <v-btn text @click="$vuetify.goTo(0)">
-      Inicio
-    </v-btn>
-    <v-btn text @click="$emit('emitScrollToSectionHomePage', 'OurServiceSection')">
+    <v-btn text @click="$vuetify.goTo(0)"> Inicio </v-btn>
+    <v-btn
+      text
+      @click="$emit('emitScrollToSectionHomePage', 'OurServiceSection')"
+    >
       Qué ofrecemos
     </v-btn>
+    <v-btn text @click="navigateToNewLandingPage"> Bomberos Alicante </v-btn>
+
     <v-btn text @click="$emit('emitScrollToSectionHomePage', 'tarifasSection')">
       Tarifas
     </v-btn>
     <v-btn text @click="$emit('emitScrollToSectionHomePage', 'ContactUsForm')">
       Contáctanos
     </v-btn>
-    <v-btn text @click="navigateToNewLandingPage">
-      Join us
-    </v-btn>
-    <v-btn text @click="navigateToNewLandingPage">
-      New Landing Page
-    </v-btn>
+    <v-btn text @click="navigateToNewLandingPage"> Join us </v-btn>
   </div>
 </template>
 
@@ -33,6 +31,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

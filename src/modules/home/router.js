@@ -1,5 +1,5 @@
 import HomeView from './views/Home.vue'
-import NewLandingPageView from './views/NewLandingPage.vue'
+import NewLandingPageView from './views/bomberos-alicante-landing.vue'
 
 const moduleRoute = [
   {

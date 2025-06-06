@@ -1,16 +1,16 @@
 <template>
   <div class="new-landing-page-view">
-    <NewLandingPageComponent />
+    <BomberosAlicante />
   </div>
 </template>
 
 <script>
-import NewLandingPageComponent from '../components/NewLandingPage/NewLandingPage'
+import BomberosAlicante from '../components/bomberos_alicante_landing/bomberos-alicante'
 
 export default {
-  name: 'NewLandingPageView',
+  name: 'BomberosAlicanteLanding',
   components: {
-    NewLandingPageComponent
+    BomberosAlicante
   },
   head: {
     title: {
@@ -24,4 +24,4 @@ export default {
 .new-landing-page-view {
   min-height: 100vh;
 }
-</style> 
+</style>
