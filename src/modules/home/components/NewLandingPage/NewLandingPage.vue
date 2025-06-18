@@ -38,9 +38,6 @@
     <!-- Contact Form Section -->
     <Formulario ref="ContactUsFormComponent" />
 
-    <!-- CTA Section -->
-    <CTA />
-
     <!-- Footer Section -->
     <Footer />
   </div>
@@ -58,7 +55,6 @@ import Testimonials from './Testimonials/Testimonials'
 import FAQs from './FAQs/FAQs'
 import Contact from './Contact/Contact'
 import Formulario from '../Formulario'
-import CTA from './CTA/CTA'
 import Footer from './Footer/Footer'
 import Cookies from 'js-cookie'
 
@@ -76,7 +72,6 @@ export default {
     FAQs,
     Contact,
     Formulario,
-    CTA,
     Footer
   },
   data() {

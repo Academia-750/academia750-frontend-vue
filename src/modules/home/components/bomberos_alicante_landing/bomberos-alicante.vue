@@ -1,9 +1,11 @@
 <template>
-  <div class="new-landing-page">
+  <div class="new-landing-page ma-0 pa-0 overflow-hidden">
     <!-- Navbar Component -->
-    <NavbarMenu 
-      @navigateTo="handleNavigation"
-      @goToPrivateArea="handlePrivateArea"
+    <TopMenu />
+    <Menu
+      ref="MenuHomePage"
+      @emitShowLoginDialog="showDialogLoginAction"
+      @emitScrollToSectionHomePage="scrollToSectionOfHomePage"
     />
     
     <!-- Hero Section -->
@@ -11,6 +13,10 @@
       @reservarPlaza="handleReservarPlaza"
     />
     
+    <DialogLogin
+      ref="DialogLoginForm"
+      @scrollToResetPasswordSection="scrollToResetPasswordSection"
+    />
     <!-- Why Choose Us Section -->
     <WhyChooseUs />
 
@@ -24,7 +30,9 @@
     <Features />
 
     <!-- Pricing Section -->
-    <Pricing />
+    <Pricing 
+      @emitClickInscriptionContactUs="handleReservarPlaza"
+    />
 
     <!-- Testimonials Section -->
     <Testimonials />
@@ -38,16 +46,12 @@
     <!-- Contact Form Section -->
     <Formulario ref="ContactUsFormComponent" />
 
-    <!-- CTA Section -->
-    <CTA />
-
     <!-- Footer Section -->
     <Footer />
   </div>
 </template>
 
 <script>
-import NavbarMenu from './Navbar/Menu'
 import HeroSection from './HeroSection/HeroSection'
 import WhyChooseUs from './WhyChooseUs/WhyChooseUs'
 import WhatIncludes from './WhatIncludes/WhatIncludes'
@@ -58,14 +62,17 @@ import Testimonials from './Testimonials/Testimonials'
 import FAQs from './FAQs/FAQs'
 import Contact from './Contact/Contact'
 import Formulario from '../Formulario'
-import CTA from './CTA/CTA'
-import Footer from './Footer/Footer'
+import Footer from '../Footer'
 import Cookies from 'js-cookie'
+import TopMenu from '../TopMenu'
+import Menu from '../Menu'
+import DialogLogin from '../Login/DialogLogin'
 
 export default {
-  name: 'NewLandingPage',
+  name: 'BomberosAlicanteLandingPage',
   components: {
-    NavbarMenu,
+    TopMenu,
+    Menu,
     HeroSection,
     WhyChooseUs,
     WhatIncludes,
@@ -76,8 +83,8 @@ export default {
     FAQs,
     Contact,
     Formulario,
-    CTA,
-    Footer
+    Footer,
+    DialogLogin
   },
   data() {
     return {
@@ -116,6 +123,44 @@ export default {
         this.$refs.ContactUsFormComponent.form.message = null
         this.$refs.ContactUsFormComponent.form.reason = 'inscription'
       }
+    },
+    showDialogLoginAction() {
+      this.$refs['DialogLoginForm'].showDialogLogin = true
+    },
+    scrollToSectionOfHomePage($refElement) {
+      this.$refs['MenuHomePage'].drawer = false
+
+      ////console.log(this.$refs[$refElement].offsetHeight)
+      /* const elemento = document.getElementById($refElement)
+      const altura = elemento?.clientHeight
+      const posicion = elemento?.getBoundingClientRect().top + window.pageYOffset - altura
+
+      window.scrollTo({ top: posicion, behavior: 'smooth' }) */
+
+      document.getElementById($refElement)?.scrollIntoView()
+      /* setTimeout(() => {
+        this.$refs[$refElement].scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }, 50) */
+
+      this.$refs['ContactUsFormComponent'].form.message = null
+      this.$refs['ContactUsFormComponent'].form.reason = null
+
+      console.info('scrollToSectionOfHomePage')
+    },
+    scrollToResetPasswordSection() {
+      this.$refs['DialogLoginForm'].showDialogLogin = false
+
+      this.$refs['ContactUsForm'].scrollIntoView(/* {
+        behavior: 'smooth',
+        block: 'start'
+      } */)
+
+      this.$refs['ContactUsFormComponent'].form.reason = 'reset-password'
+      this.$refs['ContactUsFormComponent'].form.message =
+        'He olvidado mi contraseña'
     }
   }
 }

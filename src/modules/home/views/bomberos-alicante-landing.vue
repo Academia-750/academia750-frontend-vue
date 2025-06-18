@@ -14,7 +14,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Nueva Landing Page - Academia 750'
+      inner: 'Oposiciones Bomberos Alicante: Prepárate con Academia750'
     }
   }
 }

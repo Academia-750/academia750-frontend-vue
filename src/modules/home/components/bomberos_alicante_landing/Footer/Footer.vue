@@ -26,17 +26,23 @@
           </div>
           
           <div class="social-links">
-            <a href="#" class="social-link" aria-label="Facebook">
+            <a href="https://www.facebook.com/academia750/" class="social-link" aria-label="Facebook" target="_blank">
               <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="#" class="social-link" aria-label="Instagram">
+            <a href="https://www.instagram.com/academia.750/" class="social-link" aria-label="Instagram" target="_blank">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/academia750/" class="social-link" aria-label="LinkedIn" target="_blank">
               <i class="fab fa-linkedin-in"></i>
             </a>
-            <a href="#" class="social-link" aria-label="YouTube">
+            <a href="https://www.youtube.com/@academia750" class="social-link" aria-label="YouTube" target="_blank">
               <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@academia.750" class="social-link" aria-label="TikTok" target="_blank">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/academia750" class="social-link" aria-label="Telegram" target="_blank">
+              <i class="fab fa-telegram-plane"></i>
             </a>
           </div>
         </div>

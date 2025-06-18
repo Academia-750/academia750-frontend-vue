@@ -11,7 +11,6 @@
       <div class="testimonials-container">
         <div class="testimonials-slider">
           <div class="slider-track" :style="sliderStyle">
-            <!-- Testimonial Cards (6 total) -->
             <div 
               v-for="(testimonial, index) in testimonials" 
               :key="index"
@@ -44,15 +43,14 @@
           </div>
         </div>
         
-        <!-- Navigation Controls -->
         <div class="navigation-controls">
           <div class="pagination-dots">
             <span 
-              v-for="(dot, index) in totalSlides" 
+              v-for="index in totalSlides" 
               :key="index"
               class="dot"
-              :class="{ active: index === currentSlide }"
-              @click="goToSlide(index)"
+              :class="{ active: index - 1 === currentSlide }"
+              @click="goToSlide(index - 1)"
             ></span>
           </div>
           
@@ -95,7 +93,7 @@ export default {
   data() {
     return {
       currentSlide: 0,
-      cardsPerSlide: 3,
+      isTransitioning: false,
       testimonials: [
         {
           quote: 'Academia 750 proporcionó una excelente preparación para mi examen de bombero. Los instructores fueron expertos y los materiales de estudio fueron exhaustivos. No lo hubiera conseguido sin su apoyo.',
@@ -176,41 +174,89 @@ export default {
     }
   },
   computed: {
+    cardsPerSlide() {
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth < 768) return 1
+        if (window.innerWidth < 1024) return 2
+
+        return 3
+      }
+
+      return 3
+    },
     totalSlides() {
       return Math.ceil(this.testimonials.length / this.cardsPerSlide)
     },
+    visibleTestimonials() {
+      const start = this.currentSlide * this.cardsPerSlide
+
+      return this.testimonials.slice(start, start + this.cardsPerSlide)
+    },
     sliderStyle() {
-      const translateX = -(this.currentSlide * 100)
-      
       return {
-        transform: `translateX(${translateX}%)`,
-        transition: 'transform 0.3s ease-in-out'
+        transform: `translateX(-${this.currentSlide * 100}%)`,
+        transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+      }
+    },
+    slideStyle() {
+      return {
+        width: `${100 / this.totalSlides}%`,
+        flex: `0 0 ${100 / this.totalSlides}%`
       }
     }
   },
   mounted() {
-    // Auto-slide every 5 seconds (optional)
-    // setInterval(() => {
-    //   if (this.currentSlide < this.totalSlides - 1) {
-    //     this.nextSlide()
-    //   } else {
-    //     this.currentSlide = 0
-    //   }
-    // }, 5000)
+    // Add resize listener to update cardsPerSlide
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.handleResize)
+    }
+  },
+  beforeDestroy() {
+    // Remove resize listener
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.handleResize)
+    }
   },
   methods: {
-    nextSlide() {
-      if (this.currentSlide < this.totalSlides - 1) {
-        this.currentSlide++
-      }
+    handleResize() {
+      // Adjust current slide to maintain visible position
+      const oldCardsPerSlide = this.cardsPerSlide
+
+      this.$nextTick(() => {
+        const newCardsPerSlide = this.cardsPerSlide
+
+        this.currentSlide = Math.floor((this.currentSlide * oldCardsPerSlide) / newCardsPerSlide)
+      })
     },
-    previousSlide() {
-      if (this.currentSlide > 0) {
-        this.currentSlide--
-      }
+    async nextSlide() {
+      if (this.isTransitioning || this.currentSlide >= this.totalSlides - 1) return
+      
+      this.isTransitioning = true
+      this.currentSlide++
+      
+      await this.waitForTransition()
+      this.isTransitioning = false
     },
-    goToSlide(index) {
+    async previousSlide() {
+      if (this.isTransitioning || this.currentSlide <= 0) return
+      
+      this.isTransitioning = true
+      this.currentSlide--
+      
+      await this.waitForTransition()
+      this.isTransitioning = false
+    },
+    async goToSlide(index) {
+      if (this.isTransitioning || index === this.currentSlide || index < 0 || index >= this.totalSlides) return
+      
+      this.isTransitioning = true
       this.currentSlide = index
+      
+      await this.waitForTransition()
+      this.isTransitioning = false
+    },
+    waitForTransition() {
+      return new Promise((resolve) => setTimeout(resolve, 500))
     }
   }
 }
@@ -219,6 +265,9 @@ export default {
 <style scoped>
 .testimonials-content {
   font-family: 'Roboto', sans-serif !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .testimonials-content *,
@@ -233,60 +282,57 @@ export default {
 }
 
 .section-title {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
   color: #000000;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .section-description {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 1.125rem;
   line-height: 1.6;
   color: #666666;
   font-weight: 400;
   max-width: 600px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .testimonials-container {
   position: relative;
   overflow: hidden;
+  padding: 0;
 }
 
 .testimonials-slider {
   width: 100%;
   overflow: hidden;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .slider-track {
   display: flex;
-  width: 500%;
-  transition: transform 0.3s ease-in-out;
+  width: 100%;
 }
 
 .testimonial-slide {
-  flex: 0 0 6.667%;
-  padding: 0 12px;
+  min-width: 100%;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
 .testimonial-card {
-  background-color: #ffffff;
+  background: #ffffff;
+  border: 1px solid #cccccc;
   padding: 32px 24px;
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  position: relative;
-  border: 1px solid #cccccc;
-  border-radius: 0;
-  box-shadow: none;
-  transition: none;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
 }
 
 .testimonial-card:hover {
@@ -307,15 +353,12 @@ export default {
 }
 
 .testimonial-quote {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 1rem;
   line-height: 1.6;
   color: #333333;
-  font-weight: 400;
   margin: 0 0 24px 0;
   flex-grow: 1;
-  font-style: normal;
-  position: relative;
+  text-align: center;
 }
 
 .testimonial-quote::before {
@@ -340,7 +383,6 @@ export default {
 
 .testimonial-author {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 12px;
   padding-top: 16px;
@@ -349,7 +391,6 @@ export default {
 
 .author-avatar {
   flex-shrink: 0;
-  margin-bottom: 0;
 }
 
 .author-avatar svg {
@@ -358,39 +399,33 @@ export default {
 }
 
 .author-info {
-  text-align: left;
   flex: 1;
 }
 
 .author-name {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 1rem;
   font-weight: 600;
   color: #000000;
   margin-bottom: 4px;
-  line-height: 1.4;
 }
 
 .author-title {
-  font-family: 'Roboto', sans-serif !important;
   font-size: 0.875rem;
-  line-height: 1.4;
   color: #666666;
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: normal;
 }
 
 .navigation-controls {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 0 24px;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .pagination-dots {
   display: flex;
   gap: 8px;
+  justify-content: center;
 }
 
 .dot {
@@ -413,6 +448,7 @@ export default {
 .navigation-arrows {
   display: flex;
   gap: 12px;
+  justify-content: center;
 }
 
 .nav-arrow {
@@ -438,8 +474,6 @@ export default {
 .nav-arrow:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  border-color: #f0f0f0;
-  color: #ccc;
 }
 
 .nav-arrow:disabled:hover {
@@ -449,70 +483,34 @@ export default {
 }
 
 /* Responsive Design */
-@media (min-width: 960px) {
-  .testimonials-header {
-    margin-bottom: 80px;
-  }
-  
-  .section-title {
-    font-size: 3rem;
-  }
-  
-  .testimonial-slide {
-    padding: 0 16px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 959px) {
-  .testimonial-slide {
-    padding: 0 8px;
-  }
-  
-  .navigation-controls {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
-
 @media (max-width: 767px) {
-  .testimonials-header {
-    margin-bottom: 40px;
+  .testimonial-slide {
+    padding: 0 5px;
   }
   
+  .testimonial-card {
+    padding: 24px 20px;
+  }
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .section-description {
     font-size: 1rem;
-  }
-  
-  .testimonial-slide {
     padding: 0 20px;
   }
-  
-  .testimonial-quote {
-    font-size: 0.95rem;
-    margin-bottom: 24px;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .testimonial-slide {
+    min-width: 50%;
   }
-  
-  .author-name {
-    font-size: 0.95rem;
-  }
-  
-  .author-title {
-    font-size: 0.8rem;
-  }
-  
-  .navigation-controls {
-    padding: 0 12px;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  .nav-arrow {
-    width: 44px;
-    height: 44px;
+}
+
+@media (min-width: 1024px) {
+  .testimonial-slide {
+    min-width: 33.333%;
   }
 }
 </style> 
