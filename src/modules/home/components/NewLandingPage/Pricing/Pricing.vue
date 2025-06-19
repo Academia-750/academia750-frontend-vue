@@ -62,7 +62,7 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Comenzar</button>
+              <button class="cta-button">Comenzar</button>
             </div>
           </div>
         </v-col>
@@ -119,7 +119,7 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Comenzar</button>
+              <button class="cta-button">Comenzar</button>
             </div>
           </div>
         </v-col>
@@ -135,8 +135,7 @@ export default {
   name: 'Pricing',
   components: {
     SectionWrapper
-  },
-  emits: ['emitClickInscriptionContactUs']
+  }
 }
 </script>
 

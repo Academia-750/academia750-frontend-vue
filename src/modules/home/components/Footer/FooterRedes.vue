@@ -21,8 +21,20 @@ export default {
   }
 }
 </script>
-<style>
-.redes_footer{
-    color: #202020!important;
+<style scoped>
+.redes_footer {
+  display: inline-block;
+  margin: 0 8px;
+  color: #ffffff !important;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.redes_footer:hover {
+  opacity: 0.8;
+}
+
+.redes_footer .v-icon {
+  font-size: 24px;
 }
 </style>
