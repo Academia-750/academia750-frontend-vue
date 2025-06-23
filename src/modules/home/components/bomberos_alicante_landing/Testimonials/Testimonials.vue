@@ -1,82 +1,70 @@
 <template>
-  <SectionWrapper padding-y="large" background-color="#ffffff">
+  <SectionWrapper padding-y="large" background-color="#f7f9fc">
     <div class="testimonials-content">
+      <!-- Header -->
       <div class="testimonials-header">
-        <h2 class="section-title">Testimonios de nuestros alumnos</h2>
+        <h2 class="section-title">Historias reales de éxito</h2>
         <p class="section-description">
-          Descubre las experiencias de quienes ya han conseguido su plaza como bombero con Academia 750.
+          Nuestros alumnos comparten su camino hasta conseguir su plaza como bombero en Alicante. 
+          Síguenos en 
+          <a 
+            href="https://instagram.com/academia750" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="instagram-link"
+          >
+            @academia750
+          </a> 
+          para ver más testimonios.
         </p>
       </div>
-      
-      <div class="testimonials-container">
-        <div class="testimonials-slider">
-          <div class="slider-track" :style="sliderStyle">
-            <div 
-              v-for="(testimonial, index) in testimonials" 
-              :key="index"
-              class="testimonial-slide"
-            >
-              <div class="testimonial-card">
-                <div class="star-rating">
-                  <span v-for="star in 5" :key="star" class="star">★</span>
-                </div>
-                
-                <blockquote class="testimonial-quote">
-                  {{ testimonial.quote }}
-                </blockquote>
-                
-                <div class="testimonial-author">
-                  <div class="author-avatar">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                      <circle cx="20" cy="20" r="20" fill="#E0E0E0"/>
-                      <circle cx="20" cy="15" r="6" fill="#9E9E9E"/>
-                      <path d="M8 32c0-6.627 5.373-12 12-12s12 5.373 12 12" fill="#9E9E9E"/>
-                    </svg>
-                  </div>
-                  <div class="author-info">
-                    <div class="author-name">{{ testimonial.name }}</div>
-                    <div class="author-title">{{ testimonial.position }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+      <!-- Instagram Posts Grid -->
+      <div class="instagram-grid">
+        <div class="instagram-post-wrapper">
+          <iframe 
+            src="https://www.instagram.com/reel/DHWGHBWOfz9/embed" 
+            width="320" 
+            height="400" 
+            frameborder="0" 
+            scrolling="no" 
+            allowtransparency="true"
+            class="instagram-post"
+          ></iframe>
         </div>
-        
-        <div class="navigation-controls">
-          <div class="pagination-dots">
-            <span 
-              v-for="index in totalSlides" 
-              :key="index"
-              class="dot"
-              :class="{ active: index - 1 === currentSlide }"
-              @click="goToSlide(index - 1)"
-            ></span>
-          </div>
-          
-          <div class="navigation-arrows">
-            <button 
-              class="nav-arrow prev-arrow" 
-              aria-label="Previous testimonial"
-              :disabled="currentSlide === 0"
-              @click="previousSlide"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <button 
-              class="nav-arrow next-arrow" 
-              aria-label="Next testimonial"
-              :disabled="currentSlide === totalSlides - 1"
-              @click="nextSlide"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+        <div class="instagram-post-wrapper">
+          <iframe 
+            src="https://www.instagram.com/reel/DHJiswMt11r/embed" 
+            width="320" 
+            height="400" 
+            frameborder="0" 
+            scrolling="no" 
+            allowtransparency="true"
+            class="instagram-post"
+          ></iframe>
         </div>
+        <div class="instagram-post-wrapper">
+          <iframe 
+            src="https://www.instagram.com/reel/DFs3zKxIWXf/embed" 
+            width="320" 
+            height="400" 
+            frameborder="0" 
+            scrolling="no" 
+            allowtransparency="true"
+            class="instagram-post"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="cta-container">
+        <v-btn
+          class="cta-button"
+          large
+          @click="scrollToContact"
+        >
+          <span class="fire-emoji">🔥</span> Quiero ser el próximo
+        </v-btn>
       </div>
     </div>
   </SectionWrapper>
@@ -90,173 +78,18 @@ export default {
   components: {
     SectionWrapper
   },
-  data() {
-    return {
-      currentSlide: 0,
-      isTransitioning: false,
-      testimonials: [
-        {
-          quote: 'Academia 750 proporcionó una excelente preparación para mi examen de bombero. Los instructores fueron expertos y los materiales de estudio fueron exhaustivos. No lo hubiera conseguido sin su apoyo.',
-          name: 'Laura Martínez',
-          position: 'Bombero, Alicante'
-        },
-        {
-          quote: 'Gracias a Academia 750, aprobé mi examen en la primera oportunidad. La asesoría personalizada y las pruebas de práctica fueron invaluables. El enfoque híbrido de aprendizaje funcionó perfectamente para mi horario.',
-          name: 'Carlos Rodriguez',
-          position: 'Bombero, Valencia'
-        },
-        {
-          quote: 'Lo recomiendo ampliamente Academia 750 a cualquier persona que se prepare para exámenes de seguridad pública. Su tasa de éxito habla por sí misma y la calidad de la instrucción es excepcional.',
-          name: 'Ana González',
-          position: 'Policía, Alicante'
-        },
-        {
-          quote: 'La plataforma en línea fue fácil de usar y el contenido fue exactamente lo que necesitaba para tener éxito en mi carrera como bombero. Gran apoyo a lo largo del proceso.',
-          name: 'Miguel Torres',
-          position: 'Bombero, Murcia'
-        },
-        {
-          quote: 'Excelente academia con instructores profesionales. El enfoque híbrido de aprendizaje funcionó perfectamente para mi horario y logré alcanzar mi objetivo.',
-          name: 'Elena López',
-          position: 'Respuesta de Emergencia, Alicante'
-        },
-        {
-          quote: 'Programa de preparación excepcional que me ayudó a lograr mi sueño de convertirse en bombero. La capacitación práctica fue especialmente valiosa.',
-          name: 'David Sánchez',
-          position: 'Capitán de Bombero, Valencia'
-        },
-        {
-          quote: 'Entrenamiento profesional con excelentes resultados. La academia proporciona todo lo que necesitas para tener éxito en exámenes de seguridad pública.',
-          name: 'Carmen Ruiz',
-          position: 'Policía, Valencia'
-        },
-        {
-          quote: 'Preparación de alta calidad que hizo toda la diferencia en mi éxito en el examen. Lo recomiendo Academia 750 a todos.',
-          name: 'Antonio García',
-          position: 'Bombero, Alicante'
-        },
-        {
-          quote: 'Programa de preparación integral con instructores dedicados. La academia me ayudó a lograr mis metas profesionales de manera eficiente.',
-          name: 'María Fernández',
-          position: 'Respuesta de Emergencia, Murcia'
-        },
-        {
-          quote: 'Academia 750 superó mis expectativas. La calidad del entrenamiento y la atención personalizada hicieron que mi viaje de preparación fuera exitoso.',
-          name: 'Isabel Moreno',
-          position: 'Policía, Alicante'
-        },
-        {
-          quote: 'Excelencia profesional y resultados excepcionales. Esta academia es la mejor opción para cualquier persona seria sobre carreras de seguridad pública.',
-          name: 'Francisco Jiménez',
-          position: 'Capitán de Bombero, Murcia'
-        },
-        {
-          quote: 'Preparación de alta efectividad. La experiencia y la guía de los instructores y los materiales integrales aseguraron mi éxito en el examen.',
-          name: 'Pilar Romero',
-          position: 'Respuesta de Emergencia, Valencia'
-        },
-        {
-          quote: 'Academia excepcional que entrega resultados reales. Logré alcanzar mi objetivo de convertirse en bombero gracias a su excelente preparación.',
-          name: 'Manuel Herrera',
-          position: 'Bombero, Alicante'
-        },
-        {
-          quote: 'Entrenamiento de alta calidad y apoyo profesional a lo largo de todo el proceso de preparación. Altamente recomendado para todos.',
-          name: 'Rosa Castro',
-          position: 'Policía, Murcia'
-        },
-        {
-          quote: 'Academia excepcional con resultados comprobados. El apoyo y la orientación que recibí fueron fundamentales para mi éxito.',
-          name: 'José Luis Pérez',
-          position: 'Bombero, Valencia'
-        }
-      ]
-    }
-  },
-  computed: {
-    cardsPerSlide() {
-      if (typeof window !== 'undefined') {
-        if (window.innerWidth < 768) return 1
-        if (window.innerWidth < 1024) return 2
 
-        return 3
-      }
-
-      return 3
-    },
-    totalSlides() {
-      return Math.ceil(this.testimonials.length / this.cardsPerSlide)
-    },
-    visibleTestimonials() {
-      const start = this.currentSlide * this.cardsPerSlide
-
-      return this.testimonials.slice(start, start + this.cardsPerSlide)
-    },
-    sliderStyle() {
-      return {
-        transform: `translateX(-${this.currentSlide * 100}%)`,
-        transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
-      }
-    },
-    slideStyle() {
-      return {
-        width: `${100 / this.totalSlides}%`,
-        flex: `0 0 ${100 / this.totalSlides}%`
-      }
-    }
-  },
-  mounted() {
-    // Add resize listener to update cardsPerSlide
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', this.handleResize)
-    }
-  },
-  beforeDestroy() {
-    // Remove resize listener
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('resize', this.handleResize)
-    }
-  },
   methods: {
-    handleResize() {
-      // Adjust current slide to maintain visible position
-      const oldCardsPerSlide = this.cardsPerSlide
+    scrollToContact() {
+      const element = document.querySelector('.contact-content')
 
-      this.$nextTick(() => {
-        const newCardsPerSlide = this.cardsPerSlide
-
-        this.currentSlide = Math.floor((this.currentSlide * oldCardsPerSlide) / newCardsPerSlide)
-      })
-    },
-    async nextSlide() {
-      if (this.isTransitioning || this.currentSlide >= this.totalSlides - 1) return
-      
-      this.isTransitioning = true
-      this.currentSlide++
-      
-      await this.waitForTransition()
-      this.isTransitioning = false
-    },
-    async previousSlide() {
-      if (this.isTransitioning || this.currentSlide <= 0) return
-      
-      this.isTransitioning = true
-      this.currentSlide--
-      
-      await this.waitForTransition()
-      this.isTransitioning = false
-    },
-    async goToSlide(index) {
-      if (this.isTransitioning || index === this.currentSlide || index < 0 || index >= this.totalSlides) return
-      
-      this.isTransitioning = true
-      this.currentSlide = index
-      
-      await this.waitForTransition()
-      this.isTransitioning = false
-    },
-    waitForTransition() {
-      return new Promise((resolve) => setTimeout(resolve, 500))
+      if (element) {
+        this.$vuetify.goTo(element, {
+          duration: 600,
+          offset: -80,
+          easing: 'easeInOutCubic'
+        })
+      }
     }
   }
 }
@@ -264,253 +97,173 @@ export default {
 
 <style scoped>
 .testimonials-content {
-  font-family: 'Roboto', sans-serif !important;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-}
-
-.testimonials-content *,
-.testimonials-content *::before,
-.testimonials-content *::after {
-  font-family: 'Roboto', sans-serif !important;
+  text-align: center;
+  padding: 2rem 1rem;
 }
 
 .testimonials-header {
-  text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 4rem;
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.5em;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
   font-weight: 700;
   line-height: 1.2;
-  color: #000000;
-  margin-bottom: 16px;
-  text-align: center;
 }
 
 .section-description {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: #666666;
-  font-weight: 400;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.testimonials-container {
-  position: relative;
-  overflow: hidden;
-  padding: 0;
-}
-
-.testimonials-slider {
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 40px;
-}
-
-.slider-track {
-  display: flex;
-  width: 100%;
-}
-
-.testimonial-slide {
-  min-width: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-.testimonial-card {
-  background: #ffffff;
-  border: 1px solid #cccccc;
-  padding: 32px 24px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 500px;
-}
-
-.testimonial-card:hover {
-  transform: none;
-  box-shadow: none;
-  border-color: #cccccc;
-}
-
-.star-rating {
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.star {
-  font-size: 1.2rem;
-  color: #FFD700;
-  margin-right: 2px;
-}
-
-.testimonial-quote {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #333333;
-  margin: 0 0 24px 0;
-  flex-grow: 1;
-  text-align: center;
-}
-
-.testimonial-quote::before {
-  content: '"';
-  font-size: 1.5rem;
+  font-size: 1.2em;
   color: #666;
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  font-family: Georgia, serif;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-.testimonial-quote::after {
-  content: '"';
-  font-size: 1.5rem;
-  color: #666;
-  position: absolute;
-  bottom: -10px;
-  right: -5px;
-  font-family: Georgia, serif;
+.instagram-link {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.testimonial-author {
+.instagram-link:hover {
+  color: #005fa3;
+  text-decoration: underline;
+}
+
+.instagram-grid {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 16px;
-  border-top: 1px solid #e8e8e8;
-}
-
-.author-avatar {
-  flex-shrink: 0;
-}
-
-.author-avatar svg {
-  border-radius: 50%;
-  background-color: #f0f0f0;
-}
-
-.author-info {
-  flex: 1;
-}
-
-.author-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #000000;
-  margin-bottom: 4px;
-}
-
-.author-title {
-  font-size: 0.875rem;
-  color: #666666;
-}
-
-.navigation-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.pagination-dots {
-  display: flex;
-  gap: 8px;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  padding: 0 1rem;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #E0E0E0;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.instagram-post-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dot.active {
-  background-color: #000000;
+.instagram-post-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
-.dot:hover {
-  background-color: #BDBDBD;
+.instagram-post {
+  border-radius: 12px;
+  background: #fff;
+  display: block;
 }
 
-.navigation-arrows {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
+.cta-container {
+  margin-top: 3rem;
 }
 
-.nav-arrow {
-  width: 48px;
-  height: 48px;
-  border: 1px solid #E0E0E0;
-  background-color: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #666666;
+.cta-button {
+  background-color: #0077cc !important;
+  color: #ffffff !important;
+  padding: 0.75rem 2rem !important;
+  font-size: 1.2em !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  box-shadow: 0 4px 15px rgba(0, 119, 204, 0.3) !important;
+  transition: all 0.3s ease !important;
 }
 
-.nav-arrow:hover {
-  border-color: #000000;
-  color: #000000;
-  background-color: #f5f5f5;
+.fire-emoji {
+  margin-right: 8px;
+  font-size: 1.2em;
 }
 
-.nav-arrow:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.nav-arrow:disabled:hover {
-  border-color: #f0f0f0;
-  color: #ccc;
-  background-color: #ffffff;
+.cta-button:hover {
+  background-color: #005fa3 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 119, 204, 0.4) !important;
 }
 
 /* Responsive Design */
-@media (max-width: 767px) {
-  .testimonial-slide {
-    padding: 0 5px;
+@media (min-width: 1200px) {
+  .testimonials-content {
+    padding: 4rem 2rem;
   }
-  
-  .testimonial-card {
-    padding: 24px 20px;
+
+  .instagram-grid {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .instagram-grid {
+    gap: 1.5rem;
+  }
+
+  .instagram-post {
+    width: 300px;
+    height: 375px;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-content {
+    padding: 2rem 1rem;
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 2em;
   }
 
   .section-description {
-    font-size: 1rem;
-    padding: 0 20px;
+    font-size: 1.1em;
+    padding: 0 1rem;
+  }
+
+  .instagram-post {
+    width: 280px;
+    height: 350px;
+  }
+
+  .instagram-grid {
+    gap: 1rem;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .testimonial-slide {
-    min-width: 50%;
+@media (max-width: 480px) {
+  .testimonials-header {
+    margin-bottom: 2rem;
   }
-}
 
-@media (min-width: 1024px) {
-  .testimonial-slide {
-    min-width: 33.333%;
+  .section-title {
+    font-size: 1.75em;
+  }
+
+  .section-description {
+    font-size: 1em;
+  }
+
+  .instagram-post-wrapper {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .instagram-post {
+    width: 100%;
+    height: 400px;
+  }
+
+  .cta-button {
+    width: 90%;
+    max-width: 300px;
+    font-size: 1.1em !important;
   }
 }
 </style> 

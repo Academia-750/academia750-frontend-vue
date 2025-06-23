@@ -1,6 +1,6 @@
 <template>
   <div class="d-lg-block d-none">
-    <v-img src="/images/academia750/logo-footer.svg"></v-img>
+    <v-img src="/images/academia750/LOGO ESCUDO BLANCO TRANSPARENCIA.png"></v-img>
   </div>
 </template>
 <script>

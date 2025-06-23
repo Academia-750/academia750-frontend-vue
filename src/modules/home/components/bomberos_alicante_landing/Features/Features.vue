@@ -18,23 +18,32 @@
             <div class="feature-item">
               <div class="feature-text">
                 <h3 class="feature-title main-title">Grupos por Nivel</h3>
+              </div>
+            </div>
+            
+            <!-- Feature 1 -->
+            <div class="feature-item">
+              <div class="feature-text">
+                <h3 class="feature-title"></h3>
                 <p class="feature-description">
                   Estructuramos nuestra formación en dos grupos: Iniciación para nuevos opositores y Avanzado para consolidar conocimientos.
                 </p>
-                <a class="feature-link" href="#" @click.prevent="scrollToSection('what-includes')">
+                <a class="feature-link" href="#" @click.prevent="scrollToSection('contact')">
                   Más información >
                 </a>
               </div>
             </div>
-            
             <!-- Feature 2 -->
             <div class="feature-item">
+              <div class="feature-icon">
+                <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
+              </div>
               <div class="feature-text">
                 <h3 class="feature-title">Iniciación</h3>
                 <p class="feature-description">
                   Aclimatación al temario, técnicas de estudio y disciplina. Aprende a distinguir lo importante y organízate para el proceso opositor.
                 </p>
-                <a class="feature-link" href="#" @click.prevent="scrollToSection('what-includes')">
+                <a class="feature-link" href="#" @click.prevent="scrollToSection('contact')">
                   Más información >
                 </a>
               </div>
@@ -42,12 +51,15 @@
             
             <!-- Feature 3 -->
             <div class="feature-item">
+              <div class="feature-icon">
+                <img src="/images/academia750/boxIcon.png" alt="Feature Icon" class="icon-image" />
+              </div>
               <div class="feature-text">
                 <h3 class="feature-title">Avanzado</h3>
                 <p class="feature-description">
                   Trabajo detallado del temario con test, tarjetas de memoria y ejercicios. Preparación específica para que domines todas las preguntas.
                 </p>
-                <a class="feature-link" href="#" @click.prevent="scrollToSection('what-includes')">
+                <a class="feature-link" href="#" @click.prevent="scrollToSection('contact')">
                   Más información >
                 </a>
               </div>
