@@ -66,7 +66,9 @@
             @click="scrollToSecondLandingPage"
           >
             <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>Nueva Landing Page</v-list-item-subtitle>
+            <v-list-item-subtitle>
+              Academia de Bomberos Alicante
+            </v-list-item-subtitle>
           </v-list-item>
         </v-list-item-group>
       </v-list>
