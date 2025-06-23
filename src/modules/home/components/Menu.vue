@@ -98,7 +98,7 @@ export default {
         { text: 'Qué ofrecemos', key: 'OurServiceSection' },
         { text: 'Tarifas', key: 'tarifasSection' },
         { text: 'Contáctanos', key: 'ContactUsForm' },
-        { text: 'Nueva Landing Page', key: 'SecondLandingPage' }
+        { text: 'Bomberos Alicante', key: 'SecondLandingPage' }
       ],
       isFixedMenu: false,
       allowedFixedMenu: true

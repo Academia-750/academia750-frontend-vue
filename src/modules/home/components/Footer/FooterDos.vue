@@ -23,7 +23,7 @@
         <v-icon dark> mdi-chevron-right </v-icon> Contáctanos
       </li>
       <li style="cursor: pointer" @click="navigateToNewLandingPage">
-        <v-icon dark> mdi-chevron-right </v-icon> Nueva Landing Page
+        <v-icon dark> mdi-chevron-right </v-icon> Bomberos Alicante
       </li>
     </ul>
   </div>
