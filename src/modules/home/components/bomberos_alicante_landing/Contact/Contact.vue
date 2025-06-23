@@ -6,8 +6,7 @@
         <div class="welcome-text">Bienvenido</div>
         <h2 class="section-title">Ponte en Contacto</h2>
         <p class="section-description">
-          Visítanos en Alicante para formación personalizada y apoyo en tu
-          carrera profesional como bombero.
+          Visítanos en Alicante para empezar o continuar a preparar tu oposición a bombero o bombera y conseguir tu máximo rendimiento.
         </p>
 
         <div class="contact-details">

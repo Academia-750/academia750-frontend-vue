@@ -19,8 +19,8 @@
         >
           <button 
             class="faq-question"
-            @click="toggleFAQ(index)"
             :aria-expanded="activeIndex === index"
+            @click="toggleFAQ(index)"
           >
             <span class="question-text">{{ faq.question }}</span>
             <svg 
@@ -50,7 +50,7 @@
       <div class="contact-section">
         <h3 class="contact-title">¿Todavía tienes preguntas?</h3>
         <p class="contact-description">¡Estamos aquí para ayudarte!</p>
-        <button class="contact-button">Contactar</button>
+        <button class="contact-button" @click="scrollToSection('contact')">Contactar</button>
       </div>
     </div>
   </SectionWrapper>
@@ -66,11 +66,11 @@ export default {
   },
   data() {
     return {
-      activeIndex: -1,
+      activeIndex: null,
       faqs: [
         {
-          question: '¿Qué es el examen de bombero?',
-          answer: 'El examen de bombero evalúa a los candidatos en varias habilidades y áreas de conocimiento. Incluye pruebas escritas, evaluaciones físicas y entrevistas. La preparación es clave para el éxito.'
+          question: '¿Qué pruebas contiene una oposición a bombero o bombera?',
+          answer: 'Una oposición generalmente cuenta con cinco pruebas. Prueba teórica de conocimiento de todo el temario, Supuesto práctico. Una prueba teórica de un temario más acotado orientada a una situación real. Unas pruebas físicas, Prueba psicotécnica, Reconocimiento médico'
         },
         {
           question: '¿Cómo me puedo inscribir?',
@@ -78,22 +78,30 @@ export default {
         },
         {
           question: '¿Qué está incluido en el curso?',
-          answer: 'Nuestro curso de preparación incluye materiales de estudio completos, exámenes de práctica y coaching experto. También recibirás retroalimentación personalizada para mejorar tu rendimiento. Nos aseguramos de que estés completamente equipado para el examen.'
+          answer: 'Nuestro curso de preparación incluye materiales de estudio elaborados por nosotros, exámenes de evaluación, autoevaluaciones, ejercicios, entrenamientos, psicotécnicos, etc. También tienes la posibilidad de recibir un seguimiento personalizado de tu proceso opositor. Nos aseguramos dellevarte a tu máximo rendimiento'
         },
         {
           question: '¿Cuándo empiezan las clases?',
-          answer: 'Las clases típicamente comienzan cada trimestre. Consulta nuestro sitio web para el horario más reciente y disponibilidad. Se recomienda la inscripción temprana para asegurar tu lugar.'
-        },
-        {
-          question: '¿Hay política de reembolso?',
-          answer: 'Sí, ofrecemos una política de reembolso bajo ciertas condiciones. Si te retiras antes de que comience el curso, puedes recibir un reembolso completo. Por favor consulta nuestros términos y condiciones para más detalles.'
+          answer: 'Nuestra preparación no para en todo el año, porque trabajamos el temario las veces necesarias para llegar a la oposición en el mejor estado posible. No tenemos permanencia ni matrícula por lo que puedes empezar y terminar con nosotros cuando necesites.'
         }
       ]
     }
   },
   methods: {
     toggleFAQ(index) {
-      this.activeIndex = this.activeIndex === index ? -1 : index
+      this.activeIndex = this.activeIndex === index ? null : index
+    },
+
+    scrollToSection(section) {
+      const element = document.querySelector(`.${section}-content`)
+
+      if (element) {
+        this.$vuetify.goTo(element, {
+          duration: 600,
+          offset: -80,
+          easing: 'easeInOutCubic'
+        })
+      }
     }
   }
 }

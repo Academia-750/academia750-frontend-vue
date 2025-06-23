@@ -26,23 +26,17 @@
           </div>
           
           <div class="social-links">
-            <a href="https://www.facebook.com/academia750/" class="social-link" aria-label="Facebook" target="_blank">
-              <i class="fab fa-facebook-f"></i>
+            <a href="https://www.facebook.com/academia750" target="_blank" rel="noopener noreferrer" class="social-link">
+              <v-icon>mdi-facebook</v-icon>
             </a>
-            <a href="https://www.instagram.com/academia.750/" class="social-link" aria-label="Instagram" target="_blank">
-              <i class="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/academia750" target="_blank" rel="noopener noreferrer" class="social-link">
+              <v-icon>mdi-instagram</v-icon>
             </a>
-            <a href="https://www.linkedin.com/company/academia750/" class="social-link" aria-label="LinkedIn" target="_blank">
-              <i class="fab fa-linkedin-in"></i>
+            <a href="https://twitter.com/academia750" target="_blank" rel="noopener noreferrer" class="social-link">
+              <v-icon>mdi-twitter</v-icon>
             </a>
-            <a href="https://www.youtube.com/@academia750" class="social-link" aria-label="YouTube" target="_blank">
-              <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.tiktok.com/@academia.750" class="social-link" aria-label="TikTok" target="_blank">
-              <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <a href="https://t.me/academia750" class="social-link" aria-label="Telegram" target="_blank">
-              <i class="fab fa-telegram-plane"></i>
+            <a href="https://wa.me/34644441126" target="_blank" rel="noopener noreferrer" class="social-link">
+              <v-icon>mdi-whatsapp</v-icon>
             </a>
           </div>
         </div>
