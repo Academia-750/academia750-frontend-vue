@@ -11,8 +11,8 @@ const moduleRoute = [
     }
   },
   {
-    path: '/opsiciones-bomberos-alicante',
-    name: 'opsiciones-bomberos-alicante',
+    path: '/oposiciones-bomberos-alicante',
+    name: 'oposiciones-bomberos-alicante',
     component: BomberosAlicanteLanding,
     meta: {
       layout: 'simple'

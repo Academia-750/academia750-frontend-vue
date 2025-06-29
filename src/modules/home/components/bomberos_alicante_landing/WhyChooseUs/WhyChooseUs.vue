@@ -48,15 +48,15 @@
             </div>
           </div>
           <!-- Success Stats Row -->
-            <v-row align="center" no-gutters class="success-row">
-                <v-col cols="12" md="7" class="success-stats-col">
-                <div class="success-stats">
-                    <span class="success-percentage">Éxito del 98,7%</span>
-                    <br>
-                    <span class="success-description">Porcentaje de alumnos aprobados en la última convocatoria</span>
-                </div>
-                </v-col>
-            </v-row>
+          <v-row align="center" no-gutters class="success-row">
+            <v-col cols="12" md="7" class="success-stats-col">
+              <div class="success-stats">
+                <span class="success-percentage">Éxito por encima del 90%</span>
+                <br>
+                <span class="success-description">Porcentaje de alumnos aprobados en la última convocatoria</span>
+              </div>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </div>

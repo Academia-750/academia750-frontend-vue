@@ -43,8 +43,8 @@ export default {
 /* Responsive logo sizing */
 @media (max-width: 600px) {
   .logo-image {
-    width: 40px !important;
-    height: 40px !important;
+    width: 35px !important;
+    height: 35px !important;
   }
 }
 </style> 

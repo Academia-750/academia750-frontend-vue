@@ -51,20 +51,8 @@
                   ico-redes-footer="mdi-instagram"
                 />
                 <FooterRedes
-                  link-redes-footer="https://www.youtube.com/@academia750"
-                  ico-redes-footer="mdi-youtube"
-                />
-                <FooterRedes
                   link-redes-footer="https://www.tiktok.com/@academia750"
                   ico-redes-footer="tiktok"
-                />
-                <FooterRedes
-                  link-redes-footer="https://www.linkedin.com/company/academia-750/"
-                  ico-redes-footer="mdi-linkedin"
-                />
-                <FooterRedes
-                  link-redes-footer="https://www.tiktok.com/@academia750"
-                  ico-redes-footer="mdi-telegram"
                 />
               </div>
               <div class="mt-1">

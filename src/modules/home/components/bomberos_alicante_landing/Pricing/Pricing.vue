@@ -2,10 +2,9 @@
   <SectionWrapper padding-y="large" background-color="#ffffff">
     <div class="pricing-content">
       <div class="pricing-header">
-        <p class="pricing-subtitle">Asequible</p>
         <h2 class="section-title">Opciones de Precios</h2>
         <p class="section-description">
-          Elige el plan que mejor se adapte a tus necesidades y presupuesto para tu preparación como bombero.
+          Elige el plan que mejor se adapte a tus necesidades
         </p>
       </div>
       

@@ -5,7 +5,6 @@
       :fixed="isFixedMenu"
       style="z-index: 10 !important"
     >
-      <!-- :bottom="!isFixedMenu" :fixed="isFixedMenu" -->
       <v-app-bar-nav-icon
         class="d-flex d-sm-flex d-md-none"
         @click="openNavigationDrawer"
@@ -23,7 +22,7 @@
         <span class="ml-1">Área privada</span>
       </v-btn>
     </v-app-bar>
-    <!-- Add a navigation bar -->
+    <!-- Mobile Navigation Drawer -->
     <v-navigation-drawer
       v-model="drawer"
       fixed
@@ -32,45 +31,53 @@
     >
       <v-list>
         <logo-list-menu />
-        <title-list-menu />
       </v-list>
-      <v-list rounded nav dense style="z-index: 12 !important">
-        <v-list-item-group style="z-index: 12 !important">
-          <v-list-item style="z-index: 12 !important" @click="scrollToTop">
-            <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>Inicio</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item
-            style="z-index: 12 !important"
-            @click="$emit('emitScrollToSectionHomePage', 'OurServiceSection')"
-          >
-            <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>Qué ofrecemos</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item
-            style="z-index: 12 !important"
-            @click="$emit('emitScrollToSectionHomePage', 'tarifasSection')"
-          >
-            <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>Tarifas</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item
-            style="z-index: 12 !important"
-            @click="$emit('emitScrollToSectionHomePage', 'ContactUsForm')"
-          >
-            <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>Contáctanos</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item
-            style="z-index: 12 !important"
-            @click="scrollToSecondLandingPage"
-          >
-            <icon-arrow-link-list-menu />
-            <v-list-item-subtitle>
-              Academia de Bomberos Alicante
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list-item-group>
+      <v-list class="pa-4">
+        <v-btn
+          text
+          block
+          class="justify-start mb-2"
+          @click="scrollToSection('top')"
+        >
+          <v-icon left>mdi-chevron-right</v-icon>
+          Inicio
+        </v-btn>
+        <v-btn
+          text
+          block
+          class="justify-start mb-2"
+          @click="scrollToSection('why-choose-us')"
+        >
+          <v-icon left>mdi-chevron-right</v-icon>
+          Qué ofrecemos
+        </v-btn>
+        <v-btn
+          text
+          block
+          class="justify-start mb-2"
+          @click="scrollToSection('pricing')"
+        >
+          <v-icon left>mdi-chevron-right</v-icon>
+          Tarifas
+        </v-btn>
+        <v-btn
+          text
+          block
+          class="justify-start mb-2"
+          @click="scrollToSection('contact')"
+        >
+          <v-icon left>mdi-chevron-right</v-icon>
+          Contáctanos
+        </v-btn>
+        <v-divider class="my-4"></v-divider>
+        <v-btn
+          block
+          class="justify-start"
+          @click="executeLoginAccountAction"
+        >
+          <v-icon left>mdi-account-circle</v-icon>
+          Área privada
+        </v-btn>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -81,27 +88,16 @@ import Cookies from 'js-cookie'
 import LogoMenu from './Menu/LogoMenu'
 import LinksMenu from './Menu/LinksMenu'
 import LogoListMenu from './Menu/ListMenu/LogoListMenu'
-import TitleListMenu from './Menu/ListMenu/TitleListMenu'
-import IconArrowLinkListMenu from './Menu/ListMenu/IconArrowLinkListMenu'
 
 export default {
   components: {
     LogoMenu,
     LinksMenu,
-    LogoListMenu,
-    TitleListMenu,
-    IconArrowLinkListMenu
+    LogoListMenu
   },
   data() {
     return {
       drawer: false,
-      items: [
-        { text: 'Inicio', key: '' },
-        { text: 'Qué ofrecemos', key: 'OurServiceSection' },
-        { text: 'Tarifas', key: 'tarifasSection' },
-        { text: 'Contáctanos', key: 'ContactUsForm' },
-        { text: 'Bomberos Alicante', key: 'SecondLandingPage' }
-      ],
       isFixedMenu: false,
       allowedFixedMenu: true
     }
@@ -118,7 +114,6 @@ export default {
   methods: {
     ...mapMutations('profileService', ['set_user']),
     openNavigationDrawer() {
-      //console.log('openNavigationDrawer')
       this.drawer = true
     },
     executeLoginAccountAction() {
@@ -129,52 +124,77 @@ export default {
 
         return
       }
-
       this.$router.push({
         name: 'login'
       })
-      //this.$emit('emitShowLoginDialog')
     },
     handleScroll() {
       this.isFixedMenu = window.scrollY >= 100
     },
-    scrollToTop() {
-      this.$vuetify.goTo(0)
-      this.drawer = false
-    },
-    scrollToSecondLandingPage() {
-      this.$router.push({ name: 'opsiciones-bomberos-alicante' })
-      this.drawer = false
+    scrollToSection(section) {
+      const route = this.$route.name
+      let targetElement
+
+      if (route === 'oposiciones-bomberos-alicante') {
+        // Bomberos Alicante landing page sections
+        switch (section) {
+          case 'top':
+            this.$vuetify.goTo(0, { duration: 600, offset: 0 })
+            this.drawer = false
+
+            return
+
+          case 'services':
+            targetElement = document.querySelector('.what-includes-content')
+            break
+
+          case 'pricing':
+            targetElement = document.querySelector('.pricing-content')
+            break
+
+          case 'contact':
+            targetElement = document.querySelector('.contact-content')
+            break
+        }
+      } else {
+        // Home page sections
+        switch (section) {
+          case 'top':
+            this.$vuetify.goTo(0, { duration: 600, offset: 0 })
+            this.drawer = false
+
+            return
+
+          case 'why-choose-us':
+            targetElement = document.querySelector('.why-choose-us-content')
+            break
+
+          case 'pricing':
+            targetElement = document.getElementById('tarifasSection')
+            break
+
+          case 'contact':
+            targetElement = document.getElementById('ContactUsForm')
+            break
+        }
+      }
+
+      if (targetElement) {
+        this.$vuetify.goTo(targetElement, {
+          duration: 600,
+          offset: 80,
+          easing: 'easeInOutCubic'
+        })
+        this.drawer = false
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-/* .menu_estilo .v-btn:before{
-  display: none!important;
+.v-btn {
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
-.menu_estilo button.v-app-bar__nav-icon:hover{
-  background-color: #f2f5f8!important;
-}
-@media(min-width:1025px){
-  .menu_estilo header > .v-toolbar__content{
-    max-width: 1320px!important;
-    margin: auto;
-  }
-  .menu_estilo header{
-    background: #f2f5f8!important;
-  }
-}
-@media(max-width:1024px){
-  .boton-acceso{
-    display: none;
-  }
-  .menu_estilo .v-app-bar__nav-icon{
-    width: auto;
-    justify-content: center;
-    position: absolute;
-    right: 0;
-  }
-} */
 </style>
