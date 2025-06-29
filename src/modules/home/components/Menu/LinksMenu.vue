@@ -24,7 +24,7 @@ export default {
       const route = this.$route.name
       let targetElement
 
-      if (route === 'opsiciones-bomberos-alicante') {
+      if (route === 'oposiciones-bomberos-alicante') {
         // Bomberos Alicante landing page sections
         switch (section) {
           case 'top':
