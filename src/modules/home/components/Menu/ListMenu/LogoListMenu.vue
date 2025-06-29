@@ -12,7 +12,7 @@ export default {
   props: {
     uriLogo: {
       type: String,
-      default: '/images/academia750/logo.svg'
+      default: '/images/academia750/LOGO ESCUDO COLOR TRANSPARENCIA.png'
     }
   }
 }

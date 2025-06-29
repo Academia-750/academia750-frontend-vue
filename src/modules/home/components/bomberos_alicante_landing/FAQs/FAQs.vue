@@ -39,9 +39,7 @@
             class="faq-answer"
             :class="{ expanded: activeIndex === index }"
           >
-            <div class="answer-content">
-              <p>{{ faq.answer }}</p>
-            </div>
+            <div class="answer-content" v-html="faq.answer"></div>
           </div>
         </div>
       </div>
@@ -70,7 +68,18 @@ export default {
       faqs: [
         {
           question: '¿Qué pruebas contiene una oposición a bombero o bombera?',
-          answer: 'Una oposición generalmente cuenta con cinco pruebas. Prueba teórica de conocimiento de todo el temario, Supuesto práctico. Una prueba teórica de un temario más acotado orientada a una situación real. Unas pruebas físicas, Prueba psicotécnica, Reconocimiento médico'
+          answer: `
+            <div class="faq-list-answer">
+              <p>Una oposición generalmente cuenta con cinco pruebas.</p>
+              <ul>
+                <li>Prueba teórica de conocimiento de todo el temario</li>
+                <li>Supuesto práctico. Una prueba teórica de un temario más acotado orientada a una situación real.</li>
+                <li>Unas pruebas físicas</li>
+                <li>Prueba psicotécnica</li>
+                <li>Reconocimiento médico</li>
+              </ul>
+            </div>
+          `
         },
         {
           question: '¿Cómo me puedo inscribir?',
@@ -310,5 +319,23 @@ export default {
     padding: 32px 0;
     margin-bottom: 20px;
   }
+}
+
+.faq-list-answer ul {
+  list-style-type: none;
+  padding-left: 2rem;
+  margin-top: 1rem;
+}
+
+.faq-list-answer li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq-list-answer li::before {
+  content: "○";
+  position: absolute;
+  left: 0;
 }
 </style> 

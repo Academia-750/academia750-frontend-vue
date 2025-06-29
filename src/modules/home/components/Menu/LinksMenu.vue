@@ -3,11 +3,10 @@
     <v-btn text @click="scrollToSection('top')"> Inicio </v-btn>
     <v-btn
       text
-      @click="scrollToSection('services')"
+      @click="scrollToSection('why-choose-us')"
     >
       Qué ofrecemos
     </v-btn>
-    <v-btn text @click="navigateToNewLandingPage"> Bomberos Alicante </v-btn>
     <v-btn text @click="scrollToSection('pricing')">
       Tarifas
     </v-btn>
@@ -21,10 +20,6 @@
 export default {
   name: 'LinksMenu',
   methods: {
-    navigateToNewLandingPage() {
-      this.$router.push({ name: 'opsiciones-bomberos-alicante' })
-    },
-
     scrollToSection(section) {
       const route = this.$route.name
       let targetElement
@@ -37,8 +32,8 @@ export default {
 
             return
 
-          case 'services':
-            targetElement = document.querySelector('.what-includes-content')
+          case 'why-choose-us':
+            targetElement = document.querySelector('.why-choose-us-content')
             break
 
           case 'pricing':
@@ -57,8 +52,8 @@ export default {
 
             return
 
-          case 'services':
-            targetElement = document.getElementById('OurServiceSection')
+          case 'why-choose-us':
+            targetElement = document.querySelector('.why-choose-us-content')
             break
 
           case 'pricing':
@@ -74,7 +69,7 @@ export default {
       if (targetElement) {
         this.$vuetify.goTo(targetElement, {
           duration: 600,
-          offset: -80,
+          offset: 80,
           easing: 'easeInOutCubic'
         })
       }
