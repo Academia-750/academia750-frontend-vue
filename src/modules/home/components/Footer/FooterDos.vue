@@ -6,7 +6,7 @@
       </li>
       <li
         style="cursor: pointer"
-        @click="scrollToSection('what-includes')"
+        @click="scrollToSection('why-choose-us')"
       >
         <v-icon dark> mdi-chevron-right </v-icon> Qué ofrecemos
       </li>
@@ -41,8 +41,8 @@ export default {
 
             return
 
-          case 'what-includes':
-            targetElement = document.querySelector('.what-includes-content')
+          case 'why-choose-us':
+            targetElement = document.querySelector('.why-choose-us-content')
             break
 
           case 'pricing':
