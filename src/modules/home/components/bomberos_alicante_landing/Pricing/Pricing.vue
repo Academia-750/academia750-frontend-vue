@@ -8,9 +8,9 @@
         </p>
       </div>
       
-      <v-row class="pricing-cards-row" justify="center">
-        <!-- Iniciación Card -->
-        <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col">
+      <v-row class="pricing-cards-row" justify="center" align="stretch">
+        <!-- Basic Card -->
+        <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col d-flex">
           <div class="pricing-card">
             <div class="card-header">
               <div class="header-top">
@@ -21,14 +21,14 @@
                   <span class="price">80€<span class="price-period">/mes</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Iniciación</h3>
-              <p class="package-subtitle">Si lo que buscas es comenzar a preparar la oposición</p>
+              <h3 class="package-title">Basic</h3>
+              <p class="package-subtitle">Dos opciones, iniciación y avanzado, en función de tus necesidades</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:</p>
+              <p class="includes-text">En iniciación te ayudaremos a conocer el temario y la oposición. En avanzado te exprimiremos al máximo para llegar a cualquier parte del temario.</p>
               
               <div class="features-grid">
                 <div class="feature-column">
@@ -61,13 +61,13 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Comenzar</button>
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
             </div>
           </div>
         </v-col>
         
-        <!-- Avanzado Card -->
-        <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col">
+        <!-- Presencial + GYM Card -->
+        <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col d-flex">
           <div class="pricing-card">
             <div class="card-header">
               <div class="header-top">
@@ -75,17 +75,17 @@
                   <img src="/images/academia750/boxIcon.png" alt="Package Icon" class="icon-image" />
                 </div>
                 <div class="price-section">
-                  <span class="price">80€<span class="price-period">/mes</span></span>
+                  <span class="price">120€<span class="price-period">/mes</span></span>
                 </div>
               </div>
-              <h3 class="package-title">Avanzado</h3>
-              <p class="package-subtitle">Si lo que necesitas es exprimirte al máximo</p>
+              <h3 class="package-title">Presencial + GYM</h3>
+              <p class="package-subtitle">Todo lo que incluye la cuota Basic, pero además</p>
             </div>
             
             <hr class="card-divider" />
             
             <div class="card-content">
-              <p class="includes-text">Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:</p>
+              <p class="includes-text">Incluimos el uso del aula de estudio y la opción de que puedas entrenar en nuestras instalaciones. Podrás usar el vestuario y continuar con tu estudio.</p>
               
               <div class="features-grid">
                 <div class="feature-column">
@@ -111,14 +111,102 @@
                   </div>
                   <div class="feature-item">
                     <span class="checkmark">✓</span>
-                    <span class="feature-text">Clases de forma presencial u online</span>
+                    <span class="feature-text">Clases presenciales</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Clases grabadas y/o explicativas</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Aula de estudio</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Entrena junto a otros opositores</span>
                   </div>
                 </div>
               </div>
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Comenzar</button>
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+            </div>
+          </div>
+        </v-col>
+
+        <!-- Complex Card -->
+        <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="pricing-col d-flex">
+          <div class="pricing-card recommended-card">
+            <div class="recommended-badge">
+              Recomendada por alumn@s con plaza
+            </div>
+            <div class="card-header">
+              <div class="header-top">
+                <div class="card-icon">
+                  <img src="/images/academia750/boxIcon.png" alt="Package Icon" class="icon-image" />
+                </div>
+                <div class="price-section">
+                  <span class="price">150€<span class="price-period">/mes</span></span>
+                </div>
+              </div>
+              <h3 class="package-title">Complex</h3>
+              <p class="package-subtitle">Si necesitas entrenar con un grupo, tener un preparador físico</p>
+            </div>
+            
+            <hr class="card-divider" />
+            
+            <div class="card-content">
+              <p class="includes-text">Que te corrija y aconseje en la carrera, fuerza y natación, 5 días por semana, te facilitamos esta tarifa incluyendo todo lo que aparece en la cuota Presencial + GYM.</p>
+              
+              <div class="features-grid">
+                <div class="feature-column">
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Preparación teórica</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Planificación física</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Supuestos prácticos</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Psicotécnicos</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Generador de test</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Clases presenciales</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Clases grabadas y/o explicativas</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Aula de estudio</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Entrena junto a otros opositores</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span class="feature-text">Sesiones guiadas con preparador físico (incluye acceso a piscina)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-footer">
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
             </div>
           </div>
         </v-col>
@@ -203,6 +291,29 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+}
+
+.recommended-card {
+  position: relative;
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  background-color: #d32f2f;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif !important;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .card-header {
@@ -283,9 +394,9 @@ export default {
 }
 
 .features-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .feature-column {
@@ -448,7 +559,6 @@ export default {
   }
   
   .features-grid {
-    grid-template-columns: 1fr;
     gap: 12px;
   }
   

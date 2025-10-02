@@ -5,12 +5,14 @@
         Nuestras tarifas se adaptan a tus <br />
         necesidades
       </h2>
-      <v-row justify="center">
-        <v-col lg="4" md="6" cols="12">
+      <v-row justify="center" class="align-stretch">
+        <v-col lg="4" md="6" cols="12" class="d-flex">
           <item-tarifas
-            titulo-tarifa="Iniciación"
+            titulo-tarifa="Basic"
             precio-tarifa="80"
-            contenido-tarifa="Si lo que buscas es comenzar a preparar la oposición y necesitas comprender y asimilar los conceptos para conseguir una buena base te ofrecemos la siguiente tarifa con todo esto incluido:"
+            contenido-tarifa="Dos opciones, iniciación y avanzado, en función de tus necesidades.
+            En iniciación te ayudaremos a conocer el temario y la oposición.
+            En avanzado te exprimiremos al máximo para llegar a cualquier parte del temario."
             :items-tarifa="iniciacion"
             is-dark-button
             @emitClickInscriptionContactUs="
@@ -18,15 +20,29 @@
             "
           />
         </v-col>
-        <v-col lg="4" md="6" cols="12">
+        <v-col lg="4" md="6" cols="12" class="d-flex">
           <item-tarifas
-            titulo-tarifa="Avanzado"
-            precio-tarifa="80"
+            titulo-tarifa="Presencial + GYM"
+            precio-tarifa="120"
             is-dark-button
-            contenido-tarifa="Si lo que necesitas es exprimirte al máximo, llegar a partes del temario donde otros no llegan y no dejar nada al azar, te ofrecemos un grupo para mejorar con todo lo siguiente incluido:"
-            :items-tarifa="iniciacion"
+            contenido-tarifa="Todo lo que incluye la cuota Basic, pero además:
+            Incluimos el uso del aula de estudio y la opción de que puedas entrenar en nuestras instalaciones. Podrás usar el vestuario y continuar con tu estudio."
+            :items-tarifa="Avanzado"
             @emitClickInscriptionContactUs="
               $emit('emitClickInscriptionContactUs', 'Avanzado')
+            "
+          />
+        </v-col>
+        <v-col lg="4" md="6" cols="12" class="d-flex">
+          <item-tarifas
+            titulo-tarifa="Complex"
+            precio-tarifa="150"
+            is-dark-button
+            is-recommended
+            contenido-tarifa="Si necesitas entrenar con un grupo, tener un preparador físico que te corrija y aconseje en la carrera, fuerza y natación, 5 días por semana, te facilitamos esta tarifa incluyendo todo lo que aparece en la cuota Presencial + GYM."
+            :items-tarifa="Complex"
+            @emitClickInscriptionContactUs="
+              $emit('emitClickInscriptionContactUs', 'Complex')
             "
           />
         </v-col>
@@ -61,20 +77,41 @@ export default {
         'Generador de test',
         'Clases de forma presencial u online.'
       ],
-      Autoevealuable: [
+      Avanzado: [
         'Preparación teórica',
         'Preparación física',
         'Supuestos prácticos',
         'Psicotécnicos',
         'Generador de test',
-        'Grabaciones teóricas'
+        'Clases presenciales',
+        'Clases grabadas y/o explicativas',
+        'Aula de estudio',
+        'Entrena junto a otros opositores'
+      ],
+      Complex: [
+        'Preparación teórica',
+        'Planificación física',
+        'Supuestos prácticos',
+        'Psicotécnicos',
+        'Generador de test',
+        'Clases presenciales',
+        'Clases grabadas y/o explicativas',
+        'Aula de estudio',
+        'Entrena junto a otros opositores',
+        'Sesiones guiadas con preparador físico (incluye acceso a piscina)'
       ]
     }
   }
 }
 </script>
 <style scoped>
-/* .seccion_tarifa {
-    padding-top: 70px;
-  } */
+.seccion_tarifa {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.align-stretch .v-col {
+  display: flex;
+  align-items: stretch;
+}
 </style>
