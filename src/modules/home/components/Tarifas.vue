@@ -16,7 +16,7 @@
             :items-tarifa="iniciacion"
             is-dark-button
             @emitClickInscriptionContactUs="
-              $emit('emitClickInscriptionContactUs', 'Iniciación')
+              $emit('emitClickInscriptionContactUs', 'Basic')
             "
           />
         </v-col>
@@ -29,7 +29,7 @@
             Incluimos el uso del aula de estudio y la opción de que puedas entrenar en nuestras instalaciones. Podrás usar el vestuario y continuar con tu estudio."
             :items-tarifa="Avanzado"
             @emitClickInscriptionContactUs="
-              $emit('emitClickInscriptionContactUs', 'Avanzado')
+              $emit('emitClickInscriptionContactUs', 'Presencial + GYM')
             "
           />
         </v-col>

@@ -133,7 +133,7 @@
                 <v-textarea
                   ref="MessageTextarea"
                   v-model="form.message"
-                  label="Mensaje"
+                  :label="`Mensaje: ${form.reasonInscription}`"
                   placeholder="Escribe tu mensaje"
                   solo
                   :error-messages="errors"
@@ -181,6 +181,7 @@ export default {
         email: '',
         message: '',
         reason: null,
+        reasonInscription: null,
         apiPublicKeyRecaptcha: null
       },
       itemsMotivo: ['General', 'Recuperar Contraseña', 'Unete'],
@@ -216,7 +217,7 @@ export default {
       this.form.email = null
       this.form.message = null
       this.form.reason = null
-
+      this.form.reasonInscription = null
       this.$nextTick(() => {
         this.$refs['FormSubmitContactUs']['reset']()
       })
@@ -303,6 +304,7 @@ export default {
             phone: this.form.phone,
             email: this.form.email,
             message: this.form.message,
+            reasonInscription: this.form.reasonInscription,
             'g-recaptcha-response': tokenRecaptcha
           }
         })

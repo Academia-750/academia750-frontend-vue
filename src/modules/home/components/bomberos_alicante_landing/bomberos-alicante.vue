@@ -110,8 +110,8 @@ export default {
         name: 'login'
       })
     },
-    handleReservarPlaza() {
-      console.log('Reservar plaza clicked')
+    handleReservarPlaza(plan) {
+      console.log('Selected plan:', plan)
       // Scroll to the contact form section
       this.$vuetify.goTo(this.$refs.ContactUsFormComponent.$el, { 
         duration: 800, 
@@ -122,6 +122,7 @@ export default {
       if (this.$refs.ContactUsFormComponent) {
         this.$refs.ContactUsFormComponent.form.message = null
         this.$refs.ContactUsFormComponent.form.reason = 'inscription'
+        this.$refs.ContactUsFormComponent.form.reasonInscription = plan
       }
     },
     showDialogLoginAction() {

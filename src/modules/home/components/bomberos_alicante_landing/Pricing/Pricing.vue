@@ -61,7 +61,7 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs', 'Basic')">Únete</button>
             </div>
           </div>
         </v-col>
@@ -130,7 +130,7 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs', 'Presencial + GYM')">Únete</button>
             </div>
           </div>
         </v-col>
@@ -206,7 +206,7 @@
             </div>
             
             <div class="card-footer">
-              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs')">Únete</button>
+              <button class="cta-button" @click="$emit('emitClickInscriptionContactUs', 'Complex')">Únete</button>
             </div>
           </div>
         </v-col>

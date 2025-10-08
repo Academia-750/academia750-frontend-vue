@@ -23,6 +23,8 @@
     "moment-timezone": "^0.5.31",
     "secure-random-password": "^0.2.3",
     "standard-version": "^9.5.0",
+    "sweetalert2": "^11.24.1",
+    "sweetalert2.min.css": "link:sweetalert2/dist/sweetalert2.min.css",
     "tiptap": "^1.27.1",
     "tiptap-extensions": "^1.29.1",
     "vee-validate": "^3.4.14",

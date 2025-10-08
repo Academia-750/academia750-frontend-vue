@@ -50,6 +50,12 @@ importers:
       standard-version:
         specifier: ^9.5.0
         version: 9.5.0
+      sweetalert2:
+        specifier: ^11.24.1
+        version: 11.24.1
+      sweetalert2.min.css:
+        specifier: link:sweetalert2/dist/sweetalert2.min.css
+        version: link:sweetalert2/dist/sweetalert2.min.css
       tiptap:
         specifier: ^1.27.1
         version: 1.32.2(vue-template-compiler@2.7.16)(vue@2.7.16)
@@ -5224,6 +5230,9 @@ packages:
     engines: {node: '>=4.0.0'}
     deprecated: This SVGO version is no longer supported. Upgrade to v2.x.x.
     hasBin: true
+
+  sweetalert2@11.24.1:
+    resolution: {integrity: sha512-V1PM/vXjAydKsEFrHgrfkWs+IKn8YPzmqc7eU2UaukO3K758MaLN8NC5kXnXPoKpTqNc430vYajoNKUOP9NtSA==}
 
   sweetalert2@11.4.4:
     resolution: {integrity: sha512-9yYWQuRT1v9JNI/paPTSYV+68MHwe9C+HQ/I2jtfaFzoJgYRftWXOs4JqmDSjT7m2m4r8ebMMn8LcxD1Wq9B/w==}
@@ -12049,6 +12058,8 @@ snapshots:
       stable: 0.1.8
       unquote: 1.1.1
       util.promisify: 1.0.1
+
+  sweetalert2@11.24.1: {}
 
   sweetalert2@11.4.4: {}
 
