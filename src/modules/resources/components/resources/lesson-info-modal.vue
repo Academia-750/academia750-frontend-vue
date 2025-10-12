@@ -34,13 +34,26 @@
               </p>
             </div>
           </div>
+          <div v-if="lesson.max_students" class="mb-4">
+            <p class="text-h6 mb-0 font-weight-black black--text">
+              Espacios disponibles:
+            </p>
+            <p class="text-h6 font-weight-black">
+              {{
+                lesson.available_spaces !== null
+                  ? lesson.available_spaces + ' de ' + lesson.max_students
+                  : 'Ilimitado'
+              }}
+            </p>
+          </div>
           <div class="d-flex justify-space-between">
             <SwitchInput
               v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
               id="joinLesson"
               :value="lesson.will_join === 1"
               :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
-              @click="(value) => joinLesson(lesson.id, value)"
+              :disabled="!canJoinLesson"
+              @click="(value) => handleJoinLesson(lesson.id, value)"
             />
             <resource-button
               v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
@@ -93,6 +106,22 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="confirmDialog" max-width="400">
+      <v-card>
+        <v-card-title class="headline">Confirmar asistencia</v-card-title>
+        <v-card-text>
+          Al confirmar tu asistencia, estás reservando un espacio en esta clase.
+          Por favor, asegúrate de poder asistir antes de confirmar.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey" text @click="confirmDialog = false">
+            Cancelar
+          </v-btn>
+          <v-btn color="primary" text @click="confirmJoin"> Confirmar </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 <script>
@@ -116,7 +145,22 @@ export default {
     return {
       PermissionEnum,
       isOpen: false,
-      lesson: {}
+      lesson: {},
+      confirmDialog: false,
+      pendingJoinValue: false
+    }
+  },
+  computed: {
+    canJoinLesson() {
+      // If trying to unjoin, always allow
+      if (this.lesson.will_join === 1) {
+        return this.lesson.can_join !== false
+      }
+      // If trying to join, check if not full and date hasn't passed
+      return (
+        this.lesson.can_join !== false &&
+        (this.lesson.is_full !== true || this.lesson.will_join === 1)
+      )
     }
   },
   methods: {
@@ -166,6 +210,20 @@ export default {
         params: { id: lesson.id }
       })
     },
+    handleJoinLesson(lessonId, value) {
+      // If trying to join, show confirmation dialog
+      if (value) {
+        this.pendingJoinValue = value
+        this.confirmDialog = true
+      } else {
+        // If unjoining, do it directly
+        this.joinLesson(lessonId, value)
+      }
+    },
+    async confirmJoin() {
+      this.confirmDialog = false
+      await this.joinLesson(this.lesson.id, this.pendingJoinValue)
+    },
     async joinLesson(lessonId, value) {
       const res = await LessonRepository.joinLesson(lessonId, value)
 
@@ -175,6 +233,8 @@ export default {
 
       if (value) {
         Toast.success('Has confirmado tu asistencia a la clase.')
+      } else {
+        Toast.info('Has cancelado tu asistencia a la clase.')
       }
 
       this.updateJoinLesson({ lessonId, value })
