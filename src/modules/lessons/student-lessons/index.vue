@@ -199,7 +199,7 @@ export default {
       if (lesson.will_join === 1) {
         return lesson.can_join !== false
       }
-      // If trying to join, check if not full and date hasn't passed
+      
       return (
         lesson.can_join !== false &&
         (lesson.is_full !== true || lesson.will_join === 1)
