@@ -19,6 +19,7 @@ import groups from '@/modules/groups'
 import tags from '@/modules/tags'
 import workspaces from '@/modules/workspaces'
 import lessons from '@/modules/lessons'
+import spaces from '@/modules/spaces'
 import permissions from '@/modules/permissions'
 
 registerModules({
@@ -41,6 +42,7 @@ registerModules({
   groups,
   workspaces,
   lessons,
+  spaces,
   permissions,
   tags
 })
