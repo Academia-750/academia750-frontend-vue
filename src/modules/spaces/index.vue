@@ -16,7 +16,6 @@
                 </div>
 
                 <!-- Column for Date -->
-
                 <div>
                   <span class="font-weight-bold subtitle-2">Fecha: </span>
                   {{ dateFormat(lesson.date) }}
@@ -28,33 +27,20 @@
                   {{ `${lesson.start_time} - ${lesson.end_time}` }}
                 </div>
 
-                <!-- Column for Student Count -->
-                <div>
+                <!-- Column for Max Students (specific to spaces) -->
+                <div v-if="lesson.max_students">
                   <span class="font-weight-bold subtitle-2">
-                    No. de alumnos:
+                    Máximo de alumnos:
                   </span>
-                  {{ lesson.student_count || 0 }}
+                  {{ lesson.max_students }}
                 </div>
               </template>
               <template v-else slot="info">
                 <div class="d-flex w-full justify-between">
-                  Selecciona o crea una clase
+                  Selecciona un espacio
                 </div>
-                <ResourceButtonAdd
-                  v-if="$hasRoles('admin')"
-                  class="ml-16"
-                  text-button="Crear Clase"
-                  @click="addLesson(date)"
-                />
               </template>
               <template v-if="lesson" slot="actions">
-                <resource-button
-                  v-if="$hasRoles('admin')"
-                  text-button="Editar"
-                  icon-button="mdi-pencil"
-                  color="primary"
-                  @click="$router.push({ name: 'create-lessons' })"
-                />
                 <resource-button
                   v-if="
                     $hasRolesOrPermissions(
@@ -88,13 +74,13 @@
               </template>
             </LessonToolBar>
             <CalendarLessonsList
-              :focus="date"
-              :type="type"
+              :focus="date || new Date().toISOString().substr(0, 10)"
+              :type="type || 'month'"
               :events="events"
               :loading="isLoading"
               @type="SET_TYPE"
               @date="onDate"
-              @event="onLesson"
+              @event="viewEvent"
               @load="onLoad"
               @focus="SET_DATE"
             >
@@ -103,25 +89,18 @@
         </v-card>
       </template>
       <template v-else>
-        <div class="d-flex justify-end my-2">
-          <ResourceButtonAdd
-            class="ml-16"
-            text-button="Crear Clase"
-            @click="addLesson"
-          />
-        </div>
         <div class="d-flex justify-center mt-2 mb-2">
           <MobileCalendar
             :loading="isLoading"
-            :focus="date"
+            :focus="date || new Date().toISOString().substr(0, 10)"
             :events="events"
             @load="onLoad"
             @focus="SET_DATE"
           >
             <template #actions="event">
               <div class="d-flex justify-end flex-fill">
-                <v-icon class="px-2" color="info" @click="editEvent(event)">
-                  mdi-pencil
+                <v-icon class="px-2" color="info" @click="viewEvent(event)">
+                  mdi-eye
                 </v-icon>
               </div>
             </template>
@@ -138,29 +117,25 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import moment from 'moment'
 import LessonRepository from '@/services/LessonRepository'
 import { PermissionEnum } from '@/utils/enums'
+
 export default {
-  name: 'CalendarLesson',
+  name: 'SpacesManagement',
   components: {
     CalendarLessonsList: () =>
       import(
-        /* webpackChunkName: "CalendarLessonsList" */ '../_common/calendar-lessons-list.vue'
+        /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/calendar-lessons-list.vue'
       ),
     LessonToolBar: () =>
       import(
-        /* webpackChunkName: "CalendarLessonsList" */ '../_common/lesson-tool-bar.vue'
+        /* webpackChunkName: "LessonToolBar" */ '@/modules/lessons/_common/lesson-tool-bar.vue'
       ),
-
     ResourceButton: () =>
       import(
         /* webpackChunkName: "ResourceButton" */ '@/modules/resources/components/resources/ResourceButton'
       ),
-    ResourceButtonAdd: () =>
-      import(
-        /* webpackChunkName: "ResourceButtonAdd" */ '@/modules/resources/components/resources/ResourceButtonAdd'
-      ),
     MobileCalendar: () =>
       import(
-        /* webpackChunkName: "CalendarLessonsList" */ '../_common/mobile-calendar-lessons-list.vue'
+        /* webpackChunkName: "MobileCalendar" */ '@/modules/lessons/_common/mobile-calendar-lessons-list.vue'
       )
   },
   mixins: [notifications],
@@ -173,7 +148,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson', 'date', 'type']),
+    ...mapState('spacesStore', ['lesson', 'date', 'type']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     },
@@ -198,12 +173,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations('lessonsStore', ['SET_DATE', 'SET_TYPE']),
-    ...mapActions('lessonsStore', ['setLesson']),
+    ...mapMutations('spacesStore', ['SET_DATE', 'SET_TYPE']),
+    ...mapActions('spacesStore', ['setLesson']),
     dateFormat(date) {
       return moment(date).format('DD/MM/YYYY')
     },
-    editEvent(event) {
+    viewEvent(event) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
       if (!lesson) {
@@ -211,65 +186,47 @@ export default {
       }
 
       this.setLesson(lesson)
-      this.$router.push({ name: 'create-lessons' })
-    },
-    addLesson(date = undefined) {
-      this.setLesson(false)
-      this.$router.push({ name: 'create-lessons', query: { date } })
     },
     onDate() {
       this.setLesson(false)
     },
-    onLesson(event) {
-      const lesson = this.lessons.find((item) => item.id === event.id)
-
-      if (!lesson) {
-        return
-      }
-
-      this.setLesson(lesson || false)
-      if (this.isMobile) {
-        this.$router.push({ name: 'create-lessons' })
-      }
-    },
-
-    async onLoad({ start, end }) {
+    onLoad({ start, end }) {
       this.isLoading = true // Show the loader while fetching lessons
       const params = {
         from: start,
         to: end,
-        type: 'classroom' // Only fetch classroom type lessons
+        type: 'space' // Only fetch space type lessons
       }
 
-      const { results } = await LessonRepository.calendar(params)
+      LessonRepository.calendar(params).then(({ results }) => {
+        this.lessons = results
+        this.isLoading = false
 
-      this.lessons = results
-      this.isLoading = false
+        // We already have a current selected lesson in this month
+        const alreadySelected = this.lesson && this.lessons.find(
+          (lesson) => lesson.id === this.lesson.id
+        )
 
-      // We already have a current selected lesson in this month
-      const alreadySelected = this.lessons.find(
-        (lesson) => lesson.id === this.lesson.id
-      )
+        if (alreadySelected) {
+          return
+        }
+        // Auto select the first next lesson or the last lesson if all is in the past
+        const nextLesson =
+          this.lessons.filter(
+            (lesson) => lesson.date > moment().format('YYYY-MM-DD')
+          )[0] || [...this.lessons].pop()
 
-      if (alreadySelected) {
-        return
-      }
-      // Auto select the first next lesson or the last lesson if all is in the past
-      const nextLesson =
-        this.lessons.filter(
-          (lesson) => lesson.date > moment().format('YYYY-MM-DD')
-        )[0] || [...this.lessons].pop()
-
-      if (nextLesson) {
-        this.setLesson(nextLesson)
-        this.SET_DATE(nextLesson.date)
-        this.loading = false
-      }
+        if (nextLesson) {
+          this.setLesson(nextLesson)
+          this.SET_DATE(nextLesson.date)
+          this.loading = false
+        }
+      })
     }
   },
   head: {
     title: {
-      inner: 'Gestionar Clases'
+      inner: 'Gestión de Espacios'
     }
   }
 }
