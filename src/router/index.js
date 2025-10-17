@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import middleware from '@grafikri/vue-middleware'
+import spacesRouter from '@/modules/spaces/spaces.router'
 
 // Routes
 /* import AppsRoutes from './apps.routes'
@@ -37,6 +38,9 @@ const router = new Router({
   },
   routes
 })
+
+// Register module routes
+spacesRouter(router)
 
 /**
  * Before each route update

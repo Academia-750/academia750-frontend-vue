@@ -17,7 +17,7 @@
               icon-button="mdi-folder-open"
               @click="
                 $router.push({
-                  name: 'add-materials',
+                  name: 'student-add-materials',
                   params: { id: $route.params.id }
                 })
               "
