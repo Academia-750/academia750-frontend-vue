@@ -1,6 +1,35 @@
 import Module from './module.vue'
 import authMiddleware from '@/middlewares/auth'
 import ManageSpacesModule from './index'
+import StudentSpaces from './student-spaces'
+
+/**
+ * STUDENT ROUTES FOR SPACES
+ */
+const studentRoute = [
+  {
+    path: '/',
+    component: Module,
+    redirect: { name: 'my-spaces' },
+    children: [
+      {
+        path: 'my-spaces',
+        component: Module,
+        redirect: { name: 'my-spaces' },
+        children: [
+          {
+            path: 'list',
+            name: 'my-spaces',
+            component: StudentSpaces,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
 
 /**
  * ADMIN ROUTES FOR SPACES MANAGEMENT
@@ -24,5 +53,6 @@ const adminRoute = [
 ]
 
 export default (router) => {
-  router.addRoutes(adminRoute)
+  adminRoute.forEach((route) => router.addRoute(route))
+  studentRoute.forEach((route) => router.addRoute(route))
 }

@@ -86,5 +86,5 @@ const moduleRoute = [
 ]
 
 export default (router) => {
-  router.addRoutes(moduleRoute)
+  moduleRoute.forEach((route) => router.addRoute(route))
 }
