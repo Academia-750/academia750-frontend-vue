@@ -70,7 +70,7 @@ const studentRoute = [
           },
           {
             path: ':id/materials',
-            name: 'list-of-materials',
+            name: 'student-list-of-materials',
             component: ListOfMaterialsForLessonsModule,
             meta: {
               middleware: [authMiddleware]
@@ -78,7 +78,7 @@ const studentRoute = [
           },
           {
             path: ':id/list/materials',
-            name: 'add-materials',
+            name: 'student-add-materials',
             component: AddMaterialsToLessonsModule,
             meta: {
               middleware: [authMiddleware]
@@ -174,6 +174,6 @@ const adminRoute = [
 ]
 
 export default (router) => {
-  router.addRoutes(adminRoute)
-  router.addRoutes(studentRoute)
+  adminRoute.forEach((route) => router.addRoute(route))
+  studentRoute.forEach((route) => router.addRoute(route))
 }

@@ -412,9 +412,28 @@ export default {
     })
 
     if (response.status !== 200) {
-      ResourceService.warning({
-        response
-      })
+      // Show user-friendly Spanish messages instead of technical errors
+      const errorMessage = response.data?.error || response.data?.message
+      
+      if (errorMessage && errorMessage.includes('past lessons')) {
+        ResourceService.warning({
+          response,
+          title: 'Acción no permitida',
+          message: 'No puedes cambiar la asistencia de un espacio/clase pasado.'
+        })
+      } else if (errorMessage && errorMessage.includes('maximum capacity')) {
+        ResourceService.warning({
+          response,
+          title: 'Capacidad máxima alcanzada',
+          message: 'Este espacio/clase ha alcanzado su capacidad máxima.'
+        })
+      } else {
+        ResourceService.warning({
+          response,
+          title: 'Error',
+          message: 'No se pudo actualizar tu asistencia. Inténtalo de nuevo.'
+        })
+      }
 
       return false
     }
