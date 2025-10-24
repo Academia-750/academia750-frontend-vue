@@ -6,13 +6,19 @@ export default {
       text: 'Clases y Materiales',
       key: '',
       permissions: [PermissionEnum.SEE_LESSONS],
-      regex: /^\/(lessons|student-materials|student-recordings)/,
       items: [
         {
           icon: 'mdi-book-open-page-variant',
           key: '',
           text: 'Mis Clases',
           to: { name: 'my-lessons' },
+          permissions: [PermissionEnum.SEE_LESSONS]
+        },
+        {
+          icon: 'mdi-home-city',
+          key: '',
+          text: 'Mis Espacios',
+          to: { name: 'my-spaces' },
           permissions: [PermissionEnum.SEE_LESSONS]
         },
         {
@@ -125,7 +131,6 @@ export default {
       text: 'Gestión de Usuarios',
       key: '',
       roles: 'admin',
-      regex: /^\/(manage-students|manage-profiles|manage-groups)/,
       items: [
         {
           icon: 'mdi-account',
@@ -154,7 +159,6 @@ export default {
       text: 'Gestión de Clases',
       key: '',
       roles: 'admin',
-      regex: /^\/(lesson|workspace|spaces)/,
       items: [
         {
           icon: 'mdi-book-open-page-variant',
@@ -197,7 +201,6 @@ export default {
       text: 'Gestión de Oposiciones',
       key: '',
       roles: 'admin',
-      regex: /^\/(manage-oppositions|manage-topics|import-)/,
       items: [
         {
           icon: 'mdi-book-open-variant',

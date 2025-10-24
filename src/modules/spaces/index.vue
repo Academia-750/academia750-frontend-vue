@@ -10,29 +10,25 @@
                   <div
                     :class="'mr-1 circle ' + (lesson.is_active ? 'active' : '')"
                   />
-                  <span class="font-weight-bold subtitle-2">
-                    {{ lesson.name }}
-                  </span>
+                  <TextLabel>{{ lesson.name }}</TextLabel>
                 </div>
 
                 <!-- Column for Date -->
                 <div>
-                  <span class="font-weight-bold subtitle-2">Fecha: </span>
-                  {{ dateFormat(lesson.date) }}
+                  <TextLabel>Fecha: </TextLabel>
+                  <TextValue>{{ dateFormat(lesson.date) }}</TextValue>
                 </div>
 
                 <!-- Column for Time -->
                 <div>
-                  <span class="font-weight-bold subtitle-2">Hora: </span>
-                  {{ `${lesson.start_time} - ${lesson.end_time}` }}
+                  <TextLabel>Hora: </TextLabel>
+                  <TextValue>{{ `${lesson.start_time} - ${lesson.end_time}` }}</TextValue>
                 </div>
 
                 <!-- Column for Max Students (specific to spaces) -->
                 <div v-if="lesson.max_students">
-                  <span class="font-weight-bold subtitle-2">
-                    Máximo de alumnos:
-                  </span>
-                  {{ lesson.max_students }}
+                  <TextLabel>Máximo de alumnos: </TextLabel>
+                  <TextValue>{{ lesson.max_students }}</TextValue>
                 </div>
               </template>
               <template v-else slot="info">
@@ -136,6 +132,14 @@ export default {
     MobileCalendar: () =>
       import(
         /* webpackChunkName: "MobileCalendar" */ '@/modules/lessons/_common/mobile-calendar-lessons-list.vue'
+      ),
+    TextLabel: () =>
+      import(
+        /* webpackChunkName: "TextLabel" */ '@/modules/resources/components/text/TextLabel.vue'
+      ),
+    TextValue: () =>
+      import(
+        /* webpackChunkName: "TextValue" */ '@/modules/resources/components/text/TextValue.vue'
       )
   },
   mixins: [notifications],
