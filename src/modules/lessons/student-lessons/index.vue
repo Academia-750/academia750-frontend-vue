@@ -22,15 +22,14 @@
               <!-- Column for Time -->
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-                <SwitchInput
-                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                  id="joinLesson"
-                  class="mt-3"
-                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
-                  :value="lesson.will_join === 1"
-                  :disabled="isPastDate(lesson.date)"
-                  @click="(value) => joinLesson(lesson.id, value)"
-                />
+              <SwitchInput
+                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+                id="joinLesson"
+                class="mt-3"
+                :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
+                :value="lesson.will_join === 1"
+                @click="(value) => joinLesson(lesson.id, value)"
+              />
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
@@ -89,7 +88,6 @@
                 id="joinLesson"
                 class="px-2"
                 :value="lessonEvent.will_join === 1"
-                :disabled="isPastDateFromEvent(lessonEvent)"
                 @click="(value) => joinLesson(lessonEvent.id, value)"
               />
             </div>

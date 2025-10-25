@@ -11,8 +11,11 @@
                 <span class="font-weight-bold subtitle-2">
                   {{ lesson.name }}
                 </span>
-                <span v-if="lesson.max_students" class="ml-4 caption">
-                  ({{ lesson.will_join_count || 0 }}/{{ lesson.max_students }} plazas ocupadas)
+                <span v-if="lesson.is_full" class="ml-4 caption red--text">
+                  (Completo)
+                </span>
+                <span v-else-if="lesson.max_students" class="ml-4 caption green--text">
+                  (Plazas disponibles)
                 </span>
               </div>
             </template>
@@ -24,15 +27,14 @@
             <template v-if="lesson" slot="actions">
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-                <SwitchInput
-                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                  id="joinSpace"
-                  class="mt-3"
-                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
-                  :value="lesson.will_join === 1"
-                  :disabled="!canJoinSpace(lesson)"
-                  @click="(value) => joinSpace(lesson.id, value)"
-                />
+              <SwitchInput
+                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+                id="joinSpace"
+                class="mt-3"
+                :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
+                :value="lesson.will_join === 1"
+                @click="(value) => joinSpace(lesson.id, value)"
+              />
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
@@ -80,7 +82,6 @@
                 id="joinSpace"
                 class="px-2"
                 :value="spaceEvent.will_join === 1"
-                :disabled="!canJoinSpaceFromEvent(spaceEvent)"
                 @click="(value) => joinSpace(spaceEvent.id, value)"
               />
             </div>
@@ -152,8 +153,7 @@ export default {
           timed: false,
           will_join: item.will_join,
           max_students: item.max_students,
-          student_count: item.student_count,
-          will_join_count: item.will_join_count,
+          is_full: item.is_full,
           date: item.date
         }
       })
@@ -185,42 +185,6 @@ export default {
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
-    },
-
-    /**
-     * Check if a student can join a space
-     * Returns false if:
-     * 1. The date has passed
-     * 2. The max capacity is reached and student is trying to join (not unjoin)
-     */
-    canJoinSpace(lesson) {
-      // Check if date has passed
-      const isPastDate = moment(lesson.date).isBefore(moment(), 'day')
-
-      if (isPastDate) {
-        return false
-      }
-
-      // If student is already marked as joining (will_join === 1), allow them to unjoin
-      if (lesson.will_join === 1) {
-        return true
-      }
-
-      // Check if max capacity is reached
-      if (lesson.max_students && lesson.will_join_count >= lesson.max_students) {
-        return false
-      }
-
-      return true
-    },
-
-    /**
-     * Check if a student can join from event data (for mobile view)
-     */
-    canJoinSpaceFromEvent(event) {
-      const lesson = this.lessons.find((item) => item.id === event.id)
-
-      return lesson ? this.canJoinSpace(lesson) : false
     },
 
     async onLoad({ start, end }) {
@@ -267,14 +231,15 @@ export default {
     async joinSpace(lessonId, value) {
       const lesson = this.lessons.find((l) => l.id === lessonId)
 
-      // Validate before making API call
-      if (!this.canJoinSpace(lesson)) {
-        if (moment(lesson.date).isBefore(moment(), 'day')) {
-          Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
-        } else if (lesson.max_students && lesson.will_join_count >= lesson.max_students && value) {
-          Toast.error('Este espacio ha alcanzado su capacidad máxima.')
-        }
+      // Validate before making API call - past date
+      if (moment(lesson.date).isBefore(moment(), 'day')) {
+        Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
+        return
+      }
 
+      // Validate before making API call - max capacity
+      if (lesson.is_full && value) {
+        Toast.error('Este espacio ha alcanzado su capacidad máxima.')
         return
       }
 

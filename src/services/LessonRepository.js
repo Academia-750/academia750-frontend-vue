@@ -412,22 +412,27 @@ export default {
     })
 
     if (response.status !== 200) {
-      // Show user-friendly Spanish messages instead of technical errors
+      // Show user-friendly Spanish messages based on status code or error message
       const errorMessage = response.data?.error || response.data?.message
       
-      if (errorMessage && errorMessage.includes('past lessons')) {
+      // 412 Precondition Failed - Past lesson/space
+      if (response.status === 412 || (errorMessage && errorMessage.includes('past lessons'))) {
         ResourceService.warning({
           response,
           title: 'Acción no permitida',
           message: 'No puedes cambiar la asistencia de un espacio/clase pasado.'
         })
-      } else if (errorMessage && errorMessage.includes('maximum capacity')) {
+      }
+      // 409 Conflict - Space full
+      else if (response.status === 409 || (errorMessage && errorMessage.includes('maximum capacity'))) {
         ResourceService.warning({
           response,
           title: 'Capacidad máxima alcanzada',
           message: 'Este espacio/clase ha alcanzado su capacidad máxima.'
         })
-      } else {
+      }
+      // Other errors
+      else {
         ResourceService.warning({
           response,
           title: 'Error',
