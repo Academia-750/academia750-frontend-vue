@@ -27,14 +27,14 @@
             <template v-if="lesson" slot="actions">
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-              <SwitchInput
-                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                id="joinSpace"
-                class="mt-3"
-                :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
-                :value="lesson.will_join === 1"
-                @click="(value) => joinSpace(lesson.id, value)"
-              />
+                <SwitchInput
+                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
+                  id="joinSpace"
+                  class="mt-3"
+                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
+                  :value="lesson.will_join === 1"
+                  @click="(value) => joinSpace(lesson.id, value)"
+                />
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
@@ -234,12 +234,14 @@ export default {
       // Validate before making API call - past date
       if (moment(lesson.date).isBefore(moment(), 'day')) {
         Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
+
         return
       }
 
       // Validate before making API call - max capacity
       if (lesson.is_full && value) {
         Toast.error('Este espacio ha alcanzado su capacidad máxima.')
+
         return
       }
 
