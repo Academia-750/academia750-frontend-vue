@@ -9129,10 +9129,19 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+"sweetalert2.min.css@link:sweetalert2/dist/sweetalert2.min.css":
+  version "0.0.0"
+  uid ""
+
 sweetalert2@11.x:
   version "11.7.27"
   resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.7.27.tgz"
   integrity sha512-QbRXGQn1sb7HEhzA/K2xtWIwQHh/qkSbb1w6jYcTql2xy17876lTREEt1D4X6Q0x2wHtfUjKJ+Cb8IVkRoq7DQ==
+
+sweetalert2@^11.24.1:
+  version "11.26.3"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.26.3.tgz#6e8188cf71818af34d62fe33a2465690cde9836d"
+  integrity sha512-VU0hGw/WfI9h7Mh+SCsDlWgtxDwWZ6ccqS7QcO8zEeWnwplN1GptcLstq76OluUBSLUza6ldvKd3558OhjpJ9A==
 
 table@^5.2.3:
   version "5.4.6"
