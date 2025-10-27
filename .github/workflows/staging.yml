@@ -14,7 +14,7 @@ jobs:
       SSH_USER: ${{ secrets.SSH_USER }}
       SSH_PORT: ${{ secrets.SSH_PORT }}
       FOLDER_NAME: ${{ vars.STAGING_FRONTEND_FOLDER }}
-      VUE_APP_BASE_URL_API_STAGING: ${{ vars.VUE_APP_BASE_URL_API_STAGING || 'https://test.api.academia750.es' }}
+      VUE_APP_BASE_URL_API_STAGING: ${{ vars.VUE_APP_BASE_URL_API_STAGING }}
       VUE_APP_SECRET_KEY_DESCRYPT_TOKEN: ${{ secrets.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN }}
       CLOUDINARY: ${{ vars.CLOUDINARY_PRODUCTION || '' }}
 

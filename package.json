@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "npm run serve",
+    "gh:staging": "gh workflow run staging.yml --ref $(git branch --show-current)",
     "release": "npx standard-version && git push --follow-tags"
   },
   "dependencies": {
