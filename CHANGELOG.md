@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.11.6...v2.12.0) (2025-10-27)
+
+
+### Features
+
+* added functionality for max student and end lesson date ID-2972 ([08b8b4f](https://github.com/Academia-750/academia750-frontend-vue/commit/08b8b4f5e4fe1863af2a2dfc51284feae82d8688))
+
 ### [2.11.6](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.11.5...v2.11.6) (2025-10-08)
 
 ### [2.11.5](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.10.2...v2.11.5) (2025-10-03)
