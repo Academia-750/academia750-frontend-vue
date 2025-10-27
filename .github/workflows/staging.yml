@@ -1,0 +1,116 @@
+name: Deploy Frontend Staging
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      SERVER: ${{ vars.PRODUCTION_SERVER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRODUCTION_KEY }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      FOLDER_NAME: ${{ vars.STAGING_FRONTEND_FOLDER }}
+      VUE_APP_BASE_URL_API_STAGING: ${{ vars.VUE_APP_BASE_URL_API_STAGING || 'https://test.api.academia750.es' }}
+      VUE_APP_SECRET_KEY_DESCRYPT_TOKEN: ${{ secrets.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN }}
+      CLOUDINARY: ${{ vars.CLOUDINARY_PRODUCTION || '' }}
+
+    steps:
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare branch and commit info
+        id: vars
+        run: |
+          SHORT_COMMIT=$(git rev-parse --short HEAD)
+          BRANCH_NAME="${{ github.ref_name }}"
+          echo "BUILD_INFO=${BRANCH_NAME}-${SHORT_COMMIT}" >> $GITHUB_OUTPUT
+          echo "SHORT_COMMIT=${SHORT_COMMIT}" >> $GITHUB_OUTPUT
+          echo "🏷️  Building: ${BRANCH_NAME}-${SHORT_COMMIT}"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Create staging environment file
+        run: |
+          cat > .env.staging << EOF
+          NODE_ENV=staging
+          VUE_APP_PRODUCT_NAME_APP="Academia 750 - STAGING"
+          VUE_APP_PRODUCT_VERSION_APP="${{ steps.vars.outputs.BUILD_INFO }}"
+          VUE_APP_BASE_URL_API_PRODUCTION=${{ env.VUE_APP_BASE_URL_API_STAGING }}
+          VUE_APP_BASE_URL_API_DEVELOPMENT=${{ env.VUE_APP_BASE_URL_API_STAGING }}
+          VUE_APP_CLOUDINARY_ID=${{ env.CLOUDINARY }}
+          VUE_APP_SECRET_KEY_DESCRYPT_TOKEN=${{ env.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN }}
+          VUE_APP_STAGING_BUILD=${{ steps.vars.outputs.BUILD_INFO }}
+          EOF
+          cp .env.staging .env
+          echo "📄 Environment file created"
+
+      - name: Build Vue project for Staging
+        run: |
+          echo "🔨 Building staging version: ${{ steps.vars.outputs.BUILD_INFO }}"
+          yarn build
+
+          # Add build info to the dist folder
+          echo "${{ steps.vars.outputs.BUILD_INFO }}" > dist/build-info.txt
+
+          # Create a build-info.json for programmatic access
+          cat > dist/build-info.json << EOF
+          {
+            "build": "${{ steps.vars.outputs.BUILD_INFO }}",
+            "branch": "${{ github.ref_name }}",
+            "commit": "${{ steps.vars.outputs.SHORT_COMMIT }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "environment": "staging"
+          }
+          EOF
+
+      - name: Deploy to Staging
+        uses: easingthemes/ssh-deploy@v2.2.4
+        with:
+          SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ env.SERVER }}
+          REMOTE_USER: ${{ env.SSH_USER }}
+          REMOTE_PORT: ${{ env.SSH_PORT }}
+          SOURCE: './dist'
+          TARGET: ${{ env.FOLDER_NAME }}
+          ARGS: '-rltgoDzvO --delete'
+          EXCLUDE: 'dist/robots.txt'
+
+      - name: Set proper permissions
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SERVER }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            cd ${{ env.FOLDER_NAME }}
+            chown -R webapps:webapps .
+            chmod -R 755 .
+            echo "✅ Permissions set"
+
+      - name: Deployment Summary
+        run: |
+          echo "✅ Frontend Staging Deployment Complete!"
+          echo "🏷️  Build: ${{ steps.vars.outputs.BUILD_INFO }}"
+          echo "📁 Folder: ${{ env.FOLDER_NAME }}"
+          echo "🌐 Branch: ${{ github.ref_name }}"
+          echo "💾 Commit: ${{ steps.vars.outputs.SHORT_COMMIT }}"
+          echo "🔗 API: ${{ env.VUE_APP_BASE_URL_API_STAGING }}"
