@@ -28,6 +28,7 @@
                   class="mt-3"
                   :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
                   :value="lesson.will_join === 1"
+                  :disabled="!canJoinLesson(lesson)"
                   @click="(value) => joinLesson(lesson.id, value)"
                 />
                 <ResourceButton
@@ -88,6 +89,7 @@
                 id="joinLesson"
                 class="px-2"
                 :value="event.will_join === 1"
+                :disabled="!canJoinLesson(getLessonById(event.id))"
                 @click="(value) => joinLesson(event.id, value)"
               />
             </div>
@@ -187,6 +189,21 @@ export default {
     },
     openInfoModal(lesson) {
       this.$refs.lessonInfoModal.open(lesson)
+    },
+    getLessonById(lessonId) {
+      return this.lessons.find((l) => l.id === lessonId) || {}
+    },
+    canJoinLesson(lesson) {
+      if (!lesson) return false
+      // If trying to unjoin, allow if date hasn't passed
+      if (lesson.will_join === 1) {
+        return lesson.can_join !== false
+      }
+      // If trying to join, check if not full and date hasn't passed
+      return (
+        lesson.can_join !== false &&
+        (lesson.is_full !== true || lesson.will_join === 1)
+      )
     },
 
     async onLoad({ start, end }) {
