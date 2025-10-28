@@ -9,12 +9,13 @@ export default {
    * @param {string} start_time
    * @param {string} end_time
    */
-  async create({ name, date, start_time, end_time }) {
+  async create({ name, date, start_time, end_time, type }) {
     const response = await ResourceService.post('lesson', {
       name,
       date,
       start_time,
-      end_time
+      end_time,
+      type
     })
 
     if (response.status !== 200) {
@@ -91,10 +92,11 @@ export default {
    * @param {string} to
    * @param {number} content
    */
-  async calendar({ from, to, content } = {}) {
+  async calendar({ from, to, content, type } = {}) {
     const params = {
       from,
       to,
+      type,
       content: content || undefined
     }
 
@@ -116,10 +118,11 @@ export default {
    * @param {string} to
    * @param {number} content
    */
-  async studentCalendar({ from, to, content } = {}) {
+  async studentCalendar({ from, to, content, type } = {}) {
     const params = {
       from,
       to,
+      type,
       content: content || undefined
     }
 
@@ -412,9 +415,28 @@ export default {
     })
 
     if (response.status !== 200) {
-      ResourceService.warning({
-        response
-      })
+      // Show user-friendly Spanish messages instead of technical errors
+      const errorMessage = response.data?.error || response.data?.message
+
+      if (errorMessage && errorMessage.includes('past lessons')) {
+        ResourceService.warning({
+          response,
+          title: 'Acción no permitida',
+          message: 'No puedes cambiar la asistencia de un espacio/clase pasado.'
+        })
+      } else if (errorMessage && errorMessage.includes('maximum capacity')) {
+        ResourceService.warning({
+          response,
+          title: 'Capacidad máxima alcanzada',
+          message: 'Este espacio/clase ha alcanzado su capacidad máxima.'
+        })
+      } else {
+        ResourceService.warning({
+          response,
+          title: 'Error',
+          message: 'No se pudo actualizar tu asistencia. Inténtalo de nuevo.'
+        })
+      }
 
       return false
     }

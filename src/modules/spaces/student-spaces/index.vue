@@ -1,13 +1,13 @@
 <template>
   <v-card-text>
     <div>
-      <LessonInfoModal ref="lessonInfoModal" />
+      <LessonInfoModal ref="lessonInfoModal" :hide-materials="true" />
       <v-card v-if="!isMobile" flat>
         <v-card-text>
           <LessonToolBar>
             <template v-if="lesson" slot="info">
               <div class="d-flex align-center">
-                <div class="text-bold mr-2">Clase:</div>
+                <div class="text-bold mr-2">Espacio:</div>
                 <span class="font-weight-bold subtitle-2">
                   {{ lesson.name }}
                 </span>
@@ -15,38 +15,26 @@
             </template>
             <template v-else slot="info">
               <div class="d-flex w-full justify-between">
-                Selecciona una clase
+                Selecciona un espacio
               </div>
             </template>
             <template v-if="lesson" slot="actions">
-              <!-- Column for Time -->
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
                 <SwitchInput
                   v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                  id="joinLesson"
+                  id="joinSpace"
                   class="mt-3"
                   :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
                   :value="lesson.will_join === 1"
-                  :disabled="isPastDate(lesson.date)"
-                  @click="(value) => joinLesson(lesson.id, value)"
+                  :disabled="!canJoinSpace(lesson)"
+                  @click="(value) => joinSpace(lesson.id, value)"
                 />
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
                   text-button="Información"
                   @click="openInfoModal(lesson)"
-                />
-                <resource-button
-                  v-if="lesson.is_active === 1"
-                  text-button="Entrar Clase"
-                  icon-button="mdi-eye"
-                  color="success"
-                  :disabled="!$hasPermission(PermissionEnum.SEE_ONLINE_LESSON)"
-                  :config-route="{
-                    name: 'join-online-class',
-                    params: { id: lesson.id }
-                  }"
                 />
               </div>
             </template>
@@ -59,7 +47,7 @@
             :events="events"
             @type="SET_TYPE"
             @date="onDate"
-            @event="onLesson"
+            @event="onSpace"
             @load="onLoad"
             @focus="SET_DATE"
           />
@@ -73,12 +61,12 @@
           @load="onLoad"
           @focus="SET_DATE"
         >
-          <template #actions="lessonEvent">
+          <template #actions="spaceEvent">
             <div class="d-flex justify-end flex-fill">
               <v-icon
                 class="px-2"
                 color="success"
-                @click.stop="onLesson(lessonEvent)"
+                @click.stop="onSpace(spaceEvent)"
               >
                 mdi-information
               </v-icon>
@@ -86,11 +74,11 @@
               <!-- There are two different switch for desktop and mobile in this same page -->
               <SwitchInput
                 v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                id="joinLesson"
+                id="joinSpace"
                 class="px-2"
-                :value="lessonEvent.will_join === 1"
-                :disabled="isPastDateFromEvent(lessonEvent)"
-                @click="(value) => joinLesson(lessonEvent.id, value)"
+                :value="spaceEvent.will_join === 1"
+                :disabled="!canJoinSpaceFromEvent(spaceEvent)"
+                @click="(value) => joinSpace(spaceEvent.id, value)"
               />
             </div>
           </template>
@@ -109,7 +97,7 @@ import LessonRepository from '@/services/LessonRepository'
 import Toast from '@/utils/toast'
 
 export default {
-  name: 'StudentsLessons',
+  name: 'StudentSpaces',
   components: {
     CalendarLessonsList: () =>
       import(
@@ -146,7 +134,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('studentLessonsStore', ['lesson', 'lessons', 'date', 'type']),
+    ...mapState('studentSpacesStore', ['lesson', 'lessons', 'date', 'type']),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
     },
@@ -159,7 +147,11 @@ export default {
           end: item.date + ' ' + item.end_time,
           color: item.color || '#cccccc',
           timed: false,
-          will_join: item.will_join
+          will_join: item.will_join,
+          max_students: item.max_students,
+          student_count: item.student_count,
+          will_join_count: item.will_join_count,
+          date: item.date
         }
       })
     }
@@ -169,17 +161,17 @@ export default {
   },
 
   methods: {
-    ...mapMutations('studentLessonsStore', [
+    ...mapMutations('studentSpacesStore', [
       'SET_DATE',
       'SET_TYPE',
       'SET_LESSONS'
     ]),
-    ...mapActions('studentLessonsStore', ['setLesson', 'updateJoinLesson']),
+    ...mapActions('studentSpacesStore', ['setLesson', 'updateJoinLesson']),
 
     onDate() {
       this.setLesson(false)
     },
-    onLesson(event) {
+    onSpace(event) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
       if (!lesson) {
@@ -193,27 +185,50 @@ export default {
     },
 
     /**
-     * Check if a date has passed
+     * Check if a student can join a space
+     * Returns false if:
+     * 1. The date has passed
+     * 2. The max capacity is reached and student is trying to join (not unjoin)
      */
-    isPastDate(date) {
-      return moment(date).isBefore(moment(), 'day')
+    canJoinSpace(lesson) {
+      // Check if date has passed
+      const isPastDate = moment(lesson.date).isBefore(moment(), 'day')
+
+      if (isPastDate) {
+        return false
+      }
+
+      // If student is already marked as joining (will_join === 1), allow them to unjoin
+      if (lesson.will_join === 1) {
+        return true
+      }
+
+      // Check if max capacity is reached
+      if (
+        lesson.max_students &&
+        lesson.will_join_count >= lesson.max_students
+      ) {
+        return false
+      }
+
+      return true
     },
 
     /**
-     * Check if a date has passed from event data
+     * Check if a student can join from event data (for mobile view)
      */
-    isPastDateFromEvent(event) {
+    canJoinSpaceFromEvent(event) {
       const lesson = this.lessons.find((item) => item.id === event.id)
 
-      return lesson ? this.isPastDate(lesson.date) : false
+      return lesson ? this.canJoinSpace(lesson) : false
     },
 
     async onLoad({ start, end }) {
-      this.isLoading = true // Show the loader while fetching lessons
+      this.isLoading = true // Show the loader while fetching spaces
       const params = {
         from: start,
         to: end,
-        type: 'classroom' // Only fetch classroom type lessons
+        type: 'space' // Filter only space type lessons
       }
 
       try {
@@ -231,7 +246,7 @@ export default {
         if (alreadySelected) {
           return
         }
-        // Auto select the first next lesson or the last lesson if all are in the past
+        // Auto select the first next space or the last space if all are in the past
         const nextLesson =
           this.lessons.find(
             (lesson) => lesson.date > moment().format('YYYY-MM-DD')
@@ -243,18 +258,26 @@ export default {
         }
       } catch (error) {
         // Handle any error that occurred during the request
-        console.error('Error fetching lessons:', error)
+        console.error('Error fetching spaces:', error)
       } finally {
         // Ensure that isLoading is set to false regardless of success or failure
         this.isLoading = false
       }
     },
-    async joinLesson(lessonId, value) {
+    async joinSpace(lessonId, value) {
       const lesson = this.lessons.find((l) => l.id === lessonId)
 
       // Validate before making API call
-      if (this.isPastDate(lesson.date)) {
-        Toast.error('No puedes cambiar la asistencia de una clase pasada.')
+      if (!this.canJoinSpace(lesson)) {
+        if (moment(lesson.date).isBefore(moment(), 'day')) {
+          Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
+        } else if (
+          lesson.max_students &&
+          lesson.will_join_count >= lesson.max_students &&
+          value
+        ) {
+          Toast.error('Este espacio ha alcanzado su capacidad máxima.')
+        }
 
         return
       }
@@ -266,9 +289,9 @@ export default {
       }
 
       if (value) {
-        Toast.success('Has confirmado tu asistencia a la clase.')
+        Toast.success('Has confirmado tu asistencia al espacio.')
       } else {
-        Toast.success('Has cancelado tu asistencia a la clase.')
+        Toast.success('Has cancelado tu asistencia al espacio.')
       }
 
       // Refresh selected object
@@ -277,7 +300,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Mis lecciones'
+      inner: 'Mis espacios'
     }
   }
 }
