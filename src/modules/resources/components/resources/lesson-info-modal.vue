@@ -57,6 +57,7 @@
           <div class="d-flex justify-end">
             <template v-if="isActiveLesson(lesson)">
               <resource-button
+                v-if="!hideMaterials"
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
                 color="success"
@@ -64,6 +65,7 @@
                 @click="setLessonMaterial(lesson)"
               />
               <resource-button
+                v-if="!hideMaterials"
                 text-button="Grabaciones"
                 icon-button="mdi-camera"
                 color="success"
@@ -73,6 +75,7 @@
                 @click="setLessonRecordings(lesson)"
               />
               <resource-button
+                v-if="lesson.is_online"
                 text-button="Entrar Clase"
                 icon-button="mdi-eye"
                 color="success"
@@ -111,7 +114,12 @@ export default {
         /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
       )
   },
-  props: {},
+  props: {
+    hideMaterials: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       PermissionEnum,

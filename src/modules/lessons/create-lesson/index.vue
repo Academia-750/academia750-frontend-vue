@@ -93,6 +93,19 @@
               rules="required|min:4"
               :disabled="!canEdit"
             />
+
+            <FieldInput
+              id="maxStudents"
+              v-model="maxStudents"
+              type="number"
+              :rules="maxStudents ? 'numeric|min_value:1' : ''"
+              :filled="true"
+              :outlined="false"
+              :disabled="!canEdit"
+              label="Máximo de alumnos"
+              placeholder="Sin límite"
+              @input="onMaxStudentsInput"
+            />
           </v-col>
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
@@ -104,7 +117,7 @@
                 @click="createLesson"
               />
             </div>
-            <div v-if="lesson" class="d-flex">
+            <div v-if="lesson && lessonType === 'classroom'" class="d-flex">
               <resource-button
                 text-button="Materiales"
                 icon-button="mdi-folder-open"
@@ -187,11 +200,18 @@ export default {
       end_time: null,
       isActiveLesson: false,
       isOnlineLesson: false,
-      validRegex: inputValidRegex
+      validRegex: inputValidRegex,
+      lesson: null,
+      maxStudents: null
     }
   },
   computed: {
-    ...mapState('lessonsStore', ['lesson']),
+    storeName() {
+      return this.$route?.query?.store || 'lessonsStore'
+    },
+    storeLesson() {
+      return this.$store.state[this.storeName].lesson
+    },
     title() {
       return !this.lesson ? 'Nueva Clase' : `Editar "${this.lesson.name}":`
     },
@@ -200,6 +220,20 @@ export default {
     },
     headers() {
       return headers
+    },
+    lessonType() {
+      return this.storeName === 'spacesStore' ? 'space' : 'classroom'
+    }
+  },
+  watch: {
+    storeLesson: {
+      immediate: true,
+      handler(newLesson) {
+        this.lesson = newLesson
+        if (newLesson) {
+          this.reset()
+        }
+      }
     }
   },
   mounted() {
@@ -209,7 +243,9 @@ export default {
     this?.$hasRoleMiddleware('admin')
   },
   methods: {
-    ...mapActions('lessonsStore', ['setLesson']),
+    setLesson(lesson) {
+      this.$store.dispatch(`${this.storeName}/setLesson`, lesson)
+    },
 
     reset() {
       this.name = ''
@@ -221,6 +257,7 @@ export default {
       this.lessonMeetingUrl = ''
       this.isActiveLesson = false
       this.isOnlineLesson = false
+      this.maxStudents = null
       if (this.lesson) {
         this.name = this.lesson.name
         this.date = moment(this.lesson.date).format('YYYY-MM-DD')
@@ -230,6 +267,7 @@ export default {
         this.lessonMeetingUrl = this.lesson.url
         this.isActiveLesson = Boolean(this.lesson.is_active)
         this.isOnlineLesson = Boolean(this.lesson.is_online)
+        this.maxStudents = this.lesson.max_students
       }
     },
     datePicked(date) {
@@ -248,6 +286,10 @@ export default {
     setOnline(active) {
       this.isOnlineLesson = active
     },
+    onMaxStudentsInput(value) {
+      // Convert empty string to null
+      this.maxStudents = value === '' ? null : value
+    },
     async createLesson() {
       const status = await this.$refs['FormCreateLesson'].validate()
 
@@ -259,12 +301,16 @@ export default {
       let { lesson } = this
 
       try {
+        // At this stage only lessons of type classroom are created from the frontend
+        // Lessons of type space are created direcly on the database
         if (!this.lesson) {
           lesson = await LessonRepository.create({
             name: this.name,
             date: this.date,
+            type: this.lessonType,
             start_time: this.start_time,
-            end_time: this.end_time
+            end_time: this.end_time,
+            max_students: this.maxStudents
           })
         }
 
@@ -284,7 +330,8 @@ export default {
           start_time: this.start_time,
           end_time: this.end_time,
           is_online: this.isOnlineLesson,
-          url: this.lessonMeetingUrl || undefined
+          url: this.lessonMeetingUrl || undefined,
+          max_students: this.maxStudents
         })
 
         if (!lesson) {

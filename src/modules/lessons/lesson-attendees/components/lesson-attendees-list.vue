@@ -15,7 +15,16 @@
             v-show="willJoin !== undefined"
             class="font-weight-bold text-md-h6 text-subtitle-2 mr-1"
           >
-            Asistentes: {{ willJoin }} / {{ total }}
+            Asistentes: {{ willJoin }}
+            <span v-show="lesson.max_students">
+              / Max. {{ lesson.max_students }}
+            </span>
+          </span>
+          <span
+            v-show="willJoin !== undefined"
+            class="font-weight-bold text-md-h6 text-subtitle-2 mr-1"
+          >
+            ({{ total }} estudiantes disponibles)
           </span>
           <resource-button icon-button="mdi-autorenew" @click="reset()" />
         </template>

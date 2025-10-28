@@ -211,11 +211,17 @@ export default {
       }
 
       this.setLesson(lesson)
-      this.$router.push({ name: 'create-lessons' })
+      this.$router.push({
+        name: 'create-lessons',
+        query: { store: 'lessonsStore' }
+      })
     },
     addLesson(date = undefined) {
       this.setLesson(false)
-      this.$router.push({ name: 'create-lessons', query: { date } })
+      this.$router.push({
+        name: 'create-lessons',
+        query: { date, store: 'lessonsStore' }
+      })
     },
     onDate() {
       this.setLesson(false)
@@ -229,7 +235,10 @@ export default {
 
       this.setLesson(lesson || false)
       if (this.isMobile) {
-        this.$router.push({ name: 'create-lessons' })
+        this.$router.push({
+          name: 'create-lessons',
+          query: { store: 'lessonsStore' }
+        })
       }
     },
 

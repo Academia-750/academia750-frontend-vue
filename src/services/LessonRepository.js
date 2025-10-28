@@ -9,12 +9,13 @@ export default {
    * @param {string} start_time
    * @param {string} end_time
    */
-  async create({ name, date, start_time, end_time }) {
+  async create({ name, date, start_time, end_time, type }) {
     const response = await ResourceService.post('lesson', {
       name,
       date,
       start_time,
-      end_time
+      end_time,
+      type
     })
 
     if (response.status !== 200) {
@@ -91,10 +92,11 @@ export default {
    * @param {string} to
    * @param {number} content
    */
-  async calendar({ from, to, content } = {}) {
+  async calendar({ from, to, content, type } = {}) {
     const params = {
       from,
       to,
+      type,
       content: content || undefined
     }
 
@@ -116,10 +118,11 @@ export default {
    * @param {string} to
    * @param {number} content
    */
-  async studentCalendar({ from, to, content } = {}) {
+  async studentCalendar({ from, to, content, type } = {}) {
     const params = {
       from,
       to,
+      type,
       content: content || undefined
     }
 
@@ -414,7 +417,7 @@ export default {
     if (response.status !== 200) {
       // Show user-friendly Spanish messages instead of technical errors
       const errorMessage = response.data?.error || response.data?.message
-      
+
       if (errorMessage && errorMessage.includes('past lessons')) {
         ResourceService.warning({
           response,

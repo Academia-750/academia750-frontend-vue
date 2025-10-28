@@ -42,19 +42,16 @@
               </template>
               <template v-if="lesson" slot="actions">
                 <resource-button
-                  v-if="
-                    $hasRolesOrPermissions(
-                      ['admin'],
-                      [PermissionEnum.UPDATE_LESSON_MATERIALS]
-                    )
+                  v-if="$hasRoles('admin')"
+                  text-button="Editar"
+                  icon-button="mdi-pencil"
+                  color="primary"
+                  @click="
+                    $router.push({
+                      name: 'create-lessons',
+                      query: { store: 'spacesStore' }
+                    })
                   "
-                  text-button="Materiales"
-                  icon-button="mdi-folder-open"
-                  color="success"
-                  :config-route="{
-                    name: 'list-of-materials',
-                    params: { id: lesson.id }
-                  }"
                 />
                 <resource-button
                   v-if="
@@ -99,6 +96,14 @@
           >
             <template #actions="event">
               <div class="d-flex justify-end flex-fill">
+                <v-icon
+                  v-if="$hasRoles('admin')"
+                  class="px-2"
+                  color="primary"
+                  @click="editEvent(event)"
+                >
+                  mdi-pencil
+                </v-icon>
                 <v-icon class="px-2" color="info" @click="viewEvent(event)">
                   mdi-eye
                 </v-icon>
@@ -187,6 +192,19 @@ export default {
 
       this.setLesson(lesson)
     },
+    editEvent(event) {
+      const lesson = this.lessons.find((item) => item.id === event.id)
+
+      if (!lesson) {
+        return
+      }
+
+      this.setLesson(lesson)
+      this.$router.push({
+        name: 'create-lessons',
+        query: { store: 'spacesStore' }
+      })
+    },
     onDate() {
       this.setLesson(false)
     },
@@ -203,9 +221,9 @@ export default {
         this.isLoading = false
 
         // We already have a current selected lesson in this month
-        const alreadySelected = this.lesson && this.lessons.find(
-          (lesson) => lesson.id === this.lesson.id
-        )
+        const alreadySelected =
+          this.lesson &&
+          this.lessons.find((lesson) => lesson.id === this.lesson.id)
 
         if (alreadySelected) {
           return

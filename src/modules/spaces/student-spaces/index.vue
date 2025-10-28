@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
     <div>
-      <LessonInfoModal ref="lessonInfoModal" />
+      <LessonInfoModal ref="lessonInfoModal" :hide-materials="true" />
       <v-card v-if="!isMobile" flat>
         <v-card-text>
           <LessonToolBar>
@@ -10,9 +10,6 @@
                 <div class="text-bold mr-2">Espacio:</div>
                 <span class="font-weight-bold subtitle-2">
                   {{ lesson.name }}
-                </span>
-                <span v-if="lesson.max_students" class="ml-4 caption">
-                  ({{ lesson.will_join_count || 0 }}/{{ lesson.max_students }} plazas ocupadas)
                 </span>
               </div>
             </template>
@@ -207,7 +204,10 @@ export default {
       }
 
       // Check if max capacity is reached
-      if (lesson.max_students && lesson.will_join_count >= lesson.max_students) {
+      if (
+        lesson.max_students &&
+        lesson.will_join_count >= lesson.max_students
+      ) {
         return false
       }
 
@@ -271,7 +271,11 @@ export default {
       if (!this.canJoinSpace(lesson)) {
         if (moment(lesson.date).isBefore(moment(), 'day')) {
           Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
-        } else if (lesson.max_students && lesson.will_join_count >= lesson.max_students && value) {
+        } else if (
+          lesson.max_students &&
+          lesson.will_join_count >= lesson.max_students &&
+          value
+        ) {
           Toast.error('Este espacio ha alcanzado su capacidad máxima.')
         }
 
