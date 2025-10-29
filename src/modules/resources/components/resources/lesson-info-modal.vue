@@ -34,14 +34,18 @@
               </p>
             </div>
           </div>
-          <div class="d-flex justify-space-between">
-            <SwitchInput
-              v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-              id="joinLesson"
-              :value="lesson.will_join === 1"
-              :label="lesson.will_join === 1 ? 'Asistiré' : 'No Asistiré'"
-              @click="(value) => joinLesson(lesson.id, value)"
-            />
+
+          <div class="d-flex justify-space-between mb-1">
+            <div>
+              <LessonJoinControl
+                :lesson="lesson"
+                :join="joinLesson"
+                :can-join="true"
+                switch-id="joinLesson"
+                not-join-label="No Asistiré"
+              />
+            </div>
+
             <resource-button
               v-if="$hasPermission(PermissionEnum.SEE_LESSON_PARTICIPANTS)"
               text-button="Asistentes"
@@ -109,9 +113,9 @@ export default {
   components: {
     ResourceButton: () =>
       import(/* webpackChunkName: "ResourceButton" */ './ResourceButton.vue'),
-    SwitchInput: () =>
+    LessonJoinControl: () =>
       import(
-        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+        /* webpackChunkName: "LessonJoinControl" */ './lesson-join-control.vue'
       )
   },
   props: {
@@ -180,13 +184,21 @@ export default {
       if (!res) {
         return
       }
+      const messageSpace = value
+        ? 'Has confirmado tu reserva de espacio.'
+        : 'Has cancelado tu reserva del espacio.'
 
-      if (value) {
-        Toast.success('Has confirmado tu asistencia a la clase.')
-      }
+      const message = value
+        ? 'Has confirmado tu asistencia a la clase.'
+        : 'Has cancelado tu asistencia a la clase.'
+
+      Toast.success(this.lesson.type === 'space' ? messageSpace : message)
 
       this.updateJoinLesson({ lessonId, value })
       this.lesson.will_join = value ? 1 : 0
+      this.lesson.will_join_count = value
+        ? this.lesson.will_join_count + 1
+        : this.lesson.will_join_count - 1
     }
   }
 }

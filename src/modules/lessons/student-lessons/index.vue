@@ -22,14 +22,10 @@
               <!-- Column for Time -->
               <div class="d-flex align-center">
                 <!-- There are two different switch for desktop and mobile in this same page -->
-                <SwitchInput
-                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                  id="joinLesson"
-                  class="mt-3"
-                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
-                  :value="lesson.will_join === 1"
-                  :disabled="isPastDate(lesson.date)"
-                  @click="(value) => joinLesson(lesson.id, value)"
+                <LessonJoinControl
+                  :lesson="lesson"
+                  :join="(id, value) => joinLesson(id, value)"
+                  switch-id="joinLesson"
                 />
                 <ResourceButton
                   color="success"
@@ -74,7 +70,7 @@
           @focus="SET_DATE"
         >
           <template #actions="lessonEvent">
-            <div class="d-flex justify-end flex-fill">
+            <div class="d-flex align-center justify-end flex-fill">
               <v-icon
                 class="px-2"
                 color="success"
@@ -84,13 +80,10 @@
               </v-icon>
 
               <!-- There are two different switch for desktop and mobile in this same page -->
-              <SwitchInput
-                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                id="joinLesson"
-                class="px-2"
-                :value="lessonEvent.will_join === 1"
-                :disabled="isPastDateFromEvent(lessonEvent)"
-                @click="(value) => joinLesson(lessonEvent.id, value)"
+              <LessonJoinControl
+                :lesson="lessonEvent"
+                :join="(id, value) => joinLesson(id, value)"
+                switch-id="joinLessonMobile"
               />
             </div>
           </template>
@@ -123,9 +116,9 @@ export default {
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/lesson-tool-bar.vue'
       ),
-    SwitchInput: () =>
+    LessonJoinControl: () =>
       import(
-        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+        /* webpackChunkName: "LessonJoinControl" */ '@/modules/resources/components/resources/lesson-join-control.vue'
       ),
     LessonInfoModal: () =>
       import(
@@ -159,7 +152,8 @@ export default {
           end: item.date + ' ' + item.end_time,
           color: item.color || '#cccccc',
           timed: false,
-          will_join: item.will_join
+          will_join: item.will_join,
+          date: item.date
         }
       })
     }
@@ -264,12 +258,11 @@ export default {
       if (!res) {
         return
       }
+      const message = value
+        ? 'Has confirmado tu asistencia a la clase.'
+        : 'Has cancelado tu asistencia a la clase.'
 
-      if (value) {
-        Toast.success('Has confirmado tu asistencia a la clase.')
-      } else {
-        Toast.success('Has cancelado tu asistencia a la clase.')
-      }
+      Toast.success(message)
 
       // Refresh selected object
       this.updateJoinLesson({ lessonId, value })

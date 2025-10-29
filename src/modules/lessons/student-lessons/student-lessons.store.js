@@ -38,6 +38,9 @@ export default {
 
       const updatedLesson = {
         ...state.lessons[index],
+        will_join_count: value
+          ? state.lessons[index].will_join_count + 1
+          : state.lessons[index].will_join_count - 1,
         will_join: value ? 1 : 0 // But the object expects 1 or 0. Update current selected and on the array
       }
 

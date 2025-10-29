@@ -20,16 +20,14 @@
             </template>
             <template v-if="lesson" slot="actions">
               <div class="d-flex align-center">
-                <!-- There are two different switch for desktop and mobile in this same page -->
-                <SwitchInput
-                  v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                  id="joinSpace"
-                  class="mt-3"
-                  :label="lesson.will_join === 1 ? 'Asistiré' : 'No asistiré'"
-                  :value="lesson.will_join === 1"
-                  :disabled="!canJoinSpace(lesson)"
-                  @click="(value) => joinSpace(lesson.id, value)"
+                <LessonJoinControl
+                  :lesson="lesson"
+                  :join="(id, value) => joinSpace(id, value)"
+                  switch-id="joinSpace"
+                  switch-class="mt-3"
+                  :show-capacity="false"
                 />
+
                 <ResourceButton
                   color="success"
                   icon-button="mdi-information"
@@ -62,7 +60,7 @@
           @focus="SET_DATE"
         >
           <template #actions="spaceEvent">
-            <div class="d-flex justify-end flex-fill">
+            <div class="d-flex align-center justify-end flex-fill">
               <v-icon
                 class="px-2"
                 color="success"
@@ -72,13 +70,10 @@
               </v-icon>
 
               <!-- There are two different switch for desktop and mobile in this same page -->
-              <SwitchInput
-                v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)"
-                id="joinSpace"
-                class="px-2"
-                :value="spaceEvent.will_join === 1"
-                :disabled="!canJoinSpaceFromEvent(spaceEvent)"
-                @click="(value) => joinSpace(spaceEvent.id, value)"
+              <LessonJoinControl
+                :lesson="spaceEvent"
+                :join="(id, value) => joinSpace(id, value)"
+                switch-id="joinSpaceMobile"
               />
             </div>
           </template>
@@ -111,9 +106,9 @@ export default {
       import(
         /* webpackChunkName: "CalendarLessonsList" */ '@/modules/lessons/_common/lesson-tool-bar.vue'
       ),
-    SwitchInput: () =>
+    LessonJoinControl: () =>
       import(
-        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/switch-input.vue'
+        /* webpackChunkName: "LessonJoinControl" */ '@/modules/resources/components/resources/lesson-join-control.vue'
       ),
     LessonInfoModal: () =>
       import(
@@ -184,45 +179,6 @@ export default {
       this.$refs.lessonInfoModal.open(lesson)
     },
 
-    /**
-     * Check if a student can join a space
-     * Returns false if:
-     * 1. The date has passed
-     * 2. The max capacity is reached and student is trying to join (not unjoin)
-     */
-    canJoinSpace(lesson) {
-      // Check if date has passed
-      const isPastDate = moment(lesson.date).isBefore(moment(), 'day')
-
-      if (isPastDate) {
-        return false
-      }
-
-      // If student is already marked as joining (will_join === 1), allow them to unjoin
-      if (lesson.will_join === 1) {
-        return true
-      }
-
-      // Check if max capacity is reached
-      if (
-        lesson.max_students &&
-        lesson.will_join_count >= lesson.max_students
-      ) {
-        return false
-      }
-
-      return true
-    },
-
-    /**
-     * Check if a student can join from event data (for mobile view)
-     */
-    canJoinSpaceFromEvent(event) {
-      const lesson = this.lessons.find((item) => item.id === event.id)
-
-      return lesson ? this.canJoinSpace(lesson) : false
-    },
-
     async onLoad({ start, end }) {
       this.isLoading = true // Show the loader while fetching spaces
       const params = {
@@ -265,35 +221,16 @@ export default {
       }
     },
     async joinSpace(lessonId, value) {
-      const lesson = this.lessons.find((l) => l.id === lessonId)
-
-      // Validate before making API call
-      if (!this.canJoinSpace(lesson)) {
-        if (moment(lesson.date).isBefore(moment(), 'day')) {
-          Toast.error('No puedes cambiar la asistencia de un espacio pasado.')
-        } else if (
-          lesson.max_students &&
-          lesson.will_join_count >= lesson.max_students &&
-          value
-        ) {
-          Toast.error('Este espacio ha alcanzado su capacidad máxima.')
-        }
-
-        return
-      }
-
       const res = await LessonRepository.joinLesson(lessonId, value)
 
       if (!res) {
         return
       }
+      const message = value
+        ? 'Has confirmado tu asistencia al espacio.'
+        : 'Has cancelado tu reserva del espacio.'
 
-      if (value) {
-        Toast.success('Has confirmado tu asistencia al espacio.')
-      } else {
-        Toast.success('Has cancelado tu asistencia al espacio.')
-      }
-
+      Toast.success(message)
       // Refresh selected object
       this.updateJoinLesson({ lessonId, value })
     }

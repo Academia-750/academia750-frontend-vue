@@ -34,7 +34,7 @@
         </div>
 
         <div
-          class="event-date d-flex flex-column items-center primary p-2 white--text"
+          class="event-date d-flex flex-column justify-center items-center primary p-2 white--text"
         >
           <span class="font-weight-medium">
             {{ date(event.start, 'DD') }}
@@ -152,9 +152,9 @@ export default {
   width: 45px;
   height: 45px;
   position: absolute;
-  bottom: 4px;
+  bottom: 14px;
   align-items: center;
-  left: -3px;
+  left: -8px;
 
   span:first-child {
     padding-top: 2px;
@@ -168,7 +168,10 @@ export default {
 }
 .event-item {
   padding-left: 48px;
-  height: 54px;
+  padding-right: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  height: 72px;
   display: flex;
   justify-items: center;
   flex: 1;

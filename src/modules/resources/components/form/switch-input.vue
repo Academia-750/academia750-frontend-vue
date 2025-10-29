@@ -8,10 +8,11 @@
   >
     <v-switch
       :id="id"
-      class="py-0"
+      :class="['py-0', { 'ma-0 mb-0': noMargin }]"
       :name="id"
       :input-value="value"
-      :error-messages="errors"
+      :error-messages="hideDetails ? [] : errors"
+      :hide-details="hideDetails"
       :label="label"
       :disabled="disabled"
       readonly
@@ -39,6 +40,14 @@ export default {
     id: {
       type: String,
       required: true
+    },
+    noMargin: {
+      type: Boolean,
+      default: false
+    },
+    hideDetails: {
+      type: [Boolean, String],
+      default: false
     }
   },
   methods: {
