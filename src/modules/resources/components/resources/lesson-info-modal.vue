@@ -44,6 +44,12 @@
                 switch-id="joinLesson"
                 not-join-label="No Asistiré"
               />
+              <template v-if="joiningNotOpenYet">
+                <p class="mr-4">
+                  Podrás confirmar tu asistencia a partir del
+                  {{ formattedAllowJoiningFromDate }}
+                </p>
+              </template>
             </div>
 
             <resource-button
@@ -107,6 +113,7 @@ import { PermissionEnum } from '@/utils/enums'
 import { mapMutations, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import Toast from '@/utils/toast'
+import moment from 'moment'
 
 export default {
   name: 'LessonInfoModal',
@@ -129,6 +136,18 @@ export default {
       PermissionEnum,
       isOpen: false,
       lesson: {}
+    }
+  },
+  computed: {
+    joiningNotOpenYet() {
+      const d = this.lesson?.allow_joining_from_date
+
+      return d && moment(d).isAfter(moment(), 'day')
+    },
+    formattedAllowJoiningFromDate() {
+      const d = this.lesson?.allow_joining_from_date
+
+      return d ? moment(d).format('YYYY-MM-DD') : ''
     }
   },
   methods: {

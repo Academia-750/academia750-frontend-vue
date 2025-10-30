@@ -2,11 +2,14 @@
   <div v-if="$hasPermission(PermissionEnum.JOIN_LESSONS)">
     <!-- Capacity Info (if applicable) -->
     <div v-if="lesson.max_students && !isMobile" style="min-width: 200px">
-      <span style="font-size: 10px">
-        Huecos Libres:
-        {{ lesson.max_students - lesson.will_join_count }}
-        <span v-if="!compact">(Capacidad Máx.: {{ lesson.max_students }})</span>
+      <span
+        v-if="lesson.max_students - lesson.will_join_count > 0"
+        style="font-size: 10px"
+      >
+        {{ lesson.max_students - lesson.will_join_count }} huecos libres: de
+        {{ lesson.max_students }} disponibles
       </span>
+      <v-chip v-else small color="error" dark label>Espacio Lleno</v-chip>
     </div>
 
     <!-- Join Switch -->
@@ -92,6 +95,13 @@ export default {
         return true
       }
 
+      // Do not allow joining before allow_joining_from_date if set
+      const allowFrom = this.lesson?.allow_joining_from_date
+
+      if (allowFrom && moment(allowFrom).isAfter(moment(), 'day')) {
+        return false
+      }
+
       if (
         this.lesson?.max_students &&
         this.lesson?.will_join_count >= this.lesson?.max_students
@@ -110,7 +120,7 @@ export default {
           width: '400px',
           icon: 'warning',
           title: 'Confirmar reserva',
-          html: 'Si reservas tu puesto pero no asistes a la clase puedes incurrir en penalizaciones.',
+          html: 'Si reservas tu puesto pero luego no haces uso de él, puedes incurrir en penalizaciones. Haz un uso responsable.',
           showConfirmButton: true,
           showCancelButton: true,
           confirmButtonText: 'Sí, reservar',

@@ -77,9 +77,9 @@
             :events="events"
             :event-color="getEventColor"
             :type="computedType"
-            :first-interval="8"
             :interval-minutes="60"
-            :interval-count="13"
+            :first-interval="firstIntervalComputed"
+            :interval-count="intervalCountComputed"
             locale="es-MX"
             :weekdays="calendarDay"
             @click:event="showEvent"
@@ -123,6 +123,16 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    // Format 'HH:mm' 24h
+    startTime: {
+      type: String,
+      default: '08:00'
+    },
+    // Format 'HH:mm' 24h
+    endTime: {
+      type: String,
+      default: '21:00'
     }
   },
   data: () => ({
@@ -146,6 +156,24 @@ export default {
       }
 
       return this.type
+    },
+
+    firstIntervalComputed() {
+      const start = moment(this.startTime, 'HH:mm')
+      const hour = start.isValid() ? start.hours() : 8
+
+      return hour
+    },
+    intervalCountComputed() {
+      const start = moment(this.startTime, 'HH:mm')
+      const end = moment(this.endTime, 'HH:mm')
+
+      if (!start.isValid() || !end.isValid()) {
+        return 1
+      }
+      const difference = end.diff(start, 'hours')
+
+      return parseInt(difference)
     }
   },
   mounted() {},

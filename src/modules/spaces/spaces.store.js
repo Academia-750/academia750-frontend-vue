@@ -6,7 +6,7 @@ export default {
   state: {
     lesson: false,
     date: moment().format('YYYY-MM-DD'),
-    type: 'month'
+    type: 'week'
   },
   mutations: {
     SET_LESSON(state, payload) {

@@ -43,6 +43,8 @@
             :focus="date"
             :type="type"
             :events="events"
+            :start-time="'08:00'"
+            :end-time="'23:00'"
             @type="SET_TYPE"
             @date="onDate"
             @event="onSpace"

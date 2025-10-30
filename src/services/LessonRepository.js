@@ -9,13 +9,21 @@ export default {
    * @param {string} start_time
    * @param {string} end_time
    */
-  async create({ name, date, start_time, end_time, type }) {
+  async create({
+    name,
+    date,
+    start_time,
+    end_time,
+    type,
+    allow_joining_from_date
+  }) {
     const response = await ResourceService.post('lesson', {
       name,
       date,
       start_time,
       end_time,
-      type
+      type,
+      allow_joining_from_date
     })
 
     if (response.status !== 200) {
@@ -39,7 +47,16 @@ export default {
    */
   async update(
     id,
-    { name, description, date, start_time, end_time, is_online, url }
+    {
+      name,
+      description,
+      date,
+      start_time,
+      end_time,
+      is_online,
+      url,
+      allow_joining_from_date
+    }
   ) {
     const response = await ResourceService.put(`lesson/${id}`, {
       name,
@@ -48,6 +65,7 @@ export default {
       start_time,
       end_time,
       is_online,
+      allow_joining_from_date,
       url
     })
 

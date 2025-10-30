@@ -75,6 +75,8 @@
               :type="type || 'month'"
               :events="events"
               :loading="isLoading"
+              :start-time="'08:00'"
+              :end-time="'23:00'"
               @type="SET_TYPE"
               @date="onDate"
               @event="viewEvent"

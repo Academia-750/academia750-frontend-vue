@@ -128,12 +128,7 @@
   background-color: #273743;
 }
 
-// Ensure readable text color on filled buttons
-.v-application .v-btn.v-btn--has-bg {
-  color: #fff !important;
-}
-
-// SweetAlert2 buttons use Vuetify theme colors and readable text
+// Keep SweetAlert2 button styling for consistent contrast
 .swal2-styled.swal2-confirm {
   background-color: var(--v-primary-base) !important;
   color: #fff !important;

@@ -17,12 +17,14 @@
             />
             <DateInput
               id="lesson_date"
+              name="lesson_date"
               label="Fecha"
               :value="date"
               :disabled="!canEdit"
               rules="required"
               @datePicked="datePicked"
             />
+
             <v-row>
               <v-col class="py-0">
                 <TimeInput
@@ -106,6 +108,15 @@
               placeholder="Sin límite"
               @input="onMaxStudentsInput"
             />
+            <DateInput
+              id="allow_joining_from_date"
+              label="Permitir unirse desde (opcional)"
+              :value="allowJoiningFromDate"
+              :disabled="!canEdit"
+              :key="`allow_${date || 'empty'}`"
+              :rules="allowJoiningRules"
+              @datePicked="(d) => (allowJoiningFromDate = d)"
+            />
           </v-col>
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
@@ -155,8 +166,28 @@
 import { mapState, mapActions } from 'vuex'
 import LessonRepository from '@/services/LessonRepository'
 import moment from 'moment'
+import { extend } from 'vee-validate'
 import { inputValidRegex } from '@/utils/inputValidRegex'
 import Toast from '@/utils/toast'
+
+// Register rule at module scope so it's available before component/providers mount
+extend('before_lesson_date', {
+  params: ['target'],
+  validate(value, args) {
+    // args may be an object ({ target }) or an array ([target]) depending on how vee-validate parses
+    const target = Array.isArray(args) ? args[0] : args?.target
+
+    if (!value || !target) return true
+    const valueDate = moment(value, 'DD/MM/YYYY', true)
+    // target is ISO (YYYY-MM-DD)
+    const targetDate = moment(target, 'YYYY-MM-DD', true)
+
+    if (!valueDate.isValid() || !targetDate.isValid()) return true
+
+    return valueDate.isBefore(targetDate)
+  },
+  message: 'Debe ser anterior a la fecha de la clase.'
+})
 
 export default {
   components: {
@@ -202,7 +233,8 @@ export default {
       isOnlineLesson: false,
       validRegex: inputValidRegex,
       lesson: null,
-      maxStudents: null
+      maxStudents: null,
+      allowJoiningFromDate: ''
     }
   },
   computed: {
@@ -223,6 +255,9 @@ export default {
     },
     lessonType() {
       return this.storeName === 'spacesStore' ? 'space' : 'classroom'
+    },
+    allowJoiningRules() {
+      return this.date ? `before_lesson_date:${this.date}` : ''
     }
   },
   watch: {
@@ -236,6 +271,7 @@ export default {
       }
     }
   },
+
   mounted() {
     this.reset()
   },
@@ -261,6 +297,9 @@ export default {
       if (this.lesson) {
         this.name = this.lesson.name
         this.date = moment(this.lesson.date).format('YYYY-MM-DD')
+        this.allowJoiningFromDate = this.lesson.allow_joining_from_date
+          ? moment(this.lesson.allow_joining_from_date).format('YYYY-MM-DD')
+          : ''
         this.comment = this.lesson.description
         this.start_time = this.lesson.start_time
         this.end_time = this.lesson.end_time
@@ -296,6 +335,7 @@ export default {
       if (!status) {
         return
       }
+
       this.loading = true
 
       let { lesson } = this
@@ -310,7 +350,8 @@ export default {
             type: this.lessonType,
             start_time: this.start_time,
             end_time: this.end_time,
-            max_students: this.maxStudents
+            max_students: this.maxStudents,
+            allow_joining_from_date: this.allowJoiningFromDate || undefined
           })
         }
 
@@ -331,7 +372,8 @@ export default {
           end_time: this.end_time,
           is_online: this.isOnlineLesson,
           url: this.lessonMeetingUrl || undefined,
-          max_students: this.maxStudents
+          max_students: this.maxStudents,
+          allow_joining_from_date: this.allowJoiningFromDate || undefined
         })
 
         if (!lesson) {
