@@ -86,9 +86,21 @@ export default {
   data: () => ({}),
   computed: {
     daysWithValue() {
-      return this.events.map((event) =>
-        moment(event.start).format('YYYY-MM-DD')
+      // One marker per unique (day, color) pair
+      const groupedByDay = _.groupBy(this.events, (e) =>
+        moment(e.start).format('YYYY-MM-DD')
       )
+      const results = []
+
+      Object.entries(groupedByDay).forEach(([day, list]) => {
+        const uniqueColors = _.uniq(
+          list.map((e) => (e.is_active ? '#cccccc' : e.color))
+        )
+
+        uniqueColors.forEach(() => results.push(day))
+      })
+
+      return results
     },
 
     selectedDateEvents() {
@@ -132,9 +144,11 @@ export default {
     },
 
     getEventColor(date) {
-      return this.events
-        .filter((event) => moment(event.start).isSame(date, 'day'))
-        .map((event) => (event.is_active ? '#cccccc' : event.color))
+      const sameDay = this.events.filter((event) =>
+        moment(event.start).isSame(date, 'day')
+      )
+      
+      return _.uniq(sameDay.map((e) => (e.is_active ? '#cccccc' : e.color)))
     },
 
     onEvent(event) {
