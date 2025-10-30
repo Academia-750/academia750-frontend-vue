@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.2](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.1...v2.12.2) (2025-10-30)
+
+
+### Bug Fixes
+
+* max-students not save when saving the classroom ([348f0b9](https://github.com/Academia-750/academia750-frontend-vue/commit/348f0b96cb5f89dcc584f6d6485d6eb5a8e9048d))
+
 ### [2.12.1](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.0...v2.12.1) (2025-10-30)
 
 ## [2.12.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.11.6...v2.12.0) (2025-10-30)
