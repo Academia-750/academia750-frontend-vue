@@ -55,7 +55,8 @@ export default {
       end_time,
       is_online,
       url,
-      allow_joining_from_date
+      allow_joining_from_date,
+      max_students
     }
   ) {
     const response = await ResourceService.put(`lesson/${id}`, {
@@ -66,7 +67,8 @@ export default {
       end_time,
       is_online,
       allow_joining_from_date,
-      url
+      url,
+      max_students
     })
 
     if (response.status === 409) {
