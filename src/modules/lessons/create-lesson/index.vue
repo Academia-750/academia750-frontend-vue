@@ -22,6 +22,7 @@
               :value="date"
               :disabled="!canEdit"
               rules="required"
+              format="DD-MM-YYYY"
               @datePicked="datePicked"
             />
 
@@ -110,11 +111,12 @@
             />
             <DateInput
               id="allow_joining_from_date"
+              :key="`allow_${date || 'empty'}`"
               label="Permitir unirse desde (opcional)"
               :value="allowJoiningFromDate"
               :disabled="!canEdit"
-              :key="`allow_${date || 'empty'}`"
               :rules="allowJoiningRules"
+              format="DD-MM-YYYY"
               @datePicked="(d) => (allowJoiningFromDate = d)"
             />
           </v-col>
@@ -178,7 +180,7 @@ extend('before_lesson_date', {
     const target = Array.isArray(args) ? args[0] : args?.target
 
     if (!value || !target) return true
-    const valueDate = moment(value, 'DD/MM/YYYY', true)
+    const valueDate = moment(value, 'DD-MM-YYYY', true)
     // target is ISO (YYYY-MM-DD)
     const targetDate = moment(target, 'YYYY-MM-DD', true)
 
