@@ -114,9 +114,7 @@ export default {
           showConfirmButton: true,
           showCancelButton: true,
           confirmButtonText: 'Sí, reservar',
-          cancelButtonText: 'Cancelar',
-          confirmButtonColor: 'transparent',
-          cancelButtonColor: 'transparent'
+          cancelButtonText: 'Cancelar'
         })
 
         if (!result.isConfirmed) {
