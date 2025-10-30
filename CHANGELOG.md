@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.11.6...v2.12.0) (2025-10-30)
+
+
+### Features
+
+* add space magement components and routing ([e2e861b](https://github.com/Academia-750/academia750-frontend-vue/commit/e2e861b398731de60f95f21a5e79887f0b29acd3))
+* allow to join custom date + bug fixes ([422dcf5](https://github.com/Academia-750/academia750-frontend-vue/commit/422dcf5fc4e7f133b4d4a4b604fe56a44360c496))
+* max occupancy and lesson date for students ([ad7f323](https://github.com/Academia-750/academia750-frontend-vue/commit/ad7f323e6c80f52575a935abdabfefa6beeb7fba))
+
+
+### Bug Fixes
+
+* admin users being redirected to profile update page instead of admin dashboard ([b9929fc](https://github.com/Academia-750/academia750-frontend-vue/commit/b9929fcd5383d79af92ca8e055e70bbacb4c3877))
+* calendar mobile display one dot per event/color on the date ([66a1b75](https://github.com/Academia-750/academia750-frontend-vue/commit/66a1b7532ad6bed6e5c959e8e29c874603038222))
+* create-lesson date format ([0a57158](https://github.com/Academia-750/academia750-frontend-vue/commit/0a57158e66115f8855566bebaf952afc1c623811))
+* debug and improve spaces ([3b20ebf](https://github.com/Academia-750/academia750-frontend-vue/commit/3b20ebf1abc9f1c57ee9c490441efed3f6a60725))
+* refactor join button and improve messages for spaces ([6a19c70](https://github.com/Academia-750/academia750-frontend-vue/commit/6a19c700bbc818b4ec6d25fe5d1002c64ec9243e))
+
 ### [2.11.6](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.11.5...v2.11.6) (2025-10-08)
 
 ### [2.11.5](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.10.2...v2.11.5) (2025-10-03)
