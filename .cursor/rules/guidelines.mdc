@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+
+
+# Dates
+All dates shall be formatted as DD-MM-YYYY in labels and in inputs

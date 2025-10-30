@@ -9,8 +9,9 @@
             </p>
           </div>
           <div class="mb-4">
-            <p class="text-h6 mb-0 font-weight-black black--text">Clase:</p>
-            <p class="text-h6 font-weight-black">{{ lesson.name }}</p>
+            <p class="text-h6 mb-0 font-weight-black black--text">
+              {{ lesson.name }}
+            </p>
           </div>
           <div class="mb-4">
             <p class="text-h6 mb-0 font-weight-black black--text">
@@ -147,7 +148,7 @@ export default {
     formattedAllowJoiningFromDate() {
       const d = this.lesson?.allow_joining_from_date
 
-      return d ? moment(d).format('YYYY-MM-DD') : ''
+      return d ? moment(d).format('DD-MM-YYYY') : ''
     }
   },
   methods: {
