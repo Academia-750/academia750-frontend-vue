@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.3](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.2...v2.12.3) (2025-10-31)
+
+
+### Bug Fixes
+
+* Check icon for calendar lessons i will assist ([7391b6a](https://github.com/Academia-750/academia750-frontend-vue/commit/7391b6a9c02432a630951ec7168c81dc981acd37))
+* mdc for rules and typo ([32d99ee](https://github.com/Academia-750/academia750-frontend-vue/commit/32d99eeadc4fab21e1dc2817014394b0e99edd67))
+
 ### [2.12.2](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.1...v2.12.2) (2025-10-30)
 
 
