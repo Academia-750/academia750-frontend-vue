@@ -73,12 +73,14 @@
             <div class="d-flex align-center justify-end flex-fill">
               <v-icon
                 class="px-2"
-                color="success"
+                color="primary"
                 @click.stop="onLesson(lessonEvent)"
               >
                 mdi-information
               </v-icon>
-
+              <v-icon v-if="lessonEvent.will_join" class="px-2" color="success">
+                mdi-check-circle
+              </v-icon>
               <!-- There are two different switch for desktop and mobile in this same page -->
               <LessonJoinControl
                 :lesson="lessonEvent"

@@ -63,9 +63,12 @@
         >
           <template #actions="spaceEvent">
             <div class="d-flex align-center justify-end flex-fill">
+              <v-icon v-if="spaceEvent.will_join" class="px-2" color="success">
+                mdi-check-circle
+              </v-icon>
               <v-icon
                 class="px-2"
-                color="success"
+                color="info"
                 @click.stop="onSpace(spaceEvent)"
               >
                 mdi-information

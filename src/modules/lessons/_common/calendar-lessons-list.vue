@@ -89,7 +89,11 @@
             @input="onInputChange"
           >
             <template v-slot:event="{ event }">
-              <span class="pl-1"> {{ format(event) }} </span>
+              <div class="pl-1 d-flex justify-space-between">
+                <span class="text-wrap word-break">
+                  {{ format(event) }}
+                </span>
+              </div>
             </template>
           </v-calendar>
         </v-sheet>
@@ -202,7 +206,11 @@ export default {
       this.$refs.calendar.next()
     },
     format(event) {
-      return `${moment(event.start).format('HH:mm')}   ${event.name}`
+      const willJoinCount = event.will_join ? '✅' : ''
+
+      return `${willJoinCount} ${moment(event.start).format('HH:mm')}   ${
+        event.name
+      }`
     },
     async showEvent({ event }) {
       this.$emit('event', event)
@@ -221,4 +229,19 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .v-event {
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box !important;
+
+  span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+</style>

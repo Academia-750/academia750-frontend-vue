@@ -147,7 +147,7 @@ export default {
       const sameDay = this.events.filter((event) =>
         moment(event.start).isSame(date, 'day')
       )
-      
+
       return _.uniq(sameDay.map((e) => (e.is_active ? '#cccccc' : e.color)))
     },
 

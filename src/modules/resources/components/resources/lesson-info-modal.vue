@@ -5,13 +5,12 @@
         <v-card-text>
           <div class="pt-2 mb-4">
             <p class="text-h5 mb-0 font-weight-black black--text">
-              Información
+              {{ lesson.name }}
             </p>
           </div>
           <div class="mb-4">
-            <p class="text-h6 mb-0 font-weight-black black--text">
-              {{ lesson.name }}
-            </p>
+            <p class="text-h6 mb-0 font-weight-black black--text">Fecha</p>
+            <p class="text-h6 font-weight-black">{{ formattedDateStart }}</p>
           </div>
           <div class="mb-4">
             <p class="text-h6 mb-0 font-weight-black black--text">
@@ -149,6 +148,9 @@ export default {
       const d = this.lesson?.allow_joining_from_date
 
       return d ? moment(d).format('DD-MM-YYYY') : ''
+    },
+    formattedDateStart() {
+      return moment(this.lesson?.date_start).format('DD-MM-YYYY')
     }
   },
   methods: {
