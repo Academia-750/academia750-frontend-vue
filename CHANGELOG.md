@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.4](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.3...v2.12.4) (2025-11-03)
+
+
+### Bug Fixes
+
+* layout improvements ([98d03c3](https://github.com/Academia-750/academia750-frontend-vue/commit/98d03c3004d943dc02b9ac69acec953baa786240))
+
 ### [2.12.3](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.2...v2.12.3) (2025-10-31)
 
 
