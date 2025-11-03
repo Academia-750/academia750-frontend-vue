@@ -58,6 +58,7 @@ jobs:
           VUE_APP_CLOUDINARY_ID=${{ env.CLOUDINARY }}
           VUE_APP_SECRET_KEY_DESCRYPT_TOKEN=${{ env.VUE_APP_SECRET_KEY_DESCRYPT_TOKEN }}
           VUE_APP_STAGING_BUILD=${{ steps.vars.outputs.BUILD_INFO }}
+          VUE_APP_VERSION_REF=${{ steps.vars.outputs.BUILD_INFO }}
           EOF
           cp .env.staging .env
           echo "📄 Environment file created"

@@ -7,13 +7,15 @@ const FormButtonSubmitLogin = () => import(/* webpackChunkName: "FormButtonSubmi
 
 const ButtonRequestResetPassword = () => import('@/modules/auth/login/components/ButtonRequestResetPassword.vue')
 const FooterDialogLogin = () =>  import('@/modules/home/components/Login/FooterDialogLogin')
+const VersionDisplay = () => import(/* webpackChunkName: "VersionDisplay" */ '@/components/common/VersionDisplay.vue')
 
 const components = {
   FormAccessKeyField,
   FormPasswordField,
   FormButtonSubmitLogin,
   ButtonRequestResetPassword,
-  FooterDialogLogin
+  FooterDialogLogin,
+  VersionDisplay
 }
 
 export default {

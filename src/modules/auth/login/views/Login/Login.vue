@@ -75,6 +75,7 @@
             </v-btn>
           </v-form>
         </validation-observer>
+        <version-display />
       </v-card-text>
     </v-card>
 

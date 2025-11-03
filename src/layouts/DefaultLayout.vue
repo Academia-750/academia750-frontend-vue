@@ -38,7 +38,8 @@
               <span
                 class="text-uppercase white--text font-weight-bold text-xs-caption text-sm-h6 align-self-center"
                 to="/"
-              >{{ product.name }}</span>
+                >{{ product.name }}</span
+              >
             </div>
             <!-- <div class="overline grey--text">{{ product.version }}</div> -->
           </div>
@@ -68,6 +69,8 @@
               {{ $t('menu.logout') }}
             </v-btn>
           </div>
+          <!-- Version Display -->
+          <version-display />
         </template>
       </v-navigation-drawer>
       <!-- Toolbar -->
@@ -144,6 +147,7 @@
               @{{ product.name }}
             </span>
           </div>
+          <version-display />
         </v-footer>
       </v-main>
     </section>
@@ -167,6 +171,7 @@ import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 import ProgressCircularLoadingApp from '@/modules/loading/components/ProgressCircularLoadingApp.vue'
 import ProgressLinearLoadingApp from '@/modules/loading/components/ProgressLinearLoadingApp.vue'
 import ProgressLinearStateTest from '@/modules/tests/views/FetchTest/components/progressLinearStateTest'
+import VersionDisplay from '@/components/common/VersionDisplay.vue'
 
 export default {
   components: {
@@ -178,7 +183,8 @@ export default {
     ToolbarNotifications,
     ProgressCircularLoadingApp,
     ProgressLinearLoadingApp,
-    ProgressLinearStateTest
+    ProgressLinearStateTest,
+    VersionDisplay
   },
   mixins: [logoutActionsMixin],
   data() {
