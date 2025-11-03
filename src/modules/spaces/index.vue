@@ -30,7 +30,7 @@
                 <!-- Column for Max Students (specific to spaces) -->
                 <div v-if="lesson.max_students">
                   <span class="font-weight-bold subtitle-2"> Asistencia: </span>
-                  {{ lesson.max_students - lesson.will_join_count }} plazas de
+                  {{ lesson.max_students - lesson.will_join_count }} plazas
                   libres de {{ lesson.max_students }} espacios
                 </div>
               </template>
