@@ -20,6 +20,19 @@
       @click="onEvent(event)"
     >
       <v-sheet class="relative d-flex elevation-2 mt-1 mb-2">
+        <div
+          class="event-date d-flex flex-column justify-center items-center p-2 white--text"
+          :style="{
+            backgroundColor: event.color
+          }"
+        >
+          <span class="font-weight-medium">
+            {{ date(event.start, 'DD') }}
+          </span>
+          <span class="font-weight-medium">
+            {{ date(event.start, 'MMM') }}
+          </span>
+        </div>
         <div class="event-item">
           <div class="d-flex flex-column justify-center">
             <span class="font-weight-medium text-xs-caption text-sm-h7">
@@ -31,17 +44,6 @@
             </span>
           </div>
           <slot name="actions" v-bind="event"> </slot>
-        </div>
-
-        <div
-          class="event-date d-flex flex-column justify-center items-center primary p-2 white--text"
-        >
-          <span class="font-weight-medium">
-            {{ date(event.start, 'DD') }}
-          </span>
-          <span class="font-weight-medium">
-            {{ date(event.start, 'MMM') }}
-          </span>
         </div>
       </v-sheet>
     </div>
