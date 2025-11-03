@@ -139,6 +139,11 @@
   color: #fff !important;
 }
 
+.swal2-styled.swal2-deny {
+  background-color: var(--v-error-base) !important;
+  color: #fff !important;
+}
+
 // Rows
 .row {
   margin-top: 0 !important;
