@@ -3,25 +3,36 @@ import { PermissionEnum } from '@/utils/enums'
 export default {
   menu: [
     {
-      text: 'Clases y Materiales',
+      text: 'Mis Clases',
       key: '',
       permissions: [PermissionEnum.SEE_LESSONS],
-      regex: /^\/(lessons|student-materials|student-recordings|my-spaces)/,
+      regex: /^\/(lessons|my-spaces)/,
       items: [
         {
           icon: 'mdi-book-open-page-variant',
           key: '',
-          text: 'Mis Clases',
+          text: 'Clases',
           to: { name: 'my-lessons' },
           permissions: [PermissionEnum.SEE_LESSONS]
         },
         {
           icon: 'mdi-home-city',
           key: '',
-          text: 'Mis Espacios',
+          text: 'Espacios',
           to: { name: 'my-spaces' },
           permissions: [PermissionEnum.SEE_LESSONS]
-        },
+        }
+      ]
+    },
+    {
+      text: 'Materiales',
+      key: '',
+      permissions: [
+        PermissionEnum.SEE_LESSONS,
+        PermissionEnum.SEE_LESSON_MATERIALS
+      ],
+      regex: /^\/(student-materials|student-recordings|student-assessments)/,
+      items: [
         {
           icon: 'mdi-file-pdf',
           key: '',
@@ -40,6 +51,16 @@ export default {
           permissions: [
             PermissionEnum.SEE_LESSONS,
             PermissionEnum.SEE_LESSON_RECORDINGS
+          ]
+        },
+        {
+          icon: 'mdi-clipboard-text',
+          key: '',
+          text: 'Seguimiento Teórico',
+          to: { name: 'manage-students-assessments' },
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_MATERIALS
           ]
         }
       ]

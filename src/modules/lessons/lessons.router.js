@@ -10,6 +10,9 @@ import StudentMaterialsPage from './student-materials/student-materials-page'
 import StudentLessonMaterialsPage from './student-materials/student-lesson-material-page'
 import StudentRecordingPage from './student-recordings/student-recordings-page'
 import StudentLessonRecordingPage from './student-recordings/student-lesson-recording-page'
+import StudentAssessmentPage from './student-assessments/student-assessments-page'
+import StudentLessonAssessmentPage from './student-assessments/student-lesson-assessment-page'
+import StudentAssessmentDetailPage from './student-assessments/student-assessment-detail-page'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
@@ -48,6 +51,22 @@ const studentRoute = [
             path: ':id/recordings',
             name: 'student-lesson-recordings',
             component: StudentLessonRecordingPage,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: ':id/assessments',
+            name: 'student-lesson-assessments',
+            component: StudentLessonAssessmentPage,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'assessments/:assessmentId',
+            name: 'student-assessment-detail',
+            component: StudentAssessmentDetailPage,
             meta: {
               middleware: [authMiddleware]
             }
@@ -98,6 +117,14 @@ const studentRoute = [
         path: 'student-recordings',
         name: 'manage-students-recordings',
         component: StudentRecordingPage,
+        meta: {
+          middleware: [authMiddleware]
+        }
+      },
+      {
+        path: 'student-assessments',
+        name: 'manage-students-assessments',
+        component: StudentAssessmentPage,
         meta: {
           middleware: [authMiddleware]
         }

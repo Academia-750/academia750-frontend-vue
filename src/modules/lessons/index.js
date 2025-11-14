@@ -17,8 +17,10 @@ export default {
     lessonAttendeesStore,
     makeMaterialStore('studentsMaterialsStore'),
     makeMaterialStore('studentsRecordingsStore'),
+    makeMaterialStore('studentsAssessmentsStore'),
     makeMaterialStore('studentsLessonMaterialsStore'),
-    makeMaterialStore('studentsLessonRecordingsStore')
+    makeMaterialStore('studentsLessonRecordingsStore'),
+    makeMaterialStore('studentsLessonAssessmentsStore')
   ],
   router
 }

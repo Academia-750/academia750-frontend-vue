@@ -1,7 +1,7 @@
 export default [
   {
     position: 1,
-    text: 'Workspace',
+    text: 'Categoría',
     align: 'start',
     sortable: true,
     value: 'workspace',
