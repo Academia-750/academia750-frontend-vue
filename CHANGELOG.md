@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.6...v2.13.0) (2025-11-14)
+
+
+### Features
+
+* manag assement types ([aada784](https://github.com/Academia-750/academia750-frontend-vue/commit/aada7847c45c2b0285917e74033b5875b2243fb3))
+* student assement list and add assement record ([1655a67](https://github.com/Academia-750/academia750-frontend-vue/commit/1655a67911f7a8cb0c1f05a30df04873d57f2c95))
+
 ### [2.12.6](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.5...v2.12.6) (2025-11-03)
 
 ### [2.12.5](https://github.com/Academia-750/academia750-frontend-vue/compare/v2.12.4...v2.12.5) (2025-11-03)
