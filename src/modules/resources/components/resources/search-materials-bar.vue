@@ -101,6 +101,10 @@ export default {
         {
           key: 'recording',
           label: 'Grabaciones'
+        },
+        {
+          key: 'assessment',
+          label: 'Seguimiento Teórico'
         }
       ]
     }

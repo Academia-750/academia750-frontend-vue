@@ -1,6 +1,7 @@
 export const MATERIAL_TYPES_LABELS = {
   material: 'Material',
-  recording: 'Grabación'
+  recording: 'Grabación',
+  assement: 'Seguimiento Teórico'
 }
 
 // Date default format for Spanish country

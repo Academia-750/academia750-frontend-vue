@@ -7,11 +7,17 @@ export default {
   /**
    * @param {string} type
    * @param {string} name
+   * @param {string} deadline
+   * @param {number} total_questions
+   * @param {number} penalty_factor
    */
-  async create(id, { name, type }) {
+  async create(id, { name, type, deadline, total_questions, penalty_factor }) {
     const response = await ResourceService.post(`workspace/${id}/add`, {
       name,
-      type
+      type,
+      deadline,
+      total_questions,
+      penalty_factor
     })
 
     if (response.status !== 200) {
@@ -139,15 +145,34 @@ export default {
    * @param {string} type
    * @param {string} tags
    * @param {string} url
+   * @param {string} deadline
+   * @param {number} total_questions
+   * @param {number} penalty_factor
    */
-  async update(id, { name, type, tags, url, watermark, storage }) {
+  async update(
+    id,
+    {
+      name,
+      type,
+      tags,
+      url,
+      watermark,
+      storage,
+      deadline,
+      total_questions,
+      penalty_factor
+    }
+  ) {
     const response = await ResourceService.put(`material/${id}`, {
       name,
       type,
       tags,
       url,
       watermark,
-      storage
+      storage,
+      deadline,
+      total_questions,
+      penalty_factor
     })
 
     if (response.status === 409) {

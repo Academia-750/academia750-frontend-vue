@@ -50,7 +50,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-radio-group
-              v-if="type === 'material'"
+              v-if="type === 'material' || type === 'assessment'"
               v-model="urlInputType"
               row
             >
@@ -66,7 +66,10 @@
               rules="required|url"
             />
             <FieldInput
-              v-if="type === 'material' && urlInputType === 'materialUrl'"
+              v-if="
+                (type === 'material' || type === 'assessment') &&
+                urlInputType === 'materialUrl'
+              "
               id="materialUrl"
               ref="materialUrlInput"
               v-model="materialUrl"
@@ -162,6 +165,51 @@
               @click="(value) => (watermark = value)"
             />
           </v-col>
+          <!-- Assessment Section -->
+          <v-col v-if="type === 'assessment'" cols="12">
+            <v-divider class="my-4"></v-divider>
+            <h3 class="mb-4">Configuración de Seguimiento Teórico</h3>
+            <v-row dense>
+              <v-col cols="12" md="4">
+                <DateInput
+                  id="deadline"
+                  ref="deadlineInput"
+                  :value="deadline"
+                  label="Fecha Límite"
+                  format="DD-MM-YYYY"
+                  rules="required"
+                  @datePicked="(value) => (deadline = value)"
+                />
+              </v-col>
+              <v-col cols="12" md="4">
+                <FieldInput
+                  id="totalQuestions"
+                  ref="totalQuestionsInput"
+                  v-model="totalQuestions"
+                  label="Total de Preguntas"
+                  :filled="true"
+                  :outlined="false"
+                  type="number"
+                  rules="required|numeric|min_value:1"
+                />
+              </v-col>
+              <v-col cols="12" md="4">
+                <FieldInput
+                  id="penaltyFactor"
+                  ref="penaltyFactorInput"
+                  v-model="penaltyFactor"
+                  label="Factor de Penalización"
+                  :filled="true"
+                  :outlined="false"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="1"
+                  rules="required|min_value:0|max_value:1"
+                />
+              </v-col>
+            </v-row>
+          </v-col>
           <v-row class="d-flex ml-1 mr-1 mt-2 justify-space-between">
             <div>
               <ResourceButton
@@ -200,6 +248,7 @@ import { PermissionEnum } from '@/utils/enums'
 import LessonRepository from '@/services/LessonRepository'
 import UploadRepository from '@/services/UploadRepository'
 import { getOriginalFile } from '@/utils/DownloadMaterial'
+import ResourceService from '@/services/ResourceService'
 const StorageOptions = [
   {
     label: 'Digital Ocean',
@@ -219,6 +268,8 @@ const MAX_FILE_SIZE_MB = {
   cloudinary: 10, // 10 MB
   digitalocean: 100 // 100 MB
 }
+
+const DEFAULT_PENALTY_FACTOR = 0.25
 
 export default {
   components: {
@@ -249,6 +300,10 @@ export default {
     RadioGroupInput: () =>
       import(
         /* webpackChunkName: "RadioGroupInput" */ '@/modules/resources/components/form/radio-group-input'
+      ),
+    DateInput: () =>
+      import(
+        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/date-input'
       )
   },
   data() {
@@ -271,6 +326,10 @@ export default {
         {
           key: 'recording',
           label: 'Grabaciones'
+        },
+        {
+          key: 'assessment',
+          label: 'Seguimiento Teórico'
         }
       ],
       material: false,
@@ -284,7 +343,11 @@ export default {
       StorageOptions,
       // When adding from a lesson menu
       lesson: null,
-      MAX_FILE_SIZE_MB
+      MAX_FILE_SIZE_MB,
+      // Assessment fields
+      deadline: '',
+      totalQuestions: '',
+      penaltyFactor: DEFAULT_PENALTY_FACTOR
     }
   },
   computed: {
@@ -302,11 +365,17 @@ export default {
     isMaterial() {
       return this.type === 'material'
     },
+    isMaterialOrAssessment() {
+      return this.type === 'material' || this.type === 'assessment'
+    },
     isStorageRequired() {
-      return this.type === 'material' && this.urlInputType === 'file'
+      return (
+        (this.type === 'material' || this.type === 'assessment') &&
+        this.urlInputType === 'file'
+      )
     },
     getFileName() {
-      if (!this.isMaterial) {
+      if (!this.isMaterialOrAssessment) {
         return ''
       }
 
@@ -324,7 +393,11 @@ export default {
       return fileName
     },
     typeLabel() {
-      return this.type === 'material' ? 'Material' : 'Grabación'
+      if (this.type === 'material') return 'Material'
+      if (this.type === 'recording') return 'Grabación'
+      if (this.type === 'assessment') return 'Seguimiento Teórico'
+
+      return 'Material'
     },
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown
@@ -390,7 +463,9 @@ export default {
       this.tags = this.editItem.tags ? this.editItem.tags.split(',') : []
       this.type = this.editItem.type
       this.url =
-        isInternalFile || this.editItem.type !== 'material'
+        isInternalFile ||
+        this.editItem.type === 'recording' ||
+        this.editItem.type === 'assessment'
           ? this.editItem.url
           : undefined
       this.storage = this.editItem.storage || 'digitalocean'
@@ -399,6 +474,17 @@ export default {
       this.workspace = this.editItem.workspace
       this.urlInputType =
         isInternalFile || !this.editItem.url ? 'file' : 'materialUrl'
+      // Reset first load if is assement
+      this.deadline = ''
+      this.totalQuestions = ''
+      this.penaltyFactor = DEFAULT_PENALTY_FACTOR
+      // Load assessment fields if type is assessment
+      if (this.type === 'assessment') {
+        // If material has assessment_id, fetch assessment info from API
+        if (this.editItem.assessment_id) {
+          await this.loadAssessmentInfo(this.editItem.assessment_id)
+        }
+      }
     },
 
     onChangeType(type) {
@@ -413,6 +499,44 @@ export default {
       }
       // This is just to load the title on the header
       this.lesson = await LessonRepository.info(lessonId)
+    },
+    async loadAssessmentInfo(assessmentId) {
+      try {
+        const response = await ResourceService.get(
+          `admin/assessments/${assessmentId}`
+        )
+
+        if (response.status !== 200 || !response.data.result) {
+          Toast.error(
+            'Error al cargar la información del seguimiento teórico: ' +
+              response.data.message,
+            {
+              icon: 'error'
+            }
+          )
+
+          return
+        }
+
+        const assessment = response.data.result
+
+        // Populate assessment fields from API response
+        // Deadline format from API is 'd-m-Y H:i:s', need to convert to YYYY-MM-DD for DateInput
+        this.deadline = assessment.deadline
+          ? assessment.deadline.split(' ')[0].split('-').reverse().join('-')
+          : ''
+        this.totalQuestions = assessment.total_questions || ''
+        this.penaltyFactor = assessment.penalty_factor || ''
+      } catch (error) {
+        Toast.error(
+          'Error al cargar la información del seguimiento teórico: ' +
+            error.message,
+          {
+            icon: 'error'
+          }
+        )
+        // Sentry.captureException(error)
+      }
     },
 
     reset() {
@@ -429,6 +553,15 @@ export default {
       this.material = false
       this.filesToUpload = []
       this.materialUrl = ''
+      // Reset assessment fields
+      this.deadline = ''
+      this.totalQuestions = ''
+      this.penaltyFactor = DEFAULT_PENALTY_FACTOR
+      this.$refs['deadlineInput'] && this.$refs['deadlineInput'].resetErrors()
+      this.$refs['totalQuestionsInput'] &&
+        this.$refs['totalQuestionsInput'].resetErrors()
+      this.$refs['penaltyFactorInput'] &&
+        this.$refs['penaltyFactorInput'].resetErrors()
     },
 
     async uploadFileClicked() {
@@ -568,12 +701,25 @@ export default {
 
       try {
         if (!this.material) {
+          const createData = {
+            name: this.name,
+            type: this.type
+          }
+
+          // Add assessment fields if type is assessment
+          if (this.type === 'assessment') {
+            createData.deadline = this.deadline
+            createData.total_questions = this.totalQuestions
+              ? parseInt(this.totalQuestions, 10)
+              : undefined
+            createData.penalty_factor = this.penaltyFactor
+              ? parseFloat(this.penaltyFactor)
+              : undefined
+          }
+
           material = await WorkspaceMaterialRepository.create(
             this.workspace.id,
-            {
-              name: this.name,
-              type: this.type
-            }
+            createData
           )
         }
 
@@ -586,17 +732,36 @@ export default {
         }
         this.url = urlResult.url
 
-        material = await WorkspaceMaterialRepository.update(material.id, {
+        const updateData = {
           name: this.name,
           tags: this.tags,
           storage: this.isStorageRequired ? this.storage : 'remove',
           watermark: this.watermark,
           url: this.url || undefined
-        })
+        }
+
+        material = await WorkspaceMaterialRepository.update(
+          material.id,
+          updateData
+        )
         if (!material) {
           this.loading = false
 
           return
+        }
+
+        // Update assessment separately if material has assessment_id
+        if (this.type === 'assessment' && material.assessment_id) {
+          const assessmentUpdateData = {
+            deadline: this.deadline,
+            total_questions: this.totalQuestions,
+            penalty_factor: this.penaltyFactor
+          }
+
+          await ResourceService.put(
+            `admin/assessments/${material.assessment_id}`,
+            assessmentUpdateData
+          )
         }
 
         if (this.lesson && !this.editItem) {

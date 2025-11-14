@@ -120,6 +120,9 @@ export default {
     },
     emitDate() {
       this.$emit('datePicked', this.validDate)
+    },
+    resetErrors() {
+      this.$refs.validationProvider && this.$refs.validationProvider.reset()
     }
   }
 }

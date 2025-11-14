@@ -59,7 +59,7 @@
       <template v-slot:[`item.actions-resource`]="{ item }">
         <div class="d-flex justify-space-between align-center">
           <div>
-            <div v-if="item.type === 'material'" class="d-flex mr-1">
+            <div v-if="item.type !== 'recording'" class="d-flex mr-1">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
