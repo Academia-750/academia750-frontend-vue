@@ -68,10 +68,12 @@
             </v-col>
             <v-col cols="12" md="3">
               <div class="text-center">
-                <div class="text-h4 success--text">
+                <div :class="`text-h4 ${getMarkColorClass()}--text`">
                   {{ formattedMark }}
                 </div>
-                <div class="text-body-2">Nota</div>
+                <div class="text-body-2">
+                  Nota (Pos. {{ assessmentResult.position }})
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -95,6 +97,7 @@
 <script>
 import AssessmentRepository from '@/services/AssessmentRepository'
 import moment from 'moment'
+import { getMarkColor } from '@/modules/lessons/_common/assessment.helper'
 
 export default {
   name: 'StudentAssessmentDetail',
@@ -178,6 +181,17 @@ export default {
     }
   },
   methods: {
+    getMarkColorClass() {
+      if (!this.assessmentResult || !this.assessmentResult.mark) {
+        return 'grey'
+      }
+
+      return getMarkColor(
+        this.assessmentResult.mark,
+        this.assessment?.lowest_mark,
+        this.assessment?.highest_mark
+      )
+    },
     async loadAssessmentResult() {
       try {
         const result = await AssessmentRepository.getAssessmentResult(

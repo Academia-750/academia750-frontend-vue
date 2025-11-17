@@ -581,6 +581,52 @@ export default {
     return { results: response.data.results, total: response.data.total }
   },
   /**
+   * @param {string} tags
+   * @param {string} lessons
+   * @param {string} workspaces
+   * @param {string} orderBy
+   * @param {string} order
+   * @param {string} limit
+   * @param {string} offset
+   * @param {string} content
+   */
+  async studentsAssessmentsList({
+    tags,
+    lessons,
+    workspaces,
+    orderBy,
+    order,
+    limit,
+    offset,
+    content
+  } = {}) {
+    const params = {
+      tags,
+      lessons,
+      workspaces,
+      orderBy,
+      order,
+      limit,
+      offset,
+      content: content || undefined
+    }
+
+    deleteUndefined(params)
+    const response = await ResourceService.get('student/assessments', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return { results: [], total: 0 }
+    }
+
+    return { results: response.data.results, total: response.data.total }
+  },
+  /**
    * @param {string} id
    */
   async getStudentMaterialURL(id) {

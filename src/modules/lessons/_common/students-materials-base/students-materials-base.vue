@@ -58,7 +58,7 @@
 <script>
 import _ from 'lodash'
 import componentButtonsCrud from '@/modules/resources/mixins/componentButtonsCrud'
-import headers from './students-materials-columns'
+import headers from './students-materials.columns'
 import LessonRepository from '@/services/LessonRepository'
 import ServerDataTable from '@/modules/resources/components/resources/server-data-table.vue'
 

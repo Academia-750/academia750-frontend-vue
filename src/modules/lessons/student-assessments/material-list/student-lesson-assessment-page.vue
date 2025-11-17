@@ -1,5 +1,5 @@
 <template>
-  <StudentsAssessmentsList
+  <StudentsAssessmentsMaterialList
     v-if="lesson"
     store-name="studentsLessonAssessmentsStore"
   />
@@ -14,9 +14,9 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'StudentsAssessments',
   components: {
-    StudentsAssessmentsList: () =>
+    StudentsAssessmentsMaterialList: () =>
       import(
-        /* webpackChunkName: "StudentsAssessmentsList" */ './students-assessments-list.vue'
+        /* webpackChunkName: "StudentsAssessmentsMaterialList" */ './students-assessments-material-list.vue'
       )
   },
   mixins: [notifications],

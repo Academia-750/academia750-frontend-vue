@@ -171,17 +171,6 @@
             <h3 class="mb-4">Configuración de Seguimiento Teórico</h3>
             <v-row dense>
               <v-col cols="12" md="4">
-                <DateInput
-                  id="deadline"
-                  ref="deadlineInput"
-                  :value="deadline"
-                  label="Fecha Límite"
-                  format="DD-MM-YYYY"
-                  rules="required"
-                  @datePicked="(value) => (deadline = value)"
-                />
-              </v-col>
-              <v-col cols="12" md="4">
                 <FieldInput
                   id="totalQuestions"
                   ref="totalQuestionsInput"
@@ -190,9 +179,26 @@
                   :filled="true"
                   :outlined="false"
                   type="number"
+                  min="1"
                   rules="required|numeric|min_value:1"
                 />
               </v-col>
+              <v-col cols="12" md="4">
+                <FieldInput
+                  id="deadline"
+                  ref="deadlineInput"
+                  v-model.number="deadline"
+                  type="number"
+                  label="Días para completar"
+                  hint="Número de días después de la fecha de la clase para completar el seguimiento teórico"
+                  persistent-hint
+                  :filled="true"
+                  :outlined="false"
+                  rules="required|numeric|min_value:1"
+                  min="1"
+                />
+              </v-col>
+
               <v-col cols="12" md="4">
                 <FieldInput
                   id="penaltyFactor"
@@ -270,6 +276,7 @@ const MAX_FILE_SIZE_MB = {
 }
 
 const DEFAULT_PENALTY_FACTOR = 0.25
+const DEFAULT_DEADLINE = 4
 
 export default {
   components: {
@@ -300,10 +307,6 @@ export default {
     RadioGroupInput: () =>
       import(
         /* webpackChunkName: "RadioGroupInput" */ '@/modules/resources/components/form/radio-group-input'
-      ),
-    DateInput: () =>
-      import(
-        /* webpackChunkName: "DateInput" */ '@/modules/resources/components/form/date-input'
       )
   },
   data() {
@@ -345,9 +348,10 @@ export default {
       lesson: null,
       MAX_FILE_SIZE_MB,
       // Assessment fields
-      deadline: '',
+      deadline: DEFAULT_DEADLINE,
       totalQuestions: '',
-      penaltyFactor: DEFAULT_PENALTY_FACTOR
+      penaltyFactor: DEFAULT_PENALTY_FACTOR,
+      defaultDeadline: DEFAULT_DEADLINE
     }
   },
   computed: {
@@ -472,9 +476,9 @@ export default {
       this.urlInputType =
         isInternalFile || !this.editItem.url ? 'file' : 'materialUrl'
       // Reset first load if is assement
-      this.deadline = ''
       this.totalQuestions = ''
       this.penaltyFactor = DEFAULT_PENALTY_FACTOR
+      this.deadline = this.defaultDeadline
       // Load assessment fields if type is assessment
       if (this.type === 'assessment') {
         // If material has assessment_id, fetch assessment info from API
@@ -518,10 +522,11 @@ export default {
         const assessment = response.data.result
 
         // Populate assessment fields from API response
-        // Deadline format from API is 'd-m-Y H:i:s', need to convert to YYYY-MM-DD for DateInput
-        this.deadline = assessment.deadline
-          ? assessment.deadline.split(' ')[0].split('-').reverse().join('-')
-          : ''
+        // Deadline is now an integer (number of days after lesson date)
+        this.deadline =
+          assessment.deadline !== null
+            ? Number(assessment.deadline)
+            : this.defaultDeadline
         this.totalQuestions = assessment.total_questions || ''
         this.penaltyFactor = assessment.penalty_factor || ''
       } catch (error) {
@@ -551,7 +556,7 @@ export default {
       this.filesToUpload = []
       this.materialUrl = ''
       // Reset assessment fields
-      this.deadline = ''
+      this.deadline = this.defaultDeadline
       this.totalQuestions = ''
       this.penaltyFactor = DEFAULT_PENALTY_FACTOR
       this.$refs['deadlineInput'] && this.$refs['deadlineInput'].resetErrors()
@@ -706,6 +711,8 @@ export default {
           // Add assessment fields if type is assessment
           if (this.type === 'assessment') {
             createData.deadline = this.deadline
+              ? parseInt(this.deadline, 10)
+              : undefined
             createData.total_questions = this.totalQuestions
               ? parseInt(this.totalQuestions, 10)
               : undefined
@@ -750,7 +757,7 @@ export default {
         // Update assessment separately if material has assessment_id
         if (this.type === 'assessment' && material.assessment_id) {
           const assessmentUpdateData = {
-            deadline: this.deadline,
+            deadline: this.deadline ? parseInt(this.deadline, 10) : null,
             total_questions: this.totalQuestions,
             penalty_factor: this.penaltyFactor
           }

@@ -31,7 +31,8 @@ export default {
         PermissionEnum.SEE_LESSONS,
         PermissionEnum.SEE_LESSON_MATERIALS
       ],
-      regex: /^\/(student-materials|student-recordings|student-assessments)/,
+      regex:
+        /^\/(student-materials|student-recordings|student-assessments|student-assessments-materials)/,
       items: [
         {
           icon: 'mdi-file-pdf',
@@ -57,6 +58,16 @@ export default {
           icon: 'mdi-clipboard-text',
           key: '',
           text: 'Seguimiento Teórico',
+          to: { name: 'manage-students-assessments-materials' },
+          permissions: [
+            PermissionEnum.SEE_LESSONS,
+            PermissionEnum.SEE_LESSON_MATERIALS
+          ]
+        },
+        {
+          icon: 'mdi-clipboard-check',
+          key: '',
+          text: 'Evaluaciones',
           to: { name: 'manage-students-assessments' },
           permissions: [
             PermissionEnum.SEE_LESSONS,

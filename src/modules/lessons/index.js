@@ -6,6 +6,7 @@ import lessonAttendeesStore from './lesson-attendees/lesson-attendees.store'
 import studentLessonStore from './student-lessons/student-lessons.store'
 import router from './lessons.router'
 import { makeMaterialStore } from './_common/students-materials-base/students-materials.store'
+import studentsAssessmentsListStore from './student-assessments/assessment-list/students-assessments-list.store'
 
 export default {
   stores: [
@@ -20,7 +21,8 @@ export default {
     makeMaterialStore('studentsAssessmentsStore'),
     makeMaterialStore('studentsLessonMaterialsStore'),
     makeMaterialStore('studentsLessonRecordingsStore'),
-    makeMaterialStore('studentsLessonAssessmentsStore')
+    makeMaterialStore('studentsLessonAssessmentsStore'),
+    studentsAssessmentsListStore
   ],
   router
 }

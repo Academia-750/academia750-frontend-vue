@@ -10,9 +10,9 @@ import StudentMaterialsPage from './student-materials/student-materials-page'
 import StudentLessonMaterialsPage from './student-materials/student-lesson-material-page'
 import StudentRecordingPage from './student-recordings/student-recordings-page'
 import StudentLessonRecordingPage from './student-recordings/student-lesson-recording-page'
-import StudentAssessmentPage from './student-assessments/student-assessments-page'
-import StudentLessonAssessmentPage from './student-assessments/student-lesson-assessment-page'
-import StudentAssessmentDetailPage from './student-assessments/student-assessment-detail-page'
+import StudentAssessmentPage from './student-assessments/material-list/student-assessments-page'
+import StudentLessonAssessmentPage from './student-assessments/material-list/student-lesson-assessment-page'
+import StudentAssessmentDetailPage from './student-assessments/assessment-detail/student-assessment-detail-page'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
@@ -122,9 +122,20 @@ const studentRoute = [
         }
       },
       {
+        path: 'student-assessments-materials',
+        name: 'manage-students-assessments-materials',
+        component: StudentAssessmentPage,
+        meta: {
+          middleware: [authMiddleware]
+        }
+      },
+      {
         path: 'student-assessments',
         name: 'manage-students-assessments',
-        component: StudentAssessmentPage,
+        component: () =>
+          import(
+            /* webpackChunkName: "StudentAssessmentsListPage" */ './student-assessments/assessment-list/student-assessments-list-page.vue'
+          ),
         meta: {
           middleware: [authMiddleware]
         }

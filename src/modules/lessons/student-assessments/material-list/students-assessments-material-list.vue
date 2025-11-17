@@ -8,7 +8,7 @@
       icon="mdi-clipboard-text"
     >
       <template v-slot:actions="item">
-        <div class="d-flex justify-space-between align-center">
+        <div class="d-flex align-center">
           <div v-if="item.has_url">
             <v-icon
               class="cursor-pointer pr-3 pr-md-1"
@@ -27,22 +27,10 @@
               mdi-eye
             </v-icon>
           </div>
-          <div v-if="item.assessment_id">
-            <v-tooltip top>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon
-                  v-bind="attrs"
-                  class="cursor-pointer pa-1"
-                  :color="getAssessmentIconColor(item)"
-                  v-on="on"
-                  @click="openAssessmentDetail(item)"
-                >
-                  mdi-clipboard-text
-                </v-icon>
-              </template>
-              <span>{{ getAssessmentTooltip(item) }}</span>
-            </v-tooltip>
-          </div>
+          <AssessmentDetailIcon
+            :item="item"
+            @click="openAssessmentDetailById"
+          />
         </div>
       </template>
     </StudentsMaterialsBase>
@@ -62,14 +50,17 @@
 <script>
 import LessonRepository from '@/services/LessonRepository'
 import { downloadFile, openInTab } from '@/utils/DownloadMaterial'
-import moment from 'moment'
 
 export default {
-  name: 'StudentsAssessmentsList',
+  name: 'StudentsAssessmentsMaterialList',
   components: {
     StudentsMaterialsBase: () =>
       import(
         /* webpackChunkName: "StudentsMaterialsBase" */ '@/modules/lessons/_common/students-materials-base/students-materials-base.vue'
+      ),
+    AssessmentDetailIcon: () =>
+      import(
+        /* webpackChunkName: "AssessmentDetailIcon" */ '@/modules/lessons/_common/assessment-detail-icon.vue'
       )
   },
   props: {
@@ -90,52 +81,6 @@ export default {
   },
 
   methods: {
-    getAssessmentIconColor(item) {
-      // If not an assessment, return default color
-      if (item.type !== 'assessment' || !item.assessment_id) {
-        return 'primary'
-      }
-
-      // Check if expired (deadline has passed) - expired takes priority
-      if (item.assessment_deadline) {
-        const deadline = moment(item.assessment_deadline)
-
-        if (deadline.isValid() && moment().isAfter(deadline)) {
-          return 'grey' // Gray if expired
-        }
-      }
-
-      // Check if replied (and not expired)
-      if (item.assessment_replied === 1) {
-        return 'primary' // Blue (primary) if replied
-      }
-
-      // Not replied and not expired
-      return 'orange' // Orange if not replied
-    },
-    getAssessmentTooltip(item) {
-      // If not an assessment, return default message
-      if (item.type !== 'assessment' || !item.assessment_id) {
-        return 'Ver seguimiento teórico'
-      }
-
-      // Check if expired (deadline has passed)
-      if (item.assessment_deadline) {
-        const deadline = moment(item.assessment_deadline)
-
-        if (deadline.isValid() && moment().isAfter(deadline)) {
-          return 'Seguimiento teórico expirado'
-        }
-      }
-
-      // Check if replied
-      if (item.assessment_replied === 1) {
-        return 'Seguimiento teórico respondido'
-      }
-
-      // Not replied and not expired
-      return 'Responder seguimiento teórico'
-    },
     async getUrl(material) {
       const url = await LessonRepository.getStudentMaterialURL(
         material.material_id
@@ -171,13 +116,13 @@ export default {
       await openInTab(url)
       this.loading = false
     },
-    openAssessmentDetail(material) {
-      if (!material.assessment_id) {
+    openAssessmentDetailById(assessmentId) {
+      if (!assessmentId) {
         return
       }
       this.$router.push({
         name: 'student-assessment-detail',
-        params: { assessmentId: material.assessment_id }
+        params: { assessmentId }
       })
     }
   }

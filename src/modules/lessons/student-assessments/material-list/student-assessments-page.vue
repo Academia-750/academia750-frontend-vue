@@ -1,5 +1,5 @@
 <template>
-  <StudentsAssessmentsList store-name="studentsAssessmentsStore" />
+  <StudentsAssessmentsMaterialList store-name="studentsAssessmentsStore" />
 </template>
 
 <script>
@@ -9,9 +9,9 @@ import { PermissionEnum } from '@/utils/enums'
 export default {
   name: 'StudentsAssessments',
   components: {
-    StudentsAssessmentsList: () =>
+    StudentsAssessmentsMaterialList: () =>
       import(
-        /* webpackChunkName: "StudentsAssessmentsList" */ './students-assessments-list.vue'
+        /* webpackChunkName: "StudentsAssessmentsMaterialList" */ './students-assessments-material-list.vue'
       )
   },
   mixins: [notifications],
