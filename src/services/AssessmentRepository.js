@@ -64,25 +64,15 @@ export default {
   },
 
   /**
-   * Submit assessment result
+   * Submit or update assessment result (upsert)
    * @param {number} assessmentId Assessment ID
    * @param {object} data { questions_right, questions_wrong, questions_not_answered }
    */
   async submitAssessmentResult(assessmentId, data) {
-    const response = await ResourceService.post(
+    const response = await ResourceService.put(
       `student/assessments/result/${assessmentId}`,
       data
     )
-
-    if (response.status === 409) {
-      ResourceService.warning({
-        response,
-        title: 'Ya enviado',
-        message: 'Ya has enviado un resultado para este seguimiento teórico'
-      })
-
-      return false
-    }
 
     if (response.status === 412) {
       ResourceService.warning({
@@ -96,7 +86,18 @@ export default {
       return false
     }
 
-    if (response.status !== 201) {
+    if (response.status === 404) {
+      ResourceService.warning({
+        response,
+        title: 'No encontrado',
+        message:
+          response.data?.message || 'No se encontró el seguimiento teórico'
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
       ResourceService.warning({
         response
       })
@@ -105,5 +106,43 @@ export default {
     }
 
     return response.data.result
+  },
+
+  /**
+   * Get assessment ranking
+   * @param {number} assessmentId Assessment ID
+   */
+  async getAssessmentRanking(assessmentId) {
+    const response = await ResourceService.get(
+      `student/assessments/${assessmentId}/ranking`
+    )
+
+    if (response.status === 404) {
+      activateError({
+        status: 404,
+        message: 'Seguimiento teórico no encontrado'
+      })
+
+      return false
+    }
+
+    if (response.status === 403) {
+      activateError({
+        status: 403,
+        message: 'No autorizado para ver este seguimiento teórico'
+      })
+
+      return false
+    }
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data
   }
 }

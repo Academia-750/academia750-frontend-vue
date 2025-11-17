@@ -363,9 +363,6 @@ export default {
       return 'Nuevo Material'
     },
     isMaterial() {
-      return this.type === 'material'
-    },
-    isMaterialOrAssessment() {
       return this.type === 'material' || this.type === 'assessment'
     },
     isStorageRequired() {
@@ -375,7 +372,7 @@ export default {
       )
     },
     getFileName() {
-      if (!this.isMaterialOrAssessment) {
+      if (!this.isMaterial) {
         return ''
       }
 
