@@ -21,10 +21,9 @@ export function getMarkColor(mark, lowestMark = 2, highestMark = 8) {
   const lowest = parseFloat(lowestMark) || 2
   const highest = parseFloat(highestMark) || 8
 
-  console.log(lowest, highest, markValue)
   // If lowest and highest are the same, return a default color
   if (lowest === highest) {
-    return 'gray'
+    return 'success'
   }
 
   // Calculate the range

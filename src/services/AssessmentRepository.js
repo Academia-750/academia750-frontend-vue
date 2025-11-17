@@ -144,5 +144,25 @@ export default {
     }
 
     return response.data
+  },
+
+  /**
+   * Get assessment stats by time range
+   * @param {object} params { from: 'YYYY-MM-DD', to: 'YYYY-MM-DD' }
+   */
+  async getStatsByTime(params) {
+    const response = await ResourceService.get('student/assessments/stats', {
+      params
+    })
+
+    if (response.status !== 200) {
+      ResourceService.warning({
+        response
+      })
+
+      return false
+    }
+
+    return response.data.data || []
   }
 }

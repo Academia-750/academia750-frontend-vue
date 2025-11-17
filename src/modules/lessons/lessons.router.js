@@ -13,6 +13,7 @@ import StudentLessonRecordingPage from './student-recordings/student-lesson-reco
 import StudentAssessmentPage from './student-assessments/material-list/student-assessments-page'
 import StudentLessonAssessmentPage from './student-assessments/material-list/student-lesson-assessment-page'
 import StudentAssessmentDetailPage from './student-assessments/assessment-detail/student-assessment-detail-page'
+import StudentAssessmentStatsPage from './student-assessments/assessment-stats/student-assessment-stats-page'
 import LessonAttendeesModule from './lesson-attendees'
 import StudentLessonOnlineModule from './student-join-online-clase'
 
@@ -67,6 +68,14 @@ const studentRoute = [
             path: 'assessments/:assessmentId',
             name: 'student-assessment-detail',
             component: StudentAssessmentDetailPage,
+            meta: {
+              middleware: [authMiddleware]
+            }
+          },
+          {
+            path: 'assessments-stats',
+            name: 'student-assessment-stats',
+            component: StudentAssessmentStatsPage,
             meta: {
               middleware: [authMiddleware]
             }

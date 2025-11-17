@@ -12,6 +12,11 @@
         <Toolbar :title="title" :icon="icon" :back="!!lesson">
           <template #actions>
             <resource-button
+              icon-button="mdi-chart-line"
+              class="mr-2"
+              @click="goToStats"
+            />
+            <resource-button
               icon-button="mdi-autorenew"
               @click="resetTableOptions"
             />
@@ -222,6 +227,11 @@ export default {
       this.$store.dispatch(`${this.storeName}/resetTableOptions`)
 
       this.$refs.table.reload()
+    },
+    goToStats() {
+      this.$router.push({
+        name: 'student-assessment-stats'
+      })
     }
   }
 }
