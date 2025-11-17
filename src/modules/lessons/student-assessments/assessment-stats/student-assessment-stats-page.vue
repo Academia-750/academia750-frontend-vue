@@ -1,7 +1,7 @@
 <template>
   <div>
     <Vtoolbar
-      title="Estadísticas de Evaluaciones"
+      title="Estadísticas de Seguimiento Teórico"
       icon="mdi-chart-line"
       :back="true"
     />
@@ -96,6 +96,7 @@
             height="400"
             :options="chartOptions"
             :series="chartSeries"
+            :loading="loading"
           ></apexchart>
         </v-card-text>
       </v-card>
@@ -128,15 +129,6 @@
               <span v-else class="grey--text">-</span>
             </template>
           </v-data-table>
-        </v-card-text>
-      </v-card>
-
-      <v-card v-else-if="!loading && hasSearched" class="mt-4">
-        <v-card-text>
-          <v-alert type="defau" prominent>
-            <v-alert-title>Sin datos</v-alert-title>
-            No se encontraron evaluaciones en el rango de fechas seleccionado.
-          </v-alert>
         </v-card-text>
       </v-card>
     </v-container>
@@ -342,7 +334,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Estadísticas de Evaluaciones'
+      inner: 'Seguimiento Teórico'
     }
   }
 }
