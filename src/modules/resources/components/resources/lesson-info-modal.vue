@@ -85,6 +85,14 @@
                 @click="setLessonRecordings(lesson)"
               />
               <resource-button
+                v-if="!hideMaterials"
+                text-button="Evaluaciones"
+                icon-button="mdi-clipboard-text"
+                color="success"
+                :disabled="!$hasPermission(PermissionEnum.SEE_LESSON_MATERIALS)"
+                @click="setLessonAssessments(lesson)"
+              />
+              <resource-button
                 v-if="lesson.is_online"
                 text-button="Entrar Clase"
                 icon-button="mdi-eye"
@@ -156,6 +164,7 @@ export default {
   methods: {
     ...mapMutations('studentsMaterialsStore', ['SET_LESSONS']),
     ...mapMutations('studentsRecordingsStore', ['SET_LESSONS']),
+    ...mapMutations('studentsAssessmentsStore', ['SET_LESSONS']),
     ...mapActions('studentLessonsStore', ['updateJoinLesson']),
     setLessonMaterial(lesson) {
       this.$store.dispatch('studentsLessonMaterialsStore/resetTableOptions')
@@ -180,6 +189,18 @@ export default {
 
       this.$router.push({
         name: 'student-lesson-recordings',
+        params: { id: lesson.id }
+      })
+    },
+    setLessonAssessments(lesson) {
+      this.$store.dispatch('studentsLessonAssessmentsStore/resetTableOptions')
+      this.$store.commit('studentsLessonAssessmentsStore/SET_LESSON', lesson)
+      this.$store.commit('studentsLessonAssessmentsStore/SET_TABLE_OPTIONS', {
+        offset: 0
+      })
+
+      this.$router.push({
+        name: 'student-lesson-assessments',
         params: { id: lesson.id }
       })
     },
