@@ -34,7 +34,7 @@
                 v-on="on"
                 @click="openAssessmentDetail(item)"
               >
-                mdi-clipboard-text
+                mdi-clipboard-check
               </v-icon>
             </template>
             <span>Ver detalle de evaluación</span>

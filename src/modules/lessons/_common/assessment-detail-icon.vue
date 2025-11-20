@@ -9,7 +9,7 @@
           v-on="on"
           @click="handleClick"
         >
-          mdi-clipboard-text
+          mdi-clipboard-check
         </v-icon>
       </template>
       <span>{{ tooltipText }}</span>

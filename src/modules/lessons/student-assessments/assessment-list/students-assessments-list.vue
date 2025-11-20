@@ -5,6 +5,7 @@
       :headers="headers"
       :store-name="storeName"
       item-key="id"
+      order-by="created_at"
       :load="loadStudentsAssessments"
     >
       <template v-slot:top>

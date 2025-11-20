@@ -55,16 +55,6 @@ export default {
           ]
         },
         {
-          icon: 'mdi-clipboard-text',
-          key: '',
-          text: 'Seguimiento Teórico',
-          to: { name: 'manage-students-assessments-materials' },
-          permissions: [
-            PermissionEnum.SEE_LESSONS,
-            PermissionEnum.SEE_LESSON_MATERIALS
-          ]
-        },
-        {
           icon: 'mdi-clipboard-check',
           key: '',
           text: 'Evaluaciones',

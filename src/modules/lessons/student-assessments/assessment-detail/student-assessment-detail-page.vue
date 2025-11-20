@@ -68,8 +68,15 @@
             </v-col>
             <v-col cols="12" md="3">
               <div class="text-center">
-                <div :class="`text-h4 ${getMarkColorClass()}--text`">
-                  {{ formattedMark }}
+                <div class="d-flex align-center justify-center">
+                  <div :class="`text-h4 ${getMarkColorClass()}--text`">
+                    {{ formattedMark }}
+                  </div>
+                  <AssessmentMarkColorLegend
+                    :lowest-mark="assessment?.lowest_mark"
+                    :highest-mark="assessment?.highest_mark"
+                    class="ml-2"
+                  />
                 </div>
                 <div class="text-body-2">
                   Nota (Pos. {{ assessmentResult.position }})
@@ -115,7 +122,11 @@ export default {
         /* webpackChunkName: "AssessmentRanking" */ './assessment-ranking.vue'
       ),
     AssessmentForm: () =>
-      import(/* webpackChunkName: "AssessmentForm" */ './assessment-form.vue')
+      import(/* webpackChunkName: "AssessmentForm" */ './assessment-form.vue'),
+    AssessmentMarkColorLegend: () =>
+      import(
+        /* webpackChunkName: "AssessmentMarkColorLegend" */ '@/modules/lessons/_common/assessment-mark-color-legend.vue'
+      )
   },
   data() {
     return {

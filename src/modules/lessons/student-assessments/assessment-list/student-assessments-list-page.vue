@@ -128,7 +128,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Seguimiento Teórico'
+      inner: 'Evaluaciones'
     }
   }
 }
